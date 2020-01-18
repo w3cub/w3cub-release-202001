@@ -1,0 +1,192 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ETag - HTTP - W3cubDocs</title>
+  
+  <meta name="description" content="The ETag HTTP response header is an identifier for a specific version of a resource. It allows caches to be more efficient, and saves bandwidth, as &hellip;">
+  <meta name="keywords" content="etag, -, http">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/http/headers/etag/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/http.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/http/" class="_nav-link" title="" style="margin-left:0;">HTTP</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>ETag</h1> <p>The <code>ETag</code> HTTP response header is an identifier for a specific version of a resource. It allows caches to be more efficient, and saves bandwidth, as a web server does not need to send a full response if the content has not changed. On the other side, if the content has changed, etags are useful to help prevent simultaneous updates of a resource from overwriting each other ("mid-air collisions").</p> <p>If the resource at a given URL changes, a new <code>Etag</code> value must be generated. Etags are therefore similar to fingerprints and might also be used for tracking purposes by some servers. A comparison of them allows to quickly determine whether two representations of a resource are the same, but they might also be set to persist indefinitely by a tracking server.</p> <div class="_table"><table class="properties"> <tbody> <tr> <th scope="row">Header type</th> <td><a href="https://developer.mozilla.org/en-US/docs/Glossary/Response_header" target="_blank">Response header</a></td> </tr> <tr> <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name" target="_blank">Forbidden header name</a></th> <td>no</td> </tr> </tbody> </table></div> <h2 id="Syntax">Syntax</h2> <pre class="syntaxbox">ETag: W/"&lt;etag_value&gt;"
+ETag: "&lt;etag_value&gt;"
+</pre> <h2 id="Directives">Directives</h2> <dl> <dt>
+<code>W/</code> <span class="inlineIndicator optional optionalInline">Optional</span>
+</dt> <dd>
+<code>'W/'</code> (case-sensitive) indicates that a <a href="../../conditional_requests/#Weak_validation">weak validator</a> is used. Weak validators are easy to generate but are far less useful for comparisons. Strong validators are ideal for comparisons but can be very difficult to generate efficiently. Weak <code>Etag</code> values of two representations of the same resources might be semantically equivalent, but not byte-for-byte identical.</dd> <dt>"&lt;etag_value&gt;"</dt> <dd>Entity tags uniquely representing the requested resources. They are a string of ASCII characters placed between double quotes (Like <code>"675af34563dc-tr34"</code>). The method by which <code>ETag</code> values are generated is not specified. Oftentimes, a hash of the content, a hash of the last modification timestamp, or just a revision number is used. For example, MDN uses a hash of hexadecimal digits of the wiki content.</dd> </dl> <h2 id="Examples">Examples</h2> <pre>ETag: "33a64df551425fcc55e4d42a148795d9f25f89d4"
+ETag: W/"0815"</pre> <h3 id="Avoiding_mid-air_collisions">Avoiding mid-air collisions</h3> <p>With the help of the <code>ETag</code> and the <a href="../if-match/"><code>If-Match</code></a> headers, you are able to detect mid-air edit collisions.</p> <p>For example when editing MDN, the current wiki content is hashed and put into an <code>Etag</code> in the response:</p> <pre>ETag: "33a64df551425fcc55e4d42a148795d9f25f89d4"</pre> <p>When saving changes to a wiki page (posting data), the <a href="../../methods/post/"><code>POST</code></a> request will contain the <a href="../if-match/"><code>If-Match</code></a> header containing the <code>ETag</code> values to check freshness against.</p> <pre>If-Match: "33a64df551425fcc55e4d42a148795d9f25f89d4"</pre> <p>If the hashes don't match, it means that the document has been edited in-between and a <a href="../../status/412/"><code>412</code></a><code> Precondition Failed</code> error is thrown.</p> <h3 id="Caching_of_unchanged_resources">Caching of unchanged resources</h3> <p>Another typical use case of the <code>ETag</code> header is to cache resources that are unchanged. If a user visits a given URL again (that has an <code>ETag</code> set), and it is <em>stale</em>, that is too old to be considered usable, the client will send the value of its <code>ETag</code> along in an <a href="../if-none-match/"><code>If-None-Match</code></a> header field:</p> <pre>If-None-Match: "33a64df551425fcc55e4d42a148795d9f25f89d4"</pre> <p>The server compares the client's <code>ETag</code> (sent with <code>If-None-Match</code>) with the <code>ETag</code> for its current version of the resource and if both values match (that is, the resource has not changed), the server send back a <a href="../../status/304/"><code>304</code></a><code> Not Modified</code> status, without any body, which tells the client that the cached version of the response is still good to use (<em>fresh</em>).</p> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Title</th> </tr> <tr> <td><a href="https://tools.ietf.org/html/rfc7232#section-2.3" target="_blank">RFC 7232, section 2.3: ETag</a></td> <td>Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>  <div class="_table">
+<table class="bc-table bc-table-web">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr></tbody>
+</table>
+<table class="bc-table bc-table-web">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr></tbody>
+</table>
+</div> <h2 id="See_also">See also</h2> <ul> <li><a href="../if-match/"><code>If-Match</code></a></li> <li><a href="../if-none-match/"><code>If-None-Match</code></a></li> <li>
+<a href="../../status/304/"><code>304</code></a><code> Not Modified</code>
+</li> <li>
+<a href="../../status/412/"><code>412</code></a><code> Precondition Failed</code>
+</li> <li> <p><a href="https://www.w3.org/1999/04/Editing/" target="_blank">W3C Note: Editing the Web – Detecting the Lost Update Problem Using Unreserved Checkout</a></p> </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

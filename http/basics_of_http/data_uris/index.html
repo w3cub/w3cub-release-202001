@@ -1,0 +1,327 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Data URIs - HTTP - W3cubDocs</title>
+  
+  <meta name="description" content=" Data URLs, URLs prefixed with the data&#58; scheme, allow content creators to embed small files inline in documents. ">
+  <meta name="keywords" content="data, uris, -, http">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/http/basics_of_http/data_uris/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/http.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/http/" class="_nav-link" title="" style="margin-left:0;">HTTP</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Data URIs</h1> <p><strong>Data URLs</strong>, URLs prefixed with the <code>data:</code> scheme, allow content creators to embed small files inline in documents.</p> <div class="note"> <p><strong>Note</strong>: Data URLs are treated as unique opaque origins by modern browsers, rather than inheriting the origin of the settings object responsible for the navigation.</p> </div> <h2 id="Syntax">Syntax</h2> <p>Data URLs are composed of four parts: a prefix (<code>data:</code>), a MIME type indicating the type of data, an optional <code>base64</code> token if non-textual, and the data itself:</p> <pre class="syntaxbox">data:[&lt;mediatype&gt;][;base64],&lt;data&gt;
+</pre> <p>The <code>mediatype</code> is a MIME type string, such as <code>'image/jpeg'</code> for a JPEG image file. If omitted, defaults to <code>text/plain;charset=US-ASCII</code></p> <p>If the data is textual, you can simply embed the text (using the appropriate entities or escapes based on the enclosing document's type). Otherwise, you can specify <code>base64</code> to embed base64-encoded binary data.</p> <p>A few examples:</p> <dl> <dt><code>data:,Hello%2C%20World!</code></dt> <dd>Simple text/plain data</dd> <dt><code>data:text/plain;base64,SGVsbG8sIFdvcmxkIQ%3D%3D</code></dt> <dd>base64-encoded version of the above</dd> <dt><code>data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E</code></dt> <dd>An HTML document with <code>&lt;h1&gt;Hello, World!&lt;/h1&gt;</code>
+</dd> <dt><code>data:text/html,&lt;script&gt;alert('hi');&lt;/script&gt;</code></dt> <dd>An HTML document that executes a JavaScript alert. Note that the closing script tag is required.</dd> </dl> <h2 id="Encoding_data_into_base64_format">Encoding data into base64 format</h2> <p>This can be done easily using the command-line <code>uuencode</code> utility on Linux and Mac OS X systems:</p> <pre>uuencode -m infile remotename
+</pre> <p>The <code>infile</code> parameter is the name of the file you wish to encode into base64 format, and <code>remotename</code> is the remote name for the file, which isn't actually used in <code>data</code> URLs.</p> <p>The output will look something like this:</p> <pre>begin-base64 664 test
+YSBzbGlnaHRseSBsb25nZXIgdGVzdCBmb3IgdGV2ZXIK
+====
+</pre> <p>The data URL will use the encoded data after the initial header line.</p> <h3 id="In_a_Web_page_using_JavaScript">In a Web page, using JavaScript</h3> <p>The Web APIs have native methods to encode or decode to base64: <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding" target="_blank">Base64 encoding and decoding</a>.</p> <h2 id="Common_problems">Common problems</h2> <p>This section describes problems that commonly occur when creating and using <code>data</code> URLs.</p> <pre>data:text/html,lots of text...&lt;p&gt;&lt;a name%3D"bottom"&gt;bottom&lt;/a&gt;?arg=val
+</pre> <p>This represents an HTML resource whose contents are:</p> <pre>lots of text...&lt;p&gt;&lt;a name="bottom"&gt;bottom&lt;/a&gt;?arg=val
+</pre> <dl> <dt>Syntax</dt> <dd>The format for <code>data</code> URLs is very simple, but it's easy to forget to put a comma before the "data" segment, or to incorrectly encode the data into base64 format.</dd> <dt>Formatting in HTML</dt> <dd>A <code>data</code> URL provides a file within a file, which can potentially be very wide relative to the width of the enclosing document. As a URL, the <code>data</code> should be formatable with whitespace (linefeed, tab, or spaces), but there are practical issues that arise <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=73026#c12" target="_blank">when using base64 encoding</a>.</dd> <dt>Length limitations</dt> <dd>Although Firefox supports <code>data</code> URLs of essentially unlimited length, browsers are not required to support any particular maximum length of data. For example, the Opera 11 browser limited URLs to 65535 characters long which limits <code>data</code> URLs to 65529 characters (65529 characters being the length of the encoded data, not the source, if you use the plain <code>data:</code>, without specifying a MIME type).</dd> <dt>Lack of error handling</dt> <dd>Invalid parameters in media, or typos when specifying <code>'base64'</code>, are ignored, but no error is provided.</dd> <dt>No support for query strings, etc.</dt> <dd> <p>The data portion of a data URL is opaque, so an attempt to use a query string (page-specific parameters, with the syntax <code>&lt;url&gt;?parameter-data</code>) with a data URL will just include the query string in the data the URL represents.</p> </dd> <dt>Security issues</dt> <dd>A number of security issues (e.g. phishing) have been associated with data URLs, and navigating to them in the browser's top level. To mitigate such issues, top-level navigation to <code>data://</code> URIs has been blocked in Firefox 59+ (release version, Nightly/Beta from 58), and we hope to see other browsers follow suit soon. <a href="https://blog.mozilla.org/security/2017/11/27/blocking-top-level-navigations-data-urls-firefox-58/" target="_blank">See Blocking Top-Level Navigations to data URLs for Firefox 58</a> for more details.</dd> </dl> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Title</th> </tr> <tr> <td><a href="https://tools.ietf.org/html/rfc2397" target="_blank">RFC 2397</a></td> <td>The "data" URL scheme</td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2> <div class="_table">
+<table class="bc-table bc-table-web">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> 12
+<section class="bc-history" id="sect1"><dl>
+<dt class="bc-supports-yes bc-supports"> 12
+</dt>
+<dd> The maximum size supported is 4GB</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> 8
+<section class="bc-history" id="sect2"><dl>
+<dt class="bc-supports-yes bc-supports"> 8
+</dt>
+<dd> The maximum size supported is 32kB</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> 7.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">CSS files</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> 12
+<section class="bc-history" id="sect4"><dl>
+<dt class="bc-supports-yes bc-supports"> 12
+</dt>
+<dd> The maximum size supported is 4GB</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> 8
+<section class="bc-history" id="sect5"><dl>
+<dt class="bc-supports-yes bc-supports"> 8
+</dt>
+<dd> The maximum size supported is 32kB</dd>
+<dt class="bc-supports-yes bc-supports"> 9
+</dt>
+<dd> The maximum size supported is 4GB</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> 7.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">HTML files</th>
+<td> ? </td>
+<td class="bc-supports-no"> No</td>
+<td> ? </td>
+<td class="bc-supports-no"> No</td>
+<td> ? </td>
+<td> ? </td>
+</tr>
+<tr>
+<th scope="row">JavaScript files</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> 12
+<section class="bc-history" id="sect7"><dl>
+<dt class="bc-supports-yes bc-supports"> 12
+</dt>
+<dd> The maximum size supported is 4GB</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> 9
+<section class="bc-history" id="sect8"><dl>
+<dt class="bc-supports-yes bc-supports"> 9
+</dt>
+<dd> The maximum size supported is 4GB</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> 7.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">Top-level navigation blocked to data:// URIs</th>
+<td class="bc-supports-yes"> 60</td>
+<td> ? </td>
+<td class="bc-supports-yes"> 59</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 47</td>
+<td> ? </td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-web">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> Yes
+<section class="bc-history" id="sect3"><dl>
+<dt class="bc-supports-yes bc-supports"> Yes
+</dt>
+<dd> The maximum size supported is 4GB</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">CSS files</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> Yes
+<section class="bc-history" id="sect6"><dl>
+<dt class="bc-supports-yes bc-supports"> Yes
+</dt>
+<dd> The maximum size supported is 4GB</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">HTML files</th>
+<td> ? </td>
+<td> ? </td>
+<td class="bc-supports-no"> No</td>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+</tr>
+<tr>
+<th scope="row">JavaScript files</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> Yes
+<section class="bc-history" id="sect9"><dl>
+<dt class="bc-supports-yes bc-supports"> Yes
+</dt>
+<dd> The maximum size supported is 4GB</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">Top-level navigation blocked to data:// URIs</th>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 60</td>
+<td> ? </td>
+<td class="bc-supports-yes"> 59</td>
+<td class="bc-supports-yes"> 47</td>
+<td> ? </td>
+<td class="bc-supports-no"> No</td>
+</tr>
+</tbody>
+</table>
+</div> <h2 id="See_also">See also</h2> <ul> <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding" target="_blank">Base64 encoding and decoding</a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/atob" target="_blank"><code>atob()</code></a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/btoa" target="_blank"><code>btoa()</code></a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/uri" target="_blank">CSS <code>url()</code></a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/URI" target="_blank">URI</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

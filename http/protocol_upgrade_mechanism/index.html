@@ -1,0 +1,160 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Protocol Upgrade Mechanism - HTTP - W3cubDocs</title>
+  
+  <meta name="description" content="The HTTP protocol provides a special mechanism allowing an already established connection to upgrade to a new, incompatible, protocol. This guide &hellip;">
+  <meta name="keywords" content="protocol, upgrade, mechanism, -, http">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/http/protocol_upgrade_mechanism/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/http.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/http/" class="_nav-link" title="" style="margin-left:0;">HTTP</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Protocol upgrade mechanism</h1> <p>The <a href="https://developer.mozilla.org/en/HTTP" target="_blank">HTTP protocol</a> provides a special mechanism allowing an already established connection to upgrade to a new, incompatible, protocol. This guide covers how this works and offers examples of scenarios in which it's used.</p> <p>This mechanism is always client initiated (with one exception: it's possible for the server to <a href="#Server-initiated_upgrade_to_TLS">require an upgrade to TLS</a>), and the server may accept or refuse the switch to the new protocol. This makes it possible to start a connection using a commonly-used protocol, such as HTTP/1.1, then request that the connection switch to HTTP/2 or even to WebSockets.</p> <h2 id="Handshake">Handshake</h2> <p>Protocol upgrades are always requested by the client; there is no mechanism provided for the server to request a protocol change. When the client wishes to upgrade to a new protocol, it does so by sending a normal request of any type to the server (<a href="../methods/get/"><code>GET</code></a>, <a href="../methods/post/"><code>POST</code></a>, etc.). The request needs to be configured specially to include the upgrade request, however.</p> <p>In particular, the request <em>requires</em> these two additional headers:</p> <dl> <dt><code><a href="../headers/connection/">Connection: Upgrade</a></code></dt> <dd>The <code>Connection</code> header is set to <code>"Upgrade"</code> to indicate that an upgrade is requested.</dd> <dt><code><a href="../headers/upgrade/">Upgrade: <em>protocols</em></a></code></dt> <dd>The <code>Upgrade</code> header specifies one or more comma-separated protocol names, in order of preference.</dd> </dl> <p>Other headers may be required depending on the requested protocol; for example, <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank">WebSocket</a> upgrades allow additional headers to configure details about the WebSocket connection as well as to offer a degree of security in opening the connection. See <a href="#Upgrading_to_a_WebSocket_connection">Upgrading to a WebSocket connection</a> for more details.</p> <p>The server may either refuse the upgrade — in this case it merely ignores the <code>"Upgrade"</code> header and sends back a regular response (<code>"200 OK"</code> if it can serve the requested resource, a <code>30x</code> status code if it wants to perform a redirect, a <code>40x</code> or <code>50x</code> one if it can't serve the requested resource) — or accept the upgrade. In this case, it sends back a <code>"101 Switching Protocols"</code> with an Upgrade header that specifies the protocol chosen.</p> <p>Right after sending the <code>101</code> status code, an eventual handshake for the new protocol happens, if the new protocol requires it, then the server sends the answer requested for the original request (the one that included the <code>"Upgrade"</code> header), following the new protocol rules.</p> <h2 id="The_101_status_code">The 101 status code</h2> <p>The <a href="../status/101/"><code>101</code></a> status code is sent as a response to a request including the <code>"Upgrade"</code> header to signal that the recipient of the request is willing to upgrade to one of the desired protocols. If the <code>"101 Switching Protocols"</code> status code is returned, the header must also include the <code>Connection</code> and <code>Upgrade</code> headers to describe the chosen protocol. See the examples in <a href="#Common_uses_for_this_mechanism">Common uses for this mechanism</a> to learn more about how this works.</p> <p>While you can use the protocol upgrade mechanism to upgrade an HTTP/1.1 connection to HTTP/2, you can't go the other way. In fact, the 101 status code is no longer supported at all in HTTP/2, since HTTP/2 doesn't have an upgrade mechanism.</p> <h2 id="Common_uses_for_this_mechanism">Common uses for this mechanism</h2> <p>Here we look at the most common use cases for the <code>Upgrade</code> header.</p> <h3 id="Upgrading_to_an_HTTP2_connection">Upgrading to an HTTP/2 connection</h3> <p>It's standard procedure to start a connection using HTTP/1.1, due to its broad support, then request an upgrade to HTTP/2. This way, you have a functioning connection still even if HTTP/2 isn't supported by the server. However, you can only upgrade to an insecure (cleartext) HTTP/2 connection. This is done using the target protocol name <code>h2c</code>, which stands for "HTTP/2 Cleartext". This also <em>requires</em> the specification of the <code>HTTP2-Settings</code> header field.</p> <pre>GET / HTTP/1.1
+Host: destination.server.ext
+Connection: Upgrade, HTTP2-Settings
+Upgrade: h2c
+HTTP2-Settings: <em>base64EncodedSettings</em>
+</pre> <p>Here, <code>base64EncodedSettings</code> is an HTTP/2 <code>"SETTINGS"</code> frame's payload which has been base64url encoded and all trailing <code>"="</code> (equals) characters removed in order to safely include it in this textual header format.</p> <div class="note"> <p>The <a href="https://tools.ietf.org/html/rfc4648#section-5" target="_blank">base64url</a> format is not the same as standard Base64 encoding. This is almost but not quite the same as standard Base64. The only difference: in order to ensure that the resulting string is safe for use in both URLs and filenames, the 62nd and 63rd characters in its alphabet are changed from <code>"+"</code> and <code>"/"</code> to <code>"-"</code> (minus) and <code>"_"</code> (underscore), respectively.</p> </div> <p>If the server is unable to switch to HTTP/2 for any reason, it will reply with a standard HTTP/1 reply after handling the request as normal. So if the request was to fetch a web page which does in fact exist, you would get a standard <code>"HTTP/1.1 200 OK"</code> response with the web page following the remainder of the header. If the server is able to switch to HTTP/2, a "<code>HTTP/1.1 101 Switching Protocols"</code> response is sent, which will look like this:</p> <pre>HTTP/1.1 101 Switching Protocols
+Connection: Upgrade
+Upgrade: h2c
+
+<em>[standard HTTP/2 server connection preface, etc.]</em></pre> <p>After the HTTP/1.1 header and the blank line that indicates the end of the header, the server will immediately include the server connection preface, starting with a <code>SETTINGS</code> frame.</p> <h3 id="Upgrading_to_a_WebSocket_connection">Upgrading to a WebSocket connection</h3> <p>By far, the most common use case for upgrading an HTTP connection is to use WebSockets, which are always implemented by upgrading an HTTP or HTTPS connection. Keep in mind that if you're opening a new connection using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank">WebSocket API</a>, or any library that does WebSockets, most or all of this is done for you. For example, opening a WebSocket connection is as simple as:</p> <pre data-language="js">webSocket = new WebSocket("ws://destination.server.ext", "optionalProtocol");</pre> <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/WebSocket" target="_blank"><code>WebSocket()</code></a> constructor does all the work of creating an initial HTTP/1.1 connection then handling the handshaking and upgrade process for you.</p> <div class="note"> <p>You can also use the <code>"wss://"</code> URL scheme to open a secure WebSocket connection.</p> </div> <p>If you need to create a WebSocket connection from scratch, you'll have to handle the handshaking process yourself. After creating the initial HTTP/1.1 session, you need to request the upgrade by adding to a standard request the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Upgrade" target="_blank"><code>Upgrade</code></a> and <a href="../headers/connection/"><code>Connection</code></a> headers, as follows:</p> <pre>Connection: Upgrade
+Upgrade: websocket</pre> <h3 id="WebSocket-specific_headers">WebSocket-specific headers</h3> <p>The following headers are involved in the WebSocket upgrade process. Other than the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Upgrade" target="_blank"><code>Upgrade</code></a> and <a href="../headers/connection/"><code>Connection</code></a> headers, the rest are generally optional or handled for you by the browser and server when they're talking to each other.</p> <h4 id="Sec-WebSocket-Extensions"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-WebSocket-Extensions" target="_blank"><code>Sec-WebSocket-Extensions</code></a></h4> <p>Specifies one or more protocol-level WebSocket extensions to ask the server to use. Using more than one <code>Sec-WebSocket-Extension</code> header in a request is permitted; the result is the same as if you included all of the listed extensions in one such header.</p> <pre class="syntaxbox">Sec-WebSocket-Extensions: <em>extensions</em></pre> <dl> <dt><code>extensions</code></dt> <dd>A comma-separated list of extensions to request (or agree to support). These should be selected from the <a href="https://www.iana.org/assignments/websocket/websocket.xml#extension-name" target="_blank">IANA WebSocket Extension Name Registry</a>. Extensions which take parameters do so by using semicolon delineation.</dd> </dl> <p>For example:</p> <pre>Sec-WebSocket-Extensions: superspeed, colormode; depth=16</pre> <h4 id="Sec-WebSocket-Key"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-WebSocket-Key" target="_blank"><code>Sec-WebSocket-Key</code></a></h4> <p>Provides information to the server which is needed in order to confirm that the client is entitled to request an upgrade to WebSocket. This header can be used when insecure (HTTP) clients wish to upgrade, in order to offer some degree of protection against abuse. The value of the key is computed using an algorithm defined in the WebSocket specification, so this <em>does not provide security</em>. Instead, it helps to prevent non-WebSocket clients from inadvertently, or through misuse, requesting a WebSocket connection. In essence, then, this key simply confirms that "Yes, I really mean to open a WebSocket connection."</p> <p>This header is automatically added by clients that choose to use it; it cannot be added using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader" target="_blank"><code>XMLHttpRequest.setRequestHeader()</code></a> method.</p> <pre class="syntaxbox">Sec-WebSocket-Key: <em>key</em></pre> <dl> <dt><code>key</code></dt> <dd>The key for this request to upgrade. The client adds this if it wishes to do so, and the server will include in the response a key of its own, which the client will validate before delivering the upgrade response to you.</dd> </dl> <p>The server's response's <code>Sec-WebSocket-Accept</code> header will have a value computed based upon the specified <code>key</code>.</p> <h4 id="Sec-WebSocket-Protocol"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-WebSocket-Protocol" target="_blank"><code>Sec-WebSocket-Protocol</code></a></h4> <p>The <code>Sec-WebSocket-Protocol</code> header specifies one or more WebSocket protocols that you wish to use, in order of preference. The first one that is supported by the server will be selected and returned by the server in a <code>Sec-WebSocket-Protocol</code> header included in the response. You can use this more than once in the header, as well; the result is the same as if you used a comma-delineated list of subprotocol identifiers in a single header.</p> <pre class="syntaxbox">Sec-WebSocket-Protocol: <em>subprotocols</em></pre> <dl> <dt><code>subprotocols</code></dt> <dd>A comma-separated list of subprotocol names, in the order of preference. The subprotocols may be selected from the <a href="https://www.iana.org/assignments/websocket/websocket.xml#subprotocol-name" target="_blank">IANA WebSocket Subprotocol Name Registry</a> or may be a custom name jointly understood by the client and the server.</dd> </dl> <h4 id="Sec-WebSocket-Version"><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-WebSocket-Version" target="_blank"><code>Sec-WebSocket-Version</code></a></h4> <h5 id="Request_header">Request header</h5> <p>Specifies the WebSocket protocol version the client wishes to use, so the server can confirm whether or not that version is supported on its end.</p> <pre class="syntaxbox">Sec-WebSocket-Version: <em>version</em></pre> <dl> <dt><code>version</code></dt> <dd>The WebSocket protocol version the client wishes to use when communicating with the server. This number should be the most recent version possible listed in the <a href="https://www.iana.org/assignments/websocket/websocket.xml#version-number" target="_blank">IANA WebSocket Version Number Registry</a>. The most recent final version of the WebSocket protocol is version 13.</dd> </dl> <h5 id="Response_header">Response header</h5> <p>If the server can't communicate using the specified version of the WebSocket protocol, it will respond with an error (such as 426 Upgrade Required) that includes in its headers a <code>Sec-WebSocket-Version</code> header with a comma-separated list of the supported protocol versions. If the server does support the requested protocol version, no <code>Sec-WebSocket-Version</code> header is included in the response.</p> <pre class="syntaxbox">Sec-WebSocket-Version: <em>supportedVersions</em></pre> <dl> <dt><code>supportedVersions</code></dt> <dd>A comma-delineated list of the WebSocket protocol versions supported by the server.</dd> </dl> <h3 id="Response-only_headers">Response-only headers</h3> <p>The response from the server may include these.</p> <h4 id="Sec-WebSocket-Accept"><a href="../headers/sec-websocket-accept/"><code>Sec-WebSocket-Accept</code></a></h4> <p>Included in the response message from the server during the opening handshake process when the server is willing to initiate a WebSocket connection. It will appear no more than once in the response headers.</p> <pre class="syntaxbox">Sec-WebSocket-Accept: <em>hash</em></pre> <dl> <dt><code>hash</code></dt> <dd>If a <code>Sec-WebSocket-Key</code> header was provided, the value of this header is computed by taking the value of the key, concatenating the string "258EAFA5-E914-47DA-95CA-C5AB0DC85B11" to it, taking the <a href="https://en.wikipedia.org/wiki/SHA-1" target="_blank">SHA-1</a> hash of that concatenated string, resulting in a 20-byte value. That value is then <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding" target="_blank">base64</a> encoded to obtain the value of this property.</dd> </dl> <h3 id="Client-initiated_upgrade_to_HTTP_over_TLS">Client-initiated upgrade to HTTP over TLS</h3> <p>You can also upgrade an HTTP/1.1 connection to TLS/1.0. The main advantages to this are that you can avoid using URL redirection from "http://" to "https://" on the server and you can easily use TLS on virtual hosts. This may, however, introduce problems with proxy servers.</p> <p>Upgrading an HTTP connection to use <a href="https://developer.mozilla.org/en-US/docs/Glossary/TLS" target="_blank">TLS</a> uses the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Upgrade" target="_blank"><code>Upgrade</code></a> header with the token <code>"TLS/1.0"</code>. If the switch is made successfully, the original request (which included <code>Upgrade</code>) is completed as normal, but on the TLS connection.</p> <p>The request to TLS can be made either optionally or mandatorily.</p> <h4 id="Optional_upgrade">Optional upgrade</h4> <p>To upgrade to TLS optionally (that is, allowing the connection to continue in cleartext if the upgrade to TLS fails), you simply use the <code>Upgrade</code> and <a href="../headers/connection/"><code>Connection</code></a> headers as expected. For example, given the original request:</p> <pre>GET http://destination.server.ext/secretpage.html HTTP/1.1
+Host: destination.server.ext
+Upgrade: TLS/1.0
+Connection: Upgrade</pre> <p>If the server <em>does not</em> support TLS upgrade, or is unable to upgrade to TLS at the time, it responds with a standard HTTP/1.1 response, such as:</p> <pre>HTTP/1.1 200 OK
+Date: Thu, 17 Aug 2017 21:07:44 GMT
+Server: Apache
+Last-Modified: Thu, 17 Aug 2017 08:30:15 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 31374
+
+&lt;html&gt;
+  ...
+&lt;/html&gt;
+</pre> <p>If the server <em>does</em> support TLS upgrade and wishes to permit the upgrade, it responds with the <code>"101 Switching Protocols"</code> response code, like this:</p> <pre>HTTP/1.1 101 Switching Protocols
+Upgrade: TLS/1.0, HTTP/1.1</pre> <p>Once the TLS handshake is complete, the original request will be responded to as normal.</p> <h4 id="Mandatory_upgrade">Mandatory upgrade</h4> <p>To request a mandatory upgrade to TLS—that is, to upgrade and fail the connection if the upgrade is not successful—your first request must be an <a href="../methods/options/"><code>OPTIONS</code></a> request, like this:</p> <pre>OPTIONS * HTTP/1.1
+Host: destination.server.ext
+Upgrade: TLS/1.0
+Connection: Upgrade</pre> <p>If the upgrade to TLS succeeds, the server will respond with <code>"101 Switching Protocols"</code> as described in the previous section. If the upgrade fails, the HTTP/1.1 connection will fail.</p> <h3 id="Server-initiated_upgrade_to_TLS">Server-initiated upgrade to TLS</h3> <p>This works roughly the same way as a client-initiated upgrade; an optional upgrade is requested by adding the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Upgrade" target="_blank"><code>Upgrade</code></a> header to any message. A mandatory upgrade, though, works slightly differently, in that it requests the upgrade by replying to a message it receives with the <a href="../status/426/"><code>426</code></a> status code, like this:</p> <pre>HTTP/1.1 426 Upgrade Required
+Upgrade: TLS/1.1, HTTP/1.1
+Connection: Upgrade
+
+&lt;html&gt;
+... Human-readable HTML page describing why the upgrade is required
+    and what to do if this text is seen ...
+&lt;/html&gt;</pre> <p>If the client receiving the <code>"426 Upgrade Required"</code> response is willing and able to upgrade to TLS, it should then start the same process covered above under <a href="#Client-initiated_upgrade_to_TLS">Client-initiated upgrade to TLS</a>.</p> <h2 id="References">References</h2> <ul> <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank">WebSocket API</a></li> <li><a href="../">HTTP</a></li> <li>Specifications and RFCs: <ul> <li><a href="https://tools.ietf.org/html/rfc2616" target="_blank">RFC 2616</a></li> <li><a href="https://tools.ietf.org/html/rfc6455" target="_blank">RFC 6455</a></li> <li><a href="https://tools.ietf.org/html/rfc2817" target="_blank">RFC 2817</a></li> <li><a href="https://tools.ietf.org/html/rfc7540" target="_blank">RFC 7540</a></li> </ul> </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
