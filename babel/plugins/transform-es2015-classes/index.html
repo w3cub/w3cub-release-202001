@@ -1,0 +1,172 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ES2015 Classes Transform - Babel - W3cubDocs</title>
+  
+  <meta name="description" content=" Compile ES2015 classes to ES5 ">
+  <meta name="keywords" content="es, classes, transform, -, babel">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/babel/plugins/transform-es2015-classes/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/babel.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/babel/" class="_nav-link" title="" style="margin-left:0;">Babel</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>ES2015 classes transform</h1>
+<p>Compile ES2015 classes to ES5</p>
+<h2 id="caveats">Caveats</h2>
+<p>Built-in classes such as <code>Date</code>, <code>Array</code>, <code>DOM</code> etc cannot be properly subclassed due to limitations in ES5 (for the <a href="/">es2015-classes</a> plugin). You can try to use <a href="https://github.com/loganfsmyth/babel-plugin-transform-builtin-extend" target="_blank">babel-plugin-transform-builtin-extend</a> based on <code>Object.setPrototypeOf</code> and <code>Reflect.construct</code>, but it also has some limitations.</p>
+<h2 id="installation">Installation</h2>
+<pre data-language="bash">npm install --save-dev babel-plugin-transform-es2015-classes
+</pre>
+<h2 id="usage">Usage</h2>
+<h3 id="via-babelrc-recommended">Via <code>.babelrc</code> (Recommended)</h3>
+<p><strong>.babelrc</strong></p>
+<pre data-language="js">// without options
+{
+  "plugins": ["transform-es2015-classes"]
+}
+
+// with options
+{
+  "plugins": [
+    ["transform-es2015-classes", {
+      "loose": true
+    }]
+  ]
+}
+</pre>
+<h3 id="via-cli">Via CLI</h3>
+<pre data-language="bash">babel --plugins transform-es2015-classes script.js
+</pre>
+<h3 id="via-node-api">Via Node API</h3>
+<pre data-language="javascript">require("babel-core").transform("code", {
+  plugins: ["transform-es2015-classes"]
+});
+</pre>
+<h2 id="options">Options</h2>
+<h3 id="loose"><code>loose</code></h3>
+<p><code>boolean</code>, defaults to <code>false</code>.</p>
+<h4 id="method-enumerability">Method enumerability</h4>
+<p>Please note that in loose mode class methods <strong>are</strong> enumerable. This is not in line with the spec and you may run into issues.</p>
+<h4 id="method-assignment">Method assignment</h4>
+<p>Under loose mode, methods are defined on the class prototype with simple assignments instead of being defined. This can result in the following not working:</p>
+<pre data-language="javascript">class Foo {
+  set bar() {
+    throw new Error("foo!");
+  }
+}
+
+class Bar extends Foo {
+  bar() {
+    // will throw an error when this method is defined
+  }
+}
+</pre>
+<p>When <code>Bar.prototype.foo</code> is defined it triggers the setter on <code>Foo</code>. This is a case that is very unlikely to appear in production code however it’s something to keep in mind.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 Sebastian McKenzie<br>Licensed under the MIT License.<br>
+    <a href="http://babeljs.io/docs/plugins/transform-es2015-classes/" class="_attribution-link" target="_blank">http://babeljs.io/docs/plugins/transform-es2015-classes/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
