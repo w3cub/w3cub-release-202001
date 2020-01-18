@@ -1,0 +1,711 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bundler&#58;&#58;RubygemsIntegration - Ruby 2.6 - W3cubDocs</title>
+  
+  <meta name="description" content=" This backports base_dir which replaces installation path RubyGems 1.8+ ">
+  <meta name="keywords" content="class, bundler, rubygemsintegration, -, ruby, ruby~2.6">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ruby~2.6/bundler/rubygemsintegration/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/ruby~2.6.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ruby~2.6/" class="_nav-link" title="" style="margin-left:0;">Ruby 2.6</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rdoc">
+				
+				
+<h1 id="class-Bundler::RubygemsIntegration" class="class"> class Bundler::RubygemsIntegration </h1>
+<dl class="meta">
+<dt>Parent:</dt>
+<dd class="meta-parent"><a href="../../object/">Object</a></dd>
+</dl>  <section id="5Buntitled-5D" class="documentation-section"> <section class="constants-list"> <header> <h3>Constants</h3> </header> <dl> <dt id="EXT_LOCK">EXT_LOCK </dt>
+
+</dl> </section> <section id="public-class-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Class Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-c-new"> <span class="method-name">new</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="new-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 23
+def initialize
+  @replaced_methods = {}
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-provides-3F"> <span class="method-name">provides?</span><span class="method-args">(req_str)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="provides-3F-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 19
+def self.provides?(req_str)
+  Gem::Requirement.new(req_str).satisfied_by?(version)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-c-version"> <span class="method-name">version</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="version-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 15
+def self.version
+  @version ||= Gem::Version.new(Gem::VERSION)
+end</pre> </div>  </div> </div> </section> <section id="public-instance-5Buntitled-5D-method-details" class="method-section"> <header> <h3>Public Instance Methods</h3> </header> <div class="method-detail "> <div class="method-heading" id="method-i-backport_base_dir"> <span class="method-name">backport_base_dir</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="backport_base_dir-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 546
+def backport_base_dir
+  redefine_method(Gem::Specification, :base_dir) do
+    return Gem.dir unless loaded_from
+    File.dirname File.dirname loaded_from
+  end
+end</pre> </div> <p>This backports base_dir which replaces installation path RubyGems 1.8+</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-backport_cache_file"> <span class="method-name">backport_cache_file</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="backport_cache_file-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 553
+def backport_cache_file
+  redefine_method(Gem::Specification, :cache_dir) do
+    @cache_dir ||= File.join base_dir, "cache"
+  end
+
+  redefine_method(Gem::Specification, :cache_file) do
+    @cache_file ||= File.join cache_dir, "#{full_name}.gem"
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-backport_segment_generation"> <span class="method-name">backport_segment_generation</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="backport_segment_generation-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 527
+def backport_segment_generation
+  redefine_method(Gem::Version, :segments) do
+    @segments ||= @version.scan(/[0-9]+|[a-z]+/i).map do |s|
+      /^\d+$/ =~ s ? s.to_i : s
+    end
+  end
+end</pre> </div> <p>This backports the correct segment generation code from RubyGems 1.4+ by monkeypatching it into the method in RubyGems 1.3.6 and 1.3.7.</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-backport_spec_file"> <span class="method-name">backport_spec_file</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="backport_spec_file-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 563
+def backport_spec_file
+  redefine_method(Gem::Specification, :spec_dir) do
+    @spec_dir ||= File.join base_dir, "specifications"
+  end
+
+  redefine_method(Gem::Specification, :spec_file) do
+    @spec_file ||= File.join spec_dir, "#{full_name}.gemspec"
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-backport_yaml_initialize"> <span class="method-name">backport_yaml_initialize</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="backport_yaml_initialize-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 536
+def backport_yaml_initialize
+  redefine_method(Gem::Version, :yaml_initialize) do |_, map|
+    @version = map["version"]
+    @segments = nil
+    @hash = nil
+  end
+end</pre> </div> <p>This backport fixes the marshaling of @segments.</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-bin_path"> <span class="method-name">bin_path</span><span class="method-args">(gem, bin, ver)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="bin_path-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 211
+def bin_path(gem, bin, ver)
+  Gem.bin_path(gem, bin, ver)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-binstubs_call_gem-3F"> <span class="method-name">binstubs_call_gem?</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="binstubs_call_gem-3F-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 362
+def binstubs_call_gem?
+  true
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-build"> <span class="method-name">build</span><span class="method-args">(spec, skip_validation = false)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="build-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 322
+def build(spec, skip_validation = false)
+  require "rubygems/builder"
+  Gem::Builder.new(spec).build
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-build_args"> <span class="method-name">build_args</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="build_args-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 35
+def build_args
+  Gem::Command.build_args
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-build_args-3D"> <span class="method-name">build_args=</span><span class="method-args">(args)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="build_args-3D-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 39
+def build_args=(args)
+  Gem::Command.build_args = args
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-build_gem"> <span class="method-name">build_gem</span><span class="method-args">(gem_dir, spec)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="build_gem-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 327
+def build_gem(gem_dir, spec)
+  build(spec)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-clear_paths"> <span class="method-name">clear_paths</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="clear_paths-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 207
+def clear_paths
+  Gem.clear_paths
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-config_map"> <span class="method-name">config_map</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="config_map-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 199
+def config_map
+  Gem::ConfigMap
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-configuration"> <span class="method-name">configuration</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="configuration-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 114
+def configuration
+  require "bundler/psyched_yaml"
+  Gem.configuration
+rescue Gem::SystemExitException, LoadError =&gt; e
+  Bundler.ui.error "#{e.class}: #{e.message}"
+  Bundler.ui.trace e
+  raise
+rescue YamlLibrarySyntaxError =&gt; e
+  raise YamlSyntaxError.new(e, "Your RubyGems configuration, which is " \
+    "usually located in ~/.gemrc, contains invalid YAML syntax.")
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-download_gem"> <span class="method-name">download_gem</span><span class="method-args">(spec, uri, path)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="download_gem-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 331
+def download_gem(spec, uri, path)
+  uri = Bundler.settings.mirror_for(uri)
+  fetcher = Gem::RemoteFetcher.new(configuration[:http_proxy])
+  Bundler::Retry.new("download gem from #{uri}").attempts do
+    fetcher.download(spec, uri, path)
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-ext_lock"> <span class="method-name">ext_lock</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="ext_lock-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 249
+def ext_lock
+  EXT_LOCK
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-fetch_all_remote_specs"> <span class="method-name">fetch_all_remote_specs</span><span class="method-args">(remote)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="fetch_all_remote_specs-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 270
+def fetch_all_remote_specs(remote)
+  old_sources = Bundler.rubygems.sources
+  Bundler.rubygems.sources = [remote.uri.to_s]
+  # Fetch all specs, minus prerelease specs
+  spec_list = fetch_specs(true, false)
+  # Then fetch the prerelease specs
+  fetch_prerelease_specs.each {|k, v| spec_list[k].concat(v) }
+
+  spec_list.values.first
+ensure
+  Bundler.rubygems.sources = old_sources
+end</pre> </div> <p>TODO: This is for older versions of RubyGems… should we support the X-Gemfile-Source header on these old versions? Maybe the newer implementation will work on older RubyGems? It seems difficult to keep this implementation and still send the header.</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-fetch_prerelease_specs"> <span class="method-name">fetch_prerelease_specs</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="fetch_prerelease_specs-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 260
+def fetch_prerelease_specs
+  fetch_specs(false, true)
+rescue Gem::RemoteFetcher::FetchError
+  {} # if we can't download them, there aren't any
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-fetch_specs"> <span class="method-name">fetch_specs</span><span class="method-args">(all, pre) { || ... }</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="fetch_specs-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 253
+def fetch_specs(all, pre, &amp;blk)
+  require "rubygems/spec_fetcher"
+  specs = Gem::SpecFetcher.new.list(all, pre)
+  specs.each { yield } if block_given?
+  specs
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-gem_bindir"> <span class="method-name">gem_bindir</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="gem_bindir-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 159
+def gem_bindir
+  Gem.bindir
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-gem_cache"> <span class="method-name">gem_cache</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="gem_cache-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 183
+def gem_cache
+  gem_path.map {|p| File.expand_path("cache", p) }
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-gem_dir"> <span class="method-name">gem_dir</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="gem_dir-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 155
+def gem_dir
+  Gem.dir
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-gem_from_path"> <span class="method-name">gem_from_path</span><span class="method-args">(path, policy = nil)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="gem_from_path-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 299
+def gem_from_path(path, policy = nil)
+  require "rubygems/format"
+  Gem::Format.from_file_by_path(path, policy)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-gem_path"> <span class="method-name">gem_path</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="gem_path-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 167
+def gem_path
+  Gem.path
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-inflate"> <span class="method-name">inflate</span><span class="method-args">(obj)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="inflate-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 134
+def inflate(obj)
+  if defined?(Gem::Util)
+    Gem::Util.inflate(obj)
+  else
+    Gem.inflate(obj)
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-install_with_build_args"> <span class="method-name">install_with_build_args</span><span class="method-args">(args) { || ... }</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="install_with_build_args-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 295
+def install_with_build_args(args)
+  with_build_args(args) { yield }
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-load_path_insert_index"> <span class="method-name">load_path_insert_index</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="load_path_insert_index-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 43
+def load_path_insert_index
+  Gem.load_path_insert_index
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-load_plugin_files"> <span class="method-name">load_plugin_files</span><span class="method-args">(files)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="load_plugin_files-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 241
+def load_plugin_files(files)
+  Gem.load_plugin_files(files) if Gem.respond_to?(:load_plugin_files)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-load_plugins"> <span class="method-name">load_plugins</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="load_plugins-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 237
+def load_plugins
+  Gem.load_plugins if Gem.respond_to?(:load_plugins)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-loaded_gem_paths"> <span class="method-name">loaded_gem_paths</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="loaded_gem_paths-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 224
+def loaded_gem_paths
+  # RubyGems 2.2+ can put binary extension into dedicated folders,
+  # therefore use RubyGems facilities to obtain their load paths.
+  if Gem::Specification.method_defined? :full_require_paths
+    loaded_gem_paths = Gem.loaded_specs.map {|_, s| s.full_require_paths }
+    loaded_gem_paths.flatten
+  else
+    $LOAD_PATH.select do |p|
+      Bundler.rubygems.gem_path.any? {|gp| p =~ /^#{Regexp.escape(gp)}/ }
+    end
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-loaded_specs"> <span class="method-name">loaded_specs</span><span class="method-args">(name)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="loaded_specs-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 47
+def loaded_specs(name)
+  Gem.loaded_specs[name]
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-mark_loaded"> <span class="method-name">mark_loaded</span><span class="method-args">(spec)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="mark_loaded-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 51
+def mark_loaded(spec)
+  if spec.respond_to?(:activated=)
+    current = Gem.loaded_specs[spec.name]
+    current.activated = false if current
+    spec.activated = true
+  end
+  Gem.loaded_specs[spec.name] = spec
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-marshal_spec_dir"> <span class="method-name">marshal_spec_dir</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="marshal_spec_dir-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 195
+def marshal_spec_dir
+  Gem::MARSHAL_SPEC_DIR
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-method_visibility"> <span class="method-name">method_visibility</span><span class="method-args">(klass, method)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="method_visibility-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 606
+def method_visibility(klass, method)
+  if klass.private_method_defined?(method)
+    :private
+  elsif klass.protected_method_defined?(method)
+    :protected
+  else
+    :public
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-path"> <span class="method-name">path</span><span class="method-args">(obj)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="path-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 105
+def path(obj)
+  obj.to_s
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-path_separator"> <span class="method-name">path_separator</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="path_separator-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 215
+def path_separator
+  File::PATH_SEPARATOR
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-platforms"> <span class="method-name">platforms</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="platforms-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 109
+def platforms
+  return [Gem::Platform::RUBY] if Bundler.settings[:force_ruby_platform]
+  Gem.platforms
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-post_reset_hooks"> <span class="method-name">post_reset_hooks</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="post_reset_hooks-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 175
+def post_reset_hooks
+  Gem.post_reset_hooks
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-preserve_paths"> <span class="method-name">preserve_paths</span><span class="method-args">() { || ... }</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="preserve_paths-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 219
+def preserve_paths
+  # this is a no-op outside of RubyGems 1.8
+  yield
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-provides-3F"> <span class="method-name">provides?</span><span class="method-args">(req_str)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="provides-3F-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 31
+def provides?(req_str)
+  self.class.provides?(req_str)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-read_binary"> <span class="method-name">read_binary</span><span class="method-args">(path)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="read_binary-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 130
+def read_binary(path)
+  Gem.read_binary(path)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-redefine_method"> <span class="method-name">redefine_method</span><span class="method-args">(klass, method, unbound_method = nil, &amp;block)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="redefine_method-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 585
+def redefine_method(klass, method, unbound_method = nil, &amp;block)
+  visibility = method_visibility(klass, method)
+  begin
+    if (instance_method = klass.instance_method(method)) &amp;&amp; method != :initialize
+      # doing this to ensure we also get private methods
+      klass.send(:remove_method, method)
+    end
+  rescue NameError
+    # method isn't defined
+    nil
+  end
+  @replaced_methods[[method, klass]] = instance_method
+  if unbound_method
+    klass.send(:define_method, method, unbound_method)
+    klass.send(visibility, method)
+  elsif block
+    klass.send(:define_method, method, &amp;block)
+    klass.send(visibility, method)
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-replace_bin_path"> <span class="method-name">replace_bin_path</span><span class="method-args">(specs, specs_by_name)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="replace_bin_path-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 439
+def replace_bin_path(specs, specs_by_name)
+  gem_class = (class &lt;&lt; Gem; self; end)
+
+  redefine_method(gem_class, :find_spec_for_exe) do |gem_name, *args|
+    exec_name = args.first
+
+    spec_with_name = specs_by_name[gem_name]
+    spec = if exec_name
+      if spec_with_name &amp;&amp; spec_with_name.executables.include?(exec_name)
+        spec_with_name
+      else
+        specs.find {|s| s.executables.include?(exec_name) }
+      end
+    else
+      spec_with_name
+    end
+
+    unless spec
+      message = "can't find executable #{exec_name} for gem #{gem_name}"
+      if !exec_name || spec_with_name.nil?
+        message += ". #{gem_name} is not currently included in the bundle, " \
+                   "perhaps you meant to add it to your #{Bundler.default_gemfile.basename}?"
+      end
+      raise Gem::Exception, message
+    end
+
+    raise Gem::Exception, "no default executable for #{spec.full_name}" unless exec_name ||= spec.default_executable
+
+    unless spec.name == gem_name
+      Bundler::SharedHelpers.major_deprecation 2,
+        "Bundler is using a binstub that was created for a different gem (#{spec.name}).\n" \
+        "You should run `bundle binstub #{gem_name}` " \
+        "to work around a system/bundle conflict."
+    end
+    spec
+  end
+
+  redefine_method(gem_class, :activate_bin_path) do |name, *args|
+    exec_name = args.first
+    return ENV["BUNDLE_BIN_PATH"] if exec_name == "bundle"
+
+    # Copy of Rubygems activate_bin_path impl
+    requirement = args.last
+    spec = find_spec_for_exe name, exec_name, [requirement]
+
+    gem_bin = File.join(spec.full_gem_path, spec.bindir, exec_name)
+    gem_from_path_bin = File.join(File.dirname(spec.loaded_from), spec.bindir, exec_name)
+    File.exist?(gem_bin) ? gem_bin : gem_from_path_bin
+  end
+
+  redefine_method(gem_class, :bin_path) do |name, *args|
+    exec_name = args.first
+    return ENV["BUNDLE_BIN_PATH"] if exec_name == "bundle"
+
+    spec = find_spec_for_exe(name, *args)
+    exec_name ||= spec.default_executable
+
+    gem_bin = File.join(spec.full_gem_path, spec.bindir, exec_name)
+    gem_from_path_bin = File.join(File.dirname(spec.loaded_from), spec.bindir, exec_name)
+    File.exist?(gem_bin) ? gem_bin : gem_from_path_bin
+  end
+end</pre> </div> <p>Used to make bin stubs that are not created by bundler work under bundler. The new Gem.bin_path only considers gems in <code>specs</code></p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-replace_entrypoints"> <span class="method-name">replace_entrypoints</span><span class="method-args">(specs)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="replace_entrypoints-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 511
+def replace_entrypoints(specs)
+  specs_by_name = specs.reduce({}) do |h, s|
+    h[s.name] = s
+    h
+  end
+
+  replace_gem(specs, specs_by_name)
+  stub_rubygems(specs)
+  replace_bin_path(specs, specs_by_name)
+  replace_refresh
+
+  Gem.clear_paths
+end</pre> </div> <p>Replace or hook into RubyGems to provide a bundlerized view of the world.</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-replace_gem"> <span class="method-name">replace_gem</span><span class="method-args">(specs, specs_by_name)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="replace_gem-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 370
+def replace_gem(specs, specs_by_name)
+  reverse_rubygems_kernel_mixin
+
+  executables = nil
+
+  kernel = (class &lt;&lt; ::Kernel; self; end)
+  [kernel, ::Kernel].each do |kernel_class|
+    redefine_method(kernel_class, :gem) do |dep, *reqs|
+      executables ||= specs.map(&amp;:executables).flatten if ::Bundler.rubygems.binstubs_call_gem?
+      if executables &amp;&amp; executables.include?(File.basename(caller.first.split(":").first))
+        break
+      end
+
+      reqs.pop if reqs.last.is_a?(Hash)
+
+      unless dep.respond_to?(:name) &amp;&amp; dep.respond_to?(:requirement)
+        dep = Gem::Dependency.new(dep, reqs)
+      end
+
+      if spec = specs_by_name[dep.name]
+        return true if dep.matches_spec?(spec)
+      end
+
+      message = if spec.nil?
+        "#{dep.name} is not part of the bundle." \
+        " Add it to your #{Bundler.default_gemfile.basename}."
+      else
+        "can't activate #{dep}, already activated #{spec.full_name}. " \
+        "Make sure all dependencies are added to Gemfile."
+      end
+
+      e = Gem::LoadError.new(message)
+      e.name = dep.name
+      if e.respond_to?(:requirement=)
+        e.requirement = dep.requirement
+      elsif e.respond_to?(:version_requirement=)
+        e.version_requirement = dep.requirement
+      end
+      raise e
+    end
+
+    # backwards compatibility shim, see https://github.com/bundler/bundler/issues/5102
+    kernel_class.send(:public, :gem) if Bundler.feature_flag.setup_makes_kernel_gem_public?
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-replace_refresh"> <span class="method-name">replace_refresh</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="replace_refresh-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 504
+def replace_refresh
+  gem_class = (class &lt;&lt; Gem; self; end)
+  redefine_method(gem_class, :refresh) {}
+end</pre> </div> <p>Because <a href="../../bundler/"><code>Bundler</code></a> has a static view of what specs are available, we don't refresh, so stub it out.</p>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-repository_subdirectories"> <span class="method-name">repository_subdirectories</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="repository_subdirectories-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 203
+def repository_subdirectories
+  %w[cache doc gems specifications]
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-reset"> <span class="method-name">reset</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="reset-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 171
+def reset
+  Gem::Specification.reset
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-reverse_rubygems_kernel_mixin"> <span class="method-name">reverse_rubygems_kernel_mixin</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="reverse_rubygems_kernel_mixin-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 352
+def reverse_rubygems_kernel_mixin
+  # Disable rubygems' gem activation system
+  kernel = (class &lt;&lt; ::Kernel; self; end)
+  [kernel, ::Kernel].each do |k|
+    if k.private_method_defined?(:gem_original_require)
+      redefine_method(k, :require, k.instance_method(:gem_original_require))
+    end
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-ruby_engine"> <span class="method-name">ruby_engine</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="ruby_engine-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 126
+def ruby_engine
+  Gem.ruby_engine
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-security_policies"> <span class="method-name">security_policies</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="security_policies-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 343
+def security_policies
+  @security_policies ||= begin
+    require "rubygems/security"
+    Gem::Security::Policies
+  rescue LoadError, NameError
+    {}
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-security_policy_keys"> <span class="method-name">security_policy_keys</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="security_policy_keys-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 339
+def security_policy_keys
+  %w[High Medium Low AlmostNo No].map {|level| "#{level}Security" }
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-set_installed_by_version"> <span class="method-name">set_installed_by_version</span><span class="method-args">(spec, installed_by_version = Gem::VERSION)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="set_installed_by_version-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 70
+def set_installed_by_version(spec, installed_by_version = Gem::VERSION)
+  return unless spec.respond_to?(:installed_by_version=)
+  spec.installed_by_version = Gem::Version.create(installed_by_version)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-sources"> <span class="method-name">sources</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="sources-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 151
+def sources
+  Gem.sources
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-sources-3D"> <span class="method-name">sources=</span><span class="method-args">(val)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="sources-3D-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 142
+def sources=(val)
+  # Gem.configuration creates a new Gem::ConfigFile, which by default will read ~/.gemrc
+  # If that file exists, its settings (including sources) will overwrite the values we
+  # are about to set here. In order to avoid that, we force memoizing the config file now.
+  configuration
+
+  Gem.sources = val
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-spec_cache_dirs"> <span class="method-name">spec_cache_dirs</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="spec_cache_dirs-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 187
+def spec_cache_dirs
+  @spec_cache_dirs ||= begin
+    dirs = gem_path.map {|dir| File.join(dir, "specifications") }
+    dirs &lt;&lt; Gem.spec_cache_dir if Gem.respond_to?(:spec_cache_dir) # Not in RubyGems 2.0.3 or earlier
+    dirs.uniq.select {|dir| File.directory? dir }
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-spec_default_gem-3F"> <span class="method-name">spec_default_gem?</span><span class="method-args">(spec)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="spec_default_gem-3F-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 84
+def spec_default_gem?(spec)
+  spec.respond_to?(:default_gem?) &amp;&amp; spec.default_gem?
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-spec_extension_dir"> <span class="method-name">spec_extension_dir</span><span class="method-args">(spec)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="spec_extension_dir-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 96
+def spec_extension_dir(spec)
+  return unless spec.respond_to?(:extension_dir)
+  spec.extension_dir
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-spec_from_gem"> <span class="method-name">spec_from_gem</span><span class="method-args">(path, policy = nil)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="spec_from_gem-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 304
+def spec_from_gem(path, policy = nil)
+  require "rubygems/security"
+  require "bundler/psyched_yaml"
+  gem_from_path(path, security_policies[policy]).spec
+rescue Gem::Package::FormatError
+  raise GemspecError, "Could not read gem at #{path}. It may be corrupted."
+rescue Exception, Gem::Exception, Gem::Security::Exception =&gt; e
+  if e.is_a?(Gem::Security::Exception) ||
+      e.message =~ /unknown trust policy|unsigned gem/i ||
+      e.message =~ /couldn't verify (meta)?data signature/i
+    raise SecurityError,
+      "The gem #{File.basename(path, ".gem")} can't be installed because " \
+      "the security policy didn't allow it, with the message: #{e.message}"
+  else
+    raise e
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-spec_matches_for_glob"> <span class="method-name">spec_matches_for_glob</span><span class="method-args">(spec, glob)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="spec_matches_for_glob-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 88
+def spec_matches_for_glob(spec, glob)
+  return spec.matches_for_glob(glob) if spec.respond_to?(:matches_for_glob)
+
+  spec.load_paths.map do |lp|
+    Dir["#{lp}/#{glob}#{suffix_pattern}"]
+  end.flatten(1)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-spec_missing_extensions-3F"> <span class="method-name">spec_missing_extensions?</span><span class="method-args">(spec, default = true)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="spec_missing_extensions-3F-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 75
+def spec_missing_extensions?(spec, default = true)
+  return spec.missing_extensions? if spec.respond_to?(:missing_extensions?)
+
+  return false if spec_default_gem?(spec)
+  return false if spec.extensions.empty?
+
+  default
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-stub_set_spec"> <span class="method-name">stub_set_spec</span><span class="method-args">(stub, spec)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="stub_set_spec-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 101
+def stub_set_spec(stub, spec)
+  stub.instance_variable_set(:@spec, spec)
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-stub_source_index"> <span class="method-name">stub_source_index</span><span class="method-args">(specs)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="stub_source_index-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 416
+def stub_source_index(specs)
+  Gem::SourceIndex.send(:alias_method, :old_initialize, :initialize)
+  redefine_method(Gem::SourceIndex, :initialize) do |*args|
+    @gems = {}
+    # You're looking at this thinking: Oh! This is how I make those
+    # rubygems deprecations go away!
+    #
+    # You'd be correct BUT using of this method in production code
+    # must be approved by the rubygems team itself!
+    #
+    # This is your warning. If you use this and don't have approval
+    # we can't protect you.
+    #
+    Deprecate.skip_during do
+      self.spec_dirs = *args
+      add_specs(*specs)
+    end
+  end
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-stubs_provide_full_functionality-3F"> <span class="method-name">stubs_provide_full_functionality?</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="stubs_provide_full_functionality-3F-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 366
+def stubs_provide_full_functionality?
+  false
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-suffix_pattern"> <span class="method-name">suffix_pattern</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="suffix_pattern-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 179
+def suffix_pattern
+  Gem.suffix_pattern
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-ui-3D"> <span class="method-name">ui=</span><span class="method-args">(obj)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="ui-3D-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 245
+def ui=(obj)
+  Gem::DefaultUserInteraction.ui = obj
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-undo_replacements"> <span class="method-name">undo_replacements</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="undo_replacements-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 573
+def undo_replacements
+  @replaced_methods.each do |(sym, klass), method|
+    redefine_method(klass, sym, method)
+  end
+  if Binding.public_method_defined?(:source_location)
+    post_reset_hooks.reject! {|proc| proc.binding.source_location[0] == __FILE__ }
+  else
+    post_reset_hooks.reject! {|proc| proc.binding.eval("__FILE__") == __FILE__ }
+  end
+  @replaced_methods.clear
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-user_home"> <span class="method-name">user_home</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="user_home-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 163
+def user_home
+  Gem.user_home
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-validate"> <span class="method-name">validate</span><span class="method-args">(spec)</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="validate-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 60
+def validate(spec)
+  Bundler.ui.silence { spec.validate(false) }
+rescue Gem::InvalidSpecificationException =&gt; e
+  error_message = "The gemspec at #{spec.loaded_from} is not valid. Please fix this gemspec.\n" \
+    "The validation error was '#{e.message}'\n"
+  raise Gem::InvalidSpecificationException.new(error_message)
+rescue Errno::ENOENT
+  nil
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-version"> <span class="method-name">version</span><span class="method-args">()</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="version-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 27
+def version
+  self.class.version
+end</pre> </div>  </div> </div> <div class="method-detail "> <div class="method-heading" id="method-i-with_build_args"> <span class="method-name">with_build_args</span><span class="method-args">(args) { || ... }</span> <a class="method-click-advice">Show source</a> </div> <div class="method-description">
+<div class="method-source-code" id="with_build_args-source"> <pre class="ruby" data-language="ruby"># File lib/bundler/rubygems_integration.rb, line 283
+def with_build_args(args)
+  ext_lock.synchronize do
+    old_args = build_args
+    begin
+      self.build_args = args
+      yield
+    ensure
+      self.build_args = old_args
+    end
+  end
+end</pre> </div>  </div> </div> </section> </section><div class="_attribution">
+  <p class="_attribution-p">
+    Ruby Core © 1993–2017 Yukihiro Matsumoto<br>Licensed under the Ruby License.<br>Ruby Standard Library © contributors<br>Licensed under their own licenses.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
