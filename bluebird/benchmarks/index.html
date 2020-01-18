@@ -1,0 +1,193 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Benchmarks - Bluebird - W3cubDocs</title>
+  
+  <meta name="description" content=" Benchmarks have been ran with the following versions of modules. ">
+  <meta name="keywords" content="benchmarks, -, bluebird">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/bluebird/benchmarks/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/bluebird.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/bluebird/" class="_nav-link" title="" style="margin-left:0;">Bluebird</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title">Benchmarks</h1>   <p>Benchmarks have been ran with the following versions of modules.</p> <pre data-language="javascript">├── async@1.5.2
+├── babel@5.8.35
+├── davy@1.1.0
+├── deferred@0.7.5
+├── kew@0.7.0
+├── lie@3.0.2
+├── neo-async@1.7.3
+├── optimist@0.6.1
+├── promise@7.1.1
+├── q@1.4.1
+├── rsvp@3.2.1
+├── streamline@2.0.16
+├── streamline-runtime@1.0.38
+├── text-table@0.2.0
+├── vow@0.4.12
+└── when@3.7.7
+</pre> <h3 id="1.-doxbee-sequential">  1. DoxBee sequential </h3> <p>This is Gorki Kosev's benchmark used in the article <a href="http://spion.github.io/posts/analysis-generators-and-other-async-patterns-node.html" title="" target="_blank">Analysis of generators and other async patterns in node</a>. The benchmark emulates a situation where N=10000 requests are being made concurrently to execute some mixed async/sync action with fast I/O response times.</p> <p>This is a throughput benchmark.</p> <p>Every implementation runs in a freshly created isolated process which is warmed up to the benchmark code before timing it. The memory column represents the highest snapshotted RSS memory (as reported by <code>process.memoryUsage().rss</code>) during processing.</p> <p>Command: <code>./bench doxbee</code> (<a href="http://bluebirdjs.com/docs/contribute.html#benchmarking" target="_blank">needs cloned repository</a>)</p> <p>The implementations for this benchmark are found in <a href="https://github.com/petkaantonov/bluebird/tree/master/benchmark/doxbee-sequential" title="" target="_blank"><code>benchmark/doxbee-sequential</code></a> directory.</p> <pre data-language="javascript">results for 10000 parallel executions, 1 ms per I/O op
+
+file                                       time(ms)  memory(MB)
+callbacks-baseline.js                            87       24.27
+callbacks-suguru03-neo-async-waterfall.js       116       35.96
+promises-bluebird-generator.js                  180       38.39
+promises-bluebird.js                            209       52.41
+promises-cujojs-when.js                         287       70.73
+promises-then-promise.js                        293       78.07
+promises-tildeio-rsvp.js                        366       91.94
+callbacks-caolan-async-waterfall.js             428      103.80
+promises-dfilatov-vow.js                        491      135.49
+promises-lvivski-davy.js                        503      128.99
+generators-tj-co.js                             565      113.61
+promises-calvinmetcalf-lie.js                   567      159.27
+promises-ecmascript6-native.js                  658      157.39
+promises-obvious-kew.js                         676      213.68
+promises-medikoo-deferred.js                    850      183.01
+observables-pozadi-kefir.js                     975      188.22
+observables-Reactive-Extensions-RxJS.js        1208      265.21
+streamline-generators.js                       2216      126.47
+observables-caolan-highland.js                 4844      537.79
+promises-kriskowal-q.js                        4950      380.89
+observables-baconjs-bacon.js.js               14924      802.07
+streamline-callbacks.js                       38855      197.81
+
+Platform info:
+Linux 4.4.0-64-generic x64
+Node.JS 7.7.1
+V8 5.5.372.41
+Intel(R) Core(TM) i5-6600K CPU @ 3.50GHz × 4
+</pre> <h3 id="2.-parallel">  2. Parallel </h3> <p>This made-up scenario runs 25 shimmed queries in parallel per each request (N=10000) with fast I/O response times.</p> <p>This is a throughput benchmark.</p> <p>Every implementation runs in a freshly created isolated process which is warmed up to the benchmark code before timing it. The memory column represents the highest snapshotted RSS memory (as reported by <code>process.memoryUsage().rss</code>) during processing.</p> <p>Command: <code>./bench parallel</code> (<a href="http://bluebirdjs.com/docs/contribute.html#benchmarking" target="_blank">needs cloned repository</a>)</p> <p>The implementations for this benchmark are found in <a href="https://github.com/petkaantonov/bluebird/tree/master/benchmark/madeup-parallel" title="" target="_blank"><code>benchmark/madeup-parallel</code></a> directory.</p> <pre data-language="javascript">results for 10000 parallel executions, 1 ms per I/O op
+
+file                                      time(ms)  memory(MB)
+callbacks-baseline.js                          200       71.39
+callbacks-suguru03-neo-async-parallel.js       289       89.80
+promises-bluebird.js                           390      102.95
+promises-bluebird-generator.js                 422      110.15
+callbacks-caolan-async-parallel.js             502      151.99
+promises-cujojs-when.js                        615      166.69
+promises-lvivski-davy.js                       863      282.39
+promises-then-promise.js                       942      309.98
+promises-calvinmetcalf-lie.js                 1272      367.50
+promises-tildeio-rsvp.js                      1473      397.67
+promises-ecmascript6-native.js                1575      395.60
+promises-medikoo-deferred.js                  1839      358.26
+promises-dfilatov-vow.js                      2101      551.81
+promises-obvious-kew.js                       3562      728.36
+streamline-generators.js                     14661     1097.45
+streamline-callbacks.js                      28902     1204.92
+
+Platform info:
+Linux 4.4.0-64-generic x64
+Node.JS 7.7.1
+V8 5.5.372.41
+Intel(R) Core(TM) i5-6600K CPU @ 3.50GHz × 4
+</pre> <h3 id="3.-latency-benchmarks">  3. Latency benchmarks </h3> <p>For reasonably fast promise implementations latency is going to be fully determined by the scheduler being used and is therefore not interesting to benchmark. <a href="https://jsperf.com/" title="" target="_blank">JSPerfs</a> that benchmark promises tend to benchmark latency.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2017 Petka Antonov<br>Licensed under the MIT License.<br>
+    <a href="http://bluebirdjs.com/docs/benchmarks.html" class="_attribution-link" target="_blank">http://bluebirdjs.com/docs/benchmarks.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
