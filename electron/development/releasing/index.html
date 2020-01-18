@@ -1,0 +1,212 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Releasing - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" This document describes the process for releasing a new version of Electron. ">
+  <meta name="keywords" content="releasing, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/development/releasing/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="releasing">Releasing</h1> <p>This document describes the process for releasing a new version of Electron.</p>   <h2 id="determine-which-branch-to-release-from">Determine which branch to release from</h2> <ul> <li>
+<strong>If releasing beta,</strong> run the scripts below from <code>master</code>.</li> <li>
+<strong>If releasing a stable version,</strong> run the scripts below from the branch you're stabilizing.</li> </ul>   <h2 id="find-out-what-version-change-is-needed">Find out what version change is needed</h2> <p>Run <code>npm run prepare-release -- --notesOnly</code> to view auto generated release notes. The notes generated should help you determine if this is a major, minor, patch, or beta version change. Read the <a href="../../tutorial/electron-versioning/#semver">Version Change Rules</a> for more information.</p> <p><strong>NB:</strong> If releasing from a branch, e.g. 1-8-x, check out the branch with <code>git checkout 1-8-x</code> rather than <code>git checkout -b remotes/origin/1-8-x</code>. The scripts need <code>git rev-parse --abbrev-ref HEAD</code> to return a short name, e.g. no <code>remotes/origin/</code></p>   <h2 id="set-your-tokens-and-environment-variables">Set your tokens and environment variables</h2> <p>You'll need Electron S3 credentials in order to create and upload an Electron release. Contact a team member for more information.</p> <p>There are a handful of <code>*_TOKEN</code> environment variables needed by the release scripts. Once you've generated these per-user tokens, you may want to keep them in a local file that you can <code>source</code> when starting a release.</p> <ul> <li>
+<code>ELECTRON_GITHUB_TOKEN</code>: Create as described at <a href="https://github.com/settings/tokens/new" target="_blank">https://github.com/settings/tokens/new</a>, giving the token repo access scope.</li> <li>
+<code>APPVEYOR_TOKEN</code>: Create a token from <a href="https://windows-ci.electronjs.org/api-token" target="_blank">https://windows-ci.electronjs.org/api-token</a> If you don't have an account, ask a team member to add you.</li> <li>
+<code>CIRCLE_TOKEN</code>: Create a token from "Personal API Tokens" at <a href="https://circleci.com/account/api" target="_blank">https://circleci.com/account/api</a>
+</li> </ul>   <h2 id="run-the-prepare-release-script">Run the prepare-release script</h2> <p>The prepare release script will do the following: 1. Check if a release is already in process and if so it will halt. 2. Create a release branch. 3. Bump the version number in several files. See <a href="https://github.com/electron/electron/commit/78ec1b8f89b3886b856377a1756a51617bc33f5a" target="_blank">this bump commit</a> for an example. 4. Create a draft release on GitHub with auto-generated release notes. 5. Push the release branch. 6. Call the APIs to run the release builds.</p> <p>Once you have determined which type of version change is needed, run the <code>prepare-release</code> script with arguments according to your need:</p> <ul> <li>
+<code>[major|minor|patch|beta]</code> to increment one of the version numbers, or</li> <li>
+<code>--stable</code> to indicate this is a stable version</li> </ul> <p>For example:</p>   <h3 id="major-version-change">Major version change</h3> <pre data-language="sh">npm run prepare-release -- major</pre>   <h3 id="minor-version-change">Minor version change</h3> <pre data-language="sh">npm run prepare-release -- minor</pre>   <h3 id="patch-version-change">Patch version change</h3> <pre data-language="sh">npm run prepare-release -- patch</pre>   <h3 id="beta-version-change">Beta version change</h3> <pre data-language="sh">npm run prepare-release -- beta</pre>   <h3 id="promote-beta-to-stable">Promote beta to stable</h3> <pre data-language="sh">npm run prepare-release -- --stable</pre> <p>Tip: You can test the new version number before running <code>prepare-release</code> with a dry run of the <code>bump-version</code> script with the same major/minor/patch/beta arguments, e.g.:</p> <pre data-language="sh">$ ./script/bump-version.py --bump minor --dry-run</pre>   <h2 id="wait-for-builds-hourglass_flowing_sand">Wait for builds ⏳</h2> <p>The <code>prepare-release</code> script will trigger the builds via API calls. To monitor the build progress, see the following pages:</p> <ul> <li>
+<a href="https://circleci.com/gh/electron" target="_blank">circleci.com/gh/electron/electron</a> for OS X and Linux</li> <li>
+<a href="https://windows-ci.electronjs.org/project/AppVeyor/electron" target="_blank">windows-ci.electronjs.org/project/AppVeyor/electron</a> for Windows</li> </ul>   <h2 id="compile-release-notes">Compile release notes</h2> <p>Writing release notes is a good way to keep yourself busy while the builds are running. For prior art, see existing releases on <a href="https://github.com/electron/electron/releases" target="_blank">the releases page</a>.</p> <p>Tips:</p> <ul> <li>Each listed item should reference a PR on electron/electron, not an issue, nor a PR from another repo like libcc.</li> <li>No need to use link markup when referencing PRs. Strings like <code>#123</code> will automatically be converted to links on github.com.</li> <li>To see the version of Chromium, V8, and Node in every version of Electron, visit <a href="https://atom.io/download/electron/index.json" target="_blank">atom.io/download/electron/index.json</a>.</li> </ul>   <h3 id="patch-releases">Patch releases</h3> <p>For a <code>patch</code> release, use the following format:</p> <pre data-language="sh">## Bug Fixes
+  
+  * Fixed a cross-platform thing. #123
+  
+  ### Linux
+  
+  * Fixed a Linux thing. #123
+  
+  ### macOS
+  
+  * Fixed a macOS thing. #123
+  
+  ### Windows
+  
+  * Fixed a Windows thing. #1234</pre>   <h3 id="minor-releases">Minor releases</h3> <p>For a <code>minor</code> release, e.g. <code>1.8.0</code>, use this format:</p> <pre data-language="sh">## Upgrades
+  
+  - Upgraded from Node `oldVersion` to `newVersion`. #123
+  
+  ## API Changes
+  
+  * Changed a thing. #123
+  
+  ### Linux
+  
+  * Changed a Linux thing. #123
+  
+  ### macOS
+  
+  * Changed a macOS thing. #123
+  
+  ### Windows
+  
+  * Changed a Windows thing. #123</pre>   <h3 id="major-releases">Major releases</h3> <pre data-language="sh">## Upgrades
+  
+  - Upgraded from Chromium `oldVersion` to `newVersion`. #123
+  - Upgraded from Node `oldVersion` to `newVersion`. #123
+  
+  ## Breaking API changes
+  
+  * Changed a thing. #123
+  
+  ### Linux
+  
+  * Changed a Linux thing. #123
+  
+  ### macOS
+  
+  * Changed a macOS thing. #123
+  
+  ### Windows
+  
+  * Changed a Windows thing. #123
+  
+  ## Other Changes
+  
+  - Some other change. #123</pre>   <h3 id="beta-releases">Beta releases</h3> <p>Use the same formats as the ones suggested above, but add the following note at the beginning of the changelog:</p> <pre data-language="sh">**Note:** This is a beta release and most likely will have have some
+  instability and/or regressions.
+  
+  Please file new issues for any bugs you find in it.
+  
+  This release is published to [npm](https://www.npmjs.com/package/electron)
+  under the `beta` tag and can be installed via `npm install electron@beta`.</pre>   <h2 id="edit-the-release-draft">Edit the release draft</h2> <ol> <li>Visit <a href="https://github.com/electron/electron/releases" target="_blank">the releases page</a> and you'll see a new draft release with placeholder release notes.</li> <li>Edit the release and add release notes.</li> <li>Uncheck the <code>prerelease</code> checkbox if you're publishing a stable release; leave it checked for beta releases.</li> <li>Click 'Save draft'. <strong>Do not click 'Publish release'!</strong>
+</li> <li>Wait for all builds to pass before proceeding.</li> <li>In the <code>release</code> branch, verify that the release's files have been created:</li> </ol> <pre data-language="sh">$ git rev-parse --abbrev-ref HEAD
+  release
+  $ npm run release -- --validateRelease</pre>   <h2 id="merge-temporary-branch-pre-2-0-x-branches-only">Merge temporary branch (pre-2-0-x branches only)</h2> <p>Once the release builds have finished, merge the <code>release</code> branch back into the source release branch using the <code>merge-release</code> script. If the branch cannot be successfully merged back this script will automatically rebase the <code>release</code> branch and push the changes which will trigger the release builds again, which means you will need to wait for the release builds to run again before proceeding.</p>   <h3 id="merging-back-into-master">Merging back into master</h3> <pre data-language="sh">npm run merge-release -- master</pre>   <h3 id="merging-back-into-old-release-branch">Merging back into old release branch</h3> <pre data-language="sh">npm run merge-release -- 1-7-x</pre>   <h2 id="publish-the-release">Publish the release</h2> <p>Once the merge has finished successfully, run the <code>release</code> script via <code>npm run release</code> to finish the release process. This script will do the following: 1. Build the project to validate that the correct version number is being released. 2. Download the binaries and generate the node headers and the .lib linker used on Windows by node-gyp to build native modules. 3. Create and upload the SHASUMS files stored on S3 for the node files. 4. Create and upload the SHASUMS256.txt file stored on the GitHub release. 5. Validate that all of the required files are present on GitHub and S3 and have the correct checksums as specified in the SHASUMS files. 6. Publish the release on GitHub 7. Delete the <code>release</code> branch.</p>   <h2 id="publish-to-npm">Publish to npm</h2> <p>Before publishing to npm, you'll need to log into npm as Electron. Optionally, you may find <a href="https://www.npmjs.com/package/npmrc" target="_blank">npmrc</a> to be a useful way to keep Electron's profile side-by-side with your own:</p> <pre data-language="sh">$ sudo npm install -g npmrc
+  $ npmrc -c electron
+  Removing old .npmrc (default)
+  Activating .npmrc "electron"</pre> <p>The Electron account's credentials are kept by GitHub. "Electron - NPM" for the URL "<a href="https://www.npmjs.com/login%22" target="_blank">https://www.npmjs.com/login"</a>.</p> <pre data-language="sh">$ npm login
+  Username: electron
+  Password:
+  Email: (this IS public) electron@github.com</pre> <p>Publish the release to npm.</p> <pre data-language="sh">$ npm whoami
+  electron
+  $ npm run publish-to-npm</pre> <p>Note: In general you should be using the latest Node during this process; however, older versions of the <code>publish-to-npm</code> script may have trouble with Node 7 or higher. If you have trouble with this in an older branch, try running with an older version of Node, e.g. a 6.x LTS.</p>   <h2 id="fix-missing-binaries-of-a-release-manually">Fix missing binaries of a release manually</h2> <p>In the case of a corrupted release with broken CI machines, we might have to re-upload the binaries for an already published release.</p> <p>The first step is to go to the <a href="https://github.com/electron/electron/releases" target="_blank">Releases</a> page and delete the corrupted binaries with the <code>SHASUMS256.txt</code> checksum file.</p> <p>Then manually create distributions for each platform and upload them:</p> <pre data-language="sh"># Checkout the version to re-upload.
+  git checkout vTHE.RELEASE.VERSION
+  
+  # Do release build, specifying one target architecture.
+  ./script/bootstrap.py --target_arch [arm|x64|ia32]
+  ./script/build.py -c R
+  ./script/create-dist.py
+  
+  # Explicitly allow overwritting a published release.
+  ./script/upload.py --overwrite</pre> <p>After re-uploading all distributions, publish again to upload the checksum file:</p> <pre data-language="sh">npm run release</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/development/releasing" class="_attribution-link" target="_blank">https://electronjs.org/docs/development/releasing</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

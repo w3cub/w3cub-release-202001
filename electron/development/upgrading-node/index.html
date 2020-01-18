@@ -1,0 +1,144 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Upgrading Node - Electron - W3cubDocs</title>
+  
+  <meta name="description" content="One upgrade issue is building all of Electron with a single copy of V8 to ensure compatibility. This is important because upstream Node and &hellip;">
+  <meta name="keywords" content="upgrading, node, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/development/upgrading-node/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="upgrading-node">Upgrading Node</h1>   <h2 id="discussion">Discussion</h2> <p>One upgrade issue is building all of Electron with a single copy of V8 to ensure compatibility. This is important because upstream Node and <a href="../upgrading-chromium/">libchromiumcontent</a> both use their own versions of V8.</p> <p>Upgrading Node is much easier than upgrading libchromiumcontent, so fewer conflicts arise if one upgrades libchromiumcontent first, then chooses the upstream Node release whose V8 is closest to it.</p> <p>Electron has its own <a href="https://github.com/electron/node" target="_blank">Node fork</a> with modifications for the V8 build details mentioned above and for exposing API needed by Electron. Once an upstream Node release is chosen, it's placed in a branch in Electron's Node fork and any Electron Node patches are applied there.</p> <p>Another factor is that the Node project patches its version of V8. As mentioned above, Electron builds everything with a single copy of V8, so Node's V8 patches must be ported to that copy.</p> <p>Once all of Electron's dependencies are building and using the same copy of V8, the next step is to fix any Electron code issues caused by the Node upgrade.</p> <p>[FIXME] something about a Node debugger in Atom that we (e.g. deepak) use and need to confirm doesn't break with the Node upgrade?</p> <p>So in short, the primary steps are:</p> <ol> <li>Update Electron's Node fork to the desired version</li> <li>Backport Node's V8 patches to our copy of V8</li> <li>Update Electron to use new version of Node</li> </ol> <ul> <li>Update submodules</li> <li>Update Node.js build configuration</li> </ul>   <h2 id="updating-electrons-node-fork">Updating Electron's Node fork</h2> <ol> <li>Ensure that <code>master</code> on <code>electron/node</code> has updated release tags from <code>nodejs/node</code>
+</li> <li>Create a branch in <a href="https://github.com/electron/node" target="_blank">https://github.com/electron/node</a>: <code>electron-node-vX.X.X</code> where the base that you're branching from is the tag for the desired update</li> </ol> <ul> <li>
+<code>vX.X.X</code> Must use a version of node compatible with our current version of chromium</li> </ul> <ol start="3"> <li>Re-apply our commits from the previous version of node we were using (<code>vY.Y.Y</code>) to <code>v.X.X.X</code>
+</li> </ol> <ul> <li>Check release tag and select the range of commits we need to re-apply</li> <li> <p>Cherry-pick commit range:</p> <ol> <li>Checkout both <code>vY.Y.Y</code> &amp; <code>v.X.X.X</code>
+</li> <li><code>git cherry-pick FIRST_COMMIT_HASH..LAST_COMMIT_HASH</code></li> </ol> </li> <li> <p>Resolve merge conflicts in each file encountered, then:</p> <ol> <li><code>git add &lt;conflict-file&gt;</code></li> <li><code>git cherry-pick --continue</code></li> <li>Repeat until finished</li> </ol> </li> </ul>   <h2 id="updating-v8-patches">Updating V8 Patches</h2> <p>We need to generate a patch file from each patch applied to V8.</p> <ol> <li>Get a copy of Electron's libcc fork</li> </ol> <ul> <li><code>$ git clone https://github.com/electron/libchromiumcontent</code></li> </ul> <ol start="2"> <li>Run <code>script/update</code> to get the latest libcc</li> </ol> <ul> <li>This will be time-consuming</li> </ul> <ol start="3"> <li>Remove our copies of the old Node v8 patches</li> </ol> <ul> <li>(In libchromiumcontent repo) Read <code>patches/v8/README.md</code> to see which patchfiles were created during the last update</li> <li> <p>Remove those files from <code>patches/v8/</code>:</p> <ul> <li>
+<code>git rm</code> the patchfiles</li> <li>edit <code>patches/v8/README.md</code>
+</li> <li>commit these removals</li> </ul> </li> </ul> <ol start="4"> <li>Inspect Node <a href="https://github.com/electron/node" target="_blank">repo</a> to see what patches upstream Node used with their v8 after bumping its version</li> </ol> <ul> <li><code>git log --oneline deps/V8</code></li> </ul> <ol start="5"> <li>Create a checklist of the patches. This is useful for tracking your work and for having a quick reference of commit hashes to use in the <code>git diff-tree</code> step below.</li> <li>Read <code>patches/v8/README.md</code> to see which patchfiles came from the previous version of V8 and therefore need to be removed.</li> </ol> <ul> <li>Delete each patchfile referenced in <code>patches/v8/README.md</code>
+</li> </ul> <ol start="7"> <li>For each patch, do:</li> </ol> <ul> <li> <p>(In node repo) <code>git diff-tree --patch HASH &gt; ~/path_to_libchromiumcontent/patches/v8/xxx-patch_name.patch</code></p> <ul> <li>
+<code>xxx</code> is an incremented three-digit number (to force patch order)</li> <li>
+<code>patch_name</code> should loosely match the node commit messages, e.g. <code>030-cherry_pick_cc55747,patch</code> if the Node commit message was "cherry-pick cc55747"</li> </ul> </li> <li> <p>(remainder of steps in libchromium repo) Manually edit the <code>.patch</code> file to match upstream V8's directory:</p> <ul> <li> <p>If a diff section has no instances of <code>deps/V8</code>, remove it altogether.</p> <ul> <li>We don’t want those patches because we’re only patching V8.</li> </ul> </li> <li> <p>Replace instances of <code>a/deps/v8/filename.ext</code> with <code>a/filename.ext</code></p> <ul> <li>This is needed because upstream Node keeps its V8 files in a subdirectory</li> </ul> </li> </ul> </li> <li>Ensure that local status is clean: <code>git status</code> to make sure there are no unstaged changes.</li> <li>Confirm that the patch applies cleanly with <code>script/patch.py -r src/V8 -p patches/v8/xxx-patch_name.patch.patch</code>
+</li> <li> <p>Create a new copy of the patch:</p> <ul> <li><code>cd src/v8 &amp;&amp; git diff &gt; ../../test.patch &amp;&amp; cd ../..</code></li> <li>This is needed because the first patch has Node commit checksums that we don't want</li> </ul> </li> <li> <p>Confirm that checksums are the only difference between the two patches:</p> <ul> <li><code>diff -u test.patch patches/v8/xxx-patch_name.patch</code></li> </ul> </li> <li> <p>Replace the old patch with the new:</p> <ul> <li><code>mv test.patch patches/v8/xxx-patch_name.patch</code></li> </ul> </li> <li> <p>Add the patched code to the index <em>without</em> committing:</p> <ul> <li><code>cd src/v8 &amp;&amp; git add . &amp;&amp; cd ../..</code></li> <li>We don't want to commit the changes (they're kept in the patchfiles) but need them locally so that they don't show up in subsequent diffs while we iterate through more patches</li> </ul> </li> <li> <p>Add the patch file to the index:</p> <ul> <li><code>git add a patches/v8/</code></li> </ul> </li> <li> <p>(Optionally) commit each patch file to ensure you can back up if you mess up a step:</p> <ul> <li><code>git commit patches/v8/</code></li> </ul> </li> </ul> <ol start="8"> <li>Update <code>patches/v8/README.md</code> with references to all new patches that have been added so that the next person will know which need to be removed.</li> <li> <p>Update Electron's submodule references:</p> <pre data-language="sh">$ cd electron/vendor/node
+  electron/vendor/node$ git fetch
+  electron/vendor/node$ git checkout electron-node-vA.B.C
+  electron/vendor/node$ cd ../libchromiumcontent
+  electron/vendor/libchromiumcontent$ git fetch
+  electron/vendor/libchromiumcontent$ git checkout upgrade-to-chromium-X
+  electron/vendor/libchromiumcontent$ cd ../..
+  electron$ git add vendor
+  electron$ git commit -m "update submodule referefences for node and libc"
+  electron$ git pso upgrade-to-chromium-62
+  electron$ script/bootstrap.py -d
+  electron$ script/build.py -c -D</pre> </li> </ol>   <h2 id="notes">Notes</h2> <ul> <li>libcc and V8 are treated as a single unit</li> <li> <p>Node maintains its own fork of V8</p> <ul> <li>They backport a small amount of things as needed</li> <li>Documentation in node about how <a href="https://nodejs.org/api/v8.html" target="_blank">they work with V8</a>
+</li> </ul> </li> <li> <p>We update code such that we only use one copy of V8 across all of electron</p> <ul> <li>E.g electron, libcc, and node</li> </ul> </li> <li> <p>We don’t track upstream closely due to logistics:</p> <ul> <li>Upstream uses multiple repos and so merging into a single repo would result in lost history. So we only update when we’re planning a node version bump in electron.</li> </ul> </li> <li> <p>libcc is large and time-consuming to update, so we typically choose the node version based on which of its releases has a version of V8 that’s closest to the version in libcc that we’re using.</p> <ul> <li>We sometimes have to wait for the next periodic Node release because it will sync more closely with the version of V8 in the new libcc</li> </ul> </li> <li> <p>Electron keeps all its patches in libcc because it’s simpler than maintaining different repos for patches for each upstream project.</p> <ul> <li>Crashpad, node, libcc, etc. patches are all kept in the same place</li> </ul> </li> <li> <p>Building node:</p> <ul> <li>There’s a chance we need to change our build configuration to match the build flags that node wants in <code>node/common.gypi</code>
+</li> </ul> </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/development/upgrading-node" class="_attribution-link" target="_blank">https://electronjs.org/docs/development/upgrading-node</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,158 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Upgrading Chromium - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" This is an overview of the steps needed to upgrade Chromium in Electron. ">
+  <meta name="keywords" content="upgrading, chromium, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/development/upgrading-chromium/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="upgrading-chromium">Upgrading Chromium</h1> <p>This is an overview of the steps needed to upgrade Chromium in Electron.</p> <ul> <li>Upgrade libcc to a new Chromium version</li> <li>Make Electron code compatible with the new libcc</li> <li>Update Electron dependencies (crashpad, NodeJS, etc.) if needed</li> <li>Make internal builds of libcc and electron</li> <li>Update Electron docs if necessary</li> </ul>   <h2 id="upgrade-libcc-to-a-new-chromium-version">Upgrade <code>libcc</code> to a new Chromium version</h2> <ol> <li> <p>Get the code and initialize the project:</p> <pre data-language="sh">$ git clone git@github.com:electron/libchromiumcontent.git
+  $ cd libchromiumcontent
+  $ ./script/bootstrap -v</pre> </li> <li>Update the Chromium snapshot</li> </ol> <ul> <li> <p>Choose a version number from <a href="https://omahaproxy.appspot.com/" target="_blank">OmahaProxy</a> and update the <code>VERSION</code> file with it</p> <ul> <li>This can be done manually by visiting OmahaProxy in a browser, or automatically:</li> <li>One-liner for the latest stable mac version: <code>curl -so- https://omahaproxy.appspot.com/mac &gt; VERSION</code>
+</li> <li>One-liner for the latest win64 beta version: <code>curl -so- https://omahaproxy.appspot.com/all | grep "win64,beta" | awk -F, 'NR==1{print $3}' &gt; VERSION</code>
+</li> </ul> </li> <li> <p>run <code>$ ./script/update</code></p> <ul> <li>Brew some tea -- this may run for 30m or more.</li> <li>It will probably fail applying patches.</li> </ul> </li> </ul> <ol start="3"> <li>Fix <code>*.patch</code> files in the <code>patches/</code> and <code>patches-mas/</code> folders.</li> <li>(Optional) <code>script/update</code> applies patches, but if multiple tries are needed you can manually run the same script that <code>update</code> calls: <code>$ ./script/apply-patches</code>
+</li> </ol> <ul> <li>There is a second script, <code>script/patch.py</code> that may be useful. Read <code>./script/patch.py -h</code> for more information.</li> </ul> <ol start="5"> <li>Run the build when all patches can be applied without errors</li> </ol> <ul> <li><code>$ ./script/build</code></li> <li>If some patches are no longer compatible with the Chromium code, fix compilation errors.</li> </ul> <ol start="6"> <li>When the build succeeds, create a <code>dist</code> for Electron</li> </ol> <ul> <li> <p><code>$ ./script/create-dist --no_zip</code></p> <ul> <li>It will create a <code>dist/main</code> folder in the libcc repo's root. You will need this to build Electron.</li> </ul> </li> </ul> <ol start="7"> <li>(Optional) Update script contents if there are errors resulting from files that were removed or renamed. (<code>--no_zip</code> prevents script from create <code>dist</code> archives. You don't need them.)</li> </ol>   <h2 id="update-electrons-code">Update Electron's code</h2> <ol> <li> <p>Get the code:</p> <pre data-language="sh">$ git clone git@github.com:electron/electron.git
+  $ cd electron</pre> </li> <li> <p>If you have libcc built on your machine in its own repo, tell Electron to use it:</p> <pre data-language="sh">$ ./script/bootstrap.py -v \
+    --libcc_source_path &lt;libcc_folder&gt;/src \
+    --libcc_shared_library_path &lt;libcc_folder&gt;/shared_library \
+    --libcc_static_library_path &lt;libcc_folder&gt;/static_library</pre> </li> <li>If you haven't yet built libcc but it's already supposed to be upgraded to a new Chromium, bootstrap Electron as usual <code>$ ./script/bootstrap.py -v</code>
+</li> </ol> <ul> <li>Ensure that libcc submodule (<code>vendor/libchromiumcontent</code>) points to the right revision</li> </ul> <ol start="4"> <li>Set <code>CLANG_REVISION</code> in <code>script/update-clang.sh</code> to match the version Chromium is using.</li> </ol> <ul> <li>Located in <code>electron/libchromiumcontent/src/tools/clang/scripts/update.py</code>
+</li> </ul> <ol start="5"> <li>Checkout Chromium if you haven't already:</li> </ol> <ul> <li> <p><a href="https://chromium.googlesource.com/chromium/src.git/+/%7BVERSION%7D/tools/clang/scripts/update.py" target="_blank">https://chromium.googlesource.com/chromium/src.git/+/{VERSION}/tools/clang/scripts/update.py</a></p> <ul> <li>(Replace the <code>{VERSION}</code> placeholder in the url above to the Chromium version libcc uses.)</li> </ul> </li> </ul> <ol start="6"> <li>Build Electron.</li> </ol> <ul> <li>Try to build Debug version first: <code>$ ./script/build.py -c D</code>
+</li> <li>You will need it to run tests</li> </ul> <ol start="7"> <li>Fix compilation and linking errors</li> <li>Ensure that Release build can be built too</li> </ol> <ul> <li><code>$ ./script/build.py -c R</code></li> <li>Often the Release build will have different linking errors that you'll need to fix.</li> <li>Some compilation and linking errors are caused by missing source/object files in the libcc <code>dist</code>
+</li> </ul> <ol start="9"> <li>Update <code>./script/create-dist</code> in the libcc repo, recreate a <code>dist</code>, and run Electron bootstrap script once again.</li> </ol>   <h3 id="tips-for-fixing-compilation-errors">Tips for fixing compilation errors</h3> <ul> <li>Fix build config errors first</li> <li>Fix fatal errors first, like missing files and errors related to compiler flags or defines</li> <li> <p>Try to identify complex errors as soon as possible.</p> <ul> <li>Ask for help if you're not sure how to fix them</li> </ul> </li> <li>Disable all Electron features, fix the build, then enable them one by one</li> <li>Add more build flags to disable features in build-time.</li> </ul> <p>When a Debug build of Electron succeeds, run the tests: <code>$ ./script/test.py</code> Fix the failing tests.</p> <p>Follow all the steps above to fix Electron code on all supported platforms.</p>   <h2 id="updating-crashpad">Updating Crashpad</h2> <p>If there are any compilation errors related to the Crashpad, it probably means you need to update the fork to a newer revision. See <a href="../upgrading-crashpad/">Upgrading Crashpad</a> for instructions on how to do that.</p>   <h2 id="updating-nodejs">Updating NodeJS</h2> <p>Upgrade <code>vendor/node</code> to the Node release that corresponds to the v8 version used in the new Chromium release. See the v8 versions in Node on</p> <p>See <a href="../upgrading-node/">Upgrading Node</a> for instructions on this.</p>   <h2 id="verify-ffmpeg-support">Verify ffmpeg support</h2> <p>Electron ships with a version of <code>ffmpeg</code> that includes proprietary codecs by default. A version without these codecs is built and distributed with each release as well. Each Chrome upgrade should verify that switching this version is still supported.</p> <p>You can verify Electron's support for multiple <code>ffmpeg</code> builds by loading the following page. It should work with the default <code>ffmpeg</code> library distributed with Electron and not work with the <code>ffmpeg</code> library built without proprietary codecs.</p> <pre data-language="html">&lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;meta charset="utf-8"&gt;
+      &lt;title&gt;Proprietary Codec Check&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;p&gt;Checking if Electron is using proprietary codecs by loading video from http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4&lt;/p&gt;
+      &lt;p id="outcome"&gt;&lt;/p&gt;
+      &lt;video style="display:none" src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4" autoplay&gt;&lt;/video&gt;
+      &lt;script&gt;
+        const video = document.querySelector('video')
+        video.addEventListener('error', ({target}) =&gt; {
+          if (target.error.code === target.error.MEDIA_ERR_SRC_NOT_SUPPORTED) {
+            document.querySelector('#outcome').textContent = 'Not using proprietary codecs, video emitted source not supported error event.'
+          } else {
+            document.querySelector('#outcome').textContent = `Unexpected error: ${target.error.code}`
+          }
+        })
+        video.addEventListener('playing', () =&gt; {
+          document.querySelector('#outcome').textContent = 'Using proprietary codecs, video started playing.'
+        })
+      &lt;/script&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;</pre>   <h2 id="useful-links">Useful links</h2> <ul> <li><a href="https://www.chromium.org/developers/calendar" target="_blank">Chrome Release Schedule</a></li> <li><a href="http://omahaproxy.appspot.com" target="_blank">OmahaProxy</a></li> <li><a href="https://bugs.chromium.org/p/chromium" target="_blank">Chromium Issue Tracker</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/development/upgrading-chromium" class="_attribution-link" target="_blank">https://electronjs.org/docs/development/upgrading-chromium</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

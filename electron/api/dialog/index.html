@@ -1,0 +1,181 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dialog - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Display native system dialogs for opening and saving files, alerting, etc. ">
+  <meta name="keywords" content="dialog, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/api/dialog/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="dialog">dialog</h1> <blockquote> <p>Display native system dialogs for opening and saving files, alerting, etc.</p> </blockquote> <p>Process: <a href="../../glossary/#main-process">Main</a></p> <p>An example of showing a dialog to select multiple files and directories:</p> <pre data-language="javascript">const {dialog} = require('electron')
+  console.log(dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']}))</pre> <p>The Dialog is opened from Electron's main thread. If you want to use the dialog object from a renderer process, remember to access it using the remote:</p> <pre data-language="javascript">const {dialog} = require('electron').remote
+  console.log(dialog)</pre>   <h2 id="methods">Methods</h2> <p>The <code>dialog</code> module has the following methods:</p>   <h3 id="dialogshowopendialogbrowserwindow-options-callback"><code>dialog.showOpenDialog([browserWindow, ]options[, callback])</code></h3> <ul> <li>
+<code>browserWindow</code> <a href="../browser-window/">BrowserWindow</a> (optional)</li> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>title</code> String (optional)</li> <li>
+<code>defaultPath</code> String (optional)</li> <li>
+<code>buttonLabel</code> String (optional) - Custom label for the confirmation button, when left empty the default label will be used.</li> <li>
+<code>filters</code> <a href="../structures/file-filter/">FileFilter[]</a> (optional)</li> <li> <p><code>properties</code> String - Contains which features the dialog should use. The following values are supported:</p> <ul> <li>
+<code>openFile</code> - Allow files to be selected.</li> <li>
+<code>openDirectory</code> - Allow directories to be selected.</li> <li>
+<code>multiSelections</code> - Allow multiple paths to be selected.</li> <li>
+<code>showHiddenFiles</code> - Show hidden files in dialog.</li> <li>
+<code>createDirectory</code> <em>macOS</em> - Allow creating new directories from dialog.</li> <li>
+<code>promptToCreate</code> <em>Windows</em> - Prompt for creation if the file path entered in the dialog does not exist. This does not actually create the file at the path but allows non-existent paths to be returned that should be created by the application.</li> <li>
+<code>noResolveAliases</code> <em>macOS</em> - Disable the automatic alias (symlink) path resolution. Selected aliases will now return the alias path instead of their target path.</li> <li>
+<code>treatPackageAsDirectory</code> <em>macOS</em> - Treat packages, such as <code>.app</code> folders, as a directory instead of a file.</li> </ul> </li> <li>
+<code>message</code> String (optional) <em>macOS</em> - Message to display above input boxes.</li> <li>
+<code>securityScopedBookmarks</code> Boolean (optional) <em>masOS</em> <em>mas</em> - Create <a href="https://developer.apple.com/library/content/documentation/Security/Conceptual/AppSandboxDesignGuide/AppSandboxInDepth/AppSandboxInDepth.html#//apple_ref/doc/uid/TP40011183-CH3-SW16" target="_blank">security scoped bookmarks</a> when packaged for the Mac App Store.</li> </ul> </li> <li> <p><code>callback</code> Function (optional)</p> <ul> <li>
+<code>filePaths</code> String[] - An array of file paths chosen by the user</li> <li>
+<code>bookmarks</code> String[] <em>macOS</em> <em>mas</em> - An array matching the <code>filePaths</code> array of base64 encoded strings which contains security scoped bookmark data. <code>securityScopedBookmarks</code> must be enabled for this to be populated.</li> </ul> </li> </ul> <p>Returns <code>String[]</code>, an array of file paths chosen by the user, if the callback is provided it returns <code>undefined</code>.</p> <p>The <code>browserWindow</code> argument allows the dialog to attach itself to a parent window, making it modal.</p> <p>The <code>filters</code> specifies an array of file types that can be displayed or selected when you want to limit the user to a specific type. For example:</p> <pre data-language="javascript">{
+    filters: [
+      {name: 'Images', extensions: ['jpg', 'png', 'gif']},
+      {name: 'Movies', extensions: ['mkv', 'avi', 'mp4']},
+      {name: 'Custom File Type', extensions: ['as']},
+      {name: 'All Files', extensions: ['*']}
+    ]
+  }</pre> <p>The <code>extensions</code> array should contain extensions without wildcards or dots (e.g. <code>'png'</code> is good but <code>'.png'</code> and <code>'*.png'</code> are bad). To show all files, use the <code>'*'</code> wildcard (no other wildcard is supported).</p> <p>If a <code>callback</code> is passed, the API call will be asynchronous and the result will be passed via <code>callback(filenames)</code>.</p> <p><strong>Note:</strong> On Windows and Linux an open dialog can not be both a file selector and a directory selector, so if you set <code>properties</code> to <code>['openFile', 'openDirectory']</code> on these platforms, a directory selector will be shown.</p>   <h3 id="dialogshowsavedialogbrowserwindow-options-callback"><code>dialog.showSaveDialog([browserWindow, ]options[, callback])</code></h3> <ul> <li>
+<code>browserWindow</code> <a href="../browser-window/">BrowserWindow</a> (optional)</li> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>title</code> String (optional)</li> <li>
+<code>defaultPath</code> String (optional) - Absolute directory path, absolute file path, or file name to use by default.</li> <li>
+<code>buttonLabel</code> String (optional) - Custom label for the confirmation button, when left empty the default label will be used.</li> <li>
+<code>filters</code> <a href="../structures/file-filter/">FileFilter[]</a> (optional)</li> <li>
+<code>message</code> String (optional) <em>macOS</em> - Message to display above text fields.</li> <li>
+<code>nameFieldLabel</code> String (optional) <em>macOS</em> - Custom label for the text displayed in front of the filename text field.</li> <li>
+<code>showsTagField</code> Boolean (optional) <em>macOS</em> - Show the tags input box, defaults to <code>true</code>.</li> <li>
+<code>securityScopedBookmarks</code> Boolean (optional) <em>masOS</em> <em>mas</em> - Create a <a href="https://developer.apple.com/library/content/documentation/Security/Conceptual/AppSandboxDesignGuide/AppSandboxInDepth/AppSandboxInDepth.html#//apple_ref/doc/uid/TP40011183-CH3-SW16" target="_blank">security scoped bookmark</a> when packaged for the Mac App Store. If this option is enabled and the file doesn't already exist a blank file will be created at the chosen path.</li> </ul> </li> <li> <p><code>callback</code> Function (optional)</p> <ul> <li>
+<code>filename</code> String</li> <li>
+<code>bookmark</code> String <em>macOS</em> <em>mas</em> - Base64 encoded string which contains the security scoped bookmark data for the saved file. <code>securityScopedBookmarks</code> must be enabled for this to be present.</li> </ul> </li> </ul> <p>Returns <code>String</code>, the path of the file chosen by the user, if a callback is provided it returns <code>undefined</code>.</p> <p>The <code>browserWindow</code> argument allows the dialog to attach itself to a parent window, making it modal.</p> <p>The <code>filters</code> specifies an array of file types that can be displayed, see <code>dialog.showOpenDialog</code> for an example.</p> <p>If a <code>callback</code> is passed, the API call will be asynchronous and the result will be passed via <code>callback(filename)</code>.</p>   <h3 id="dialogshowmessageboxbrowserwindow-options-callback"><code>dialog.showMessageBox([browserWindow, ]options[, callback])</code></h3> <ul> <li>
+<code>browserWindow</code> <a href="../browser-window/">BrowserWindow</a> (optional)</li> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>type</code> String (optional) - Can be <code>"none"</code>, <code>"info"</code>, <code>"error"</code>, <code>"question"</code> or <code>"warning"</code>. On Windows, <code>"question"</code> displays the same icon as <code>"info"</code>, unless you set an icon using the <code>"icon"</code> option. On macOS, both <code>"warning"</code> and <code>"error"</code> display the same warning icon.</li> <li>
+<code>buttons</code> String - Array of texts for buttons. On Windows, an empty array will result in one button labeled "OK".</li> <li>
+<code>defaultId</code> Integer (optional) - Index of the button in the buttons array which will be selected by default when the message box opens.</li> <li>
+<code>title</code> String (optional) - Title of the message box, some platforms will not show it.</li> <li>
+<code>message</code> String - Content of the message box.</li> <li>
+<code>detail</code> String (optional) - Extra information of the message.</li> <li>
+<code>checkboxLabel</code> String (optional) - If provided, the message box will include a checkbox with the given label. The checkbox state can be inspected only when using <code>callback</code>.</li> <li>
+<code>checkboxChecked</code> Boolean (optional) - Initial checked state of the checkbox. <code>false</code> by default.</li> <li>
+<code>icon</code> <a href="../native-image/">NativeImage</a> (optional)</li> <li>
+<code>cancelId</code> Integer (optional) - The index of the button to be used to cancel the dialog, via the <code>Esc</code> key. By default this is assigned to the first button with "cancel" or "no" as the label. If no such labeled buttons exist and this option is not set, <code>0</code> will be used as the return value or callback response. This option is ignored on Windows.</li> <li>
+<code>noLink</code> Boolean (optional) - On Windows Electron will try to figure out which one of the <code>buttons</code> are common buttons (like "Cancel" or "Yes"), and show the others as command links in the dialog. This can make the dialog appear in the style of modern Windows apps. If you don't like this behavior, you can set <code>noLink</code> to <code>true</code>.</li> <li>
+<code>normalizeAccessKeys</code> Boolean (optional) - Normalize the keyboard access keys across platforms. Default is <code>false</code>. Enabling this assumes <code>&amp;</code> is used in the button labels for the placement of the keyboard shortcut access key and labels will be converted so they work correctly on each platform, <code>&amp;</code> characters are removed on macOS, converted to <code>_</code> on Linux, and left untouched on Windows. For example, a button label of <code>Vie&amp;w</code> will be converted to <code>Vie_w</code> on Linux and <code>View</code> on macOS and can be selected via <code>Alt-W</code> on Windows and Linux.</li> </ul> </li> <li> <p><code>callback</code> Function (optional)</p> <ul> <li>
+<code>response</code> Number - The index of the button that was clicked.</li> <li>
+<code>checkboxChecked</code> Boolean - The checked state of the checkbox if <code>checkboxLabel</code> was set. Otherwise <code>false</code>.</li> </ul> </li> </ul> <p>Returns <code>Integer</code>, the index of the clicked button, if a callback is provided it returns undefined.</p> <p>Shows a message box, it will block the process until the message box is closed. It returns the index of the clicked button.</p> <p>The <code>browserWindow</code> argument allows the dialog to attach itself to a parent window, making it modal.</p> <p>If a <code>callback</code> is passed, the dialog will not block the process. The API call will be asynchronous and the result will be passed via <code>callback(response)</code>.</p>   <h3 id="dialogshowerrorboxtitle-content"><code>dialog.showErrorBox(title, content)</code></h3> <ul> <li>
+<code>title</code> String - The title to display in the error box.</li> <li>
+<code>content</code> String - The text content to display in the error box.</li> </ul> <p>Displays a modal dialog that shows an error message.</p> <p>This API can be called safely before the <code>ready</code> event the <code>app</code> module emits, it is usually used to report errors in early stage of startup. If called before the app <code>ready</code>event on Linux, the message will be emitted to stderr, and no GUI dialog will appear.</p>   <h3 id="dialogshowcertificatetrustdialogbrowserwindow-options-callback-macos-windows">
+<code>dialog.showCertificateTrustDialog([browserWindow, ]options, callback)</code> <em>macOS</em> <em>Windows</em>
+</h3> <ul> <li>
+<code>browserWindow</code> <a href="../browser-window/">BrowserWindow</a> (optional)</li> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>certificate</code> <a href="../structures/certificate/">Certificate</a> - The certificate to trust/import.</li> <li>
+<code>message</code> String - The message to display to the user.</li> </ul> </li> <li>
+<code>callback</code> Function</li> </ul> <p>On macOS, this displays a modal dialog that shows a message and certificate information, and gives the user the option of trusting/importing the certificate. If you provide a <code>browserWindow</code> argument the dialog will be attached to the parent window, making it modal.</p> <p>On Windows the options are more limited, due to the Win32 APIs used:</p> <ul> <li>The <code>message</code> argument is not used, as the OS provides its own confirmation dialog.</li> <li>The <code>browserWindow</code> argument is ignored since it is not possible to make this confirmation dialog modal.</li> </ul>   <h2 id="sheets">Sheets</h2> <p>On macOS, dialogs are presented as sheets attached to a window if you provide a <a href="../browser-window/"><code>BrowserWindow</code></a> reference in the <code>browserWindow</code> parameter, or modals if no window is provided.</p> <p>You can call <code>BrowserWindow.getCurrentWindow().setSheetOffset(offset)</code> to change the offset from the window frame where sheets are attached.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/api/dialog" class="_attribution-link" target="_blank">https://electronjs.org/docs/api/dialog</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

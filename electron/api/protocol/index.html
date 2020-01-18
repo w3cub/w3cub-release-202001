@@ -1,0 +1,270 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Protocol - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Register a custom protocol and intercept existing protocol requests. ">
+  <meta name="keywords" content="protocol, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/api/protocol/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="protocol">protocol</h1> <blockquote> <p>Register a custom protocol and intercept existing protocol requests.</p> </blockquote> <p>Process: <a href="../../glossary/#main-process">Main</a></p> <p>An example of implementing a protocol that has the same effect as the <code>file://</code> protocol:</p> <pre data-language="javascript">const {app, protocol} = require('electron')
+  const path = require('path')
+  
+  app.on('ready', () =&gt; {
+    protocol.registerFileProtocol('atom', (request, callback) =&gt; {
+      const url = request.url.substr(7)
+      callback({path: path.normalize(`${__dirname}/${url}`)})
+    }, (error) =&gt; {
+      if (error) console.error('Failed to register protocol')
+    })
+  })</pre> <p><strong>Note:</strong> All methods unless specified can only be used after the <code>ready</code> event of the <code>app</code> module gets emitted.</p>   <h2 id="methods">Methods</h2> <p>The <code>protocol</code> module has the following methods:</p>   <h3 id="protocolregisterstandardschemesschemes-options"><code>protocol.registerStandardSchemes(schemes[, options])</code></h3> <ul> <li>
+<code>schemes</code> String[] - Custom schemes to be registered as standard schemes.</li> <li> <p><code>options</code> Object (optional)</p> <ul> <li>
+<code>secure</code> Boolean (optional) - <code>true</code> to register the scheme as secure. Default <code>false</code>.</li> </ul> </li> </ul> <p>A standard scheme adheres to what RFC 3986 calls <a href="https://tools.ietf.org/html/rfc3986#section-3" target="_blank">generic URI syntax</a>. For example <code>http</code> and <code>https</code> are standard schemes, while <code>file</code> is not.</p> <p>Registering a scheme as standard, will allow relative and absolute resources to be resolved correctly when served. Otherwise the scheme will behave like the <code>file</code> protocol, but without the ability to resolve relative URLs.</p> <p>For example when you load following page with custom protocol without registering it as standard scheme, the image will not be loaded because non-standard schemes can not recognize relative URLs:</p> <pre data-language="html">&lt;body&gt;
+    &lt;img src='test.png'&gt;
+  &lt;/body&gt;</pre> <p>Registering a scheme as standard will allow access to files through the <a href="https://developer.mozilla.org/en-US/docs/Web/API/LocalFileSystem" target="_blank">FileSystem API</a>. Otherwise the renderer will throw a security error for the scheme.</p> <p>By default web storage apis (localStorage, sessionStorage, webSQL, indexedDB, cookies) are disabled for non standard schemes. So in general if you want to register a custom protocol to replace the <code>http</code> protocol, you have to register it as a standard scheme:</p> <pre data-language="javascript">const {app, protocol} = require('electron')
+  
+  protocol.registerStandardSchemes(['atom'])
+  app.on('ready', () =&gt; {
+    protocol.registerHttpProtocol('atom', '...')
+  })</pre> <p><strong>Note:</strong> This method can only be used before the <code>ready</code> event of the <code>app</code> module gets emitted.</p>   <h3 id="protocolregisterserviceworkerschemesschemes"><code>protocol.registerServiceWorkerSchemes(schemes)</code></h3> <ul> <li>
+<code>schemes</code> String[] - Custom schemes to be registered to handle service workers.</li> </ul>   <h3 id="protocolregisterfileprotocolscheme-handler-completion"><code>protocol.registerFileProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>filePath</code> String (optional)</li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Registers a protocol of <code>scheme</code> that will send the file as a response. The <code>handler</code> will be called with <code>handler(request, callback)</code> when a <code>request</code> is going to be created with <code>scheme</code>. <code>completion</code> will be called with <code>completion(null)</code> when <code>scheme</code> is successfully registered or <code>completion(error)</code> when failed.</p> <p>To handle the <code>request</code>, the <code>callback</code> should be called with either the file's path or an object that has a <code>path</code> property, e.g. <code>callback(filePath)</code> or <code>callback({path: filePath})</code>.</p> <p>When <code>callback</code> is called with nothing, a number, or an object that has an <code>error</code> property, the <code>request</code> will fail with the <code>error</code> number you specified. For the available error numbers you can use, please see the <a href="https://code.google.com/p/chromium/codesearch#chromium/src/net/base/net_error_list.h" target="_blank">net error list</a>.</p> <p>By default the <code>scheme</code> is treated like <code>http:</code>, which is parsed differently than protocols that follow the "generic URI syntax" like <code>file:</code>, so you probably want to call <code>protocol.registerStandardSchemes</code> to have your scheme treated as a standard scheme.</p>   <h3 id="protocolregisterbufferprotocolscheme-handler-completion"><code>protocol.registerBufferProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>buffer</code> (Buffer | <a href="../structures/mime-typed-buffer/">MimeTypedBuffer</a>) (optional)</li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Registers a protocol of <code>scheme</code> that will send a <code>Buffer</code> as a response.</p> <p>The usage is the same with <code>registerFileProtocol</code>, except that the <code>callback</code> should be called with either a <code>Buffer</code> object or an object that has the <code>data</code>, <code>mimeType</code>, and <code>charset</code> properties.</p> <p>Example:</p> <pre data-language="javascript">const {protocol} = require('electron')
+  
+  protocol.registerBufferProtocol('atom', (request, callback) =&gt; {
+    callback({mimeType: 'text/html', data: Buffer.from('&lt;h5&gt;Response&lt;/h5&gt;')})
+  }, (error) =&gt; {
+    if (error) console.error('Failed to register protocol')
+  })</pre>   <h3 id="protocolregisterstringprotocolscheme-handler-completion"><code>protocol.registerStringProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>data</code> String (optional)</li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Registers a protocol of <code>scheme</code> that will send a <code>String</code> as a response.</p> <p>The usage is the same with <code>registerFileProtocol</code>, except that the <code>callback</code> should be called with either a <code>String</code> or an object that has the <code>data</code>, <code>mimeType</code>, and <code>charset</code> properties.</p>   <h3 id="protocolregisterhttpprotocolscheme-handler-completion"><code>protocol.registerHttpProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li> <p><code>redirectRequest</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>session</code> Object (optional)</li> <li> <p><code>uploadData</code> Object (optional)</p> <ul> <li>
+<code>contentType</code> String - MIME type of the content.</li> <li>
+<code>data</code> String - Content to be sent.</li> </ul> </li> </ul> </li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Registers a protocol of <code>scheme</code> that will send an HTTP request as a response.</p> <p>The usage is the same with <code>registerFileProtocol</code>, except that the <code>callback</code> should be called with a <code>redirectRequest</code> object that has the <code>url</code>, <code>method</code>, <code>referrer</code>, <code>uploadData</code> and <code>session</code> properties.</p> <p>By default the HTTP request will reuse the current session. If you want the request to have a different session you should set <code>session</code> to <code>null</code>.</p> <p>For POST requests the <code>uploadData</code> object must be provided.</p>   <h3 id="protocolregisterstreamprotocolscheme-handler-completion"><code>protocol.registerStreamProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>headers</code> Object</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>stream</code> (ReadableStream | <a href="../structures/stream-protocol-response/">StreamProtocolResponse</a>) (optional)</li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Registers a protocol of <code>scheme</code> that will send a <code>Readable</code> as a response.</p> <p>The usage is similar to the other <code>register{Any}Protocol</code>, except that the <code>callback</code> should be called with either a <code>Readable</code> object or an object that has the <code>data</code>, <code>statusCode</code>, and <code>headers</code> properties.</p> <p>Example:</p> <pre data-language="javascript">const {protocol} = require('electron')
+  const {PassThrough} = require('stream')
+  
+  function createStream (text) {
+    const rv = new PassThrough() // PassThrough is also a Readable stream
+    rv.push(text)
+    rv.push(null)
+    return rv
+  }
+  
+  protocol.registerStreamProtocol('atom', (request, callback) =&gt; {
+    callback({
+      statusCode: 200,
+      headers: {
+        'content-type': 'text/html'
+      },
+      data: createStream('&lt;h5&gt;Response&lt;/h5&gt;')
+    })
+  }, (error) =&gt; {
+    if (error) console.error('Failed to register protocol')
+  })</pre> <p>It is possible to pass any object that implements the readable stream API (emits <code>data</code>/<code>end</code>/<code>error</code> events). For example, here's how a file could be returned:</p> <pre data-language="javascript">const {protocol} = require('electron')
+  const fs = require('fs')
+  
+  protocol.registerStreamProtocol('atom', (request, callback) =&gt; {
+    callback(fs.createReadStream('index.html'))
+  }, (error) =&gt; {
+    if (error) console.error('Failed to register protocol')
+  })</pre>   <h3 id="protocolunregisterprotocolscheme-completion"><code>protocol.unregisterProtocol(scheme[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Unregisters the custom protocol of <code>scheme</code>.</p>   <h3 id="protocolisprotocolhandledscheme-callback"><code>protocol.isProtocolHandled(scheme, callback)</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>The <code>callback</code> will be called with a boolean that indicates whether there is already a handler for <code>scheme</code>.</p>   <h3 id="protocolinterceptfileprotocolscheme-handler-completion"><code>protocol.interceptFileProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>filePath</code> String</li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Intercepts <code>scheme</code> protocol and uses <code>handler</code> as the protocol's new handler which sends a file as a response.</p>   <h3 id="protocolinterceptstringprotocolscheme-handler-completion"><code>protocol.interceptStringProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>data</code> String (optional)</li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Intercepts <code>scheme</code> protocol and uses <code>handler</code> as the protocol's new handler which sends a <code>String</code> as a response.</p>   <h3 id="protocolinterceptbufferprotocolscheme-handler-completion"><code>protocol.interceptBufferProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>buffer</code> Buffer (optional)</li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Intercepts <code>scheme</code> protocol and uses <code>handler</code> as the protocol's new handler which sends a <code>Buffer</code> as a response.</p>   <h3 id="protocolintercepthttpprotocolscheme-handler-completion"><code>protocol.interceptHttpProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li> <p><code>redirectRequest</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>session</code> Object (optional)</li> <li> <p><code>uploadData</code> Object (optional)</p> <ul> <li>
+<code>contentType</code> String - MIME type of the content.</li> <li>
+<code>data</code> String - Content to be sent.</li> </ul> </li> </ul> </li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Intercepts <code>scheme</code> protocol and uses <code>handler</code> as the protocol's new handler which sends a new HTTP request as a response.</p>   <h3 id="protocolinterceptstreamprotocolscheme-handler-completion"><code>protocol.interceptStreamProtocol(scheme, handler[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>handler</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>headers</code> Object</li> <li>
+<code>referrer</code> String</li> <li>
+<code>method</code> String</li> <li>
+<code>uploadData</code> <a href="../structures/upload-data/">UploadData[]</a>
+</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>stream</code> (ReadableStream | <a href="../structures/stream-protocol-response/">StreamProtocolResponse</a>) (optional)</li> </ul> </li> </ul> </li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Same as <code>protocol.registerStreamProtocol</code>, except that it replaces an existing protocol handler.</p>   <h3 id="protocoluninterceptprotocolscheme-completion"><code>protocol.uninterceptProtocol(scheme[, completion])</code></h3> <ul> <li>
+<code>scheme</code> String</li> <li> <p><code>completion</code> Function (optional)</p> <ul> <li>
+<code>error</code> Error</li> </ul> </li> </ul> <p>Remove the interceptor installed for <code>scheme</code> and restore its original handler.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/api/protocol" class="_attribution-link" target="_blank">https://electronjs.org/docs/api/protocol</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

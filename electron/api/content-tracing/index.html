@@ -1,0 +1,154 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>contentTracing - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Collect tracing data from Chromium&#39;s content module for finding performance bottlenecks and slow operations. ">
+  <meta name="keywords" content="contenttracing, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/api/content-tracing/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="contenttracing">contentTracing</h1> <blockquote> <p>Collect tracing data from Chromium's content module for finding performance bottlenecks and slow operations.</p> </blockquote> <p>Process: <a href="../../glossary/#main-process">Main</a></p> <p>This module does not include a web interface so you need to open <code>chrome://tracing/</code> in a Chrome browser and load the generated file to view the result.</p> <p><strong>Note:</strong> You should not use this module until the <code>ready</code> event of the app module is emitted.</p> <pre data-language="javascript">const {app, contentTracing} = require('electron')
+  
+  app.on('ready', () =&gt; {
+    const options = {
+      categoryFilter: '*',
+      traceOptions: 'record-until-full,enable-sampling'
+    }
+  
+    contentTracing.startRecording(options, () =&gt; {
+      console.log('Tracing started')
+  
+      setTimeout(() =&gt; {
+        contentTracing.stopRecording('', (path) =&gt; {
+          console.log('Tracing data recorded to ' + path)
+        })
+      }, 5000)
+    })
+  })</pre>   <h2 id="methods">Methods</h2> <p>The <code>contentTracing</code> module has the following methods:</p>   <h3 id="contenttracinggetcategoriescallback"><code>contentTracing.getCategories(callback)</code></h3> <ul> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>categories</code> String[]</li> </ul> </li> </ul> <p>Get a set of category groups. The category groups can change as new code paths are reached.</p> <p>Once all child processes have acknowledged the <code>getCategories</code> request the <code>callback</code> is invoked with an array of category groups.</p>   <h3 id="contenttracingstartrecordingoptions-callback"><code>contentTracing.startRecording(options, callback)</code></h3> <ul> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>categoryFilter</code> String</li> <li>
+<code>traceOptions</code> String</li> </ul> </li> <li>
+<code>callback</code> Function</li> </ul> <p>Start recording on all processes.</p> <p>Recording begins immediately locally and asynchronously on child processes as soon as they receive the EnableRecording request. The <code>callback</code> will be called once all child processes have acknowledged the <code>startRecording</code> request.</p> <p><code>categoryFilter</code> is a filter to control what category groups should be traced. A filter can have an optional <code>-</code> prefix to exclude category groups that contain a matching category. Having both included and excluded category patterns in the same list is not supported.</p> <p>Examples:</p> <ul> <li>
+<code>test_MyTest*</code>,</li> <li>
+<code>test_MyTest*,test_OtherStuff</code>,</li> <li><code>"-excluded_category1,-excluded_category2</code></li> </ul> <p><code>traceOptions</code> controls what kind of tracing is enabled, it is a comma-delimited list. Possible options are:</p> <ul> <li><code>record-until-full</code></li> <li><code>record-continuously</code></li> <li><code>trace-to-console</code></li> <li><code>enable-sampling</code></li> <li><code>enable-systrace</code></li> </ul> <p>The first 3 options are trace recording modes and hence mutually exclusive. If more than one trace recording modes appear in the <code>traceOptions</code> string, the last one takes precedence. If none of the trace recording modes are specified, recording mode is <code>record-until-full</code>.</p> <p>The trace option will first be reset to the default option (<code>record_mode</code> set to <code>record-until-full</code>, <code>enable_sampling</code> and <code>enable_systrace</code> set to <code>false</code>) before options parsed from <code>traceOptions</code> are applied on it.</p>   <h3 id="contenttracingstoprecordingresultfilepath-callback"><code>contentTracing.stopRecording(resultFilePath, callback)</code></h3> <ul> <li>
+<code>resultFilePath</code> String</li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>resultFilePath</code> String</li> </ul> </li> </ul> <p>Stop recording on all processes.</p> <p>Child processes typically cache trace data and only rarely flush and send trace data back to the main process. This helps to minimize the runtime overhead of tracing since sending trace data over IPC can be an expensive operation. So, to end tracing, we must asynchronously ask all child processes to flush any pending trace data.</p> <p>Once all child processes have acknowledged the <code>stopRecording</code> request, <code>callback</code> will be called with a file that contains the traced data.</p> <p>Trace data will be written into <code>resultFilePath</code> if it is not empty or into a temporary file. The actual file path will be passed to <code>callback</code> if it's not <code>null</code>.</p>   <h3 id="contenttracingstartmonitoringoptions-callback"><code>contentTracing.startMonitoring(options, callback)</code></h3> <ul> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>categoryFilter</code> String</li> <li>
+<code>traceOptions</code> String</li> </ul> </li> <li>
+<code>callback</code> Function</li> </ul> <p>Start monitoring on all processes.</p> <p>Monitoring begins immediately locally and asynchronously on child processes as soon as they receive the <code>startMonitoring</code> request.</p> <p>Once all child processes have acknowledged the <code>startMonitoring</code> request the <code>callback</code> will be called.</p>   <h3 id="contenttracingstopmonitoringcallback"><code>contentTracing.stopMonitoring(callback)</code></h3> <ul> <li>
+<code>callback</code> Function</li> </ul> <p>Stop monitoring on all processes.</p> <p>Once all child processes have acknowledged the <code>stopMonitoring</code> request the <code>callback</code> is called.</p>   <h3 id="contenttracingcapturemonitoringsnapshotresultfilepath-callback"><code>contentTracing.captureMonitoringSnapshot(resultFilePath, callback)</code></h3> <ul> <li>
+<code>resultFilePath</code> String</li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>resultFilePath</code> String</li> </ul> </li> </ul> <p>Get the current monitoring traced data.</p> <p>Child processes typically cache trace data and only rarely flush and send trace data back to the main process. This is because it may be an expensive operation to send the trace data over IPC and we would like to avoid unneeded runtime overhead from tracing. So, to end tracing, we must asynchronously ask all child processes to flush any pending trace data.</p> <p>Once all child processes have acknowledged the <code>captureMonitoringSnapshot</code> request the <code>callback</code> will be called with a file that contains the traced data.</p>   <h3 id="contenttracinggettracebufferusagecallback"><code>contentTracing.getTraceBufferUsage(callback)</code></h3> <ul> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>value</code> Number</li> <li>
+<code>percentage</code> Number</li> </ul> </li> </ul> <p>Get the maximum usage across processes of trace buffer as a percentage of the full state. When the TraceBufferUsage value is determined the <code>callback</code> is called.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/api/content-tracing" class="_attribution-link" target="_blank">https://electronjs.org/docs/api/content-tracing</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

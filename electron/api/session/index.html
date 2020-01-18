@@ -1,0 +1,241 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Session - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Manage browser sessions, cookies, cache, proxy settings, etc. ">
+  <meta name="keywords" content="session, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/api/session/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="session">session</h1> <blockquote> <p>Manage browser sessions, cookies, cache, proxy settings, etc.</p> </blockquote> <p>Process: <a href="../../glossary/#main-process">Main</a></p> <p>The <code>session</code> module can be used to create new <code>Session</code> objects.</p> <p>You can also access the <code>session</code> of existing pages by using the <code>session</code> property of <a href="../web-contents/"><code>WebContents</code></a>, or from the <code>session</code> module.</p> <pre data-language="javascript">const {BrowserWindow} = require('electron')
+  
+  let win = new BrowserWindow({width: 800, height: 600})
+  win.loadURL('http://github.com')
+  
+  const ses = win.webContents.session
+  console.log(ses.getUserAgent())</pre>   <h2 id="methods">Methods</h2> <p>The <code>session</code> module has the following methods:</p>   <h3 id="sessionfrompartitionpartition-options"><code>session.fromPartition(partition[, options])</code></h3> <ul> <li>
+<code>partition</code> String</li> <li> <p><code>options</code> Object (optional)</p> <ul> <li>
+<code>cache</code> Boolean - Whether to enable cache.</li> </ul> </li> </ul> <p>Returns <code>Session</code> - A session instance from <code>partition</code> string. When there is an existing <code>Session</code> with the same <code>partition</code>, it will be returned; otherwise a new <code>Session</code> instance will be created with <code>options</code>.</p> <p>If <code>partition</code> starts with <code>persist:</code>, the page will use a persistent session available to all pages in the app with the same <code>partition</code>. if there is no <code>persist:</code> prefix, the page will use an in-memory session. If the <code>partition</code> is empty then default session of the app will be returned.</p> <p>To create a <code>Session</code> with <code>options</code>, you have to ensure the <code>Session</code> with the <code>partition</code> has never been used before. There is no way to change the <code>options</code> of an existing <code>Session</code> object.</p>   <h2 id="properties">Properties</h2> <p>The <code>session</code> module has the following properties:</p>   <h3 id="sessiondefaultsession"><code>session.defaultSession</code></h3> <p>A <code>Session</code> object, the default session object of the app.</p>   <h2 id="class-session">Class: Session</h2> <blockquote> <p>Get and set properties of a session.</p> </blockquote> <p>Process: <a href="../../glossary/#main-process">Main</a></p> <p>You can create a <code>Session</code> object in the <code>session</code> module:</p> <pre data-language="javascript">const {session} = require('electron')
+  const ses = session.fromPartition('persist:name')
+  console.log(ses.getUserAgent())</pre>   <h3 id="instance-events">Instance Events</h3> <p>The following events are available on instances of <code>Session</code>:</p>   <h4 id="event-will-download">Event: 'will-download'</h4> <ul> <li>
+<code>event</code> Event</li> <li>
+<code>item</code> <a href="../download-item/">DownloadItem</a>
+</li> <li>
+<code>webContents</code> <a href="../web-contents/">WebContents</a>
+</li> </ul> <p>Emitted when Electron is about to download <code>item</code> in <code>webContents</code>.</p> <p>Calling <code>event.preventDefault()</code> will cancel the download and <code>item</code> will not be available from next tick of the process.</p> <pre data-language="javascript">const {session} = require('electron')
+  session.defaultSession.on('will-download', (event, item, webContents) =&gt; {
+    event.preventDefault()
+    require('request')(item.getURL(), (data) =&gt; {
+      require('fs').writeFileSync('/somewhere', data)
+    })
+  })</pre>   <h3 id="instance-methods">Instance Methods</h3> <p>The following methods are available on instances of <code>Session</code>:</p>   <h4 id="sesgetcachesizecallback"><code>ses.getCacheSize(callback)</code></h4> <ul> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>size</code> Integer - Cache size used in bytes.</li> </ul> </li> </ul> <p>Callback is invoked with the session's current cache size.</p>   <h4 id="sesclearcachecallback"><code>ses.clearCache(callback)</code></h4> <ul> <li>
+<code>callback</code> Function - Called when operation is done.</li> </ul> <p>Clears the session’s HTTP cache.</p>   <h4 id="sesclearstoragedataoptions-callback"><code>ses.clearStorageData([options, callback])</code></h4> <ul> <li> <p><code>options</code> Object (optional)</p> <ul> <li>
+<code>origin</code> String (optional) - Should follow <code>window.location.origin</code>’s representation <code>scheme://host:port</code>.</li> <li>
+<code>storages</code> String - The types of storages to clear, can contain: <code>appcache</code>, <code>cookies</code>, <code>filesystem</code>, <code>indexdb</code>, <code>localstorage</code>, <code>shadercache</code>, <code>websql</code>, <code>serviceworkers</code>.</li> <li>
+<code>quotas</code> String - The types of quotas to clear, can contain: <code>temporary</code>, <code>persistent</code>, <code>syncable</code>.</li> </ul> </li> <li>
+<code>callback</code> Function (optional) - Called when operation is done.</li> </ul> <p>Clears the data of web storages.</p>   <h4 id="sesflushstoragedata"><code>ses.flushStorageData()</code></h4> <p>Writes any unwritten DOMStorage data to disk.</p>   <h4 id="sessetproxyconfig-callback"><code>ses.setProxy(config, callback)</code></h4> <ul> <li> <p><code>config</code> Object</p> <ul> <li>
+<code>pacScript</code> String - The URL associated with the PAC file.</li> <li>
+<code>proxyRules</code> String - Rules indicating which proxies to use.</li> <li>
+<code>proxyBypassRules</code> String - Rules indicating which URLs should bypass the proxy settings.</li> </ul> </li> <li>
+<code>callback</code> Function - Called when operation is done.</li> </ul> <p>Sets the proxy settings.</p> <p>When <code>pacScript</code> and <code>proxyRules</code> are provided together, the <code>proxyRules</code> option is ignored and <code>pacScript</code> configuration is applied.</p> <p>The <code>proxyRules</code> has to follow the rules below:</p> <pre data-language="sh">proxyRules = schemeProxies[";"&lt;schemeProxies&gt;]
+  schemeProxies = [&lt;urlScheme&gt;"="]&lt;proxyURIList&gt;
+  urlScheme = "http" | "https" | "ftp" | "socks"
+  proxyURIList = &lt;proxyURL&gt;[","&lt;proxyURIList&gt;]
+  proxyURL = [&lt;proxyScheme&gt;"://"]&lt;proxyHost&gt;[":"&lt;proxyPort&gt;]</pre> <p>For example:</p> <ul> <li>
+<code>http=foopy:80;ftp=foopy2</code> - Use HTTP proxy <code>foopy:80</code> for <code>http://</code> URLs, and HTTP proxy <code>foopy2:80</code> for <code>ftp://</code> URLs.</li> <li>
+<code>foopy:80</code> - Use HTTP proxy <code>foopy:80</code> for all URLs.</li> <li>
+<code>foopy:80,bar,direct://</code> - Use HTTP proxy <code>foopy:80</code> for all URLs, failing over to <code>bar</code> if <code>foopy:80</code> is unavailable, and after that using no proxy.</li> <li>
+<code>socks4://foopy</code> - Use SOCKS v4 proxy <code>foopy:1080</code> for all URLs.</li> <li>
+<code>http=foopy,socks5://bar.com</code> - Use HTTP proxy <code>foopy</code> for http URLs, and fail over to the SOCKS5 proxy <code>bar.com</code> if <code>foopy</code> is unavailable.</li> <li>
+<code>http=foopy,direct://</code> - Use HTTP proxy <code>foopy</code> for http URLs, and use no proxy if <code>foopy</code> is unavailable.</li> <li>
+<code>http=foopy;socks=foopy2</code> - Use HTTP proxy <code>foopy</code> for http URLs, and use <code>socks4://foopy2</code> for all other URLs.</li> </ul> <p>The <code>proxyBypassRules</code> is a comma separated list of rules described below:</p> <ul> <li> <p><code>[ URL_SCHEME "://" ] HOSTNAME_PATTERN [ ":" &lt;port&gt; ]</code></p> <p> Match all hostnames that match the pattern HOSTNAME_PATTERN.</p> <p> Examples: "foobar.com", "<em>foobar.com", "</em>.foobar.com", "<em>foobar.com:99", "<a href="https://x" target="_blank">https://x</a>.</em>.y.com:99"</p> </li> <li> <p><code>"." HOSTNAME_SUFFIX_PATTERN [ ":" PORT ]</code></p> <p>Match a particular domain suffix.</p> <p>Examples: ".google.com", ".com", "<a href="http://.google.com" target="_blank">http://.google.com</a>"</p> </li> <li> <p><code>[ SCHEME "://" ] IP_LITERAL [ ":" PORT ]</code></p> <p> Match URLs which are IP address literals.</p> <p> Examples: "127.0.1", "[0:0::1]", "[::1]", "<a href="#">http://[::1]:99</a>"</p> </li> <li> <p><code>IP_LITERAL "/" PREFIX_LENGTH_IN_BITS</code></p> <p> Match any URL that is to an IP literal that falls between the given range. IP range is specified using CIDR notation.</p> <p> Examples: "192.168.1.1/16", "fefe:13::abc/33".</p> </li> <li> <p><code>&lt;local&gt;</code></p> <p> Match local addresses. The meaning of <code>&lt;local&gt;</code> is whether the host matches one of: "127.0.0.1", "::1", "localhost".</p> </li> </ul>   <h4 id="sesresolveproxyurl-callback"><code>ses.resolveProxy(url, callback)</code></h4> <ul> <li>
+<code>url</code> URL</li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>proxy</code> String</li> </ul> </li> </ul> <p>Resolves the proxy information for <code>url</code>. The <code>callback</code> will be called with <code>callback(proxy)</code> when the request is performed.</p>   <h4 id="sessetdownloadpathpath"><code>ses.setDownloadPath(path)</code></h4> <ul> <li>
+<code>path</code> String - The download location.</li> </ul> <p>Sets download saving directory. By default, the download directory will be the <code>Downloads</code> under the respective app folder.</p>   <h4 id="sesenablenetworkemulationoptions"><code>ses.enableNetworkEmulation(options)</code></h4> <ul> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>offline</code> Boolean (optional) - Whether to emulate network outage. Defaults to false.</li> <li>
+<code>latency</code> Double (optional) - RTT in ms. Defaults to 0 which will disable latency throttling.</li> <li>
+<code>downloadThroughput</code> Double (optional) - Download rate in Bps. Defaults to 0 which will disable download throttling.</li> <li>
+<code>uploadThroughput</code> Double (optional) - Upload rate in Bps. Defaults to 0 which will disable upload throttling.</li> </ul> </li> </ul> <p>Emulates network with the given configuration for the <code>session</code>.</p> <pre data-language="javascript">// To emulate a GPRS connection with 50kbps throughput and 500 ms latency.
+  window.webContents.session.enableNetworkEmulation({
+    latency: 500,
+    downloadThroughput: 6400,
+    uploadThroughput: 6400
+  })
+  
+  // To emulate a network outage.
+  window.webContents.session.enableNetworkEmulation({offline: true})</pre>   <h4 id="sesdisablenetworkemulation"><code>ses.disableNetworkEmulation()</code></h4> <p>Disables any network emulation already active for the <code>session</code>. Resets to the original network configuration.</p>   <h4 id="sessetcertificateverifyprocproc"><code>ses.setCertificateVerifyProc(proc)</code></h4> <ul> <li> <p><code>proc</code> Function</p> <ul> <li> <p><code>request</code> Object</p> <ul> <li>
+<code>hostname</code> String</li> <li>
+<code>certificate</code> <a href="../structures/certificate/">Certificate</a>
+</li> <li>
+<code>verificationResult</code> String - Verification result from chromium.</li> <li>
+<code>errorCode</code> Integer - Error code.</li> </ul> </li> <li> <p><code>callback</code> Function</p> <ul> <li> <p><code>verificationResult</code> Integer - Value can be one of certificate error codes from <a href="https://code.google.com/p/chromium/codesearch#chromium/src/net/base/net_error_list.h" target="_blank">here</a>. Apart from the certificate error codes, the following special codes can be used.</p> <ul> <li>
+<code>0</code> - Indicates success and disables Certificate Transparency verification.</li> <li>
+<code>-2</code> - Indicates failure.</li> <li>
+<code>-3</code> - Uses the verification result from chromium.</li> </ul> </li> </ul> </li> </ul> </li> </ul> <p>Sets the certificate verify proc for <code>session</code>, the <code>proc</code> will be called with <code>proc(request, callback)</code> whenever a server certificate verification is requested. Calling <code>callback(0)</code> accepts the certificate, calling <code>callback(-2)</code> rejects it.</p> <p>Calling <code>setCertificateVerifyProc(null)</code> will revert back to default certificate verify proc.</p> <pre data-language="javascript">const {BrowserWindow} = require('electron')
+  let win = new BrowserWindow()
+  
+  win.webContents.session.setCertificateVerifyProc((request, callback) =&gt; {
+    const {hostname} = request
+    if (hostname === 'github.com') {
+      callback(0)
+    } else {
+      callback(-2)
+    }
+  })</pre>   <h4 id="sessetpermissionrequesthandlerhandler"><code>ses.setPermissionRequestHandler(handler)</code></h4> <ul> <li> <p><code>handler</code> Function | null</p> <ul> <li>
+<code>webContents</code> <a href="../web-contents/">WebContents</a> - WebContents requesting the permission.</li> <li>
+<code>permission</code> String - Enum of 'media', 'geolocation', 'notifications', 'midiSysex', 'pointerLock', 'fullscreen', 'openExternal'.</li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>permissionGranted</code> Boolean - Allow or deny the permission.</li> </ul> </li> <li> <p><code>details</code> Object - Some properties are only available on certain permission types.</p> <ul> <li>
+<code>externalURL</code> String - The url of the <code>openExternal</code> request.</li> </ul> </li> </ul> </li> </ul> <p>Sets the handler which can be used to respond to permission requests for the <code>session</code>. Calling <code>callback(true)</code> will allow the permission and <code>callback(false)</code> will reject it. To clear the handler, call <code>setPermissionRequestHandler(null)</code>.</p> <pre data-language="javascript">const {session} = require('electron')
+  session.fromPartition('some-partition').setPermissionRequestHandler((webContents, permission, callback) =&gt; {
+    if (webContents.getURL() === 'some-host' &amp;&amp; permission === 'notifications') {
+      return callback(false) // denied.
+    }
+  
+    callback(true)
+  })</pre>   <h4 id="sesclearhostresolvercachecallback"><code>ses.clearHostResolverCache([callback])</code></h4> <ul> <li>
+<code>callback</code> Function (optional) - Called when operation is done.</li> </ul> <p>Clears the host resolver cache.</p>   <h4 id="sesallowntlmcredentialsfordomainsdomains"><code>ses.allowNTLMCredentialsForDomains(domains)</code></h4> <ul> <li>
+<code>domains</code> String - A comma-separated list of servers for which integrated authentication is enabled.</li> </ul> <p>Dynamically sets whether to always send credentials for HTTP NTLM or Negotiate authentication.</p> <pre data-language="javascript">const {session} = require('electron')
+  // consider any url ending with `example.com`, `foobar.com`, `baz`
+  // for integrated authentication.
+  session.defaultSession.allowNTLMCredentialsForDomains('*example.com, *foobar.com, *baz')
+  
+  // consider all urls for integrated authentication.
+  session.defaultSession.allowNTLMCredentialsForDomains('*')</pre>   <h4 id="sessetuseragentuseragent-acceptlanguages"><code>ses.setUserAgent(userAgent[, acceptLanguages])</code></h4> <ul> <li>
+<code>userAgent</code> String</li> <li>
+<code>acceptLanguages</code> String (optional)</li> </ul> <p>Overrides the <code>userAgent</code> and <code>acceptLanguages</code> for this session.</p> <p>The <code>acceptLanguages</code> must a comma separated ordered list of language codes, for example <code>"en-US,fr,de,ko,zh-CN,ja"</code>.</p> <p>This doesn't affect existing <code>WebContents</code>, and each <code>WebContents</code> can use <code>webContents.setUserAgent</code> to override the session-wide user agent.</p>   <h4 id="sesgetuseragent"><code>ses.getUserAgent()</code></h4> <p>Returns <code>String</code> - The user agent for this session.</p>   <h4 id="sesgetblobdataidentifier-callback"><code>ses.getBlobData(identifier, callback)</code></h4> <ul> <li>
+<code>identifier</code> String - Valid UUID.</li> <li> <p><code>callback</code> Function</p> <ul> <li>
+<code>result</code> Buffer - Blob data.</li> </ul> </li> </ul>   <h4 id="sescreateinterrupteddownloadoptions"><code>ses.createInterruptedDownload(options)</code></h4> <ul> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>path</code> String - Absolute path of the download.</li> <li>
+<code>urlChain</code> String[] - Complete URL chain for the download.</li> <li>
+<code>mimeType</code> String (optional)</li> <li>
+<code>offset</code> Integer - Start range for the download.</li> <li>
+<code>length</code> Integer - Total length of the download.</li> <li>
+<code>lastModified</code> String - Last-Modified header value.</li> <li>
+<code>eTag</code> String - ETag header value.</li> <li>
+<code>startTime</code> Double (optional) - Time when download was started in number of seconds since UNIX epoch.</li> </ul> </li> </ul> <p>Allows resuming <code>cancelled</code> or <code>interrupted</code> downloads from previous <code>Session</code>. The API will generate a <a href="../download-item/">DownloadItem</a> that can be accessed with the <a href="#event-will-download">will-download</a> event. The <a href="../download-item/">DownloadItem</a> will not have any <code>WebContents</code> associated with it and the initial state will be <code>interrupted</code>. The download will start only when the <code>resume</code> API is called on the <a href="../download-item/">DownloadItem</a>.</p>   <h4 id="sesclearauthcacheoptions-callback"><code>ses.clearAuthCache(options[, callback])</code></h4> <ul> <li>
+<code>options</code> (<a href="../structures/remove-password/">RemovePassword</a> | <a href="../structures/remove-client-certificate/">RemoveClientCertificate</a>)</li> <li>
+<code>callback</code> Function (optional) - Called when operation is done.</li> </ul> <p>Clears the session’s HTTP authentication cache.</p>   <h4 id="sessetpreloadspreloads"><code>ses.setPreloads(preloads)</code></h4> <ul> <li>
+<code>preloads</code> String[] - An array of absolute path to preload scripts</li> </ul> <p>Adds scripts that will be executed on ALL web contents that are associated with this session just before normal <code>preload</code> scripts run.</p>   <h4 id="sesgetpreloads"><code>ses.getPreloads()</code></h4> <p>Returns <code>String[]</code> an array of paths to preload scripts that have been registered.</p>   <h3 id="instance-properties">Instance Properties</h3> <p>The following properties are available on instances of <code>Session</code>:</p>   <h4 id="sescookies"><code>ses.cookies</code></h4> <p>A <a href="../cookies/">Cookies</a> object for this session.</p>   <h4 id="seswebrequest"><code>ses.webRequest</code></h4> <p>A <a href="../web-request/">WebRequest</a> object for this session.</p>   <h4 id="sesprotocol"><code>ses.protocol</code></h4> <p>A <a href="../protocol/">Protocol</a> object for this session.</p> <pre data-language="javascript">const {app, session} = require('electron')
+  const path = require('path')
+  
+  app.on('ready', function () {
+    const protocol = session.fromPartition('some-partition').protocol
+    protocol.registerFileProtocol('atom', function (request, callback) {
+      var url = request.url.substr(7)
+      callback({path: path.normalize(`${__dirname}/${url}`)})
+    }, function (error) {
+      if (error) console.error('Failed to register protocol')
+    })
+  })</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/api/session" class="_attribution-link" target="_blank">https://electronjs.org/docs/api/session</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

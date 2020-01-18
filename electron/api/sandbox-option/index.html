@@ -1,0 +1,167 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sandbox - Electron - W3cubDocs</title>
+  
+  <meta name="description" content="Create a browser window with a renderer that can run inside Chromium OS sandbox. With this option enabled, the renderer must communicate via IPC to &hellip;">
+  <meta name="keywords" content="option, sandbox, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/api/sandbox-option/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="sandbox-option">
+<code>sandbox</code> Option</h1> <blockquote> <p>Create a browser window with a renderer that can run inside Chromium OS sandbox. With this option enabled, the renderer must communicate via IPC to the main process in order to access node APIs. However, in order to enable the Chromium OS sandbox, electron must be run with the <code>--enable-sandbox</code> command line argument.</p> </blockquote> <p>One of the key security features of Chromium is that all blink rendering/JavaScript code is executed within a sandbox. This sandbox uses OS-specific features to ensure that exploits in the renderer process cannot harm the system.</p> <p>In other words, when the sandbox is enabled, the renderers can only make changes to the system by delegating tasks to the main process via IPC. <a href="https://www.chromium.org/developers/design-documents/sandbox" target="_blank">Here's</a> more information about the sandbox.</p> <p>Since a major feature in electron is the ability to run node.js in the renderer process (making it easier to develop desktop applications using web technologies), the sandbox is disabled by electron. This is because most node.js APIs require system access. <code>require()</code> for example, is not possible without file system permissions, which are not available in a sandboxed environment.</p> <p>Usually this is not a problem for desktop applications since the code is always trusted, but it makes electron less secure than chromium for displaying untrusted web content. For applications that require more security, the <code>sandbox</code> flag will force electron to spawn a classic chromium renderer that is compatible with the sandbox.</p> <p>A sandboxed renderer doesn't have a node.js environment running and doesn't expose node.js JavaScript APIs to client code. The only exception is the preload script, which has access to a subset of the electron renderer API.</p> <p>Another difference is that sandboxed renderers don't modify any of the default JavaScript APIs. Consequently, some APIs such as <code>window.open</code> will work as they do in chromium (i.e. they do not return a <a href="../browser-window-proxy/"><code>BrowserWindowProxy</code></a>).</p>   <h2 id="example">Example</h2> <p>To create a sandboxed window, simply pass <code>sandbox: true</code> to <code>webPreferences</code>:</p> <pre data-language="js">let win
+  app.on('ready', () =&gt; {
+    win = new BrowserWindow({
+      webPreferences: {
+        sandbox: true
+      }
+    })
+    win.loadURL('http://google.com')
+  })</pre> <p>In the above code the <a href="../browser-window/"><code>BrowserWindow</code></a> that was created has node.js disabled and can communicate only via IPC. The use of this option stops electron from creating a node.js runtime in the renderer. Also, within this new window <code>window.open</code> follows the native behaviour (by default electron creates a <a href="../browser-window/"><code>BrowserWindow</code></a> and returns a proxy to this via <code>window.open</code>).</p> <p>It is important to note that this option alone won't enable the OS-enforced sandbox. To enable this feature, the <code>--enable-sandbox</code> command-line argument must be passed to electron, which will force <code>sandbox: true</code> for all <code>BrowserWindow</code> instances.</p> <p>To enable OS-enforced sandbox on <code>BrowserWindow</code> or <code>webview</code> process with <code>sandbox:true</code> without causing entire app to be in sandbox, <code>--enable-mixed-sandbox</code> command-line argument must be passed to electron. This option is currently only supported on macOS and Windows.</p> <pre data-language="js">let win
+  app.on('ready', () =&gt; {
+    // no need to pass `sandbox: true` since `--enable-sandbox` was enabled.
+    win = new BrowserWindow()
+    win.loadURL('http://google.com')
+  })</pre> <p>Note that it is not enough to call <code>app.commandLine.appendSwitch('--enable-sandbox')</code>, as electron/node startup code runs after it is possible to make changes to chromium sandbox settings. The switch must be passed to electron on the command-line:</p> <pre data-language="sh">electron --enable-sandbox app.js</pre> <p>It is not possible to have the OS sandbox active only for some renderers, if <code>--enable-sandbox</code> is enabled, normal electron windows cannot be created.</p> <p>If you need to mix sandboxed and non-sandboxed renderers in one application, simply omit the <code>--enable-sandbox</code> argument. Without this argument, windows created with <code>sandbox: true</code> will still have node.js disabled and communicate only via IPC, which by itself is already a gain from security POV.</p>   <h2 id="preload">Preload</h2> <p>An app can make customizations to sandboxed renderers using a preload script. Here's an example:</p> <pre data-language="js">let win
+  app.on('ready', () =&gt; {
+    win = new BrowserWindow({
+      webPreferences: {
+        sandbox: true,
+        preload: 'preload.js'
+      }
+    })
+    win.loadURL('http://google.com')
+  })</pre> <p>and preload.js:</p> <pre data-language="js">// This file is loaded whenever a javascript context is created. It runs in a
+  // private scope that can access a subset of electron renderer APIs. We must be
+  // careful to not leak any objects into the global scope!
+  const fs = require('fs')
+  const {ipcRenderer} = require('electron')
+  
+  // read a configuration file using the `fs` module
+  const buf = fs.readFileSync('allowed-popup-urls.json')
+  const allowedUrls = JSON.parse(buf.toString('utf8'))
+  
+  const defaultWindowOpen = window.open
+  
+  function customWindowOpen (url, ...args) {
+    if (allowedUrls.indexOf(url) === -1) {
+      ipcRenderer.sendSync('blocked-popup-notification', location.origin, url)
+      return null
+    }
+    return defaultWindowOpen(url, ...args)
+  }
+  
+  window.open = customWindowOpen</pre> <p>Important things to notice in the preload script:</p> <ul> <li>Even though the sandboxed renderer doesn't have node.js running, it still has access to a limited node-like environment: <code>Buffer</code>, <code>process</code>, <code>setImmediate</code> and <code>require</code> are available.</li> <li>The preload script can indirectly access all APIs from the main process through the <code>remote</code> and <code>ipcRenderer</code> modules. This is how <code>fs</code> (used above) and other modules are implemented: They are proxies to remote counterparts in the main process.</li> <li>The preload script must be contained in a single script, but it is possible to have complex preload code composed with multiple modules by using a tool like browserify, as explained below. In fact, browserify is already used by electron to provide a node-like environment to the preload script.</li> </ul> <p>To create a browserify bundle and use it as a preload script, something like the following should be used:</p> <pre data-language="sh">  browserify preload/index.js \
+      -x electron \
+      -x fs \
+      --insert-global-vars=__filename,__dirname -o preload.js</pre> <p>The <code>-x</code> flag should be used with any required module that is already exposed in the preload scope, and tells browserify to use the enclosing <code>require</code> function for it. <code>--insert-global-vars</code> will ensure that <code>process</code>, <code>Buffer</code> and <code>setImmediate</code> are also taken from the enclosing scope(normally browserify injects code for those).</p> <p>Currently the <code>require</code> function provided in the preload scope exposes the following modules:</p> <ul> <li><code>child_process</code></li> <li> <p><code>electron</code></p> <ul> <li><code>crashReporter</code></li> <li><code>remote</code></li> <li><code>ipcRenderer</code></li> <li><code>webFrame</code></li> </ul> </li> <li><code>fs</code></li> <li><code>os</code></li> <li><code>timers</code></li> <li><code>url</code></li> </ul> <p>More may be added as needed to expose more electron APIs in the sandbox, but any module in the main process can already be used through <code>electron.remote.require</code>.</p>   <h2 id="status">Status</h2> <p>Please use the <code>sandbox</code> option with care, as it is still an experimental feature. We are still not aware of the security implications of exposing some electron renderer APIs to the preload script, but here are some things to consider before rendering untrusted content:</p> <ul> <li>A preload script can accidentally leak privileged APIs to untrusted code.</li> <li>Some bug in V8 engine may allow malicious code to access the renderer preload APIs, effectively granting full access to the system through the <code>remote</code> module.</li> </ul> <p>Since rendering untrusted content in electron is still uncharted territory, the APIs exposed to the sandbox preload script should be considered more unstable than the rest of electron APIs, and may have breaking changes to fix security issues.</p> <p>One planned enhancement that should greatly increase security is to block IPC messages from sandboxed renderers by default, allowing the main process to explicitly define a set of messages the renderer is allowed to send.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/api/sandbox-option" class="_attribution-link" target="_blank">https://electronjs.org/docs/api/sandbox-option</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

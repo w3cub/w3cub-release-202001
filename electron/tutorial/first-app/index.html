@@ -1,0 +1,219 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Writing Your First Electron App - Electron - W3cubDocs</title>
+  
+  <meta name="description" content="Electron enables you to create desktop applications with pure JavaScript by providing a runtime with rich native (operating system) APIs. You could &hellip;">
+  <meta name="keywords" content="writing, your, first, electron, app, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/tutorial/first-app/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="writing-your-first-electron-app">Writing Your First Electron App</h1> <p>Electron enables you to create desktop applications with pure JavaScript by providing a runtime with rich native (operating system) APIs. You could see it as a variant of the Node.js runtime that is focused on desktop applications instead of web servers.</p> <p>This doesn't mean Electron is a JavaScript binding to graphical user interface (GUI) libraries. Instead, Electron uses web pages as its GUI, so you could also see it as a minimal Chromium browser, controlled by JavaScript.</p> <p><strong>Note</strong>: This example is also available as a repository you can <a href="#trying-this-example">download and run immediately</a>.</p> <p>As far as development is concerned, an Electron application is essentially a Node.js application. The starting point is a <code>package.json</code> that is identical to that of a Node.js module. A most basic Electron app would have the following folder structure:</p> <pre data-language="text">your-app/
+  ├── package.json
+  ├── main.js
+  └── index.html</pre> <p>Create a new empty folder for your new Electron application. Open up your command line client and run <code>npm init</code> from that very folder.</p> <pre data-language="sh">npm init</pre> <p>npm will guide you through creating a basic <code>package.json</code> file. The script specified by the <code>main</code> field is the startup script of your app, which will run the main process. An example of your <code>package.json</code> might look like this:</p> <pre data-language="json">{
+    "name": "your-app",
+    "version": "0.1.0",
+    "main": "main.js"
+  }</pre> <p><strong>Note</strong>: If the <code>main</code> field is not present in <code>package.json</code>, Electron will attempt to load an <code>index.js</code> (as Node.js does). If this was actually a simple Node application, you would add a <code>start</code> script that instructs <code>node</code> to execute the current package:</p> <pre data-language="json">{
+    "name": "your-app",
+    "version": "0.1.0",
+    "main": "main.js",
+    "scripts": {
+      "start": "node ."
+    }
+  }</pre> <p>Turning this Node application into an Electron application is quite simple - we merely replace the <code>node</code> runtime with the <code>electron</code> runtime.</p> <pre data-language="json">{
+    "name": "your-app",
+    "version": "0.1.0",
+    "main": "main.js",
+    "scripts": {
+      "start": "electron ."
+    }
+  }</pre>   <h2 id="installing-electron">Installing Electron</h2> <p>At this point, you'll need to install <code>electron</code> itself. The recommended way of doing so is to install it as a development dependency in your app, which allows you to work on multiple apps with different Electron versions. To do so, run the following command from your app's directory:</p> <pre data-language="sh">npm install --save-dev electron</pre> <p>Other means for installing Electron exist. Please consult the <a href="../installation/">installation guide</a> to learn about use with proxies, mirrors, and custom caches.</p>   <h2 id="electron-development-in-a-nutshell">Electron Development in a Nutshell</h2> <p>Electron apps are developed in JavaScript using the same principles and methods found in Node.js development. All APIs and features found in Electron are accessible through the <code>electron</code> module, which can be required like any other Node.js module:</p> <pre data-language="javascript">const electron = require('electron')</pre> <p>The <code>electron</code> module exposes features in namespaces. As examples, the lifecycle of the application is managed through <code>electron.app</code>, windows can be created using the <code>electron.BrowserWindow</code> class. A simple <code>main.js</code> file might wait for the application to be ready and open a window:</p> <pre data-language="javascript">const {app, BrowserWindow} = require('electron')
+  
+  function createWindow () {
+    // Create the browser window.
+    win = new BrowserWindow({width: 800, height: 600})
+  
+    // and load the index.html of the app.
+    win.loadFile('index.html')
+  }
+  
+  app.on('ready', createWindow)</pre> <p>The <code>main.js</code> should create windows and handle all the system events your application might encounter. A more complete version of the above example might open developer tools, handle the window being closed, or re-create windows on macOS if the user clicks on the app's icon in the dock.</p> <pre data-language="javascript">const {app, BrowserWindow} = require('electron')
+  
+  // Keep a global reference of the window object, if you don't, the window will
+  // be closed automatically when the JavaScript object is garbage collected.
+  let win
+  
+  function createWindow () {
+    // Create the browser window.
+    win = new BrowserWindow({width: 800, height: 600})
+  
+    // and load the index.html of the app.
+    win.loadFile('index.html')
+  
+    // Open the DevTools.
+    win.webContents.openDevTools()
+  
+    // Emitted when the window is closed.
+    win.on('closed', () =&gt; {
+      // Dereference the window object, usually you would store windows
+      // in an array if your app supports multi windows, this is the time
+      // when you should delete the corresponding element.
+      win = null
+    })
+  }
+  
+  // This method will be called when Electron has finished
+  // initialization and is ready to create browser windows.
+  // Some APIs can only be used after this event occurs.
+  app.on('ready', createWindow)
+  
+  // Quit when all windows are closed.
+  app.on('window-all-closed', () =&gt; {
+    // On macOS it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform !== 'darwin') {
+      app.quit()
+    }
+  })
+  
+  app.on('activate', () =&gt; {
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (win === null) {
+      createWindow()
+    }
+  })
+  
+  // In this file you can include the rest of your app's specific main process
+  // code. You can also put them in separate files and require them here.</pre> <p>Finally the <code>index.html</code> is the web page you want to show:</p> <pre data-language="html">&lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;meta charset="UTF-8"&gt;
+      &lt;title&gt;Hello World!&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Hello World!&lt;/h1&gt;
+      We are using node &lt;script&gt;document.write(process.versions.node)&lt;/script&gt;,
+      Chrome &lt;script&gt;document.write(process.versions.chrome)&lt;/script&gt;,
+      and Electron &lt;script&gt;document.write(process.versions.electron)&lt;/script&gt;.
+    &lt;/body&gt;
+  &lt;/html&gt;</pre>   <h2 id="running-your-app">Running Your App</h2> <p>Once you've created your initial <code>main.js</code>, <code>index.html</code>, and <code>package.json</code> files, you can try your app by running <code>npm start</code> from your application's directory.</p>   <h2 id="trying-this-example">Trying this Example</h2> <p>Clone and run the code in this tutorial by using the <a href="https://github.com/electron/electron-quick-start" target="_blank"><code>electron/electron-quick-start</code></a> repository.</p> <p><strong>Note</strong>: Running this requires <a href="https://git-scm.com" target="_blank">Git</a>.</p> <pre data-language="sh"># Clone the repository
+  $ git clone https://github.com/electron/electron-quick-start
+  # Go into the repository
+  $ cd electron-quick-start
+  # Install dependencies
+  $ npm install
+  # Run the app
+  $ npm start</pre> <p>For a list of boilerplates and tools to kick-start your development process, see the <a href="../boilerplates-and-clis/">Boilerplates and CLIs documentation</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/tutorial/first-app" class="_attribution-link" target="_blank">https://electronjs.org/docs/tutorial/first-app</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

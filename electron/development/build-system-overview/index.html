@@ -1,0 +1,128 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Build System Overview - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Electron uses gyp for project generation and ninja for building. Project configurations can be found in the .gyp and .gypi files. ">
+  <meta name="keywords" content="build, system, overview, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/development/build-system-overview/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="build-system-overview">Build System Overview</h1> <p>Electron uses <a href="https://gyp.gsrc.io/" target="_blank">gyp</a> for project generation and <a href="https://ninja-build.org/" target="_blank">ninja</a> for building. Project configurations can be found in the <code>.gyp</code> and <code>.gypi</code> files.</p>   <h2 id="gyp-files">Gyp Files</h2> <p>Following <code>gyp</code> files contain the main rules for building Electron:</p> <ul> <li>
+<code>electron.gyp</code> defines how Electron itself is built.</li> <li>
+<code>common.gypi</code> adjusts the build configurations of Node to make it build together with Chromium.</li> <li>
+<code>brightray/brightray.gyp</code> defines how <code>brightray</code> is built and includes the default configurations for linking with Chromium.</li> <li>
+<code>brightray/brightray.gypi</code> includes general build configurations about building.</li> </ul>   <h2 id="component-build">Component Build</h2> <p>Since Chromium is quite a large project, the final linking stage can take quite a few minutes, which makes it hard for development. In order to solve this, Chromium introduced the "component build", which builds each component as a separate shared library, making linking very quick but sacrificing file size and performance.</p> <p>In Electron we took a very similar approach: for <code>Debug</code> builds, the binary will be linked to a shared library version of Chromium's components to achieve fast linking time; for <code>Release</code> builds, the binary will be linked to the static library versions, so we can have the best possible binary size and performance.</p>   <h2 id="minimal-bootstrapping">Minimal Bootstrapping</h2> <p>All of Chromium's prebuilt binaries (<code>libchromiumcontent</code>) are downloaded when running the bootstrap script. By default both static libraries and shared libraries will be downloaded and the final size should be between 800MB and 2GB depending on the platform.</p> <p>By default, <code>libchromiumcontent</code> is downloaded from Amazon Web Services. If the <code>LIBCHROMIUMCONTENT_MIRROR</code> environment variable is set, the bootstrap script will download from it. <a href="https://github.com/hokein/libchromiumcontent-qiniu-mirror" target="_blank"><code>libchromiumcontent-qiniu-mirror</code></a> is a mirror for <code>libchromiumcontent</code>. If you have trouble in accessing AWS, you can switch the download address to it via <code>export LIBCHROMIUMCONTENT_MIRROR=http://7xk3d2.dl1.z0.glb.clouddn.com/</code></p> <p>If you only want to build Electron quickly for testing or development, you can download the shared library versions by passing the <code>--dev</code> parameter:</p> <pre data-language="sh">$ ./script/bootstrap.py --dev
+  $ ./script/build.py -c D</pre>   <h2 id="two-phase-project-generation">Two-Phase Project Generation</h2> <p>Electron links with different sets of libraries in <code>Release</code> and <code>Debug</code> builds. <code>gyp</code>, however, doesn't support configuring different link settings for different configurations.</p> <p>To work around this Electron uses a <code>gyp</code> variable <code>libchromiumcontent_component</code> to control which link settings to use and only generates one target when running <code>gyp</code>.</p>   <h2 id="target-names">Target Names</h2> <p>Unlike most projects that use <code>Release</code> and <code>Debug</code> as target names, Electron uses <code>R</code> and <code>D</code> instead. This is because <code>gyp</code> randomly crashes if there is only one <code>Release</code> or <code>Debug</code> build configuration defined, and Electron only has to generate one target at a time as stated above.</p> <p>This only affects developers, if you are building Electron for rebranding you are not affected.</p>   <h2 id="tests">Tests</h2> <p>Test your changes conform to the project coding style using:</p> <pre data-language="sh">$ npm run lint</pre> <p>Test functionality using:</p> <pre data-language="sh">$ npm test</pre> <p>Whenever you make changes to Electron source code, you'll need to re-run the build before the tests:</p> <pre data-language="sh">$ npm run build &amp;&amp; npm test</pre> <p>You can make the test suite run faster by isolating the specific test or block you're currently working on using Mocha's <a href="https://mochajs.org/#exclusive-tests" target="_blank">exclusive tests</a> feature. Append <code>.only</code> to any <code>describe</code> or <code>it</code> function call:</p> <pre data-language="js">describe.only('some feature', function () {
+    // ... only tests in this block will be run
+  })</pre> <p>Alternatively, you can use mocha's <code>grep</code> option to only run tests matching the given regular expression pattern:</p> <pre data-language="sh">$ npm test -- --grep child_process</pre> <p>Tests that include native modules (e.g. <code>runas</code>) can't be executed with the debug build (see <a href="https://github.com/electron/electron/issues/2558" target="_blank">#2558</a> for details), but they will work with the release build.</p> <p>To run the tests with the release build use:</p> <pre data-language="sh">$ npm test -- -R</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/development/build-system-overview" class="_attribution-link" target="_blank">https://electronjs.org/docs/development/build-system-overview</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

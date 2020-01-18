@@ -1,0 +1,135 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Build Instructions (Windows) - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Follow the guidelines below for building Electron on Windows. ">
+  <meta name="keywords" content="build, instructions, windows, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/development/build-instructions-windows/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="build-instructions-windows">Build Instructions (Windows)</h1> <p>Follow the guidelines below for building Electron on Windows.</p>   <h2 id="prerequisites">Prerequisites</h2> <ul> <li>Windows 7 / Server 2008 R2 or higher</li> <li>Visual Studio 2017 - <a href="https://www.visualstudio.com/vs/" target="_blank">download VS 2017 Community Edition for free</a>
+</li> <li><a href="http://www.python.org/download/releases/2.7/" target="_blank">Python 2.7</a></li> <li><a href="https://nodejs.org/download/" target="_blank">Node.js</a></li> <li><a href="http://git-scm.com" target="_blank">Git</a></li> <li>
+<a href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551063.aspx" target="_blank">Debugging Tools for Windows</a> if you plan on creating a full distribution since <code>symstore.exe</code> is used for creating a symbol store from <code>.pdb</code> files.</li> </ul> <p>If you don't currently have a Windows installation, <a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/" target="_blank">dev.microsoftedge.com</a> has timebombed versions of Windows that you can use to build Electron.</p> <p>Building Electron is done entirely with command-line scripts and cannot be done with Visual Studio. You can develop Electron with any editor but support for building with Visual Studio will come in the future.</p> <p><strong>Note:</strong> Even though Visual Studio is not used for building, it's still <strong>required</strong> because we need the build toolchains it provides.</p>   <h2 id="getting-the-code">Getting the Code</h2> <pre data-language="powershell">$ git clone https://github.com/electron/electron.git</pre>   <h2 id="bootstrapping">Bootstrapping</h2> <p>The bootstrap script will download all necessary build dependencies and create the build project files. Notice that we're using <code>ninja</code> to build Electron so there is no Visual Studio project generated.</p> <pre data-language="powershell">$ cd electron
+  $ python script\bootstrap.py -v</pre>   <h2 id="building">Building</h2> <p>Build both Release and Debug targets:</p> <pre data-language="powershell">$ python script\build.py</pre> <p>You can also only build the Debug target:</p> <pre data-language="powershell">$ python script\build.py -c D</pre> <p>After building is done, you can find <code>electron.exe</code> under <code>out\D</code> (debug target) or under <code>out\R</code> (release target).</p>   <h2 id="32bit-build">32bit Build</h2> <p>To build for the 32bit target, you need to pass <code>--target_arch=ia32</code> when running the bootstrap script:</p> <pre data-language="powershell">$ python script\bootstrap.py -v --target_arch=ia32</pre> <p>The other building steps are exactly the same.</p>   <h2 id="visual-studio-project">Visual Studio project</h2> <p>To generate a Visual Studio project, you can pass the <code>--msvs</code> parameter:</p> <pre data-language="powershell">$ python script\bootstrap.py --msvs</pre>   <h2 id="cleaning">Cleaning</h2> <p>To clean the build files:</p> <pre data-language="powershell">$ npm run clean</pre> <p>To clean only <code>out</code> and <code>dist</code> directories:</p> <pre data-language="sh">$ npm run clean-build</pre> <p><strong>Note:</strong> Both clean commands require running <code>bootstrap</code> again before building.</p>   <h2 id="tests">Tests</h2> <p>See <a href="../build-system-overview/#tests">Build System Overview: Tests</a></p>   <h2 id="troubleshooting">Troubleshooting</h2>   <h3 id="command-xxxx-not-found">Command xxxx not found</h3> <p>If you encountered an error like <code>Command xxxx not found</code>, you may try to use the <code>VS2015 Command Prompt</code> console to execute the build scripts.</p>   <h3 id="fatal-internal-compiler-error-c1001">Fatal internal compiler error: C1001</h3> <p>Make sure you have the latest Visual Studio update installed.</p>   <h3 id="assertion-failed-handle-activecnt--0">Assertion failed: ((handle))-&gt;activecnt &gt;= 0</h3> <p>If building under Cygwin, you may see <code>bootstrap.py</code> failed with following error:</p> <pre data-language="sh">Assertion failed: ((handle))-&gt;activecnt &gt;= 0, file src\win\pipe.c, line 1430
+  
+  Traceback (most recent call last):
+    File "script/bootstrap.py", line 87, in &lt;module&gt;
+      sys.exit(main())
+    File "script/bootstrap.py", line 22, in main
+      update_node_modules('.')
+    File "script/bootstrap.py", line 56, in update_node_modules
+      execute([NPM, 'install'])
+    File "/home/zcbenz/codes/raven/script/lib/util.py", line 118, in execute
+      raise e
+  subprocess.CalledProcessError: Command '['npm.cmd', 'install']' returned non-zero exit status 3</pre> <p>This is caused by a bug when using Cygwin Python and Win32 Node together. The solution is to use the Win32 Python to execute the bootstrap script (assuming you have installed Python under <code>C:\Python27</code>):</p> <pre data-language="powershell">$ /cygdrive/c/Python27/python.exe script/bootstrap.py</pre>   <h3 id="lnk1181-cannot-open-input-file-kernel32lib">LNK1181: cannot open input file 'kernel32.lib'</h3> <p>Try reinstalling 32bit Node.js.</p>   <h3 id="error-enoent-stat-cusersusernameappdataroamingnpm">Error: ENOENT, stat 'C:\Users\USERNAME\AppData\Roaming\npm'</h3> <p>Creating that directory <a href="https://stackoverflow.com/a/25095327/102704" target="_blank">should fix the problem</a>:</p> <pre data-language="powershell">$ mkdir ~\AppData\Roaming\npm</pre>   <h3 id="node-gyp-is-not-recognized-as-an-internal-or-external-command">node-gyp is not recognized as an internal or external command</h3> <p>You may get this error if you are using Git Bash for building, you should use PowerShell or VS2015 Command Prompt instead.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/development/build-instructions-windows" class="_attribution-link" target="_blank">https://electronjs.org/docs/development/build-instructions-windows</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

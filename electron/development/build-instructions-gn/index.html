@@ -1,0 +1,138 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Build Instructions (Experimental GN Build) - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Follow the guidelines below for building Electron with the experimental GN build. ">
+  <meta name="keywords" content="build, instructions, experimental, gn, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/development/build-instructions-gn/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="build-instructions-experimental-gn-build">Build Instructions (experimental GN build)</h1> <p>Follow the guidelines below for building Electron with the experimental GN build.</p> <blockquote> <p><strong>NOTE</strong>: The GN build system is in <em>experimental</em> status, and currently only works on macOS and Linux, in debug mode, as a component build.</p> </blockquote>   <h2 id="prerequisites">Prerequisites</h2> <p>See the <a href="../build-instructions-osx/#prerequisites">macOS</a> or <a href="../build-instructions-linux/#prerequisites">Linux</a> build instructions for the requirements for your platform. In addition, you'll need to install <a href="http://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up" target="_blank"><code>depot_tools</code></a>, the toolset used for fetching Chromium and its dependencies.</p>   <h2 id="getting-the-code">Getting the Code</h2> <pre data-language="sh">$ mkdir electron-gn &amp;&amp; cd electron-gn
+  $ cat &gt; .gclient &lt;&lt;-GCLIENT
+  solutions = [
+    {
+      "url": "https://github.com/electron/electron",
+      "managed": False,
+      "name": "src/electron",
+    },
+  ]
+  GCLIENT
+  $ gclient sync --with_branch_heads --with_tags
+  # This will take a while, go get a coffee.</pre>   <h2 id="building">Building</h2> <pre data-language="sh">$ cd src
+  $ export CHROMIUM_BUILDTOOLS_PATH=`pwd`/buildtools
+  $ gn gen out/Default --args='root_extra_deps=["//electron"] is_electron_build=true is_component_build=true use_jumbo_build=true v8_promise_internal_field_count=1 v8_typed_array_max_size_in_heap=0'</pre> <p>This will generate all the ninja files needed for the build. You shouldn't have to run <code>gn gen</code> again—if you want to change the build arguments you can run <code>gn args out/Default</code> to bring up an editor.</p> <p>To build, run <code>ninja</code> with the <code>electron:electron_app</code> target:</p> <pre data-language="sh">$ ninja -C out/Default electron:electron_app
+  # This will also take a while and probably heat up your lap.</pre> <p>This will build all of what was previously 'libchromiumcontent' (i.e. the <code>content/</code> directory of <code>chromium</code> and its dependencies, incl. WebKit and V8), so it will take a while.</p> <p>To speed up subsequent builds, you can use <a href="https://github.com/mozilla/sccache" target="_blank">sccache</a>. Add the GN arg <code>cc_wrapper="sccache"</code> by running <code>gn args out/Default</code> to bring up an editor.</p> <p>The built executable will be under <code>./out/Default</code>:</p> <pre data-language="sh">$ ./out/Default/Electron.app/Contents/MacOS/Electron
+  # or, on Linux
+  $ ./out/Default/electron</pre>   <h2 id="tests">Tests</h2> <p>To run the tests, you'll first need to build the test modules against the same version of node.js that was built as part of the build process.</p> <pre data-language="sh">$ (cd electron/spec &amp;&amp; npm i --nodedir=../../third_party/electron_node)</pre> <p>Then, run Electron with <code>electron/spec</code> as the argument:</p> <pre data-language="sh">$ ./out/Default/Electron.app/Contents/MacOS/Electron electron/spec</pre> <p>If you're debugging something, it can be helpful to pass some extra flags to the Electron binary:</p> <pre data-language="sh">$ ./out/Default/Electron.app/Contents/MacOS/Electron electron/spec \
+    --ci --enable-logging -g 'BrowserWindow module'</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/development/build-instructions-gn" class="_attribution-link" target="_blank">https://electronjs.org/docs/development/build-instructions-gn</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

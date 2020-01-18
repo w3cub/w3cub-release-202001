@@ -1,0 +1,167 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>crashReporter - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Submit crash reports to a remote server. ">
+  <meta name="keywords" content="crashreporter, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/api/crash-reporter/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="crashreporter">crashReporter</h1> <blockquote> <p>Submit crash reports to a remote server.</p> </blockquote> <p>Process: <a href="../../glossary/#main-process">Main</a>, <a href="../../glossary/#renderer-process">Renderer</a></p> <p>The following is an example of automatically submitting a crash report to a remote server:</p> <pre data-language="javascript">const {crashReporter} = require('electron')
+  
+  crashReporter.start({
+    productName: 'YourName',
+    companyName: 'YourCompany',
+    submitURL: 'https://your-domain.com/url-to-submit',
+    uploadToServer: true
+  })</pre> <p>For setting up a server to accept and process crash reports, you can use following projects:</p> <ul> <li><a href="https://github.com/mozilla/socorro" target="_blank">socorro</a></li> <li><a href="https://github.com/electron/mini-breakpad-server" target="_blank">mini-breakpad-server</a></li> </ul> <p>Crash reports are saved locally in an application-specific temp directory folder. For a <code>productName</code> of <code>YourName</code>, crash reports will be stored in a folder named <code>YourName Crashes</code> inside the temp directory. You can customize this temp directory location for your app by calling the <code>app.setPath('temp', '/my/custom/temp')</code> API before starting the crash reporter.</p>   <h2 id="methods">Methods</h2> <p>The <code>crashReporter</code> module has the following methods:</p>   <h3 id="crashreporterstartoptions"><code>crashReporter.start(options)</code></h3> <ul> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>companyName</code> String (optional)</li> <li>
+<code>submitURL</code> String - URL that crash reports will be sent to as POST.</li> <li>
+<code>productName</code> String (optional) - Defaults to <code>app.getName()</code>.</li> <li>
+<code>uploadToServer</code> Boolean (optional) - Whether crash reports should be sent to the server Default is <code>true</code>.</li> <li>
+<code>ignoreSystemCrashHandler</code> Boolean (optional) - Default is <code>false</code>.</li> <li>
+<code>extra</code> Object (optional) - An object you can define that will be sent along with the report. Only string properties are sent correctly. Nested objects are not supported and the property names and values must be less than 64 characters long.</li> <li>
+<code>crashesDirectory</code> String (optional) - Directory to store the crashreports temporarily (only used when the crash reporter is started via <code>process.crashReporter.start</code>).</li> </ul> </li> </ul> <p>You are required to call this method before using any other <code>crashReporter</code> APIs and in each process (main/renderer) from which you want to collect crash reports. You can pass different options to <code>crashReporter.start</code> when calling from different processes.</p> <p><strong>Note</strong> Child processes created via the <code>child_process</code> module will not have access to the Electron modules. Therefore, to collect crash reports from them, use <code>process.crashReporter.start</code> instead. Pass the same options as above along with an additional one called <code>crashesDirectory</code> that should point to a directory to store the crash reports temporarily. You can test this out by calling <code>process.crash()</code> to crash the child process.</p> <p><strong>Note:</strong> To collect crash reports from child process in Windows, you need to add this extra code as well. This will start the process that will monitor and send the crash reports. Replace <code>submitURL</code>, <code>productName</code> and <code>crashesDirectory</code> with appropriate values.</p> <p><strong>Note:</strong> If you need send additional/updated <code>extra</code> parameters after your first call <code>start</code> you can call <code>addExtraParameter</code> on macOS or call <code>start</code> again with the new/updated <code>extra</code> parameters on Linux and Windows.</p> <pre data-language="js"> const args = [
+     `--reporter-url=${submitURL}`,
+     `--application-name=${productName}`,
+     `--crashes-directory=${crashesDirectory}`
+   ]
+   const env = {
+     ELECTRON_INTERNAL_CRASH_SERVICE: 1
+   }
+   spawn(process.execPath, args, {
+     env: env,
+     detached: true
+   })</pre> <p><strong>Note:</strong> On macOS, Electron uses a new <code>crashpad</code> client for crash collection and reporting. If you want to enable crash reporting, initializing <code>crashpad</code> from the main process using <code>crashReporter.start</code> is required regardless of which process you want to collect crashes from. Once initialized this way, the crashpad handler collects crashes from all processes. You still have to call <code>crashReporter.start</code> from the renderer or child process, otherwise crashes from them will get reported without <code>companyName</code>, <code>productName</code> or any of the <code>extra</code> information.</p>   <h3 id="crashreportergetlastcrashreport"><code>crashReporter.getLastCrashReport()</code></h3> <p>Returns <a href="../structures/crash-report/"><code>CrashReport</code></a>:</p> <p>Returns the date and ID of the last crash report. If no crash reports have been sent or the crash reporter has not been started, <code>null</code> is returned.</p>   <h3 id="crashreportergetuploadedreports"><code>crashReporter.getUploadedReports()</code></h3> <p>Returns <a href="../structures/crash-report/"><code>CrashReport[]</code></a>:</p> <p>Returns all uploaded crash reports. Each report contains the date and uploaded ID.</p>   <h3 id="crashreportergetuploadtoserver-linux-macos">
+<code>crashReporter.getUploadToServer()</code> <em>Linux</em> <em>macOS</em>
+</h3> <p>Returns <code>Boolean</code> - Whether reports should be submitted to the server. Set through the <code>start</code> method or <code>setUploadToServer</code>.</p> <p><strong>Note:</strong> This API can only be called from the main process.</p>   <h3 id="crashreportersetuploadtoserveruploadtoserver-linux-macos">
+<code>crashReporter.setUploadToServer(uploadToServer)</code> <em>Linux</em> <em>macOS</em>
+</h3> <ul> <li>
+<code>uploadToServer</code> Boolean <em>macOS</em> - Whether reports should be submitted to the server.</li> </ul> <p>This would normally be controlled by user preferences. This has no effect if called before <code>start</code> is called.</p> <p><strong>Note:</strong> This API can only be called from the main process.</p>   <h3 id="crashreporteraddextraparameterkey-value-macos">
+<code>crashReporter.addExtraParameter(key, value)</code> <em>macOS</em>
+</h3> <ul> <li>
+<code>key</code> String - Parameter key, must be less than 64 characters long.</li> <li>
+<code>value</code> String - Parameter value, must be less than 64 characters long.</li> </ul> <p>Set an extra parameter to be sent with the crash report. The values specified here will be sent in addition to any values set via the <code>extra</code> option when <code>start</code> was called. This API is only available on macOS, if you need to add/update extra parameters on Linux and Windows after your first call to <code>start</code> you can call <code>start</code> again with the updated <code>extra</code> options.</p>   <h3 id="crashreporterremoveextraparameterkey-macos">
+<code>crashReporter.removeExtraParameter(key)</code> <em>macOS</em>
+</h3> <ul> <li>
+<code>key</code> String - Parameter key, must be less than 64 characters long.</li> </ul> <p>Remove a extra parameter from the current set of parameters so that it will not be sent with the crash report.</p>   <h3 id="crashreportergetparameters"><code>crashReporter.getParameters()</code></h3> <p>See all of the current parameters being passed to the crash reporter.</p>   <h2 id="crash-report-payload">Crash Report Payload</h2> <p>The crash reporter will send the following data to the <code>submitURL</code> as a <code>multipart/form-data</code> <code>POST</code>:</p> <ul> <li>
+<code>ver</code> String - The version of Electron.</li> <li>
+<code>platform</code> String - e.g. 'win32'.</li> <li>
+<code>process_type</code> String - e.g. 'renderer'.</li> <li>
+<code>guid</code> String - e.g. '5e1286fc-da97-479e-918b-6bfb0c3d1c72'.</li> <li>
+<code>_version</code> String - The version in <code>package.json</code>.</li> <li>
+<code>_productName</code> String - The product name in the <code>crashReporter</code> <code>options</code> object.</li> <li>
+<code>prod</code> String - Name of the underlying product. In this case Electron.</li> <li>
+<code>_companyName</code> String - The company name in the <code>crashReporter</code> <code>options</code> object.</li> <li>
+<code>upload_file_minidump</code> File - The crash report in the format of <code>minidump</code>.</li> <li>All level one properties of the <code>extra</code> object in the <code>crashReporter</code> <code>options</code> object.</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/api/crash-reporter" class="_attribution-link" target="_blank">https://electronjs.org/docs/api/crash-reporter</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

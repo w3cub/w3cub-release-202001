@@ -1,0 +1,130 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>autoUpdater - Electron - W3cubDocs</title>
+  
+  <meta name="description" content=" Enable apps to automatically update themselves. ">
+  <meta name="keywords" content="autoupdater, -, electron">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/electron/api/auto-updater/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/electron.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/electron/" class="_nav-link" title="" style="margin-left:0;">Electron</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="autoupdater">autoUpdater</h1> <blockquote> <p>Enable apps to automatically update themselves.</p> </blockquote> <p>Process: <a href="../../glossary/#main-process">Main</a></p> <p><strong>You can find a detailed guide about how to implement updates into your application <a href="../../tutorial/updates/">here</a>.</strong></p>   <h2 id="platform-notices">Platform Notices</h2> <p>Currently, only macOS and Windows are supported. There is no built-in support for auto-updater on Linux, so it is recommended to use the distribution's package manager to update your app.</p> <p>In addition, there are some subtle differences on each platform:</p>   <h3 id="macos">macOS</h3> <p>On macOS, the <code>autoUpdater</code> module is built upon <a href="https://github.com/Squirrel/Squirrel.Mac" target="_blank">Squirrel.Mac</a>, meaning you don't need any special setup to make it work. For server-side requirements, you can read <a href="https://github.com/Squirrel/Squirrel.Mac#server-support" target="_blank">Server Support</a>. Note that <a href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW35" target="_blank">App Transport Security</a> (ATS) applies to all requests made as part of the update process. Apps that need to disable ATS can add the <code>NSAllowsArbitraryLoads</code> key to their app's plist.</p> <p><strong>Note:</strong> Your application must be signed for automatic updates on macOS. This is a requirement of <code>Squirrel.Mac</code>.</p>   <h3 id="windows">Windows</h3> <p>On Windows, you have to install your app into a user's machine before you can use the <code>autoUpdater</code>, so it is recommended that you use the <a href="https://github.com/electron/windows-installer" target="_blank">electron-winstaller</a>, <a href="https://github.com/electron-userland/electron-forge" target="_blank">electron-forge</a> or the <a href="https://github.com/electron/grunt-electron-installer" target="_blank">grunt-electron-installer</a> package to generate a Windows installer.</p> <p>When using <a href="https://github.com/electron/windows-installer" target="_blank">electron-winstaller</a> or <a href="https://github.com/electron-userland/electron-forge" target="_blank">electron-forge</a> make sure you do not try to update your app <a href="https://github.com/electron/windows-installer#handling-squirrel-events" target="_blank">the first time it runs</a> (Also see <a href="https://github.com/electron/electron/issues/7155" target="_blank">this issue for more info</a>). It's also recommended to use <a href="https://github.com/mongodb-js/electron-squirrel-startup" target="_blank">electron-squirrel-startup</a> to get desktop shortcuts for your app.</p> <p>The installer generated with Squirrel will create a shortcut icon with an <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd378459(v=vs.85).aspx" target="_blank">Application User Model ID</a> in the format of <code>com.squirrel.PACKAGE_ID.YOUR_EXE_WITHOUT_DOT_EXE</code>, examples are <code>com.squirrel.slack.Slack</code> and <code>com.squirrel.code.Code</code>. You have to use the same ID for your app with <code>app.setAppUserModelId</code> API, otherwise Windows will not be able to pin your app properly in task bar.</p> <p>Unlike Squirrel.Mac, Windows can host updates on S3 or any other static file host. You can read the documents of <a href="https://github.com/Squirrel/Squirrel.Windows" target="_blank">Squirrel.Windows</a> to get more details about how Squirrel.Windows works.</p>   <h2 id="events">Events</h2> <p>The <code>autoUpdater</code> object emits the following events:</p>   <h3 id="event-error">Event: 'error'</h3> <p>Returns:</p> <ul> <li>
+<code>error</code> Error</li> </ul> <p>Emitted when there is an error while updating.</p>   <h3 id="event-checking-for-update">Event: 'checking-for-update'</h3> <p>Emitted when checking if an update has started.</p>   <h3 id="event-update-available">Event: 'update-available'</h3> <p>Emitted when there is an available update. The update is downloaded automatically.</p>   <h3 id="event-update-not-available">Event: 'update-not-available'</h3> <p>Emitted when there is no available update.</p>   <h3 id="event-update-downloaded">Event: 'update-downloaded'</h3> <p>Returns:</p> <ul> <li>
+<code>event</code> Event</li> <li>
+<code>releaseNotes</code> String</li> <li>
+<code>releaseName</code> String</li> <li>
+<code>releaseDate</code> Date</li> <li>
+<code>updateURL</code> String</li> </ul> <p>Emitted when an update has been downloaded.</p> <p>On Windows only <code>releaseName</code> is available.</p>   <h2 id="methods">Methods</h2> <p>The <code>autoUpdater</code> object has the following methods:</p>   <h3 id="autoupdatersetfeedurloptions"><code>autoUpdater.setFeedURL(options)</code></h3> <ul> <li> <p><code>options</code> Object</p> <ul> <li>
+<code>url</code> String</li> <li>
+<code>headers</code> Object (optional) <em>macOS</em> - HTTP request headers.</li> <li>
+<code>serverType</code> String (optional) <em>macOS</em> - Either <code>json</code> or <code>default</code>, see the <a href="https://github.com/Squirrel/Squirrel.Mac" target="_blank">Squirrel.Mac</a> README for more information.</li> </ul> </li> </ul> <p>Sets the <code>url</code> and initialize the auto updater.</p>   <h3 id="autoupdatergetfeedurl"><code>autoUpdater.getFeedURL()</code></h3> <p>Returns <code>String</code> - The current update feed URL.</p>   <h3 id="autoupdatercheckforupdates"><code>autoUpdater.checkForUpdates()</code></h3> <p>Asks the server whether there is an update. You must call <code>setFeedURL</code> before using this API.</p>   <h3 id="autoupdaterquitandinstall"><code>autoUpdater.quitAndInstall()</code></h3> <p>Restarts the app and installs the update after it has been downloaded. It should only be called after <code>update-downloaded</code> has been emitted.</p> <p>Under the hood calling <code>autoUpdater.quitAndInstall()</code> will close all application windows first, and automatically call <code>app.quit()</code> after all windows have been closed.</p> <p><strong>Note:</strong> If the application is quit without calling this API after the <code>update-downloaded</code> event has been emitted, the application will still be replaced by the updated one on the next run.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–2018 GitHub Inc.<br>Licensed under the MIT license.<br>
+    <a href="https://electronjs.org/docs/api/auto-updater" class="_attribution-link" target="_blank">https://electronjs.org/docs/api/auto-updater</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
