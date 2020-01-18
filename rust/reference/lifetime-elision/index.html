@@ -1,0 +1,213 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>10.9. Lifetime Elision - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Rust has rules that allow lifetimes to be elided in various places where the compiler can infer a sensible default choice. ">
+  <meta name="keywords" content="lifetime, elision, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/lifetime-elision/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 id="lifetime-elision">Lifetime elision</h1> <p>Rust has rules that allow lifetimes to be elided in various places where the compiler can infer a sensible default choice.</p> <h2 id="lifetime-elision-in-functions">Lifetime elision in functions</h2> <p>In order to make common patterns more ergonomic, lifetime arguments can be <em>elided</em> in <a href="../types/function-item/">function item</a>, <a href="../types/function-pointer/">function pointer</a> and <a href="../types/closure/">closure trait</a> signatures. The following rules are used to infer lifetime parameters for elided lifetimes. It is an error to elide lifetime parameters that cannot be inferred. The placeholder lifetime, <code>'_</code>, can also be used to have a lifetime inferred in the same way. For lifetimes in paths, using <code>'_</code> is preferred. Trait object lifetimes follow different rules discussed <a href="../lifetime-elision/#default-trait-object-lifetimes">below</a>.</p> <ul> <li>Each elided lifetime in the parameters becomes a distinct lifetime parameter.</li> <li>If there is exactly one lifetime used in the parameters (elided or not), that lifetime is assigned to <em>all</em> elided output lifetimes.</li> </ul> <p>In method signatures there is another rule</p> <ul> <li>If the receiver has type <code>&amp;Self</code> or <code>&amp;mut Self</code>, then the lifetime of that reference to <code>Self</code> is assigned to all elided output lifetime parameters.</li> </ul> <p>Examples:</p> <pre data-language="rust">fn print(s: &amp;str);                                      // elided
+fn print(s: &amp;'_ str);                                   // also elided
+fn print&lt;'a&gt;(s: &amp;'a str);                               // expanded
+
+fn debug(lvl: usize, s: &amp;str);                          // elided
+fn debug&lt;'a&gt;(lvl: usize, s: &amp;'a str);                   // expanded
+
+fn substr(s: &amp;str, until: usize) -&gt; &amp;str;               // elided
+fn substr&lt;'a&gt;(s: &amp;'a str, until: usize) -&gt; &amp;'a str;     // expanded
+
+fn get_str() -&gt; &amp;str;                                   // ILLEGAL
+
+fn frob(s: &amp;str, t: &amp;str) -&gt; &amp;str;                      // ILLEGAL
+
+fn get_mut(&amp;mut self) -&gt; &amp;mut T;                        // elided
+fn get_mut&lt;'a&gt;(&amp;'a mut self) -&gt; &amp;'a mut T;              // expanded
+
+fn args&lt;T: ToCStr&gt;(&amp;mut self, args: &amp;[T]) -&gt; &amp;mut Command;                  // elided
+fn args&lt;'a, 'b, T: ToCStr&gt;(&amp;'a mut self, args: &amp;'b [T]) -&gt; &amp;'a mut Command; // expanded
+
+fn new(buf: &amp;mut [u8]) -&gt; BufWriter&lt;'_&gt;;                // elided - preferred
+fn new(buf: &amp;mut [u8]) -&gt; BufWriter;                    // elided
+fn new&lt;'a&gt;(buf: &amp;'a mut [u8]) -&gt; BufWriter&lt;'a&gt;;         // expanded
+
+type FunPtr = fn(&amp;str) -&gt; &amp;str;                         // elided
+type FunPtr = for&lt;'a&gt; fn(&amp;'a str) -&gt; &amp;'a str;           // expanded
+
+type FunTrait = dyn Fn(&amp;str) -&gt; &amp;str;                   // elided
+type FunTrait = dyn for&lt;'a&gt; Fn(&amp;'a str) -&gt; &amp;'a str;     // expanded
+</pre> <h2 id="default-trait-object-lifetimes">Default trait object lifetimes</h2> <p>The assumed lifetime of references held by a <a href="../types/trait-object/">trait object</a> is called its <em>default object lifetime bound</em>. These were defined in <a href="https://github.com/rust-lang/rfcs/blob/master/text/0599-default-object-bound.md" target="_blank">RFC 599</a> and amended in <a href="https://github.com/rust-lang/rfcs/blob/master/text/1156-adjust-default-object-bounds.md" target="_blank">RFC 1156</a>.</p> <p>These default object lifetime bounds are used instead of the lifetime parameter elision rules defined above when the lifetime bound is omitted entirely. If <code>'_</code> is used as the lifetime bound then the bound follows the usual elision rules.</p> <p>If the trait object is used as a type argument of a generic type then the containing type is first used to try to infer a bound.</p> <ul> <li>If there is a unique bound from the containing type then that is the default</li> <li>If there is more than one bound from the containing type then an explicit bound must be specified</li> </ul> <p>If neither of those rules apply, then the bounds on the trait are used:</p> <ul> <li>If the trait is defined with a single lifetime <em>bound</em> then that bound is used.</li> <li>If <code>'static</code> is used for any lifetime bound then <code>'static</code> is used.</li> <li>If the trait has no lifetime bounds, then the lifetime is inferred in expressions and is <code>'static</code> outside of expressions.</li> </ul> <pre data-language="rust">// For the following trait...
+trait Foo { }
+
+// These two are the same as Box&lt;T&gt; has no lifetime bound on T
+Box&lt;dyn Foo&gt;
+Box&lt;dyn Foo + 'static&gt;
+
+// ...and so are these:
+impl dyn Foo {}
+impl dyn Foo + 'static {}
+
+// ...so are these, because &amp;'a T requires T: 'a
+&amp;'a dyn Foo
+&amp;'a (dyn Foo + 'a)
+
+// std::cell::Ref&lt;'a, T&gt; also requires T: 'a, so these are the same
+std::cell::Ref&lt;'a, dyn Foo&gt;
+std::cell::Ref&lt;'a, dyn Foo + 'a&gt;
+
+// This is an error:
+struct TwoBounds&lt;'a, 'b, T: ?Sized + 'a + 'b&gt;
+TwoBounds&lt;'a, 'b, dyn Foo&gt; // Error: the lifetime bound for this object type
+                           // cannot be deduced from context
+</pre> <p>Note that the innermost object sets the bound, so <code>&amp;'a Box&lt;dyn Foo&gt;</code> is still <code>&amp;'a Box&lt;dyn Foo + 'static&gt;</code>.</p> <pre data-language="rust">// For the following trait...
+trait Bar&lt;'a&gt;: 'a { }
+
+// ...these two are the same:
+Box&lt;dyn Bar&lt;'a&gt;&gt;
+Box&lt;dyn Bar&lt;'a&gt; + 'a&gt;
+
+// ...and so are these:
+impl&lt;'a&gt; dyn Foo&lt;'a&gt; {}
+impl&lt;'a&gt; dyn Foo&lt;'a&gt; + 'a {}
+
+// This is still an error:
+struct TwoBounds&lt;'a, 'b, T: ?Sized + 'a + 'b&gt;
+TwoBounds&lt;'a, 'b, dyn Foo&lt;'c&gt;&gt;
+</pre> <h2 id="static-lifetime-elision">
+<code>'static</code> lifetime elision</h2> <p>Both <a href="../items/constant-items/">constant</a> and <a href="../items/static-items/">static</a> declarations of reference types have <em>implicit</em> <code>'static</code> lifetimes unless an explicit lifetime is specified. As such, the constant declarations involving <code>'static</code> above may be written without the lifetimes.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+// STRING: &amp;'static str
+const STRING: &amp;str = "bitstring";
+
+struct BitsNStrings&lt;'a&gt; {
+    mybits: [u32; 2],
+    mystring: &amp;'a str,
+}
+
+// BITS_N_STRINGS: BitsNStrings&lt;'static&gt;
+const BITS_N_STRINGS: BitsNStrings&lt;'_&gt; = BitsNStrings {
+    mybits: [1, 2],
+    mystring: STRING,
+};
+#}</pre> <p>Note that if the <code>static</code> or <code>const</code> items include function or closure references, which themselves include references, the compiler will first try the standard elision rules. If it is unable to resolve the lifetimes by its usual rules, then it will error. By way of example:</p> <pre data-language="rust">// Resolved as `fn&lt;'a&gt;(&amp;'a str) -&gt; &amp;'a str`.
+const RESOLVED_SINGLE: fn(&amp;str) -&gt; &amp;str = ..
+
+// Resolved as `Fn&lt;'a, 'b, 'c&gt;(&amp;'a Foo, &amp;'b Bar, &amp;'c Baz) -&gt; usize`.
+const RESOLVED_MULTIPLE: &amp;dyn Fn(&amp;Foo, &amp;Bar, &amp;Baz) -&gt; usize = ..
+
+// There is insufficient information to bound the return reference lifetime
+// relative to the argument lifetimes, so this is an error.
+const RESOLVED_STATIC: &amp;dyn Fn(&amp;Foo, &amp;Bar) -&gt; &amp;Baz = ..
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/lifetime-elision.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/lifetime-elision.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

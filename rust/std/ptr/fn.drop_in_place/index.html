@@ -1,0 +1,166 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Std&#58;&#58;ptr&#58;&#58;drop_in_place - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Executes the destructor (if any) of the pointed-to value. ">
+  <meta name="keywords" content="function, std, ptr, drop, place, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/ptr/fn.drop_in_place/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 class="fqn">Function std::ptr::drop_in_place</h1>
+<pre class="rust fn" data-language="rust">pub unsafe fn drop_in_place&lt;T&gt;(to_drop: *mut T) where    T: ?Sized, </pre>
+<p>Executes the destructor (if any) of the pointed-to value.</p> <p>This is semantically equivalent to calling <a href="../fn.read/"><code>ptr::read</code></a> and discarding the result, but has the following advantages:</p> <ul> <li> <p>It is <em>required</em> to use <code>drop_in_place</code> to drop unsized types like trait objects, because they can't be read out onto the stack and dropped normally.</p> </li> <li> <p>It is friendlier to the optimizer to do this over <a href="../fn.read/"><code>ptr::read</code></a> when dropping manually allocated memory (e.g., when writing Box/Rc/Vec), as the compiler doesn't need to prove that it's sound to elide the copy.</p> </li> </ul> <h2 id="safety" class="section-header">Safety</h2> <p>Behavior is undefined if any of the following conditions are violated:</p> <ul> <li> <p><code>to_drop</code> must be <a href="../#safety">valid</a> for reads.</p> </li> <li> <p><code>to_drop</code> must be properly aligned. See the example below for how to drop an unaligned pointer.</p> </li> </ul> <p>Additionally, if <code>T</code> is not <a href="../../marker/trait.copy/"><code>Copy</code></a>, using the pointed-to value after calling <code>drop_in_place</code> can cause undefined behavior. Note that <code>*to_drop = foo</code> counts as a use because it will cause the value to be dropped again. <a href="../fn.write/"><code>write</code></a> can be used to overwrite data without causing it to be dropped.</p> <p>Note that even if <code>T</code> has size <code>0</code>, the pointer must be non-NULL and properly aligned.</p> <h2 id="examples" class="section-header">Examples</h2> <p>Manually remove the last item from a vector:</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::ptr;
+use std::rc::Rc;
+
+let last = Rc::new(1);
+let weak = Rc::downgrade(&amp;last);
+
+let mut v = vec![Rc::new(0), last];
+
+unsafe {
+    // Get a raw pointer to the last element in `v`.
+    let ptr = &amp;mut v[1] as *mut _;
+    // Shorten `v` to prevent the last item from being dropped. We do that first,
+    // to prevent issues if the `drop_in_place` below panics.
+    v.set_len(1);
+    // Without a call `drop_in_place`, the last item would never be dropped,
+    // and the memory it manages would be leaked.
+    ptr::drop_in_place(ptr);
+}
+
+assert_eq!(v, &amp;[0.into()]);
+
+// Ensure that the last item was dropped.
+assert!(weak.upgrade().is_none());</pre></div> <p>Unaligned values cannot be dropped in place, they must be copied to an aligned location first:</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::ptr;
+use std::mem::{self, MaybeUninit};
+
+unsafe fn drop_after_copy&lt;T&gt;(to_drop: *mut T) {
+    let mut copy: MaybeUninit&lt;T&gt; = MaybeUninit::uninit();
+    ptr::copy(to_drop, copy.as_mut_ptr(), 1);
+    drop(copy.assume_init());
+}
+
+#[repr(packed, C)]
+struct Packed {
+    _padding: u8,
+    unaligned: Vec&lt;i32&gt;,
+}
+
+let mut p = Packed { _padding: 0, unaligned: vec![42] };
+unsafe {
+    drop_after_copy(&amp;mut p.unaligned as *mut _);
+    mem::forget(p);
+}</pre></div> <p>Notice that the compiler performs this copy automatically when dropping packed structs, i.e., you do not usually have to worry about such issues unless you call <code>drop_in_place</code> manually.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

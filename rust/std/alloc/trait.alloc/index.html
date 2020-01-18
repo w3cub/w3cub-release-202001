@@ -1,0 +1,246 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;alloc&#58;&#58;Alloc - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" An implementation of Alloc can allocate, reallocate, and deallocate arbitrary blocks of data described via Layout. ">
+  <meta name="keywords" content="trait, std, alloc, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/alloc/trait.alloc/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 class="fqn">Trait std::alloc::Alloc</h1>
+<pre class="rust trait" data-language="rust">pub unsafe trait Alloc {
+    unsafe fn alloc(&amp;mut self, layout: Layout) -&gt; Result&lt;NonNull&lt;u8&gt;, AllocErr&gt;;
+    unsafe fn dealloc(&amp;mut self, ptr: NonNull&lt;u8&gt;, layout: Layout);
+
+    fn usable_size(&amp;self, layout: &amp;Layout) -&gt; (usize, usize) { ... }
+    unsafe fn realloc(        &amp;mut self,         ptr: NonNull&lt;u8&gt;,         layout: Layout,         new_size: usize    ) -&gt; Result&lt;NonNull&lt;u8&gt;, AllocErr&gt; { ... }
+    unsafe fn alloc_zeroed(        &amp;mut self,         layout: Layout    ) -&gt; Result&lt;NonNull&lt;u8&gt;, AllocErr&gt; { ... }
+    unsafe fn alloc_excess(        &amp;mut self,         layout: Layout    ) -&gt; Result&lt;Excess, AllocErr&gt; { ... }
+    unsafe fn realloc_excess(        &amp;mut self,         ptr: NonNull&lt;u8&gt;,         layout: Layout,         new_size: usize    ) -&gt; Result&lt;Excess, AllocErr&gt; { ... }
+    unsafe fn grow_in_place(        &amp;mut self,         ptr: NonNull&lt;u8&gt;,         layout: Layout,         new_size: usize    ) -&gt; Result&lt;(), CannotReallocInPlace&gt; { ... }
+    unsafe fn shrink_in_place(        &amp;mut self,         ptr: NonNull&lt;u8&gt;,         layout: Layout,         new_size: usize    ) -&gt; Result&lt;(), CannotReallocInPlace&gt; { ... }
+    fn alloc_one&lt;T&gt;(&amp;mut self) -&gt; Result&lt;NonNull&lt;T&gt;, AllocErr&gt; { ... }
+    unsafe fn dealloc_one&lt;T&gt;(&amp;mut self, ptr: NonNull&lt;T&gt;) { ... }
+    fn alloc_array&lt;T&gt;(&amp;mut self, n: usize) -&gt; Result&lt;NonNull&lt;T&gt;, AllocErr&gt; { ... }
+    unsafe fn realloc_array&lt;T&gt;(        &amp;mut self,         ptr: NonNull&lt;T&gt;,         n_old: usize,         n_new: usize    ) -&gt; Result&lt;NonNull&lt;T&gt;, AllocErr&gt; { ... }
+    unsafe fn dealloc_array&lt;T&gt;(        &amp;mut self,         ptr: NonNull&lt;T&gt;,         n: usize    ) -&gt; Result&lt;(), AllocErr&gt; { ... }
+}</pre>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<p>An implementation of <code>Alloc</code> can allocate, reallocate, and deallocate arbitrary blocks of data described via <code>Layout</code>.</p> <p>Some of the methods require that a memory block be <em>currently allocated</em> via an allocator. This means that:</p> <ul> <li> <p>the starting address for that memory block was previously returned by a previous call to an allocation method (<code>alloc</code>, <code>alloc_zeroed</code>, <code>alloc_excess</code>, <code>alloc_one</code>, <code>alloc_array</code>) or reallocation method (<code>realloc</code>, <code>realloc_excess</code>, or <code>realloc_array</code>), and</p> </li> <li> <p>the memory block has not been subsequently deallocated, where blocks are deallocated either by being passed to a deallocation method (<code>dealloc</code>, <code>dealloc_one</code>, <code>dealloc_array</code>) or by being passed to a reallocation method (see above) that returns <code>Ok</code>.</p> </li> </ul> <p>A note regarding zero-sized types and zero-sized layouts: many methods in the <code>Alloc</code> trait state that allocation requests must be non-zero size, or else undefined behavior can result.</p> <ul> <li> <p>However, some higher-level allocation methods (<code>alloc_one</code>, <code>alloc_array</code>) are well-defined on zero-sized types and can optionally support them: it is left up to the implementor whether to return <code>Err</code>, or to return <code>Ok</code> with some pointer.</p> </li> <li> <p>If an <code>Alloc</code> implementation chooses to return <code>Ok</code> in this case (i.e., the pointer denotes a zero-sized inaccessible block) then that returned pointer must be considered "currently allocated". On such an allocator, <em>all</em> methods that take currently-allocated pointers as inputs must accept these zero-sized pointers, <em>without</em> causing undefined behavior.</p> </li> <li> <p>In other words, if a zero-sized pointer can flow out of an allocator, then that allocator must likewise accept that pointer flowing back into its deallocation and reallocation methods.</p> </li> </ul> <p>Some of the methods require that a layout <em>fit</em> a memory block. What it means for a layout to "fit" a memory block means (or equivalently, for a memory block to "fit" a layout) is that the following two conditions must hold:</p> <ol> <li> <p>The block's starting address must be aligned to <code>layout.align()</code>.</p> </li> <li> <p>The block's size must fall in the range <code>[use_min, use_max]</code>, where:</p> <ul> <li> <p><code>use_min</code> is <code>self.usable_size(layout).0</code>, and</p> </li> <li> <p><code>use_max</code> is the capacity that was (or would have been) returned when (if) the block was allocated via a call to <code>alloc_excess</code> or <code>realloc_excess</code>.</p> </li> </ul> </li> </ol> <p>Note that:</p> <ul> <li> <p>the size of the layout most recently used to allocate the block is guaranteed to be in the range <code>[use_min, use_max]</code>, and</p> </li> <li> <p>a lower-bound on <code>use_max</code> can be safely approximated by a call to <code>usable_size</code>.</p> </li> <li> <p>if a layout <code>k</code> fits a memory block (denoted by <code>ptr</code>) currently allocated via an allocator <code>a</code>, then it is legal to use that layout to deallocate it, i.e., <code>a.dealloc(ptr, k);</code>.</p> </li> </ul> <h2 id="safety" class="section-header">Safety</h2> <p>The <code>Alloc</code> trait is an <code>unsafe</code> trait for a number of reasons, and implementors must ensure that they adhere to these contracts:</p> <ul> <li> <p>Pointers returned from allocation functions must point to valid memory and retain their validity until at least the instance of <code>Alloc</code> is dropped itself.</p> </li> <li> <p><code>Layout</code> queries and calculations in general must be correct. Callers of this trait are allowed to rely on the contracts defined on each method, and implementors must ensure such contracts remain true.</p> </li> </ul> <p>Note that this list may get tweaked over time as clarifications are made in the future.</p>  <h2 id="required-methods" class="small-section-header">Required methods</h2>
+<div class="methods">
+<h3 id="tymethod.alloc" class="method"><code id="alloc.v">unsafe fn <a href="#tymethod.alloc" class="fnname">alloc</a>(&amp;mut self, layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Returns a pointer meeting the size and alignment guarantees of <code>layout</code>.</p> <p>If this method returns an <code>Ok(addr)</code>, then the <code>addr</code> returned will be non-null address pointing to a block of storage suitable for holding an instance of <code>layout</code>.</p> <p>The returned block of storage may or may not have its contents initialized. (Extension subtraits might restrict this behavior, e.g., to ensure initialization to particular sets of bit patterns.)</p> <h2 id="safety-1" class="section-header">Safety</h2> <p>This function is unsafe because undefined behavior can result if the caller does not ensure that <code>layout</code> has non-zero size.</p> <p>(Extension subtraits might provide more specific bounds on behavior, e.g., guarantee a sentinel address or a null pointer in response to a zero-size allocation request.)</p> <h2 id="errors" class="section-header">Errors</h2> <p>Returning <code>Err</code> indicates that either memory is exhausted or <code>layout</code> does not meet allocator's size or alignment constraints.</p> <p>Implementations are encouraged to return <code>Err</code> on memory exhaustion rather than panicking or aborting, but this is not a strict requirement. (Specifically: it is <em>legal</em> to implement this trait atop an underlying native allocation library that aborts on memory exhaustion.)</p> <p>Clients wishing to abort computation in response to an allocation error are encouraged to call the <a href="https://doc.rust-lang.org/alloc/alloc/fn.handle_alloc_error.html" target="_blank"><code>handle_alloc_error</code></a> function, rather than directly invoking <code>panic!</code> or similar.</p> </div>
+<h3 id="tymethod.dealloc" class="method"><code id="dealloc.v">unsafe fn <a href="#tymethod.dealloc" class="fnname">dealloc</a>(&amp;mut self, ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>)</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Deallocate the memory referenced by <code>ptr</code>.</p> <h2 id="safety-2" class="section-header">Safety</h2> <p>This function is unsafe because undefined behavior can result if the caller does not ensure all of the following:</p> <ul> <li> <p><code>ptr</code> must denote a block of memory currently allocated via this allocator,</p> </li> <li> <p><code>layout</code> must <em>fit</em> that block of memory,</p> </li> <li> <p>In addition to fitting the block of memory <code>layout</code>, the alignment of the <code>layout</code> must match the alignment used to allocate that block of memory.</p> </li> </ul> </div>
+</div>
+<span class="loading-content">Loading content...</span> <h2 id="provided-methods" class="small-section-header">Provided methods</h2>
+<div class="methods">
+<h3 id="method.usable_size" class="method"><code id="usable_size.v">fn <a href="#method.usable_size" class="fnname">usable_size</a>(&amp;self, layout: &amp;<a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>) -&gt; <a class="primitive" href="../../primitive.tuple/">(</a><a class="primitive" href="../../primitive.usize/">usize</a>, <a class="primitive" href="../../primitive.usize/">usize</a><a class="primitive" href="../../primitive.tuple/">)</a></code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Returns bounds on the guaranteed usable size of a successful allocation created with the specified <code>layout</code>.</p> <p>In particular, if one has a memory block allocated via a given allocator <code>a</code> and layout <code>k</code> where <code>a.usable_size(k)</code> returns <code>(l, u)</code>, then one can pass that block to <code>a.dealloc()</code> with a layout in the size range [l, u].</p> <p>(All implementors of <code>usable_size</code> must ensure that <code>l &lt;= k.size() &lt;= u</code>)</p> <p>Both the lower- and upper-bounds (<code>l</code> and <code>u</code> respectively) are provided, because an allocator based on size classes could misbehave if one attempts to deallocate a block without providing a correct value for its size (i.e., one within the range <code>[l, u]</code>).</p> <p>Clients who wish to make use of excess capacity are encouraged to use the <code>alloc_excess</code> and <code>realloc_excess</code> instead, as this method is constrained to report conservative values that serve as valid bounds for <em>all possible</em> allocation method calls.</p> <p>However, for clients that do not wish to track the capacity returned by <code>alloc_excess</code> locally, this method is likely to produce useful results.</p> </div>
+<h3 id="method.realloc" class="method"><code id="realloc.v">unsafe fn <a href="#method.realloc" class="fnname">realloc</a>(<br>    &amp;mut self, <br>    ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <br>    layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>, <br>    new_size: <a class="primitive" href="../../primitive.usize/">usize</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Returns a pointer suitable for holding data described by a new layout with <code>layout</code>’s alignment and a size given by <code>new_size</code>. To accomplish this, this may extend or shrink the allocation referenced by <code>ptr</code> to fit the new layout.</p> <p>If this returns <code>Ok</code>, then ownership of the memory block referenced by <code>ptr</code> has been transferred to this allocator. The memory may or may not have been freed, and should be considered unusable (unless of course it was transferred back to the caller again via the return value of this method).</p> <p>If this method returns <code>Err</code>, then ownership of the memory block has not been transferred to this allocator, and the contents of the memory block are unaltered.</p> <h2 id="safety-3" class="section-header">Safety</h2> <p>This function is unsafe because undefined behavior can result if the caller does not ensure all of the following:</p> <ul> <li> <p><code>ptr</code> must be currently allocated via this allocator,</p> </li> <li> <p><code>layout</code> must <em>fit</em> the <code>ptr</code> (see above). (The <code>new_size</code> argument need not fit it.)</p> </li> <li> <p><code>new_size</code> must be greater than zero.</p> </li> <li> <p><code>new_size</code>, when rounded up to the nearest multiple of <code>layout.align()</code>, must not overflow (i.e., the rounded value must be less than <code>usize::MAX</code>).</p> </li> </ul> <p>(Extension subtraits might provide more specific bounds on behavior, e.g., guarantee a sentinel address or a null pointer in response to a zero-size allocation request.)</p> <h2 id="errors-1" class="section-header">Errors</h2> <p>Returns <code>Err</code> only if the new layout does not meet the allocator's size and alignment constraints of the allocator, or if reallocation otherwise fails.</p> <p>Implementations are encouraged to return <code>Err</code> on memory exhaustion rather than panicking or aborting, but this is not a strict requirement. (Specifically: it is <em>legal</em> to implement this trait atop an underlying native allocation library that aborts on memory exhaustion.)</p> <p>Clients wishing to abort computation in response to a reallocation error are encouraged to call the <a href="https://doc.rust-lang.org/alloc/alloc/fn.handle_alloc_error.html" target="_blank"><code>handle_alloc_error</code></a> function, rather than directly invoking <code>panic!</code> or similar.</p> </div>
+<h3 id="method.alloc_zeroed" class="method"><code id="alloc_zeroed.v">unsafe fn <a href="#method.alloc_zeroed" class="fnname">alloc_zeroed</a>(<br>    &amp;mut self, <br>    layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Behaves like <code>alloc</code>, but also ensures that the contents are set to zero before being returned.</p> <h2 id="safety-4" class="section-header">Safety</h2> <p>This function is unsafe for the same reasons that <code>alloc</code> is.</p> <h2 id="errors-2" class="section-header">Errors</h2> <p>Returning <code>Err</code> indicates that either memory is exhausted or <code>layout</code> does not meet allocator's size or alignment constraints, just as in <code>alloc</code>.</p> <p>Clients wishing to abort computation in response to an allocation error are encouraged to call the <a href="https://doc.rust-lang.org/alloc/alloc/fn.handle_alloc_error.html" target="_blank"><code>handle_alloc_error</code></a> function, rather than directly invoking <code>panic!</code> or similar.</p> </div>
+<h3 id="method.alloc_excess" class="method"><code id="alloc_excess.v">unsafe fn <a href="#method.alloc_excess" class="fnname">alloc_excess</a>(&amp;mut self, layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../struct.excess/" title="struct std::alloc::Excess">Excess</a>, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Behaves like <code>alloc</code>, but also returns the whole size of the returned block. For some <code>layout</code> inputs, like arrays, this may include extra storage usable for additional data.</p> <h2 id="safety-5" class="section-header">Safety</h2> <p>This function is unsafe for the same reasons that <code>alloc</code> is.</p> <h2 id="errors-3" class="section-header">Errors</h2> <p>Returning <code>Err</code> indicates that either memory is exhausted or <code>layout</code> does not meet allocator's size or alignment constraints, just as in <code>alloc</code>.</p> <p>Clients wishing to abort computation in response to an allocation error are encouraged to call the <a href="https://doc.rust-lang.org/alloc/alloc/fn.handle_alloc_error.html" target="_blank"><code>handle_alloc_error</code></a> function, rather than directly invoking <code>panic!</code> or similar.</p> </div>
+<h3 id="method.realloc_excess" class="method"><code id="realloc_excess.v">unsafe fn <a href="#method.realloc_excess" class="fnname">realloc_excess</a>(<br>    &amp;mut self, <br>    ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <br>    layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>, <br>    new_size: <a class="primitive" href="../../primitive.usize/">usize</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../struct.excess/" title="struct std::alloc::Excess">Excess</a>, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Behaves like <code>realloc</code>, but also returns the whole size of the returned block. For some <code>layout</code> inputs, like arrays, this may include extra storage usable for additional data.</p> <h2 id="safety-6" class="section-header">Safety</h2> <p>This function is unsafe for the same reasons that <code>realloc</code> is.</p> <h2 id="errors-4" class="section-header">Errors</h2> <p>Returning <code>Err</code> indicates that either memory is exhausted or <code>layout</code> does not meet allocator's size or alignment constraints, just as in <code>realloc</code>.</p> <p>Clients wishing to abort computation in response to a reallocation error are encouraged to call the <a href="https://doc.rust-lang.org/alloc/alloc/fn.handle_alloc_error.html" target="_blank"><code>handle_alloc_error</code></a> function, rather than directly invoking <code>panic!</code> or similar.</p> </div>
+<h3 id="method.grow_in_place" class="method"><code id="grow_in_place.v">unsafe fn <a href="#method.grow_in_place" class="fnname">grow_in_place</a>(<br>    &amp;mut self, <br>    ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <br>    layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>, <br>    new_size: <a class="primitive" href="../../primitive.usize/">usize</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>, <a class="struct" href="../struct.cannotreallocinplace/" title="struct std::alloc::CannotReallocInPlace">CannotReallocInPlace</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Attempts to extend the allocation referenced by <code>ptr</code> to fit <code>new_size</code>.</p> <p>If this returns <code>Ok</code>, then the allocator has asserted that the memory block referenced by <code>ptr</code> now fits <code>new_size</code>, and thus can be used to carry data of a layout of that size and same alignment as <code>layout</code>. (The allocator is allowed to expend effort to accomplish this, such as extending the memory block to include successor blocks, or virtual memory tricks.)</p> <p>Regardless of what this method returns, ownership of the memory block referenced by <code>ptr</code> has not been transferred, and the contents of the memory block are unaltered.</p> <h2 id="safety-7" class="section-header">Safety</h2> <p>This function is unsafe because undefined behavior can result if the caller does not ensure all of the following:</p> <ul> <li> <p><code>ptr</code> must be currently allocated via this allocator,</p> </li> <li> <p><code>layout</code> must <em>fit</em> the <code>ptr</code> (see above); note the <code>new_size</code> argument need not fit it,</p> </li> <li> <p><code>new_size</code> must not be less than <code>layout.size()</code>,</p> </li> </ul> <h2 id="errors-5" class="section-header">Errors</h2> <p>Returns <code>Err(CannotReallocInPlace)</code> when the allocator is unable to assert that the memory block referenced by <code>ptr</code> could fit <code>layout</code>.</p> <p>Note that one cannot pass <code>CannotReallocInPlace</code> to the <code>handle_alloc_error</code> function; clients are expected either to be able to recover from <code>grow_in_place</code> failures without aborting, or to fall back on another reallocation method before resorting to an abort.</p> </div>
+<h3 id="method.shrink_in_place" class="method"><code id="shrink_in_place.v">unsafe fn <a href="#method.shrink_in_place" class="fnname">shrink_in_place</a>(<br>    &amp;mut self, <br>    ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <br>    layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>, <br>    new_size: <a class="primitive" href="../../primitive.usize/">usize</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>, <a class="struct" href="../struct.cannotreallocinplace/" title="struct std::alloc::CannotReallocInPlace">CannotReallocInPlace</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Attempts to shrink the allocation referenced by <code>ptr</code> to fit <code>new_size</code>.</p> <p>If this returns <code>Ok</code>, then the allocator has asserted that the memory block referenced by <code>ptr</code> now fits <code>new_size</code>, and thus can only be used to carry data of that smaller layout. (The allocator is allowed to take advantage of this, carving off portions of the block for reuse elsewhere.) The truncated contents of the block within the smaller layout are unaltered, and ownership of block has not been transferred.</p> <p>If this returns <code>Err</code>, then the memory block is considered to still represent the original (larger) <code>layout</code>. None of the block has been carved off for reuse elsewhere, ownership of the memory block has not been transferred, and the contents of the memory block are unaltered.</p> <h2 id="safety-8" class="section-header">Safety</h2> <p>This function is unsafe because undefined behavior can result if the caller does not ensure all of the following:</p> <ul> <li> <p><code>ptr</code> must be currently allocated via this allocator,</p> </li> <li> <p><code>layout</code> must <em>fit</em> the <code>ptr</code> (see above); note the <code>new_size</code> argument need not fit it,</p> </li> <li> <p><code>new_size</code> must not be greater than <code>layout.size()</code> (and must be greater than zero),</p> </li> </ul> <h2 id="errors-6" class="section-header">Errors</h2> <p>Returns <code>Err(CannotReallocInPlace)</code> when the allocator is unable to assert that the memory block referenced by <code>ptr</code> could fit <code>layout</code>.</p> <p>Note that one cannot pass <code>CannotReallocInPlace</code> to the <code>handle_alloc_error</code> function; clients are expected either to be able to recover from <code>shrink_in_place</code> failures without aborting, or to fall back on another reallocation method before resorting to an abort.</p> </div>
+<h3 id="method.alloc_one" class="method"><code id="alloc_one.v">fn <a href="#method.alloc_one" class="fnname">alloc_one</a>&lt;T&gt;(&amp;mut self) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;T&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Allocates a block suitable for holding an instance of <code>T</code>.</p> <p>Captures a common usage pattern for allocators.</p> <p>The returned block is suitable for passing to the <code>alloc</code>/<code>realloc</code> methods of this allocator.</p> <p>Note to implementors: If this returns <code>Ok(ptr)</code>, then <code>ptr</code> must be considered "currently allocated" and must be acceptable input to methods such as <code>realloc</code> or <code>dealloc</code>, <em>even if</em> <code>T</code> is a zero-sized type. In other words, if your <code>Alloc</code> implementation overrides this method in a manner that can return a zero-sized <code>ptr</code>, then all reallocation and deallocation methods need to be similarly overridden to accept such values as input.</p> <h2 id="errors-7" class="section-header">Errors</h2> <p>Returning <code>Err</code> indicates that either memory is exhausted or <code>T</code> does not meet allocator's size or alignment constraints.</p> <p>For zero-sized <code>T</code>, may return either of <code>Ok</code> or <code>Err</code>, but will <em>not</em> yield undefined behavior.</p> <p>Clients wishing to abort computation in response to an allocation error are encouraged to call the <a href="https://doc.rust-lang.org/alloc/alloc/fn.handle_alloc_error.html" target="_blank"><code>handle_alloc_error</code></a> function, rather than directly invoking <code>panic!</code> or similar.</p> </div>
+<h3 id="method.dealloc_one" class="method"><code id="dealloc_one.v">unsafe fn <a href="#method.dealloc_one" class="fnname">dealloc_one</a>&lt;T&gt;(&amp;mut self, ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;T&gt;)</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Deallocates a block suitable for holding an instance of <code>T</code>.</p> <p>The given block must have been produced by this allocator, and must be suitable for storing a <code>T</code> (in terms of alignment as well as minimum and maximum size); otherwise yields undefined behavior.</p> <p>Captures a common usage pattern for allocators.</p> <h2 id="safety-9" class="section-header">Safety</h2> <p>This function is unsafe because undefined behavior can result if the caller does not ensure both:</p> <ul> <li> <p><code>ptr</code> must denote a block of memory currently allocated via this allocator</p> </li> <li> <p>the layout of <code>T</code> must <em>fit</em> that block of memory.</p> </li> </ul> </div>
+<h3 id="method.alloc_array" class="method"><code id="alloc_array.v">fn <a href="#method.alloc_array" class="fnname">alloc_array</a>&lt;T&gt;(&amp;mut self, n: <a class="primitive" href="../../primitive.usize/">usize</a>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;T&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Allocates a block suitable for holding <code>n</code> instances of <code>T</code>.</p> <p>Captures a common usage pattern for allocators.</p> <p>The returned block is suitable for passing to the <code>alloc</code>/<code>realloc</code> methods of this allocator.</p> <p>Note to implementors: If this returns <code>Ok(ptr)</code>, then <code>ptr</code> must be considered "currently allocated" and must be acceptable input to methods such as <code>realloc</code> or <code>dealloc</code>, <em>even if</em> <code>T</code> is a zero-sized type. In other words, if your <code>Alloc</code> implementation overrides this method in a manner that can return a zero-sized <code>ptr</code>, then all reallocation and deallocation methods need to be similarly overridden to accept such values as input.</p> <h2 id="errors-8" class="section-header">Errors</h2> <p>Returning <code>Err</code> indicates that either memory is exhausted or <code>[T; n]</code> does not meet allocator's size or alignment constraints.</p> <p>For zero-sized <code>T</code> or <code>n == 0</code>, may return either of <code>Ok</code> or <code>Err</code>, but will <em>not</em> yield undefined behavior.</p> <p>Always returns <code>Err</code> on arithmetic overflow.</p> <p>Clients wishing to abort computation in response to an allocation error are encouraged to call the <a href="https://doc.rust-lang.org/alloc/alloc/fn.handle_alloc_error.html" target="_blank"><code>handle_alloc_error</code></a> function, rather than directly invoking <code>panic!</code> or similar.</p> </div>
+<h3 id="method.realloc_array" class="method"><code id="realloc_array.v">unsafe fn <a href="#method.realloc_array" class="fnname">realloc_array</a>&lt;T&gt;(<br>    &amp;mut self, <br>    ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;T&gt;, <br>    n_old: <a class="primitive" href="../../primitive.usize/">usize</a>, <br>    n_new: <a class="primitive" href="../../primitive.usize/">usize</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;T&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Reallocates a block previously suitable for holding <code>n_old</code> instances of <code>T</code>, returning a block suitable for holding <code>n_new</code> instances of <code>T</code>.</p> <p>Captures a common usage pattern for allocators.</p> <p>The returned block is suitable for passing to the <code>alloc</code>/<code>realloc</code> methods of this allocator.</p> <h2 id="safety-10" class="section-header">Safety</h2> <p>This function is unsafe because undefined behavior can result if the caller does not ensure all of the following:</p> <ul> <li> <p><code>ptr</code> must be currently allocated via this allocator,</p> </li> <li> <p>the layout of <code>[T; n_old]</code> must <em>fit</em> that block of memory.</p> </li> </ul> <h2 id="errors-9" class="section-header">Errors</h2> <p>Returning <code>Err</code> indicates that either memory is exhausted or <code>[T; n_new]</code> does not meet allocator's size or alignment constraints.</p> <p>For zero-sized <code>T</code> or <code>n_new == 0</code>, may return either of <code>Ok</code> or <code>Err</code>, but will <em>not</em> yield undefined behavior.</p> <p>Always returns <code>Err</code> on arithmetic overflow.</p> <p>Clients wishing to abort computation in response to a reallocation error are encouraged to call the <a href="https://doc.rust-lang.org/alloc/alloc/fn.handle_alloc_error.html" target="_blank"><code>handle_alloc_error</code></a> function, rather than directly invoking <code>panic!</code> or similar.</p> </div>
+<h3 id="method.dealloc_array" class="method"><code id="dealloc_array.v">unsafe fn <a href="#method.dealloc_array" class="fnname">dealloc_array</a>&lt;T&gt;(<br>    &amp;mut self, <br>    ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;T&gt;, <br>    n: <a class="primitive" href="../../primitive.usize/">usize</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code></h3>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<div class="docblock">
+<p>Deallocates a block suitable for holding <code>n</code> instances of <code>T</code>.</p> <p>Captures a common usage pattern for allocators.</p> <h2 id="safety-11" class="section-header">Safety</h2> <p>This function is unsafe because undefined behavior can result if the caller does not ensure both:</p> <ul> <li> <p><code>ptr</code> must denote a block of memory currently allocated via this allocator</p> </li> <li> <p>the layout of <code>[T; n]</code> must <em>fit</em> that block of memory.</p> </li> </ul> <h2 id="errors-10" class="section-header">Errors</h2> <p>Returning <code>Err</code> indicates that either <code>[T; n]</code> or the given memory block does not meet allocator's size or alignment constraints.</p> <p>Always returns <code>Err</code> on arithmetic overflow.</p> </div>
+</div>
+<span class="loading-content">Loading content...</span> <h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-Alloc" class="impl">
+<code class="in-band">impl Alloc for <a class="struct" href="../struct.global/" title="struct std::alloc::Global">Global</a></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/alloc.rs.html#167-192" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.alloc" class="method hidden">
+<code id="alloc.v-1">unsafe fn <a href="#method.alloc" class="fnname">alloc</a>(&amp;mut self, layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/alloc.rs.html#169-171" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="stability hidden"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<h4 id="method.dealloc" class="method hidden">
+<code id="dealloc.v-1">unsafe fn <a href="#method.dealloc" class="fnname">dealloc</a>(&amp;mut self, ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/alloc.rs.html#174-176" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="stability hidden"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<h4 id="method.realloc-1" class="method hidden">
+<code id="realloc.v-1">unsafe fn <a href="#method.realloc-1" class="fnname">realloc</a>(<br>    &amp;mut self, <br>    ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <br>    layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>, <br>    new_size: <a class="primitive" href="../../primitive.usize/">usize</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/alloc.rs.html#179-186" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="stability hidden"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<h4 id="method.alloc_zeroed-1" class="method hidden">
+<code id="alloc_zeroed.v-1">unsafe fn <a href="#method.alloc_zeroed-1" class="fnname">alloc_zeroed</a>(<br>    &amp;mut self, <br>    layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/alloc.rs.html#189-191" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="stability hidden"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+</div>
+<h3 id="impl-Alloc-1" class="impl">
+<code class="in-band">impl Alloc for <a class="struct" href="../struct.system/" title="struct std::alloc::System">System</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/alloc.rs.html#138-161" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.alloc-1" class="method hidden">
+<code id="alloc.v-2">unsafe fn <a href="#method.alloc-1" class="fnname">alloc</a>(&amp;mut self, layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/alloc.rs.html#140-142" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="stability hidden"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<h4 id="method.alloc_zeroed-2" class="method hidden">
+<code id="alloc_zeroed.v-2">unsafe fn <a href="#method.alloc_zeroed-2" class="fnname">alloc_zeroed</a>(<br>    &amp;mut self, <br>    layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/alloc.rs.html#145-147" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="stability hidden"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<h4 id="method.dealloc-1" class="method hidden">
+<code id="dealloc.v-2">unsafe fn <a href="#method.dealloc-1" class="fnname">dealloc</a>(&amp;mut self, ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/alloc.rs.html#150-152" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="stability hidden"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+<h4 id="method.realloc-2" class="method hidden">
+<code id="realloc.v-2">unsafe fn <a href="#method.realloc-2" class="fnname">realloc</a>(<br>    &amp;mut self, <br>    ptr: <a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <br>    layout: <a class="struct" href="../struct.layout/" title="struct std::alloc::Layout">Layout</a>, <br>    new_size: <a class="primitive" href="../../primitive.usize/">usize</a><br>) -&gt; <a class="enum" href="../../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="struct" href="../../ptr/struct.nonnull/" title="struct std::ptr::NonNull">NonNull</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;, <a class="struct" href="../struct.allocerr/" title="struct std::alloc::AllocErr">AllocErr</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/alloc.rs.html#155-160" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="stability hidden"><span class="stab unstable">🔬 This is a nightly-only experimental API. (allocator_api #32838)</span></div>
+</div>
+</div>
+<span class="loading-content">Loading content...</span><div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/alloc/trait.Alloc.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/alloc/trait.Alloc.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

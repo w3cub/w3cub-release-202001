@@ -1,0 +1,867 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;convert&#58;&#58;AsRef - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Used to do a cheap reference-to-reference conversion. ">
+  <meta name="keywords" content="trait, std, convert, asref, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/convert/trait.asref/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 class="fqn">Trait std::convert::AsRef</h1>
+<pre class="rust trait" data-language="rust">pub trait AsRef&lt;T&gt; where    T: ?Sized, {
+    fn as_ref(&amp;self) -&gt; &amp;T;
+}</pre>
+<p>Used to do a cheap reference-to-reference conversion.</p> <p>This trait is similar to <a href="../trait.asmut/" title="`AsMut`"><code>AsMut</code></a> which is used for converting between mutable references. If you need to do a costly conversion it is better to implement <a href="../trait.from/" title="`From`"><code>From</code></a> with type <code>&amp;T</code> or write a custom function.</p> <p><code>AsRef</code> has the same signature as <a href="../../borrow/trait.borrow/"><code>Borrow</code></a>, but <code>Borrow</code> is different in few aspects:</p> <ul> <li>Unlike <code>AsRef</code>, <code>Borrow</code> has a blanket impl for any <code>T</code>, and can be used to accept either a reference or a value.</li> <li>
+<code>Borrow</code> also requires that <code>Hash</code>, <code>Eq</code> and <code>Ord</code> for borrowed value are equivalent to those of the owned value. For this reason, if you want to borrow only a single field of a struct you can implement <code>AsRef</code>, but not <code>Borrow</code>.</li> </ul> <p><strong>Note: This trait must not fail</strong>. If the conversion can fail, use a dedicated method which returns an <a href="../../option/enum.option/"><code>Option&lt;T&gt;</code></a> or a <a href="../../result/enum.result/"><code>Result&lt;T, E&gt;</code></a>.</p> <h2 id="generic-implementations" class="section-header">Generic Implementations</h2> <ul> <li>
+<code>AsRef</code> auto-dereferences if the inner type is a reference or a mutable reference (e.g.: <code>foo.as_ref()</code> will work the same if <code>foo</code> has type <code>&amp;mut Foo</code> or <code>&amp;&amp;mut Foo</code>)</li> </ul> <h2 id="examples" class="section-header">Examples</h2> <p>By using trait bounds we can accept arguments of different types as long as they can be converted to the specified type <code>T</code>.</p> <p>For example: By creating a generic function that takes an <code>AsRef&lt;str&gt;</code> we express that we want to accept all references that can be converted to <code>&amp;str</code> as an argument. Since both <a href="../../string/struct.string/"><code>String</code></a> and <code>&amp;str</code> implement <code>AsRef&lt;str&gt;</code> we can accept both as input argument.</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+fn is_hello&lt;T: AsRef&lt;str&gt;&gt;(s: T) {
+   assert_eq!("hello", s.as_ref());
+}
+
+let s = "hello";
+is_hello(s);
+
+let s = "hello".to_string();
+is_hello(s);</pre></div>  <h2 id="required-methods" class="small-section-header">Required methods</h2>
+<div class="methods">
+<h3 id="tymethod.as_ref" class="method"><code id="as_ref.v">fn <a href="#tymethod.as_ref" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code></h3>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>F<pre class="content">impl&lt;'_, F&gt; Future for &amp;'_ mut F where
+    F: Unpin + Future + ?Sized, 
+    type Output = &lt;F as Future&gt;::Output;
+impl&lt;'_, I&gt; Iterator for &amp;'_ mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'_, R: Read + ?Sized&gt; Read for &amp;'_ mut R
+impl&lt;'_, W: Write + ?Sized&gt; Write for &amp;'_ mut W
+</pre>
+</div>
+<div class="docblock">
+<p>Performs the conversion.</p> </div>
+</div>
+<span class="loading-content">Loading content...</span> <h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-AsRef%3C%5Bu8%5D%3E" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.str/">str</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/str/mod.rs.html#4157-4162" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref" class="method hidden">
+<code id="as_ref.v-1">fn <a href="#method.as_ref" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/str/mod.rs.html#4159-4161" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5Bu8%5D%3E-1" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2177-2182" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-1" class="method hidden">
+<code id="as_ref.v-2">fn <a href="#method.as_ref-1" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2179-2181" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3Cstr%3E" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="primitive" href="../../primitive.str/">str</a>&gt; for <a class="primitive" href="../../primitive.str/">str</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#592-597" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-2" class="method hidden">
+<code id="as_ref.v-3">fn <a href="#method.as_ref-2" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="primitive" href="../../primitive.str/">str</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#594-596" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3Cstr%3E-1" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="primitive" href="../../primitive.str/">str</a>&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2169-2174" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-3" class="method hidden">
+<code id="as_ref.v-4">fn <a href="#method.as_ref-3" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="primitive" href="../../primitive.str/">str</a></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2171-2173" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CCStr%3E" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a>&gt; for <a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#1293-1298" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-4" class="method hidden">
+<code id="as_ref.v-5">fn <a href="#method.as_ref-4" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#1295-1297" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CCStr%3E-1" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a>&gt; for <a class="struct" href="../../ffi/struct.cstring/" title="struct std::ffi::CString">CString</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#1301-1306" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-5" class="method hidden">
+<code id="as_ref.v-6">fn <a href="#method.as_ref-5" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.cstr/" title="struct std::ffi::CStr">CStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#1303-1305" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3COsStr%3E" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for <a class="primitive" href="../../primitive.str/">str</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#939-943" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-6" class="method hidden">
+<code id="as_ref.v-7">fn <a href="#method.as_ref-6" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#940-942" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3COsStr%3E-1" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for <a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#925-929" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-7" class="method hidden">
+<code id="as_ref.v-8">fn <a href="#method.as_ref-7" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#926-928" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3COsStr%3E-2" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for <a class="struct" href="../../ffi/struct.osstring/" title="struct std::ffi::OsString">OsString</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#932-936" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-8" class="method hidden">
+<code id="as_ref.v-9">fn <a href="#method.as_ref-8" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#933-935" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3COsStr%3E-3" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for <a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2573-2577" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-9" class="method hidden">
+<code id="as_ref.v-10">fn <a href="#method.as_ref-9" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2574-2576" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3COsStr%3E-4" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for <a class="struct" href="../../path/struct.pathbuf/" title="struct std::path::PathBuf">PathBuf</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#1705-1709" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-10" class="method hidden">
+<code id="as_ref.v-11">fn <a href="#method.as_ref-10" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#1706-1708" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3COsStr%3E-5" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#946-950" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-11" class="method hidden">
+<code id="as_ref.v-12">fn <a href="#method.as_ref-11" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/os_str.rs.html#947-949" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="primitive" href="../../primitive.str/">str</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2687-2691" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-12" class="method hidden">
+<code id="as_ref.v-13">fn <a href="#method.as_ref-12" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2688-2690" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E-1" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2666-2670" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-13" class="method hidden">
+<code id="as_ref.v-14">fn <a href="#method.as_ref-13" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2667-2669" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E-2" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="struct" href="../../ffi/struct.osstring/" title="struct std::ffi::OsString">OsString</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2680-2684" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-14" class="method hidden">
+<code id="as_ref.v-15">fn <a href="#method.as_ref-14" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2681-2683" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E-3" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2659-2663" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-15" class="method hidden">
+<code id="as_ref.v-16">fn <a href="#method.as_ref-15" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2660-2662" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E-4" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="struct" href="../../path/struct.pathbuf/" title="struct std::path::PathBuf">PathBuf</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2701-2705" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-16" class="method hidden">
+<code id="as_ref.v-17">fn <a href="#method.as_ref-16" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2702-2704" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E-5" class="impl">
+<code class="in-band">impl AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="struct" href="../../string/struct.string/" title="struct std::string::String">String</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2694-2698" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-17" class="method hidden">
+<code id="as_ref.v-18">fn <a href="#method.as_ref-17" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2695-2697" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3COsStr%3E-6" class="impl">
+<code class="in-band">impl&lt;'_&gt; AsRef&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for <a class="enum" href="../../path/enum.component/" title="enum std::path::Component">Component</a>&lt;'_&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#565-569" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-18" class="method hidden">
+<code id="as_ref.v-19">fn <a href="#method.as_ref-18" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#566-568" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3COsStr%3E-7" class="impl">
+<code class="in-band">impl&lt;'_&gt; AsRef&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for <a class="struct" href="../../path/struct.components/" title="struct std::path::Components">Components</a>&lt;'_&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#825-829" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-19" class="method hidden">
+<code id="as_ref.v-20">fn <a href="#method.as_ref-19" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#826-828" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3COsStr%3E-8" class="impl">
+<code class="in-band">impl&lt;'_&gt; AsRef&lt;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt; for std::path::<a class="struct" href="../../path/struct.iter/" title="struct std::path::Iter">Iter</a>&lt;'_&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#878-882" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-20" class="method hidden">
+<code id="as_ref.v-21">fn <a href="#method.as_ref-20" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#879-881" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E-6" class="impl">
+<code class="in-band">impl&lt;'_&gt; AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'_, <a class="struct" href="../../ffi/struct.osstr/" title="struct std::ffi::OsStr">OsStr</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2673-2677" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-21" class="method hidden">
+<code id="as_ref.v-22">fn <a href="#method.as_ref-21" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#2674-2676" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E-7" class="impl">
+<code class="in-band">impl&lt;'_&gt; AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="enum" href="../../path/enum.component/" title="enum std::path::Component">Component</a>&lt;'_&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#572-576" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-22" class="method hidden">
+<code id="as_ref.v-23">fn <a href="#method.as_ref-22" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#573-575" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E-8" class="impl">
+<code class="in-band">impl&lt;'_&gt; AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for <a class="struct" href="../../path/struct.components/" title="struct std::path::Components">Components</a>&lt;'_&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#818-822" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-23" class="method hidden">
+<code id="as_ref.v-24">fn <a href="#method.as_ref-23" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#819-821" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3CPath%3E-9" class="impl">
+<code class="in-band">impl&lt;'_&gt; AsRef&lt;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a>&gt; for std::path::<a class="struct" href="../../path/struct.iter/" title="struct std::path::Iter">Iter</a>&lt;'_&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#871-875" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.as_ref-24" class="method hidden">
+<code id="as_ref.v-25">fn <a href="#method.as_ref-24" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../path/struct.path/" title="struct std::path::Path">Path</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/path.rs.html#872-874" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E" class="impl">
+<code class="in-band">impl&lt;'_, T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for std::slice::<a class="struct" href="../../slice/struct.iter/" title="struct std::slice::Iter">Iter</a>&lt;'_, T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#3389-3393" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-25" class="method hidden">
+<code id="as_ref.v-26">fn <a href="#method.as_ref-25" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#3390-3392" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3CT%3E" class="impl">
+<code class="in-band">impl&lt;'_, T&gt; AsRef&lt;T&gt; for <a class="enum" href="../../borrow/enum.cow/" title="enum std::borrow::Cow">Cow</a>&lt;'_, T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../borrow/trait.toowned/" title="trait std::borrow::ToOwned">ToOwned</a> + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/borrow.rs.html#378-382" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-26" class="method hidden">
+<code id="as_ref.v-27">fn <a href="#method.as_ref-26" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/borrow.rs.html#379-381" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>F<pre class="content">impl&lt;'_, F&gt; Future for &amp;'_ mut F where
+    F: Unpin + Future + ?Sized, 
+    type Output = &lt;F as Future&gt;::Output;
+impl&lt;'_, I&gt; Iterator for &amp;'_ mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'_, R: Read + ?Sized&gt; Read for &amp;'_ mut R
+impl&lt;'_, W: Write + ?Sized&gt; Write for &amp;'_ mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3CU%3E" class="impl">
+<code class="in-band">impl&lt;'_, T, U&gt; AsRef&lt;U&gt; for <a class="primitive" href="../../primitive.reference/">&amp;'_ </a>T <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.asref/" title="trait std::convert::AsRef">AsRef</a>&lt;U&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>,<br>    U: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#494-499" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-27" class="method hidden">
+<code id="as_ref.v-28">fn <a href="#method.as_ref-27" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>U</code><a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#496-498" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>F<pre class="content">impl&lt;'_, F&gt; Future for &amp;'_ mut F where
+    F: Unpin + Future + ?Sized, 
+    type Output = &lt;F as Future&gt;::Output;
+impl&lt;'_, I&gt; Iterator for &amp;'_ mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'_, R: Read + ?Sized&gt; Read for &amp;'_ mut R
+impl&lt;'_, W: Write + ?Sized&gt; Write for &amp;'_ mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3CU%3E-1" class="impl">
+<code class="in-band">impl&lt;'_, T, U&gt; AsRef&lt;U&gt; for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>T <span class="where fmt-newline">where<br>    T: <a class="trait" href="../trait.asref/" title="trait std::convert::AsRef">AsRef</a>&lt;U&gt; + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>,<br>    U: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#503-508" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-28" class="method hidden">
+<code id="as_ref.v-29">fn <a href="#method.as_ref-28" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>U</code><a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#505-507" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>F<pre class="content">impl&lt;'_, F&gt; Future for &amp;'_ mut F where
+    F: Unpin + Future + ?Sized, 
+    type Output = &lt;F as Future&gt;::Output;
+impl&lt;'_, I&gt; Iterator for &amp;'_ mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'_, R: Read + ?Sized&gt; Read for &amp;'_ mut R
+impl&lt;'_, W: Write + ?Sized&gt; Write for &amp;'_ mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-1" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 0]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-29" class="method hidden">
+<code id="as_ref.v-30">fn <a href="#method.as_ref-29" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-2" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 1]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-30" class="method hidden">
+<code id="as_ref.v-31">fn <a href="#method.as_ref-30" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-3" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 2]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-31" class="method hidden">
+<code id="as_ref.v-32">fn <a href="#method.as_ref-31" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-4" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 3]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-32" class="method hidden">
+<code id="as_ref.v-33">fn <a href="#method.as_ref-32" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-5" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 4]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-33" class="method hidden">
+<code id="as_ref.v-34">fn <a href="#method.as_ref-33" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-6" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 5]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-34" class="method hidden">
+<code id="as_ref.v-35">fn <a href="#method.as_ref-34" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-7" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 6]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-35" class="method hidden">
+<code id="as_ref.v-36">fn <a href="#method.as_ref-35" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-8" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 7]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-36" class="method hidden">
+<code id="as_ref.v-37">fn <a href="#method.as_ref-36" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-9" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 8]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-37" class="method hidden">
+<code id="as_ref.v-38">fn <a href="#method.as_ref-37" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-10" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 9]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-38" class="method hidden">
+<code id="as_ref.v-39">fn <a href="#method.as_ref-38" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-11" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 10]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-39" class="method hidden">
+<code id="as_ref.v-40">fn <a href="#method.as_ref-39" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-12" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 11]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-40" class="method hidden">
+<code id="as_ref.v-41">fn <a href="#method.as_ref-40" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-13" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 12]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-41" class="method hidden">
+<code id="as_ref.v-42">fn <a href="#method.as_ref-41" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-14" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 13]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-42" class="method hidden">
+<code id="as_ref.v-43">fn <a href="#method.as_ref-42" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-15" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 14]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-43" class="method hidden">
+<code id="as_ref.v-44">fn <a href="#method.as_ref-43" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-16" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 15]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-44" class="method hidden">
+<code id="as_ref.v-45">fn <a href="#method.as_ref-44" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-17" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 16]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-45" class="method hidden">
+<code id="as_ref.v-46">fn <a href="#method.as_ref-45" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-18" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 17]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-46" class="method hidden">
+<code id="as_ref.v-47">fn <a href="#method.as_ref-46" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-19" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 18]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-47" class="method hidden">
+<code id="as_ref.v-48">fn <a href="#method.as_ref-47" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-20" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 19]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-48" class="method hidden">
+<code id="as_ref.v-49">fn <a href="#method.as_ref-48" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-21" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 20]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-49" class="method hidden">
+<code id="as_ref.v-50">fn <a href="#method.as_ref-49" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-22" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 21]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-50" class="method hidden">
+<code id="as_ref.v-51">fn <a href="#method.as_ref-50" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-23" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 22]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-51" class="method hidden">
+<code id="as_ref.v-52">fn <a href="#method.as_ref-51" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-24" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 23]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-52" class="method hidden">
+<code id="as_ref.v-53">fn <a href="#method.as_ref-52" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-25" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 24]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-53" class="method hidden">
+<code id="as_ref.v-54">fn <a href="#method.as_ref-53" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-26" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 25]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-54" class="method hidden">
+<code id="as_ref.v-55">fn <a href="#method.as_ref-54" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-27" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 26]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-55" class="method hidden">
+<code id="as_ref.v-56">fn <a href="#method.as_ref-55" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-28" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 27]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-56" class="method hidden">
+<code id="as_ref.v-57">fn <a href="#method.as_ref-56" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-29" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 28]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-57" class="method hidden">
+<code id="as_ref.v-58">fn <a href="#method.as_ref-57" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-30" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 29]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-58" class="method hidden">
+<code id="as_ref.v-59">fn <a href="#method.as_ref-58" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-31" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 30]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-59" class="method hidden">
+<code id="as_ref.v-60">fn <a href="#method.as_ref-59" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-32" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 31]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-60" class="method hidden">
+<code id="as_ref.v-61">fn <a href="#method.as_ref-60" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-33" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.array/">[</a>T<a class="primitive" href="../../primitive.array/">; 32]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#121-126" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-61" class="method hidden">
+<code id="as_ref.v-62">fn <a href="#method.as_ref-61" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/array.rs.html#123-125" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-34" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#578-582" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-62" class="method hidden">
+<code id="as_ref.v-63">fn <a href="#method.as_ref-62" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/convert.rs.html#579-581" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3C%5BT%5D%3E-35" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="primitive" href="../../primitive.slice/">[</a>T<a class="primitive" href="../../primitive.slice/">]</a>&gt; for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2243-2247" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-63" class="method hidden">
+<code id="as_ref.v-64">fn <a href="#method.as_ref-63" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.slice/">&amp;[T]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2244-2246" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.slice/">&amp;'_ [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a><pre class="content">impl&lt;'_&gt; Read for &amp;'_ [u8]
+impl&lt;'_&gt; Write for &amp;'_ mut [u8]
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3CVec%3CT%3E%3E" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;<a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt;&gt; for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2229-2233" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-64" class="method hidden">
+<code id="as_ref.v-65">fn <a href="#method.as_ref-64" class="fnname">as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2230-2232" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;<pre class="content">impl Write for Vec&lt;u8&gt;
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3CT%3E-1" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;T&gt; for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#843-847" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-65" class="method hidden">
+<code id="as_ref.v-66">fn <a href="#method.as_ref-65" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#844-846" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>F<pre class="content">impl&lt;'_, F&gt; Future for &amp;'_ mut F where
+    F: Unpin + Future + ?Sized, 
+    type Output = &lt;F as Future&gt;::Output;
+impl&lt;'_, I&gt; Iterator for &amp;'_ mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'_, R: Read + ?Sized&gt; Read for &amp;'_ mut R
+impl&lt;'_, W: Write + ?Sized&gt; Write for &amp;'_ mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3CT%3E-2" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;T&gt; for <a class="struct" href="../../rc/struct.rc/" title="struct std::rc::Rc">Rc</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#2155-2159" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-66" class="method hidden">
+<code id="as_ref.v-67">fn <a href="#method.as_ref-66" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#2156-2158" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>F<pre class="content">impl&lt;'_, F&gt; Future for &amp;'_ mut F where
+    F: Unpin + Future + ?Sized, 
+    type Output = &lt;F as Future&gt;::Output;
+impl&lt;'_, I&gt; Iterator for &amp;'_ mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'_, R: Read + ?Sized&gt; Read for &amp;'_ mut R
+impl&lt;'_, W: Write + ?Sized&gt; Write for &amp;'_ mut W
+</pre>
+</div>
+</div>
+<h3 id="impl-AsRef%3CT%3E-3" class="impl">
+<code class="in-band">impl&lt;T&gt; AsRef&lt;T&gt; for <a class="struct" href="../../sync/struct.arc/" title="struct std::sync::Arc">Arc</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#2279-2283" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.as_ref-67" class="method hidden">
+<code id="as_ref.v-68">fn <a href="#method.as_ref-67" class="fnname">as_ref</a>(&amp;self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;</a>T</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#2280-2282" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>F<pre class="content">impl&lt;'_, F&gt; Future for &amp;'_ mut F where
+    F: Unpin + Future + ?Sized, 
+    type Output = &lt;F as Future&gt;::Output;
+impl&lt;'_, I&gt; Iterator for &amp;'_ mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'_, R: Read + ?Sized&gt; Read for &amp;'_ mut R
+impl&lt;'_, W: Write + ?Sized&gt; Write for &amp;'_ mut W
+</pre>
+</div>
+</div>
+</div>
+<span class="loading-content">Loading content...</span><div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/convert/trait.AsRef.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/convert/trait.AsRef.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,578 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;io&#58;&#58;Write - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" A trait for objects which are byte-oriented sinks. ">
+  <meta name="keywords" content="trait, std, io, write, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/io/trait.write/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 class="fqn">Trait std::io::Write</h1>
+<pre class="rust trait" data-language="rust">pub trait Write {
+    fn write(&amp;mut self, buf: &amp;[u8]) -&gt; Result&lt;usize&gt;;
+    fn flush(&amp;mut self) -&gt; Result&lt;()&gt;;
+
+    fn write_vectored(&amp;mut self, bufs: &amp;[IoSlice]) -&gt; Result&lt;usize&gt; { ... }
+    fn write_all(&amp;mut self, buf: &amp;[u8]) -&gt; Result&lt;()&gt; { ... }
+    fn write_fmt(&amp;mut self, fmt: Arguments) -&gt; Result&lt;()&gt; { ... }
+    fn by_ref(&amp;mut self) -&gt; &amp;mut Self    where        Self: Sized,
+    { ... }
+}</pre>
+<p>A trait for objects which are byte-oriented sinks.</p> <p>Implementors of the <code>Write</code> trait are sometimes called 'writers'.</p> <p>Writers are defined by two required methods, <a href="#tymethod.write"><code>write</code></a> and <a href="#tymethod.flush"><code>flush</code></a>:</p> <ul> <li> <p>The <a href="#tymethod.write"><code>write</code></a> method will attempt to write some data into the object, returning how many bytes were successfully written.</p> </li> <li> <p>The <a href="#tymethod.flush"><code>flush</code></a> method is useful for adaptors and explicit buffers themselves for ensuring that all buffered data has been pushed out to the 'true sink'.</p> </li> </ul> <p>Writers are intended to be composable with one another. Many implementors throughout <a href="../"><code>std::io</code></a> take and provide types which implement the <code>Write</code> trait.</p> <h2 id="examples" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::io::prelude::*;
+use std::fs::File;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let data = b"some bytes";
+
+    let mut pos = 0;
+    let mut buffer = File::create("foo.txt")?;
+
+    while pos &lt; data.len() {
+        let bytes_written = buffer.write(&amp;data[pos..])?;
+        pos += bytes_written;
+    }
+    Ok(())
+}</pre></div> <p>The trait also provides convenience methods like <a href="#method.write_all"><code>write_all</code></a>, which calls <code>write</code> in a loop until its entire input has been written.</p>  <h2 id="required-methods" class="small-section-header">Required methods</h2>
+<div class="methods">
+<h3 id="tymethod.write" class="method"><code id="write.v">fn <a href="#tymethod.write" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code></h3>
+<div class="docblock">
+<p>Write a buffer into this writer, returning how many bytes were written.</p> <p>This function will attempt to write the entire contents of <code>buf</code>, but the entire write may not succeed, or the write may also generate an error. A call to <code>write</code> represents <em>at most one</em> attempt to write to any wrapped object.</p> <p>Calls to <code>write</code> are not guaranteed to block waiting for data to be written, and a write which would otherwise block can be indicated through an <a href="../../result/enum.result/#variant.Err"><code>Err</code></a> variant.</p> <p>If the return value is <a href="../../result/enum.result/#variant.Ok"><code>Ok(n)</code></a> then it must be guaranteed that <code>0 &lt;= n &lt;= buf.len()</code>. A return value of <code>0</code> typically means that the underlying object is no longer able to accept bytes and will likely not be able to in the future as well, or that the buffer provided is empty.</p> <h2 id="errors" class="section-header">Errors</h2> <p>Each call to <code>write</code> may generate an I/O error indicating that the operation could not be completed. If an error is returned then no bytes in the buffer were written to this writer.</p> <p>It is <strong>not</strong> considered an error if the entire buffer could not be written to this writer.</p> <p>An error of the <a href="../enum.errorkind/#variant.Interrupted"><code>ErrorKind::Interrupted</code></a> kind is non-fatal and the write operation should be retried if there is nothing else to do.</p> <h2 id="examples-1" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::io::prelude::*;
+use std::fs::File;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let mut buffer = File::create("foo.txt")?;
+
+    // Writes some prefix of the byte string, not necessarily all of it.
+    buffer.write(b"some bytes")?;
+    Ok(())
+}</pre></div> </div>
+<h3 id="tymethod.flush" class="method"><code id="flush.v">fn <a href="#tymethod.flush" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code></h3>
+<div class="docblock">
+<p>Flush this output stream, ensuring that all intermediately buffered contents reach their destination.</p> <h2 id="errors-1" class="section-header">Errors</h2> <p>It is considered an error if not all bytes could be written due to I/O errors or EOF being reached.</p> <h2 id="examples-2" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::io::prelude::*;
+use std::io::BufWriter;
+use std::fs::File;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let mut buffer = BufWriter::new(File::create("foo.txt")?);
+
+    buffer.write_all(b"some bytes")?;
+    buffer.flush()?;
+    Ok(())
+}</pre></div> </div>
+</div>
+<span class="loading-content">Loading content...</span> <h2 id="provided-methods" class="small-section-header">Provided methods</h2>
+<div class="methods">
+<h3 id="method.write_vectored" class="method">
+<code id="write_vectored.v">fn <a href="#method.write_vectored" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><span class="since" title="Stable since Rust version 1.36.0">1.36.0</span>
+</h3>
+<div class="docblock">
+<p>Like <code>write</code>, except that it writes from a slice of buffers.</p> <p>Data is copied to from each buffer in order, with the final buffer read from possibly being only partially consumed. This method must behave as a call to <code>write</code> with the buffers concatenated would.</p> <p>The default implementation calls <code>write</code> with either the first nonempty buffer provided, or an empty one if none exists.</p> </div>
+<h3 id="method.write_all" class="method"><code id="write_all.v">fn <a href="#method.write_all" class="fnname">write_all</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code></h3>
+<div class="docblock">
+<p>Attempts to write an entire buffer into this writer.</p> <p>This method will continuously call <a href="#tymethod.write"><code>write</code></a> until there is no more data to be written or an error of non-<a href="../enum.errorkind/#variant.Interrupted"><code>ErrorKind::Interrupted</code></a> kind is returned. This method will not return until the entire buffer has been successfully written or such an error occurs. The first error that is not of <a href="../enum.errorkind/#variant.Interrupted"><code>ErrorKind::Interrupted</code></a> kind generated from this method will be returned.</p> <h2 id="errors-2" class="section-header">Errors</h2> <p>This function will return the first error of non-<a href="../enum.errorkind/#variant.Interrupted"><code>ErrorKind::Interrupted</code></a> kind that <a href="#tymethod.write"><code>write</code></a> returns.</p> <h2 id="examples-3" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::io::prelude::*;
+use std::fs::File;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let mut buffer = File::create("foo.txt")?;
+
+    buffer.write_all(b"some bytes")?;
+    Ok(())
+}</pre></div> </div>
+<h3 id="method.write_fmt" class="method"><code id="write_fmt.v">fn <a href="#method.write_fmt" class="fnname">write_fmt</a>(&amp;mut self, fmt: <a class="struct" href="../../fmt/struct.arguments/" title="struct std::fmt::Arguments">Arguments</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code></h3>
+<div class="docblock">
+<p>Writes a formatted string into this writer, returning any error encountered.</p> <p>This method is primarily used to interface with the <a href="../../macro.format_args/"><code>format_args!</code></a> macro, but it is rare that this should explicitly be called. The <a href="../../macro.write/"><code>write!</code></a> macro should be favored to invoke this method instead.</p> <p>This function internally uses the <a href="#method.write_all"><code>write_all</code></a> method on this trait and hence will continuously write data so long as no errors are received. This also means that partial writes are not indicated in this signature.</p> <h2 id="errors-3" class="section-header">Errors</h2> <p>This function will return any I/O error reported while formatting.</p> <h2 id="examples-4" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::io::prelude::*;
+use std::fs::File;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let mut buffer = File::create("foo.txt")?;
+
+    // this call
+    write!(buffer, "{:.*}", 2, 1.234567)?;
+    // turns into this:
+    buffer.write_fmt(format_args!("{:.*}", 2, 1.234567))?;
+    Ok(())
+}</pre></div> </div>
+<h3 id="method.by_ref" class="method"><code id="by_ref.v">fn <a href="#method.by_ref" class="fnname">by_ref</a>(&amp;mut self) -&gt; <a class="primitive" href="../../primitive.reference/">&amp;mut </a>Self <span class="where fmt-newline">where<br>    Self: <a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code></h3>
+<div class="important-traits">ⓘImportant traits for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>F<pre class="content">impl&lt;'_, F&gt; Future for &amp;'_ mut F where
+    F: Unpin + Future + ?Sized, 
+    type Output = &lt;F as Future&gt;::Output;
+impl&lt;'_, I&gt; Iterator for &amp;'_ mut I where
+    I: Iterator + ?Sized, 
+    type Item = &lt;I as Iterator&gt;::Item;
+impl&lt;'_, R: Read + ?Sized&gt; Read for &amp;'_ mut R
+impl&lt;'_, W: Write + ?Sized&gt; Write for &amp;'_ mut W
+</pre>
+</div>
+<div class="docblock">
+<p>Creates a "by reference" adaptor for this instance of <code>Write</code>.</p> <p>The returned adaptor also implements <code>Write</code> and will simply borrow this current writer.</p> <h2 id="examples-5" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::io::Write;
+use std::fs::File;
+
+fn main() -&gt; std::io::Result&lt;()&gt; {
+    let mut buffer = File::create("foo.txt")?;
+
+    let reference = buffer.by_ref();
+
+    // we can use reference just like our original buffer
+    reference.write_all(b"some bytes")?;
+    Ok(())
+}</pre></div> </div>
+</div>
+<span class="loading-content">Loading content...</span> <h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-Write" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../../fs/struct.file/" title="struct std::fs::File">File</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/fs.rs.html#630-640" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write" class="method hidden">
+<code id="write.v-1">fn <a href="#method.write" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/fs.rs.html#631-633" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-1" class="method hidden">
+<code id="write_vectored.v-1">fn <a href="#method.write_vectored-1" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/fs.rs.html#635-637" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush" class="method hidden">
+<code id="flush.v-1">fn <a href="#method.flush" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/fs.rs.html#639" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-1" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../struct.cursor/" title="struct std::io::Cursor">Cursor</a>&lt;<a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;<a class="primitive" href="../../primitive.slice/">[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>&gt;&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#379-392" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-1" class="method hidden">
+<code id="write.v-2">fn <a href="#method.write-1" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#381-383" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-2" class="method hidden">
+<code id="write_vectored.v-2">fn <a href="#method.write_vectored-2" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#386-388" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-1" class="method hidden">
+<code id="flush.v-2">fn <a href="#method.flush-1" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#391" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-2" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../struct.cursor/" title="struct std::io::Cursor">Cursor</a>&lt;<a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#365-376" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-2" class="method hidden">
+<code id="write.v-3">fn <a href="#method.write-2" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#366-368" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-3" class="method hidden">
+<code id="write_vectored.v-3">fn <a href="#method.write_vectored-3" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#370-372" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-2" class="method hidden">
+<code id="flush.v-3">fn <a href="#method.flush-2" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#375" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-3" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../struct.sink/" title="struct std::io::Sink">Sink</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/util.rs.html#204-216" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-3" class="method hidden">
+<code id="write.v-4">fn <a href="#method.write-3" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/util.rs.html#206" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-4" class="method hidden">
+<code id="write_vectored.v-4">fn <a href="#method.write_vectored-4" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/util.rs.html#209-212" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-3" class="method hidden">
+<code id="flush.v-4">fn <a href="#method.flush-3" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/util.rs.html#215" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-4" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../struct.stderr/" title="struct std::io::Stderr">Stderr</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#678-694" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-4" class="method hidden">
+<code id="write.v-5">fn <a href="#method.write-4" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#679-681" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-5" class="method hidden">
+<code id="write_vectored.v-5">fn <a href="#method.write_vectored-5" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#682-684" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-4" class="method hidden">
+<code id="flush.v-5">fn <a href="#method.flush-4" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#685-687" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_all-1" class="method hidden">
+<code id="write_all.v-1">fn <a href="#method.write_all-1" class="fnname">write_all</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#688-690" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_fmt-1" class="method hidden">
+<code id="write_fmt.v-1">fn <a href="#method.write_fmt-1" class="fnname">write_fmt</a>(&amp;mut self, args: <a class="struct" href="../../fmt/struct.arguments/" title="struct std::fmt::Arguments">Arguments</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#691-693" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-5" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../struct.stdout/" title="struct std::io::Stdout">Stdout</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#519-535" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-5" class="method hidden">
+<code id="write.v-6">fn <a href="#method.write-5" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#520-522" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-6" class="method hidden">
+<code id="write_vectored.v-6">fn <a href="#method.write_vectored-6" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#523-525" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-5" class="method hidden">
+<code id="flush.v-6">fn <a href="#method.flush-5" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#526-528" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_all-2" class="method hidden">
+<code id="write_all.v-2">fn <a href="#method.write_all-2" class="fnname">write_all</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#529-531" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_fmt-2" class="method hidden">
+<code id="write_fmt.v-2">fn <a href="#method.write_fmt-2" class="fnname">write_fmt</a>(&amp;mut self, args: <a class="struct" href="../../fmt/struct.arguments/" title="struct std::fmt::Arguments">Arguments</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#532-534" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-6" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../../net/struct.tcpstream/" title="struct std::net::TcpStream">TcpStream</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/net/tcp.rs.html#582-590" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-6" class="method hidden">
+<code id="write.v-7">fn <a href="#method.write-6" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/net/tcp.rs.html#583" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-7" class="method hidden">
+<code id="write_vectored.v-7">fn <a href="#method.write_vectored-7" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/net/tcp.rs.html#585-587" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-6" class="method hidden">
+<code id="flush.v-7">fn <a href="#method.flush-6" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/net/tcp.rs.html#589" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-7" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../../os/unix/net/struct.unixstream/" title="struct std::os::unix::net::UnixStream">UnixStream</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/sys/unix/ext/net.rs.html#580-592" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-7" class="method hidden">
+<code id="write.v-8">fn <a href="#method.write-7" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sys/unix/ext/net.rs.html#581-583" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-8" class="method hidden">
+<code id="write_vectored.v-8">fn <a href="#method.write_vectored-8" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sys/unix/ext/net.rs.html#585-587" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-7" class="method hidden">
+<code id="flush.v-8">fn <a href="#method.flush-7" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sys/unix/ext/net.rs.html#589-591" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-8" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../../process/struct.childstdin/" title="struct std::process::ChildStdin">ChildStdin</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/process.rs.html#235-247" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-8" class="method hidden">
+<code id="write.v-9">fn <a href="#method.write-8" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/process.rs.html#236-238" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-9" class="method hidden">
+<code id="write_vectored.v-9">fn <a href="#method.write_vectored-9" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/process.rs.html#240-242" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-8" class="method hidden">
+<code id="flush.v-9">fn <a href="#method.flush-8" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/process.rs.html#244-246" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-9" class="impl">
+<code class="in-band">impl Write for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#311-336" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="docblock">
+<p>Write is implemented for <code>Vec&lt;u8&gt;</code> by appending to the vector. The vector will grow as needed.</p> </div>
+<div class="impl-items">
+<h4 id="method.write-9" class="method hidden">
+<code id="write.v-10">fn <a href="#method.write-9" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#313-316" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-10" class="method hidden">
+<code id="write_vectored.v-10">fn <a href="#method.write_vectored-10" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#319-326" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_all-3" class="method hidden">
+<code id="write_all.v-3">fn <a href="#method.write_all-3" class="fnname">write_all</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#329-332" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-9" class="method hidden">
+<code id="flush.v-10">fn <a href="#method.flush-9" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#335" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-10" class="impl">
+<code class="in-band">impl&lt;'_&gt; Write for &amp;'_ <a class="struct" href="../../fs/struct.file/" title="struct std::fs::File">File</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/fs.rs.html#663-673" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-10" class="method hidden">
+<code id="write.v-11">fn <a href="#method.write-10" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/fs.rs.html#664-666" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-11" class="method hidden">
+<code id="write_vectored.v-11">fn <a href="#method.write_vectored-11" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/fs.rs.html#668-670" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-10" class="method hidden">
+<code id="flush.v-11">fn <a href="#method.flush-10" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/fs.rs.html#672" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-11" class="impl">
+<code class="in-band">impl&lt;'_&gt; Write for &amp;'_ <a class="struct" href="../../net/struct.tcpstream/" title="struct std::net::TcpStream">TcpStream</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/net/tcp.rs.html#605-613" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-11" class="method hidden">
+<code id="write.v-12">fn <a href="#method.write-11" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/net/tcp.rs.html#606" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-12" class="method hidden">
+<code id="write_vectored.v-12">fn <a href="#method.write_vectored-12" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/net/tcp.rs.html#608-610" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-11" class="method hidden">
+<code id="flush.v-12">fn <a href="#method.flush-11" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/net/tcp.rs.html#612" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-12" class="impl">
+<code class="in-band">impl&lt;'_&gt; Write for <a class="primitive" href="../../primitive.slice/">&amp;'_ mut [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#272-306" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="docblock">
+<p>Write is implemented for <code>&amp;mut [u8]</code> by copying into the slice, overwriting its data.</p> <p>Note that writing updates the slice to point to the yet unwritten part. The slice will be empty when it has been completely overwritten.</p> </div>
+<div class="impl-items">
+<h4 id="method.write-12" class="method hidden">
+<code id="write.v-13">fn <a href="#method.write-12" class="fnname">write</a>(&amp;mut self, data: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#274-280" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-13" class="method hidden">
+<code id="write_vectored.v-13">fn <a href="#method.write_vectored-13" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#283-293" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_all-4" class="method hidden">
+<code id="write_all.v-4">fn <a href="#method.write_all-4" class="fnname">write_all</a>(&amp;mut self, data: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#296-302" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-12" class="method hidden">
+<code id="flush.v-13">fn <a href="#method.flush-12" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#305" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-13" class="impl">
+<code class="in-band">impl&lt;'_&gt; Write for <a class="struct" href="../struct.cursor/" title="struct std::io::Cursor">Cursor</a>&lt;&amp;'_ mut <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;<a class="primitive" href="../../primitive.u8/">u8</a>&gt;&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#351-362" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-13" class="method hidden">
+<code id="write.v-14">fn <a href="#method.write-13" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#352-354" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-14" class="method hidden">
+<code id="write_vectored.v-14">fn <a href="#method.write_vectored-14" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#356-358" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-13" class="method hidden">
+<code id="flush.v-14">fn <a href="#method.flush-13" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#361" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-14" class="impl">
+<code class="in-band">impl&lt;'_&gt; Write for <a class="struct" href="../struct.cursor/" title="struct std::io::Cursor">Cursor</a>&lt;<a class="primitive" href="../../primitive.slice/">&amp;'_ mut [</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#335-348" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-14" class="method hidden">
+<code id="write.v-15">fn <a href="#method.write-14" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#337-339" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-15" class="method hidden">
+<code id="write_vectored.v-15">fn <a href="#method.write_vectored-15" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#342-344" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-14" class="method hidden">
+<code id="flush.v-15">fn <a href="#method.flush-14" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/cursor.rs.html#347" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-15" class="impl">
+<code class="in-band">impl&lt;'_&gt; Write for <a class="struct" href="../struct.stderrlock/" title="struct std::io::StderrLock">StderrLock</a>&lt;'_&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#696-706" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-15" class="method hidden">
+<code id="write.v-16">fn <a href="#method.write-15" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#697-699" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-16" class="method hidden">
+<code id="write_vectored.v-16">fn <a href="#method.write_vectored-16" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#700-702" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-15" class="method hidden">
+<code id="flush.v-16">fn <a href="#method.flush-15" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#703-705" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-16" class="impl">
+<code class="in-band">impl&lt;'_&gt; Write for <a class="struct" href="../struct.stdoutlock/" title="struct std::io::StdoutLock">StdoutLock</a>&lt;'_&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#537-547" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-16" class="method hidden">
+<code id="write.v-17">fn <a href="#method.write-16" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#538-540" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-17" class="method hidden">
+<code id="write_vectored.v-17">fn <a href="#method.write_vectored-17" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#541-543" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-16" class="method hidden">
+<code id="flush.v-17">fn <a href="#method.flush-16" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/stdio.rs.html#544-546" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-17" class="impl">
+<code class="in-band">impl&lt;'_, W: <a class="trait" href="../trait.write/" title="trait std::io::Write">Write</a> + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>&gt; Write for <a class="primitive" href="../../primitive.reference/">&amp;'_ mut </a>W</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#43-64" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-17" class="method hidden">
+<code id="write.v-18">fn <a href="#method.write-17" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#45" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-18" class="method hidden">
+<code id="write_vectored.v-18">fn <a href="#method.write_vectored-18" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#48-50" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-17" class="method hidden">
+<code id="flush.v-18">fn <a href="#method.flush-17" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#53" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_all-5" class="method hidden">
+<code id="write_all.v-5">fn <a href="#method.write_all-5" class="fnname">write_all</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#56-58" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_fmt-3" class="method hidden">
+<code id="write_fmt.v-3">fn <a href="#method.write_fmt-3" class="fnname">write_fmt</a>(&amp;mut self, fmt: <a class="struct" href="../../fmt/struct.arguments/" title="struct std::fmt::Arguments">Arguments</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#61-63" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-18" class="impl">
+<code class="in-band">impl&lt;'a&gt; Write for &amp;'a <a class="struct" href="../../os/unix/net/struct.unixstream/" title="struct std::os::unix::net::UnixStream">UnixStream</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/sys/unix/ext/net.rs.html#595-607" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-18" class="method hidden">
+<code id="write.v-19">fn <a href="#method.write-18" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sys/unix/ext/net.rs.html#596-598" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-19" class="method hidden">
+<code id="write_vectored.v-19">fn <a href="#method.write_vectored-19" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sys/unix/ext/net.rs.html#600-602" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-18" class="method hidden">
+<code id="flush.v-19">fn <a href="#method.flush-18" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sys/unix/ext/net.rs.html#604-606" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-19" class="impl">
+<code class="in-band">impl&lt;W: <a class="trait" href="../trait.write/" title="trait std::io::Write">Write</a> + ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>&gt; Write for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;W&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#122-143" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-19" class="method hidden">
+<code id="write.v-20">fn <a href="#method.write-19" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#124" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-20" class="method hidden">
+<code id="write_vectored.v-20">fn <a href="#method.write_vectored-20" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#127-129" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-19" class="method hidden">
+<code id="flush.v-20">fn <a href="#method.flush-19" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#132" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_all-6" class="method hidden">
+<code id="write_all.v-6">fn <a href="#method.write_all-6" class="fnname">write_all</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#135-137" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_fmt-4" class="method hidden">
+<code id="write_fmt.v-4">fn <a href="#method.write_fmt-4" class="fnname">write_fmt</a>(&amp;mut self, fmt: <a class="struct" href="../../fmt/struct.arguments/" title="struct std::fmt::Arguments">Arguments</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/impls.rs.html#140-142" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-20" class="impl">
+<code class="in-band">impl&lt;W: <a class="trait" href="../trait.write/" title="trait std::io::Write">Write</a>&gt; Write for <a class="struct" href="../struct.bufwriter/" title="struct std::io::BufWriter">BufWriter</a>&lt;W&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#596-629" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-20" class="method hidden">
+<code id="write.v-21">fn <a href="#method.write-20" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#597-609" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.write_vectored-21" class="method hidden">
+<code id="write_vectored.v-21">fn <a href="#method.write_vectored-21" class="fnname">write_vectored</a>(&amp;mut self, bufs: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="struct" href="../struct.ioslice/" title="struct std::io::IoSlice">IoSlice</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#611-624" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-20" class="method hidden">
+<code id="flush.v-21">fn <a href="#method.flush-20" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#626-628" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+<h3 id="impl-Write-21" class="impl">
+<code class="in-band">impl&lt;W: <a class="trait" href="../trait.write/" title="trait std::io::Write">Write</a>&gt; Write for <a class="struct" href="../struct.linewriter/" title="struct std::io::LineWriter">LineWriter</a>&lt;W&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#937-979" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.write-21" class="method hidden">
+<code id="write.v-22">fn <a href="#method.write-21" class="fnname">write</a>(&amp;mut self, buf: <a class="primitive" href="../../primitive.slice/">&amp;[</a><a class="primitive" href="../../primitive.u8/">u8</a><a class="primitive" href="../../primitive.slice/">]</a>) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.usize/">usize</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#938-972" title="goto source code" target="_blank">[src]</a>
+</h4>
+<h4 id="method.flush-21" class="method hidden">
+<code id="flush.v-22">fn <a href="#method.flush-21" class="fnname">flush</a>(&amp;mut self) -&gt; <a class="type" href="../type.result/" title="type std::io::Result">Result</a>&lt;<a class="primitive" href="../../primitive.unit/">()</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#974-978" title="goto source code" target="_blank">[src]</a>
+</h4>
+</div>
+</div>
+<span class="loading-content">Loading content...</span><div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/io/trait.Write.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/io/trait.Write.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,134 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>15. Constant Evaluation - Rust - W3cubDocs</title>
+  
+  <meta name="description" content="Constant evaluation is the process of computing the result of expressions during compilation. Only a subset of all expressions can be evaluated at &hellip;">
+  <meta name="keywords" content="constant, evaluation, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/const_eval/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 id="constant-evaluation">Constant evaluation</h1> <p>Constant evaluation is the process of computing the result of <a href="../expressions/">expressions</a> during compilation. Only a subset of all expressions can be evaluated at compile-time.</p> <h2 id="constant-expressions">Constant expressions</h2> <p>Certain forms of expressions, called constant expressions, can be evaluated at compile time. In <a href="../const_eval/#const-context">const contexts</a>, these are the only allowed expressions, and are always evaluated at compile time. In other places, such as <a href="../statements/#let-statements">let statements</a>, constant expressions <em>may</em> be, but are not guaranteed to be, evaluated at compile time. Behaviors such as out of bounds <a href="../expressions/array-expr/#array-and-slice-indexing-expressions">array indexing</a> or <a href="../expressions/operator-expr/#overflow">overflow</a> are compiler errors if the value must be evaluated at compile time (i.e. in const contexts). Otherwise, these behaviors are warnings, but will likely panic at run-time.</p> <p>The following expressions are constant expressions, so long as any operands are also constant expressions and do not cause any <a href="../destructors/"><code>Drop::drop</code></a> calls to be run.</p> <ul> <li>
+<a href="../expressions/literal-expr/">Literals</a>.</li> <li>
+<a href="../expressions/path-expr/">Paths</a> to <a href="../items/functions/">functions</a> and constants. Recursively defining constants is not allowed.</li> <li>
+<a href="../expressions/tuple-expr/">Tuple expressions</a>.</li> <li>
+<a href="../expressions/array-expr/">Array expressions</a>.</li> <li>
+<a href="../expressions/struct-expr/">Struct</a> expressions.</li> <li>
+<a href="../expressions/enum-variant-expr/">Enum variant</a> expressions.</li> <li>
+<a href="../expressions/block-expr/">Block expressions</a>, including <code>unsafe</code> blocks. <ul> <li>
+<a href="../statements/#let-statements">let statements</a> and thus irrefutable <a href="../patterns/">patterns</a>, with the caveat that until <code>if</code> and <code>match</code> are implemented, one cannot use both short circuiting operators (<code>&amp;&amp;</code> and <code>||</code>) and let statements within the same constant.</li> <li><a href="../expressions/operator-expr/#assignment-expressions">assignment expressions</a></li> <li><a href="../expressions/operator-expr/#compound-assignment-expressions">assignment operator expressions</a></li> <li><a href="../statements/#expression-statements">expression statements</a></li> </ul> </li> <li>
+<a href="../expressions/field-expr/">Field</a> expressions.</li> <li>Index expressions, <a href="../expressions/array-expr/#array-and-slice-indexing-expressions">array indexing</a> or <a href="../types/slice/">slice</a> with a <code>usize</code>.</li> <li>
+<a href="../expressions/range-expr/">Range expressions</a>.</li> <li>
+<a href="../expressions/closure-expr/">Closure expressions</a> which don't capture variables from the environment.</li> <li>Built in <a href="../expressions/operator-expr/#negation-operators">negation</a>, <a href="../expressions/operator-expr/#arithmetic-and-logical-binary-operators">arithmetic, logical</a>, <a href="../expressions/operator-expr/#comparison-operators">comparison</a> or <a href="../expressions/operator-expr/#lazy-boolean-operators">lazy boolean</a> operators used on integer and floating point types, <code>bool</code> and <code>char</code>.</li> <li>Shared <a href="../expressions/operator-expr/#borrow-operators">borrow</a>s, except if applied to a type with <a href="../interior-mutability/">interior mutability</a>.</li> <li>The <a href="../expressions/operator-expr/#the-dereference-operator">dereference operator</a>.</li> <li>
+<a href="../expressions/grouped-expr/">Grouped</a> expressions.</li> <li>
+<a href="../expressions/operator-expr/#type-cast-expressions">Cast</a> expressions, except pointer to address and function pointer to address casts.</li> <li>Calls of <a href="../items/functions/#const-functions">const functions</a> and const methods.</li> </ul> <h2 id="const-context">Const context</h2> <p>A <em>const context</em> is one of the following:</p> <ul> <li><a href="../types/array/">Array type length expressions</a></li> <li>Repeat expression length expressions</li> <li>The initializer of <ul> <li><a href="../items/constant-items/">constants</a></li> <li><a href="../items/static-items/">statics</a></li> <li><a href="../items/enumerations/#custom-discriminant-values-for-field-less-enumerations">enum discriminants</a></li> </ul> </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/const_eval.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/const_eval.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,445 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>std&#58;&#58;ops&#58;&#58;Drop - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Used to run some code when a value goes out of scope. This is sometimes called a &#39;destructor&#39;. ">
+  <meta name="keywords" content="trait, std, ops, drop, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/ops/trait.drop/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 class="fqn">Trait std::ops::Drop</h1>
+<pre class="rust trait" data-language="rust">#[lang = "drop"]
+pub trait Drop {
+    fn drop(&amp;mut self);
+}</pre>
+<p>Used to run some code when a value goes out of scope. This is sometimes called a 'destructor'.</p> <p>When a value goes out of scope, it will have its <code>drop</code> method called if its type implements <code>Drop</code>. Then, any fields the value contains will also be dropped recursively.</p> <p>Because of this recursive dropping, you do not need to implement this trait unless your type needs its own destructor logic.</p> <p>Refer to <a href="../../../book/ch15-03-drop/">the chapter on <code>Drop</code> in <em>The Rust Programming Language</em></a> for some more elaboration.</p> <h2 id="examples" class="section-header">Examples</h2>
+<h3 id="implementing-drop" class="section-header">Implementing <code>Drop</code>
+</h3> <p>The <code>drop</code> method is called when <code>_x</code> goes out of scope, and therefore <code>main</code> prints <code>Dropping!</code>.</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+struct HasDrop;
+
+impl Drop for HasDrop {
+    fn drop(&amp;mut self) {
+        println!("Dropping!");
+    }
+}
+
+fn main() {
+    let _x = HasDrop;
+}</pre></div> <h3 id="dropping-is-done-recursively" class="section-header">Dropping is done recursively</h3> <p>When <code>outer</code> goes out of scope, the <code>drop</code> method will be called first for <code>Outer</code>, then for <code>Inner</code>. Therefore, <code>main</code> prints <code>Dropping Outer!</code> and then <code>Dropping Inner!</code>.</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+struct Inner;
+struct Outer(Inner);
+
+impl Drop for Inner {
+    fn drop(&amp;mut self) {
+        println!("Dropping Inner!");
+    }
+}
+
+impl Drop for Outer {
+    fn drop(&amp;mut self) {
+        println!("Dropping Outer!");
+    }
+}
+
+fn main() {
+    let _x = Outer(Inner);
+}</pre></div> <h3 id="variables-are-dropped-in-reverse-order-of-declaration" class="section-header">Variables are dropped in reverse order of declaration</h3> <p><code>_first</code> is declared first and <code>_second</code> is declared second, so <code>main</code> will print <code>Declared second!</code> and then <code>Declared first!</code>.</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+struct PrintOnDrop(&amp;'static str);
+
+impl Drop for PrintOnDrop {
+    fn drop(&amp;mut self) {
+        println!("{}", self.0);
+    }
+}
+
+fn main() {
+    let _first = PrintOnDrop("Declared first!");
+    let _second = PrintOnDrop("Declared second!");
+}</pre></div>  <h2 id="required-methods" class="small-section-header">Required methods</h2>
+<div class="methods">
+<h3 id="tymethod.drop" class="method"><code id="drop.v">fn <a href="#tymethod.drop" class="fnname">drop</a>(&amp;mut self)</code></h3>
+<div class="docblock">
+<p>Executes the destructor for this type.</p> <p>This method is called implicitly when the value goes out of scope, and cannot be called explicitly (this is compiler error <a href="../../../error-index/#E0040">E0040</a>). However, the <a href="../../mem/fn.drop/"><code>std::mem::drop</code></a> function in the prelude can be used to call the argument's <code>Drop</code> implementation.</p> <p>When this method has been called, <code>self</code> has not yet been deallocated. That only happens after the method is over. If this wasn't the case, <code>self</code> would be a dangling reference.</p> <h2 id="panics" class="section-header">Panics</h2> <p>Given that a <a href="../../macro.panic/"><code>panic!</code></a> will call <code>drop</code> as it unwinds, any <a href="../../macro.panic/"><code>panic!</code></a> in a <code>drop</code> implementation will likely abort.</p> </div>
+</div>
+<span class="loading-content">Loading content...</span> <h2 id="implementors" class="small-section-header">Implementors</h2>
+<div class="item-list" id="implementors-list">
+<h3 id="impl-Drop" class="impl">
+<code class="in-band">impl Drop for <a class="struct" href="../../ffi/struct.cstring/" title="struct std::ffi::CString">CString</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#614-619" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop" class="method hidden">
+<code id="drop.v-1">fn <a href="#method.drop" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/ffi/c_str.rs.html#616-618" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-1" class="impl">
+<code class="in-band">impl Drop for <a class="struct" href="../../sync/struct.condvar/" title="struct std::sync::Condvar">Condvar</a></code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/condvar.rs.html#606-610" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-1" class="method hidden">
+<code id="drop.v-2">fn <a href="#method.drop-1" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/condvar.rs.html#607-609" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-2" class="impl">
+<code class="in-band">impl Drop for <a class="struct" href="../../task/struct.waker/" title="struct std::task::Waker">Waker</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/task/wake.rs.html#314-322" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-2" class="method hidden">
+<code id="drop.v-3">fn <a href="#method.drop-2" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/core/task/wake.rs.html#316-321" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-3" class="impl">
+<code class="in-band">impl&lt;'_&gt; Drop for std::string::<a class="struct" href="../../string/struct.drain/" title="struct std::string::Drain">Drain</a>&lt;'_&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2363-2374" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-3" class="method hidden">
+<code id="drop.v-4">fn <a href="#method.drop-3" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/string.rs.html#2364-2373" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-4" class="impl">
+<code class="in-band">impl&lt;'_, I&gt; Drop for <a class="struct" href="../../vec/struct.splice/" title="struct std::vec::Splice">Splice</a>&lt;'_, I&gt; <span class="where fmt-newline">where<br>    I: <a class="trait" href="../../iter/trait.iterator/" title="trait std::iter::Iterator">Iterator</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2662-2700" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-4" class="method hidden">
+<code id="drop.v-5">fn <a href="#method.drop-4" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2663-2699" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-5" class="impl">
+<code class="in-band">impl&lt;'_, T&gt; Drop for <a class="struct" href="../../collections/binary_heap/struct.peekmut/" title="struct std::collections::binary_heap::PeekMut">PeekMut</a>&lt;'_, T&gt; <span class="where fmt-newline">where<br>    T: <a class="trait" href="../../cmp/trait.ord/" title="trait std::cmp::Ord">Ord</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/binary_heap.rs.html#277-283" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-5" class="method hidden">
+<code id="drop.v-6">fn <a href="#method.drop-5" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/binary_heap.rs.html#278-282" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-6" class="impl">
+<code class="in-band">impl&lt;'_, T&gt; Drop for std::collections::vec_deque::<a class="struct" href="../../collections/vec_deque/struct.drain/" title="struct std::collections::vec_deque::Drain">Drain</a>&lt;'_, T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/vec_deque.rs.html#2446-2490" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-6" class="method hidden">
+<code id="drop.v-7">fn <a href="#method.drop-6" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/vec_deque.rs.html#2447-2489" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-7" class="impl">
+<code class="in-band">impl&lt;'_, T&gt; Drop for std::vec::<a class="struct" href="../../vec/struct.drain/" title="struct std::vec::Drain">Drain</a>&lt;'_, T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2590-2610" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-7" class="method hidden">
+<code id="drop.v-8">fn <a href="#method.drop-7" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2591-2609" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-8" class="impl">
+<code class="in-band">impl&lt;'_, T, F&gt; Drop for std::collections::linked_list::<a class="struct" href="../../collections/linked_list/struct.drainfilter/" title="struct std::collections::linked_list::DrainFilter">DrainFilter</a>&lt;'_, T, F&gt; <span class="where fmt-newline">where<br>    F: <a class="trait" href="../trait.fnmut/" title="trait std::ops::FnMut">FnMut</a>(<a class="primitive" href="../../primitive.reference/">&amp;mut </a>T) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/linked_list.rs.html#1038-1044" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-8" class="method hidden">
+<code id="drop.v-9">fn <a href="#method.drop-8" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/linked_list.rs.html#1041-1043" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-9" class="impl">
+<code class="in-band">impl&lt;'_, T, F&gt; Drop for std::vec::<a class="struct" href="../../vec/struct.drainfilter/" title="struct std::vec::DrainFilter">DrainFilter</a>&lt;'_, T, F&gt; <span class="where fmt-newline">where<br>    F: <a class="trait" href="../trait.fnmut/" title="trait std::ops::FnMut">FnMut</a>(<a class="primitive" href="../../primitive.reference/">&amp;mut </a>T) -&gt; <a class="primitive" href="../../primitive.bool/">bool</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2789-2798" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-9" class="method hidden">
+<code id="drop.v-10">fn <a href="#method.drop-9" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2792-2797" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-10" class="impl">
+<code class="in-band">impl&lt;'_, T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>&gt; Drop for <a class="struct" href="../../sync/struct.mutexguard/" title="struct std::sync::MutexGuard">MutexGuard</a>&lt;'_, T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mutex.rs.html#444-452" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-10" class="method hidden">
+<code id="drop.v-11">fn <a href="#method.drop-10" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mutex.rs.html#446-451" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-11" class="impl">
+<code class="in-band">impl&lt;'_, T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>&gt; Drop for <a class="struct" href="../../sync/struct.rwlockreadguard/" title="struct std::sync::RwLockReadGuard">RwLockReadGuard</a>&lt;'_, T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/rwlock.rs.html#544-548" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-11" class="method hidden">
+<code id="drop.v-12">fn <a href="#method.drop-11" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/rwlock.rs.html#545-547" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-12" class="impl">
+<code class="in-band">impl&lt;'_, T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>&gt; Drop for <a class="struct" href="../../sync/struct.rwlockwriteguard/" title="struct std::sync::RwLockWriteGuard">RwLockWriteGuard</a>&lt;'_, T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/rwlock.rs.html#551-556" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-12" class="method hidden">
+<code id="drop.v-13">fn <a href="#method.drop-12" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/rwlock.rs.html#552-555" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-13" class="impl">
+<code class="in-band">impl&lt;'f&gt; Drop for <a class="struct" href="../../ffi/struct.valistimpl/" title="struct std::ffi::VaListImpl">VaListImpl</a>&lt;'f&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/core/ffi.rs.html#344-357" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-13" class="method hidden">
+<code id="drop.v-14">fn <a href="#method.drop-13" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/core/ffi.rs.html#345-356" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-14" class="impl">
+<code class="in-band">impl&lt;K, V&gt; Drop for <a class="struct" href="../../collections/btree_map/struct.btreemap/" title="struct std::collections::btree_map::BTreeMap">BTreeMap</a>&lt;K, V&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/map.rs.html#129-135" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-14" class="method hidden">
+<code id="drop.v-15">fn <a href="#method.drop-14" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/map.rs.html#130-134" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-15" class="impl">
+<code class="in-band">impl&lt;K, V&gt; Drop for std::collections::btree_map::<a class="struct" href="../../collections/btree_map/struct.intoiter/" title="struct std::collections::btree_map::IntoIter">IntoIter</a>&lt;K, V&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/map.rs.html#1300-1317" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-15" class="method hidden">
+<code id="drop.v-16">fn <a href="#method.drop-15" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/btree/map.rs.html#1301-1316" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-16" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for <a class="struct" href="../../boxed/struct.box/" title="struct std::boxed::Box">Box</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#333-337" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-16" class="method hidden">
+<code id="drop.v-17">fn <a href="#method.drop-16" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/boxed.rs.html#334-336" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-17" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for <a class="struct" href="../../collections/linked_list/struct.linkedlist/" title="struct std::collections::linked_list::LinkedList">LinkedList</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/linked_list.rs.html#806-810" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-17" class="method hidden">
+<code id="drop.v-18">fn <a href="#method.drop-17" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/linked_list.rs.html#807-809" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-18" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for <a class="struct" href="../../collections/vec_deque/struct.vecdeque/" title="struct std::collections::vec_deque::VecDeque">VecDeque</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/vec_deque.rs.html#66-76" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-18" class="method hidden">
+<code id="drop.v-19">fn <a href="#method.drop-18" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/collections/vec_deque.rs.html#67-75" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-19" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for <a class="struct" href="../../rc/struct.rc/" title="struct std::rc::Rc">Rc</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#844-889" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.drop-19" class="method">
+<code id="drop.v-20">fn <a href="#method.drop-19" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#872-888" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>Drops the <code>Rc</code>.</p> <p>This will decrement the strong reference count. If the strong reference count reaches zero then the only other references (if any) are <a href="../../rc/struct.weak/"><code>Weak</code></a>, so we <code>drop</code> the inner value.</p> <h2 id="examples-1" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::rc::Rc;
+
+struct Foo;
+
+impl Drop for Foo {
+    fn drop(&amp;mut self) {
+        println!("dropped!");
+    }
+}
+
+let foo  = Rc::new(Foo);
+let foo2 = Rc::clone(&amp;foo);
+
+drop(foo);    // Doesn't print anything
+drop(foo2);   // Prints "dropped!"</pre></div> </div>
+</div>
+<h3 id="impl-Drop-20" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for std::rc::<a class="struct" href="../../rc/struct.weak/" title="struct std::rc::Weak">Weak</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#1554-1591" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.drop-20" class="method">
+<code id="drop.v-21">fn <a href="#method.drop-20" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/rc.rs.html#1579-1590" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>Drops the <code>Weak</code> pointer.</p> <h2 id="examples-2" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::rc::{Rc, Weak};
+
+struct Foo;
+
+impl Drop for Foo {
+    fn drop(&amp;mut self) {
+        println!("dropped!");
+    }
+}
+
+let foo = Rc::new(Foo);
+let weak_foo = Rc::downgrade(&amp;foo);
+let other_weak_foo = Weak::clone(&amp;weak_foo);
+
+drop(weak_foo);   // Doesn't print anything
+drop(foo);        // Prints "dropped!"
+
+assert!(other_weak_foo.upgrade().is_none());</pre></div> </div>
+</div>
+<h3 id="impl-Drop-21" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for <a class="struct" href="../../sync/mpsc/struct.receiver/" title="struct std::sync::mpsc::Receiver">Receiver</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mpsc/mod.rs.html#1547-1556" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-21" class="method hidden">
+<code id="drop.v-22">fn <a href="#method.drop-21" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mpsc/mod.rs.html#1548-1555" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-22" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for <a class="struct" href="../../sync/mpsc/struct.sender/" title="struct std::sync::mpsc::Sender">Sender</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mpsc/mod.rs.html#897-906" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-22" class="method hidden">
+<code id="drop.v-23">fn <a href="#method.drop-22" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mpsc/mod.rs.html#898-905" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-23" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for <a class="struct" href="../../sync/mpsc/struct.syncsender/" title="struct std::sync::mpsc::SyncSender">SyncSender</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mpsc/mod.rs.html#1032-1036" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-23" class="method hidden">
+<code id="drop.v-24">fn <a href="#method.drop-23" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mpsc/mod.rs.html#1033-1035" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-24" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for <a class="struct" href="../../sync/struct.arc/" title="struct std::sync::Arc">Arc</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#939-1010" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.drop-24" class="method">
+<code id="drop.v-25">fn <a href="#method.drop-24" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#968-1009" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>Drops the <code>Arc</code>.</p> <p>This will decrement the strong reference count. If the strong reference count reaches zero then the only other references (if any) are <a href="../../sync/struct.weak/"><code>Weak</code></a>, so we <code>drop</code> the inner value.</p> <h2 id="examples-3" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::sync::Arc;
+
+struct Foo;
+
+impl Drop for Foo {
+    fn drop(&amp;mut self) {
+        println!("dropped!");
+    }
+}
+
+let foo  = Arc::new(Foo);
+let foo2 = Arc::clone(&amp;foo);
+
+drop(foo);    // Doesn't print anything
+drop(foo2);   // Prints "dropped!"</pre></div> </div>
+</div>
+<h3 id="impl-Drop-25" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for std::sync::<a class="struct" href="../../sync/struct.weak/" title="struct std::sync::Weak">Weak</a>&lt;T&gt; <span class="where fmt-newline">where<br>    T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#1447-1494" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.drop-25" class="method">
+<code id="drop.v-26">fn <a href="#method.drop-25" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/sync.rs.html#1472-1493" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>Drops the <code>Weak</code> pointer.</p> <h2 id="examples-4" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::sync::{Arc, Weak};
+
+struct Foo;
+
+impl Drop for Foo {
+    fn drop(&amp;mut self) {
+        println!("dropped!");
+    }
+}
+
+let foo = Arc::new(Foo);
+let weak_foo = Arc::downgrade(&amp;foo);
+let other_weak_foo = Weak::clone(&amp;weak_foo);
+
+drop(weak_foo);   // Doesn't print anything
+drop(foo);        // Prints "dropped!"
+
+assert!(other_weak_foo.upgrade().is_none());</pre></div> </div>
+</div>
+<h3 id="impl-Drop-26" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for std::vec::<a class="struct" href="../../vec/struct.intoiter/" title="struct std::vec::IntoIter">IntoIter</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2507-2515" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-26" class="method hidden">
+<code id="drop.v-27">fn <a href="#method.drop-26" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2508-2514" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-27" class="impl">
+<code class="in-band">impl&lt;T&gt; Drop for <a class="struct" href="../../vec/struct.vec/" title="struct std::vec::Vec">Vec</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2203-2211" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-27" class="method hidden">
+<code id="drop.v-28">fn <a href="#method.drop-27" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/alloc/vec.rs.html#2204-2210" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-28" class="impl">
+<code class="in-band">impl&lt;T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>&gt; Drop for <a class="struct" href="../../sync/struct.mutex/" title="struct std::sync::Mutex">Mutex</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mutex.rs.html#364-373" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-28" class="method hidden">
+<code id="drop.v-29">fn <a href="#method.drop-28" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/mutex.rs.html#365-372" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-29" class="impl">
+<code class="in-band">impl&lt;T: ?<a class="trait" href="../../marker/trait.sized/" title="trait std::marker::Sized">Sized</a>&gt; Drop for <a class="struct" href="../../sync/struct.rwlock/" title="struct std::sync::RwLock">RwLock</a>&lt;T&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/rwlock.rs.html#415-420" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-29" class="method hidden">
+<code id="drop.v-30">fn <a href="#method.drop-29" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/sync/rwlock.rs.html#416-419" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+<h3 id="impl-Drop-30" class="impl">
+<code class="in-band">impl&lt;W: <a class="trait" href="../../io/trait.write/" title="trait std::io::Write">Write</a>&gt; Drop for <a class="struct" href="../../io/struct.bufwriter/" title="struct std::io::BufWriter">BufWriter</a>&lt;W&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#652-659" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items"><h4 id="method.drop-30" class="method hidden">
+<code id="drop.v-31">fn <a href="#method.drop-30" class="fnname">drop</a>(&amp;mut self)</code><a class="srclink" href="https://doc.rust-lang.org/src/std/io/buffered.rs.html#653-658" title="goto source code" target="_blank">[src]</a>
+</h4></div>
+</div>
+<span class="loading-content">Loading content...</span><div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/ops/trait.Drop.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

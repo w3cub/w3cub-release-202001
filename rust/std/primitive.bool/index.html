@@ -1,0 +1,544 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Std&#58;&#58;bool - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" The boolean type. ">
+  <meta name="keywords" content="primitive, type, bool, std, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/std/primitive.bool/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 class="fqn">Primitive Type bool</h1>
+<p>The boolean type.</p> <p>The <code>bool</code> represents a value, which could only be either <code>true</code> or <code>false</code>. If you cast a <code>bool</code> into an integer, <code>true</code> will be 1 and <code>false</code> will be 0.</p> <h2 id="basic-usage" class="section-header">Basic usage</h2> <p><code>bool</code> implements various traits, such as <a href="../ops/trait.bitand/"><code>BitAnd</code></a>, <a href="../ops/trait.bitor/"><code>BitOr</code></a>, <a href="../ops/trait.not/"><code>Not</code></a>, etc., which allow us to perform boolean operations using <code>&amp;</code>, <code>|</code> and <code>!</code>.</p> <p><code>if</code> always demands a <code>bool</code> value. <a href="../macro.assert/"><code>assert!</code></a>, being an important macro in testing, checks whether an expression returns <code>true</code>.</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+let bool_val = true &amp; false | false;
+assert!(!bool_val);</pre></div> <h2 id="examples" class="section-header">Examples</h2> <p>A trivial example of the usage of <code>bool</code>,</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+let praise_the_borrow_checker = true;
+
+// using the `if` conditional
+if praise_the_borrow_checker {
+    println!("oh, yeah!");
+} else {
+    println!("what?!!");
+}
+
+// ... or, a match pattern
+match praise_the_borrow_checker {
+    true =&gt; println!("keep praising!"),
+    false =&gt; println!("you should praise!"),
+}</pre></div> <p>Also, since <code>bool</code> implements the <a href="../marker/trait.copy/"><code>Copy</code></a> trait, we don't have to worry about the move semantics (just like the integer and float primitives).</p> <p>Now an example of <code>bool</code> cast to integer type:</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+assert_eq!(true as i32, 1);
+assert_eq!(false as i32, 0);</pre></div> <h2 id="implementations" class="small-section-header">Trait Implementations</h2>
+<div id="implementations-list">
+<h3 id="impl-Copy" class="impl">
+<code class="in-band">impl <a class="trait" href="../marker/trait.copy/" title="trait std::marker::Copy">Copy</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/marker.rs.html#670" title="goto source code" target="_blank">[src]</a>
+</h3>
+
+<h3 id="impl-BitXor%3Cbool%3E" class="impl">
+<code class="in-band">impl&lt;'a&gt; <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for &amp;'a <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#30-37" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output" class="type"><code id="Output.t">type <a href="../ops/trait.bitxor/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitxor/#associatedtype.Output" title="type std::ops::BitXor::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>^</code> operator.</p> </div>
+<h4 id="method.bitxor" class="method hidden">
+<code id="bitxor.v">fn <a href="../ops/trait.bitxor/#tymethod.bitxor" class="fnname">bitxor</a>(self, other: <a class="primitive" href="../primitive.bool/">bool</a>) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitxor/#associatedtype.Output" title="type std::ops::BitXor::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#34-36" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>^</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitXor%3C%26%27_%20bool%3E" class="impl">
+<code class="in-band">impl&lt;'_, '_&gt; <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;&amp;'_ <a class="primitive" href="../primitive.bool/">bool</a>&gt; for &amp;'_ <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#50-57" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-1" class="type"><code id="Output.t-1">type <a href="../ops/trait.bitxor/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitxor/#associatedtype.Output" title="type std::ops::BitXor::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>^</code> operator.</p> </div>
+<h4 id="method.bitxor-1" class="method hidden">
+<code id="bitxor.v-1">fn <a href="../ops/trait.bitxor/#tymethod.bitxor" class="fnname">bitxor</a>(self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitxor/#associatedtype.Output" title="type std::ops::BitXor::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#54-56" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>^</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitXor%3Cbool%3E-1" class="impl">
+<code class="in-band">impl <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#302-307" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-2" class="type"><code id="Output.t-2">type <a href="../ops/trait.bitxor/#associatedtype.Output" class="type">Output</a> = <a class="primitive" href="../primitive.bool/">bool</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>^</code> operator.</p> </div>
+<h4 id="method.bitxor-2" class="method hidden">
+<code id="bitxor.v-2">fn <a href="../ops/trait.bitxor/#tymethod.bitxor" class="fnname">bitxor</a>(self, other: <a class="primitive" href="../primitive.bool/">bool</a>) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#306" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>^</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitXor%3C%26%27_%20bool%3E-1" class="impl">
+<code class="in-band">impl&lt;'_&gt; <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;&amp;'_ <a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#40-47" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-3" class="type"><code id="Output.t-3">type <a href="../ops/trait.bitxor/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitxor/#associatedtype.Output" title="type std::ops::BitXor::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>^</code> operator.</p> </div>
+<h4 id="method.bitxor-3" class="method hidden">
+<code id="bitxor.v-3">fn <a href="../ops/trait.bitxor/#tymethod.bitxor" class="fnname">bitxor</a>(self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitxor/" title="trait std::ops::BitXor">BitXor</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitxor/#associatedtype.Output" title="type std::ops::BitXor::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#44-46" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>^</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitXorAssign%3Cbool%3E" class="impl">
+<code class="in-band">impl <a class="trait" href="../ops/trait.bitxorassign/" title="trait std::ops::BitXorAssign">BitXorAssign</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#708-711" title="goto source code" target="_blank">[src]</a><span class="since" title="Stable since Rust version 1.8.0">1.8.0</span>
+</h3>
+<div class="impl-items">
+<h4 id="method.bitxor_assign" class="method hidden">
+<code id="bitxor_assign.v">fn <a href="../ops/trait.bitxorassign/#tymethod.bitxor_assign" class="fnname">bitxor_assign</a>(&amp;mut self, other: <a class="primitive" href="../primitive.bool/">bool</a>)</code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#710" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>^=</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitXorAssign%3C%26%27_%20bool%3E" class="impl">
+<code class="in-band">impl&lt;'_&gt; <a class="trait" href="../ops/trait.bitxorassign/" title="trait std::ops::BitXorAssign">BitXorAssign</a>&lt;&amp;'_ <a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#70-75" title="goto source code" target="_blank">[src]</a><span class="since" title="Stable since Rust version 1.22.0">1.22.0</span>
+</h3>
+<div class="impl-items">
+<h4 id="method.bitxor_assign-1" class="method hidden">
+<code id="bitxor_assign.v-1">fn <a href="../ops/trait.bitxorassign/#tymethod.bitxor_assign" class="fnname">bitxor_assign</a>(&amp;mut self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>)</code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#72-74" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>^=</code> operation.</p> </div>
+</div>
+<h3 id="impl-Default" class="impl">
+<code class="in-band">impl <a class="trait" href="../default/trait.default/" title="trait std::default::Default">Default</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#121-125" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.default" class="method">
+<code id="default.v">fn <a href="../default/trait.default/#tymethod.default" class="fnname">default</a>() -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/default.rs.html#124" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>Returns the default value of <code>false</code></p> </div>
+</div>
+<h3 id="impl-Hash" class="impl">
+<code class="in-band">impl <a class="trait" href="../hash/trait.hash/" title="trait std::hash::Hash">Hash</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/hash/mod.rs.html#582-586" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.hash" class="method hidden">
+<code id="hash.v">fn <a href="../hash/trait.hash/#tymethod.hash" class="fnname">hash</a>&lt;H&gt;(&amp;self, state: <a class="primitive" href="../primitive.reference/">&amp;mut </a>H) <span class="where fmt-newline">where<br>    H: <a class="trait" href="../hash/trait.hasher/" title="trait std::hash::Hasher">Hasher</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/core/hash/mod.rs.html#583-585" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Feeds this value into the given [<code>Hasher</code>]. <a href="../hash/trait.hash/#tymethod.hash">Read more</a></p> </div>
+<h4 id="method.hash_slice" class="method">
+<code id="hash_slice.v">fn <a href="../hash/trait.hash/#method.hash_slice" class="fnname">hash_slice</a>&lt;H&gt;(data: <a class="primitive" href="../primitive.slice/">&amp;[Self]</a>, state: <a class="primitive" href="../primitive.reference/">&amp;mut </a>H) <span class="where fmt-newline">where<br>    H: <a class="trait" href="../hash/trait.hasher/" title="trait std::hash::Hasher">Hasher</a>, </span></code><a class="srclink" href="https://doc.rust-lang.org/src/core/hash/mod.rs.html#192-198" title="goto source code" target="_blank">[src]</a><span class="since" title="Stable since Rust version 1.3.0">1.3.0</span>
+</h4>
+<div class="docblock">
+<p>Feeds a slice of this type into the given [<code>Hasher</code>]. <a href="../hash/trait.hash/#method.hash_slice">Read more</a></p> </div>
+</div>
+<h3 id="impl-BitOr%3C%26%27_%20bool%3E" class="impl">
+<code class="in-band">impl&lt;'_&gt; <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;&amp;'_ <a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#40-47" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-4" class="type"><code id="Output.t-4">type <a href="../ops/trait.bitor/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitor/#associatedtype.Output" title="type std::ops::BitOr::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>|</code> operator.</p> </div>
+<h4 id="method.bitor" class="method hidden">
+<code id="bitor.v">fn <a href="../ops/trait.bitor/#tymethod.bitor" class="fnname">bitor</a>(self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitor/#associatedtype.Output" title="type std::ops::BitOr::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#44-46" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>|</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitOr%3C%26%27_%20bool%3E-1" class="impl">
+<code class="in-band">impl&lt;'_, '_&gt; <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;&amp;'_ <a class="primitive" href="../primitive.bool/">bool</a>&gt; for &amp;'_ <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#50-57" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-5" class="type"><code id="Output.t-5">type <a href="../ops/trait.bitor/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitor/#associatedtype.Output" title="type std::ops::BitOr::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>|</code> operator.</p> </div>
+<h4 id="method.bitor-1" class="method hidden">
+<code id="bitor.v-1">fn <a href="../ops/trait.bitor/#tymethod.bitor" class="fnname">bitor</a>(self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitor/#associatedtype.Output" title="type std::ops::BitOr::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#54-56" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>|</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitOr%3Cbool%3E" class="impl">
+<code class="in-band">impl&lt;'a&gt; <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for &amp;'a <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#30-37" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-6" class="type"><code id="Output.t-6">type <a href="../ops/trait.bitor/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitor/#associatedtype.Output" title="type std::ops::BitOr::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>|</code> operator.</p> </div>
+<h4 id="method.bitor-2" class="method hidden">
+<code id="bitor.v-2">fn <a href="../ops/trait.bitor/#tymethod.bitor" class="fnname">bitor</a>(self, other: <a class="primitive" href="../primitive.bool/">bool</a>) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitor/#associatedtype.Output" title="type std::ops::BitOr::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#34-36" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>|</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitOr%3Cbool%3E-1" class="impl">
+<code class="in-band">impl <a class="trait" href="../ops/trait.bitor/" title="trait std::ops::BitOr">BitOr</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#215-220" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-7" class="type"><code id="Output.t-7">type <a href="../ops/trait.bitor/#associatedtype.Output" class="type">Output</a> = <a class="primitive" href="../primitive.bool/">bool</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>|</code> operator.</p> </div>
+<h4 id="method.bitor-3" class="method hidden">
+<code id="bitor.v-3">fn <a href="../ops/trait.bitor/#tymethod.bitor" class="fnname">bitor</a>(self, rhs: <a class="primitive" href="../primitive.bool/">bool</a>) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#219" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>|</code> operation.</p> </div>
+</div>
+<h3 id="impl-Clone" class="impl">
+<code class="in-band">impl <a class="trait" href="../clone/trait.clone/" title="trait std::clone::Clone">Clone</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/clone.rs.html#165-170" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.clone" class="method hidden">
+<code id="clone.v">fn <a href="../clone/trait.clone/#tymethod.clone" class="fnname">clone</a>(&amp;self) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/clone.rs.html#167-169" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Returns a copy of the value. <a href="../clone/trait.clone/#tymethod.clone">Read more</a></p> </div>
+<h4 id="method.clone_from" class="method">
+<code id="clone_from.v">fn <a href="../clone/trait.clone/#method.clone_from" class="fnname">clone_from</a>(&amp;mut self, source: <a class="primitive" href="../primitive.reference/">&amp;</a>Self)</code><a class="srclink" href="https://doc.rust-lang.org/src/core/clone.rs.html#131-133" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>Performs copy-assignment from <code>source</code>. <a href="../clone/trait.clone/#method.clone_from">Read more</a></p> </div>
+</div>
+<h3 id="impl-Eq" class="impl">
+<code class="in-band">impl <a class="trait" href="../cmp/trait.eq/" title="trait std::cmp::Eq">Eq</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#916" title="goto source code" target="_blank">[src]</a>
+</h3>
+
+<h3 id="impl-PartialOrd%3Cbool%3E" class="impl">
+<code class="in-band">impl <a class="trait" href="../cmp/trait.partialord/" title="trait std::cmp::PartialOrd">PartialOrd</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#956-961" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.partial_cmp" class="method hidden">
+<code id="partial_cmp.v">fn <a href="../cmp/trait.partialord/#tymethod.partial_cmp" class="fnname">partial_cmp</a>(&amp;self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; <a class="enum" href="../option/enum.option/" title="enum std::option::Option">Option</a>&lt;<a class="enum" href="../cmp/enum.ordering/" title="enum std::cmp::Ordering">Ordering</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#958-960" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>This method returns an ordering between <code>self</code> and <code>other</code> values if one exists. <a href="../cmp/trait.partialord/#tymethod.partial_cmp">Read more</a></p> </div>
+<h4 id="method.lt" class="method">
+<code id="lt.v">fn <a href="../cmp/trait.partialord/#method.lt" class="fnname">lt</a>(&amp;self, other: <a class="primitive" href="../primitive.reference/">&amp;</a>Rhs) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#772-777" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>This method tests less than (for <code>self</code> and <code>other</code>) and is used by the <code>&lt;</code> operator. <a href="../cmp/trait.partialord/#method.lt">Read more</a></p> </div>
+<h4 id="method.le" class="method">
+<code id="le.v">fn <a href="../cmp/trait.partialord/#method.le" class="fnname">le</a>(&amp;self, other: <a class="primitive" href="../primitive.reference/">&amp;</a>Rhs) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#794-799" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>This method tests less than or equal to (for <code>self</code> and <code>other</code>) and is used by the <code>&lt;=</code> operator. <a href="../cmp/trait.partialord/#method.le">Read more</a></p> </div>
+<h4 id="method.gt" class="method">
+<code id="gt.v">fn <a href="../cmp/trait.partialord/#method.gt" class="fnname">gt</a>(&amp;self, other: <a class="primitive" href="../primitive.reference/">&amp;</a>Rhs) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#815-820" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>This method tests greater than (for <code>self</code> and <code>other</code>) and is used by the <code>&gt;</code> operator. <a href="../cmp/trait.partialord/#method.gt">Read more</a></p> </div>
+<h4 id="method.ge" class="method">
+<code id="ge.v">fn <a href="../cmp/trait.partialord/#method.ge" class="fnname">ge</a>(&amp;self, other: <a class="primitive" href="../primitive.reference/">&amp;</a>Rhs) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#837-842" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>This method tests greater than or equal to (for <code>self</code> and <code>other</code>) and is used by the <code>&gt;=</code> operator. <a href="../cmp/trait.partialord/#method.ge">Read more</a></p> </div>
+</div>
+<h3 id="impl-BitAnd%3Cbool%3E" class="impl">
+<code class="in-band">impl <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#131-136" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-8" class="type"><code id="Output.t-8">type <a href="../ops/trait.bitand/#associatedtype.Output" class="type">Output</a> = <a class="primitive" href="../primitive.bool/">bool</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>&amp;</code> operator.</p> </div>
+<h4 id="method.bitand" class="method hidden">
+<code id="bitand.v">fn <a href="../ops/trait.bitand/#tymethod.bitand" class="fnname">bitand</a>(self, rhs: <a class="primitive" href="../primitive.bool/">bool</a>) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#135" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>&amp;</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitAnd%3C%26%27_%20bool%3E" class="impl">
+<code class="in-band">impl&lt;'_&gt; <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;&amp;'_ <a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#40-47" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-9" class="type"><code id="Output.t-9">type <a href="../ops/trait.bitand/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitand/#associatedtype.Output" title="type std::ops::BitAnd::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>&amp;</code> operator.</p> </div>
+<h4 id="method.bitand-1" class="method hidden">
+<code id="bitand.v-1">fn <a href="../ops/trait.bitand/#tymethod.bitand" class="fnname">bitand</a>(self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitand/#associatedtype.Output" title="type std::ops::BitAnd::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#44-46" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>&amp;</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitAnd%3C%26%27_%20bool%3E-1" class="impl">
+<code class="in-band">impl&lt;'_, '_&gt; <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;&amp;'_ <a class="primitive" href="../primitive.bool/">bool</a>&gt; for &amp;'_ <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#50-57" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-10" class="type"><code id="Output.t-10">type <a href="../ops/trait.bitand/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitand/#associatedtype.Output" title="type std::ops::BitAnd::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>&amp;</code> operator.</p> </div>
+<h4 id="method.bitand-2" class="method hidden">
+<code id="bitand.v-2">fn <a href="../ops/trait.bitand/#tymethod.bitand" class="fnname">bitand</a>(self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitand/#associatedtype.Output" title="type std::ops::BitAnd::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#54-56" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>&amp;</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitAnd%3Cbool%3E-1" class="impl">
+<code class="in-band">impl&lt;'a&gt; <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for &amp;'a <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#30-37" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-11" class="type"><code id="Output.t-11">type <a href="../ops/trait.bitand/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitand/#associatedtype.Output" title="type std::ops::BitAnd::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>&amp;</code> operator.</p> </div>
+<h4 id="method.bitand-3" class="method hidden">
+<code id="bitand.v-3">fn <a href="../ops/trait.bitand/#tymethod.bitand" class="fnname">bitand</a>(self, other: <a class="primitive" href="../primitive.bool/">bool</a>) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.bitand/" title="trait std::ops::BitAnd">BitAnd</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt;&gt;::<a class="type" href="../ops/trait.bitand/#associatedtype.Output" title="type std::ops::BitAnd::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#34-36" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>&amp;</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitOrAssign%3C%26%27_%20bool%3E" class="impl">
+<code class="in-band">impl&lt;'_&gt; <a class="trait" href="../ops/trait.bitorassign/" title="trait std::ops::BitOrAssign">BitOrAssign</a>&lt;&amp;'_ <a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#70-75" title="goto source code" target="_blank">[src]</a><span class="since" title="Stable since Rust version 1.22.0">1.22.0</span>
+</h3>
+<div class="impl-items">
+<h4 id="method.bitor_assign" class="method hidden">
+<code id="bitor_assign.v">fn <a href="../ops/trait.bitorassign/#tymethod.bitor_assign" class="fnname">bitor_assign</a>(&amp;mut self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>)</code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#72-74" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>|=</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitOrAssign%3Cbool%3E" class="impl">
+<code class="in-band">impl <a class="trait" href="../ops/trait.bitorassign/" title="trait std::ops::BitOrAssign">BitOrAssign</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#659-662" title="goto source code" target="_blank">[src]</a><span class="since" title="Stable since Rust version 1.8.0">1.8.0</span>
+</h3>
+<div class="impl-items">
+<h4 id="method.bitor_assign-1" class="method hidden">
+<code id="bitor_assign.v-1">fn <a href="../ops/trait.bitorassign/#tymethod.bitor_assign" class="fnname">bitor_assign</a>(&amp;mut self, other: <a class="primitive" href="../primitive.bool/">bool</a>)</code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#661" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>|=</code> operation.</p> </div>
+</div>
+<h3 id="impl-Ord" class="impl">
+<code class="in-band">impl <a class="trait" href="../cmp/trait.ord/" title="trait std::cmp::Ord">Ord</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#1002-1007" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.cmp" class="method hidden">
+<code id="cmp.v">fn <a href="../cmp/trait.ord/#tymethod.cmp" class="fnname">cmp</a>(&amp;self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; <a class="enum" href="../cmp/enum.ordering/" title="enum std::cmp::Ordering">Ordering</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#1004-1006" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>This method returns an <code>Ordering</code> between <code>self</code> and <code>other</code>. <a href="../cmp/trait.ord/#tymethod.cmp">Read more</a></p> </div>
+<h4 id="method.max" class="method">
+<code id="max.v">fn <a href="../cmp/trait.ord/#method.max" class="fnname">max</a>(self, other: Self) -&gt; Self</code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#549-552" title="goto source code" target="_blank">[src]</a><span class="since" title="Stable since Rust version 1.21.0">1.21.0</span>
+</h4>
+<div class="docblock">
+<p>Compares and returns the maximum of two values. <a href="../cmp/trait.ord/#method.max">Read more</a></p> </div>
+<h4 id="method.min" class="method">
+<code id="min.v">fn <a href="../cmp/trait.ord/#method.min" class="fnname">min</a>(self, other: Self) -&gt; Self</code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#566-569" title="goto source code" target="_blank">[src]</a><span class="since" title="Stable since Rust version 1.21.0">1.21.0</span>
+</h4>
+<div class="docblock">
+<p>Compares and returns the minimum of two values. <a href="../cmp/trait.ord/#method.min">Read more</a></p> </div>
+<h4 id="method.clamp" class="method">
+<code id="clamp.v">fn <a href="../cmp/trait.ord/#method.clamp" class="fnname">clamp</a>(self, min: Self, max: Self) -&gt; Self</code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#590-600" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="stability"><span class="stab unstable">🔬 This is a nightly-only experimental API. (clamp #44095)</span></div>
+<div class="docblock">
+<p>Restrict a value to a certain interval. <a href="../cmp/trait.ord/#method.clamp">Read more</a></p> </div>
+</div>
+<h3 id="impl-Debug" class="impl">
+<code class="in-band">impl <a class="trait" href="../fmt/trait.debug/" title="trait std::fmt::Debug">Debug</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/fmt/mod.rs.html#1941-1946" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.fmt" class="method hidden">
+<code id="fmt.v">fn <a href="../fmt/trait.debug/#tymethod.fmt" class="fnname">fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="../fmt/struct.formatter/" title="struct std::fmt::Formatter">Formatter</a>) -&gt; <a class="enum" href="../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="primitive" href="../primitive.unit/">()</a>, <a class="struct" href="../fmt/struct.error/" title="struct std::fmt::Error">Error</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/core/fmt/mod.rs.html#1943-1945" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Formats the value using the given formatter. <a href="../fmt/trait.debug/#tymethod.fmt">Read more</a></p> </div>
+</div>
+<h3 id="impl-PartialEq%3Cbool%3E" class="impl">
+<code class="in-band">impl <a class="trait" href="../cmp/trait.partialeq/" title="trait std::cmp::PartialEq">PartialEq</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#892-897" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.eq" class="method hidden">
+<code id="eq.v">fn <a href="../cmp/trait.partialeq/#tymethod.eq" class="fnname">eq</a>(&amp;self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#894" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="../cmp/trait.partialeq/#tymethod.eq">Read more</a></p> </div>
+<h4 id="method.ne" class="method hidden">
+<code id="ne.v">fn <a href="../cmp/trait.partialeq/#method.ne" class="fnname">ne</a>(&amp;self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/cmp.rs.html#896" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>This method tests for <code>!=</code>.</p> </div>
+</div>
+<h3 id="impl-Display" class="impl">
+<code class="in-band">impl <a class="trait" href="../fmt/trait.display/" title="trait std::fmt::Display">Display</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/fmt/mod.rs.html#1949-1953" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="method.fmt-1" class="method hidden">
+<code id="fmt.v-1">fn <a href="../fmt/trait.display/#tymethod.fmt" class="fnname">fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="../fmt/struct.formatter/" title="struct std::fmt::Formatter">Formatter</a>) -&gt; <a class="enum" href="../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="primitive" href="../primitive.unit/">()</a>, <a class="struct" href="../fmt/struct.error/" title="struct std::fmt::Error">Error</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/core/fmt/mod.rs.html#1950-1952" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Formats the value using the given formatter. <a href="../fmt/trait.display/#tymethod.fmt">Read more</a></p> </div>
+</div>
+<h3 id="impl-BitAndAssign%3Cbool%3E" class="impl">
+<code class="in-band">impl <a class="trait" href="../ops/trait.bitandassign/" title="trait std::ops::BitAndAssign">BitAndAssign</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#610-613" title="goto source code" target="_blank">[src]</a><span class="since" title="Stable since Rust version 1.8.0">1.8.0</span>
+</h3>
+<div class="impl-items">
+<h4 id="method.bitand_assign" class="method hidden">
+<code id="bitand_assign.v">fn <a href="../ops/trait.bitandassign/#tymethod.bitand_assign" class="fnname">bitand_assign</a>(&amp;mut self, other: <a class="primitive" href="../primitive.bool/">bool</a>)</code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#612" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>&amp;=</code> operation.</p> </div>
+</div>
+<h3 id="impl-BitAndAssign%3C%26%27_%20bool%3E" class="impl">
+<code class="in-band">impl&lt;'_&gt; <a class="trait" href="../ops/trait.bitandassign/" title="trait std::ops::BitAndAssign">BitAndAssign</a>&lt;&amp;'_ <a class="primitive" href="../primitive.bool/">bool</a>&gt; for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#70-75" title="goto source code" target="_blank">[src]</a><span class="since" title="Stable since Rust version 1.22.0">1.22.0</span>
+</h3>
+<div class="impl-items">
+<h4 id="method.bitand_assign-1" class="method hidden">
+<code id="bitand_assign.v-1">fn <a href="../ops/trait.bitandassign/#tymethod.bitand_assign" class="fnname">bitand_assign</a>(&amp;mut self, other: &amp;<a class="primitive" href="../primitive.bool/">bool</a>)</code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#72-74" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the <code>&amp;=</code> operation.</p> </div>
+</div>
+<h3 id="impl-Not" class="impl">
+<code class="in-band">impl&lt;'_&gt; <a class="trait" href="../ops/trait.not/" title="trait std::ops::Not">Not</a> for &amp;'_ <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#10-17" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-12" class="type"><code id="Output.t-12">type <a href="../ops/trait.not/#associatedtype.Output" class="type">Output</a> = &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.not/" title="trait std::ops::Not">Not</a>&gt;::<a class="type" href="../ops/trait.not/#associatedtype.Output" title="type std::ops::Not::Output">Output</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>!</code> operator.</p> </div>
+<h4 id="method.not" class="method hidden">
+<code id="not.v">fn <a href="../ops/trait.not/#tymethod.not" class="fnname">not</a>(self) -&gt; &lt;<a class="primitive" href="../primitive.bool/">bool</a> as <a class="trait" href="../ops/trait.not/" title="trait std::ops::Not">Not</a>&gt;::<a class="type" href="../ops/trait.not/#associatedtype.Output" title="type std::ops::Not::Output">Output</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/internal_macros.rs.html#14-16" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the unary <code>!</code> operation.</p> </div>
+</div>
+<h3 id="impl-Not-1" class="impl">
+<code class="in-band">impl <a class="trait" href="../ops/trait.not/" title="trait std::ops::Not">Not</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#47-52" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Output-13" class="type"><code id="Output.t-13">type <a href="../ops/trait.not/#associatedtype.Output" class="type">Output</a> = <a class="primitive" href="../primitive.bool/">bool</a></code></h4>
+<div class="docblock">
+<p>The resulting type after applying the <code>!</code> operator.</p> </div>
+<h4 id="method.not-1" class="method hidden">
+<code id="not.v-1">fn <a href="../ops/trait.not/#tymethod.not" class="fnname">not</a>(self) -&gt; <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/ops/bit.rs.html#51" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock hidden">
+<p>Performs the unary <code>!</code> operation.</p> </div>
+</div>
+<h3 id="impl-FromStr" class="impl">
+<code class="in-band">impl <a class="trait" href="../str/trait.fromstr/" title="trait std::str::FromStr">FromStr</a> for <a class="primitive" href="../primitive.bool/">bool</a></code><a class="srclink" href="https://doc.rust-lang.org/src/core/str/mod.rs.html#107-140" title="goto source code" target="_blank">[src]</a>
+</h3>
+<div class="impl-items">
+<h4 id="associatedtype.Err" class="type"><code id="Err.t">type <a href="../str/trait.fromstr/#associatedtype.Err" class="type">Err</a> = <a class="struct" href="../str/struct.parseboolerror/" title="struct std::str::ParseBoolError">ParseBoolError</a></code></h4>
+<div class="docblock">
+<p>The associated error which can be returned from parsing.</p> </div>
+<h4 id="method.from_str" class="method">
+<code id="from_str.v">fn <a href="../str/trait.fromstr/#tymethod.from_str" class="fnname">from_str</a>(s: &amp;<a class="primitive" href="../primitive.str/">str</a>) -&gt; <a class="enum" href="../result/enum.result/" title="enum std::result::Result">Result</a>&lt;<a class="primitive" href="../primitive.bool/">bool</a>, <a class="struct" href="../str/struct.parseboolerror/" title="struct std::str::ParseBoolError">ParseBoolError</a>&gt;</code><a class="srclink" href="https://doc.rust-lang.org/src/core/str/mod.rs.html#133-139" title="goto source code" target="_blank">[src]</a>
+</h4>
+<div class="docblock">
+<p>Parse a <code>bool</code> from a string.</p> <p>Yields a <code>Result&lt;bool, ParseBoolError&gt;</code>, because <code>s</code> may or may not actually be parseable.</p> <h2 id="examples-1" class="section-header">Examples</h2> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+use std::str::FromStr;
+
+assert_eq!(FromStr::from_str("true"), Ok(true));
+assert_eq!(FromStr::from_str("false"), Ok(false));
+assert!(&lt;bool as FromStr&gt;::from_str("not even a boolean").is_err());</pre></div> <p>Note, in many cases, the <code>.parse()</code> method on <code>str</code> is more proper.</p> <div class="example-wrap"><pre class="rust rust-example-rendered" data-language="rust">
+assert_eq!("true".parse(), Ok(true));
+assert_eq!("false".parse(), Ok(false));
+assert!("not even a boolean".parse::&lt;bool&gt;().is_err());</pre></div> </div>
+</div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/std/primitive.bool.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/std/primitive.bool.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

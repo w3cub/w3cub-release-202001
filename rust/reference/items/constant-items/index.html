@@ -1,0 +1,175 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>6.9. Constant Items - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" Syntax ConstantItem &#58; const ( IDENTIFIER | _ ) &#58; Type &#61; Expression ; ">
+  <meta name="keywords" content="constant, items, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/items/constant-items/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 id="constant-items">Constant items</h1> <blockquote> <p><strong><sup>Syntax</sup></strong><br> <em>ConstantItem</em> :<br> <code>const</code> ( <a href="../../identifiers/">IDENTIFIER</a> | <code>_</code> ) <code>:</code> <a href="../../types/#type-expressions"><em>Type</em></a> <code>=</code> <a href="../../expressions/"><em>Expression</em></a> <code>;</code></p> </blockquote> <p>A <em>constant item</em> is an optionally named <em><a href="../../const_eval/#constant-expressions">constant value</a></em> which is not associated with a specific memory location in the program. Constants are essentially inlined wherever they are used, meaning that they are copied directly into the relevant context when used. References to the same constant are not necessarily guaranteed to refer to the same memory address.</p> <p>Constants must be explicitly typed. The type must have a <code>'static</code> lifetime: any references it contains must have <code>'static</code> lifetimes.</p> <p>Constants may refer to the address of other constants, in which case the address will have elided lifetimes where applicable, otherwise – in most cases – defaulting to the <code>static</code> lifetime. (See <a href="../../lifetime-elision/#static-lifetime-elision">static lifetime elision</a>.) The compiler is, however, still at liberty to translate the constant many times, so the address referred to may not be stable.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+const BIT1: u32 = 1 &lt;&lt; 0;
+const BIT2: u32 = 1 &lt;&lt; 1;
+
+const BITS: [u32; 2] = [BIT1, BIT2];
+const STRING: &amp;'static str = "bitstring";
+
+struct BitsNStrings&lt;'a&gt; {
+    mybits: [u32; 2],
+    mystring: &amp;'a str,
+}
+
+const BITS_N_STRINGS: BitsNStrings&lt;'static&gt; = BitsNStrings {
+    mybits: BITS,
+    mystring: STRING,
+};
+#}</pre> <h2 id="constants-with-destructors">Constants with Destructors</h2> <p>Constants can contain destructors. Destructors are run when the value goes out of scope.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+struct TypeWithDestructor(i32);
+
+impl Drop for TypeWithDestructor {
+    fn drop(&amp;mut self) {
+        println!("Dropped. Held {}.", self.0);
+    }
+}
+
+const ZERO_WITH_DESTRUCTOR: TypeWithDestructor = TypeWithDestructor(0);
+
+fn create_and_drop_zero_with_destructor() {
+    let x = ZERO_WITH_DESTRUCTOR;
+    // x gets dropped at end of function, calling drop.
+    // prints "Dropped. Held 0.".
+}
+#}</pre> <h2 id="unnamed-constant">Unnamed constant</h2> <p>Unlike an <a href="../../glossary/#associated-item">associated</a> constant, a <a href="../../glossary/#free-item">free</a> constant may be unnamed by using an underscore instead of the name. For example:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+const _: () =  { struct _SameNameTwice; };
+
+// OK although it is the same name as above:
+const _: () =  { struct _SameNameTwice; };
+#}</pre> <p>As with <a href="../use-declarations/#underscore-imports">underscore imports</a>, macros may safely emit the same unnamed constant in the same scope more than once. For example, the following should not produce an error:</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+macro_rules! m {
+    ($item: item) =&gt; { $item $item }
+}
+
+m!(const _: () = (););
+// This expands to:
+// const _: () = ();
+// const _: () = ();
+#}</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/items/constant-items.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/items/constant-items.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

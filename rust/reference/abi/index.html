@@ -1,0 +1,163 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>16. Application Binary Interface - Rust - W3cubDocs</title>
+  
+  <meta name="description" content=" This section documents features that affect the ABI of the compiled output of a crate. ">
+  <meta name="keywords" content="application, binary, interface, abi, -, rust">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/rust/reference/abi/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/rust.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/rust/" class="_nav-link" title="" style="margin-left:0;">Rust</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _rust">
+				
+				
+<h1 id="application-binary-interface-abi">Application Binary Interface (ABI)</h1> <p>This section documents features that affect the ABI of the compiled output of a crate.</p> <p>See <em><a href="../items/functions/#extern-functions">extern functions</a></em> for information on specifying the ABI for exporting functions. See <em><a href="../items/external-blocks/">external blocks</a></em> for information on specifying the ABI for linking external libraries.</p> <h2 id="the-used-attribute">The <code>used</code> attribute</h2> <p>The <em><code>used</code> attribute</em> can only be applied to <a href="../items/static-items/"><code>static</code> items</a>. This <a href="../attributes/">attribute</a> forces the compiler to keep the variable in the output object file (.o, .rlib, etc.) even if the variable is not used, or referenced, by any other item in the crate.</p> <p>Below is an example that shows under what conditions the compiler keeps a <code>static</code> item in the output object file.</p> <pre data-language="rust">
+# #![allow(unused_variables)]
+#fn main() {
+// foo.rs
+
+// This is kept because of `#[used]`:
+#[used]
+static FOO: u32 = 0;
+
+// This is removable because it is unused:
+#[allow(dead_code)]
+static BAR: u32 = 0;
+
+// This is kept because it is publicly reachable:
+pub static BAZ: u32 = 0;
+
+// This is kept because it is referenced by a public, reachable function:
+static QUUX: u32 = 0;
+
+pub fn quux() -&gt; &amp;'static u32 {
+    &amp;QUUX
+}
+
+// This is removable because it is referenced by a private, unused (dead) function:
+static CORGE: u32 = 0;
+
+#[allow(dead_code)]
+fn corge() -&gt; &amp;'static u32 {
+    &amp;CORGE
+}
+#}</pre> <pre>$ rustc -O --emit=obj --crate-type=rlib foo.rs
+
+$ nm -C foo.o
+0000000000000000 R foo::BAZ
+0000000000000000 r foo::FOO
+0000000000000000 R foo::QUUX
+0000000000000000 T foo::quux
+</pre> <h2 id="the-no_mangle-attribute">The <code>no_mangle</code> attribute</h2> <p>The <em><code>no_mangle</code> attribute</em> may be used on any <a href="../items/">item</a> to disable standard symbol name mangling. The symbol for the item will be the identifier of the item's name.</p> <h2 id="the-link_section-attribute">The <code>link_section</code> attribute</h2> <p>The <em><code>link_section</code> attribute</em> specifies the section of the object file that a <a href="../items/functions/">function</a> or <a href="../items/static-items/">static</a>'s content will be placed into. It uses the <a href="../attributes/#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a> syntax to specify the section name.</p> <pre data-language="rust">#[no_mangle]
+#[link_section = ".example_section"]
+pub static VAR1: u32 = 1;
+</pre> <h2 id="the-export_name-attribute">The <code>export_name</code> attribute</h2> <p>The <em><code>export_name</code> attribute</em> specifies the name of the symbol that will be exported on a <a href="../items/functions/">function</a> or <a href="../items/static-items/">static</a>. It uses the <a href="../attributes/#meta-item-attribute-syntax"><em>MetaNameValueStr</em></a> syntax to specify the symbol name.</p> <pre data-language="rust">#[export_name = "exported_symbol_name"]
+pub fn name_in_rust() { }
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010 The Rust Project Developers<br>Licensed under the Apache License, Version 2.0 or the MIT license, at your option.<br>
+    <a href="https://doc.rust-lang.org/reference/abi.html" class="_attribution-link" target="_blank">https://doc.rust-lang.org/reference/abi.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
