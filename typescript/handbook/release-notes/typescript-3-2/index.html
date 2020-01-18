@@ -1,0 +1,223 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript 3.2 - TypeScript - W3cubDocs</title>
+  
+  <meta name="description" content="TypeScript 3.2 introduces a new --strictBindCallApply compiler option (in the --strict family of options) with which the bind, call, and apply &hellip;">
+  <meta name="keywords" content="typescript, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/typescript/handbook/release-notes/typescript-3-2/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/typescript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title"> TypeScript 3.2 </h1>   <h2 id="strictbindcallapply"> <code>strictBindCallApply</code>  </h2> <p>TypeScript 3.2 introduces a new <code>--strictBindCallApply</code> compiler option (in the <code>--strict</code> family of options) with which the <code>bind</code>, <code>call</code>, and <code>apply</code> methods on function objects are strongly typed and strictly checked.</p> <pre data-language="typescript">function foo(a: number, b: string): string {
+  return a + b;
+}
+
+let a = foo.apply(undefined, [10]);        // error: too few argumnts
+let b = foo.apply(undefined, [10, 20]);      // error: 2nd argument is a number
+let c = foo.apply(undefined, [10, "hello", 30]); // error: too many arguments
+let d = foo.apply(undefined, [10, "hello"]);   // okay! returns a string
+</pre> <p>This is achieved by introducing two new types, <code>CallableFunction</code> and <code>NewableFunction</code>, in <code>lib.d.ts</code>. These types contain specialized generic method declarations for <code>bind</code>, <code>call</code>, and <code>apply</code> for regular functions and constructor functions, respectively. The declarations use generic rest parameters (see #24897) to capture and reflect parameter lists in a strongly typed manner. In <code>--strictBindCallApply</code> mode these declarations are used in place of the (very permissive) declarations provided by type <code>Function</code>.</p> <h2 id="caveats"> Caveats  </h2> <p>Since the stricter checks may uncover previously unreported errors, this is a breaking change in <code>--strict</code> mode.</p> <p>Additionally, <a href="https://github.com/Microsoft/TypeScript/pull/27028#issuecomment-429334450" target="_blank">another caveat</a> of this new functionality is that due to certain limitations, <code>bind</code>, <code>call</code>, and <code>apply</code> can’t yet fully model generic functions or functions that have overloads. When using these methods on a generic function, type parameters will be substituted with the empty object type (<code>{}</code>), and when used on a function with overloads, only the last overload will ever be modeled.</p> <h2 id="generic-spread-expressions-in-object-literals"> Generic spread expressions in object literals  </h2> <p>In TypeScript 3.2, object literals now allow generic spread expressions which now produce intersection types, similar to the <code>Object.assign</code> function and JSX literals. For example:</p> <pre data-language="typescript">function taggedObject&lt;T, U extends string&gt;(obj: T, tag: U) {
+  return { ...obj, tag };  // T &amp; { tag: U }
+}
+
+let x = taggedObject({ x: 10, y: 20 }, "point");  // { x: number, y: number } &amp; { tag: "point" }
+</pre> <p>Property assignments and non-generic spread expressions are merged to the greatest extent possible on either side of a generic spread expression. For example:</p> <pre data-language="typescript">function foo1&lt;T&gt;(t: T, obj1: { a: string }, obj2: { b: string }) {
+  return { ...obj1, x: 1, ...t, ...obj2, y: 2 };  // { a: string, x: number } &amp; T &amp; { b: string, y: number }
+}
+</pre> <p>Non-generic spread expressions continue to be processed as before: Call and construct signatures are stripped, only non-method properties are preserved, and for properties with the same name, the type of the rightmost property is used. This contrasts with intersection types which concatenate call and construct signatures, preserve all properties, and intersect the types of properties with the same name. Thus, spreads of the same types may produce different results when they are created through instantiation of generic types:</p> <pre data-language="typescript">function spread&lt;T, U&gt;(t: T, u: U) {
+  return { ...t, ...u };  // T &amp; U
+}
+
+declare let x: { a: string, b: number };
+declare let y: { b: string, c: boolean };
+
+let s1 = { ...x, ...y };  // { a: string, b: string, c: boolean }
+let s2 = spread(x, y);  // { a: string, b: number } &amp; { b: string, c: boolean }
+let b1 = s1.b;  // string
+let b2 = s2.b;  // number &amp; string
+</pre> <h2 id="generic-object-rest-variables-and-parameters"> Generic object rest variables and parameters  </h2> <p>TypeScript 3.2 also allows destructuring a rest binding from a generic variable. This is achieved by using the predefined <code>Pick</code> and <code>Exclude</code> helper types from <code>lib.d.ts</code>, and using the generic type in question as well as the names of the other bindings in the destructuring pattern.</p> <pre data-language="typescript">function excludeTag&lt;T extends { tag: string }&gt;(obj: T) {
+  let { tag, ...rest } = obj;
+  return rest;  // Pick&lt;T, Exclude&lt;keyof T, "tag"&gt;&gt;
+}
+
+const taggedPoint = { x: 10, y: 20, tag: "point" };
+const point = excludeTag(taggedPoint);  // { x: number, y: number }
+</pre> <h2 id="bigint"> BigInt  </h2> <p>BigInts are part of an upcoming proposal in ECMAScript that allow us to model theoretically arbitrarily large integers. TypeScript 3.2 brings type-checking for BigInts, as well as support for emitting BigInt literals when targeting <code>esnext</code>.</p> <p>BigInt support in TypeScript introduces a new primitive type called the <code>bigint</code> (all lowercase). You can get a <code>bigint</code> by calling the <code>BigInt()</code> function or by writing out a BigInt literal by adding an <code>n</code> to the end of any integer numeric literal:</p> <pre data-language="typescript">let foo: bigint = BigInt(100); // the BigInt function
+let bar: bigint = 100n;    // a BigInt literal
+
+// *Slaps roof of fibonacci function*
+// This bad boy returns ints that can get *so* big!
+function fibonacci(n: bigint) {
+  let result = 1n;
+  for (let last = 0n, i = 0n; i &lt; n; i++) {
+    const current = result;
+    result += last;
+    last = current;
+  }
+  return result;
+}
+
+fibonacci(10000n)
+</pre> <p>While you might imagine close interaction between <code>number</code> and <code>bigint</code>, the two are separate domains.</p> <pre data-language="typescript">declare let foo: number;
+declare let bar: bigint;
+
+foo = bar; // error: Type 'bigint' is not assignable to type 'number'.
+bar = foo; // error: Type 'number' is not assignable to type 'bigint'.
+</pre> <p>As specified in ECMAScript, mixing <code>number</code>s and <code>bigint</code>s in arithmetic operations is an error. You’ll have to explicitly convert values to <code>BigInt</code>s.</p> <pre data-language="typescript">console.log(3.141592 * 10000n);   // error
+console.log(3145 * 10n);      // error
+console.log(BigInt(3145) * 10n);  // okay!
+</pre> <p>Also important to note is that <code>bigint</code>s produce a new string when using the <code>typeof</code> operator: the string <code>"bigint"</code>. Thus, TypeScript correctly narrows using <code>typeof</code> as you’d expect.</p> <pre data-language="typescript">function whatKindOfNumberIsIt(x: number | bigint) {
+  if (typeof x === "bigint") {
+    console.log("'x' is a bigint!");
+  }
+  else {
+    console.log("'x' is a floating-point number");
+  }
+}
+</pre> <p>We’d like to extend a huge thanks to <a href="https://github.com/calebsander" target="_blank">Caleb Sander</a> for all the work on this feature. We’re grateful for the contribution, and we’re sure our users are too!</p> <h2 id="caveats-1"> Caveats  </h2> <p>As we mentioned, BigInt support is only available for the <code>esnext</code> target. It may not be obvious, but because BigInts have different behavior for mathematical operators like <code>+</code>, <code>-</code>, <code>*</code>, etc., providing functionality for older targets where the feature doesn’t exist (like <code>es2017</code> and below) would involve rewriting each of these operations. TypeScript would need to dispatch to the correct behavior depending on the type, and so every addition, string concatenation, multiplication, etc. would involve a function call.</p> <p>For that reason, we have no immediate plans to provide downleveling support. On the bright side, Node 11 and newer versions of Chrome already support this feature, so you’ll be able to use BigInts there when targeting <code>esnext</code>.</p> <p>Certain targets may include a polyfill or BigInt-like runtime object. For those purposes you may want to add <code>esnext.bigint</code> to the <code>lib</code> setting in your compiler options.</p> <h2 id="non-unit-types-as-union-discriminants"> Non-unit types as union discriminants  </h2> <p>TypeScript 3.2 makes narrowing easier by relaxing rules for what it considers a discriminant property. Common properties of unions are now considered discriminants as long as they contain <em>some</em> singleton type (e.g. a string literal, <code>null</code>, or <code>undefined</code>), and they contain no generics.</p> <p>As a result, TypeScript 3.2 considers the <code>error</code> property in the following example to be a discriminant, whereas before it wouldn’t since <code>Error</code> isn’t a singleton type. Thanks to this, narrowing works correctly in the body of the <code>unwrap</code> function.</p> <pre data-language="typescript">type Result&lt;T&gt; =
+  | { error: Error; data: null }
+  | { error: null; data: T };
+
+function unwrap&lt;T&gt;(result: Result&lt;T&gt;) {
+  if (result.error) {
+    // Here 'error' is non-null
+    throw result.error;
+  }
+
+  // Now 'data' is non-null
+  return result.data;
+}
+</pre> <h2 id="tsconfigjson-inheritance-via-nodejs-packages"> <code>tsconfig.json</code> inheritance via Node.js packages  </h2> <p>TypeScript 3.2 now resolves <code>tsconfig.json</code>s from <code>node_modules</code>. When using a bare path for the <code>"extends"</code> field in <code>tsconfig.json</code>, TypeScript will dive into <code>node_modules</code> packages for us.</p> <pre data-language="javascripton5">{
+  "extends": "@my-team/tsconfig-base",
+  "include": ["./**/*"]
+  "compilerOptions": {
+    // Override certain options on a project-by-project basis.
+    "strictBindCallApply": false,
+  }
+}
+</pre> <p>Here, TypeScript will climb up <code>node_modules</code> folders looking for a <code>@my-team/tsconfig-base</code> package. For each of those packages, TypeScript will first check whether <code>package.json</code> contains a <code>"tsconfig"</code> field, and if it does, TypeScript will try to load a configuration file from that field. If neither exists, TypeScript will try to read from a <code>tsconfig.json</code> at the root. This is similar to the lookup process for <code>.js</code> files in packages that Node uses, and the <code>.d.ts</code> lookup process that TypeScript already uses.</p> <p>This feature can be extremely useful for bigger organizations, or projects with lots of distributed dependencies.</p> <h2 id="the-new---showconfig-flag"> The new <code>--showConfig</code> flag  </h2> <p><code>tsc</code>, the TypeScript compiler, supports a new flag called <code>--showConfig</code>. When running <code>tsc --showConfig</code>, TypeScript will calculate the effective <code>tsconfig.json</code> (after calculating options inherited from the <code>extends</code> field) and print that out. This can be useful for diagnosing configuration issues in general.</p> <h2 id="objectdefineproperty-declarations-in-javascript"> <code>Object.defineProperty</code> declarations in JavaScript  </h2> <p>When writing in JavaScript files (using <code>allowJs</code>), TypeScript now recognizes declarations that use <code>Object.defineProperty</code>. This means you’ll get better completions, and stronger type-checking when enabling type-checking in JavaScript files (by turning on the <code>checkJs</code> option or adding a <code>// @ts-check</code> comment to the top of your file).</p> <pre data-language="javascript">// @ts-check
+
+let obj = {};
+Object.defineProperty(obj, "x", { value: "hello", writable: false });
+
+obj.x.toLowercase();
+//  ~~~~~~~~~~~
+//  error:
+//   Property 'toLowercase' does not exist on type 'string'.
+//   Did you mean 'toLowerCase'?
+
+obj.x = "world";
+//  ~
+//  error:
+//   Cannot assign to 'x' because it is a read-only property.
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012-2019 Microsoft<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-2.html" class="_attribution-link" target="_blank">https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-2.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,297 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript 2.7 - TypeScript - W3cubDocs</title>
+  
+  <meta name="description" content=" TypeScript 2.7 adds support for declaring const-named properties on types including ECMAScript symbols. ">
+  <meta name="keywords" content="typescript, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/typescript/handbook/release-notes/typescript-2-7/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/typescript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title"> TypeScript 2.7 </h1>   <h2 id="constant-named-properties"> Constant-named properties  </h2> <p>TypeScript 2.7 adds support for declaring const-named properties on types including ECMAScript symbols.</p> <h5 id="example"> Example  </h5> <pre data-language="typescript">// Lib
+export const SERIALIZE = Symbol("serialize-method-key");
+
+export interface Serializable {
+  [SERIALIZE](obj: {}): string;
+}
+</pre> <pre data-language="typescript">// consumer
+
+import { SERIALIZE, Serializable } from "lib";
+
+class JSONSerializableItem implements Serializable {
+  [SERIALIZE](obj: {}) {
+    return JSON.stringify(obj);
+  }
+}
+</pre> <p>This also applies to numeric and string literals.</p> <h5 id="example-1"> Example  </h5> <pre data-language="typescript">const Foo = "Foo";
+const Bar = "Bar";
+
+let x = {
+  [Foo]: 100,
+  [Bar]: "hello",
+};
+
+let a = x[Foo]; // has type 'number'
+let b = x[Bar]; // has type 'string'
+</pre> <h2 id="unique-symbol"> <code>unique symbol</code>  </h2> <p>To enable treating symbols as unique literals a new type <code>unique symbol</code> is available. <code>unique symbol</code> is a subtype of <code>symbol</code>, and are produced only from calling <code>Symbol()</code> or <code>Symbol.for()</code>, or from explicit type annotations. The new type is only allowed on <code>const</code> declarations and <code>readonly static</code> properties, and in order to reference a specific unique symbol, you’ll have to use the <code>typeof</code> operator. Each reference to a <code>unique symbol</code> implies a completely unique identity that’s tied to a given declaration.</p> <h5 id="example-2"> Example  </h5> <pre data-language="typescript">// Works
+declare const Foo: unique symbol;
+
+// Error! 'Bar' isn't a constant.
+let Bar: unique symbol = Symbol();
+
+// Works - refers to a unique symbol, but its identity is tied to 'Foo'.
+let Baz: typeof Foo = Foo;
+
+// Also works.
+class C {
+  static readonly StaticSymbol: unique symbol = Symbol();
+}
+</pre> <p>Because each <code>unique symbol</code> has a completely separate identity, no two <code>unique symbol</code> types are assignable or comparable to each other.</p> <h5 id="example-3"> Example  </h5> <pre data-language="typescript">const Foo = Symbol();
+const Bar = Symbol();
+
+// Error: can't compare two unique symbols.
+if (Foo === Bar) {
+  // ...
+}
+</pre> <h2 id="strict-class-initialization"> Strict Class Initialization  </h2> <p>TypeScript 2.7 introduces a new flag called <code>--strictPropertyInitialization</code>. This flag performs checks to ensure that each instance property of a class gets initialized in the constructor body, or by a property initializer. For example</p> <pre data-language="typescript">class C {
+  foo: number;
+  bar = "hello";
+  baz: boolean;
+//  ~~~
+//  Error! Property 'baz' has no initializer and is not definitely assigned in the
+//     constructor.
+
+  constructor() {
+    this.foo = 42;
+  }
+}
+</pre> <p>In the above, if we truly meant for <code>baz</code> to potentially be <code>undefined</code>, we should have declared it with the type <code>boolean | undefined</code>.</p> <p>There are certain scenarios where properties can be initialized indirectly (perhaps by a helper method or dependency injection library), in which case you can use the new <em>definite assignment assertion modifiers</em> for your properties (discussed below).</p> <pre data-language="typescript">class C {
+  foo!: number;
+  // ^
+  // Notice this '!' modifier.
+  // This is the "definite assignment assertion"
+
+  constructor() {
+    this.initialize();
+  }
+
+  initialize() {
+    this.foo = 0;
+  }
+}
+</pre> <p>Keep in mind that <code>--strictPropertyInitialization</code> will be turned on along with other <code>--strict</code> mode flags, which can impact your project. You can set the <code>strictPropertyInitialization</code> setting to <code>false</code> in your <code>tsconfig.json</code>’s <code>compilerOptions</code>, or <code>--strictPropertyInitialization false</code> on the command line to turn off this checking.</p> <h2 id="definite-assignment-assertions"> Definite Assignment Assertions  </h2> <p>The definite assignment assertion is a feature that allows a <code>!</code> to be placed after instance property and variable declarations to relay to TypeScript that a variable is indeed assigned for all intents and purposes, even if TypeScript’s analyses cannot detect so.</p> <h5 id="example-4"> Example  </h5> <pre data-language="typescript">let x: number;
+initialize();
+console.log(x + x);
+//      ~   ~
+// Error! Variable 'x' is used before being assigned.
+
+function initialize() {
+  x = 10;
+}
+</pre> <p>With definite assignment assertions, we can assert that <code>x</code> is really assigned by appending an <code>!</code> to its declaration:</p> <pre data-language="typescript">// Notice the '!'
+let x!: number;
+initialize();
+
+// No error!
+console.log(x + x);
+
+function initialize() {
+  x = 10;
+}
+</pre> <p>In a sense, the definite assignment assertion operator is the dual of the non-null assertion operator (in which <em>expressions</em> are post-fixed with a <code>!</code>), which we could also have used in the example.</p> <pre data-language="typescript">let x: number;
+initialize();
+
+// No error!
+console.log(x! + x!);
+
+function initialize() {
+  x = 10;
+
+</pre> <p>In our example, we knew that all uses of <code>x</code> would be initialized so it makes more sense to use definite assignment assertions than non-null assertions.</p> <h2 id="fixed-length-tuples"> Fixed Length Tuples  </h2> <p>In TypeScript 2.6 and earlier, <code>[number, string, string]</code> was considered a subtype of <code>[number, string]</code>. This was motivated by TypeScript’s structural nature; the first and second elements of a <code>[number, string, string]</code> are respectively subtypes of the first and second elements of <code>[number, string]</code>. However, after examining real world usage of tuples, we noticed that most situations in which this was permitted was typically undesirable.</p> <p>In TypeScript 2.7, tuples of different arities are no longer assignable to each other. Thanks to a pull request from <a href="https://github.com/tycho01" target="_blank">Tycho Grouwstra</a>, tuple types now encode their arity into the type of their respective <code>length</code> property. This is accomplished by leveraging numeric literal types, which now allow tuples to be distinct from tuples of different arities.</p> <p>Conceptually, you might consider the type <code>[number, string]</code> to be equivalent to the following declaration of <code>NumStrTuple</code>:</p> <pre data-language="typescript">interface NumStrTuple extends Array&lt;number | string&gt; {
+  0: number;
+  1: string;
+  length: 2; // using the numeric literal type '2'
+}
+</pre> <p>Note that this is a breaking change for some code. If you need to resort to the original behavior in which tuples only enforce a minimum length, you can use a similar declaration that does not explicitly define a <code>length</code> property, falling back to <code>number</code>.</p> <pre data-language="typescript">interface MinimumNumStrTuple extends Array&lt;number | string&gt; {
+  0: number;
+  1: string;
+}
+</pre> <p>Note that this does not imply tuples represent immutable arrays, but it is an implied convention.</p> <h2 id="improved-type-inference-for-object-literals"> Improved type inference for object literals  </h2> <p>TypeScript 2.7 improves type inference for multiple object literals occurring in the same context. When multiple object literal types contribute to a union type, we now <em>normalize</em> the object literal types such that all properties are present in each constituent of the union type.</p> <p>Consider:</p> <pre data-language="typescript">const obj = test ? { text: "hello" } : {};  // { text: string } | { text?: undefined }
+const s = obj.text;  // string | undefined
+</pre> <p>Previously type <code>{}</code> was inferred for <code>obj</code> and the second line subsequently caused an error because <code>obj</code> would appear to have no properties. That obviously wasn’t ideal.</p> <h5 id="example-5"> Example  </h5> <pre data-language="typescript">// let obj: { a: number, b: number } |
+//   { a: string, b?: undefined } |
+//   { a?: undefined, b?: undefined }
+let obj = [{ a: 1, b: 2 }, { a: "abc" }, {}][0];
+obj.a;  // string | number | undefined
+obj.b;  // number | undefined
+</pre> <p>Multiple object literal type inferences for the same type parameter are similarly collapsed into a single normalized union type:</p> <pre data-language="typescript">declare function f&lt;T&gt;(...items: T[]): T;
+// let obj: { a: number, b: number } |
+//   { a: string, b?: undefined } |
+//   { a?: undefined, b?: undefined }
+let obj = f({ a: 1, b: 2 }, { a: "abc" }, {});
+obj.a;  // string | number | undefined
+obj.b;  // number | undefined
+</pre> <h2 id="improved-handling-of-structurally-identical-classes-and-instanceof-expressions"> Improved handling of structurally identical classes and <code>instanceof</code> expressions  </h2> <p>TypeScript 2.7 improves the handling of structurally identical classes in union types and <code>instanceof</code> expressions:</p> <ul> <li>Structurally identical, but distinct, class types are now preserved in union types (instead of eliminating all but one).</li> <li>Union type subtype reduction only removes a class type if it is a subclass of <em>and</em> derives from another class type in the union.</li> <li>Type checking of the <code>instanceof</code> operator is now based on whether the type of the left operand <em>derives from</em> the type indicated by the right operand (as opposed to a structural subtype check).</li> </ul> <p>This means that union types and <code>instanceof</code> properly distinguish between structurally identical classes.</p> <h5 id="example-6"> Example  </h5> <pre data-language="typescript">class A {}
+class B extends A {}
+class C extends A {}
+class D extends A { c: string }
+class E extends D {}
+
+let x1 = !true ? new A() : new B();  // A
+let x2 = !true ? new B() : new C();  // B | C (previously B)
+let x3 = !true ? new C() : new D();  // C | D (previously C)
+
+let a1 = [new A(), new B(), new C(), new D(), new E()];  // A[]
+let a2 = [new B(), new C(), new D(), new E()];  // (B | C | D)[] (previously B[])
+
+function f1(x: B | C | D) {
+  if (x instanceof B) {
+    x;  // B (previously B | D)
+  }
+  else if (x instanceof C) {
+    x;  // C
+  }
+  else {
+    x;  // D (previously never)
+  }
+}
+</pre> <h2 id="type-guards-inferred-from--in-operator"> Type guards inferred from <code>in</code> operator  </h2> <p>The <code>in</code> operator now acts as a narrowing expression for types.</p> <p>For a <code>n in x</code> expression, where <code>n</code> is a string literal or string literal type and <code>x</code> is a union type, the “true” branch narrows to types which have an optional or required property <code>n</code>, and the “false” branch narrows to types which have an optional or missing property <code>n</code>.</p> <h5 id="example-7"> Example  </h5> <pre data-language="typescript">interface A { a: number };
+interface B { b: string };
+
+function foo(x: A | B) {
+  if ("a" in x) {
+    return x.a;
+  }
+  return x.b;
+}
+</pre> <h2 id="support-for-import-d-from-cjs-from-commonjs-modules-with---esmoduleinterop"> Support for <code>import d from "cjs"</code> from CommonJS modules with <code>--esModuleInterop</code>  </h2> <p>TypeScript 2.7 updates CommonJS/AMD/UMD module emit to synthesize namespace records based on the presence of an <code>__esModule</code> indicator under <code>--esModuleInterop</code>. The change brings the generated output from TypeScript closer to that generated by Babel.</p> <p>Previously CommonJS/AMD/UMD modules were treated in the same way as ES6 modules, resulting in a couple of problems. Namely:</p> <ul> <li>TypeScript treats a namespace import (i.e. <code>import * as foo from "foo"</code>) for a CommonJS/AMD/UMD module as equivalent to <code>const foo = require("foo")</code>.Things are simple here, but they don’t work out if the primary object being imported is a primitive or a class or a function. ECMAScript spec stipulates that a namespace record is a plain object, and that a namespace import (<code>foo</code> in the example above) is not callable, though allowed by TypeScript</li> <li>Similarly a default import (i.e. <code>import d from "foo"</code>) for a CommonJS/AMD/UMD module as equivalent to <code>const d = require("foo").default</code>.Most of the CommonJS/AMD/UMD modules available today do not have a <code>default</code> export, making this import pattern practically unusable to import non-ES modules (i.e. CommonJS/AMD/UMD). For instance <code>import fs from "fs"</code> or <code>import express from "express"</code> are not allowed.</li> </ul> <p>Under the new <code>--esModuleInterop</code> these two issues should be addressed:</p> <ul> <li>A namespace import (i.e. <code>import * as foo from "foo"</code>) is now correctly flagged as uncallable. Calling it will result in an error.</li> <li>Default imports to CommonJS/AMD/UMD are now allowed (e.g. <code>import fs from "fs"</code>), and should work as expected.</li> </ul> <blockquote> <p>Note: The new behavior is added under a flag to avoid unwarranted breaks to existing code bases. <strong>We highly recommend applying it both to new and existing projects.</strong> For existing projects, namespace imports (<code>import * as express from "express"; express();</code>) will need to be converted to default imports (<code>import express from "express"; express();</code>).</p> </blockquote> <h5 id="example-8"> Example  </h5> <p>With <code>--esModuleInterop</code> two new helpers are generated <code>__importStar</code> and <code>__importDefault</code> for import <code>*</code> and import <code>default</code> respectively. For instance input like:</p> <pre data-language="typescript">import * as foo from "foo";
+import b from "bar";
+</pre> <p>Will generate:</p> <pre data-language="javascript">"use strict";
+var __importStar = (this &amp;&amp; this.__importStar) || function (mod) {
+  if (mod &amp;&amp; mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  result["default"] = mod;
+  return result;
+}
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+  return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+}
+exports.__esModule = true;
+var foo = __importStar(require("foo"));
+var bar_1 = __importDefault(require("bar"));
+</pre> <h2 id="numeric-separators"> Numeric separators  </h2> <p>TypeScript 2.7 brings support for <a href="https://github.com/tc39/proposal-numeric-separator" target="_blank">ES Numeric Separators</a>. Numeric literals can now be separated into segments using <code>_</code>.</p> <h5 id="example-9"> Example  </h5> <pre data-language="typescript">const million = 1_000_000;
+const phone = 555_734_2231;
+const bytes = 0xFF_0C_00_FF;
+const word = 0b1100_0011_1101_0001;
+</pre> <h2 id="cleaner-output-in---watch-mode"> Cleaner output in <code>--watch</code> mode  </h2> <p>TypeScript’s <code>--watch</code> mode now clears the screen after a re-compilation is requested.</p> <h2 id="prettier---pretty-output"> Prettier <code>--pretty</code> output  </h2> <p>TypeScript’s <code>--pretty</code> flag can make error messages easier to read and manage. <code>--pretty</code> now uses colors for file names, diagnostic codes, and line numbers. File names and positions are now also formatted to allow navigation in common terminals (e.g. Visual Studio Code terminal).</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012-2019 Microsoft<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html" class="_attribution-link" target="_blank">https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

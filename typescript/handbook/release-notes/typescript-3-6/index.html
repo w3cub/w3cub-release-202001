@@ -1,0 +1,266 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript 3.6 - TypeScript - W3cubDocs</title>
+  
+  <meta name="description" content="TypeScript 3.6 introduces stricter checking for iterators and generator functions. In earlier versions, users of generators had no way to &hellip;">
+  <meta name="keywords" content="typescript, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/typescript/handbook/release-notes/typescript-3-6/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/typescript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title"> TypeScript 3.6 </h1>   <h2 id="stricter-generators"> Stricter Generators  </h2> <p>TypeScript 3.6 introduces stricter checking for iterators and generator functions. In earlier versions, users of generators had no way to differentiate whether a value was yielded or returned from a generator.</p> <pre data-language="typescript">function* foo() {
+  if (Math.random() &lt; 0.5) yield 100;
+  return "Finished!"
+}
+
+let iter = foo();
+let curr = iter.next();
+if (curr.done) {
+  // TypeScript 3.5 and prior thought this was a 'string | number'.
+  // It should know it's 'string' since 'done' was 'true'!
+  curr.value
+}
+</pre> <p>Additionally, generators just assumed the type of <code>yield</code> was always <code>any</code>.</p> <pre data-language="typescript">function* bar() {
+  let x: { hello(): void } = yield;
+  x.hello();
+}
+
+let iter = bar();
+iter.next();
+iter.next(123); // oops! runtime error!
+</pre> <p>In TypeScript 3.6, the checker now knows that the correct type for <code>curr.value</code> should be <code>string</code> in our first example, and will correctly error on our call to <code>next()</code> in our last example. This is thanks to some changes in the <code>Iterator</code> and <code>IteratorResult</code> type declarations to include a few new type parameters, and to a new type that TypeScript uses to represent generators called the <code>Generator</code> type.</p> <p>The <code>Iterator</code> type now allows users to specify the yielded type, the returned type, and the type that <code>next</code> can accept.</p> <pre data-language="typescript">interface Iterator&lt;T, TReturn = any, TNext = undefined&gt; {
+  // Takes either 0 or 1 arguments - doesn't accept 'undefined'
+  next(...args: [] | [TNext]): IteratorResult&lt;T, TReturn&gt;;
+  return?(value?: TReturn): IteratorResult&lt;T, TReturn&gt;;
+  throw?(e?: any): IteratorResult&lt;T, TReturn&gt;;
+}
+</pre> <p>Building on that work, the new <code>Generator</code> type is an <code>Iterator</code> that always has both the <code>return</code> and <code>throw</code> methods present, and is also iterable.</p> <pre data-language="typescript">interface Generator&lt;T = unknown, TReturn = any, TNext = unknown&gt;
+    extends Iterator&lt;T, TReturn, TNext&gt; {
+  next(...args: [] | [TNext]): IteratorResult&lt;T, TReturn&gt;;
+  return(value: TReturn): IteratorResult&lt;T, TReturn&gt;;
+  throw(e: any): IteratorResult&lt;T, TReturn&gt;;
+  [Symbol.iterator](): Generator&lt;T, TReturn, TNext&gt;;
+}
+</pre> <p>To allow differentiation between returned values and yielded values, TypeScript 3.6 converts the <code>IteratorResult</code> type to a discriminated union type:</p> <pre data-language="typescript">type IteratorResult&lt;T, TReturn = any&gt; = IteratorYieldResult&lt;T&gt; | IteratorReturnResult&lt;TReturn&gt;;
+
+interface IteratorYieldResult&lt;TYield&gt; {
+  done?: false;
+  value: TYield;
+}
+
+interface IteratorReturnResult&lt;TReturn&gt; {
+  done: true;
+  value: TReturn;
+}
+</pre> <p>In short, what this means is that you’ll be able to appropriately narrow down values from iterators when dealing with them directly.</p> <p>To correctly represent the types that can be passed in to a generator from calls to <code>next()</code>, TypeScript 3.6 also infers certain uses of <code>yield</code> within the body of a generator function.</p> <pre data-language="typescript">function* foo() {
+  let x: string = yield;
+  console.log(x.toUpperCase());
+}
+
+let x = foo();
+x.next(); // first call to 'next' is always ignored
+x.next(42); // error! 'number' is not assignable to 'string'
+</pre> <p>If you’d prefer to be explicit, you can also enforce the type of values that can be returned, yielded, and evaluated from <code>yield</code> expressions using an explicit return type. Below, <code>next()</code> can only be called with <code>boolean</code>s, and depending on the value of <code>done</code>, <code>value</code> is either a <code>string</code> or a <code>number</code>.</p> <pre data-language="typescript">/**
+ * - yields numbers
+ * - returns strings
+ * - can be passed in booleans
+ */
+function* counter(): Generator&lt;number, string, boolean&gt; {
+  let i = 0;
+  while (true) {
+    if (yield i++) {
+      break;
+    }
+  }
+  return "done!";
+}
+
+var iter = counter();
+var curr = iter.next()
+while (!curr.done) {
+  console.log(curr.value);
+  curr = iter.next(curr.value === 5)
+}
+console.log(curr.value.toUpperCase());
+
+// prints:
+//
+// 0
+// 1
+// 2
+// 3
+// 4
+// 5
+// DONE!
+</pre> <p>For more details on the change, <a href="https://github.com/Microsoft/TypeScript/issues/2983" target="_blank">see the pull request here</a>.</p> <h2 id="more-accurate-array-spread"> More Accurate Array Spread  </h2> <p>In pre-ES2015 targets, the most faithful emit for constructs like <code>for</code>/<code>of</code> loops and array spreads can be a bit heavy. For this reason, TypeScript uses a simpler emit by default that only supports array types, and supports iterating on other types using the <code>--downlevelIteration</code> flag. The looser default without <code>--downlevelIteration</code> works fairly well; however, there were some common cases where the transformation of array spreads had observable differences. For example, the following array containing a spread</p> <pre data-language="typescript">[...Array(5)]
+</pre> <p>can be rewritten as the following array literal</p> <pre data-language="javascript">[undefined, undefined, undefined, undefined, undefined]
+</pre> <p>However, TypeScript would instead transform the original code into this code:</p> <pre data-language="typescript">Array(5).slice();
+</pre> <p>which is slightly different. <code>Array(5)</code> produces an array with a length of 5, but with no defined property slots.</p> <p>TypeScript 3.6 introduces a new <code>__spreadArrays</code> helper to accurately model what happens in ECMAScript 2015 in older targets outside of <code>--downlevelIteration</code>. <code>__spreadArrays</code> is also available in <a href="https://github.com/Microsoft/tslib/" target="_blank">tslib</a>.</p> <p>For more information, <a href="https://github.com/microsoft/TypeScript/pull/31166" target="_blank">see the relevant pull request</a>.</p> <h2 id="improved-ux-around-promises"> Improved UX Around Promises  </h2> <p>TypeScript 3.6 introduces some improvements for when <code>Promise</code>s are mis-handled.</p> <p>For example, it’s often very common to forget to <code>.then()</code> or <code>await</code> the contents of a <code>Promise</code> before passing it to another function. TypeScript’s error messages are now specialized, and inform the user that perhaps they should consider using the <code>await</code> keyword.</p> <pre data-language="typescript">interface User {
+  name: string;
+  age: number;
+  location: string;
+}
+
+declare function getUserData(): Promise&lt;User&gt;;
+declare function displayUser(user: User): void;
+
+async function f() {
+  displayUser(getUserData());
+//        ~~~~~~~~~~~~~
+// Argument of type 'Promise&lt;User&gt;' is not assignable to parameter of type 'User'.
+//   ...
+// Did you forget to use 'await'?
+}
+</pre> <p>It’s also common to try to access a method before <code>await</code>-ing or <code>.then()</code>-ing a <code>Promise</code>. This is another example, among many others, where we’re able to do better.</p> <pre data-language="typescript">async function getCuteAnimals() {
+  fetch("https://reddit.com/r/aww.json")
+    .json()
+  //   ~~~~
+  // Property 'json' does not exist on type 'Promise&lt;Response&gt;'.
+  //
+  // Did you forget to use 'await'?
+}
+</pre> <p>For more details, <a href="https://github.com/microsoft/TypeScript/issues/30646" target="_blank">see the originating issue</a>, as well as the pull requests that link back to it.</p> <h2 id="better-unicode-support-for-identifiers"> Better Unicode Support for Identifiers  </h2> <p>TypeScript 3.6 contains better support for Unicode characters in identifiers when emitting to ES2015 and later targets.</p> <pre data-language="typescript">const 𝓱𝓮𝓵𝓵𝓸 = "world"; // previously disallowed, now allowed in '--target es2015'
+</pre> <h2 id="importmeta-support-in-systemjs"> <code>import.meta</code> Support in SystemJS  </h2> <p>TypeScript 3.6 supports transforming <code>import.meta</code> to <code>context.meta</code> when your <code>module</code> target is set to <code>system</code>.</p> <pre data-language="typescript">// This module:
+
+console.log(import.meta.url)
+
+// gets turned into the following:
+
+System.register([], function (exports, context) {
+  return {
+  setters: [],
+  execute: function () {
+    console.log(context.meta.url);
+  }
+  };
+});
+</pre> <h2 id="get-and-set-accessors-are-allowed-in-ambient-contexts"> <code>get</code> and <code>set</code> Accessors Are Allowed in Ambient Contexts  </h2> <p>In previous versions of TypeScript, the language didn’t allow <code>get</code> and <code>set</code> accessors in ambient contexts (like in <code>declare</code>-d classes, or in <code>.d.ts</code> files in general). The rationale was that accessors weren’t distinct from properties as far as writing and reading to these properties; however, <a href="https://github.com/tc39/proposal-class-fields/issues/248" target="_blank">because ECMAScript’s class fields proposal may have differing behavior from in existing versions of TypeScript</a>, we realized we needed a way to communicate this different behavior to provide appropriate errors in subclasses.</p> <p>As a result, users can write getters and setters in ambient contexts in TypeScript 3.6.</p> <pre data-language="typescript">declare class Foo {
+  // Allowed in 3.6+.
+  get x(): number;
+  set x(val: number): void;
+}
+</pre> <p>In TypeScript 3.7, the compiler itself will take advantage of this feature so that generated <code>.d.ts</code> files will also emit <code>get</code>/<code>set</code> accessors.</p> <h2 id="ambient-classes-and-functions-can-merge"> Ambient Classes and Functions Can Merge  </h2> <p>In previous versions of TypeScript, it was an error to merge classes and functions under any circumstances. Now, ambient classes and functions (classes/functions with the <code>declare</code> modifier, or in <code>.d.ts</code> files) can merge. This means that now you can write the following:</p> <pre data-language="typescript">export declare function Point2D(x: number, y: number): Point2D;
+export declare class Point2D {
+  x: number;
+  y: number;
+  constructor(x: number, y: number);
+}
+</pre> <p>instead of needing to use</p> <pre data-language="typescript">export interface Point2D {
+  x: number;
+  y: number;
+}
+export declare var Point2D: {
+  (x: number, y: number): Point2D;
+  new (x: number, y: number): Point2D;
+}
+</pre> <p>One advantage of this is that the callable constructor pattern can be easily expressed while also allowing namespaces to merge with these declarations (since <code>var</code> declarations can’t merge with <code>namespace</code>s).</p> <p>In TypeScript 3.7, the compiler will take advantage of this feature so that <code>.d.ts</code> files generated from <code>.js</code> files can appropriately capture both the callability and constructability of a class-like function.</p> <p>For more details, <a href="https://github.com/microsoft/TypeScript/pull/32584" target="_blank">see the original PR on GitHub</a>.</p> <h2 id="apis-to-support---build-and---incremental"> APIs to Support <code>--build</code> and <code>--incremental</code>  </h2> <p>TypeScript 3.0 introduced support for referencing other and building them incrementally using the <code>--build</code> flag. Additionally, TypeScript 3.4 introduced the <code>--incremental</code> flag for saving information about previous compilations to only rebuild certain files. These flags were incredibly useful for structuring projects more flexibly and speeding builds up. Unfortunately, using these flags didn’t work with 3rd party build tools like Gulp and Webpack. TypeScript 3.6 now exposes two sets of APIs to operate on project references and incremental program building.</p> <p>For creating <code>--incremental</code> builds, users can leverage the <code>createIncrementalProgram</code> and <code>createIncrementalCompilerHost</code> APIs. Users can also re-hydrate old program instances from <code>.tsbuildinfo</code> files generated by this API using the newly exposed <code>readBuilderProgram</code> function, which is only meant to be used as for creating new programs (i.e. you can’t modify the returned instance - it’s only meant to be used for the <code>oldProgram</code> parameter in other <code>create*Program</code> functions).</p> <p>For leveraging project references, a new <code>createSolutionBuilder</code> function has been exposed, which returns an instance of the new type <code>SolutionBuilder</code>.</p> <p>For more details on these APIs, you can <a href="https://github.com/microsoft/TypeScript/pull/31432" target="_blank">see the original pull request</a>.</p> <h2 id="semicolon-aware-code-edits"> Semicolon-Aware Code Edits  </h2> <p>Editors like Visual Studio and Visual Studio Code can automatically apply quick fixes, refactorings, and other transformations like automatically importing values from other modules. These transformations are powered by TypeScript, and older versions of TypeScript unconditionally added semicolons to the end of every statement; unfortunately, this disagreed with many users’ style guidelines, and many users were displeased with the editor inserting semicolons.</p> <p>TypeScript is now smart enough to detect whether your file uses semicolons when applying these sorts of edits. If your file generally lacks semicolons, TypeScript won’t add one.</p> <p>For more details, <a href="https://github.com/microsoft/TypeScript/pull/31801" target="_blank">see the corresponding pull request</a>.</p> <h2 id="smarter-auto-import-syntax"> Smarter Auto-Import Syntax  </h2> <p>JavaScript has a lot of different module syntaxes or conventions: the one in the ECMAScript standard, the one Node already supports (CommonJS), AMD, System.js, and more! For the most part, TypeScript would default to auto-importing using ECMAScript module syntax, which was often inappropriate in certain TypeScript projects with different compiler settings, or in Node projects with plain JavaScript and <code>require</code> calls.</p> <p>TypeScript 3.6 is now a bit smarter about looking at your existing imports before deciding on how to auto-import other modules. You can <a href="https://github.com/microsoft/TypeScript/pull/32684" target="_blank">see more details in the original pull request here</a>.</p> <h2 id="new-typescript-playground"> New TypeScript Playground  </h2> <p>The TypeScript playground has received a much-needed refresh with handy new functionality! The new playground is largely a fork of <a href="https://github.com/agentcooper" target="_blank">Artem Tyurin</a>’s <a href="https://github.com/agentcooper/typescript-play" target="_blank">TypeScript playground</a> which community members have been using more and more. We owe Artem a big thanks for helping out here!</p> <p>The new playground now supports many new options including:</p> <ul> <li>The <code>target</code> option (allowing users to switch out of <code>es5</code> to <code>es3</code>, <code>es2015</code>, <code>esnext</code>, etc.)</li> <li>All the strictness flags (including just <code>strict</code>)</li> <li>Support for plain JavaScript files (using <code>allowJS</code> and optionally <code>checkJs</code>)</li> </ul> <p>These options also persist when sharing links to playground samples, allowing users to more reliably share examples without having to tell the recipient “oh, don’t forget to turn on the <code>noImplicitAny</code> option!”.</p> <p>In the near future, we’re going to be refreshing the playground samples, adding JSX support, and polishing automatic type acquisition, meaning that you’ll be able to see the same experience on the playground as you’d get in your personal editor.</p> <p>As we improve the playground and the website, <a href="https://github.com/microsoft/TypeScript-Website/" target="_blank">we welcome feedback and pull requests on GitHub</a>!</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012-2019 Microsoft<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-6.html" class="_attribution-link" target="_blank">https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-6.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,229 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>React &#38; Webpack - TypeScript - W3cubDocs</title>
+  
+  <meta name="description" content=" This guide will teach you how to wire up TypeScript with React and webpack. ">
+  <meta name="keywords" content="react, &#38;, webpack, -, typescript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/typescript/handbook/react-&-webpack/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/typescript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title"> React &amp; Webpack </h1>   <p>This guide will teach you how to wire up TypeScript with <a href="https://reactjs.org/" target="_blank">React</a> and <a href="https://webpack.js.org/" target="_blank">webpack</a>.</p> <p>If you’re starting a brand new project, take a look at the <a href="https://create-react-app.dev/docs/adding-typescript" target="_blank">React Quick Start guide</a> first.</p> <p>Otherwise, we assume that you’re already using <a href="https://nodejs.org/" target="_blank">Node.js</a> with <a href="https://www.npmjs.com/" target="_blank">npm</a>.</p> <h2 id="lay-out-the-project"> Lay out the project  </h2> <p>Let’s start out with a new directory. We’ll name it <code>proj</code> for now, but you can change it to whatever you want.</p> <pre data-language="shell">mkdir proj
+cd proj
+</pre> <p>To start, we’re going to structure our project in the following way:</p> <pre data-language="text">proj/
+├─ dist/
+└─ src/
+   └─ components/
+</pre> <p>TypeScript files will start out in your <code>src</code> folder, run through the TypeScript compiler, then webpack, and end up in a <code>main.js</code> file in <code>dist</code>. Any components that we write will go in the <code>src/components</code> folder.</p> <p>Let’s scaffold this out:</p> <pre data-language="shell">mkdir src
+cd src
+mkdir components
+cd ..
+</pre> <p>Webpack will eventually generate the <code>dist</code> directory for us.</p> <h2 id="initialize-the-project"> Initialize the project  </h2> <p>Now we’ll turn this folder into an npm package.</p> <pre data-language="shell">npm init -y
+</pre> <p>This creates a <code>package.json</code> file with default values.</p> <h2 id="install-our-dependencies"> Install our dependencies  </h2> <p>First ensure Webpack is installed.</p> <pre data-language="shell">npm install --save-dev webpack webpack-cli
+</pre> <p>Webpack is a tool that will bundle your code and optionally all of its dependencies into a single <code>.js</code> file.</p> <p>Let’s now add React and React-DOM, along with their declaration files, as dependencies to your <code>package.json</code> file:</p> <pre data-language="shell">npm install --save react react-dom
+npm install --save-dev @types/react @types/react-dom
+</pre> <p>That <code>@types/</code> prefix means that we also want to get the declaration files for React and React-DOM. Usually when you import a path like <code>"react"</code>, it will look inside of the <code>react</code> package itself; however, not all packages include declaration files, so TypeScript also looks in the <code>@types/react</code> package as well. You’ll see that we won’t even have to think about this later on.</p> <p>Next, we’ll add development-time dependencies on the <a href="https://www.npmjs.com/package/ts-loader" target="_blank">ts-loader</a> and <a href="https://www.npmjs.com/package/source-map-loader" target="_blank">source-map-loader</a>.</p> <pre data-language="shell">npm install --save-dev typescript ts-loader source-map-loader
+</pre> <p>Both of these dependencies will let TypeScript and webpack play well together. ts-loader helps Webpack compile your TypeScript code using the TypeScript’s standard configuration file named <code>tsconfig.json</code>. source-map-loader uses any sourcemap outputs from TypeScript to inform webpack when generating <em>its own</em> sourcemaps. This will allow you to debug your final output file as if you were debugging your original TypeScript source code.</p> <p>Please note that ts-loader is not the only loader for typescript.</p> <p>Notice that we installed TypeScript as a development dependency. We could also have linked TypeScript to a global copy with <code>npm link typescript</code>, but this is a less common scenario.</p> <h2 id="add-a-typescript-configuration-file"> Add a TypeScript configuration file  </h2> <p>You’ll want to bring your TypeScript files together - both the code you’ll be writing as well as any necessary declaration files.</p> <p>To do this, you’ll need to create a <code>tsconfig.json</code> which contains a list of your input files as well as all your compilation settings. Simply create a new file in your project root named <code>tsconfig.json</code> and fill it with the following contents:</p> <pre data-language="javascripton">{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react"
+  }
+}
+</pre> <p>You can learn more about <code>tsconfig.json</code> files <a href="../tsconfig-json/">here</a>.</p> <h2 id="write-some-code"> Write some code  </h2> <p>Let’s write our first TypeScript file using React. First, create a file named <code>Hello.tsx</code> in <code>src/components</code> and write the following:</p> <pre data-language="typescript">import * as React from "react";
+
+export interface HelloProps { compiler: string; framework: string; }
+
+export const Hello = (props: HelloProps) =&gt; &lt;h1&gt;Hello from {props.compiler} and {props.framework}!&lt;/h1&gt;;
+</pre> <p>Note that while this example uses <a href="https://reactjs.org/docs/components-and-props.html#functional-and-class-components" target="_blank">function components</a>, we could also make our example a little <em>classier</em> as well.</p> <pre data-language="typescript">import * as React from "react";
+
+export interface HelloProps { compiler: string; framework: string; }
+
+// 'HelloProps' describes the shape of props.
+// State is never set so we use the '{}' type.
+export class Hello extends React.Component&lt;HelloProps, {}&gt; {
+  render() {
+    return &lt;h1&gt;Hello from {this.props.compiler} and {this.props.framework}!&lt;/h1&gt;;
+  }
+}
+</pre> <p>Next, let’s create an <code>index.tsx</code> in <code>src</code> with the following source:</p> <pre data-language="typescript">import * as React from "react";
+import * as ReactDOM from "react-dom";
+
+import { Hello } from "./components/Hello";
+
+ReactDOM.render(
+  &lt;Hello compiler="TypeScript" framework="React" /&gt;,
+  document.getElementById("example")
+);
+</pre> <p>We just imported our <code>Hello</code> component into <code>index.tsx</code>. Notice that unlike with <code>"react"</code> or <code>"react-dom"</code>, we used a <em>relative path</em> to <code>Hello.tsx</code> - this is important. If we hadn’t, TypeScript would’ve instead tried looking in our <code>node_modules</code> folder.</p> <p>We’ll also need a page to display our <code>Hello</code> component. Create a file at the root of <code>proj</code> named <code>index.html</code> with the following contents:</p> <pre data-language="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;title&gt;Hello React!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="example"&gt;&lt;/div&gt;
+
+    &lt;!-- Dependencies --&gt;
+    &lt;script src="./node_modules/react/umd/react.development.js"&gt;&lt;/script&gt;
+    &lt;script src="./node_modules/react-dom/umd/react-dom.development.js"&gt;&lt;/script&gt;
+
+    &lt;!-- Main --&gt;
+    &lt;script src="./dist/main.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre> <p>Notice that we’re including files from within <code>node_modules</code>. React and React-DOM’s npm packages include standalone <code>.js</code> files that you can include in a web page, and we’re referencing them directly to get things moving faster. Feel free to copy these files to another directory, or alternatively, host them on a content delivery network (CDN). Facebook makes CDN-hosted versions of React available, and you can <a href="http://facebook.github.io/react/downloads.html#development-vs.-production-builds" target="_blank">read more about that here</a>.</p> <h2 id="create-a-webpack-configuration-file"> Create a webpack configuration file  </h2> <p>Create a <code>webpack.config.js</code> file at the root of the project directory.</p> <pre data-language="javascript">module.exports = {
+  mode: "production",
+
+  // Enable sourcemaps for debugging webpack's output.
+  devtool: "source-map",
+
+  resolve: {
+    // Add '.ts' and '.tsx' as resolvable extensions.
+    extensions: [".ts", ".tsx"]
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "ts-loader"
+          }
+        ]
+      },
+      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        loader: "source-map-loader"
+      }
+    ]
+  },
+
+  // When importing a module whose path matches one of the following, just
+  // assume a corresponding global variable exists and use that instead.
+  // This is important because it allows us to avoid bundling all of our
+  // dependencies, which allows browsers to cache those libraries between builds.
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM"
+  }
+};
+</pre> <p>You might be wondering about that <code>externals</code> field. We want to avoid bundling all of React into the same file, since this increases compilation time and browsers will typically be able to cache a library if it doesn’t change.</p> <p>Ideally, we’d just import the React module from within the browser, but most browsers still don’t quite support modules yet. Instead libraries have traditionally made themselves available using a single global variable like <code>jQuery</code> or <code>_</code>. This is called the “namespace pattern”, and webpack allows us to continue leveraging libraries written that way. With our entry for <code>"react": "React"</code>, webpack will work its magic to make any import of <code>"react"</code> load from the <code>React</code> variable.</p> <p>You can learn more about configuring webpack <a href="https://webpack.js.org/concepts" target="_blank">here</a>.</p> <h2 id="putting-it-all-together"> Putting it all together  </h2> <p>Just run:</p> <pre data-language="shell">npx webpack
+</pre> <p>Now open up <code>index.html</code> in your favorite browser and everything should be ready to use! You should see a page that says “Hello from TypeScript and React!”</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012-2019 Microsoft<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://www.typescriptlang.org/docs/handbook/react-&amp;-webpack.html" class="_attribution-link" target="_blank">https://www.typescriptlang.org/docs/handbook/react-&amp;-webpack.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

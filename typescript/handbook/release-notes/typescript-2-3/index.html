@@ -1,0 +1,155 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript 2.3 - TypeScript - W3cubDocs</title>
+  
+  <meta name="description" content=" First some ES2016 terminology&#58; ">
+  <meta name="keywords" content="typescript, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/typescript/handbook/release-notes/typescript-2-3/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/typescript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title"> TypeScript 2.3 </h1>   <h2 id="generators-and-iteration-for-es5es3"> Generators and Iteration for ES5/ES3  </h2> <p><em>First some ES2016 terminology:</em></p> <h5 id="iterators"> Iterators  </h5> <p><a href="http://www.ecma-international.org/ecma-262/6.0/#sec-iteration" target="_blank">ES2015 introduced <code>Iterator</code></a>, which is an object that exposes three methods, <code>next</code>, <code>return</code>, and <code>throw</code>, as per the following interface:</p> <pre data-language="typescript">interface Iterator&lt;T&gt; {
+  next(value?: any): IteratorResult&lt;T&gt;;
+  return?(value?: any): IteratorResult&lt;T&gt;;
+  throw?(e?: any): IteratorResult&lt;T&gt;;
+}
+</pre> <p>This kind of iterator is useful for iterating over synchronously available values, such as the elements of an Array or the keys of a Map. An object that supports iteration is said to be “iterable” if it has a <code>Symbol.iterator</code> method that returns an <code>Iterator</code> object.</p> <p>The Iterator protocol also defines the target of some of the ES2015 features like <code>for..of</code> and spread operator and the array rest in destructuring assignmnets.</p> <h5 id="generators"> Generators  </h5> <p><a href="http://www.ecma-international.org/ecma-262/6.0/#sec-generatorfunction-objects" target="_blank">ES2015 also introduced “Generators”</a>, which are functions that can be used to yield partial computation results via the <code>Iterator</code> interface and the <code>yield</code> keyword. Generators can also internally delegate calls to another iterable through <code>yield *</code>. For example:</p> <pre data-language="typescript">function* f() {
+  yield 1;
+  yield* [2, 3];
+}
+</pre> <h5 id="new---downleveliteration"> New <code>--downlevelIteration</code>  </h5> <p>Previously generators were only supported if the target is ES6/ES2015 or later. Moreover, constructs that operate on the Iterator protocol, e.g. <code>for..of</code> were only supported if they operate on arrays for targets below ES6/ES2015.</p> <p>TypeScript 2.3 adds full support for generators and the Iterator protocol for ES3 and ES5 targets with <code>--downlevelIteration</code> flag.</p> <p>With <code>--downlevelIteration</code>, the compiler uses new type check and emit behavior that attempts to call a <code>[Symbol.iterator]()</code> method on the iterated object if it is found, and creates a synthetic array iterator over the object if it is not.</p> <blockquote> <p>Please note that this requires a native <code>Symbol.iterator</code> or <code>Symbol.iterator</code> shim at runtime for any non-array values.</p> </blockquote> <p><code>for..of</code> statements, Array Destructuring, and Spread elements in Array, Call, and New expressions support <code>Symbol.iterator</code> in ES5/E3 if available when using <code>--downlevelIteration</code>, but can be used on an Array even if it does not define <code>Symbol.iterator</code> at run time or design time.</p> <h2 id="async-iteration"> Async Iteration  </h2> <p>TypeScript 2.3 adds support for the async iterators and generators as described by the current <a href="https://github.com/tc39/proposal-async-iteration" target="_blank">TC39 proposal</a>.</p> <h5 id="async-iterators"> Async iterators  </h5> <p>The Async Iteration introduces an <code>AsyncIterator</code>, which is similar to <code>Iterator</code>. The difference lies in the fact that the <code>next</code>, <code>return</code>, and <code>throw</code> methods of an <code>AsyncIterator</code> return a <code>Promise</code> for the iteration result, rather than the result itself. This allows the caller to enlist in an asynchronous notification for the time at which the <code>AsyncIterator</code> has advanced to the point of yielding a value. An <code>AsyncIterator</code> has the following shape:</p> <pre data-language="typescript">interface AsyncIterator&lt;T&gt; {
+  next(value?: any): Promise&lt;IteratorResult&lt;T&gt;&gt;;
+  return?(value?: any): Promise&lt;IteratorResult&lt;T&gt;&gt;;
+  throw?(e?: any): Promise&lt;IteratorResult&lt;T&gt;&gt;;
+}
+</pre> <p>An object that supports async iteration is said to be “iterable” if it has a <code>Symbol.asyncIterator</code> method that returns an <code>AsyncIterator</code> object.</p> <h5 id="async-generators"> Async Generators  </h5> <p>The <a href="https://github.com/tc39/proposal-async-iteration" target="_blank">Async Iteration proposal</a> introduces “Async Generators”, which are async functions that also can be used to yield partial computation results. Async Generators can also delegate calls via <code>yield*</code> to either an iterable or async iterable:</p> <pre data-language="typescript">async function* g() {
+  yield 1;
+  await sleep(100);
+  yield* [2, 3];
+  yield* (async function *() {
+  await sleep(100);
+  yield 4;
+  })();
+}
+</pre> <p>As with Generators, Async Generators can only be function declarations, function expressions, or methods of classes or object literals. Arrow functions cannot be Async Generators. Async Generators require a valid, global <code>Promise</code> implementation (either native or an ES2015-compatible polyfill), in addition to a valid <code>Symbol.asyncIterator</code> reference (either a native symbol or a shim).</p> <h5 id="the-for-await-of-statement"> The <code>for-await-of</code> Statement  </h5> <p>Finally, ES2015 introduced the <code>for..of</code> statement as a means of iterating over an iterable. Similarly, the Async Iteration proposal introduces the <code>for..await..of</code> statement to iterate over an async iterable:</p> <pre data-language="typescript">async function f() {
+  for await (const x of g()) {
+   console.log(x);
+  }
+}
+</pre> <p>The <code>for..await..of</code> statement is only legal within an Async Function or Async Generator.</p> <h5 id="caveats"> Caveats  </h5> <ul> <li>Keep in mind that our support for async iterators relies on support for <code>Symbol.asyncIterator</code> to exist at runtime. You may need to polyfill <code>Symbol.asyncIterator</code>, which for simple purposes can be as simple as: <code>(Symbol as any).asyncIterator = Symbol.asyncIterator || Symbol.for("Symbol.asyncIterator");</code>
+</li> <li>You also need to include <code>esnext</code> in your <code>--lib</code> option, to get the <code>AsyncIterator</code> declaration if you do not already have it.</li> <li>Finally, if your target is ES5 or ES3, you’ll also need to set the <code>--downlevelIterators</code> flag.</li> </ul> <h2 id="generic-parameter-defaults"> Generic parameter defaults  </h2> <p>TypeScript 2.3 adds support for declaring defaults for generic type parameters.</p> <h5 id="example"> Example  </h5> <p>Consider a function that creates a new <code>HTMLElement</code>, calling it with no arguments generates a <code>Div</code>; you can optionally pass a list of children as well. Previously you would have to define it as:</p> <pre data-language="typescript">declare function create(): Container&lt;HTMLDivElement, HTMLDivElement[]&gt;;
+declare function create&lt;T extends HTMLElement&gt;(element: T): Container&lt;T, T[]&gt;;
+declare function create&lt;T extends HTMLElement, U extends HTMLElement&gt;(element: T, children: U[]): Container&lt;T, U[]&gt;;
+</pre> <p>With generic parameter defaults we can reduce it to:</p> <pre data-language="typescript">declare function create&lt;T extends HTMLElement = HTMLDivElement, U = T[]&gt;(element?: T, children?: U): Container&lt;T, U&gt;;
+</pre> <p>A generic parameter default follows the following rules:</p> <ul> <li>A type parameter is deemed optional if it has a default.</li> <li>Required type parameters must not follow optional type parameters.</li> <li>Default types for a type parameter must satisfy the constraint for the type parameter, if it exists.</li> <li>When specifying type arguments, you are only required to specify type arguments for the required type parameters. Unspecified type parameters will resolve to their default types.</li> <li>If a default type is specified and inference cannot choose a candidate, the default type is inferred.</li> <li>A class or interface declaration that merges with an existing class or interface declaration may introduce a default for an existing type parameter.</li> <li>A class or interface declaration that merges with an existing class or interface declaration may introduce a new type parameter as long as it specifies a default.</li> </ul> <h2 id="new---strict-master-option"> New <code>--strict</code> master option  </h2> <p>New checks added to TypeScript are often off by default to avoid breaking existing projects. While avoiding breakage is a good thing, this strategy has the drawback of making it increasingly complex to choose the highest level of type safety, and doing so requires explicit opt-in action on every TypeScript release. With the <code>--strict</code> option it becomes possible to choose maximum type safety with the understanding that additional errors might be reported by newer versions of the compiler as improved type checking features are added.</p> <p>The new <code>--strict</code> compiler option represents the recommended setting of a number of type checking options. Specifically, specifying <code>--strict</code> corresponds to specifying all of the following options (and may in the future include more options):</p> <ul> <li><code>--strictNullChecks</code></li> <li><code>--noImplicitAny</code></li> <li><code>--noImplicitThis</code></li> <li><code>--alwaysStrict</code></li> </ul> <p>In exact terms, the <code>--strict</code> option sets the <em>default</em> value for the compiler options listed above. This means it is still possible to individually control the options. For example,</p> <pre data-language="sh">--strict --noImplicitThis false
+</pre> <p>has the effect of turning on all strict options <em>except</em> the <code>--noImplicitThis</code> option. Using this scheme it is possible to express configurations consisting of <em>all</em> strict options except some explicitly listed options. In other words, it is now possible to default to the highest level of type safety but opt out of certain checks.</p> <p>Starting with TypeScript 2.3, the default <code>tsconfig.json</code> generated by <code>tsc --init</code> includes a <code>"strict": true</code> setting in the <code>"compilerOptions"</code> section. Thus, new projects started with <code>tsc --init</code> will by default have the highest level of type safety enabled.</p> <h2 id="enhanced---init-output"> Enhanced <code>--init</code> output  </h2> <p>Along with setting <code>--strict</code> on by default, <code>tsc --init</code> has an enhanced output. Default <code>tsconfig.json</code> files generated by <code>tsc --init</code> now include a set of the common compiler options along with their descriptions commented out. Just un-comment the configuration you like to set to get the desired behavior; we hope the new output simplifies the setting up new projects and keeps configuration files readable as projects grow.</p> <h2 id="errors-in-js-files-with---checkjs"> Errors in .js files with <code>--checkJs</code>  </h2> <p>By default the TypeScript compiler does not report any errors in .js files including using <code>--allowJs</code>. With TypeScript 2.3 type-checking errors can also be reported in <code>.js</code> files with <code>--checkJs</code>.</p> <p>You can skip checking some files by adding <code>// @ts-nocheck</code> comment to them; conversely you can choose to check only a few <code>.js</code> files by adding <code>// @ts-check</code> comment to them without setting <code>--checkJs</code>. You can also ignore errors on specific lines by adding <code>// @ts-ignore</code> on the preceding line.</p> <p><code>.js</code> files are still checked to ensure that they only include standard ECMAScript features; type annotations are only allowed in <code>.ts</code> files and are flagged as errors in <code>.js</code> files. JSDoc comments can be used to add some type information to your JavaScript code, see <a href="https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript" target="_blank">JSDoc Support documentation</a> for more details about the supported JSDoc constructs.</p> <p>See <a href="https://github.com/Microsoft/TypeScript/wiki/Type-Checking-JavaScript-Files" target="_blank">Type checking JavaScript Files documentation</a> for more details.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012-2019 Microsoft<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-3.html" class="_attribution-link" target="_blank">https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-3.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

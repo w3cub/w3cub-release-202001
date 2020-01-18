@@ -1,0 +1,271 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Utility Types - TypeScript - W3cubDocs</title>
+  
+  <meta name="description" content=" TypeScript provides several utility types to facilitate common type transformations. These utilities are available globally. ">
+  <meta name="keywords" content="utility, types, -, typescript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/typescript/handbook/utility-types/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/typescript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title"> Utility Types </h1>   <h2 id="introduction"> Introduction  </h2> <p>TypeScript provides several utility types to facilitate common type transformations. These utilities are available globally.</p> <h2 id="table-of-contents"> Table of contents  </h2> <ul> <li><a href="#partialt"><code>Partial&lt;T&gt;</code></a></li> <li><a href="#readonlyt"><code>Readonly&lt;T&gt;</code></a></li> <li><a href="#recordkt"><code>Record&lt;K,T&gt;</code></a></li> <li><a href="#picktk"><code>Pick&lt;T,K&gt;</code></a></li> <li><a href="#omittk"><code>Omit&lt;T,K&gt;</code></a></li> <li><a href="#excludetu"><code>Exclude&lt;T,U&gt;</code></a></li> <li><a href="#extracttu"><code>Extract&lt;T,U&gt;</code></a></li> <li><a href="#nonnullablet"><code>NonNullable&lt;T&gt;</code></a></li> <li><a href="#parameterst"><code>Parameters&lt;T&gt;</code></a></li> <li><a href="#constructorparameterst"><code>ConstructorParameters&lt;T&gt;</code></a></li> <li><a href="#returntypet"><code>ReturnType&lt;T&gt;</code></a></li> <li><a href="#instancetypet"><code>InstanceType&lt;T&gt;</code></a></li> <li><a href="#requiredt"><code>Required&lt;T&gt;</code></a></li> <li><a href="#thisparametertype"><code>ThisParameterType</code></a></li> <li><a href="#omitthisparameter"><code>OmitThisParameter</code></a></li> <li><a href="#thistypet"><code>ThisType&lt;T&gt;</code></a></li> </ul> <h2 id="partialt"> <code>Partial&lt;T&gt;</code>  </h2> <p>Constructs a type with all properties of <code>T</code> set to optional. This utility will return a type that represents all subsets of a given type.</p> <h5 id="example"> Example  </h5> <pre data-language="typescript">interface Todo {
+  title: string;
+  description: string;
+}
+
+function updateTodo(todo: Todo, fieldsToUpdate: Partial&lt;Todo&gt;) {
+  return { ...todo, ...fieldsToUpdate };
+}
+
+const todo1 = {
+  title: 'organize desk',
+  description: 'clear clutter',
+};
+
+const todo2 = updateTodo(todo1, {
+  description: 'throw out trash',
+});
+</pre> <h2 id="readonlyt"> <code>Readonly&lt;T&gt;</code>  </h2> <p>Constructs a type with all properties of <code>T</code> set to <code>readonly</code>, meaning the properties of the constructed type cannot be reassigned.</p> <h5 id="example-1"> Example  </h5> <pre data-language="typescript">interface Todo {
+  title: string;
+}
+
+const todo: Readonly&lt;Todo&gt; = {
+  title: 'Delete inactive users',
+};
+
+todo.title = 'Hello'; // Error: cannot reassign a readonly property
+</pre> <p>This utility is useful for representing assignment expressions that will fail at runtime (i.e. when attempting to reassign properties of a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze" target="_blank">frozen object</a>).</p> <h5 id="objectfreeze"> <code>Object.freeze</code>  </h5> <pre data-language="typescript">function freeze&lt;T&gt;(obj: T): Readonly&lt;T&gt;;
+</pre> <h2 id="recordkt"> <code>Record&lt;K,T&gt;</code>  </h2> <p>Constructs a type with a set of properties <code>K</code> of type <code>T</code>. This utility can be used to map the properties of a type to another type.</p> <h5 id="example-2"> Example  </h5> <pre data-language="typescript">interface PageInfo {
+  title: string;
+}
+
+type Page = 'home' | 'about' | 'contact';
+
+const x: Record&lt;Page, PageInfo&gt; = {
+  about: { title: 'about' },
+  contact: { title: 'contact' },
+  home: { title: 'home' },
+};
+</pre> <h2 id="picktk"> <code>Pick&lt;T,K&gt;</code>  </h2> <p>Constructs a type by picking the set of properties <code>K</code> from <code>T</code>.</p> <h5 id="example-3"> Example  </h5> <pre data-language="typescript">interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+}
+
+type TodoPreview = Pick&lt;Todo, 'title' | 'completed'&gt;;
+
+const todo: TodoPreview = {
+  title: 'Clean room',
+  completed: false,
+};
+</pre> <h2 id="omittk"> <code>Omit&lt;T,K&gt;</code>  </h2> <p>Constructs a type by picking all properties from <code>T</code> and then removing <code>K</code>.</p> <h5 id="example-4"> Example  </h5> <pre data-language="typescript">interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+}
+
+type TodoPreview = Omit&lt;Todo, 'description'&gt;;
+
+const todo: TodoPreview = {
+  title: 'Clean room',
+  completed: false,
+};
+</pre> <h2 id="excludetu"> <code>Exclude&lt;T,U&gt;</code>  </h2> <p>Constructs a type by excluding from <code>T</code> all properties that are assignable to <code>U</code>.</p> <h5 id="example-5"> Example  </h5> <pre data-language="typescript">type T0 = Exclude&lt;"a" | "b" | "c", "a"&gt;;  // "b" | "c"
+type T1 = Exclude&lt;"a" | "b" | "c", "a" | "b"&gt;;  // "c"
+type T2 = Exclude&lt;string | number | (() =&gt; void), Function&gt;;  // string | number
+</pre> <h2 id="extracttu"> <code>Extract&lt;T,U&gt;</code>  </h2> <p>Constructs a type by extracting from <code>T</code> all properties that are assignable to <code>U</code>.</p> <h5 id="example-6"> Example  </h5> <pre data-language="typescript">type T0 = Extract&lt;"a" | "b" | "c", "a" | "f"&gt;;  // "a"
+type T1 = Extract&lt;string | number | (() =&gt; void), Function&gt;;  // () =&gt; void
+</pre> <h2 id="nonnullablet"> <code>NonNullable&lt;T&gt;</code>  </h2> <p>Constructs a type by excluding <code>null</code> and <code>undefined</code> from <code>T</code>.</p> <h5 id="example-7"> Example  </h5> <pre data-language="typescript">type T0 = NonNullable&lt;string | number | undefined&gt;;  // string | number
+type T1 = NonNullable&lt;string[] | null | undefined&gt;;  // string[]
+</pre> <h2 id="parameterst"> <code>Parameters&lt;T&gt;</code>  </h2> <p>Constructs a tuple type of the types of the parameters of a function type <code>T</code>.</p> <h5 id="example-8"> Example  </h5> <pre data-language="typescript">declare function f1(arg: { a: number, b: string }): void
+type T0 = Parameters&lt;() =&gt; string&gt;;  // []
+type T1 = Parameters&lt;(s: string) =&gt; void&gt;;  // [string]
+type T2 = Parameters&lt;(&lt;T&gt;(arg: T) =&gt; T)&gt;;  // [unknown]
+type T4 = Parameters&lt;typeof f1&gt;;  // { a: number, b: string }
+type T5 = Parameters&lt;any&gt;;  // unknown[]
+type T6 = Parameters&lt;never&gt;;  // any
+type T7 = Parameters&lt;string&gt;;  // Error
+type T8 = Parameters&lt;Function&gt;;  // Error
+</pre> <h2 id="constructorparameterst"> <code>ConstructorParameters&lt;T&gt;</code>  </h2> <p>The <code>ConstructorParameters&lt;T&gt;</code> type lets us extract all parameter types of a constructor function type. It produces a tuple type with all the parameter types (or the type <code>never</code> if <code>T</code> is not a function).</p> <h5 id="example-9"> Example  </h5> <pre data-language="typescript">type T0 = ConstructorParameters&lt;ErrorConstructor&gt;;  // [(string | undefined)?]
+type T1 = ConstructorParameters&lt;FunctionConstructor&gt;;  // string[]
+type T2 = ConstructorParameters&lt;RegExpConstructor&gt;;  // [string, (string | undefined)?]
+</pre> <h2 id="returntypet"> <code>ReturnType&lt;T&gt;</code>  </h2> <p>Constructs a type consisting of the return type of function <code>T</code>.</p> <h5 id="example-10"> Example  </h5> <pre data-language="typescript">declare function f1(): { a: number, b: string }
+type T0 = ReturnType&lt;() =&gt; string&gt;;  // string
+type T1 = ReturnType&lt;(s: string) =&gt; void&gt;;  // void
+type T2 = ReturnType&lt;(&lt;T&gt;() =&gt; T)&gt;;  // {}
+type T3 = ReturnType&lt;(&lt;T extends U, U extends number[]&gt;() =&gt; T)&gt;;  // number[]
+type T4 = ReturnType&lt;typeof f1&gt;;  // { a: number, b: string }
+type T5 = ReturnType&lt;any&gt;;  // any
+type T6 = ReturnType&lt;never&gt;;  // any
+type T7 = ReturnType&lt;string&gt;;  // Error
+type T8 = ReturnType&lt;Function&gt;;  // Error
+</pre> <h2 id="instancetypet"> <code>InstanceType&lt;T&gt;</code>  </h2> <p>Constructs a type consisting of the instance type of a constructor function type <code>T</code>.</p> <h5 id="example-11"> Example  </h5> <pre data-language="typescript">class C {
+  x = 0;
+  y = 0;
+}
+
+type T0 = InstanceType&lt;typeof C&gt;;  // C
+type T1 = InstanceType&lt;any&gt;;  // any
+type T2 = InstanceType&lt;never&gt;;  // any
+type T3 = InstanceType&lt;string&gt;;  // Error
+type T4 = InstanceType&lt;Function&gt;;  // Error
+</pre> <h2 id="requiredt"> <code>Required&lt;T&gt;</code>  </h2> <p>Constructs a type consisting of all properties of <code>T</code> set to required.</p> <h5 id="example-12"> Example  </h5> <pre data-language="typescript">interface Props {
+  a?: number;
+  b?: string;
+};
+
+const obj: Props = { a: 5 }; // OK
+
+const obj2: Required&lt;Props&gt; = { a: 5 }; // Error: property 'b' missing
+</pre> <h2 id="thisparametertype"> <code>ThisParameterType</code>  </h2> <p>Extracts the type of the <code>this</code> parameter of a function type, or <code>unknown</code> if the function type has no <code>this</code> parameter.</p> <p>Note: This type only works correctly if <code>--strictFunctionTypes</code> is enabled. See <a href="https://github.com/microsoft/TypeScript/issues/32964" target="_blank">#32964</a>.</p> <h5 id="example-13"> Example  </h5> <pre data-language="typescript">function toHex(this: Number) {
+  return this.toString(16);
+}
+
+function numberToString(n: ThisParameterType&lt;typeof toHex&gt;) {
+  return toHex.apply(n);
+}
+</pre> <h2 id="omitthisparameter"> <code>OmitThisParameter</code>  </h2> <p>Removes the ‘this’ parameter from a function type.</p> <p>Note: This type only works correctly if <code>--strictFunctionTypes</code> is enabled. See <a href="https://github.com/microsoft/TypeScript/issues/32964" target="_blank">#32964</a>.</p> <h5 id="example-14"> Example  </h5> <pre data-language="typescript">function toHex(this: Number) {
+  return this.toString(16);
+}
+
+// The return type of `bind` is already using `OmitThisParameter`, this is just for demonstration.
+const fiveToHex: OmitThisParameter&lt;typeof toHex&gt; = toHex.bind(5);
+
+console.log(fiveToHex());
+</pre> <h2 id="thistypet"> <code>ThisType&lt;T&gt;</code>  </h2> <p>This utility does not return a transformed type. Instead, it serves as a marker for a contextual <code>this</code> type. Note that the <code>--noImplicitThis</code> flag must be enabled to use this utility.</p> <h5 id="example-15"> Example  </h5> <pre data-language="typescript">// Compile with --noImplicitThis
+
+type ObjectDescriptor&lt;D, M&gt; = {
+  data?: D;
+  methods?: M &amp; ThisType&lt;D &amp; M&gt;;  // Type of 'this' in methods is D &amp; M
+}
+
+function makeObject&lt;D, M&gt;(desc: ObjectDescriptor&lt;D, M&gt;): D &amp; M {
+  let data: object = desc.data || {};
+  let methods: object = desc.methods || {};
+  return { ...data, ...methods } as D &amp; M;
+}
+
+let obj = makeObject({
+  data: { x: 0, y: 0 },
+  methods: {
+    moveBy(dx: number, dy: number) {
+      this.x += dx;  // Strongly typed this
+      this.y += dy;  // Strongly typed this
+    }
+  }
+});
+
+obj.x = 10;
+obj.y = 20;
+obj.moveBy(5, 5);
+</pre> <p>In the example above, the <code>methods</code> object in the argument to <code>makeObject</code> has a contextual type that includes <code>ThisType&lt;D &amp; M&gt;</code> and therefore the type of <code>this</code> in methods within the <code>methods</code> object is <code>{ x: number, y: number } &amp; { moveBy(dx: number, dy: number): number }</code>. Notice how the type of the <code>methods</code> property simultaneously is an inference target and a source for the <code>this</code> type in methods.</p> <p>The <code>ThisType&lt;T&gt;</code> marker interface is simply an empty interface declared in <code>lib.d.ts</code>. Beyond being recognized in the contextual type of an object literal, the interface acts like any empty interface.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012-2019 Microsoft<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" class="_attribution-link" target="_blank">https://www.typescriptlang.org/docs/handbook/utility-types.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

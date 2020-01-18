@@ -1,0 +1,176 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript 2.4 - TypeScript - W3cubDocs</title>
+  
+  <meta name="description" content="Dynamic import expressions are a new feature and part of ECMAScript that allows users to asynchronously request a module at any arbitrary point in &hellip;">
+  <meta name="keywords" content="typescript, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/typescript/handbook/release-notes/typescript-2-4/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/typescript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title"> TypeScript 2.4 </h1>   <h2 id="dynamic-import-expressions"> Dynamic Import Expressions  </h2> <p>Dynamic <code>import</code> expressions are a new feature and part of ECMAScript that allows users to asynchronously request a module at any arbitrary point in your program.</p> <p>This means that you can conditionally and lazily import other modules and libraries. For example, here’s an <code>async</code> function that only imports a utility library when it’s needed:</p> <pre data-language="typescript">async function getZipFile(name: string, files: File[]): Promise&lt;File&gt; {
+  const zipUtil = await import('./utils/create-zip-file');
+  const zipContents = await zipUtil.getContentAsBlob(files);
+  return new File(zipContents, name);
+}
+</pre> <p>Many bundlers have support for automatically splitting output bundles based on these <code>import</code> expressions, so consider using this new feature with the <code>esnext</code> module target.</p> <h2 id="string-enums"> String Enums  </h2> <p>TypeScript 2.4 now allows enum members to contain string initializers.</p> <pre data-language="typescript">enum Colors {
+  Red = "RED",
+  Green = "GREEN",
+  Blue = "BLUE",
+}
+</pre> <p>The caveat is that string-initialized enums can’t be reverse-mapped to get the original enum member name. In other words, you can’t write <code>Colors["RED"]</code> to get the string <code>"Red"</code>.</p> <h2 id="improved-inference-for-generics"> Improved inference for generics  </h2> <p>TypeScript 2.4 introduces a few wonderful changes around the way generics are inferred.</p> <h3 id="return-types-as-inference-targets"> Return types as inference targets  </h3> <p>For one, TypeScript can now make inferences for the return type of a call. This can improve your experience and catch errors. Something that now works:</p> <pre data-language="typescript">function arrayMap&lt;T, U&gt;(f: (x: T) =&gt; U): (a: T[]) =&gt; U[] {
+  return a =&gt; a.map(f);
+}
+
+const lengths: (a: string[]) =&gt; number[] = arrayMap(s =&gt; s.length);
+</pre> <p>As an example of new errors you might spot as a result:</p> <pre data-language="typescript">let x: Promise&lt;string&gt; = new Promise(resolve =&gt; {
+  resolve(10);
+  //    ~~ Error!
+});
+</pre> <h3 id="type-parameter-inference-from-contextual-types"> Type parameter inference from contextual types  </h3> <p>Prior to TypeScript 2.4, in the following example</p> <pre data-language="typescript">let f: &lt;T&gt;(x: T) =&gt; T = y =&gt; y;
+</pre> <p><code>y</code> would have the type <code>any</code>. This meant the program would type-check, but you could technically do anything with <code>y</code>, such as the following:</p> <pre data-language="typescript">let f: &lt;T&gt;(x: T) =&gt; T = y =&gt; y() + y.foo.bar;
+</pre> <p>That last example isn’t actually type-safe.</p> <p>In TypeScript 2.4, the function on the right side implicitly <em>gains</em> type parameters, and <code>y</code> is inferred to have the type of that type-parameter.</p> <p>If you use <code>y</code> in a way that the type parameter’s constraint doesn’t support, you’ll correctly get an error. In this case, the constraint of <code>T</code> was (implicitly) <code>{}</code>, so the last example will appropriately fail.</p> <h3 id="stricter-checking-for-generic-functions"> Stricter checking for generic functions  </h3> <p>TypeScript now tries to unify type parameters when comparing two single-signature types. As a result, you’ll get stricter checks when relating two generic signatures, and may catch some bugs.</p> <pre data-language="typescript">type A = &lt;T, U&gt;(x: T, y: U) =&gt; [T, U];
+type B = &lt;S&gt;(x: S, y: S) =&gt; [S, S];
+
+function f(a: A, b: B) {
+  a = b;  // Error
+  b = a;  // Ok
+}
+</pre> <h2 id="strict-contravariance-for-callback-parameters"> Strict contravariance for callback parameters  </h2> <p>TypeScript has always compared parameters in a bivariant way. There are a number of reasons for this, but by-and-large this was not been a huge issue for our users until we saw some of the adverse effects it had with <code>Promise</code>s and <code>Observable</code>s.</p> <p>TypeScript 2.4 introduces tightens this up when relating two callback types. For example:</p> <pre data-language="typescript">interface Mappable&lt;T&gt; {
+  map&lt;U&gt;(f: (x: T) =&gt; U): Mappable&lt;U&gt;;
+}
+
+declare let a: Mappable&lt;number&gt;;
+declare let b: Mappable&lt;string | number&gt;;
+
+a = b;
+b = a;
+</pre> <p>Prior to TypeScript 2.4, this example would succeed. When relating the types of <code>map</code>, TypeScript would bidirectionally relate their parameters (i.e. the type of <code>f</code>). When relating each <code>f</code>, TypeScript would also bidirectionally relate the type of <em>those</em> parameters.</p> <p>When relating the type of <code>map</code> in TS 2.4, the language will check whether each parameter is a callback type, and if so, it will ensure that those parameters are checked in a contravariant manner with respect to the current relation.</p> <p>In other words, TypeScript now catches the above bug, which may be a breaking change for some users, but will largely be helpful.</p> <h2 id="weak-type-detection"> Weak Type Detection  </h2> <p>TypeScript 2.4 introduces the concept of “weak types”. Any type that contains nothing but a set of all-optional properties is considered to be <em>weak</em>. For example, this <code>Options</code> type is a weak type:</p> <pre data-language="typescript">interface Options {
+  data?: string,
+  timeout?: number,
+  maxRetries?: number,
+}
+</pre> <p>In TypeScript 2.4, it’s now an error to assign anything to a weak type when there’s no overlap in properties. For example:</p> <pre data-language="typescript">function sendMessage(options: Options) {
+  // ...
+}
+
+const opts = {
+  payload: "hello world!",
+  retryOnFail: true,
+}
+
+// Error!
+sendMessage(opts);
+// No overlap between the type of 'opts' and 'Options' itself.
+// Maybe we meant to use 'data'/'maxRetries' instead of 'payload'/'retryOnFail'.
+</pre> <p>You can think of this as TypeScript “toughening up” the weak guarantees of these types to catch what would otherwise be silent bugs.</p> <p>Since this is a breaking change, you may need to know about the workarounds which are the same as those for strict object literal checks:</p> <ol> <li>Declare the properties if they really do exist.</li> <li>Add an index signature to the weak type (i.e. <code>[propName: string]: {}</code>).</li> <li>Use a type assertion (i.e. <code>opts as Options</code>).</li> </ol>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012-2019 Microsoft<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-4.html" class="_attribution-link" target="_blank">https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-4.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

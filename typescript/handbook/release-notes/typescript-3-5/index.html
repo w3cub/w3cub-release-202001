@@ -1,0 +1,239 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript 3.5 - TypeScript - W3cubDocs</title>
+  
+  <meta name="description" content=" TypeScript 3.5 introduces several optimizations around type-checking and incremental builds. ">
+  <meta name="keywords" content="typescript, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/typescript/handbook/release-notes/typescript-3-5/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/typescript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title"> TypeScript 3.5 </h1>   <h2 id="speed-improvements"> Speed improvements  </h2> <p>TypeScript 3.5 introduces several optimizations around type-checking and incremental builds.</p> <h3 id="type-checking-speed-ups"> Type-checking speed-ups  </h3> <p>TypeScript 3.5 contains certain optimizations over TypeScript 3.4 for type-checking more efficiently. These improvements are significantly more pronounced in editor scenarios where type-checking drives operations like code completion lists.</p> <h3 id="--incremental-improvements"> <code>--incremental</code> improvements  </h3> <p>TypeScript 3.5 improves on 3.4’s <code>--incremental</code> build mode, by saving information about how the state of the world was calculated - compiler settings, why files were looked up, where files were found, etc. In scenarios involving hundreds of projects using TypeScript’s project references in <code>--build</code> mode, <a href="https://github.com/Microsoft/TypeScript/pull/31101" target="_blank">we’ve found that the amount of time rebuilding can be reduced by as much as 68% compared to TypeScript 3.4</a>!</p> <p>For more details, you can see the pull requests to</p> <ul> <li><a href="https://github.com/Microsoft/TypeScript/pull/31100" target="_blank">cache module resolution</a></li> <li><a href="https://github.com/Microsoft/TypeScript/pull/31101" target="_blank">cache settings calculated from <code>tsconfig.json</code></a></li> </ul> <h2 id="the-omit-helper-type"> The <code>Omit</code> helper type  </h2> <p>TypeScript 3.5 introduces the new <code>Omit</code> helper type, which creates a new type with some properties dropped from the original.</p> <pre data-language="typescript">type Person = {
+  name: string;
+  age: number;
+  location: string;
+};
+
+type QuantumPerson = Omit&lt;Person, "location"&gt;;
+
+// equivalent to
+type QuantumPerson = {
+  name: string;
+  age: number;
+};
+</pre> <p>Here we were able to copy over all the properties of <code>Person</code> except for <code>location</code> using the <code>Omit</code> helper.</p> <p>For more details, <a href="https://github.com/Microsoft/TypeScript/pull/30552" target="_blank">see the pull request on GitHub to add <code>Omit</code></a>, as well as <a href="https://github.com/microsoft/TypeScript/pull/31134" target="_blank">the change to use <code>Omit</code> for object rest</a>.</p> <h3 id="improved-excess-property-checks-in-union-types"> Improved excess property checks in union types  </h3> <p>In TypeScript 3.4 and earlier, certain excess properties were allowed in situations where they really shouldn’t have been. For instance, TypeScript 3.4 permitted the incorrect <code>name</code> property in the object literal even though its types don’t match between <code>Point</code> and <code>Label</code>.</p> <pre data-language="typescript">type Point = {
+  x: number;
+  y: number;
+};
+
+type Label = {
+  name: string;
+};
+
+const thing: Point | Label = {
+  x: 0,
+  y: 0,
+  name: true // uh-oh!
+};
+</pre> <p>Previously, a non-disciminated union wouldn’t have <em>any</em> excess property checking done on its members, and as a result, the incorrectly typed <code>name</code> property slipped by.</p> <p>In TypeScript 3.5, the type-checker at least verifies that all the provided properties belong to <em>some</em> union member and have the appropriate type, meaning that the sample above correctly issues an error.</p> <p>Note that partial overlap is still permitted as long as the property types are valid.</p> <pre data-language="typescript">const pl: Point | Label = {
+  x: 0,
+  y: 0,
+  name: "origin" // okay
+};
+</pre> <h2 id="the---allowumdglobalaccess-flag"> The <code>--allowUmdGlobalAccess</code> flag  </h2> <p>In TypeScript 3.5, you can now reference UMD global declarations like</p> <pre>export as namespace foo;
+</pre> <p>from anywhere - even modules - using the new <code>--allowUmdGlobalAccess</code> flag.</p> <p>This mode adds flexibility for mixing and matching the way 3rd party libraries, where globals that libraries declare can always be consumed, even from within modules.</p> <p>For more details, <a href="https://github.com/Microsoft/TypeScript/pull/30776/files" target="_blank">see the pull request on GitHub</a>.</p> <h2 id="smarter-union-type-checking"> Smarter union type checking  </h2> <p>In TypeScript 3.4 and prior, the following example would fail:</p> <pre data-language="typescript">type S = { done: boolean, value: number }
+type T =
+  | { done: false, value: number }
+  | { done: true, value: number };
+
+declare let source: S;
+declare let target: T;
+
+target = source;
+</pre> <p>That’s because <code>S</code> isn’t assignable to <code>{ done: false, value: number }</code> nor <code>{ done: true, value: number }</code>. Why? Because the <code>done</code> property in <code>S</code> isn’t specific enough - it’s <code>boolean</code> whereas each constituent of <code>T</code> has a <code>done</code> property that’s specifically <code>true</code> or <code>false</code>. That’s what we meant by each constituent type being checked in isolation: TypeScript doesn’t just union each property together and see if <code>S</code> is assignable to that. If it did, some bad code could get through like the following:</p> <pre data-language="typescript">interface Foo {
+  kind: "foo";
+  value: string;
+}
+
+interface Bar {
+  kind: "bar";
+  value: number;
+}
+
+function doSomething(x: Foo | Bar) {
+  if (x.kind === "foo") {
+    x.value.toLowerCase();
+  }
+}
+
+// uh-oh - luckily TypeScript errors here!
+doSomething({
+  kind: "foo",
+  value: 123,
+});
+</pre> <p>However, this was a bit overly strict for the original example. If you figure out the precise type of any possible value of <code>S</code>, you can actually see that it matches the types in <code>T</code> exactly.</p> <p>In TypeScript 3.5, when assigning to types with discriminant properties like in <code>T</code>, the language actually <em>will</em> go further and decompose types like <code>S</code> into a union of every possible inhabitant type. In this case, since <code>boolean</code> is a union of <code>true</code> and <code>false</code>, <code>S</code> will be viewed as a union of <code>{ done: false, value: number }</code> and <code>{ done: true, value: number }</code>.</p> <p>For more details, you can <a href="https://github.com/microsoft/TypeScript/pull/30779" target="_blank">see the original pull request on GitHub</a>.</p> <h2 id="higher-order-type-inference-from-generic-constructors"> Higher order type inference from generic constructors  </h2> <p>In TypeScript 3.4, we improved inference for when generic functions that return functions like so:</p> <pre data-language="typescript">function compose&lt;T, U, V&gt;(
+  f: (x: T) =&gt; U, g: (y: U) =&gt; V): (x: T) =&gt; V {
+  
+  return x =&gt; g(f(x))
+}
+</pre> <p>took other generic functions as arguments, like so:</p> <pre data-language="typescript">function arrayify&lt;T&gt;(x: T): T[] {
+  return [x];
+}
+
+type Box&lt;U&gt; = { value: U }
+function boxify&lt;U&gt;(y: U): Box&lt;U&gt; {
+  return { value: y };
+}
+
+let newFn = compose(arrayify, boxify);
+</pre> <p>Instead of a relatively useless type like <code>(x: {}) =&gt; Box&lt;{}[]&gt;</code>, which older versions of the language would infer, TypeScript 3.4’s inference allows <code>newFn</code> to be generic. Its new type is <code>&lt;T&gt;(x: T) =&gt; Box&lt;T[]&gt;</code>.</p> <p>TypeScript 3.5 generalizes this behavior to work on constructor functions as well.</p> <pre data-language="typescript">class Box&lt;T&gt; {
+  kind: "box";
+  value: T;
+  constructor(value: T) {
+    this.value = value;
+  }
+}
+
+class Bag&lt;U&gt; {
+  kind: "bag";
+  value: U;
+  constructor(value: U) {
+    this.value = value;
+  }
+}
+
+
+function composeCtor&lt;T, U, V&gt;(
+  F: new (x: T) =&gt; U, G: new (y: U) =&gt; V): (x: T) =&gt; V {
+  
+  return x =&gt; new G(new F(x))
+}
+
+let f = composeCtor(Box, Bag); // has type '&lt;T&gt;(x: T) =&gt; Bag&lt;Box&lt;T&gt;&gt;'
+let a = f(1024); // has type 'Bag&lt;Box&lt;number&gt;&gt;'
+</pre> <p>In addition to compositional patterns like the above, this new inference on generic constructors means that functions that operate on class components in certain UI libraries like React can more correctly operate on generic class components.</p> <pre data-language="typescript">type ComponentClass&lt;P&gt; = new (props: P) =&gt; Component&lt;P&gt;;
+declare class Component&lt;P&gt; {
+  props: P;
+  constructor(props: P);
+}
+
+declare function myHoc&lt;P&gt;(C: ComponentClass&lt;P&gt;): ComponentClass&lt;P&gt;;
+
+type NestedProps&lt;T&gt; = { foo: number, stuff: T };
+
+declare class GenericComponent&lt;T&gt; extends Component&lt;NestedProps&lt;T&gt;&gt; {
+}
+
+// type is 'new &lt;T&gt;(props: NestedProps&lt;T&gt;) =&gt; Component&lt;NestedProps&lt;T&gt;&gt;'
+const GenericComponent2 = myHoc(GenericComponent);
+</pre> <p>To learn more, <a href="https://github.com/microsoft/TypeScript/pull/31116" target="_blank">check out the original pull request on GitHub</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012-2019 Microsoft<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-5.html" class="_attribution-link" target="_blank">https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-5.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

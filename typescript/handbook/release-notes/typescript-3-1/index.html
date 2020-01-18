@@ -1,0 +1,168 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript 3.1 - TypeScript - W3cubDocs</title>
+  
+  <meta name="description" content="In TypeScript 3.1, mapped object types[1] over tuples and arrays now produce new tuples&#47;arrays, rather than creating a new type where members &hellip;">
+  <meta name="keywords" content="typescript, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/typescript/handbook/release-notes/typescript-3-1/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/typescript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/typescript/" class="_nav-link" title="" style="margin-left:0;">TypeScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="post-title"> TypeScript 3.1 </h1>   <h2 id="mapped-types-on-tuples-and-arrays"> Mapped types on tuples and arrays  </h2> <p>In TypeScript 3.1, mapped object types<sup><a href="#ts-3-1-only-homomorphic">[1]</a></sup> over tuples and arrays now produce new tuples/arrays, rather than creating a new type where members like <code>push()</code>, <code>pop()</code>, and <code>length</code> are converted. For example:</p> <pre data-language="typescript">type MapToPromise&lt;T&gt; = { [K in keyof T]: Promise&lt;T[K]&gt; };
+
+type Coordinate = [number, number]
+
+type PromiseCoordinate = MapToPromise&lt;Coordinate&gt;; // [Promise&lt;number&gt;, Promise&lt;number&gt;]
+</pre> <p><code>MapToPromise</code> takes a type <code>T</code>, and when that type is a tuple like <code>Coordinate</code>, only the numeric properties are converted. In <code>[number, number]</code>, there are two numerically named properties: <code>0</code> and <code>1</code>. When given a tuple like that, <code>MapToPromise</code> will create a new tuple where the <code>0</code> and <code>1</code> properties are <code>Promise</code>s of the original type. So the resulting type <code>PromiseCoordinate</code> ends up with the type <code>[Promise&lt;number&gt;, Promise&lt;number&gt;]</code>.</p> <h2 id="properties-declarations-on-functions"> Properties declarations on functions  </h2> <p>TypeScript 3.1 brings the ability to define properties on function declarations and <code>const</code>-declared functions, simply by assigning to properties on these functions in the same scope. This allows us to write canonical JavaScript code without resorting to <code>namespace</code> hacks. For example:</p> <pre data-language="typescript">function readImage(path: string, callback: (err: any, image: Image) =&gt; void) {
+  // ...
+}
+
+readImage.sync = (path: string) =&gt; {
+  const contents = fs.readFileSync(path);
+  return decodeImageSync(contents);
+}
+</pre> <p>Here, we have a function <code>readImage</code> which reads an image in a non-blocking asynchronous way. In addition to <code>readImage</code>, we’ve provided a convenience function on <code>readImage</code> itself called <code>readImage.sync</code>.</p> <p>While ECMAScript exports are often a better way of providing this functionality, this new support allows code written in this style to “just work” TypeScript. Additionally, this approach for property declarations allows us to express common patterns like <code>defaultProps</code> and <code>propTypes</code> on React function components (formerly known as SFCs).</p> <pre data-language="typescript">export const FooComponent = ({ name }) =&gt; (
+  &lt;div&gt;Hello! I am {name}&lt;/div&gt;
+);
+
+FooComponent.defaultProps = {
+  name: "(anonymous)",
+};
+</pre>  <hr> <p><sup id="ts-3-1-only-homomorphic">[1]</sup> More specifically, homomorphic mapped types like in the above form.</p> <h2 id="version-selection-with-typesversions"> Version selection with <code>typesVersions</code>  </h2> <p>Feedback from our community, as well as our own experience, has shown us that leveraging the newest TypeScript features while also accommodating users on the older versions are difficult. TypeScript introduces a new feature called <code>typesVersions</code> to help accommodate these scenarios.</p> <p>When using Node module resolution in TypeScript 3.1, when TypeScript cracks open a <code>package.json</code> file to figure out which files it needs to read, it first looks at a new field called <code>typesVersions</code>. A <code>package.json</code> with a <code>typesVersions</code> field might look like this:</p> <pre data-language="javascripton">{
+  "name": "package-name",
+  "version": "1.0",
+  "types": "./index.d.ts",
+  "typesVersions": {
+  "&gt;=3.1": { "*": ["ts3.1/*"] }
+  }
+}
+</pre> <p>This <code>package.json</code> tells TypeScript to check whether the current version of TypeScript is running. If it’s 3.1 or later, it figures out the path you’ve imported relative to the package, and reads from the package’s <code>ts3.1</code> folder. That’s what that <code>{ "*": ["ts3.1/*"] }</code> means - if you’re familiar with path mapping today, it works exactly like that.</p> <p>So in the above example, if we’re importing from <code>"package-name"</code>, we’ll try to resolve from <code>[...]/node_modules/package-name/ts3.1/index.d.ts</code> (and other relevant paths) when running in TypeScript 3.1. If we import from <code>package-name/foo</code>, we’ll try to look for <code>[...]/node_modules/package-name/ts3.1/foo.d.ts</code> and <code>[...]/node_modules/package-name/ts3.1/foo/index.d.ts</code>.</p> <p>What if we’re not running in TypeScript 3.1 in this example? Well, if none of the fields in <code>typesVersions</code> get matched, TypeScript falls back to the <code>types</code> field, so here TypeScript 3.0 and earlier will be redirected to <code>[...]/node_modules/package-name/index.d.ts</code>.</p> <h2 id="matching-behavior"> Matching behavior  </h2> <p>The way that TypeScript decides on whether a version of the compiler &amp; language matches is by using Node’s <a href="https://github.com/npm/node-semver#ranges" target="_blank">semver ranges</a>.</p> <h2 id="multiple-fields"> Multiple fields  </h2> <p><code>typesVersions</code> can support multiple fields where each field name is specified by the range to match on.</p> <pre data-language="javascripton">{
+  "name": "package-name",
+  "version": "1.0",
+  "types": "./index.d.ts",
+  "typesVersions": {
+  "&gt;=3.2": { "*": ["ts3.2/*"] },
+  "&gt;=3.1": { "*": ["ts3.1/*"] }
+  }
+}
+</pre> <p>Since ranges have the potential to overlap, determining which redirect applies is order-specific. That means in the above example, even though both the <code>&gt;=3.2</code> and the <code>&gt;=3.1</code> matchers support TypeScript 3.2 and above, reversing the order could have different behavior, so the above sample would not be equivalent to the following.</p> <pre data-language="javascripton5">{
+  "name": "package-name",
+  "version": "1.0",
+  "types": "./index.d.ts",
+  "typesVersions": {
+  // NOTE: this doesn't work!
+  "&gt;=3.1": { "*": ["ts3.1/*"] },
+  "&gt;=3.2": { "*": ["ts3.2/*"] }
+  }
+}
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012-2019 Microsoft<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-1.html" class="_attribution-link" target="_blank">https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-1.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
