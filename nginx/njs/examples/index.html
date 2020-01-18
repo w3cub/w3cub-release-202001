@@ -1,0 +1,345 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Examples - Nginx - W3cubDocs</title>
+  
+  <meta name="description" content=" nginx.conf&#58; ">
+  <meta name="keywords" content="examples, -, nginx">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/nginx/njs/examples/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/nginx.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/nginx/" class="_nav-link" title="" style="margin-left:0;">nginx</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _nginx">
+				
+				
+<h1>Examples</h1>
+<ul>
+<li><a href="#helloword">Hello World</a></li>
+<li><a href="#urldecode">URL Decoding</a></li>
+<li><a href="#urlencode">URL Encoding</a></li>
+<li><a href="#redirect">Internal Redirect</a></li>
+<li><a href="#fast_response">Returning Fastest Response from Proxy</a></li>
+<li><a href="#jwt">Creating HS JWT</a></li>
+<li><a href="#subrequest">Accessing API from a Subrequest</a></li>
+<li><a href="#secure_link">Creating secure_link Hash</a></li>
+</ul>
+<h4 id="helloword">Hello World</h4>
+<p> <code>nginx.conf</code>: </p> <pre data-language="nginx">
+load_module modules/ngx_http_js_module.so;
+
+events {}
+
+http {
+    js_include hello_world.js;
+
+    server {
+        listen 8000;
+
+        location / {
+            js_content hello;
+        }
+    }
+}
+
+</pre>
+
+<p> <code>hello_world.js</code>: </p> <pre data-language="nginx">
+function hello(r) {
+    r.return(200, "Hello world!");
+}
+</pre>
+
+<h4 id="urldecode">URL Decoding</h4>
+<p> <code>nginx.conf</code>: </p> <pre data-language="nginx">
+js_include urldecode.js;
+
+js_set $decoded_foo decoded_foo;
+</pre>
+
+<p> <code>urldecode.js</code>: </p> <pre data-language="nginx">
+function decoded_foo(r) {
+    return decodeURIComponent(r.args.foo);
+}
+</pre>
+
+<h4 id="urlencode">URL Encoding</h4>
+<p> <code>nginx.conf</code>: </p> <pre data-language="nginx">
+js_include urlencode.js;
+
+js_set $encoded_foo encoded_foo;
+...
+
+location / {
+    proxy_pass http://example.com?foo=$encoded_foo;
+}
+</pre>
+
+<p> <code>urlencode.js</code>: </p> <pre data-language="nginx">
+function encoded_foo(r) {
+    return encodeURIComponent('foo &amp; bar?');
+}
+</pre>
+
+<h4 id="redirect">Internal Redirect</h4>
+<p> <code>nginx.conf</code>: </p> <pre data-language="nginx">
+js_include redirect.js;
+
+location /redirect {
+    js_content redirect;
+}
+
+location @named {
+    return 200 named;
+}
+</pre>
+
+<p> <code>redirect.js</code>: </p> <pre data-language="nginx">
+function redirect(r) {
+    r.internalRedirect('@named');
+}
+</pre>
+
+<h4 id="fast_response">Returning Fastest Response from Proxy</h4>
+<p> <code>nginx.conf</code>: </p> <pre data-language="nginx">
+js_include fastresponse.js;
+
+location /start {
+    js_content content;
+}
+
+location /foo {
+    proxy_pass http://backend1;
+}
+
+location /bar {
+    proxy_pass http://backend2;
+}
+</pre>
+
+<p> <code>fastresponse.js</code>: </p> <pre data-language="nginx">
+function content(r) {
+    var n = 0;
+
+    function done(res) {
+        if (n++ == 0) {
+            r.return(res.status, res.responseBody);
+        }
+    }
+
+    r.subrequest('/foo', r.variables.args, done);
+    r.subrequest('/bar', r.variables.args, done);
+}
+</pre>
+
+<h4 id="jwt">Creating HS JWT</h4>
+<p> <code>nginx.conf</code>: </p> <pre data-language="nginx">
+js_include hs_jwt.js;
+
+js_set $jwt jwt;
+</pre>
+
+<p> <code>hs_jwt.js</code>: </p> <pre data-language="nginx">
+function create_hs256_jwt(claims, key, valid) {
+    var header = { "typ" : "JWT", "alg" : "HS256", "exp" : Date.now() + valid };
+
+    var s = JSON.stringify(header).toBytes().toString('base64url') + '.'
+            + JSON.stringify(claims).toBytes().toString('base64url');
+
+    var h = require('crypto').createHmac('sha256', key);
+
+    return s + '.' + h.update(s).digest().toString('base64url');
+}
+
+function jwt(r) {
+    var claims = {
+        "iss" : "nginx",
+        "sub" : "alice",
+        "foo" : 123,
+        "bar" : "qq",
+        "zyx" : false
+    };
+
+    return create_hs256_jwt(claims, 'foo', 600);
+}
+</pre>
+
+<h4 id="subrequest">Accessing API from a Subrequest</h4>
+<p> <code>nginx.conf</code>: </p> <pre data-language="nginx">
+js_include subrequest.js;
+
+keyval_zone zone=foo:10m;
+...
+
+location /keyval {
+    js_content set_keyval;
+}
+
+location /version {
+    js_content version;
+}
+
+location /api {
+    api write=on;
+}
+</pre>
+
+<p> <code>subrequest.js</code>: </p> <pre data-language="nginx">
+function set_keyval(r) {
+    r.subrequest('/api/3/http/keyvals/foo',
+        { method: 'POST',
+          body: JSON.stringify({ foo: 789, bar: "ss dd 00" })},
+
+        function(res) {
+            if (res.status &gt;= 300) {
+                r.return(res.status, res.responseBody);
+                return;
+            }
+            r.return(500);
+        });
+}
+
+function version(r) {
+    r.subrequest('/api/3/nginx', { method: 'GET' }, function(res) {
+        if (res.status != 200) {
+            r.return(res.status);
+            return;
+        }
+
+        var json = JSON.parse(res.responseBody);
+        r.return(200, json.version);
+    });
+}
+</pre>
+
+<h4 id="secure_link">Creating secure_link Hash</h4>
+<p> <code>nginx.conf</code>: </p> <pre data-language="nginx">
+js_include hash.js;
+
+js_set $new_foo create_secure_link;
+...
+
+location / {
+    secure_link $cookie_foo;
+    secure_link_md5 "$uri mykey";
+    ...
+}
+
+location @login {
+    add_header Set-Cookie "foo=$new_foo; Max-Age=60";
+    return 302 /;
+}
+</pre>
+
+<p> <code>hash.js</code>: </p> <pre data-language="nginx">
+function create_secure_link(r) {
+    return require('crypto').createHash('md5')
+                            .update(r.uri).update(" mykey")
+                            .digest('base64url');
+}
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2002-2019 Igor Sysoev<br>© 2011-2019 Nginx, Inc.<br>Licensed under the BSD License.<br>
+    <a href="https://nginx.org/en/docs/njs/examples.html" class="_attribution-link" target="_blank">https://nginx.org/en/docs/njs/examples.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
