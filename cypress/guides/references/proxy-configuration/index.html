@@ -1,0 +1,185 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Proxy Configuration - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content="Cypress needs Internet access to work. Many companies require the use of a corporate proxy to access the Internet. If your company does this, many &hellip;">
+  <meta name="keywords" content="proxy, configuration, set, on, linux, or, macos, windows, environment, variables, view, unset, and, settings, cypress, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/guides/references/proxy-configuration/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Proxy Configuration</h1>  <div class="article-content" itemprop="articleBody"> <p>Cypress needs Internet access to work. Many companies require the use of a corporate proxy to access the Internet. If your company does this, many functions of Cypress will not work until you’ve configured Cypress to use your proxy:</p> <ul> <li>Cypress won’t be able to load web pages besides <code>localhost</code>.</li> <li>Cypress won’t be able to warn you if your <a href="../configuration/#Global"><code>baseUrl</code></a> isn’t available.</li> <li>Cypress won’t be able to connect to the <a href="../../dashboard/introduction/">Dashboard Service</a> to log in or record test runs.</li> <li>
+<code>npm install cypress</code> may fail while downloading the Cypress binary.</li> </ul> <p>If you are experiencing any or all of these issues, you may need to configure Cypress with your proxy. Instructions are available for <a href="#Set-a-proxy-on-Linux-or-macOS">macOS</a>, <a href="#Set-a-proxy-on-Linux-or-macOS">Linux</a>, and <a href="#Set-a-proxy-on-Windows">Windows</a>.</p> <blockquote class="note warning">
+<p>Proxy Auto-Configuration (PAC) files are not currently supported. If your organization uses a PAC file, contact a network administrator to ask what HTTP proxy you should be using to access the general Internet, then use that proxy with Cypress.</p> </blockquote> <blockquote class="note warning">
+<p>SOCKS proxies are not currently supported. A workaround is to set up an HTTP proxy locally that points to your SOCKS proxy, then using that HTTP proxy with Cypress. <a href="https://superuser.com/questions/423563/convert-http-requests-to-socks5" target="_blank" rel="noopener">Read more about forwarding an HTTP proxy through SOCKS.</a></p> </blockquote> <h1 id="Set-a-proxy-on-Linux-or-macOS" class="article-heading">
+Set a proxy on Linux or macOS
+</h1>
+<p>To set your proxy on Linux or macOS, run the following command in a terminal before running Cypress:</p> <pre class=" language-shell" data-language="javascript">export HTTP_PROXY=http://my-company-proxy.com
+</pre> <p>You can also set <code>NO_PROXY</code> to bypass the proxy for certain domains (by default, only <code>localhost</code> will be bypassed):</p> <pre class=" language-shell" data-language="javascript">export NO_PROXY=localhost,google.com,apple.com
+</pre> <p>To make these changes permanent, you can add these commands to your shell’s <code>~/.profile</code> (<code>~/.zsh_profile</code>, <code>~/.bash_profile</code>, etc.) to run them on every login.</p> <h1 id="Set-a-proxy-on-Windows" class="article-heading">
+Set a proxy on Windows
+</h1>
+<p>When starting up after being installed, Cypress will attempt to load the proxy configured in the Windows registry by default. <a href="https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/" target="_blank" rel="noopener">Learn how to set your proxy settings system-wide in Windows.</a></p> <blockquote class="note info">
+<p>When downloading Cypress for the first time, the <code>cypress</code> command line tool <em>does not</em> read proxy settings from the Windows registry. If you need to configure a proxy for the installation to work, you must set the appropriate environment variables as described below.</p> </blockquote> <p>You can also set proxy environment variables before running Cypress to override the Windows registry. This is also the only way to define a proxy for <code>cypress install</code>. In Command Prompt, defining the required environment variables looks like this:</p> <pre class=" language-shell" data-language="javascript">set HTTP_PROXY=http://my-company-proxy.com
+</pre> <p>To accomplish the same thing in Powershell:</p> <pre class=" language-shell" data-language="javascript">$env:HTTP_PROXY = "http://my-company-proxy.com"
+</pre> <p>To save the <code>HTTP_PROXY</code> variable and use your proxy for all new shells, use <code>setx</code>:</p> <pre class=" language-shell" data-language="javascript">setx HTTP_PROXY http://my-company-proxy.com
+</pre> <h1 id="Proxy-environment-variables" class="article-heading">
+Proxy environment variables
+</h1>
+<blockquote class="note warning">
+<p>This section refers to your operating system’s environment variables, <em>not</em> <a href="../../guides/environment-variables/">Cypress environment variables</a></p> </blockquote> <p>Cypress automatically reads from your system’s <code>HTTP_PROXY</code> environment variable and uses that proxy for all HTTP and HTTPS traffic. If an <code>HTTPS_PROXY</code> environment variable is set, HTTPS traffic will use that proxy instead.</p> <p>To bypass the proxy for certain domains, a <code>NO_PROXY</code> environment variable can be set to a comma-separated list of domain names to not proxy traffic for. By default, traffic to <code>localhost</code> will not be proxied.</p> <p>If an uppercase and a lowercase version of the proxy settings are supplied (for example, <code>HTTP_PROXY</code> and <code>http_proxy</code> are both set), the lowercase variable will be preferred.</p> <h1 id="View-unset-and-set-environment-variables" class="article-heading">
+View, unset, and set environment variables
+</h1>
+<p>In order to properly configure your proxy configuration, it can be helpful to know how to view currently set environment variables, unset unwanted environment variables, and set environment variables depending on your operating system.</p> <h2 id="Linux-or-macOS" class="article-heading">
+Linux or macOS
+</h2>
+<h3 id="Set-an-environment-variable-for-the-current-session" class="article-heading">
+Set an environment variable for the current session
+</h3>
+<pre class=" language-shell" data-language="javascript">export SOME_VARIABLE=some-value
+</pre> <h3 id="Unset-an-environment-variable" class="article-heading">
+Unset an environment variable
+</h3>
+<pre class=" language-shell" data-language="javascript">unset SOME_VARIABLE
+</pre> <p><code>echo</code> will print nothing after <code>unset</code>:</p> <pre class=" language-shell" data-language="javascript">echo $SOME_VARIABLE
+</pre> <h3 id="See-all-the-currently-set-environment-variables" class="article-heading">
+See all the currently set environment variables
+</h3>
+<p>Print all env vars:</p> <pre class=" language-shell" data-language="javascript">env
+</pre> <p>Print environment variables with <code>proxy</code> (case insensitive) in the name:</p> <pre class=" language-shell" data-language="javascript">env | grep -i proxy
+</pre> <h2 id="Windows" class="article-heading">
+Windows
+</h2>
+<p>Setting environment variables in Windows is different depending on if you’re using <em>command prompt</em> or <em>Powershell</em>.</p> <h3 id="Set-an-environment-variable-for-current-session" class="article-heading">
+Set an environment variable for current session
+</h3>
+<p><em>Command prompt:</em></p> <pre class=" language-shell" data-language="javascript">set SOME_VARIABLE=some-value
+</pre> <p><em>Powershell:</em></p> <pre class=" language-shell" data-language="javascript">$env:SOME_VARIABLE = "some-value"
+</pre> <h3 id="Set-environment-variable-globally-for-all-future-sessions" class="article-heading">
+Set environment variable globally for all future sessions
+</h3>
+<pre class=" language-shell" data-language="javascript">setx SOME_VARIABLE some-value
+</pre> <h3 id="Unset-an-environment-variable-in-the-current-session" class="article-heading">
+Unset an environment variable in the current session
+</h3>
+<p><em>Command prompt:</em></p> <pre class=" language-shell" data-language="javascript">set SOME_VARIABLE=
+</pre> <p><em>Powershell:</em></p> <pre class=" language-shell" data-language="javascript">Remove-Item Env:\SOME_VARIABLE
+</pre> <h3 id="See-all-currently-set-environment-variables" class="article-heading">
+See all currently set environment variables
+</h3>
+<p><em>Command prompt:</em></p> <pre class=" language-shell" data-language="javascript">set
+</pre> <p><em>Powershell:</em></p> <pre class=" language-shell" data-language="javascript">Get-ChildItem Env:
+</pre> <h1 id="View-proxy-settings-in-Cypress" class="article-heading">
+View proxy settings in Cypress
+</h1>
+<p>Your current proxy settings can be viewed from within the Cypress Test Runner. Follow these steps:</p> <ol> <li>Open up your project in Cypress via <code>cypress open</code>.</li> <li>Click the “Settings” tab.</li> <li>Click the “Proxy Settings” section to expand it and view the proxy settings that Cypress is currently using.</li> </ol> <img src="data:image/png;base64,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" alt="Proxy configuration in the Desktop app" class> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/guides/references/proxy-configuration.html" class="_attribution-link" target="_blank">https://docs.cypress.io/guides/references/proxy-configuration.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

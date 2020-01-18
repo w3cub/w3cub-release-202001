@@ -1,0 +1,163 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Plugins - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content=" Plugins enable you to tap into, modify, or extend the internal behavior of Cypress. ">
+  <meta name="keywords" content="plugins, use, cases, list, installing, using, plugin, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/guides/tooling/plugins-guide/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Plugins</h1>  <div class="article-content" itemprop="articleBody"> <p>Plugins enable you to tap into, modify, or extend the internal behavior of Cypress.</p> <p>Normally, as a user, all of your test code, your application, and Cypress commands are executed in the browser. But Cypress is also a Node process that plugins can use.</p> <blockquote> <p>Plugins enable you to tap into the <code>node</code> process running outside of the browser.</p> </blockquote> <p>Plugins are a “seam” for you to write your own custom code that executes during particular stages of the Cypress lifecycle.</p> <blockquote class="note info">
+<strong class="note-title foo">  This is a brief overview </strong><p>If you want more details about how to write a plugin, we’ve written API docs that show you how to work with each plugin event.</p> <p>You can <a href="../../../api/plugins/writing-a-plugin/">check out the API docs here</a>.</p> </blockquote> <h1 id="Use-Cases" class="article-heading">
+Use Cases
+</h1>
+<h2 id="Configuration" class="article-heading">
+Configuration
+</h2>
+<p>With plugins, you can programmatically alter the resolved configuration and environment variables that come from <code>cypress.json</code>, <a href="../../guides/environment-variables/#Option-2-cypress-env-json"><code>cypress.env.json</code></a>, the CLI, or system environment variables.</p> <p>This enables you to do things like:</p> <ul> <li>Use multiple environments with their own configurations</li> <li>Swap out environment variables based on an environment</li> <li>Read in configuration files using the built in <code>fs</code> lib</li> <li>Write your configuration in <code>yml</code>
+</li> </ul> <p>Check out our <a href="../../../api/plugins/configuration-api/">Configuration API docs</a> which describe how to use this event.</p> <h2 id="Preprocessors" class="article-heading">
+Preprocessors
+</h2>
+<p>The event <code>file:preprocessor</code> is used to customize how your test code is transpiled and sent to the browser. By default Cypress handles CoffeeScript and ES6 using <code>babel</code> and then uses <code>browserify</code> to package it for the browser.</p> <p>You can use the <code>file:preprocessor</code> event to do things like:</p> <ul> <li>Add TypeScript support.</li> <li>Add the latest ES* support.</li> <li>Write your test code in ClojureScript.</li> <li>Customize the <code>babel</code> settings to add your own plugins.</li> <li>Swap out <code>browserify</code> for <code>webpack</code> or anything else.</li> </ul> <p>Check out our <a href="../../../api/plugins/preprocessors-api/">File Preprocessor API docs</a> which describe how to use this event.</p> <h2 id="Browser-Launching" class="article-heading">
+Browser Launching
+</h2>
+<p>The event <code>before:browser:launch</code> can be used to modify the launch arguments for each particular browser.</p> <p>You can use the <code>before:browser:launch</code> event to do things like:</p> <ul> <li>Load a Chrome extension</li> <li>Change print media</li> <li>Enable or disable experimental chrome features</li> <li>Control which Chrome components are loaded</li> </ul> <p>Check out our <a href="../../../api/plugins/browser-launch-api/">Browser Launch API docs</a> which describe how to use this event.</p> <h2 id="Screenshot-handling" class="article-heading">
+Screenshot handling
+</h2>
+<p>The event <code>after:screenshot</code> is called after a screenshot is taken and saved to disk.</p> <p>You can use the <code>after:screenshot</code> event to do things like:</p> <ul> <li>Save details about the screenshot</li> <li>Rename the screenshot</li> <li>Manipulate the screenshot image by resizing or cropping it</li> </ul> <p>Check out our <a href="../../../api/plugins/after-screenshot-api/">After Screenshot API docs</a> which describe how to use this event.</p> <h2 id="cy-task" class="article-heading">
+cy.task
+</h2>
+<p>The event <code>task</code> is used in conjunction with the <a href="../../../api/commands/task/"><code>cy.task()</code></a> command. It allows you to write arbitrary code in Node to accomplish tasks that aren’t possible in the browser.</p> <p>You can use the <code>task</code> event to do things like:</p> <ul> <li>Manipulating a database (seeding, reading, writing, etc.)</li> <li>Storing state in Node that you want persisted (since the driver is fully refreshed on visits)</li> <li>Performing parallel tasks (like making multiple http requests outside of Cypress)</li> <li>Running an external process (like spinning up a Webdriver instance of another browser like Firefox, Safari, or puppeteer)</li> </ul> <h1 id="List-of-plugins" class="article-heading">
+List of plugins
+</h1>
+<p>Cypress maintains an official list of plugins created by us and the community. You can <code>npm install</code> any of the plugins listed below:</p> <a href="../../../plugins/">Our official list of Cypress plugins.</a> <h1 id="Installing-plugins" class="article-heading">
+Installing plugins
+</h1>
+<p>Plugins from our <a href="../../../plugins/">official list</a> are just npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.</p> <p>You can install any published plugin using NPM:</p> <pre class=" language-shell" data-language="javascript">npm install &lt;plugin name&gt; --save-dev
+</pre> <h1 id="Using-a-plugin" class="article-heading">
+Using a plugin
+</h1>
+<p>Whether you install an npm module, or just want to write your own code - you should do all of that in this file:</p> <pre class=" language-text" data-language="javascript">cypress/plugins/index.js
+</pre> <blockquote class="note info">
+<p>By default Cypress seeds this file for new projects, but if you have an existing project just create this file yourself.</p> </blockquote> <p>Inside of this file, you will export a function. Cypress will call this function, pass you the project’s configuration, and enable you to bind to the events exposed.</p> <pre class=" language-javascript" data-language="javascript">// cypress/plugins/index.js
+
+// export a function
+module.exports = (on, config) =&gt; {
+
+  // bind to the event we care about
+  on('&lt;event&gt;', (arg1, arg2) =&gt; {
+    // plugin stuff here
+  })
+}
+</pre> <p>For more information on writing plugins, please <a href="../../../api/plugins/writing-a-plugin/">check out our API docs here</a>.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/guides/tooling/plugins-guide.html" class="_attribution-link" target="_blank">https://docs.cypress.io/guides/tooling/plugins-guide.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

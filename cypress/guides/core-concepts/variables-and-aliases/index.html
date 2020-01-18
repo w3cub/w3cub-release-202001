@@ -1,0 +1,391 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Variables and Aliases - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content=" New users to Cypress may initially find it challenging to work with the asynchronous nature of our APIs. ">
+  <meta name="keywords" content="variables, and, aliases, what, you’ll, learn, return, values, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/guides/core-concepts/variables-and-aliases/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Variables and Aliases</h1>  <div class="article-content" itemprop="articleBody"> <blockquote class="note info">
+<h1 id="What-you’ll-learn" class="article-heading">
+ What you’ll learn
+</h1>
+<ul> <li>How to deal with async commands</li> <li>What Aliases are and how they simplify your code</li> <li>Why you rarely need to use variables with Cypress</li> <li>How to use Aliases for objects, elements and routes</li> </ul> </blockquote> <h1 id="Return-Values" class="article-heading">
+Return Values
+</h1>
+<p>New users to Cypress may initially find it challenging to work with the asynchronous nature of our APIs.</p> <blockquote class="note success">
+<strong class="note-title foo">  Do not worry! </strong><p>There are many simple and easy ways to reference, compare and utilize the objects that Cypress commands yield you.</p> <p>Once you get the hang of async code you’ll realize you can do everything you could do synchronously, without your code doing any backflips.</p> <p>This guide explores many common patterns for writing good Cypress code that can handle even the most complex situations.</p> </blockquote> <p>Asynchronous APIs are here to stay in JavaScript. They are found everywhere in modern code. In fact, most new browser APIs are asynchronous and many core Node modules are asynchronous as well.</p> <p>The patterns we’ll explore below are useful in and outside of Cypress.</p> <p>The first and most important concept you should recognize is…</p> <blockquote class="note danger">
+<strong class="note-title foo">  Return Values </strong><p><strong>You cannot assign or work with the return values</strong> of any Cypress command. Commands are enqueued and run asynchronously.</p> </blockquote> <pre class=" language-js" data-language="javascript">// ...this won't work...
+
+// nope
+const button = cy.get('button')
+
+// nope
+const form = cy.get('form')
+
+// nope
+button.click()
+</pre> <h2 id="Closures" class="article-heading">
+Closures
+</h2>
+<p>To access what each Cypress command yields you use <a href="../../../api/commands/then/"><code>.then()</code></a>.</p> <pre class=" language-js" data-language="javascript">cy.get('button').then(($btn) =&gt; {
+  // $btn is the object that the previous
+  // command yielded us
+})
+</pre> <p>If you’re familiar with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises" target="_blank" rel="noopener">native Promises</a> the Cypress <code>.then()</code> works the same way. You can continue to nest more Cypress commands inside of the <code>.then()</code>.</p> <p>Each nested command has access to the work done in previous commands. This ends up reading very nicely.</p> <pre class=" language-js" data-language="javascript">cy.get('button').then(($btn) =&gt; {
+
+  // store the button's text
+  const txt = $btn.text()
+
+  // submit a form
+  cy.get('form').submit()
+
+  // compare the two buttons' text
+  // and make sure they are different
+  cy.get('button').should(($btn2) =&gt; {
+    expect($btn2.text()).not.to.eq(txt)
+  })
+})
+
+// these commands run after all of the
+// other previous commands have finished
+cy.get(...).find(...).should(...)
+</pre> <p>The commands outside of the <code>.then()</code> will not run until all of the nested commands finish.</p> <blockquote class="note info">
+<p>By using callback functions we’ve created a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures" target="_blank" rel="noopener">closure</a>. Closures enable us to keep references around to refer to work done in previous commands.</p> </blockquote> <h2 id="Debugging" class="article-heading">
+Debugging
+</h2>
+<p>Using <code>.then()</code> functions is an excellent opportunity to use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger" target="_blank" rel="noopener"><code>debugger</code></a>. This can help you understand the order in which commands are run. This also enables you to inspect the objects that Cypress yields you in each command.</p> <pre class=" language-js" data-language="javascript">cy.get('button').then(($btn) =&gt; {
+  // inspect $btn &lt;object&gt;
+  debugger
+
+  cy.get('#countries').select('USA').then(($select) =&gt; {
+    // inspect $select &lt;object&gt;
+    debugger
+
+    cy.url().should((url) =&gt; {
+      // inspect the url &lt;string&gt;
+      debugger
+
+      $btn    // is still available
+      $select // is still available too
+    })
+  })
+})
+
+</pre> <h2 id="Variables" class="article-heading">
+Variables
+</h2>
+<p>Typically in Cypress you hardly need to ever use <code>const</code>, <code>let</code>, or <code>var</code>. When using closures you’ll always have access to the objects that were yielded to you without assigning them.</p> <p>The one exception to this rule is when you are dealing with mutable objects (that change state). When things change state you often want to compare an object’s previous value to the next value.</p> <p>Here’s a great use case for a <code>const</code>.</p> <pre class=" language-html" data-language="javascript">&lt;button&gt;increment&lt;/button&gt;
+
+you clicked button &lt;span id='num'&gt;0&lt;/span&gt; times
+</pre> <pre class=" language-js" data-language="javascript">// app code
+let count = 0
+
+$('button').on('click', function () {
+  $('#num').text(count += 1)
+})
+</pre> <pre class=" language-js" data-language="javascript">// cypress test code
+cy.get('#num').then(($span) =&gt; {
+  // capture what num is right now
+  const num1 = parseFloat($span.text())
+
+  cy.get('button').click().then(() =&gt; {
+    // now capture it again
+    const num2 = parseFloat($span.text())
+
+    // make sure it's what we expected
+    expect(num2).to.eq(num1 + 1)
+  })
+})
+</pre> <p>The reason for using <code>const</code> is because the <code>$span</code> object is mutable. Whenever you have mutable objects and you’re trying to compare them, you’ll need to store their values. Using <code>const</code> is a perfect way to do that.</p> <h1 id="Aliases" class="article-heading">
+Aliases
+</h1>
+<p>Using <code>.then()</code> callback functions to access the previous command values is great—but what happens when you’re running code in hooks like <code>before</code> or <code>beforeEach</code>?</p> <pre class=" language-js" data-language="javascript">beforeEach(function () {
+  cy.button().then(($btn) =&gt; {
+    const text = $btn.text()
+  })
+})
+
+it('does not have access to text', function () {
+  // how do we get access to text ?!?!
+})
+</pre> <p>How will we get access to <code>text</code>?</p> <p>We could make our code do some ugly backflips using <code>let</code> to get access to it.</p> <blockquote class="note danger">
+<strong class="note-title foo">  Do not do this </strong><p>This code below is just for demonstration.</p> </blockquote> <pre class=" language-js" data-language="javascript">describe('a suite', function () {
+  // this creates a closure around
+  // 'text' so we can access it
+  let text
+
+  beforeEach(function () {
+    cy.button().then(($btn) =&gt; {
+      // redefine text reference
+      text = $btn.text()
+    })
+  })
+
+  it('does have access to text', function () {
+    // now text is available to us
+    // but this is not a great solution :(
+    text
+  })
+})
+</pre> <p>Fortunately, you don’t have to make your code do backflips. Cypress makes it easy to handle these situations.</p> <blockquote class="note success">
+<strong class="note-title foo">  Introducing Aliases </strong><p>Aliases are a powerful construct in Cypress that have many uses. We’ll explore each of their capabilities below.</p> <p>At first, we’ll use them to make it easy to share objects between your hooks and your tests.</p> </blockquote> <h2 id="Sharing-Context" class="article-heading">
+Sharing Context
+</h2>
+<p>Sharing context is the simplest way to use aliases.</p> <p>To alias something you’d like to share use the <a href="../../../api/commands/as/"><code>.as()</code></a> command.</p> <p>Let’s look at our previous example with aliases.</p> <pre class=" language-js" data-language="javascript">beforeEach(function () {
+  // alias the $btn.text() as 'text'
+  cy.get('button').invoke('text').as('text')
+})
+
+it('has access to text', function () {
+  this.text // is now available
+})
+</pre> <p>Under the hood, aliasing basic objects and primitives utilizes Mocha’s shared <a href="https://github.com/mochajs/mocha/wiki/Shared-Behaviours" target="_blank" rel="noopener"><code>context</code></a> object: that is, aliases are available as <code>this.*</code>.</p> <p>Mocha automatically shares contexts for us across all applicable hooks for each test. Additionally these aliases and properties are automatically cleaned up after each test.</p> <pre class=" language-js" data-language="javascript">describe('parent', function () {
+  beforeEach(function () {
+    cy.wrap('one').as('a')
+  })
+
+  context('child', function () {
+    beforeEach(function () {
+      cy.wrap('two').as('b')
+    })
+
+    describe('grandchild', function () {
+      beforeEach(function () {
+        cy.wrap('three').as('c')
+      })
+
+      it('can access all aliases as properties', function () {
+        expect(this.a).to.eq('one')   // true
+        expect(this.b).to.eq('two')   // true
+        expect(this.c).to.eq('three') // true
+      })
+    })
+  })
+})
+</pre> <h3 id="Accessing-Fixtures" class="article-heading">
+Accessing Fixtures:
+</h3>
+<p>The most common use case for sharing context is when dealing with <a href="../../../api/commands/fixture/"><code>cy.fixture()</code></a>.</p> <p>Often times you may load a fixture in a <code>beforeEach</code> hook but want to utilize the values in your tests.</p> <pre class=" language-js" data-language="javascript">beforeEach(function () {
+  // alias the users fixtures
+  cy.fixture('users.json').as('users')
+})
+
+it('utilize users in some way', function () {
+  // access the users property
+  const user = this.users[0]
+
+  // make sure the header contains the first
+  // user's name
+  cy.get('header').should('contain', user.name)
+})
+</pre> <blockquote class="note danger">
+<strong class="note-title foo">  Watch out for async commands </strong><p>Do not forget that <strong>Cypress commands are async</strong>!</p> <p>You cannot use a <code>this.*</code> reference until the <code>.as()</code> command runs.</p> </blockquote> <pre class=" language-js" data-language="javascript">it('is not using aliases correctly', function () {
+  cy.fixture('users.json').as('users')
+
+  // nope this won't work
+  //
+  // this.users is not defined
+  // because the 'as' command has only
+  // been enqueued - it has not run yet
+  const user = this.users[0]
+})
+</pre> <p>The same principles we introduced many times before apply to this situation. If you want to access what a command yields you have to do it in a closure using a <a href="../../../api/commands/then/"><code>.then()</code></a>.</p> <pre class=" language-js" data-language="javascript">// yup all good
+cy.fixture('users.json').then((users) =&gt; {
+  // now we can avoid the alias altogether
+  // and just use a callback function
+  const user = users[0]
+
+  // passes
+  cy.get('header').should('contain', user.name)
+})
+</pre> <h3 id="Avoiding-the-use-of-this" class="article-heading">
+Avoiding the use of <code>this</code>
+</h3>
+<blockquote class="note warning">
+<strong class="note-title foo">  Arrow Functions </strong><p>Accessing aliases as properties with <code>this.*</code> will not work if you use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank" rel="noopener">arrow functions</a> for your tests or hooks.</p> <p>This is why all of our examples use the regular <code>function () {}</code> syntax as opposed to the lambda “fat arrow” syntax <code>() =&gt; {}</code>.</p> </blockquote> <p>Instead of using the <code>this.*</code> syntax, there is another way to access aliases.</p> <p>The <a href="../../../api/commands/get/"><code>cy.get()</code></a> command is capable of accessing aliases with a special syntax using the <code>@</code> character:</p> <pre class=" language-js" data-language="javascript">beforeEach(function () {
+  // alias the users fixtures
+  cy.fixture('users.json').as('users')
+})
+
+it('utilize users in some way', function () {
+  // use the special '@' syntax to access aliases
+  // which avoids the use of 'this'
+  cy.get('@users').then((users) =&gt; {
+    // access the users argument
+    const user = users[0]
+
+    // make sure the header contains the first
+    // user's name
+    cy.get('header').should('contain', user.name)
+  })
+})
+</pre> <p>By using <a href="../../../api/commands/get/"><code>cy.get()</code></a> we avoid the use of <code>this</code>.</p> <p>Keep in mind that there are use cases for both approaches because they have different ergonomics.</p> <p>When using <code>this.users</code> we have access to it synchronously, whereas when using <code>cy.get('@users')</code> it becomes an asynchronous command.</p> <p>You can think of the <code>cy.get('@users')</code> as doing the same thing as <a href="../../../api/commands/wrap/"><code>cy.wrap(this.users)</code></a>.</p> <h2 id="Elements" class="article-heading">
+Elements
+</h2>
+<p>Aliases have other special characteristics when being used with DOM elements.</p> <p>After you alias DOM elements, you can then later access them for reuse.</p> <pre class=" language-javascript" data-language="javascript">// alias all of the tr's found in the table as 'rows'
+cy.get('table').find('tr').as('rows')
+</pre> <p>Internally, Cypress has made a reference to the <code>&lt;tr&gt;</code> collection returned as the alias “rows”. To reference these same “rows” later, you can use the <a href="../../../api/commands/get/"><code>cy.get()</code></a> command.</p> <pre class=" language-javascript" data-language="javascript">// Cypress returns the reference to the &lt;tr&gt;'s
+// which allows us to continue to chain commands
+// finding the 1st row.
+cy.get('@rows').first().click()
+</pre> <p>Because we’ve used the <code>@</code> character in <a href="../../../api/commands/get/"><code>cy.get()</code></a>, instead of querying the DOM for elements, <a href="../../../api/commands/get/"><code>cy.get()</code></a> looks for an existing alias called <code>rows</code> and returns the reference (if it finds it).</p> <h3 id="Stale-Elements" class="article-heading">
+Stale Elements:
+</h3>
+<p>In many single-page JavaScript applications the DOM re-renders parts of the application constantly. If you alias DOM elements that have been removed from the DOM by the time you call <a href="../../../api/commands/get/"><code>cy.get()</code></a> with the alias, Cypress automatically re-queries the DOM to find these elements again.</p> <pre class=" language-html" data-language="javascript">&lt;ul id="todos"&gt;
+  &lt;li&gt;
+    Walk the dog
+    &lt;button class="edit"&gt;edit&lt;/button&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    Feed the cat
+    &lt;button class="edit"&gt;edit&lt;/button&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</pre> <p>Let’s imagine when we click the <code>.edit</code> button that our <code>&lt;li&gt;</code> is re-rendered in the DOM. Instead of displaying the edit button it instead displays an <code>&lt;input /&gt;</code> text field allowing you to edit the todo. The previous <code>&lt;li&gt;</code> has been <em>completely</em> removed from the DOM and a new <code>&lt;li&gt;</code> is rendered in its place.</p> <pre class=" language-javascript" data-language="javascript">cy.get('#todos li').first().as('firstTodo')
+cy.get('@firstTodo').find('.edit').click()
+cy.get('@firstTodo').should('have.class', 'editing')
+  .find('input').type('Clean the kitchen')
+</pre> <p>When we reference <code>@firstTodo</code>, Cypress checks to see if all of the elements it is referencing are still in the DOM. If they are, it returns those existing elements. If they aren’t, Cypress replays the commands leading up to the alias definition.</p> <p>In our case it would re-issue the commands: <code>cy.get('#todos li').first()</code>. Everything just works because the new <code>&lt;li&gt;</code> is found.</p> <blockquote class="note warning">
+<p><em>Usually</em>, replaying previous commands will return what you expect, but not always. It is recommended that you <strong>alias elements as soon as possible</strong> instead of further down a chain of commands.</p> <ul> <li>
+<code>cy.get('#nav header .user').as('user')</code>  (good)</li> <li>
+<code>cy.get('#nav').find('header').find('.user').as('user')</code>  (bad)</li> </ul> <p>When in doubt, you can <em>always</em> issue a regular <a href="../../../api/commands/get/"><code>cy.get()</code></a> to query for the elements again.</p> </blockquote> <h2 id="Routes" class="article-heading">
+Routes
+</h2>
+<p>Aliases can also be used with <a href="../../../api/commands/route/">routes</a>. Aliasing your routes enables you to:</p> <ul> <li>ensure your application makes the intended requests</li> <li>wait for your server to send the response</li> <li>access the actual XHR object for assertions</li> </ul> <img src="data:image/jpeg;base64,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" alt="Alias commands" class> <p>Here’s an example of aliasing a route and waiting on it to complete.</p> <pre class=" language-js" data-language="javascript">cy.server()
+cy.route('POST', '/users', { id: 123 }).as('postUser')
+
+cy.get('form').submit()
+
+cy.wait('@postUser').its('requestBody').should('have.property', 'name', 'Brian')
+
+cy.contains('Successfully created user: Brian')
+</pre> <blockquote class="note info">
+<strong class="note-title foo">  New to Cypress? </strong><p><a href="../../guides/network-requests/">We have a much more detailed and comprehensive guide on routing Network Requests.</a></p> </blockquote> <h2 id="Requests" class="article-heading">
+Requests
+</h2>
+<p>Aliases can also be used with <a href="../../../api/commands/request/">requests</a>.</p> <p>Here’s an example of aliasing a request and accessing its properties later.</p> <pre class=" language-js" data-language="javascript">cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
+
+// other test code here
+
+cy.get('@comments').should((response) =&gt; {
+  if (response.status === 200) {
+      expect(response).to.have.property('duration')
+    } else {
+      // whatever you want to check here
+    }
+  })
+})
+</pre> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/guides/core-concepts/variables-and-aliases.html" class="_attribution-link" target="_blank">https://docs.cypress.io/guides/core-concepts/variables-and-aliases.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

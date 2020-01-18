@@ -1,0 +1,188 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Spread - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content=" Expand an array into multiple arguments. ">
+  <meta name="keywords" content="spread, syntax, examples, rules, command, log, history, see, also, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/api/commands/spread/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">spread</h1>  <div class="article-content" itemprop="articleBody"> <p>Expand an array into multiple arguments.</p> <blockquote class="note info">
+<p>Identical to <a href="../then/"><code>.then()</code></a>, but always expects an array-like structure as its subject.</p> </blockquote> <h1 id="Syntax" class="article-heading">
+Syntax
+</h1>
+<pre class=" language-javascript" data-language="javascript">.spread(callbackFn)
+.spread(options, callbackFn)
+</pre> <h2 id="Usage" class="article-heading">
+Usage
+</h2>
+<p><strong> Correct Usage</strong></p> <pre class=" language-javascript" data-language="javascript">cy.getCookies().spread(() =&gt; {}) // Yield all cookies
+</pre> <p><strong> Incorrect Usage</strong></p> <pre class=" language-javascript" data-language="javascript">cy.spread(() =&gt; {}) // Errors, cannot be chained off 'cy'
+cy.location().spread()   // Errors, 'location' does not yield an array
+</pre> <h2 id="Arguments" class="article-heading">
+Arguments
+</h2>
+<p><strong> fn</strong> <strong><em>(Function)</em></strong></p> <p>Pass a function that expands the array into its arguments.</p> <p><strong> options</strong> <strong><em>(Object)</em></strong></p> <p>Pass in an options object to change the default behavior of <code>.spread()</code>.</p> <table> <thead> <tr> <th>Option</th> <th>Default</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>timeout</code></td> <td><a href="../../../guides/references/configuration/#Timeouts"><code>defaultCommandTimeout</code></a></td> <td>Time to wait for <code>.spread()</code> to resolve before <a href="#Timeouts">timing out</a>
+</td> </tr> </tbody> </table> <h2 id="Yields" class="article-heading">
+Yields 
+</h2>
+<ul> <li><p><code>.spread()</code> yields the return value of your callback function.</p></li> <li><p><code>.spread()</code> will not change the subject if <code>null</code> or <code>undefined</code> is returned.</p></li> </ul> <h1 id="Examples" class="article-heading">
+Examples
+</h1>
+<h2 id="Aliased-Routes" class="article-heading">
+Aliased Routes
+</h2>
+<h3 id="Expand-the-array-of-aliased-routes" class="article-heading">
+Expand the array of aliased routes
+</h3>
+<pre class=" language-javascript" data-language="javascript">cy.server()
+cy.route('/users/').as('getUsers')
+cy.route('/activities/').as('getActivities')
+cy.route('/comments/').as('getComments')
+cy.wait(['@getUsers', '@getActivities', '@getComments'])
+  .spread((getUsers, getActivities, getComments) =&gt; {
+    // each XHR is now an individual argument
+  })
+</pre> <h2 id="Cookies" class="article-heading">
+Cookies
+</h2>
+<h3 id="Expand-the-array-of-cookies" class="article-heading">
+Expand the array of cookies
+</h3>
+<pre class=" language-javascript" data-language="javascript">cy.getCookies().spread((cookie1, cookie2, cookie3) =&gt; {
+  // each cookie is now an individual argument
+})
+</pre> <h1 id="Rules" class="article-heading">
+Rules
+</h1>
+<h2 id="Requirements" class="article-heading">
+Requirements 
+</h2>
+<ul> <li><p><code>.spread()</code> requires being chained off a previous command.</p></li> <li><p><code>.spread()</code> requires being chained off of a command that yields an array-like structure.</p></li> </ul> <h2 id="Assertions" class="article-heading">
+Assertions 
+</h2>
+<ul> <li><p><code>.spread()</code> will only run assertions you've chained once, and will not <a href="../../../guides/core-concepts/retry-ability/">retry</a>.</p></li> </ul> <h2 id="Timeouts" class="article-heading">
+Timeouts 
+</h2>
+<ul> <li><p><code>.spread()</code> can time out waiting for a promise you've returned to resolve.</p></li> </ul> <h1 id="Command-Log" class="article-heading">
+Command Log
+</h1>
+<p><code>.spread()</code> does <em>not</em> log in the Command Log</p> <details class="history"><summary><h1 id="History" class="article-heading">
+History
+</h1></summary><table> <thead> <tr> <th>Version</th> <th>Changes</th> </tr> </thead> <tbody> <tr> <td><a href="../../../guides/references/changelog/#0-5.9">0.5.9</a></td> <td>
+<code>.spread()</code> command added</td> </tr> </tbody> </table> </details> <h1 id="See-also" class="article-heading">
+See also
+</h1>
+<ul> <li><a href="../each/"><code>.each()</code></a></li> <li>
+<a href="../then/"><code>.then()</code></a> </li> </ul> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/api/commands/spread.html" class="_attribution-link" target="_blank">https://docs.cypress.io/api/commands/spread.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

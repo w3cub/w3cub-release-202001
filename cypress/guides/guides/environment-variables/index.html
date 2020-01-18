@@ -1,0 +1,227 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Environment Variables - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content=" Environment variables are useful when&#58; ">
+  <meta name="keywords" content="environment, variables, setting, overriding, configuration, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/guides/guides/environment-variables/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Environment Variables</h1>  <div class="article-content" itemprop="articleBody"> <p>Environment variables are useful when:</p> <ul> <li>Values are different across developer machines.</li> <li>Values are different across multiple environments: <em>(dev, staging, qa, prod)</em>
+</li> <li>Values change frequently and are highly dynamic.</li> </ul> <p>Environment variables can be changed easily - especially when running in CI.</p> <h3 id="Instead-of-hard-coding-this-in-your-tests" class="article-heading">
+Instead of hard coding this in your tests:
+</h3>
+<pre class=" language-javascript" data-language="javascript">cy.request('https://api.acme.corp') // this will break on other environments
+</pre> <h3 id="We-can-move-this-into-an-environment-variable" class="article-heading">
+We can move this into an environment variable.
+</h3>
+<pre class=" language-javascript" data-language="javascript">cy.request(Cypress.env('EXTERNAL_API')) // points to a dynamic env var
+</pre> <blockquote class="note info">
+<strong class="note-title foo">  Using ‘baseUrl’ </strong><p>Environment variables are great at pointing to external services and servers, or storing password or other credentials.</p> <p>However, you <strong>do not</strong> need to use environment variables to point to the origin and domain under test. Use <code>baseUrl</code> instead of environment variables.</p> <p><a href="../../../api/commands/visit/"><code>cy.visit()</code></a> and <a href="../../../api/commands/request/"><code>cy.request()</code></a> are automatically prefixed with this value - avoiding the need to specify them.</p> <p><code>baseUrl</code> can be set in your <code>cypress.json</code> - and then you can use an environment variable to override it.</p> <pre class=" language-shell" data-language="javascript">CYPRESS_baseUrl=https://staging.app.com cypress run
+</pre> </blockquote> <h1 id="Setting" class="article-heading">
+Setting
+</h1>
+<p>There are 5 different ways to set environment variables. Each has a slightly different use case.</p> <p><strong><em>To summarize you can:</em></strong></p> <ul> <li><a href="#Option-1-cypress-json">Set in `cypress.json`</a></li> <li><a href="#Option-2-cypress-env-json">Create a `cypress.env.json`</a></li> <li><a href="#Option-3-CYPRESS">Export as `CYPRESS_*`</a></li> <li><a href="#Option-4-env">Pass in the CLI as `--env`</a></li> <li>
+<a href="#Option-5-Plugins">Set an environment variable within your plugins.</a> </li> </ul> <p>Don’t feel obligated to pick just one method. It is common to use one strategy for local development but another when running in <a href="../continuous-integration/">CI</a>.</p> <p>When your tests are running, you can use the <a href="../../../api/cypress-api/env/"><code>Cypress.env</code></a> function to access the values of your environment variables.</p> <h2 id="Option-1-cypress-json" class="article-heading">
+Option #1: <code>cypress.json</code>
+</h2>
+<p>Any key/value you set in your <a href="../../references/configuration/">configuration</a> under the <code>env</code> key will become an environment variable.</p> <pre class=" language-javascript" data-language="javascript">// cypress.json
+{
+  "projectId": "128076ed-9868-4e98-9cef-98dd8b705d75",
+  "env": {
+    "foo": "bar",
+    "some": "value"
+  }
+}
+</pre> <h3 id="Test-file" class="article-heading">
+Test file
+</h3>
+<pre class=" language-javascript" data-language="javascript">Cypress.env()       // {foo: 'bar', some: 'value'}
+Cypress.env('foo')  // 'bar'
+Cypress.env('some') // 'value'
+</pre> <h3 id="Overview" class="article-heading">
+Overview
+</h3>
+<blockquote class="note success">
+<strong class="note-title foo">  Benefits </strong><ul> <li>Great for values that need to be checked into source control and remain the same on all machines.</li> </ul> </blockquote> <blockquote class="note danger">
+<strong class="note-title foo">  Downsides </strong><ul> <li>Only works for values that should be the same on across all machines.</li> </ul> </blockquote> <h2 id="Option-2-cypress-env-json" class="article-heading">
+Option #2: <code>cypress.env.json</code>
+</h2>
+<p>You can create your own <code>cypress.env.json</code> file that Cypress will automatically check. Values in here will overwrite conflicting environment variables in <code>cypress.json</code>.</p> <p>This strategy is useful because if you add <code>cypress.env.json</code> to your <code>.gitignore</code> file, the values in here can be different for each developer machine.</p> <pre class=" language-javascript" data-language="javascript">// cypress.env.json
+{
+  "host": "veronica.dev.local",
+  "api_server": "http://localhost:8888/api/v1/"
+}
+</pre> <h3 id="From-test-file" class="article-heading">
+From test file
+</h3>
+<pre class=" language-javascript" data-language="javascript">Cypress.env()             // {host: 'veronica.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('host')       // 'veronica.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
+</pre> <h3 id="An-Overview" class="article-heading">
+An Overview
+</h3>
+<blockquote class="note success">
+<strong class="note-title foo">  Benefits </strong><ul> <li>Dedicated file just for environment variables.</li> <li>Enables you to generate this file from other build processes.</li> <li>Values can be different on each machine (if not checked into source control).</li> </ul> </blockquote> <blockquote class="note danger">
+<strong class="note-title foo">  Downsides </strong><ul> <li>Another file you have to deal with.</li> <li>Overkill for 1 or 2 environment variables.</li> </ul> </blockquote> <h2 id="Option-3-CYPRESS" class="article-heading">
+Option #3: <code>CYPRESS_*</code>
+</h2>
+<p>Any environment variable on your machine that starts with either <code>CYPRESS_</code> or <code>cypress_</code> will automatically be added and made available to you.</p> <p>Conflicting values will override values from <code>cypress.json</code> and <code>cypress.env.json</code> files.</p> <p>Cypress will <em>strip off</em> the <code>CYPRESS_</code> when adding your environment variables.</p> <h3 id="Export-cypress-env-variables-from-the-command-line" class="article-heading">
+Export cypress env variables from the command line
+</h3>
+<pre class=" language-shell" data-language="javascript">export CYPRESS_HOST=laura.dev.local
+</pre> <pre class=" language-shell" data-language="javascript">export cypress_api_server=http://localhost:8888/api/v1/
+</pre> <h3 id="In-test-file" class="article-heading">
+In test file
+</h3>
+<pre class=" language-javascript" data-language="javascript">Cypress.env()             // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('HOST')       // 'laura.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
+</pre> <h3 id="Overview-1" class="article-heading">
+Overview:
+</h3>
+<blockquote class="note success">
+<strong class="note-title foo">  Benefits </strong><ul> <li>Quickly export some values.</li> <li>Can be stored in your <code>bash_profile</code>.</li> <li>Allows for dynamic values between different machines.</li> <li>Especially useful for CI environments.</li> </ul> </blockquote> <blockquote class="note danger">
+<strong class="note-title foo">  Downsides </strong><ul> <li>Not as obvious where values come from versus the other options.</li> </ul> </blockquote> <h2 id="Option-4-env" class="article-heading">
+Option #4: <code>--env</code>
+</h2>
+<p>Lastly you can pass in environment variables as options when <a href="../command-line/#cypress-run">using the CLI tool</a>.</p> <p>Values here will overwrite all other conflicting environment variables.</p> <p>You can use the <code>--env</code> argument for <a href="../command-line/#cypress-run"><code>cypress run</code></a>.</p> <blockquote class="note warning">
+<p>Multiple values must be separated by a comma, not a space.</p> </blockquote> <h3 id="From-the-command-line-or-CI" class="article-heading">
+From the command line or CI
+</h3>
+<pre class=" language-shell" data-language="javascript">cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
+</pre> <h3 id="Test-file-1" class="article-heading">
+Test file:
+</h3>
+<pre class=" language-javascript" data-language="javascript">Cypress.env()             // {host: 'kevin.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('host')       // 'kevin.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
+</pre> <h3 id="Overview-2" class="article-heading">
+Overview -
+</h3>
+<blockquote class="note success">
+<strong class="note-title foo">  Benefits </strong><ul> <li>Does not require any changes to files or configuration.</li> <li>Obvious where environment variables come from.</li> <li>Allows for dynamic values between different machines.</li> <li>Overwrites all other forms of setting env variables.</li> </ul> </blockquote> <blockquote class="note danger">
+<strong class="note-title foo">  Downsides </strong><ul> <li>Pain to write the <code>--env</code> options everywhere you use Cypress.</li> </ul> </blockquote> <h2 id="Option-5-Plugins" class="article-heading">
+Option #5: Plugins
+</h2>
+<p>Instead of setting environment variables in a file, you can use plugins to dynamically set them with Node code. This enables you to do things like use <code>fs</code> and read off configuration values and dynamically change them.</p> <p>While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you’d like.</p> <a href="../../../api/plugins/configuration-api/">We’ve fully documented how to do this here.</a> <h1 id="Overriding-Configuration" class="article-heading">
+Overriding Configuration
+</h1>
+<p>If your environment variables match a standard configuration key, then instead of setting an <code>environment variable</code> they will instead override the configuration value.</p> <p><strong><em>Change the <code>baseUrl</code> configuration value / not set env var in <code>Cypress.env()</code></em></strong></p> <pre class=" language-shell" data-language="javascript">export CYPRESS_BASE_URL=http://localhost:8080
+</pre> <p><strong><em>‘foo’ does not match config / sets env var in <code>Cypress.env()</code></em></strong></p> <pre class=" language-shell" data-language="javascript">export CYPRESS_FOO=bar
+</pre> <p>You can <a href="../../references/configuration/">read more about how environment variables can change configuration here</a>.</p> <h2 id="See-also" class="article-heading">
+See also
+</h2>
+<ul> <li>
+<a href="https://docs.cypress.io/examples/examples/recipes.html#Server-Communication" target="_blank">Environment Variables recipe</a> </li> </ul> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/guides/guides/environment-variables.html" class="_attribution-link" target="_blank">https://docs.cypress.io/guides/guides/environment-variables.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

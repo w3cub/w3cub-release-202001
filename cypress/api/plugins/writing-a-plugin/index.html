@@ -1,0 +1,179 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Writing a Plugin - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content=" The Plugins API allows you to hook into and extend Cypress behavior. ">
+  <meta name="keywords" content="writing, plugin, plugins, api, execution, context, error, handling, file, changes, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/api/plugins/writing-a-plugin/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Writing a Plugin</h1>  <div class="article-content" itemprop="articleBody"> <p>The Plugins API allows you to hook into and extend Cypress behavior.</p> <blockquote class="note info">
+<p><strong>Note:</strong> This document assumes you have read the <a href="../../../guides/tooling/plugins-guide/">Plugins Guide</a>.</p> </blockquote> <h1 id="Plugins-API" class="article-heading">
+Plugins API
+</h1>
+<p>To get started, open up this file:</p> <pre class=" language-text" data-language="javascript">cypress/plugins/index.js
+</pre> <p>The plugins file must export a function with the following signature:</p> <pre class=" language-javascript" data-language="javascript">// cypress/plugins/index.js
+
+// export a function
+module.exports = (on, config) =&gt; {
+  // configure plugins here
+}
+</pre> <p>The exported function is called whenever a project is opened either with <a href="../../../guides/guides/command-line/#cypress-open"><code>cypress open</code></a> or <a href="../../../guides/guides/command-line/#cypress-run"><code>cypress run</code></a>.</p> <p>Your function will receive 2 arguments: <code>on</code> and <code>config</code>.</p> <p>You can return a synchronous function, or you can also return a Promise, and it will be awaited until it resolves. This enables you to perform asynchronous actions in your exported function such as reading files in from the filesystem.</p> <p>If you return or resolve with an object, Cypress will then merge this object into the <code>config</code> which enables you to overwrite configuration or environment variables.</p> <h2 id="on" class="article-heading">
+on
+</h2>
+<p><code>on</code> is a function that you will use to register listeners on various <strong>events</strong> that Cypress exposes.</p> <p>Registering to listen on an event looks like this:</p> <pre class=" language-javascript" data-language="javascript">module.exports = (on, config) =&gt; {
+  on('&lt;event&gt;', (arg1, arg2) =&gt; {
+    // plugin stuff here
+  })
+}
+</pre> <p>Each event documents its own argument signature. To understand how to use them, please <a href="#List-of-events">refer to the docs for each one</a>.</p> <h2 id="config" class="article-heading">
+config
+</h2>
+<p><code>config</code> is the resolved <a href="../../../guides/references/configuration/">Cypress configuration</a> of the opened project.</p> <p>This configuration contains all of the values that get passed into the browser for your project.</p> <a href="https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.coffee" target="_blank" rel="noopener">For a comprehensive list of all configuration values look here.</a> <p>Some plugins may utilize or require these values, so they can take certain actions based on the configuration.</p> <p>You can programmatically modify these values and Cypress will then respect these changes. This enables you to swap out configuration based on things like the environment you’re running in.</p> <a href="../configuration-api/">Please check out our API docs for modifying configuration here.</a> <h2 id="List-of-events" class="article-heading">
+List of events
+</h2>
+<p><strong><em>The following events are available:</em></strong></p> <table> <thead> <tr> <th>Event</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><a href="../preprocessors-api/"><code>file:preprocessor</code></a></td> <td>Occurs when a spec or spec-related file needs to be transpiled for the browser.</td> </tr> <tr> <td><a href="../browser-launch-api/"><code>before:browser:launch</code></a></td> <td>Occurs immediately before launching a browser.</td> </tr> <tr> <td><a href="../../commands/task/"><code>task</code></a></td> <td>Occurs in conjunction with the <code>cy.task</code> command.</td> </tr> <tr> <td><a href="../after-screenshot-api/"><code>after:screenshot</code></a></td> <td>Occurs after a screenshot is taken.</td> </tr> </tbody> </table> <blockquote class="note warning">
+<strong class="note-title foo">  More Coming Soon </strong><p>The Plugins API is relatively new.</p> <p>We have many new plugin events <a href="https://github.com/cypress-io/cypress/issues/684" target="_blank" rel="noopener noreferrer">we are adding</a>.</p> </blockquote> <h1 id="Execution-context" class="article-heading">
+Execution context
+</h1>
+<p>Your <code>pluginsFile</code> is invoked when Cypress opens a project.</p> <p>Cypress does this by spawning an independent <code>child_process</code> which then <code>requires</code> in your <code>pluginsFile</code>. This is similar to the way Visual Studio Code or Atom works.</p> <p>You will need to keep in mind it is <strong>Cypress who is requiring your file</strong> - not your local project, not your local Node version, and not anything else under your control.</p> <p>Because of this, this global context and the version of Node is controlled by Cypress.</p> <blockquote class="note warning">
+<strong class="note-title foo">  Node version </strong><p>Keep in mind - code executed in plugins is executed <strong>by the Node version</strong> that comes bundled in Cypress itself.</p> <p>This version of Node has <strong>nothing to do</strong> with your locally installed versions. Therefore you have to write Node code which is compatible with this version.</p> <p>You can find the current Node version we use <a href="https://github.com/cypress-io/cypress/blob/master/.node-version" target="_blank" rel="noopener">here</a>.</p> </blockquote> <h2 id="npm-modules" class="article-heading">
+npm modules
+</h2>
+<p>When Cypress executes your <code>pluginsFile</code> it will execute with <code>process.cwd()</code> set to your project’s path. Additionally - you will be able to <code>require</code> <strong>any node module</strong> you have installed.</p> <p>You can also <code>require</code> local files relative to your project.</p> <p><strong>For example, if your <code>package.json</code> looked like this:</strong></p> <pre class=" language-json" data-language="javascript">{
+  "name": "My Project",
+  "dependencies": {
+    "debug": "x.x.x"
+  },
+  "devDependencies": {
+    "lodash": "x.x.x"
+  }
+}
+</pre> <p><strong>Then you could do any of the following in your <code>pluginsFile</code>:</strong></p> <pre class=" language-js" data-language="javascript">// cypress/plugins/index.js
+
+const _ = require('lodash') // yup, dev dependencies
+const path = require('path') // yup, built in node modules
+const debug = require('debug') // yup, dependencies
+const User = require('../../lib/models/user') // yup, relative local modules
+
+console.log(__dirname) // /Users/janelane/Dev/my-project/cypress/plugins/index.js
+
+console.log(process.cwd()) // /Users/janelane/Dev/my-project
+</pre> <h1 id="Error-handling" class="article-heading">
+Error handling
+</h1>
+<p>Cypress spawns your <code>pluginsFile</code> in its own child process so it is isolated away from the context that Cypress itself runs in. That means you cannot accidentally modify or change Cypress’ own execution in any way.</p> <p>If your <code>pluginsFile</code> has an uncaught exception, an unhandled rejection from a promise, a syntax error, or anything else - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.</p> <p>Errors from your plugins <em>will not crash</em> Cypress.</p> <h1 id="File-changes" class="article-heading">
+File changes
+</h1>
+<p>Normally when writing code in Node, you typically have to restart the process after changing any files.</p> <p>With Cypress, we automatically watch your <code>pluginsFile</code> and any changes made will take effect immediately. We will read the file in and execute the exported function again.</p> <p>This enables you to iterate on plugin code even with Cypress already running.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/api/plugins/writing-a-plugin.html" class="_attribution-link" target="_blank">https://docs.cypress.io/api/plugins/writing-a-plugin.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

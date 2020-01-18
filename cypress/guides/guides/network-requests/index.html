@@ -1,0 +1,258 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Network Requests - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content="Cypress makes it easy to test the entire lifecycle of Ajax &#47; XHR requests within your application. Cypress provides you direct access to the XHR &hellip;">
+  <meta name="keywords" content="network, requests, what, you’ll, learn, testing, strategies, stubbing, routing, fixtures, waiting, see, also, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/guides/guides/network-requests/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Network Requests</h1>  <div class="article-content" itemprop="articleBody"> <blockquote class="note info">
+<h1 id="What-you’ll-learn" class="article-heading">
+ What you’ll learn
+</h1>
+<ul> <li>How Cypress enables you to stub out the back end with <a href="../../../api/commands/route/"><code>cy.route()</code></a>
+</li> <li>What tradeoffs we make when we stub our network requests</li> <li>How Cypress visualizes network management in the Command Log</li> <li>How to use Fixtures to reuse XHR responses</li> <li>How to use Aliases to refer back to XHR requests and wait on them</li> <li>How to write declarative tests that resist flake</li> </ul> </blockquote> <h1 id="Testing-Strategies" class="article-heading">
+Testing Strategies
+</h1>
+<p>Cypress makes it easy to test the entire lifecycle of Ajax / XHR requests within your application. Cypress provides you direct access to the XHR objects, enabling you to make assertions about its properties. Additionally you can even stub and mock a request’s response.</p> <blockquote class="note warning">
+<p>Please be aware that Cypress only currently supports intercepting XMLHttpRequests. Requests using the Fetch API and other types of network requests like page loads and <code>&lt;script&gt;</code> tags will not be intercepted or visible in the Command Log. See <a href="https://github.com/cypress-io/cypress/issues/95" target="_blank" rel="noopener noreferrer">#95</a> for more details and temporary workarounds.</p>
+<br>
+</blockquote> <p><strong><em>Common testing scenarios:</em></strong></p> <ul> <li>Asserting on a request’s body</li> <li>Asserting on a request’s url</li> <li>Asserting on a request’s headers</li> <li>Stubbing a response’s body</li> <li>Stubbing a response’s status code</li> <li>Stubbing a response’s headers</li> <li>Delaying a response</li> <li>Waiting for a response to happen</li> </ul> <p>Within Cypress, you have the ability to choose whether to stub responses or allow them to actually hit your server. You can also mix and match within the same test by choosing to stub certain requests, while allowing others to hit your server.</p> <p>Let’s investigate both strategies, why you would use one versus the other, and why you should regularly use both.</p> <h2 id="Don’t-Stub-Responses" class="article-heading">
+Don’t Stub Responses
+</h2>
+<p>Requests that are not stubbed actually reach your server. By <em>not</em> stubbing your responses, you are writing true <em>end-to-end</em> tests. This means you are driving your application the same way a real user would.</p> <blockquote> <p>When requests are not stubbed, this guarantees that the <em>contract</em> between your client and server is working correctly.</p> </blockquote> <p>In other words, you can have confidence your server is sending the correct data in the correct structure to your client to consume. It is a good idea to have <em>end-to-end</em> tests around your application’s <em>critical paths</em>. These typically include user login, signup, or other critical paths such as billing.</p> <p><strong><em>There are downsides to not stubbing responses you should be aware of:</em></strong></p> <ul> <li>Since no responses are stubbed, that means <strong>your server has to actually send real responses</strong>. This can be problematic because you may have to <em>seed a database</em> before every test to generate state. For instance, if you were testing <em>pagination</em>, you’d have to seed the database with every object that it takes to replicate this feature in your application.</li> <li>Since real responses go through every single layer of your server (controllers, models, views, etc) the tests are often <strong>much slower</strong> than stubbed responses.</li> </ul> <p>If you are writing a traditional server-side application where most of the responses are HTML you will likely have few stubbed responses. However, most modern applications that serve JSON can take advantage of stubbing.</p> <blockquote class="note success">
+<strong class="note-title foo">  Benefits </strong><ul> <li>Guaranteed to work in production</li> <li>Test coverage around server endpoints</li> <li>Great for traditional server-side HTML rendering</li> </ul> </blockquote> <blockquote class="note danger">
+<strong class="note-title foo">  Downsides </strong><ul> <li>Requires seeding data</li> <li>Much slower</li> <li>Harder to test edge cases</li> </ul> </blockquote> <blockquote class="note info">
+<strong class="note-title foo">  Suggested Use </strong><ul> <li>Use sparingly</li> <li>Great for the <em>critical paths</em> of your application</li> <li>Helpful to have one test around the <em>happy path</em> of a feature</li> </ul> </blockquote> <h2 id="Stub-Responses" class="article-heading">
+Stub Responses
+</h2>
+<p>Stubbing responses enables you to control every aspect of the response, including the response <code>body</code>, the <code>status</code>, <code>headers</code>, and even network <code>delay</code>. Stubbing is extremely fast, most responses will be returned in less than 20ms.</p> <blockquote> <p>Stubbing responses is a great way to control the data that is returned to your client.</p> </blockquote> <p>You don’t have to do any work on the server. Your application will have no idea its requests are being stubbed, so there are <em>no code changes</em> needed.</p> <blockquote class="note success">
+<strong class="note-title foo">  Benefits </strong><ul> <li>Easy control of response bodies, status, and headers</li> <li>Can force responses to take longer to simulate network delay</li> <li>No code changes to your server or client code</li> <li>Fast, &lt; 20ms response times</li> </ul> </blockquote> <blockquote class="note danger">
+<strong class="note-title foo">  Downsides </strong><ul> <li>No guarantee your stubbed responses match the actual data the server sends</li> <li>No test coverage on some server endpoints</li> <li>Not as useful if you’re using traditional server side HTML rendering</li> </ul> </blockquote> <blockquote class="note info">
+<strong class="note-title foo">  Suggested Use </strong><ul> <li>Use for the vast majority of tests</li> <li>Mix and match, typically have one true end-to-end test, and then stub the rest</li> <li>Perfect for JSON APIs</li> </ul> </blockquote> <h1 id="Stubbing" class="article-heading">
+Stubbing
+</h1>
+<p>Cypress makes it easy to stub a response and control the <code>body</code>, <code>status</code>, <code>headers</code>, or even delay.</p> <p><strong><em>To begin stubbing responses you need to do two things.</em></strong></p> <ol> <li>Start a <a href="../../../api/commands/server/"><code>cy.server()</code></a>
+</li> <li>Provide a <a href="../../../api/commands/route/"><code>cy.route()</code></a>
+</li> </ol> <p>These two commands work together to control the behavior of your responses within the command’s options. <a href="../../../api/commands/server/"><code>cy.server()</code></a> enables stubbing, while <a href="../../../api/commands/route/"><code>cy.route()</code></a> provides a routing table so Cypress understands which response should go with which request.</p> <blockquote class="note info">
+<p>See <a href="../../../api/commands/server/#Options"><code>cy.server()</code> options</a> and <a href="../../../api/commands/route/#Options"><code>cy.route()</code> options</a> for instructions on how to stub responses.</p> </blockquote> <h1 id="Requests" class="article-heading">
+Requests
+</h1>
+<p>Cypress automatically indicates when an XHR request happens in your application. These are always logged in the Command Log (regardless of whether it’s stubbed). Cypress indicates when a request has started and when it is finished. Additionally, Cypress takes a snapshot of the DOM at the moment the request is made and another snapshot at the moment the response returns.</p> <img src="https://docs.cypress.io/img/guides/network-requests/snapshot-of-request-command.07901c10.gif" alt="Snapshot of request and response" class> <p>By default, Cypress is configured to <em>ignore</em> requests that are used to fetch static content like <code>.js</code> or <code>.html</code> files. This keeps the Command Log less noisy. This option can be changed by overriding the default whitelisting in the <a href="../../../api/commands/server/#Options"><code>cy.server()</code> options</a>.</p> <p>Cypress automatically collects the request <code>headers</code> and the request <code>body</code> and will make this available to you.</p> <h1 id="Routing" class="article-heading">
+Routing
+</h1>
+<pre class=" language-javascript" data-language="javascript">cy.server()           // enable response stubbing
+cy.route({
+  method: 'GET',      // Route all GET requests
+  url: '/users/*',    // that have a URL that matches '/users/*'
+  response: []        // and force the response to be: []
+})
+</pre> <p>When you start a <a href="../../../api/commands/server/"><code>cy.server()</code></a> and define <a href="../../../api/commands/route/"><code>cy.route()</code></a> commands, Cypress displays this under “Routes” in the Command Log.</p> <img src="data:image/png;base64,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" alt="Routing Table" class> <p>Once you start a server with <a href="../../../api/commands/server/"><code>cy.server()</code></a>, all requests will be controllable for the remainder of the test. When a new test runs, Cypress will restore the default behavior and remove all routing and stubbing. For a complete reference of the API and options, refer to the documentation for each command.</p> <ul> <li><a href="../../../api/commands/server/"><code>cy.server()</code></a></li> <li>
+<a href="../../../api/commands/route/"><code>cy.route()</code></a> </li> </ul> <h1 id="Fixtures" class="article-heading">
+Fixtures
+</h1>
+<p>A fixture is a fixed set of data located in a file that is used in your tests. The purpose of a test fixture is to ensure that there is a well known and fixed environment in which tests are run so that results are repeatable. Fixtures are accessed within tests by calling the <a href="../../../api/commands/fixture/"><code>cy.fixture()</code></a> command.</p> <p>Cypress makes it easy to stub a network requests and have it respond instantly with fixture data.</p> <p>When stubbing a response, you typically need to manage potentially large and complex JSON objects. Cypress allows you to integrate fixture syntax directly into responses.</p> <pre class=" language-javascript" data-language="javascript">cy.server()
+
+// we set the response to be the activites.json fixture
+cy.route('GET', 'activities/*', 'fixture:activities.json')
+</pre> <p>You can additionally reference <a href="../../core-concepts/variables-and-aliases/">aliases</a> within responses. These aliases do not have to point to fixtures, but that is a common use case. Separating out a fixture enables you to work and mutate that object prior to handing it off to a response.</p> <pre class=" language-javascript" data-language="javascript">cy.server()
+
+cy.fixture('activities.json').as('activitiesJSON')
+cy.route('GET', 'activities/*', '@activitiesJSON')
+</pre> <h2 id="Organizing" class="article-heading">
+Organizing
+</h2>
+<p>Cypress automatically scaffolds out a suggested folder structure for organizing your fixtures on every new project. By default it will create an <code>example.json</code> file when you add your project to Cypress.</p> <pre class=" language-text" data-language="javascript">/cypress/fixtures/example.json
+</pre> <p>Your fixtures can be further organized within additional folders. For instance, you could create another folder called <code>images</code> and add images:</p> <pre class=" language-text" data-language="javascript">/cypress/fixtures/images/cats.png
+/cypress/fixtures/images/dogs.png
+/cypress/fixtures/images/birds.png
+</pre> <p>To access the fixtures nested within the <code>images</code> folder, include the folder in your <a href="../../../api/commands/fixture/"><code>cy.fixture()</code></a> command.</p> <pre class=" language-javascript" data-language="javascript">cy.fixture('images/dogs.png') //returns dogs.png as Base64
+</pre> <h1 id="Waiting" class="article-heading">
+Waiting
+</h1>
+<p>Whether or not you choose to stub responses, Cypress enables you to declaratively <a href="../../../api/commands/wait/"><code>cy.wait()</code></a> for requests and their responses.</p> <blockquote class="note info">
+<p>This following section utilizes a concept known as <a href="../../core-concepts/variables-and-aliases/">Aliasing</a>. If you’re new to Cypress you might want to check that out first.</p> </blockquote> <p>Here is an example of aliasing routes and then subsequently waiting on them:</p> <pre class=" language-javascript" data-language="javascript">cy.server()
+cy.route('activities/*', 'fixture:activities').as('getActivities')
+cy.route('messages/*', 'fixture:messages').as('getMessages')
+
+// visit the dashboard, which should make requests that match
+// the two routes above
+cy.visit('http://localhost:8888/dashboard')
+
+// pass an array of Route Aliases that forces Cypress to wait
+// until it sees a response for each request that matches
+// each of these aliases
+cy.wait(['@getActivities', '@getMessages'])
+
+// these commands will not run until the wait command resolves above
+cy.get('h1').should('contain', 'Dashboard')
+</pre> <p>If you would like to check the response data of each response of an aliased route, you can use several <code>cy.wait()</code> calls.</p> <pre class=" language-javascript" data-language="javascript">cy.server()
+cy.route({
+  method: 'POST',
+  url: '/myApi',
+}).as('apiCheck')
+cy.visit('/')
+cy.wait('@apiCheck').then((xhr) =&gt; {
+  assert.isNotNull(xhr.response.body.data, '1st API call has data')
+})
+cy.wait('@apiCheck').then((xhr) =&gt; {
+  assert.isNotNull(xhr.response.body.data, '2nd API call has data')
+})
+cy.wait('@apiCheck').then((xhr) =&gt; {
+  assert.isNotNull(xhr.response.body.data, '3rd API call has data')
+})
+</pre> <p>Waiting on an aliased route has big advantages:</p> <ol> <li>Tests are more robust with much less flake.</li> <li>Failure messages are much more precise.</li> <li>You can assert about the underlying XHR object.</li> </ol> <p>Let’s investigate each benefit.</p> <h2 id="Flake" class="article-heading">
+Flake
+</h2>
+<p>One advantage of declaratively waiting for responses is that it decreases test flake. You can think of <a href="../../../api/commands/wait/"><code>cy.wait()</code></a> as a guard that indicates to Cypress when you expect a request to be made that matches a specific routing alias. This prevents the next commands from running until responses come back and it guards against situations where your requests are initially delayed.</p> <p><strong><em>Auto-complete Example:</em></strong></p> <p>What makes this example below so powerful is that Cypress will automatically wait for a request that matches the <code>getSearch</code> alias. Instead of forcing Cypress to test the <em>side effect</em> of a successful request (the display of the Book results), you can test the actual <em>cause</em> of the results.</p> <pre class=" language-javascript" data-language="javascript">cy.server()
+cy.route('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
+
+// our autocomplete field is throttled
+// meaning it only makes a request after
+// 500ms from the last keyPress
+cy.get('#autocomplete').type('Book')
+
+// wait for the request + response
+// thus insulating us from the
+// throttled request
+cy.wait('@getSearch')
+
+cy.get('#results')
+  .should('contain', 'Book 1')
+  .and('contain', 'Book 2')
+</pre> <h2 id="Failures" class="article-heading">
+Failures
+</h2>
+<p>In our example above, we added an assertion to the display of the search results.</p> <p><strong><em>The search results working are coupled to a few things in our application:</em></strong></p> <ol> <li>Our application making a request to the correct URL.</li> <li>Our application correctly processing the response.</li> <li>Our application inserting the results into the DOM.</li> </ol> <p>In this example, there are many possible sources of failure. In most testing tools, if our request failed to go out, we would normally only ever get an error once we attempt to find the results in the DOM and see that there is no matching element. This is problematic because it’s unknown <em>why</em> the results failed to be displayed. Was there a problem with our rendering code? Did we modify or change an attribute such as an <code>id</code> or <code>class</code> on an element? Perhaps our server sent us different Book items.</p> <p>With Cypress, by adding a <a href="../../../api/commands/wait/"><code>cy.wait()</code></a>, you can more easily pinpoint your specific problem. If the response never came back, you’ll receive an error like this:</p> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApIAAABaCAMAAAA8ckakAAACglBMVEX4+PjMzMz/35zDw8Oenp7pT18nKTD619v//9X////39/fx8fHf39/j4+OIiIj4/9X//83y9NX6/9X/+bfpT2oZGRnsX1/29vZ3eInpnLja2trs7Ov7+/v//9H16cfsVF/pT3L/9Lj2/9X59M349NLpU5br08342JbxoWry+dX5+dHxnGrs083pT2LqX2vtal///8fKysrz/9XpT5DsT1/4+dXqtb/6+c3pXpbplrf9/f3t2Mv59MjpVJL44J342JL505LrT1/pT3zt08jpobvx07jqrbrx7tTxrHTt4dL446nwlGHsysfpT4D/+bvte2DpbZz0v4vx4sfxoXL/+77/35nu383vvLzU1NP37sX36Ljx2bnr2ZvpT4jqnrH4y4zw8PDu6dX19M7pZo5+mZT/3qH07szpb6b09PT/2JXugGDw6c34047/+cP62NbwrX7/+c3unH7pX53pfqbscF/tcF/qanHqeHv019v525ukvpne3t7pjKfk5OTz0Z3zu37+3a3ujG75/83UnIjv0cDizZj/9LL97rfprbHw6dHvzduDeYjrVF/06c393LnuknTw9NXsvcXXwJX01Kr/7K3pf5/rlo3rw8T22KHs2NHyy5Xpeo53f43tutP82crvk2rwr5Hwto3pgKzvi1/pe5z3zs7pj7yofIjpX4Lhto7vzLjpVGrxxq7ysne+lory07PV2Zzpi7LxnGLaoonsw5L72c/pk7LssaHsfmvzvJrtuLGntJX66aXpnKT10tV4kpKVe4i0yJrIuZSUrJby9c3fuaH/+dGWlY3487/CtY/wm3Psj5jsZWD33qbpcGzYi4Xrq8u0hYjFzprWwsHn5+exsbFjU+HcAAATtElEQVR42uxb/1NTVxbvZno3tz+sLw3ZbNxuQgAxBghkQQQWiIBGLAgKGKkQZUCUASys3wrYjghIq2IV/LpaVPyCLLZSrVpUFBF3Bl27TnX/oT3n3veShxIGI1+2zD2DL+9+O+/ccz73fHmJH/z+Dfoj8dFH70wNXX8QJGgi8mHkb3/50yd/XvAhUIDLB+8PyS/9t4RoBQmaiMZDchJETgckP5pTSF44un+rJmjauv/oBQGXOYFkQEf5G/eSdfs170376wRgZh+SgUP3b9tL3t2qmQbaelcgZrYhOUkyOaNesm64cWZ9JEPknbGxmwHA5mmaFIv9QzImhZ+cZUjOcHkT0EveJ8Txq6pdfFir7e1qrCvuatT2FgMdZteuoHHLovZt09CA6Q1MlplccK0eMZm6XZNAsu2xfHNUQGZelTcBvWTv+eFjeX681WVe02ovJTT+QMh5bQ8+4PwlvBoOB1vZIJoyTK81mldPNZ729nYvwPB4u0azr98EDc+r7nYbtDTnjntx4vF2gKfNW81a1e3Qaqu0sYZGI2qceVXeTJZL9qghabxW13g/snEHIYDNu8ZkGGpsCRqQWu1R5iQfnxsZG6gsM5nQJV6Ca2V1BzYqPX3cRbZBY0hTgONe1gCfehuue9nV5BVuct6VN4FzyZ5YslKV+RlTrlT1RA4bT+1Ob9TW/YKQ1LZYg4ckxm1P39DImOl5JcTgMtNNz8hT/AD8IRgBnx96of0EsOeCtLKa3T3xdOzNMD3FPPO26TX2YdUtMDOfypvAXrL40S8qxNXFnTJa70VeJ+d7HIenA5JY3HhGnnff6e6vvN3t7TfdrO5YsGABuD8OSU31AHjEAhP23awe6OiAkbZKqIe8Bdw3QsPTt5cVOAIz86m8mey95AVIG310DJlW9ZBYQn6dLkhWdzyv7K9sq7zNonN1x9DxUUgPZUji8N4C0yj0uQZMo3dkSGo0ApLzu7wJ6CV7h3tPqyHZQq7B3x7rixekqvcByVt2+P0DN0ASckTTk77HCEXPSKXXsw8r7ic2r6e/HeocCNJDrmqvp++xq80HSQjc3jvtKkiKwD2vypuAXrIFqmn1S6Bj5Px98hXWNi1WXnFrtf+2vl954xl5PfB8YEgzgJUKJJId7L2P5xUrb6BrzKXpx1oHE8vuDgWSrG+vCpKivJlX5U3gXHJ4eEZ3yV4CDTzmAfqpfNvE3457XKo35U2qq0LjW+Il0Lwqb+buO26M3Bkd3WNQaveZFmD1Ehx5hJOcX+XN3H3Hzb7irh4dbQdU9T8f9YovuUV5M9e/BBI/uxDlzf/b7yWn48dpR8WPLuZbefOl+AmvIFHeCBLljSBB00Oz/O2NIEFTheQslTeCBE0RkrP17Y0gQVOD5Kz9OE2QoClBcubKm94Xjw7+93eCBE2ZPvtkZsubL3AaFSRoyhT12cyWN0RAUtA70l9ntrwRkBQUHCRnrLwRkBQUFCRnrrwRkBQUZOCeqfLmbUiW/PDgQOLU5dO5S0tLD4RPaVqpu1B/olgfcE7csvdS1SSs32l1SW2aW72h+6l0GkX+5mD45GwvERJgpMnaOUFvSeEcQXKWyhvnbvK9kSycunxhyGBCVb09DSf+FCkFtK8xwHNzuqbUOwnrKRCuZizDyBpnZgrvzN8sUd3SlXSaREbKsNrp+knYhpAzJR+/1Ws+bafUZphAzwUk3X9+UN5poMDSz355Y64xwAlN+ziJ+clEGqVPsqB+oiSzZREMW75lhrBsw52nWSpAg7KakvR/t0h0EU37FpzNRguuNyfSjRX4J+uazUTOMAvmRrBJCk9Y0xqn2JdxhnnASg+Tci9L3IP52OPjWS/rWcTeTTDWKEYFl7EiKkKiFsVcKFIEconCixmXYDMJOCUxEZOUB+UCNjPkXZVtsuspsAlaZOUZoAtq3rYNF1e8wTZRXh61iK1wObLxw8L2yLUKdJLU6qnN2rlxG5skbxLohuMYP4lM54yx3xwK9wgLLuN7GM+8wj+sYipLb7FIc1/egIfgG82LpzQ6vTUU31uegdvvjCSFfgONLfH0H+ju7Lq18LESgBbPEBB6mpDFIWQHcXQ61/JFGVktJKF16TpJDUlwRmHkJfDZAZNiqMLTzP6LuOw36uH2Z4mGOGDBTwnhq6G5ijsQhb11A2W9rMdLyildbkAHrAttgG4IpjlsYzFhssPHNY5npAt3GMMsXA7/llFnZhe9CBM361EwxjIfVeDMZA+0Qce61tCFNFiRnZn4jCqJXrkM7owtA7Sr2N4DuVIpG+OxxgU3yRI+wnpI1irbOarcRo4Qkgez9nGRWdg+1JwuyVEolTGWfOZgUq3hwiVztQNT6mMu64oPq5hy6eVpc13eKKEBDQfq1MVlHTLXQ18RWRUl6Yy7wteDrWpuUV2hhFYtyQZlDQ4OFku6OLIiSh9C8mqjaHTWIdBxNhj0akUi3bFsnJdcEimFkFPhYZlZ2bqaZB/PDMcKek7GTwZZQf8DqmQLYD69mEL1HJLIvmhTp65mJ+9lPTowLq3ZpYepujhrLW02dJrjfoY9pFJnA0/Liqy1rYVSNIS45iw8QjqASjPYATdRWkvL4EnKgx4yMXNvsXXbE8L1GJyDFjm3Sp8DWHNmnqElqXAKYpiK/WzX2ZHleljaBAGdsYJxnfGqXZe7KZ5rlRkEGdvIZgAWuAEAUg7ZIOsVH0ebN8XTUjtjzHNcXGiDOQVWuzNzDU0rhFVX7Z+vTQ/3M+e68g37maL0yrS5Lm982QpY2GXo1BnBCayH41aUEI44Pegu3Z0srXY8gGCeT74rZDD5ouHlV2CnFNZYjCd0Jbf5G6mPCpJneRJWli4pPKMBYwxaQHhPc3fpffaNTlHSLGRvvFrqrgf7YS/roQV58flwg5BEtl+D4KFdkKwt9qV8oat49Cs3x3Fe0VVm42lHZxmq3OI+J0MSWfKYXcQTtOUJEuXYCVLkjKz4oi1HFn8NJ5SmuX8EKVErfrapMsty7mBlE4SRT2EbpJxr1ac8mwFQm5sCB+C6+4TinzkkXeTRNllenuPiwui8Uvc+EgOO5YBE2R5ok6HTz1zWFR9WM0XplWlzXd7YZL1Ql8EOB5xJ7eTWxj19Hxv7BcAPakJIo0vuEXCHSuBmeX4IxjVdKAPOqkkgGcPngwIVnqgEpVZg5izaKU0ASWQf54AVWzplSGIYzidnt4PzUyCJ6+oNgzX+xzORII2LW6joeHleieNfoWdywZkegUNl9UNyOXOjV3ZK4yEZpMhhpHDpiiW3yhLCdS3E2iB7STVbbOj2ZA0ekasUHGfwhFPmr55kSHayR9lIbGzsy2VqSNITR8AJqiCJC4twXuwG+jlkN2v4w04aOscxR758WM2UqVaeNtflTb5SbDszB0EaJvV6BZLs3HA6x26f7UYj2N+CJOIYosFUIKnwjIZkxqzYFx925TJE5WzZvgvVkAyV3QP2ckjS3FNrU+g4SD50DD7w162KMyvbVC8bPp/cA3f/T9jaDXCUJxUvuVDxkqt5zbA8/W1IvpPIurgGq91l2I04KofTLUMyfTwkIXcfvC5RlZc863dksvLsfkhmGNThdIn8oiEHIi8y9ptjSaTyXktXZI1nLtmGXlLFnBsFh9VMUXpl2px/e7MaAsBGNxizmYCpdHGG1NaL6ELQkuY9eYURP26gJwoTc8inzusVrVfWAb4OFBYWcizItUMzLKrHXBK3a26R83AFkunhYSr7KjxtZI1UIJ8HFymW9kF2lQ+++ARJDqe56yok6mN/w3EgouSAnvXyHvqQoOqWYJ4kq7k5y+12h1Nn7Aq+LUNqhNsOkMAKBzvNe8CAD7GiaM7LfrZW3iKyZDGW1nAvtz2rNhF5Bi0yvUH+1975/URxRXFcY24yqTaz7pJtsBlY2G3rLq671cTFLqKACPUHrIG0sA1KIQEikKLWNAYaY0Mam6yRpP5I5EFT+2CsfWjT2NbYN2OICW/6//See++5c2dh1SXOuoTzfUCcmXvm3JmzM/O99zPsuJ0GV/SEZTNn8VnSCCtK8kyuszMb1CXp9I52tfTubXRLsoF1xHRJ9rMbT1se4uddfBzy84kl/qwEgd2SbGVXRga/bHQejtkn23lJjnYthXO2Jzg/Vmq1GRSyx83e/eyN8H5ZOAa10DNuymr4We0ehwM83SssGhiyU3YP/wk3bvFneBfkmHGPuIAErslGre1xuECd8zju7nM2bOVcqJXXIBXT4m72/hl1Av4CxxcUudRc4w6SW/xaS4d3wPiel0vlEv7R4VUAoUUafEeBe2x3gX+oQurhCFIC+/AcXK1YeCnJL1oFHpzfuNlNvpi3FiHTbYfF4KCshAJr/iF12FpzyvzaxS3vHb7vADfXi+FdViv/3QwLIafbkjzdR7IkIcXpb3nsLmMknreuiYsDCjfVPM85ifbmUrMtjXpujwhsu0P4t/nSE/HABWG8Q4yfzKGi4HCs5GozqMhebVYFszdWVIyPgRe1wN4kzLGpjPB/z6K23LDUYKoTdedRoq8bvJUxPW2wES5zYp55mWcyJ3cpjOV45znggfBH/jSkgybEXu6dD6rBQrPD7mQVhARPLgbBSqdffspF+ykK++c43/i054qUib2itWPFEiWiewM7MbE0A0nBjTuxavCMytkNKrPPxKph9kZpZjAF41slJyeqSk7LczWAotVak00M3ileWnebZV8fLl040q+GZyul7qHJTD6cs33diXrIeWsTihWG07rlJVvcq6peF8VjgneiD27uo5PFU3VyxL361MBv6mwu7u9O+t9uSRKcRiI4jUSqEjiNRHqzkqR3b0jVVZL07g2pukqyovam502GSkpqsATkPPPw8YORVw+FqFEQI0IAJpKswLxdteenx51lJXvji73593M9cfwm52MViPnYyjkoCHqdsd1s7ytfiNipJmiNCA0wOcd/LlTt+Qm9raEVsjerl2S67VYQhvkVy4z4tMbKkUeGH7EgQsyS8lYA99S44L5jQGnL9iLozqE9AqjWMSWhrejnQN0I36TZrhvDCHjC2T6cimzR0PNqjDvy74i0wzZj7mqjK4q1FtMcjo0wNXZQtpC/IDwfc3us8kUAu+5qz8YtyYrYm0AKJrhDAC8D66zwaZCLlQOPDCTioaSko21FeSPAPfWH5VxmYo1sL4P+rmBQFTNdEBOrin4GoHm/1QetbjRCBF2SNWeTXbIkFbftTcZl3JF/R6S96b4MJlebXZGstZP6xRLvvyiYWsYEwYLROM+Up7jXFlt/jD028uVtplNMcuZkb/yzN+n6DkC1f42b+DRIYeWKRwb8EOlopLwR4J7pEq+PdLvtRdCjrP1BI0xRymXOg7h17ICG0U/Zg118H8etZf5oNuPO9YciT8M5QSEit20kYzLumn9HpF0Gy+JqoyuKtZ7ihfqEfY0wtYgpnxWO2EsF3iqc295ylW89H6yLY48xX9mm6USX83yjlmSl7I049AI/NvBpUQUSK1c8MpakRFEV5e1q6sQeqFZsLwHa/D8s2WG5MfOd3xxQMPrBiLh+AfiXbvMwo6Ga+HV2qx9KTXHbRjIm4478u0baMZhcbXZFsdYwj930kY0wdR8+wB6CZHgPBC9owdMEHhcoSZGvaiP2tVGfJStmb1RJ7vLg01guLuzsKUmkvF01sMW7/C6oKXTJdFvTlyNxXLbM2HdQrYLrOCjLAfaB2+qSXLC6I/maBc1tu8l4GHfk3zXSjsHkarMryFofG4c3YhCmRhBWJvMJz1QC9k2PLE9J1orrrGjjHiyyN/7ZG09JGhQ5YuWKR64/brl0dP3K95FTi393uBS6LjN+ltWyQHguaF06oErykCTTS5RkulCILGhu20jGZNyRf9dIuxGMr/Z2RbqnJ5Hb/NqOMLUuSZHM6SG8Sor9WthjzFe9lXkYPqFkb3ydvQnUH4kGkXVGfFoO0ABWrkBjJ5XbvhSOSDoaKW8EuOGJlP3X2TmpKXQR9O78GNBiuKz3fOIow6tkD5sbyWfFPlQVYTBhbOAVP81tu8l4GHfNvyPSjsHkarMrirXmHws2Z2lCeye+oN/P5uJ59ohf/UcnW+bti+xx5qufsMcyX2zT1/5F5ho/WEfbFzZgSVZq9gb++geyzhqftjRWrkBjeEv6Zruko21FeYf0K3N89W+7wU9jewh6hglfjsu4EU6ebbYV/bwsXoiGfaiSxGAh8W5zH/xEbttalXHX/Dsi7RhMrja7olhrIMC5IXMUTC1jyuyFVbcaUuL15pOCslc9lvliG3D3i4Vd/Nkyu/FKsnKzN5mE939FbDSCxggvi38l5a0RaycM5+3efrc9BHUQQpfLHC/anSj6M0TRVf68zwrA22DcDf69KLJC4M2uKNYatYLQRoBbrnBkXO/eVRt1OEbI3lQ3nOak5kaiP7N9lTxM64N/J3vzrrCL5TC/r12p6Lz0+uDfyd4QCURa//aGRKo2e0MivVt7Q18yQipXA/7aG/oqJtJav4rJv6/1/Iy+go1EX+tJoq/1JJHWydd6kkhrvHH7ZW9IpLWWZBn2ZuDTLSSSn3r5sjx782Lb7OzsNhLJH+3YMbB5S3n2ZmLr8PDwVhLJHw1/+GJ2c3n2ZtN7JJJ/mpgYfn+gPHuziUTyUR9MDH8/UJ69oYNGqkBJlmNv6KCR/C/JsuwNHTSS7yVZpr0hkSrwLEn2hkT2hkQie0Mie0Mikb0hkb0hkcjekMjeUEmSqsbe/A9CNvFXuVwdHgAAAABJRU5ErkJggg==" alt="Wait Failure" class> <p>Now we know exactly why our test failed. It had nothing to do with the DOM. Instead we can see that either our request never went out or a request went out to the wrong URL.</p> <h2 id="Assertions" class="article-heading">
+Assertions
+</h2>
+<p>Another benefit of using <a href="../../../api/commands/wait/"><code>cy.wait()</code></a> on requests is that it allows you to access the actual <code>XHR</code> object. This is useful when you want to make assertions about this object.</p> <p>In our example above we can assert about the request object to verify that it sent data as a query string in the URL. Although we’re mocking the response, we can still verify that our application sends the correct request.</p> <pre class=" language-javascript" data-language="javascript">cy.server()
+cy.route('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
+
+cy.get('#autocomplete').type('Book')
+
+// this yields us the XHR object which includes
+// fields for request, response, url, method, etc
+cy.wait('@getSearch')
+  .its('url').should('include', '/search?query=Book')
+
+cy.get('#results')
+  .should('contain', 'Book 1')
+  .and('contain', 'Book 2')
+</pre> <p><strong><em>The XHR object that <a href="../../../api/commands/wait/"><code>cy.wait()</code></a> yields you has everything you need to make assertions including:</em></strong></p> <ul> <li>URL</li> <li>Method</li> <li>Status Code</li> <li>Request Body</li> <li>Request Headers</li> <li>Response Body</li> <li>Response Headers</li> </ul> <h1 id="See-also" class="article-heading">
+See also
+</h1>
+<ul> <li>
+<a href="https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js" target="_blank" rel="noopener">Network requests in Kitchen Sink example</a> </li> </ul> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/guides/guides/network-requests.html" class="_attribution-link" target="_blank">https://docs.cypress.io/guides/guides/network-requests.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

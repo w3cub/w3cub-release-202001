@@ -1,0 +1,358 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Conditional Testing - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content=" Conditional testing refers to the common programming pattern&#58; ">
+  <meta name="keywords" content="conditional, testing, what, you’ll, learn, definition, problem, situations, strategies, error, recovery, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/guides/core-concepts/conditional-testing/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Conditional Testing</h1>  <div class="article-content" itemprop="articleBody"> <blockquote class="note info">
+<h1 id="What-you’ll-learn" class="article-heading">
+ What you’ll learn
+</h1>
+<ul> <li>When conditional testing is a good choice for your tests</li> <li>Situations where conditional testing is impossible</li> <li>Strategies to handle common scenarios of conditional testing</li> </ul> </blockquote> <h1 id="Definition" class="article-heading">
+Definition
+</h1>
+<p>Conditional testing refers to the common programming pattern:</p> <blockquote> <p>If X, then Y, else Z</p> </blockquote> <p>Many of our users ask how to accomplish this seemingly simple idiom in Cypress.</p> <p>Here are some example use cases:</p> <ul> <li>How do I do something different whether an element does or doesn’t exist?</li> <li>My application does A/B testing, how do I account for that?</li> <li>My users receive a “welcome wizard”, but existing ones don’t. Can I always close the wizard in case it’s shown, and ignore it when it’s not?</li> <li>Can I recover from failed Cypress commands like if a <a href="../../../api/commands/get/"><code>cy.get()</code></a> doesn’t find an element?</li> <li>I am trying to write dynamic tests that do something different based on the text on the page.</li> <li>I want to automatically find all <code>&lt;a&gt;</code> elements and based on which ones I find, I want to check that each link works.</li> </ul> <p>The problem is - while first appearing simple, writing tests in this fashion often leads to flaky tests, random failures, and difficult to track down edge cases.</p> <p>Let’s investigate why and how you can overcome these problems…</p> <h1 id="The-problem" class="article-heading">
+The problem
+</h1>
+<p>These days modern JavaScript applications are highly dynamic and mutable. Their state and the DOM are continuously changing over a period of time.</p> <p>The problem with <strong>conditional testing</strong> is that it can only be used when the state has stabilized. In modern day applications, knowing when state is stable is oftentimes impossible.</p> <p>To a human - if something changes 10ms or 100ms from now, we may not even notice this change and assume the state was always the same.</p> <p>To a robot - even 10ms represents billions+ of clock cycles. The timescale difference is incredible.</p> <p>A human also has intuition. If you click a button and see a loading spinner, you will assume the state is in flux and will automatically wait for it to finish.</p> <p>A robot has no intuition - it will do exactly as it is programmed to do.</p> <p>To illustrate this, let’s take a very simple example of trying to conditionally test unstable state.</p> <h2 id="The-DOM-is-unstable" class="article-heading">
+The DOM is unstable
+</h2>
+<pre class=" language-js" data-language="javascript">// your app code
+
+// random amount of time
+const random = Math.random() * 100
+
+// create a &lt;button&gt; element
+const btn = document.createElement('button')
+
+// attach it to the body
+document.body.appendChild(btn)
+
+setTimeout(() =&gt; {
+  // add the class active after an indeterminate amount of time
+  btn.setAttribute('class', 'active')
+}, random)
+</pre> <pre class=" language-js" data-language="javascript">// your cypress test code
+it('does something different based on the class of the button', function () {
+  // RERUN THIS TEST OVER AND OVER AGAIN
+  // AND IT WILL SOMETIMES BE TRUE, AND
+  // SOMETIMES BE FALSE.
+
+  cy.get('button').then(($btn) =&gt; {
+    if ($btn.hasClass('active')) {
+      // do something if it's active
+    } else {
+      // do something else
+    }
+  })
+})
+</pre> <p>Do you see the problem here? This test is non-deterministic. The <code>&lt;button&gt;</code> will sometimes have the class <code>active</code> and sometimes not. In <strong>most</strong> cases, you cannot rely on the state of the DOM to determine what you should conditionally do.</p> <p>This is the heart of flaky tests. At Cypress we have designed our API to combat this type of flakiness at every step.</p> <h1 id="The-situations" class="article-heading">
+The situations
+</h1>
+<p>The <strong>only</strong> way to do conditional testing on the DOM is if you are 100% sure that the state has “settled” and there is no possible way for it to change.</p> <p>That is it! In any other circumstance you will have flaky tests if you try to rely on the state of the DOM for conditional testing.</p> <p>Let’s explore a few examples.</p> <h2 id="Server-side-rendering" class="article-heading">
+Server side rendering
+</h2>
+<p>If your application is server side rendered without JavaScript that asynchronously modifies the DOM - congratulations, you can easily do conditional testing on the DOM!</p> <p>Why? Because if the DOM is not going to change after the <code>load</code> event occurs, then it can accurately represent a stable state of truth.</p> <p>You can safely skip down to the bottom where we provide examples of conditional testing.</p> <h2 id="Client-side-rendering" class="article-heading">
+Client side rendering
+</h2>
+<p>However, in most modern applications these days - when the <code>load</code> event occurs, usually nothing has rendered on the screen. It is usually at this moment that your scripts begin to load dynamic content and begin to render asynchronously.</p> <p>Unfortunately, it is not possible for you to use the DOM to do conditional testing. To do this would require you to know with 100% guarantee that your application has finished all asynchronous rendering and that there are no pending network requests, setTimeouts, intervals, postMessage, or async/await code.</p> <p>This is difficult to do (if not impossible) without making changes to your application. You could use a library like <a href="https://github.com/angular/zone.js/" target="_blank" rel="noopener">Zone.js</a>, but even that does not capture every async possibility.</p> <p>In other words, you cannot do conditional testing safely if you want your tests to run 100% consistently.</p> <p>But do not fret - there are better workarounds to still achieve conditional testing <strong>without</strong> relying on the DOM. You just have to <em>anchor</em> yourself to another piece of truth that is not mutable.</p> <h1 id="The-strategies" class="article-heading">
+The strategies
+</h1>
+<p>If you are unable to guarantee that the DOM is stable - don’t worry, there are other ways you can do conditional testing or work around the problems inherent with it.</p> <p><strong>You could:</strong></p> <ul> <li>Remove the need to ever do conditional testing.</li> <li>Force your application to behave deterministically.</li> <li>Check other sources of truth (like your server or database).</li> <li>Embed data into other places (cookies / local storage) you could read off.</li> <li>Add data to the DOM that you can read off to know how to proceed.</li> </ul> <p>Let’s explore some examples of conditional testing that will pass or fail 100% of the time.</p> <h2 id="A-B-campaign" class="article-heading">
+A/B campaign
+</h2>
+<p>In this example let’s assume you visit your website and the content will be different based on which A/B campaign your server decides to send. Perhaps it is based on geo-location, IP address, time of day, locale, or other factors that are difficult to control. How can you write tests in this manner?</p> <p>Easily: control which campaign gets sent, or provide a reliable means to know which one it is.</p> <h3 id="Use-URL-query-params" class="article-heading">
+Use URL query params:
+</h3>
+<pre class=" language-js" data-language="javascript">// tell your back end server which campaign you want sent
+// so you can deterministically know what it is ahead of time
+cy.visit('https://app.com?campaign=A')
+
+...
+
+cy.visit('https://app.com?campaign=B')
+
+...
+
+cy.visit('https://app.com?campaign=C')
+</pre> <p>Now there is not even a need to do conditional testing since you are able to know ahead of time what campaign was sent. Yes, this may require server side updates, but you have to make an untestable app testable if you want to test it!</p> <h3 id="Use-the-server" class="article-heading">
+Use the server:
+</h3>
+<p>Alternatively, if your server saves the campaign with a session, you could just ask your server to tell you which campaign you are on.</p> <pre class=" language-js" data-language="javascript">// this sends us the session cookies
+cy.visit('https://app.com')
+
+// assuming this sends us back
+// the campaign information
+cy.request('https://app.com/me')
+  .its('body.campaign')
+  .then((campaign) =&gt; {
+    // runs different cypress test code
+    // based on the type of campaign
+    return campaigns.test(campaign)
+  })
+</pre> <h3 id="Use-session-cookies" class="article-heading">
+Use session cookies:
+</h3>
+<p>Perhaps an even easier way to test this is if your server sent the campaign in a session cookie that you could read off.</p> <pre class=" language-js" data-language="javascript">cy.visit('https://app.com')
+cy.getCookie('campaign')
+  .then((campaign) =&gt; {
+    return campaigns.test(campaign)
+  })
+</pre> <h3 id="Embed-data-in-the-DOM" class="article-heading">
+Embed data in the DOM:
+</h3>
+<p>Another valid strategy would be to embed data directly into the DOM - but do so in a way where this data is <strong>always</strong> present and query-able. It would have to be present 100% of the time, else this would not work.</p> <pre class=" language-js" data-language="javascript">cy.get('html')
+  .should('have.attr', 'data-campaign').then((campaign) =&gt; {
+    return campaigns.test(campaign)
+  })
+</pre> <h2 id="Welcome-wizard" class="article-heading">
+Welcome wizard
+</h2>
+<p>In this example, let’s imagine you are running a bunch of tests and each time you load your application, it may show a “Welcome Wizard” modal.</p> <p>In this situation, you want to close the wizard when it is present and ignore it if it is not.</p> <p>The problem with this is that if the wizard renders asynchronously (as it likely does) you cannot use the DOM to conditionally dismiss it.</p> <p>Once again - we will need another reliable way to achieve this without involving the DOM.</p> <p>These patterns are pretty much the same as before:</p> <h3 id="Use-the-URL-to-control-it" class="article-heading">
+Use the URL to control it:
+</h3>
+<pre class=" language-js" data-language="javascript">// dont show the wizard
+cy.visit('https://app.com?wizard=0')
+</pre> <pre class=" language-js" data-language="javascript">// show the wizard
+cy.visit('https://app.com?wizard=1')
+</pre> <p>We would likely just need to update our client side code to check whether this query param is present. Now we know ahead of time whether it will or will not be shown.</p> <h3 id="Use-Cookies-to-know-ahead-of-time" class="article-heading">
+Use Cookies to know ahead of time:
+</h3>
+<p>In the case where you cannot control it, you can still conditionally dismiss it <strong>if</strong> you know whether it is going to be shown.</p> <pre class=" language-js" data-language="javascript">cy.visit('https://app.com')
+cy.getCookie('showWizard')
+  .then((val) =&gt; {
+    if (val) {
+      // dismiss the wizard conditionally by enqueuing these
+      // three additional commands
+      cy.get('#wizard').contains('Close').click()
+    }
+  })
+  .get(...)    // more commands here
+  .should(...) // more commands here
+  .click()     // more commands here
+</pre> <h3 id="Use-your-server-or-database" class="article-heading">
+Use your server or database:
+</h3>
+<p>If you store and/or persist whether to show the wizard on the server, then just ask it.</p> <pre class=" language-js" data-language="javascript">cy.visit('https://app.com')
+cy.request('https://app.com/me')
+  .its('body.showWizard')
+  .then((val) =&gt; {
+    if (val) {
+      // dismiss the wizard conditionally by enqueuing these
+      // three additional commands
+      cy.get('#wizard').contains('Close').click()
+    }
+  })
+  .get(...)    // more commands here
+  .should(...) // more commands here
+  .click()     // more commands here
+</pre> <p>Alternatively, if you are creating users, it might just be easier to create the user and set whether you want the wizard to be shown ahead of time. That would avoid this check later.</p> <h3 id="Embed-data-in-DOM" class="article-heading">
+Embed data in DOM:
+</h3>
+<p>Another valid strategy would be to embed data directly into the DOM but to do so in a way that the data is <strong>always</strong> present and query-able. The data would have to be present 100% of the time, otherwise this strategy would not work.</p> <pre class=" language-js" data-language="javascript">cy.get('html').should('have.attr', 'data-wizard').then((wizard) =&gt; {
+  if (wizard) {
+    // dismiss the wizard conditionally by enqueuing these
+    // three additional commands
+    cy.get('#wizard').contains('Close').click()
+  }
+})
+.get(...)    // more commands here
+.should(...) // more commands here
+.click()     // more commands here
+</pre> <h2 id="Element-existence" class="article-heading">
+Element existence
+</h2>
+<p>In the case where you <strong>are</strong> trying to use the DOM to do conditional testing, you can utilize the ability to synchronously query for elements in Cypress to create control flow.</p> <blockquote class="note warning">
+<p>In the event you did not read a word above and skipped down here, we will reiterate it one more time:</p> <p>You cannot do conditional testing on the DOM unless you are either:</p> <ul> <li>Server side rendering with no asynchronous JavaScript.</li> <li>Using client side JavaScript that <strong>only</strong> ever does synchronous rendering.</li> </ul> <p>It is crucial that you understand how your application works else you will write flaky tests.</p> </blockquote> <p>Let’s imagine we have a scenario where our application may do two separate things that we are unable to control. In other words you tried every strategy above and for whatever reason you were unable to know ahead of time what your application will do.</p> <p>Testing this in Cypress is possible.</p> <pre class=" language-js" data-language="javascript">// app code
+$('button').on('click', (e) =&gt; {
+  // do something synchronously randomly
+  if (Math.random() &lt; .5) {
+    // append an input
+    $('&lt;input /&gt;').appendTo($('body'))
+  } else {
+    // or append a textarea
+    $('&lt;textarea /&gt;').appendTo($('body'))
+  }
+})
+</pre> <pre class=" language-js" data-language="javascript">// click the button causing the new
+// elements to appear
+cy.get('button').click()
+cy.get('body').then(($body) =&gt; {
+  // synchronously query from body
+  // to find which element was created
+  if ($body.find('input').length) {
+    // input was found, do something else here
+    return 'input'
+  }
+
+  // else assume it was textarea
+  return 'textarea'
+})
+  .then((selector) =&gt; {
+    // selector is a string that represents
+    // the selector we could use to find it
+    cy.get(selector).type(`found the element by selector ${selector}`)
+  })
+</pre> <p>We will reiterate one more time. Had the <code>&lt;input&gt;</code> or the <code>&lt;textarea&gt;</code> been rendered asynchronously, you could not use the pattern above. You would have to involve arbitrary delays which will not work in every situation, will slow down your tests, and will still leave chances that your tests are flaky (and are an all-around anti-pattern).</p> <p>Cypress is built around creating <strong>reliable tests</strong>. The secret to writing good tests is to provide as much “state” and “facts” to Cypress and to “guard it” from issuing new commands until your application has reached the desired state it needs to proceed.</p> <p>Doing conditional testing adds a huge problem - that the test writer themselves are unsure what the given state will be. In those situations, the only reliable way to have accurate tests is to embed this dynamic state in a reliable and consistent way.</p> <p>If you are not sure if you have written a potentially flaky test, there is an easy way to figure it out. Repeat the test an excessive number of times, and then repeat by modifying the Developer Tools to throttle the Network and the CPU. This will create different loads that simulate different environments (like CI). If you’ve written a good test, it will pass or fail 100% of the time.</p> <pre class=" language-js" data-language="javascript">Cypress._.times(100, (i) =&gt; {
+  it(`num ${i + 1} - test the thing conditionally`, () =&gt; {
+    // do the conditional bits 100 times
+  })
+})
+</pre> <h2 id="Dynamic-text" class="article-heading">
+Dynamic text
+</h2>
+<p>The pattern of doing something conditionally based on whether or not certain text is present is identical to element existence above.</p> <h3 id="Conditionally-check-whether-an-element-has-certain-text" class="article-heading">
+Conditionally check whether an element has certain text:
+</h3>
+<pre class=" language-js" data-language="javascript">// this only works if there's 100% guarantee
+// body has fully rendered without any pending changes
+// to its state
+cy.get('body').then(($body) =&gt; {
+    // synchronously ask for the body's text
+    // and do something based on whether it includes
+    // another string
+    if ($body.text().includes('some string')) {
+      // yup found it
+      cy.get(...).should(...)
+    } else {
+      // nope not here
+      cy.get(...).should(...)
+    }
+  })
+</pre> <h1 id="Error-Recovery" class="article-heading">
+Error Recovery
+</h1>
+<p>Many of our users ask how they can recover from failed commands.</p> <blockquote> <p>If I had error handling, I could just try to find X and if X fails go find Y</p> </blockquote> <p>Because error handling is a common idiom in most programming languages, and especially in Node, it seems reasonable to expect to do that in Cypress.</p> <p>However, this is really the same question as asking to do conditional testing just wrapped up in a slightly different implementation detail.</p> <p>For instance you may want to do this:</p> <p><strong>The following code is not valid, you cannot add error handling to Cypress commands. The code is just for demonstration purposes.</strong></p> <pre class=" language-js" data-language="javascript">cy.get('button').contains('hello')
+  .catch((err) =&gt; {
+    // oh no the button wasn't found
+    // (or something else failed)
+    cy.get('somethingElse').click()
+  })
+</pre> <p>If you’ve been reading along, then you should already have a grasp on why trying to implement conditional code with asynchronous rendering is not a good idea. If the test writer cannot accurately predict the given state of the system, then neither can Cypress. Error handling offers no additional proof this can be done deterministically.</p> <p>You should think of failed commands in Cypress as akin to uncaught exceptions in server side code. It is not possible to try to recover in those scenarios because the system has transitioned to an unreliable state. Instead you generally always opt to crash and log. When Cypress fails the test - that is exactly what it is doing. Bailing out, skipping any remaining commands in the test, and logging out the failure.</p> <p>But… for the sake of the argument, let’s imagine for a moment you did have error handling in Cypress.</p> <p>Enabling this would mean that for every single command, it would recover from errors, but only after each applicable command timeout was reached. Since timeouts start at 4 seconds (and exceed from there), this means that it would only fail after a long, long time.</p> <p>Let’s reimagine our “Welcome Wizard” example from before.</p> <p><strong>The following code is not valid, you cannot add error handling to Cypress commands. The code is just for demonstration purposes.</strong></p> <pre class=" language-js" data-language="javascript">// great error recovery code
+function keepCalmAndCarryOn () {
+  cy.get(...).should(...).click()
+}
+
+cy
+  .get('#wizard').contains('Close').click()
+  .catch((err) =&gt; {
+    // no problem, i guess the wizard didn't exist
+    // or something... no worries
+    keepCalmAndCarryOn()
+  })
+  .then(keepCalmAndCarryOn)
+</pre> <p>In the <strong>best</strong> case scenario, we have wasted at LEAST 4 seconds waiting on the <code>&lt;#wizard&gt;</code> element to possibly exist before we errored and continued on.</p> <p>But in the <strong>worst</strong> case scenario we have a situation where the <code>&lt;#wizard&gt;</code> <strong>was</strong> going to be rendered, but it didn’t render within our given timeout. Let’s assume this was due to a pending network request or WebSocket message or a queued timer, or anything else.</p> <p>In this situation, not only did we wait a long period of time, but when the <code>&lt;#wizard&gt;</code> element was eventually shown it’s likely caused an error downstream on other commands.</p> <p>If you cannot accurately know the state of your application then no matter what programming idioms you have available - <strong>you cannot write 100% deterministic tests</strong>.</p> <p>Still not convinced?</p> <p>Not only is this an anti-pattern, but it’s an actual logical fallacy.</p> <p>You may think to yourself… okay fine, but 4 seconds - man that’s not enough. Network requests could be slow, let’s bump it up to 1 minute!</p> <p>Even then, it’s still possible a WebSocket message could come in… so 5 minutes!</p> <p>Even then, not enough, it’s possible a <code>setTimeout</code> could trigger… 60 minutes.</p> <p>As you approach infinity your confidence does continue to rise on the chances you could prove the desired state will be reached, but you can never prove it will. Instead you could theoretically be waiting for the heat death of the universe for a condition to come that is only a moment away from happening. There is no way to prove or disprove that it <em>may</em> conditionally happen.</p> <p>You, the test writer must know ahead of time what your application is programmed to do - or have 100% confidence that the state of a mutable object (like the DOM) has stabilized in order to write accurate conditional tests.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/guides/core-concepts/conditional-testing.html" class="_attribution-link" target="_blank">https://docs.cypress.io/guides/core-concepts/conditional-testing.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

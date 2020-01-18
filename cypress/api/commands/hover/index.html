@@ -1,0 +1,156 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Hover - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content=" Cypress does not have a cy.hover() command. See Issue #10. ">
+  <meta name="keywords" content="hover, workarounds, see, also, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/api/commands/hover/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">hover</h1>  <div class="article-content" itemprop="articleBody"> <blockquote class="note danger">
+<p>Cypress does not have a <strong>cy.hover()</strong> command. See <a href="https://github.com/cypress-io/cypress/issues/10" target="_blank" rel="noopener noreferrer">Issue #10</a>.</p> </blockquote> <p>If <code>cy.hover()</code> is used, an error will display and redirect you to this page.</p> <h1 id="Workarounds" class="article-heading">
+Workarounds
+</h1>
+<p>Sometimes an element has specific logic on hover and you <em>do</em> need to “hover” in Cypress. Maybe the element doesn’t even display to be clickable until you hover over another element.</p> <p>Oftentimes you can use <a href="../trigger/"><code>.trigger()</code></a>, <a href="../invoke/"><code>.invoke()</code></a> or <a href="../wrap/"><code>cy.wrap()</code></a> to show the element before you perform the action.</p> <blockquote class="note info">
+<p><a href="https://docs.cypress.io/examples/examples/recipes.html#Testing-the-DOM" target="_blank">Check out our example recipe on testing hover and working with hidden elements</a></p> </blockquote> <h2 id="Trigger" class="article-heading">
+Trigger
+</h2>
+<p>If the hover behavior depends on a JavaScript event like <code>mouseover</code>, you can trigger the event to achieve that behavior.</p> <h3 id="Simulating-mouseover-event-to-get-popover-to-display" class="article-heading">
+Simulating <code>mouseover</code> event to get popover to display
+</h3>
+<pre class=" language-javascript" data-language="javascript">cy.get('.menu-item').trigger('mouseover')
+cy.get('.popover').should('be.visible')
+</pre> <h2 id="Invoke" class="article-heading">
+Invoke
+</h2>
+<h3 id="Example-of-showing-an-element-in-order-to-perform-action" class="article-heading">
+Example of showing an element in order to perform action
+</h3>
+<pre class=" language-javascript" data-language="javascript">cy.get('.hidden').invoke('show').click()
+</pre> <h2 id="Force-click" class="article-heading">
+Force click
+</h2>
+<p>You can also force the action to be performed on the element regardless of whether the element is visible or not.</p> <h3 id="Example-of-clicking-on-a-hidden-element" class="article-heading">
+Example of clicking on a hidden element
+</h3>
+<pre class=" language-javascript" data-language="javascript">cy.get('.hidden').click({ force: true })
+</pre> <h3 id="Example-of-checking-a-hidden-element" class="article-heading">
+Example of checking a hidden element
+</h3>
+<pre class=" language-javascript" data-language="javascript">cy.get('.checkbox').check({ force: true })
+</pre> <h1 id="See-also" class="article-heading">
+See also
+</h1>
+<ul> <li><a href="../invoke/"><code>.invoke()</code></a></li> <li><a href="../trigger/"><code>.trigger()</code></a></li> <li><a href="../wrap/"><code>cy.wrap()</code></a></li> <li>
+<a href="https://docs.cypress.io/examples/examples/recipes.html#Testing-the-DOM" target="_blank">Recipe: Hover and Hidden Elements</a> </li> </ul> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/api/commands/hover.html" class="_attribution-link" target="_blank">https://docs.cypress.io/api/commands/hover.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

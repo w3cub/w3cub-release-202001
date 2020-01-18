@@ -1,0 +1,347 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Writing and Organizing Tests - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content="We recently gave a “Best Practices” conference talk at AssertJS (February 2018). This video demonstrates how to approach breaking down your &hellip;">
+  <meta name="keywords" content="writing, and, organizing, tests, what, you’ll, learn, folder, structure, watching, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/guides/core-concepts/writing-and-organizing-tests/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Writing and Organizing Tests</h1>  <div class="article-content" itemprop="articleBody"> <blockquote class="note info">
+<h1 id="What-you’ll-learn" class="article-heading">
+ What you’ll learn
+</h1>
+<ul> <li>How to organize your test and support files.</li> <li>What languages are supported in your test files.</li> <li>How Cypress handles unit tests vs integration tests.</li> <li>How to group your tests.</li> </ul> </blockquote> <blockquote class="note success">
+<strong class="note-title foo">  Best Practices </strong><p>We recently gave a “Best Practices” conference talk at AssertJS (February 2018). This video demonstrates how to approach breaking down your application and organizing your tests.</p> <p> <a href="https://www.youtube.com/watch?v=5XQOK0v_YRE" target="_blank" rel="noopener">https://www.youtube.com/watch?v=5XQOK0v_YRE</a></p> </blockquote> <h1 id="Folder-Structure" class="article-heading">
+Folder Structure
+</h1>
+<p>After adding a new project, Cypress will automatically scaffold out a suggested folder structure. By default it will create:</p> <pre class=" language-text" data-language="javascript">/cypress
+  /fixtures
+    - example.json
+
+  /integration
+    /examples
+      - actions.spec.js
+      - aliasing.spec.js
+      - assertions.spec.js
+      - connectors.spec.js
+      - cookies.spec.js
+      - cypress_api.spec.js
+      - files.spec.js
+      - local_storage.spec.js
+      - location.spec.js
+      - misc.spec.js
+      - navigation.spec.js
+      - network_requests.spec.js
+      - querying.spec.js
+      - spies_stubs_clocks.spec.js
+      - traversal.spec.js
+      - utilities.spec.js
+      - viewport.spec.js
+      - waiting.spec.js
+      - window.spec.js
+
+  /plugins
+    - index.js
+
+  /support
+    - commands.js
+    - index.js
+</pre> <p><strong><em>Configuring Folder Structure</em></strong></p> <p>While Cypress allows to configure where your tests, fixtures, and support files are located, if you’re starting your first project, we recommend you use the above structure.</p> <p>You can modify the folder configuration in your <code>cypress.json</code>. See <a href="../../references/configuration/#Folders-Files">configuration</a> for more detail.</p> <blockquote class="note info">
+<strong class="note-title foo">  What files should I add to my ‘.gitignore file’ ? </strong><p>Cypress will create a <a href="../../references/configuration/#Screenshots"><code>screenshotsFolder</code></a> and a <a href="../../references/configuration/#Videos"><code>videosFolder</code></a> to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their <code>.gitignore</code> file. Additionally, if you are storing sensitive environment variables in your <code>cypress.json</code> or <a href="../../guides/environment-variables/#Option-2-cypress-env-json"><code>cypress.env.json</code></a>, these should also be ignored when you check into source control.</p> </blockquote> <h2 id="Fixture-Files" class="article-heading">
+Fixture Files
+</h2>
+<p>Fixtures are used as external pieces of static data that can be used by your tests. Fixture files are located in <code>cypress/fixtures</code> by default, but can be <a href="../../references/configuration/#Folders-Files">configured</a> to another directory.</p> <p>You would typically use them with the <a href="../../../api/commands/fixture/"><code>cy.fixture()</code></a> command and most often when you’re stubbing <a href="../../guides/network-requests/">Network Requests</a>.</p> <h2 id="Test-files" class="article-heading">
+Test files
+</h2>
+<p>Test files are located in <code>cypress/integration</code> by default, but can be <a href="../../references/configuration/#Folders-Files">configured</a> to another directory. Test files may be written as:</p> <ul> <li><code>.js</code></li> <li><code>.jsx</code></li> <li><code>.coffee</code></li> <li><code>.cjsx</code></li> </ul> <p>Cypress also supports <code>ES2015</code> out of the box. You can use either <code>ES2015 modules</code> or <code>CommonJS modules</code>. This means you can <code>import</code> or <code>require</code> both <strong>npm packages</strong> and <strong>local relative modules</strong>.</p> <blockquote class="note info">
+<strong class="note-title foo">  Example Recipe </strong><p>Check out our recipe using <a href="https://docs.cypress.io/examples/examples/recipes.html#Fundamentals" target="_blank">ES2015 and CommonJS modules</a>.</p> </blockquote> <p>To see an example of every command used in Cypress, open the <a href="https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples" target="_blank" rel="noopener"><code>example</code> folder</a> within your <code>cypress/integration</code> folder.</p> <p>To start writing tests for your app, create a new file like <code>app_spec.js</code> within your <code>cypress/integration</code> folder. Refresh your tests list in the Cypress Test Runner and your new file should have appeared in the list.</p> <h2 id="Plugin-files" class="article-heading">
+Plugin files
+</h2>
+<p>By default Cypress will automatically include the plugins file <code>cypress/plugins/index.js</code> <strong>before</strong> every single spec file it runs. We do this purely as a convenience mechanism so you don’t have to import this file in every single one of your spec files.</p> <p>The initial imported plugins file can be <a href="../../references/configuration/#Folders-Files">configured to another file</a>.</p> <a href="../../tooling/plugins-guide/">Read more about using plugins to extend Cypress behavior.</a> <h2 id="Support-file" class="article-heading">
+Support file
+</h2>
+<p>By default Cypress will automatically include the support file <code>cypress/support/index.js</code>. This file runs <strong>before</strong> every single spec file . We do this purely as a convenience mechanism so you don’t have to import this file in every single one of your spec files.</p> <p>The initial imported support file can be <a href="../../references/configuration/#Folders-Files">configured to another file</a>.</p> <p>The support file is a great place to put reusable behavior such as Custom Commands or global overrides that you want applied and available to all of your spec files.</p> <p>You can define your behaviors in a <code>beforeEach</code> within any of the <code>cypress/support</code> files:</p> <pre class=" language-javascript" data-language="javascript">beforeEach(function () {
+  cy.log('I run before every test in every spec file!!!!!!')
+})
+</pre> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABSwAAALWCAMAAAB7my0nAAADAFBMVEX4+Pji4uLJycrx8fEhwI7y8vJ3d3fu8fT////29vb6+vrp6enT09Pb29vr6+v09PTW1tb19fW9vb3w8PD+/v79/f0RERHd3d3Hx8eVlZVPT09WVVRsbGy7vL2qqqru8ewurYl3d4PI6fTAwMDnTEGPj4/m8fX9tTW8vc2CoMzu7cx3gKafyumngneFd3dVVVXNpYbnzqaAd3d3d3y5ubhlZWUevomXmJvu7u/S0dHMztGenp7227fu8fC0tLWRkZJ6eHjv8Obv6M2BgYG02PLd8fX///SbtNjky6Hj8vTq8fR8l79RUVGjo6Pat56sra5ra2t3epnf4eW5nJW83vXo6Ofn6e6DqNJ3fKDR1Nv49/eTeHfH2eno7vKkzu2ignd9fX13eZCefHfIn4CUmrSVvN/P7/X/9tbm5ebu79Lz///s1K67yNUICAjh6/TW8PSUl6a4knn6//93iq6glpWrlIBWVW4lwZDXuZXw5+N+nszhwpvS9P/v8eCUp8Pw8NnIyMhYWFj///qRrtTZ+P/u3Lum4c/DxMTQ2uZEv5pqxaqXfHfTrZB5ns+AipdWaJ+jwN2sinfj6O3AqZdyVVTN4PHu8dzp4dq+nIDUy8Hc5O7v48Orm5XKpILl/P/Yys5TyKO0ucHf1cqt1vLu7e2alpXj2dLp17+rvs4vwpTi5ueu0ev69fCosb3B5/nO5/V+lK63sKy80eVsms1qbn3a2tjZ08/Ez9vHwK3MrZT41qOWo7f37uqWxueFpMvWv6iLioldXV3z9/bA6NyelIWNeHf//eNvb3KThX7027HgzbOkqa+nemusxuKBybPy5dfHwc7W3+jHsaLtg3v958HNnnLGl23TqXnf8Ovy+/mS1sKbZlR3bWzKwr9WVWOEfnnJvrqYyLmFVlS2glucss7qYlmtpKDS7udrc5WcvM/009HpWE38wllWVYCMcmv80ojv9PtkVVRWerJmksdvqqhtVlRWWZXS19PytrHvmpSmblTmuHlajMTrbWUiJCOAY1QFCIWKAAAgAElEQVR42uydP2/bSBqHKQXSQZYoUVZhWxcTAeQg5TQSLCl7dHDqDhLkRs0ABlzqK6RK1FiIP8UWLt2qCVxY58LYJltsCsN9YCAJkDYuAtwM/44oipbJoXLa/J5gd0VSS9N8+T55hzMcKhkAAAAPouAUAAAAZAkAAJAlAABAlgAAAFkCAABkCQAAfz9ZFgAAADyI8v/G1pYC1vJ8InIAeYSDQpAROYA8wkEhyIgcAJAlggxZAgBZAsgSAMgSQJYAwEtIOcgSAOQRUg6yBAB5hJRDkBE5gDzCQSHIiBwAkCWCjMgBAFkCyBIAyBJAlgDAS0g5yBIA5BFSDrIEAHmElEOQETmAPMJBIciIHACQJYKMyAEAWQLIEgDIEkCWAMBLSDnIEgB4CSkHWQKAPELKQZYAII8gSwQZkQPIIxwUgozIAQBZIsiIHACQJYAsAYAsAWQJALyElIMsAUAeIeUgSwCQR0g5BBmRA8gjHNTPhw5bZ+w/Z60hhSwBWCsv7e4i5VZGc7uv6wP2YaDr/e1mouezWQpen9o0jNoQkQPgkVd3r1rtQZarodRmqnRlyXTZziR1PqkxIvtBG7QGMenkza9dkhmyOUQOrC8po3ew06sPkvESc+XKbCk75W5Obm9vr/6xNpE8M3R9Rpa6bpwlcj7pW67EIFmO2frR4SH/Ny8u6fWsLK8hS7BKjKkhbV/UeFq1uR5blYERL48CXFmtCi3xJ9PGDFN5JpWacvTk3TOL0/+ux3UxsFzZHz/hp3nct2w5SOB8bo24+P4ZIMsttt5gQkwxSV6X2Yphy0XTCamhTQBWBzWYfGTZMvWqKnDJWk5pUk3L85LtSlGWZ6PqLAdhv2zvcr+cuCxLJzfzK09NUVrCvFkLV5p2NDSn5Z3RTHn2o9ty4flsEXI87ARUljTr+DD3lJC6b+sBmWYgS7DCutI0jBRbUsMnrmmdubJal+Ylx5Vi8VgZmfDV1oewH0evq91B/OQOPws3zIgnvpUbH5gjb4+4SLkyI5/i7z/uXdlTtkATuy7KphprYqdLqWbqsxx1lwvPZ/FlSqHHAbJUCbn0Pvra3ClC9BXdQAHAritl2fLSleSMNKXJMsiVbnFSrR7mHv51XyUvyxuzevTZ8l9s1X8UrjZ6NL91ae739vb+KosLidmyzcWYnt09TfOV7QRua9BgWbKG9sT5xjEZzYZux78CsgQx+fcf3769/7ggqdKu0tKxf1Dd3E/3YDPF/tYfP5cuyzBXKoVqtbGELI+r3XyisqQ39q3JK39leed8g9WWt5FO8AbXo2NLai8kZMu86cr564WvzkfcZ+j5DJJlqUEabmlr+O5Q5kdkR/YNFPBLV45/fH1h8vX9edDmtlMDjtpxf9TQ3NVhwd11Q64sQ105I8tB/eV+L+0sbfGlespsuKnsGN+qE74pX+vt9wyNSpbljduN49/gfrqb37gcn/f2PFve2wvfk7lwuBX783cEM/1AhyYky7Mp8e5Aa77uclZ1bkGWQBoXtipNXb5ZLCEZPcgds09HyK9tqbIMd6Ugy5J9N6Cr8aViln9k/2QriurUugOF7jh3DLZkytKtK0OKx9xVxMqSft/zbOm4cu8+kQunzKU4Cdgw4RKNeNcyiiy9rrzB7EDMypQcU8gSyCorzwVXMt4kKctNrp5GRShaiUxZPuBKT5ZPGm77v8AHFrlL2VzL/tQdUO8mASlKlKXnypDxQR+iNsMvPrm2dF355c9ELp0t3pMT5CLK+30iqujRsiwQkhbtKH6hLm6DLEFcZl354ut5grI85uYR2vItIvOe5UOudGWZY3Vl1yiejVmDm2TMe7L68Ezl1WYhX0sfso3jlpJnB/dcraT4bvVYKXd0+u42oK4MceVR5LFD9LVrS9eVn5NrhacfuUW+LFnL+61YZh56JW2uIS5BliAeG7+98PEtOVk2WVO32xFWeLXbOL4sdx9ypSvLCTsM1cytEdc0++XMFKTMlptWbzjvnmg5dahRrV7GSbmjd0KLeylX8gGXpxFP8pwtk3KlMmZK1AK3aGzLONpO48mSZsWxQ2/nh11ClkBaYcnIJSZLs1u9L9qzt2/RL61SlgduqdjmLe+ec1ey1eOduM7QoZbj8EFvgROWS7mjd979yeXqytxJjEHp1GfLxFyp1JkSg+euGLIt9Wg7jSfLilhZMnOOKpAlkAPdeDPnyhe/JSbLuq8VLjOPHtEMp1kmS818Gm6b3480b1NmDdUWtiNL87Gfhl6oxDoo8/aja8vl6sqrZ1HvWM7bMjlXKvzOZPAcQ01+N3NFsiwQMhZluSNqtBcrcgCIfJyX5bfEZKlzK0WfwktWBw+9FofDdwd03/7Y2cwJslRqzgPsejNOyp16fd9LuZLePIveCOd/ATJbfnFlGeDKCwdFKTsfo4zE5LIM7vkq+ivLpkUxwz4W7QVJssyLfTpiBw/tLB6QDlmCx/N+lbLsc/WkkpPlkkOHKrMPXLKESmedQUID8QmeLedxo26cPtU7R5DPPixVV3JXvosxjwZ1xqILo9Nntrt152tvcFGUkZibTInB0UyxLZu+StOacKNMDefzUI4sZ8ZZqsI4yxQhz+NdTgD8NFmapVotQVkuNyid27DWtmi1rOkXnxR0U5jXuZnHHctqvcMHYHaLkQ+K0qtnfsLqyruYrlRmXBlgS/pDkiy3mfFagVtabMv2imSZeyo8wdMXxgrteI9BQpYgPnSlzXCN6+hlkrJc6nFHZsNqgRdg7M9wmFcyqZTZqXX2nDfKXVnSVMpMwhIviLdjHNTG1fKuVOK7Urmf7Q3/q7zY48q5jbLx+J+jLuzG4V0/qrgiY1OOF+TAZ8N7hLhPhGXJyGneD0aLZv2FLEEkVtrBQ/no78NS1P899kQaTm84s589gGnC1pSZO609n83Isu+M/uSHHUeW1GfLsLqSf/N3iXVluC3jkdGD2+GUt8L1TAJBDpSlRkjHvuXaFlrePbGXHLIE8dmYHzp0npgs+ZidGPuJPkWbT5aDrj12iPeLv+SjPY/NGkTtmrLMWjOG7FarU7P1zZ/3iSNLny3D6soTs28n1rwX3nM7n5K2JZ+NzQh4Npy3tGtJBJnJ0muYZIZDc6ACdWexzE+9lndlKrTOIUsgg1UOSle2iPs8tsP4qSZXlkGT//pkqfDu70Oj3R+xo0kpYz5HiD6ucZWz7fwxx+5lp8iV2n1ZG/dINWTOtqUOSrTlQ+MrP8Q6w7nP3pghbwRRQhNpmK+RmB98PnZeMyFXls3tdHpKOqqmWa1rndjDhFRCSK+o0PZUGCtUJ8SQcjkB4GbXtxU+7mj1hzfSMzueTuTKMuC1En5Z0o746BA98MYR8VZl3RpR5I5yD+2VWu6gPFuG1ZW3MWaxdPgujK90bXmf0MVjalH1rVT16M/vhJ3PlvtSHUvEfbfnm7+Dh0z5ayd2nKK81PDuXkKWQA70YoUTaSg5a4zOgX0dNy8fmtQn0tW96IVlE2/y37o1ecYra5eb9lQaz623A+5PrbkzCvaAzKwW+6AcW4bVlfwbp1cnDneRwpn55LrSHZ3+5XVCF0/FfKvEttgSz2ybvd6RR9MuPp+a48qRX5bKJGtuaHiKVsMHpEOWIFJ6na9wijYlZU2dMTpm7Vvj0l5QJctyqVfhDlRt4g0IKqqaOpy/x/VkS9NSFRkHZdky9D1kJ74+82hn2Jx2yH5ux7JlQpMOcYbWC8q8Xp6UETIsSG6QS/m8F5l8oVUYJvWTAHAJn/xXkTj5L2syTX3vDquOCvKv7t3dVZ27pStLSu8+3Ia50j8eM5osKb344T7jaNaWn/5M8NdXrTGTu4VBJVcZFHatRTXx87m6yAEwy8dVvVaC1QCdWVceTtb66l66slQe6uSmkl7+QOnnc+8z/VxWaIK//7Cv++kPV3A+IUvwk9gw/yxC5gvLeNknFJdEL6331f3Lp1yz5nNlrbke5xOyBAlADZmuZMWlcdw1TdmpN9f96kbKKcNNQZWbw3U5n4gcSARDpis5uYGmFv8OVzdSjlGZjOtG36iPJ5X1OZ+IHEjIllPjpx8DZPkLAFkCAFkCyBIAyBJAlgDAS0g5yBIA5BFSDrIEAHmElEOQETmAPMJBIciIHACQJYKMyAEAWQLIEgDIEkCWAMBLSDnIEgDkEVIOsgQAeYSUQ5AROYA8wkEhyIgcAJAlgozIAQBZAsgSAMgSQJYAwEtIOcgSAHgJKQdZAoA8QspBlgAgj/7H3v3FSHEXAByf2T3rwLIk1mW4NT/2ZbJ96YsmXGGydU3dekq60kuFw/5NE6kYbA2cNCeRNOvZQI7ExtgYLRJyBDXSAikNEmx5MGlzlyoqJthKgw8mptwTaeI78fdnZnZmd+duT469vbvvJ4Tb2dmZvd5w38zMb2ZLLNnIbDnwe8Q3xUZmywHEko3MlgOIJYglQCxBLAG6xK8csQT4PeJXjlgC/B7xK8dGZsuB3yO+KTYyWw4glmxkthzw//3rPnr0r/9ulQcAGBs32pnMo89aU0dlLlvYAIDAd3ZmMl8X1pSqZYscACCw/teZTOVH1uTk5NTkVNJnAQBGNvupTOZLn7NOn55sswYAEHjiiUbjj7dlLNutBQBEGoO129b4+Onx1lhuAABEBhv3uDKWA/pPXAEAEGk0ZlxrQBkfiH8ZcAAAkcHBmResoJHj8S/8aAAgHst7XrAGOuBHAwDte5bEEgCIJQAQSwAglgDQH7EUxBIAiCUALEosh4glAPR/LC3bttgOAFZTLMtuQncL2a5r9/a/2SqVy2x5AAuMpViiWGbXlZYklpZXd11iCWAJY+l7inBd/dWb+8VeUNMeH4b7uuPEEsASxjLav+zmZV63x+mLS75tqUYsARDLuTWqWfkdEksAdzWW/qYEf95YWplyuVxaFy5eCaaynlfWR+u2ephV7fR8Jy9nV9Y5sRfLKTt5PG+X5CoqGcsc9cul1Rqjk57Zqpys2okXV+3275BYArirscwkY5mZL5Z+3Yz1lFXcrFow8lNRozqGFw7wuG4tGB8y4z5WMFWrJvZAS8FydfPYDyarZm41MRmuIpxLLAHcQSxHFhLLtYPxVg6unSeWqmUlPeRTNnETcmeyUq/G9yyjWMoClryqrKveX5VhFVWvVE8Oq8sV1queVxI1cyAvYyqn5JdGUFI5V63CC9osVyHfvZ4llgDuNJYLu84yXsvOrYzF0qq7IhdULK93Hs3Tul3hOctmLGvq+VzdDUJYU3uj2VoilnLdZug8F8RSh1UuU7f0mqI9WEvvZpb0i0sN9iwB9DiWsVqmtDIWSy+8hNJSh95O8oqd9lhmwwNt+bfQ+TOz3c6H+GoN5eiRr2YGy+TVnqYqtZP2HRJLAHc5llEt01oZC1otylVZPZIzSnkrNZbN8OWcbHjqUh+PJ/u4LtucyJtH+uVWcxn1KB/sdhJLAIsSy5GFXjpkapnaylgsW+7nyekTkOV188ZSn8gMj50ricH1mjlPaQWvzEbvVG4OGpmrzr30O4OIJYCFx3Lh11mqWqa3Mj2WTtaMZYt8N7EMS1dKjIbrmxVdt+45iSs1O8fSIZYAljCWztpMJr2ViVjW7Ihpna/Ht+0uYum3rS6Qrwp9zZF6pZWMZSl6t5w5nCeWAJYwlnPrdM4yrmrOLc4Zy2zz4sh6hz3EvKvW3DxnmVPxjJ2zVPxoLrEE0N+xrDYPpuM7eaaLc8ayORre6PjxRfo9PD3GHhyq26rNdav5dtn0j8sglgD6KpayV/VckDx14WMm3A0M9iyt9Fj6wWWXjeRF6Xlz5aQlgj1LNxPsRNaCL2Z2SU1Wwj1Nv0wsAdxxLEfu4gdpqDt4KuqGG30KUugbamTD9MlEX82qNlJiae5rVGPfIh7LkrrLR9/X02jewVMJm1zSNwF5lboeJrfq5iagWnPQPPj2+JQ2AAuP5dDd/NSh8N5wt2rF7uvW5xLNVUBeWixNCt26X2q53TG8p1y/ohGs0Y6O+820vu4oG3XRIpYA+i6WfvxjgqyG+uwgz+za5dRnAlUaQbosOVXJxT91SLO94NWWr24dN9ezR7INuYqyF90wqT9mqBHF0HwIUTSd7/CpQ+YTiqO3A4AliuXisqJRnDZL9ImYAFZnLEf6M5bmJh39MWs+sQSw9LEU/RlLNVST1x+3VnOIJQBi2VkuunGxZhFLAMQyja2uN3Ld8hzjMMQSALHsQta22YAAiCUA9FEsR4glAMwfyyFiCQDEEgCIJQD0KpacswSALmLJaDgAEEsAIJYAQCwBgFgCwDKLJaPhANBFLLnOEgCIJQAQSwDoWSw5ZwkAXcSS0XAAIJYAQCwBgFgCALEEgGUWS0bDAaCLWHKdJQAQSwAglgDQs1hyzhIAuoglo+EAQCwBgFgCALEEAGIJAMssliO3iSUAzBvLoQcWO5ZjrU9M7L/w8jzLFK7d2MXWALCKYnl96vThlqeGr1w4NN9ib4ufsDUArJ5YXp+SCx9ecCwLxBJAf8dyZFFjqVs5MPDP+HPW9JWZcxvWmIkzF33/WDjnspz4+175YMOGL4hHxj4zxgYB0K+xFIsZy6CVAzdj+4wfCuMZOTH9on54YYeasedJM+M5Z88N82h2L1sEwMqN5baxllYmDsP/du+lW+KlI94J2cpbQuwePC//flhPzLxz9V/Hb+xyJl478ksxe+Tet9ggAFZsLMc+Gpjclt5KaeKKGg0vOM4HYladvJzYL76513lbxM9kcs4SwAqP5Ufy1ae3zdHKaIDn2g21RynJw+5TMo/xo25iCWBlx/KmevW43LdMbWUUyx+K75snCvvFM841Id78HrEEsExieaej4dvG9esnb6a2MorlP4SoPavUhNjlOJ8XQszse4pYAlgOsbzj6yzfHY8v16GVUSzDcXFFpfFX78kHI7M7iCWAVRDLRC07tTK2Z9kaxOHfvij3Ls8RSwCrIJaxWnZsZeyc5f1tl50X9tzSmSSWAPo7lotxB09Yy86tbI6GC3GqbWbhQ2IJYBnEclHu4DG1TGmljKU4px98ENy7M7z/EceZPqALKvcsn9P3hv+XrQFgpcdS1zKtlc7EFTF78mOZxuknhXjl7Pn3hLkoXbzy55J8PKs+v+19Id659B82CICVHUvn3aOH02deu2HuDZ8YflUPhc+8eULub/7B3BGuHstZ3+LecACrIJZzKkwcXD8aPrIfezp8/vLruZ9FQz5nXl//CRsEwGqOZbKc/NQBLMNYjjzA/4MHAOaN5RCxBABiCQDEEgB6FUvOWQJAF7EUxBIAiCUAEEsAIJYAQCwBYHnFktFwAOgillxnCQDEEgCIJQD0LJacswSALmLJaDgAEEsAIJYAsPxiuXEjP04AxJJYAljVsWQ0HAC6iCXXWQJAL2PJYTgAYkksAazyWHLOEgC6iCXXWQJAL2PJYTgAYtmLWBbO7Nz60OgXrWBy4uDTW5WHRsccZ/jgqJ7Y+elg5i9e864+fl+45OWdW7eObl3Tacnmus0KPgmeGd55X/zNz1w8cuTqMfX6wsTB69GzzTUAIJZ9chg+/I2ituXsCTX5fjF0KDaxe6+a96ffmKl9P9dL7gkmi2e/0rZkct3F4o+DZ7bH5jrTrwZv/ZRe/Kvh8z8oPsy/EQD9F8uzmzY/elw2UNXyweK+TZuVkydiE8/LXb0JmbZ9zz/2+0uykX/RsTyw5eTmzec/lrX7duuSzXXrpza/FeTxQLH403C3c4+cOPu4ffG8bvGDzVhuJ5YAgliO9O4w3N+U4LfFcsvL6uuXDxRPOYlmtUzIncI3ZOLkErKaO3Qsd+vD5enjxZfGWl6cXHfku8XfHd93IgrnbvPw8jGHWALoGMseXmeZScYykxa0r+lapcWyIA+63wgey31MtS8oY6mPzp1rrbuGabGUe5qHwhIWtoetbHsvYglg0WP5P/bONaaqK4vjKZPZx9ikmdg7SW8wEmy84TUOl6tBLiIXhMojFajKI754WB+BVBBpUIsmotEEn3UQKVijDtbUKOJkfMT4SKOOlTGOxpn54DhtpmaSfphk2n4wMfNh1t77PPY+Z58LVIR7Zf2TVs49Z69z9j5n/+5ae60DQ2vyOyIr35nsBrQtLLh29SwXMveRC8C5WIDlmr5hwvIx2His24Eg/NwkhCUKhYoYWEq0dLDSBJoOLzdYglO42PwcXMv7AixvDDcMvwIUBEPnuG29NcIShUK5w7J0LEuHLFo6WUnhdeGNP2YM6Fmbud6tccuNaiHY+OoXVBsmvdcrcm8hJRuH5eS2R14ds0JL0/ayt61qojV9dL2Sh/vchATLrW9+uQS09s1DCEsUCqXDcmzrLA1aKlhplfdc/ZwzS6gWMjcW6KCT3ECazeYt+x0tbbZZ7ggC/QPMhW3coXAfzeZUCEsUCjXKsBxJJK5iJQXa8ae73h3YyFPcUrXQXG/6PKqSZTZY1uuwzMzM7DOKgaSWpm29dIhWYt7pTf+EB+NnlLBsnMKRPqUXYYlCocYHloyWSlaa64rbb7BCS+eapccjHiaH4Rt4uWSeebDatmFtFQ3q/1vAfE9nGI5rligUapzDcErLmBglKy2gvddLX64Jk+DJE73Rk2aCx6OnaoaC5fZDVpi9mL6xs3UDwhKFQkUaLF1lAm07y6uEKR1aZcDN85i9tGhkw4Gy54aG5a/XeBsvZVA9P+RtZ3WbWDqEQqGGgmVpBL3uyFcS6Ys4YTxLukJpvKgIRz6bJJQObXGWs9tscwQa7df0AUM9V+TaIYQlCoVSwHJ2JMGSeX8PFjnfwxE3PAVe7zNGtwe9XpbPNmDp4cmf8J6l585G41doeMCHPcBcy1XsN3BM6nl/B8IShUK9WliOQhjuTedJ7XQeTNMUN9V9O/9ueL3ewXk0bd74CXcQdddw+yKa35ZaSrZBqz73C2uUc9mbjo/hnI3z5g30eW3xP8IShUJFJCzFX9FmlTsuoBsHxEMf/JsfeVp/y3HjVT2OrucHCy1l29Bmh1Bp7uGrnJ47j/jOwc5J0rkWCi8LoVCoiQ3LSPwbPJ6hD9meM2fTV6N3Qo8nZ/kSDX/TLwqFcoUl/g0eFAqFGktY4t/gQaFQCEuEJQqFQlhiGI5CoVAISxQKhRoFWJZiGI5CoVBDw3I2whKFQqHGEJYoFAqFsEShUKgJDktcs0ShUKhhwBLrLFEoFGosYamWhkKhUFEhhCUKhUJFEizVYTjeABQKhbBEWKJQqAkDy1IMw1EoFGpoWM5GWKJQKNQYwhLDcBQKhbBEWKJQqAkOS1yzjBy99Wn4/W9UVT1c/lp1+ANftF66cC/WfmD2p5zKpUWWtKf80yKXjbeWCPf49+UfuVlAjTkssc4yYpSURlLC7L53m4Dip78+Hd4ZImXro/LKxXvRSkixeQNBlYXqNkcJWWFu+AmpUG+AkWQTnXErSfxqtQVUFMPyZ4XhXX9JSFgWvZM9rZorNCrPcNLMcLCsJ0yBSIHljW+Gxe3DLaEKt31Ho5X94r0Anhl85LBMdvGWU4lwe4GPieoNeAqSTdzG/UYcIckCamLBchOgcihYtvWmX803t7rv/mP21Gf6s9R9609TA/vOdo7b2BYQQ6PyDIeFZdZBQrb6tLUPI+XBOjo80OWmCSCwCSAh+E3RI/leAPKbdVdwTnnWkdGApQ9hiWG4/MgdS0gYGpa5P8T+03hc4r6LZfpPP93xhG/E/m/cxrbt6a5dLaQmYde7/a8cloeXkuaIerBShwfLdTOJq2epnTjeGY1zSr4XWU8TPhKHBT1LhOWowzIO/MqGIcPwpN/Ffmw8Ln/T8Ri7v1Bb9y9j4w/jzIzkIsXHORlBX1b3tMEGunEqyHyQTcEqOLQrplM7NWva2X4VLFdkdZcMNugGc56WlJjz8HCtAJ2sYwMlZy/xw04FO7UusLde0Uj+cuouKeFw6goG+YR+EAyyedl1uaSkgc/QrmCVlvPttEG4K3EZwd286UXjB0Ongs8PksDpjGAwyM8lWICNKSUl8xo+Y6NwA/yu53DYbsflXAwGq3612xiuKm0TP6tiLM0uXYSL08/PfzhBx4Gby4ArOTEw7bSPDnRwvXEXPnM+d90DMBBs9LpidrOxM5BtmWPd+HbgeIzKkxfuBZwhWPX8oRqW0qDI3y5+GzlTxKfAIifA0iLncL+fUK8KlqXjF4afStitHRsBLHt+AEw+fPBnAOQ1Bs79y8q/7O6oGG9Y+pQRevyupTRAP+/T4mrJXv4ZXeSqI2W96tAdpskga1PJpvpCHuG3Oz20L2ayPTWL6XSqJcWH2ALaGWcjUXqj84X0EsiH7LMmQk4CZ44Qy0Adqbwc4iZyQ6SMrYDstAJNfQ7XEmkFQrKQ08J37BXXKZxpj1wxGwJDM41tX3deuNWlnFoSWKy7djUQv29byfaU9XNz37foWwVGyqWVON3ae2nWeqN5L9hwiObMLZUvJ9yLAqOrzudBGpSXgKUPYRkpsBznOsuRwPLvEIDDFGkDn/In6lj+WBgR0agSln42UebDf9foE5/IP6PPeirLo34DrFvvhCWomvCpvgX+zb7FJ/KjzEz4Kf79zMzMAyyJTOJvhnh2BIzTGQn2KvPlRrJ6gBH7+kLMtgE/PeKDSR1Iv0s4iNjlBeazrSY9++oI/95uCVCgBkKhUIAeIVkAFAf2Zc8nmzWtHg6A4+D/oWb7KK1bGqo2syF+46wU3rLELhnw43FrGyC7Jh36RVPq+uCl0Q4CS9laqBzEWuMQ772ZxnawztIRpxcumYPLo/ev2glL+V7Uh6qrxSBaeB6kQbEv8rrDUlrkjVspPl5HEZavCSx/XunQSGAJzuRPOjT3F4BjeVKLbFjWdMJcgrnrhGW7ltXkLAOh8z3+gpZ7mx63DSY8zLIv0sC7yxEcub0svdDOHbjNOiy3FoE9mJRiI5txOB/M7W0d9DCYgmwGtzICfQ3IyjcrYOjlNXaoWDIAACAASURBVOdreyjl/fwjOH2Ns8JHmLmShbYOTps53BdNCpPgARsmLAPkfL7KE5S6BCChXwnQmUAeOx84onFHWC/o4AXuU8bBEan82wLA2KxgL/siKde/BUhxoXaFGZLMUdRV9tMlANtyiXwvdKCpYCkPKxttAXVfhwQ+ShvQYcsc3Fbh8WpFWCIshwfLuCf6+iSAcr+fLlxmLZo/Y8b8AxEKy7LVLF6tLHTAst3uTZiwrJnOGZZC47tr9MM9lGuSN7MzxKcfzCqgEoXlAh4P2hrZg17WqF7w0HTHq44EztFdBxlh4fKKi9jxmyn36AH1RMU7ISaULIBbV9avqaNK18GD0ThfpCSr3CW+bsATxoAtRs51t2nX4LPASX4t07WeEDO8RxFEt4prFKk87oeRTC6UzUH/XUpAZc+S+68qWMrDat5+K5JPUW+4mHNYQE2oNcuRwvJFbCx7prYAKKl3WRj3JCISPGpYclw9yr7qs8OykjbYmaaCZYoZlR0l5PuYmJjgIX3CW+tkJmbrqD0wziiY25ed52gkwbs4A/ZcphCkxgAMnLq07rmBNmrRL4/N7Zze7AWMNh+yaZ8XDpayBer4ksZLvhHCkhk73OE4WO5SPfPTuEcMPEsOwq6YDmoFzsM8xnvZjavpNcAlA/6cwKMlkjVnHxrnZ2umLI0im/MrVjJUa5audLMNqx11UuVDEsIyOmA5NXpg+ST2t/QZ/SX1LFsZLF9EMCyt59oOS9Zg3UxXWO6kUVmqnEIRoOM3FvaaaJYDjF8XPSWXyk+/taeCB5kn6dErjEVPnjFabesPBUgh87vCwlK2kMuSVAG9OnZEsJRBoehSWy2cAo6i5+GrlEzNRayUQPJHE+nSrOLUV/iFXhDP30SafbI5f7iXZeQ+ucBSHhSEJcJyTMPwFzoYW/maJU320HXMaIDldQcsk9xhWU84LGuymW6ecYGl4VkmimSRGkmwjNf3LOCn2JzTweJOOqv3sT0z9tlhScPePBcnS4alYEHLunyXZZXXjxIsxS7RyBqC7M36Ei/fM2OVzzaedC0gP1XpEWtdvWlGAlw/PziiyYWyuVGBpTgoRjGE9TWUot4waieMFQ6hjKAgct7fQlhGeILnr6zAUtO+i4390c/qh9hn0QDLYr7sNjxYbuFhuOxFWBO0wCr84Z5loirp4lxDTZHTFGWX+eodTbgWufUHml0/ojZaJ4bh9lrTTRDu8xMCCCpeBpa2LvWkkeIr/NtCfjfINp7A2NO1rvXhJ27xoiX9/G0dPAxPlFzT9peDpWNQcmcdt7JubVNmdao3tKezLghXOiuhSG0BhWF4GFjSDHgF/+carR/6+ALLjEdkUboEy5VsZhaQoWG5goMsfrVVK+iYoOBYsUwEROvNtqlqbyQleCrz5TyH8WJ2neQ5yrAEjBAXmwU8oeK0YF7KCh3LzS8DS3uXmtjr1/Q7M2elmMayjWfP/9k7+5go0juOB5vMkLNHSGNyt1l1g8kZFAXKYoC9W90F18KS3sKqKAFUtGdBCC8ixpdTW605E5Hz8BTBl4ucAkGtSlUk9Gr/qK2nMVaTa//ovZicsb0/rrmr0SZNk/Z5npnZeWaY2d2A7gv7/fyh8+zOPDPzLPPZ3++ZZ551CUKQbkebJFL5w9tJ+ya01REpm6e8Wlk6F/JfB9wNHt3u6cB7daMfVs41Loj9Du6Zgm7HA5MaQELJcrujspI+xVM5/vEOjSytWz+fObMso+QYEeQvr/6TuPK5h1oyK+tq0bNoytI9zeFoF2pHHI6mYLKktzweD40KYcjy8oGuvrXsFi1JJEnJOf21R8P6C5T4IqM6hQ6uXqPzi34jrWTKh2tSknrSFXkqFtpPxx71OuuusfBGFyl3UOesMYlVaxuHrn3RrKth15PBA70p/e1yZEnT0dIHSQUj4xovNfXVdqG8OrWyKZgs9adUrEqQCD9tsCl/6DqNt3TtyW4zGenuzt0Rf0UdCXwlWaYN9k4fldbUVEfbK21w6NqN2x8HlWV3amVflVD6aip9OEtzStpmJef2AW/PbP47QFNo4Efg1mdyI0+1NYDIyzKK81n2pys0BpHlM/URR5p7Z2URY54nV8PXyuOOT6PWtuoDKp8Ek6W6XnBZSs+0CNL4PHWjQ8qb8/TrzRP1o/x0G/GVZ2ofpWlVJXiKvymkkyUdw11umPspAw4X6GpQz0LaEQnbXEZP8Gzgb9yYy1J/SlSectO65WdsWE+efn67YpOIeIP2ZLmCpjr5NpXxEzzqZ6E+yiQ9nMXXd0p7r416bweXuqstoinQY5LGHMnmVA9AUwOIgiwXxYIsR8xXqv9QlaU48D+69A/pq/pt9k7W1eGotW1D4OJYE1SW4kO6zu477L7oaECW+o3cD9mNkbTHUl4/cJt/dLH+lprs3f8DW+8wf/dIRrsRh/d+O8tM2ShKKTAM5OU3v5JUft6gD7ZVMOtzPNaunjpXQ/1BSR67lcv/JtP0uCd4OvjGU2U5fme6UxpVJWg7IomZjmit17XnnirjiFi6GS50ynfDpUL1uOrIpyGVOlcY/E0GPgsWwAa+Bzu0fw98s4psBIIq3p38k52aAh1JHzAnvfuv/h0dx0QaU0SWkflZie4HSU2idLl7xZX+pF6v6I2DT+Hsa/4wDtNLJ/nip8n2+7uMZ0a3JfnNZlU338iZ5B8ymWp7utlGJCA177s7O6TWx9XgrPNrj65uqGtSE7ybn5JIdlXhNeklyDB+HDYlya98GNnkC4POPv6dcXV1Q5OcmVzbrHV8Z83KXrPCWT//mWnmkq9rgtAgSxCb0NR0VTwe+InMcGYVN59PDUCW+A0eEDb3Zz/JFLQ30eODgdlbXKbjAiBLMFFZ4jd4gAnF3IRlccUGZS66UJwyS9UBZBl74yxB7NKwrqhzMB4jr9F1RXmN4az4dlEpIksAWYJExosmAEjDAQAAsgQAgBiVZRnScAAAwDhLAACILVkiDQcAQJaQJQAgwWWJPksAABAxzhIAAGJLlkjDAQCQJWQJAIAsX2YaDgAAUwHIEgAAwpLlS57PEgAApoYsF0GWAAAQQVkiDQcAQJaQJQAgwWWJPksAAAhDljMhSwAAiKAskYYDACBLyBIAAFkiDQcAAMgSAABegCzLkIYDAEBoWWKcJQAARFKWAAAAWQIAQILLEn2WAAAQhiwxzhIAACIpSwAAgCwjwIWV+fn5KfmUuk3Je7fXsEV3xWb27m+vv/eeY+641QAAINHS8A6Lyr7kTwPL75L3fv5EWh47rVsNAAASTZYDubm5s7ZYxmaR/48mv2VpoQu5uWdOE1duseSdqbz2aItlqW41AACIkCwjOJ9lwSwNBQarvE10yHjL8hP+1TGWcS9L3aRbDQAAIiTLCI6znKaV5bRwZbn3iN6NkCUAIG5lGToNf+V13pWvvxJ2ZDlquQdZAgASRpYaWxq60kSWOy06W0KWAIBIyzKiv8Gj2tLYlbwsd9vo4KGVIiksW26xtIxshiwBANGTZWTHWSq2NHElL0uZn21KTp6x7AZdpDfGIUsAQJzLMryhQ5ItzVzJy1IeOtQoBZTLek5a1GQcsgQATHFZMluautKkz5LEljNmJN9/YrEchiwBAImQhlNbTptm6kpTWSrvtvwKsgQAJIYsgxJclstO5r0LWQIAoiLL2JrP0liWF76T/v8jZAkAiJYsF8W+LPcub7nEAssjlpbTkCUAIL5l+aLTcMubEveSk29aLC2Lc+nMQyuSIUsAAGRpMM6SRZgDW9jiRU8yZAkAiI4s4+Q3eC7U5Iub8XkBAKImy3j5DZ4Z+LAAAFNClgAAAFkCAABkiZ/CBQAAyBIAAF6ALMuQhgMAQGhZLoIsAQAggrJEGg4AgCwhSwBAgssSfZYAABCGLDHOEgAAIilL4zRcBACAuACyBACAWJKlMfgAAACQJWQJAEgYWZYhDQcAgNCyXARZAgBABGWJNBwAAFlClgCABJcl+iwnwcqKl1Hr2aEak8JkqKDUxFb7pfjn4goFcSNLjLOcOD8W7HNefK3u9UKb17AwuWOl7Iip9tvvEsqbcYmChJPlhNLw7j+np1fHsSzTeFkea3etChScR3IyJhY2NQjCJ8aFyctyXky13ylB24AAQJYmbCeqDC7LPSfz8tj7u8jCpTuWPMa5x/SlvpOfz/xTUctRUSw8J72eN1YiPsxTGPNEWJaFOZyMbGuFjJIJ1drKh1utLyz2SqnYtT7GZEkEnrYRlyhAGh5Kls6P0tNDyXL+M6v1NyzCslqtS/9ilXleIjqlQpaVBF7FyutfzrH9zaoWIizL+kyBiywXChkTyp9P5HC1aAqTxbYwxmQp9p05iisUQJYhZWkjcWVjiDQ8/2ur9X0aoP2V/v+ZrMEs8tJOZZmX5daNnCy3RkKWG92PZt+lZ+AucNwUhLZ/OxyOA6J43dFzS6gdKXA4Kokx+x3NYt+Vu4NKqNuX6/OdcTQppVmNfKXZgv3XBgVnD9mGqWU724NId+KgTbP9F1d8vnRWW/+It2f2oNedSw/Jed1RYuvx3W30Gsmy74rv4ohJwN+z+Ew62YWtQN4R2dMB3Vk4C8jx912ZPSh3NXTf8PkalUi6+0c+3+LGXrm2L3y+i+kHxn9XksOvTFVf7yeN0tiECxbErizLopeG95NL6KMQfZbbJOnZ/mO1HhKdXTUknnxa00Uuf2LRb6tFZ/cjKpCuJuLO583TybWW0tU18L31y+HpXV0RSCPTfDm0K/B3RNhCgNUlhTmBgn2OaFsvXG6ny2lLWbZ+UHpngVTJfrL4DtfxUCWUGhQGMtk2l0tYN6bwsdSdSU2aLe/oMGml9fY3ydLuteSdFbRXYKyKHU/zOFnuWcu2Kb9k8B22XJDvBRW6hHKPfIhtXu1ZkMq/aQ9U4Twunet5ura7XargEKtuVGkT/X6kNlJelw/IfhhXLIhZWUZ5nGUoWZ743koT7UKSjlNBiJ/JaTmNIP/FrVcsR6Asd/8wAlGl3OdGru8iQXAtFRtcLhcpkX9dbXPrq1jBTgq1G6mkaIHIgbrHvZ74ZskbXymyLNbepN4pCGvGF0g6LnSeI3VSd3awio5VSb7dIAhFb+QwPUo7klglzmd+XScIinBVWe4ix1CbRw9oXIeo7QPqwyLmulZ599l0T9qzkCvPkSonrrTn3WbHwA7I3rmkSDopcgZC55LbrvE3u0gbkWOTXz9GvkDsv89Rv0IAmMKynNjQoVCypFL8r0iT7uceXpY0srS+Pxx9WbZ5xG2C1LE4X3+DZ25AUoLwjeheyNxDvFdKE2NlyCMNFPfxm6lBmFpoZZHjnoNMR9Rn86iT2N7u0NzVmU3DU7qjd4h80/5OtUh9ljYsFt5SelZVWW5jwbDtuCamDfiZbESy/mp2flSFRO+1zbqzoJXb7xHjCas94qdEeh5WK1l910FJwfks++8Q7DQQdRoP8DyltBHx/2UPC0NXl+CaBZDlRGRJOyu/baZqfCpqZCn1WW7d7YmuLNvIxV4vS5IIhJPlQo0sF0jZ7Dw2uPAyH2b9oOeng2qpgfdXoEBS1lLuhfpbJJBzUU0FIKLeQXe02kMOap9zrSTL2jn/Z+/sQqS67gB+ZwdmlowTfJoGdjqyXEaSuPVjVeg4zET3Gkx0SnVMshXjx9YkKIo1pIJJUScPBUFZGk1qVEKJKVG2FEppNaWQ9CGCCCXoQ/uWgpSUPvShgb73fN57z+zM7qzu7Izu7/fiHO+9597rsD//5/z/56w244grS2E/da3oZ1vTK23al1r7iW0I70nPHlbP7b6F6Fydd0DOMxwwM6vvmYg3NrpfbcbmrVlt/o3kNT/R/ymo4BSAOcu5y/LnQomf/PL+0NCIK8v0RyaNs7mXslQxmxhDzibLd6LI8/QtEbv9+UybLj9MTbwxvSFDvNLAwIbPRnVPavxvM/GVG+vWfXxBKkzc6HX1UMtMZDliTm6SpXDvig0DgrOp5uGx1XLaBnyvKyFubn4L0bny+J3njr0hAuDhI6K3DcflM1XkOP7YzeVhD6nJtnkbK8sx815yToJxOPSrLPN9LsuT94dWjQtj/ueNJlmmr+6LJb17KUsroRlk+YyZKZTD9Tsbler+3apHp1QzaqyJz0Wm9bygLVa/Y5NJSpZ7p8tShLJNstQTjorm5UHi0OfO46x48fRuVTHqvoU4b2/sVS1S7mMqq7RWl7mabM/kBzPKUvSmZiIqP9O5K4DHWpZdGoan/zY09O2fwmxOTJbiJ/Hef4dU/ufRkOWh3UY3926lorSLw7n4MDRqyOrt5xR/2WIGy3Y1jpzynCiXvzSyHJkuy8OpVrLU3RVfWz5NluOx5pup1OY1euzvvoXt3MpyUnc3Kf9Lq3x2W+XJdfLo6k9VrmtzJ7IksgRk+RCyXDM09O67RolNskxXrgwNrRrpF1mOxSvI3QSPOn4lChsv7my50u/k2VioF2usaXKIrtR53cSY8s/TK9vKMkypx4fhTdXpm+pHWw3D5Y0//9B9yyuj02S5b1r9/dufjdpHrqSXXTobJfwT9dbDcH3XE/FaAACG4XOSpZyvjCrM/25l+Ss163fHRpaHhSy39liWctOL6OABmUK2kho3itsbO2xW+m06vn/SJkScwCrWEDKJZ3OE/n50aVRHa6t1PydaRpZ79bDZzHxWzHOoLI6TR7m20eZhZGHTiGNvGwO7bxGXpRW2wwvxl312o7lzRYSqsfSWleVJneaXdaUT7KwByHIab2/YtUuu4tm14cxMp8kioaFvpQlPrN0vxt1fBxvfkSVFXw8Ho3JV40vpa6PB+0Or3h3er43SK1nK4ei2u4nSTSOC1IpXD954ern8+8mb5y8eT6m5v7EfHLl7PnPprI0sY3WWlfdMFfi0hnDMjt/veTJx6Wk9CSk8eU4PdIWoTh29+mWqpSx/d2bPp2f1gP3i0l1Xd6e2ZZfKJUVCrcPXj35/6sbHz4dToOYZTsiq9rvfufTlFjMVkDLWc9/CkaWsqz91uXLwj+s+EOL75vqZy09+elxL995vd9X3JC7Y7mUlutmpadPSpdnjqR2vLt11VN1m4sieq2dT87i6E2CeZdnD/Sw/fdpyZKbTVJHQuJm+tGvDo2WN487acPUT+b/eyFJGfBvDVSlXRsMVPDYBMvxSOrbU5/N0syyFBaOKS6cxtjJcHSTDL3lEZp3fWh7L/Twjx8NGlqZ0SCNrIJf9OLakSM952oYry2Vm/Y1pXzFF6Ommt3h2NB6AfmQ7H7Erc1LaqZvsbc3/DDFZHkjFLgofaMXz/MhCv8pyfT/I8uZMp429r8LHdFgtJOPMypt6Zfgf/qqnNTU6ZX7o/oLL0sRDXyg/vaXHmddum/yw0cza19QI87CWyYRd2De2O8x+HIjPYzqN9FfHVQ5d1rOvNncYu6U884U8MHHke0KgKht+WNxSiNSu4EkN/3OrjlPj2lp2QT/FDj1AvzZqlmKql/iHOu0XYUw7no7J0rzFoZXO5KK+JjUsxvKH9GrOtadejNS79piZaJDrIrdtjWLWlA1cN+1UaaBTbAYMi0CWC/5rJc7Xp+p9t/HCwanz0WKVjG6oCsVXok3Vfz1Vr8dWtFTsduFOjfi0gvFKoj7VemP2RL3lMng5Uq603xv9YL3+SpiWWeZsWf7yVHhEhLTR+h/nLZrI1Ov2zSui6+iJXq7XL8dve7ldD1P1y/y4ArJc1HS6Ndq5eJHhuYeuOHSmFR8QOTwen9tbADBnya+V6LIsr/7w+tbWjd7I8qvCN2Ikb9PwyBIWuyz5HTzdl+W+nvzum7HRh5TlC84ubj16C4DHT5YMw9tR2Rls6cFtT98OfvNQHRzeH0xeX97jtwBAlgAADMORJQAgS2QJAItPltsZhgMAUGcJANBfsmQYDgDIElkCwCKXJXOWAABp6iwBAPpLlgzDAQBZIksAQJbdHIYDADwOIEsAgI5kuR1ZAgDMLsv1yBIAAFkCACBLAICFkiVzlgAAHciSbDgAALIEAECWAADIEgAAWQIAPGKyJBsOANCBLKmzBABAlgAAyBIAYMFkyZwlAEAHsiQbDgCALAEAkCUAALIEAECWAACPmCzJhgMAdCBL6iwBAJAlAACyBABYMFkyZwkA0IEsyYYDACBLAABkCQCALAEA+kqW/0KWAACzynJ7GlkCAMwqy/XIEgAAWQIAIEsAgIWSJXOWAAAdyDKPLAEA+l+WXiLh8T0AwGKSZTHn0NlFiVwusYAv7A0E4tFqhQzfPQA8ErJMLin0QJaZvH26El8+APRIliVfInSk/vRnPtk3Nl3QYbgnHi7wE42ysCWxJQDMRZbzng0vdjYA9zsdp88njVyuYT8U+PYBYA6yXL+YZOkVrCLzuTzfPgB0S5al7zqUZpWlN1AsFgtL7OVl00r6flGN1hPyY1K60y8NZsXh8pLB2MmilXDH84mC6KI84OlRv7ha9hhOeiarollNOCdXnSlRO+QPeuFqAFgsshxwZTkwmyxLNZ1NKUpHeYHJrZRlVkfj2wRPLheY/JCO/TzTCqqO1Qrmupr+XDLNqj5adZq2C3vUcaZ4Jr59AJiDLOc0Z/nEU3FXPvXELLKULiuolE9Ryy0vgslyrRqPLENZyoIev1ozeWoh1nzVL9TctLrosFb1/UI+0AN5ma7xpUAbxqTiqOzCN24WXYi715KtJgEafPsAMAdZzi0bHrdla1fGZOnVcvmMsVhWBY/6r5NGV3qoHMoykH+fqeWMCAMZjSYDR5aibz2OzhhZKrGKa2qe6imMYD0VZhbUyYXpWszk1BUAAF2SZcyWbVwZk6VvSyg9OfQedEe+02WZtAPtQZl/MTJLNMvS6aEYfirJg+aarAwbpanbvYSsICKwBIBuyjK0ZTtXxoQWhLoqyk/iQCHrtZVlJL7MYDKq7Ama/bgkGTWy+pM63YuukZ+y7evOZehZ5rsHgK7K0tiyrStjsmxaz5NRE5DFJbPKUk1k2siv7CTXAz1P6Zkzk+GdilHSSN0lCmtbujJgEA4AXZalsmV7V7aX5WBS57Lz2U5kaU1XcLLhnq+MW/MHnUrN1rLElQAwf7J8gBU8TwwMtHelI8sgEaJFVVL57UQHsixN686QreZVzZE803NlWQjvltHDeVwJAPMlyy6u4Alapliqem5xRlkmo+LIWosIMZuTPUdzlhkpT89dwVgKj+JKAOhvWVajwXQ8yNNenFGWUTa80XL7InUPP0zTFNQ1QVQOlFFJnxZl53LelEXhANBfshS+qmWM8mTh44ANA01k6bWXZcmUXTbcovSsrpz08iayzA2YIDIwf+jDBdksWy2Wio4rq3zrAPAAsuzmrkNyBU9ZLrhRU5B5taDG7o5WkoeqjTay1OsaZe47H5dlQa7yUet6GtEKnrJ1ckEtAvLLNZUm92p6EVAQJc3dHTf59gFgDrLMd3PXIbs2PFf1Yuu61VyirgLy28lSqzBXKxWaljvaNeV6yaLpMRGO+3Vb1R0lrRqLHrIEgL6TZSm+TZDXkHsH+Tq0y8g9gcoNoy5PtMqZ+K5DioRvzvZKcum4rmcPSTZEF0U/XDCpthlqhDLUmxCF7WzzrkN6e2K/k82JAQC6K8v5xWu/2MYnOASARS9LvUhHbbNWQpYAgCzbIFM1WbXdWjCILAGg97Lc3peyzIRpmPYV5MgSABZQluv7M7JMFNQvrS3O8BtrkSUAIMsOSCYSfIEAgCwBAPpIltuRJQDA7LLMI0sAAGQJAIAsAQCQJQAAsgQAeLRkSTYcAKADWVJnCQCALAEAkCUAwILJkjlLAIAOZEk2HAAAWQIA/J+9c4uN4joDcHDR7gYk1NJBYcSARZEsF9KIq2wvGGFCDCSqTQDbWFyaJk5MwAJjTInF5WGhmLQKIRDjGIyJoVgEMGBKHAhUSAk1TQwCIpeUFNqoReCXIqI+8NKHnrnuzO6svYhlvev9vgeYMzPn7HrO7Of/P+fMGlkCACBLAABkCQCQZLJkNhwAIApZss4SAABZAgAgSwCAuMmSMUsAgChkyWw4AACyBABAlgAAyBIAAFkCACSZLJkNBwCIQpasswQAQJYAAMgSACBusmTMEgAgClnGfja8KnRHYM2Zrb3Ukbpul9AbAJBCsrz18SfbQnblXzmzsbdqnyvv0RsAkDqyvPWxqLztsWUpIUsASCVZaq4cOPBv9n3PdFy5fGLYs3rheHtOzl7zyAVRuLFCbAwbNkF5peonVXQIAKSELA1XDrxvixm/VXSWiULHOm3zzEL1QPli/cCbvvLb+lb3CnoEABJUljGYDZ9bFeJKRxp+bejZB8rm2jFNwpUPFKVseJv4d5ZWuHz++p3G2yW+QEPtR0p37dDTdAgAJKosn3idZdV3A9+dG9mVgsAVdTZc8vluKt3q4GVgjbJohe9zxT6SyZglAPRzWX4nzv5kbg+utCZ4um6rEaVApN2HhB7tWTeyBID+Lcv76tnrRWwZ0ZWWLDcoa/Ud0hplma9LUU6tQpYAkCSyfNIxy7nrtfPfvR/RlZYs/6ooL76m8qKilPh84xVFuVy5BFkCQDLI8olnw79cb6/n4kpLlua8uIqqxn2XxMa87oXIEgBSQJYOW7q50hZZhgoxv2WdiC5PIEsASAFZ2mzp6krbmOW4sGXnUvkDTZPIEgD6vSwtW7q7MjgbriiHwg5K3yJLAEgRWRq2jOBKIUvlhLZx03h2J3/NKz5fR7VmUBFZvqk9G/5fegMAEliWsfk+S9WWkVzpC1xRupvvCTV2LFaUHa1tlxR9Ubqyo3OU2O5Wv7/tK0U5f/YuHQIAiSrLGH1T+pe/2xb5YNdt/dnwQP5ubSr88qkmEW+e058IV7fFoTd4NhwAUkCWPSIFaoYUm1sD5i819184OniXNeVz/OiQh3QIAKSyLJ3m5KoDQBLKkr/BAwAQhSwVZAkAgCwBAJAlAACyBABAlgAA84d51wAAIABJREFUySVLZsMBAKKQ5RRkCQCALAEAkCUAQLxkyZglAEAUsmQ2HAAAWQIAIEsAAGQJAIAsAQCSTJbMhgMARCFL1lkCAMRTls89x+UEAGSJLAEgpWXJmCUAQBSyZDYcACCesiQNBwBkiSwBAFmShgMAIEsAgBjIch5pOABA77JMnHWW0vGi7Lzi3GeMYqBmabZKXnGVz5dfU6wVirzGwfqGMddLM8yaF4qys4uzn3WrGWxbb+ChsSe/KMP+4sfba2uv71XPlwI1t6y9wRYAAFkmSBqev0DWyGptUotfySYbbYWyFeqxrw/rpco6rWa5UZRbXwqr6WxblrcYewpsR30du42XXqJVn23uf0eexT0CAIkny9aRkwsbhQNVW06TK0dOVmlushUqRKgXEGqrrJj/6VnhyKuaLKuzmidPbrsnbPdWaM1g29quyacNPVbL8k4z7CwXhdbSAe1tmounBWVZgCwBwJBlHMcsc0Y6yAmTZdZW9f+Z1fIhn8NZIQURFB4TihM1hDUXarIs09LljkZ5c1XIyc62LVbKRxormyxxlumbF/b6kCUAuMoyjuss05yyTIsktDmarSLJUhJJ9zFjW8SYaiwoZKll576u0NAwkixFpLnRNKFUYLoy7LWQJQDEXJa9M2i43ZXDB0US2gYtuY4YWRZo4aOOEOdCmyzLD0cpyy7RRpfRjkjCT/iQJQAkjCwdtgxzpSU0Q16RZCmCwoXWfhFaXrXJ8mK0afg5YUHR0Am9baM2sgSAhEjD7bYMd6Uqr9MDPs1pM2Ztpsmb05eaq4VE4YsfqVT58hvt3itQzabLctCmb2RDs7aaVttLfhpcTVR+WB2v1NN9vQmHLDcPPlokWD54N7IEgL6QpWVLF1cGl/ecb9KdZVstZBVmG6JzhIHqbLZe82RYzZC2tbkjkejv1ELYyq0u4aNVXQVZAoAuyzh/n6VuSzdXqkJrvlM7pq1an+J2rBaaJmdNVylcEiLLlYYsp06dethcDOSoabVtLB1SV2J2NGZt1JPxY66yrByqK31oI7IEAEOW8V5nqdrS1ZXWuGLgorbQMnzMUpLspznT8Cp9ueQs62T3ts3WytSk/uEcLfYMT8MZswSApyfLaB93HJSW5urKoNDyG9WHa3qY4Jllj0YPWRM8kjFV05ssA7uDafZC9YmdzVXIEgASTZYRsYQW0OZVelg6VGbKTerSHlo0Z8OFZU/0Lsth5XLlZzkqj3bLW7R1mywdAoDeZDkvgR531EcS1Qdxeogs1RFK80FFceZdn23p0Ibw5ewhbesKNOuXHxYOlc451w4hSwBwkaWSSLLUor9rC8Kfw7EXpDmyfFez27VGWZvPNmUp6ZM/PUeWUke1+RUakohhd2qhZZn2DRy+fb/ciiwB4OnKMgZpuJylT2pn6cm0OsWtcjXUfxdlWe6crk6bV27UA0QjNAwsUOe3HTUdbQvKmibYxiinaU86donXrJw+ve2wHJL/I0sASEhZ2r+iLbjccbZa2Gk/9do9/cwjxlOO1eeNPHqlfrKtprNtUWerbaW5pI9ySh3f6Ac763yO1yqwPSwEAMgy0f6shNT7KYG87JovYveCkpS3tMjLN/0CQFLJEgAg4WTJ3+ABAIhCllOQJQBAHGUJAIAsAQBSXJaMWQIARCFLBVkCAMRRlgAAyBIAAFmShgMAIEsAgBjI8il/n6UXACAp6E2WU5AlAEAcZemehtMBAIAskSUApIwsGbMEAIhClgqyBACIoyxJwwEAWSJLAECWpOEJwpBdPR8fUFp6Y2m/+oHnZyTrW7f1xfL51s9TrBKhRq7jSPGulyMUhhTZ+vgPxasitQDIMnUZO9HzfA+Hv/6zRzD6Z/3nB/7tDM+rq5Pyndv74h2P5xWrAwWL5rrX2e/xLLMKEzyeEveCaGScpc70X3lGv+XeAsRflvP6NA2vv56ZuSR5P+wTX9OZEZN7eOwLPclypUdjUqLI8uI/o/L2nnUzSiId25+s7rf3hfCZ6UddluMiRMvjPbbuFX78uXtB3AXjLN2m/8J+hRwtQPxl2ZfrLGuEKnuT5abGrPMvWaWGv9yeotw17qWGS5eVSTta6/rs2s7xmMTkHu5RlrkfeDybM7zLbyTKjbU/OtHNnGgTQQhCEra4KXlw9oVQ/lojFMwuzv0oFrLMQJb9W5aPnYbnHsjM7F2WM38Y8Q/zdkn/9wiN/5xUD/xdL4z4X59d2013amvXeX6dWTvm5FOX5Z7FnrUJdWONj06Wb7/giRhZeg821yXjZ8rZF7l3MlfZLwuRJbKMuSzTRVxZ0WsaPvbDEb8xb5ebhh5HvD/X+/a/zMIf+9gZ41522Z2X48/IbRjVWaEWWvxaDFLjLxWn1qfVeVsmj2o96SbLZbkNhZ0VRoN5dwoLrc/hntdt0sk90FbY+pl+Wou/zlsv2lvtUsn5y6mhsFCXU73fr3+gr/n92uey/mxhYYX+Ca33l3rzvh/VKXolPce/Xa/abm6YtPgffeCZdCTH7/frr2VrQRSGFhZOr9irXYWLIu56JE7bHvZ22v3+0h9vNy9XqbdGf1WXa2n9SO3izRmvr28cVK+D3lyOeCcH20YdyVAvtH+12Qt7w++7hjZxIbSrV5+2Xbt2prKDzWk/xvdtzWlukbytL8Qr+Esf3XCXpeOiOH+7TAgx5/P2uyBoTiHLoDmj/f0E/XDMsiVzu/fAY8hy3w9CkzeuXRGC/JMmzveXFB9t+H1JX8sywzVDH127WE3QT2V401/3vKfvUwe53vC82uieuouPSadWZ5H2US/QM/wt/2fvbGOquNI4Hkh2htStIbsm7Y0vhCYSEZa3SyNCWS4gCpesEXyDqAjSuiBGQaRRKZrVNW0CUqvrS31LfKkQtKshWiCuLx90o26M0WSzH7pNm7Qx2y+bpqb7wS+7zzln5s4583K9LhTuhf8/ablzZ+aZOWfm/O7znOeZ0emh9WXwNQ0r2HDaoFUe5hNol5w7yTJ2ulrBTkF7j3/XpmnniTPHNctAo1YzHBAmSgJaFZ8B2W8FmsYY3qApMxCKheIOseKAPE/hTHuUyNkQ6po5fPmW88StJhVv0PwrDNeugeL3Pev5mqorwtz3HcZSuZly2aE53dqHOdZ8Y+ha8O6QzYWW3Hw56VqUm0113g9Kp4wClimAZbTAcoLrLF8Flv+gAJyGSBf5lM+ZY/ljRVREo66wzOYDpZT+u8nu+FTxHbvXs3ge9Wti3VYnLEn1mhjqnfS36K4YyE8LCuhT8u8KCgoO8iSylnwnILIjZJyNSLJXU6bupOokMaL3swC3bcLPiPhoUPsX3NcEiPjp+Uv5UpuRfXWEf7/u8DOg+gOBgJ9toVggFPt7i0q1XbreQhvQdvT/QLu9l5rXBOpD2ZBs86gM3qrkJpnwE3FrFyG7YQG1i6XUjc7LYQ0klvK5UDWItfoh2Xcnh6/gjWU9zk5cMUenx65fvROW6rVoCdTXy0G0dD8onWKf5PWGpTLJm7Revr1OA5aTBJb/X+nQq8CSnMnnBjQ/LifH8rwe3bBsOEJjicauE5b79MI2ZxkIG+/Jg3rJPbbdHhrwNMr6csi7K5YcuQM8vbBPOHC7DFjuDpI9GpTyTjbjdDwa23u62WY0BPkI3sEJ9ICQVRaqgGGn116m9zDKZ4uv6PANzgofaeQqFrq6BW3yhC86P0yCh2yEYOnXrpa5eYJKkwgk7CeBGuNfxI9HjmjScd4K1nn+R4xxtEWW+LUgMLa7sJf/kKwyfgW0ygp9hBtSzDHU1VxhUwC26RL1WhhAc4Ol2q28tyXUPQhIfFQWqMGWObqs0u21A7AELCODZdKXxvwkgfLjbDZxWbi8dO7c0oNRCsuqjTxeralwwHKf3ZsIwbLhLcGwdBbf3WRf9jCuKd7M/oAYfjSqiEoMlktEPGjbyR708p1aJA/NcLwaNf+f2apPOGHp9CqDfPtdjHtsgxbNjXdSTKhYILeu6oruHlV6dh71xtWgK1nVJol5A5EwJmxxcjbfY02j7/znxbm8pZ8McMM9LkH0DnmOIkvE/dSTaRWqOWq/Rwmo6lkK/9UNlmq3hi6/Fcmnuy94mHNYgBCGh4Hli5kz+T3VSaBk3mVF0pdRkeBxh6XA1dOiGyl2WNawHfbnuMEyPRSVnda07+Pj4/MPGwPemicLYbaR2SPjnIIlnxUtcuykwLtyIa0ZZhBkxggMgrqs7nkz26nDOD0+totPFS3htHmPD/tF4WCpWmCOr9Y6lPKKsOTGjnY7Nlab1ML9NOERE8/S8mlVfDezQsfhHuPDotaN7BzolAl/TuCxEsmGz5+Yx+dzpjyNoprLdpnJcJuz9KSbrVvtqFMqH+YDloDlmHuWmewe/QXzLHdwWL6IYlha97UdlnyH5gxPWO5nUVmWmkKRoJNtTuy1sSwHGb8le0oelZ/Z1prVIsg8z7auMyc9RcZoo609DCAV3O8KC0vVQglPUvmN6thXgqUKCpcmdW2gQ9BW7DhilpKrPchLCRR/NJVNzbocekSc6KB8/DatPUU1lx3uYRm1TR6wVDsFsJwMsFwWO2H4CwOMO8ScJUv2sHnMWIDlLQcs53vDskUTsGwo4rpzyQOWpmeZKpNF2UmBZbKxZok4xK7ibh53slHdy9fM7bXDkoW9izycLBWWkgW9cPg+zypvHSNYyk1ikTUF2buMKV6xZu67Kbb+ZHMBZVmuHrF+7FSOmQA3jk+OaFqFam5MYCl3ilkMYf0MpbsvmLUT5gyHVEZQHj3Pb01NWL4dOwmev/MCS13/dubMH7N5/RD/LhZgWSmm3SKDZacIw1Uvwhqg5Vbhj/AsU92SLs451HQ1TVE1LGbvWMI16NUe2u3WcXejjXIYbq813UnhvjgggWD1aGBpa9LJHK1yRPxaqM8G2fqTGNu/wbM+/NxdUbRkHL+rW4ThqYprum90sHR0SknuWSvr1vWr3CPuC/pXuYPSmebOC7pbgGIYlj9/6RDLgK8Wf26y+qH3B3lmPCqL0hVYrucjs1x7OSzrBMiSN1q1go4BSo4Vz0RQtN5uG6r2nZQET02ZmucwH8xuVDxHFZaEEc3DZrlIqDgthE6lzsBy+2hgaW9SG3/8mv1mFq+X01i2/jwZ0LQw045JAqTGxetkcxOqOYKyd8irwrLwN/LPgZTgsR2eFd5bO/2yNsV9Qb+YLz1TcCz/iYcFaErBcmd+bS17iqfW+XiHAsuZ7/9z1qxlaRVHCZB/uPZvYuV/yhglMzOvlf40kbAsjs/P79AahvLzt4SDJUt5fDcwokUAy6sfHTq3nqdoKZCkpcJpb3wzaB+gxIu0tdNZcXWdjS/2nVTIVA2umx736TwTniaF9rPaoxOFTde5e2PzlHsYc+o8fNWGzQPXv9pqs9D1rP+jE9MvdhieJQtHK5/ELRxydF5i4usdWtXaxNot4WBpb1K5BUECfnL/lryBL5i/ZetPnmZyw93Dvw1Vr2oix1fAMrn/xLQRsaVijvVXcv/A9eH758PC8lhi7bk1WuXriezhLKVJardS2z6R6Zkl/wYoCy1yBW5zhlR5qlqAptSc5cV5pjaHgeVP1iOOLPbOzCRiXqLR8K35uOPzCetb6wGVm+FgaW0XHpbimRZN1OdZOx0wV6bat0vV7VV+tp1k4xnqozRtFgRPy0khGyxZDXeVa+xnFhym2yxYrRAHIrct4PYET6OcuPGGpb1JDJ5G1xYbz9jwmTz7++3KPTziRrWx0oJizkhTuT/BY10L61Em8XCWbO+0mmtj3Nslhe5WjygL7JxEzZFBTusEFAvQBMByVjTAcsh7o+Y/WbDU+/7LPv1L/FQv5Wsyrw1OWN+2hAZHXVhY6k/ZNrsf8rzoSAiW9p2Kn/LESPJ3Iq7vuy8/uth8zwr2Ht/l2x2Us0eG1J0kBR938MiUV1EKxzAUl9/+WqD8ksscbJvmNed4tMNqumShuVvAY7c5/G9zTDue4OmRO8+CpfNgtiaNWBBMOizAzCpam239uWeNu0cskuFar5ENFwtrHeboaoil3hUu92ToWnAHNvQ72KPeD3K36rwCwQJvp/xkp7LAKulD5GTZf+s+Oo4XaUwSWI7PPytx7EncFl0M96C+sjruRFAPxsBVuPBGdQSnGWQv+ZJfk11dfcj9zehJcdVeb1X33qkwrnrA41Xb07x2IofUe+7uwoBlT7JQ2FStnl3TwKFRveDdu0k6HWpV0GOWIM39cdjpcdXmxciiHwz29vEf3M01DYzyzeRqtzbJkzUrT3gtXKiWr5nyLvmmLQAaYAlFp1houjoWT/xkRiRvFfd+nxoEWOKflYAi1uM5zzI0NYkeG+qbsz3gWRcAWEKAJTTGKpdeWBZTajTfRfcynfYK1SHAMur+DR4oitVSX9rbH4ue10h96YLNkWy4tLQSniUUMSzfBiyhyacgugCKXlgiDIcgCLAELCEImuKwxJwlBEGQjjpLCIKg6IIlwnAIggBLwBKCIMASYTgEQRBgCUEQNAawXIYwHIIgCHWWEARB0QVL9zAcgiBoMgiwhCAIigiWP/OcJQRB0OSA5SzAEoIgaBxhiTAcgiDAErCEIAiwRBgOQRAEWEIQBI0BLJchDIcgCHo5LFFnCUEQNJ6whCAIAiwhCIKmOCwxZwlBEBQBLFFnCUEQNJ6whCAIAiwhCIIAS4ThEARBgCUEQdAYwBLvs4QgCIoAllFTZ3l5ZV5e3vQ8pqZNCXt3ruMfi1dt42v/8sWHH+anODaDIAiKNViONgzv8Vnal/Ag9PkDWvf7Z+LzjTO2zSAIgqYaLPtyc3Nnb/fdmE1/jyS842tlH3Jzz54hVm73LThbe/2b7b5Fts0gCILGCZbjOGe5cLaihS6bLCUccr3jWyJ/e4NH3IsTN9k2gyAIGidYjmOdZbwKy/hIYbn3sJ2NgCUEQTELy5eH4a+9KbPyzdci9ixHfI8ASwiCpgwsFVq6stIDlp0+Gy0BSwiCJnEYLtPSnZUyLHcnseKhlTotLF7u87UObQMsIQiaIrAM0dKDlTIsDb27KSFhxuJh9pElxgFLCIImBpbj/D5LQUsvVsqwNEqHNguHcvGnp3xWMA5YQhA03rAc7zpLRktPVnrMWZJvOWNGwuNnPt9BwBKCoBiHZcSReHy8Jys9YWmubf0jYAlB0NSAZViFh+XiUws+ACwhCJoQWEbXv8HjDsvLP4i/fwUsIQiaKFjOin5Y7l3eeoU7lod9rWcASwiCYhuWYx2G+wqEHiUk3Pb5Wn+by948tCIBsIQgCLB0qbPkHmbfdv7x87IEwBKCIIThYXR5XZ6+DdcLgqD/sXduMVHldxwPNvmfJmYtaZo0zaFOxkSCgoozGmTMWWcGiALZjI4XJIgIrEQCAQnFoAao2ZiQwLKKFwTWGMcVCBt31bbixlT3QVKL2Ww12d2Htu7GbrbxwQfdrE2aPvR/nXPOzHARZGaU7+dB+c/lfxlyPvP7/S8HyHIafoVfFgAgkbLE3+ABAIAZyHI9ZAkAAHGUJf4ULgAAsoQsAQALXJaYswQAgBnIMg2yBACAOMoSaTgAALKELAEAkCXScAAAgCwBAOAVyHKe72epAQDAa8F0slwPWQIAQBxlGRv8AgAAkCVkCQBYMLLEnCUAAMxAlmmQJQAAxFGWSMMBAJAlZAkAgCyRhs+Wnbvmo9aPRssnKcyFXYzy5Pr8lgTTcYUCyHIByHItcS979bX6qkhzUczC3PrKOJJUn99xL9nWiEsUvC6y3JrQNLzvbxkZe15jWTqtsjzb4i0JF4xTrszZhU11hPw5dmHuslyRVJ/feWL/AAFIalkmcp/lYarKqWXZ8WFODn++jf7w6cRvcjiXv2cPhT78R9pf8g6e0TT/ZfF4zq1C7WGO4lZBnGXpd1lk5KggmYWzqrXJGm41vbLYa8mutqokkyUVuLMGlyhYcLJ86TTcuJCRMZ0sV/6k63/gEZau6/lf65IXhZohCmt0GnhtUY8/Wub4u24W4izL2tXEElmuIpmzyp8HXZZabIW54liVZLLUQhfP4AoFkOW0snTQuLJ+mjR8w790/QMWoH3D/v9KanANfeio+tkqy0M1Flkeiocsa3zfLb3PRuDL9dwhpPk/Ho+nU9NuePrHSeVYrsdTSo055GnUQtfuj6hQN7QuELjoaVCl39ZbK80m7k9iFIx++h6ulsO8BY014mEfzeHfXwsEMnhtQ2NF/UtHinzrWJeMG55CR3/gfn1RLFmGrgWujE0S8Pe/fTGDNuHIlQ3RljojRmHk0v6Hri0dkVMNfTcDgXoVSff9MhB4u35A1vbPQOBKRmf0dyXtfmmq+fgQ/VDqG3DBguSVZQLnLIfoJXRhmjnLViE9x391/X3N6C2n8eSP5b308qcWfbpHM/q+YwLpbaDufNG4mF5rS3p7h5/pj64v7u2NQxrpDLjYVOBtKmwSZneh3xUuuJdpjipytYX97Mzn2XqXeCZLVHKc/rjfMvFQRopjFIZX8/dcLeTTmOSSmM5kJs2WDZ2gn1KVeyP9qb2CPrODzQrcKuP9aYySZUcFf8+2T2N8h20nci3I7yXbCmQXm4vso6CVP2kJV2GcE2P9mL3a1yIqeJ9X95n6TCLbEZ+Relx2yH0CVyxIWlkmeJ/ldLIcfKazRNtP03EmCO0rmZazCPK55XVbZATKc/fTcYgq5Zwbvb7zCPHma3Ver5eW6L/e5vTaMl5w00JlDZMUK1A5MPf4qqhvNi3/Vslyi32R+ighe6MLNB0nPZdpncyd3byis2XCt9WE5C13cT2KhgQl2kru132EKOGasmyjfajMYR2KmhB1nGQ+zOOua5LNZ7OW7KOQlbtE5dSV7px7vA+8Q+6eTXliUHQEpGfTPW/0Yhf9jGjf5ONn6ReI+3OX+RUCwBssy9ltHZpOlkyK/9NY0v2iwCpLFlnqH1xPvCybC7RWIiYWV0Yu8KSHJUXIE823iruHeq+YJcZqyyMLFN+zvs0MwsxCE48cO7q4jpjPVjAn8dYmWO5qZLPwlDW0n8rX+W+mReYz53XNP65mVk1ZtvJg2HHOFtOG/UzfRLP+PXx8TIVU75WNEaNglbu/oMYjuwu0v1LpFfBa6cvbuoSCN/Dsv5u4WSBqxN7geV59RtT/Vwt4GLq7ENcsgCxnI0s2Wfm0kanxR80mSzFneai9ILGybKYXe62UJBWIRZarbLLMEtnsCr658Ko1zPpZ/zsjZqnO6q9wgaasxZYHasdpIOdlmgpDRX2ENbS7gHbqPaNCyLJymTBjll2W1H78vbSe4ogh+SqI+5IqUO8xz9bxfttHQSvnr6tm8wzVcmb1pIx4Ldl9tszNY5MtPyP2nkbxpcCDUwCQhr+8LI9TJV46+1jXs+yy1M7LZZz8RMqSx2w0h5xOlkfMyLNjnMZutzonqfIcqayJLrAQL3fRIs9Nl6iJ5/9qJd64sW7dxVNMYbSh/bxTDhlZZskXR8iSujfTs4jSRSLTY6VlTQV8+7kQ8yNHQSvnHp/YdLCGBsDOelqbp4X1yWB5/MGx9HANpGfSdRslS78cF5uTQB4OIMvZybLtsb6mhBrzaU2ELLVQhWXRO5GyVBKaQpYr5EwhS9cnvFx1T2LVaNuqaRbWWuciNTEvqDarT6jFJC7LvdGypKFshCzFhCMn8ngQfeq2rTuZhR1lfMeofRT0dXstQ1Uwufv5qpJbbHOVqz09Z6aUJa2Nz0QYR8XaFQDJKMutSZ6Ga1/r+vPPwqs5FlnSK/HhM52v/7wesqwtk7p5OE7MZRcb3dY01Cyw3dubOJ9vlsmyOo3DpjwrN268K2WZFS3LOhJLlqK65e+mR8myxFJsIiR/rcj97aNQlStZ9ojqethXmnHzHl8nF4tHod/xta78mcgSkSVIZlmuT3ZZrtX1Y8ekEiNkqRmDur4mK1lk6bfuILcv8PDnB82wsW97zJN+bV2WUM9SWBvhELFTZ7+MMdn/HasnlWV4Sd2ahkfsTvcFG2Kl4azh2+fsoxx0RcmyImr//eGbLtVlQ3P0d5kL/inB2Gm4aLXVuhcAgDdUlvOUhmtsvtLcYf6NkuUFPus3oSLLOirLogTLkt30wnyymi0hK0mVSMXttTwtT/r5Wvb1qAURW2BlKVCZWFdzqP5297tEtJYt6mmNGVnuFWmznPk0ZD/4Ko5tHWXYq9Zh2MamLJu9VQxsH4VVlkrYNrZYB7vSK1s2aKhqWd5SsmwTy/xsX2kl7qwBIMsoDntKS9kpnlJP51QvY5uE9OfMhK3ufTTvfpTnPcK2FD1y5rnYqcYd2rAr77S+5phznzBKomTJ0tHiBym5Y1IEJHPPgRsZ6ezxnrHevhbC5/7879Q/6F3c36UiS8s+S+Ok3AUeVaCO2Xa9fElKf4aYhKSe7BaJLhVVe0PoLokpy6ud5UNdImHvSy0NlZHit1LZkSKqVudIw4bRGxcLwlOgsg+tbFf7g1/3390spwKItJ59FDZZsn317QPGgT+tO0PF98NI58CSoRYh3YdXSoPlKadU9WwnurxTky819a0Wsm1PamkDb6ayvjzURV7h6U4A3pw5y6EMRf1UL+ObhErk9KU6G24eayyxnQ3nV+RPiZEli/i84VMpg67wCR61AOLcoVmO+tzWImVJLWjuuLQV/KvDp4NY+MWeYavOzemWtZ8VLB+WspRbhwRsD6SjynKkSMx5qoJdlg55/kaWB+UmdC1iFCtd1gD0vKo8S53MIcKpPtWs/GawyLKaWN4U7lBmAS5ZkKyyTEsGWY5N9TL/aR4+auHdQizONJrEyfA/fiGmNQViybz2cdxlKeOhO9xPzSLPHL4n14elZtzv8gyzTsikUh3s85eFVz+qrfOYtoL2ZQtfQ2f72bNlC/5x7pk77InK+lVUoHw1vI42SUWqTvAQ5/dFIk61astxSvRim0jQh13yKCYfxLf8ZSfCMW2JZpGlHEXtatsMtb9RAAACZUlEQVTkongPcdJcvlac5nS3F5rqdR+UEw3sXGRxkRmzEhW4+rbzZaB23AwYLABZxv3PSvQGR4NJd+OFA6O95mGVxaLAdyjuMm+q/tFoMGg50WKo24Xb9ohHbRg3UoKjsW/MnhKMeQyeZcrG5PdGPxAM7govyzhstyzfORp+hoa05vkf2ygiWBwMqpEbtGqzRzuDwQFrswOT1TAaHMDlCiDLBc1Mb43Wbd1k2D3nHYe2acVZwtLjkpcbBQCQJf6sxDzLMhQYKYpdSIwsv1z6A83k1TI8ZAkgS8hyvmVZkZC/feN3zVGWW2x3cUvQKABIGlluRRo+3xjb8zYnoNmOe3kfz6mCun15PSPpCR4FAEkjy/WQJQAAJP1xRwAAgCwhSwDAGyNLzFkCAMAMZJn2C8gSAACml+XPkYYDAABkCQAASSVLpOEAAMgSsgQALHBZbkUaDgAAM9hnCVkCAEAcZQkAAG8ukCUAAMxIllshSwAAmF6WaZAlAABAlgAAAFkCAABkCQAAkCUAALxessRqOAAAzECW2GcJAACQJQDg/+3avQ2CUBiG0YAx0fCjSEFjxxLoFDbswCYswgrsp17bK6EiITlnhFs8xfdexBJgs1i6WQKsiKU1HEAsAcQSQCwBxBJgZ7G0hgOsiKV/lgDrYpmnY3sDIKod0zzEssifKQB/PPIi3CyTppivAETNRZOENTzrhwSAqCEZ+izEsu6mcioBiJq6OsTy+HEAIOrbyBDL6gLAguoXSwAWhTX8DMCi8M/SMwCIJYBYAmwTSzdLgBWxvIslgFgCiCWAWAKIJcC+Yvk6vQE8r1knH0sMxwAAAABJRU5ErkJggg==" alt="Global hooks for tests" class> <blockquote class="note info">
+<p><strong>Note:</strong> This example assumes you are already familiar with Mocha <a href="../writing-and-organizing-tests/#Hooks">hooks</a>.</p> </blockquote> <blockquote class="note danger">
+<p> Keep in mind, setting something in a global hook will render it less flexible for changes and for testing its behavior down the road.</p> </blockquote> <p>From your support file you should also <code>import</code> or <code>require</code> other files to keep things organized.</p> <p>We automatically seed you an example support file, which has several commented out examples.</p> <blockquote class="note info">
+<strong class="note-title foo">  Example Recipe </strong><p>Our <a href="https://docs.cypress.io/examples/examples/recipes.html#Fundamentals" target="_blank">“Node Modules” recipes</a> show you how to modify the support file.</p> </blockquote> <h1 id="Writing-tests" class="article-heading">
+Writing tests
+</h1>
+<p>Cypress is built on top of <a href="../../references/bundled-tools/#Mocha">Mocha</a> and <a href="../../references/bundled-tools/#Chai">Chai</a>. We support both Chai’s <code>BDD</code> and <code>TDD</code> assertion styles. Tests you write in Cypress will mostly adhere to this style.</p> <p>If you’re familiar with writing tests in JavaScript, then writing tests in Cypress will be a breeze.</p> <h2 id="Test-Structure" class="article-heading">
+Test Structure
+</h2>
+<p>The test interface borrowed from <a href="../../references/bundled-tools/#Mocha">Mocha</a> provides <code>describe()</code>, <code>context()</code>, <code>it()</code> and <code>specify()</code>.</p> <p><code>context()</code> is identical to <code>describe()</code> and <code>specify()</code> is identical to <code>it()</code>, so choose whatever terminology works best for you.</p> <pre class=" language-javascript" data-language="javascript">// -- Start: Our Application Code --
+function add (a, b) {
+  return a + b
+}
+
+function subtract (a, b) {
+  return a - b
+}
+
+function divide (a, b) {
+  return a / b
+}
+
+function multiply (a, b) {
+  return a * b
+}
+// -- End: Our Application Code --
+
+// -- Start: Our Cypress Tests --
+describe('Unit test our math functions', function() {
+  context('math', function() {
+    it('can add numbers', function() {
+      expect(add(1, 2)).to.eq(3)
+    })
+
+    it('can subtract numbers', function() {
+      expect(subtract(5, 12)).to.eq(-7)
+    })
+
+    specify('can divide numbers', function() {
+      expect(divide(27, 9)).to.eq(3)
+    })
+
+    specify('can multiply numbers', function() {
+      expect(multiply(5, 4)).to.eq(20)
+    })
+  })
+})
+// -- End: Our Cypress Tests --
+</pre> <h2 id="Hooks" class="article-heading">
+Hooks
+</h2>
+<p>Cypress also provides hooks (borrowed from <a href="../../references/bundled-tools/#Mocha">Mocha</a>).</p> <p>These are helpful to set conditions that you want to run before a set of tests or before each test. They’re also helpful to clean up conditions after a set of tests or after each test.</p> <pre class=" language-javascript" data-language="javascript">describe('Hooks', function() {
+  before(function() {
+    // runs once before all tests in the block
+  })
+
+  after(function() {
+    // runs once after all tests in the block
+  })
+
+  beforeEach(function() {
+    // runs before each test in the block
+  })
+
+  afterEach(function() {
+    // runs after each test in the block
+  })
+})
+</pre> <h3 id="The-order-of-hook-and-test-execution-is-as-follows" class="article-heading">
+The order of hook and test execution is as follows:
+</h3>
+<ul> <li>All <code>before()</code> hooks run (once)</li> <li>Any <code>beforeEach()</code> hooks run</li> <li>Tests run</li> <li>Any <code>afterEach()</code> hooks run</li> <li>All <code>after()</code> hooks run (once)</li> </ul> <blockquote class="note danger">
+<p> Before writing <code>after()</code> or <code>afterEach()</code> hooks, please see our <a href="../../references/best-practices/#Using-after-or-afterEach-hooks">thoughts on the anti-pattern of cleaning up state with <code>after()</code> or <code>afterEach()</code></a>.</p> </blockquote> <h2 id="Excluding-and-Including-Tests" class="article-heading">
+Excluding and Including Tests
+</h2>
+<p>To run a specified suite or test, append <code>.only</code> to the function. All nested suites will also be executed. This gives us the ability to run one test at a time and is the recommended way to write a test suite.</p> <pre class=" language-javascript" data-language="javascript">// -- Start: Our Application Code --
+function fizzbuzz (num) {
+  if (num % 3 === 0 &amp;&amp; num % 5 === 0) {
+    return 'fizzbuzz'
+  }
+
+  if (num % 3 === 0) {
+    return 'fizz'
+  }
+
+  if (num % 5 === 0) {
+    return 'buzz'
+  }
+}
+// -- End: Our Application Code --
+
+// -- Start: Our Cypress Tests --
+describe('Unit Test FizzBuzz', function () {
+  function numsExpectedToEq (arr, expected) {
+    // loop through the array of nums and make
+    // sure they equal what is expected
+    arr.forEach((num) =&gt; {
+      expect(fizzbuzz(num)).to.eq(expected)
+    })
+  }
+
+  it.only('returns "fizz" when number is multiple of 3', function () {
+    numsExpectedToEq([9, 12, 18], 'fizz')
+  })
+
+  it('returns "buzz" when number is multiple of 5', function () {
+    numsExpectedToEq([10, 20, 25], 'buzz')
+  })
+
+  it('returns "fizzbuzz" when number is multiple of both 3 and 5', function () {
+    numsExpectedToEq([15, 30, 60], 'fizzbuzz')
+  })
+})
+
+</pre> <p>To skip a specified suite or test, append <code>.skip()</code> to the function. All nested suites will also be skipped.</p> <pre class=" language-javascript" data-language="javascript">it.skip('returns "fizz" when number is multiple of 3', function () {
+  numsExpectedToEq([9, 12, 18], 'fizz')
+})
+</pre> <h2 id="Dynamically-Generate-Tests" class="article-heading">
+Dynamically Generate Tests
+</h2>
+<p>You can dynamically generate tests using JavaScript.</p> <pre class=" language-javascript" data-language="javascript">describe('if your app uses jQuery', function () {
+  ['mouseover', 'mouseout', 'mouseenter', 'mouseleave'].forEach((event) =&gt; {
+    it('triggers event: ' + event, function () {
+      // if your app uses jQuery, then we can trigger a jQuery
+      // event that causes the event callback to fire
+      cy
+        .get('#with-jquery').invoke('trigger', event)
+        .get('#messages').should('contain', 'the event ' + event + 'was fired')
+    })
+  })
+})
+</pre> <p>The code above will produce a suite with 4 tests:</p> <pre class=" language-text" data-language="javascript">&gt; if your app uses jQuery
+  &gt; triggers event: 'mouseover'
+  &gt; triggers event: 'mouseout'
+  &gt; triggers event: 'mouseenter'
+  &gt; triggers event: 'mouseleave'
+</pre> <h2 id="Assertion-Styles" class="article-heading">
+Assertion Styles
+</h2>
+<p>Cypress supports both BDD (<code>expect</code>/<code>should</code>) and TDD (<code>assert</code>) style assertions. <a href="../../references/assertions/">Read more about assertions.</a></p> <pre class=" language-javascript" data-language="javascript">it('can add numbers', function() {
+  expect(add(1, 2)).to.eq(3)
+})
+
+it('can subtract numbers', function() {
+  assert.equal(subtract(5, 12), -7, 'these numbers are equal')
+})
+</pre> <h1 id="Watching-tests" class="article-heading">
+Watching tests
+</h1>
+<p>When running in interactive mode using <a href="../../guides/command-line/#cypress-open"><code>cypress open</code></a> Cypress watches the filesystem for changes to your spec files. Soon after adding or updating a test Cypress will reload it and run all of the tests in that spec file.</p> <p>This makes for a productive development experience because you can add and edit tests as you’re implementing a feature and the Cypress user interface will always reflect the results of your latest edits.</p> <blockquote class="note info">
+<p>Remember to use <a href="../writing-and-organizing-tests/#Excluding-and-Including-Tests"><code>.only</code></a> to limit which tests are run: this can be especially useful when you’ve got a lot of tests in a single spec file that you’re constantly editing; consider also splitting your tests into smaller files each dealing with logically related behavior.</p> </blockquote> <h2 id="What-is-watched" class="article-heading">
+What is watched?
+</h2>
+<h3 id="Files" class="article-heading">
+Files
+</h3>
+<ul> <li><a href="../../references/configuration/"><code>cypress.json</code></a></li> <li>
+<a href="../../guides/environment-variables/"><code>cypress.env.json</code></a> </li> </ul> <h3 id="Folders" class="article-heading">
+Folders
+</h3>
+<ul> <li><code>cypress/integration/</code></li> <li><code>cypress/support/</code></li> <li><code>cypress/plugins/</code></li> </ul> <p>The folder, the files within the folder, and all child folders and their files (recursively) are watched.</p> <blockquote class="note info">
+<p>Those folder paths refer to the <a href="../../references/configuration/#Folders-Files">default folder paths</a>. If you’ve configured Cypress to use different folder paths then the folders specific to your configuration will be watched.</p> </blockquote> <h2 id="What-isn’t-watched" class="article-heading">
+What isn’t watched?
+</h2>
+<p>Everything else; this includes, but isn’t limited to, the following:</p> <ul> <li>Your application code</li> <li><code>node_modules</code></li> <li><code>cypress/fixtures/</code></li> </ul> <p>If you’re developing using a modern JS-based web application stack then you’ve likely got support for some form of hot module replacement which is responsible for watching your application code—HTML, CSS, JS, etc.—and transparently reloading your application in response to changes.</p> <h2 id="Configuration" class="article-heading">
+Configuration
+</h2>
+<p>Set the <a href="../../references/configuration/#Global"><code>watchForFileChanges</code></a> configuration property to <code>false</code> to disable file watching.</p> <blockquote class="note warning">
+<p><strong>Nothing</strong> is watched during <a href="../../guides/command-line/#cypress-run"><code>cypress run</code></a>.</p> <p>The <code>watchForFileChanges</code> property is only in effect when running Cypress using <a href="../../guides/command-line/#cypress-open"><code>cypress open</code></a>.</p> </blockquote> <p>The component responsible for the file-watching behavior in Cypress is the <a href="https://github.com/cypress-io/cypress-browserify-preprocessor" target="_blank" rel="noopener">Cypress Browserify Preprocessor</a>. This is the default file-watcher packaged with Cypress.</p> <p>If you need further control of the file-watching behavior you can configure this preprocessor explicitly: it exposes options that allow you to configure behavior such as <em>what</em> is watched and the delay before emitting an “update” event after a change.</p> <p>Cypress also ships other <a href="../../../plugins/">file-watching preprocessors</a>; you’ll have to configure these explicitly if you want to use them.</p> <ul> <li><a href="https://github.com/cypress-io/cypress-watch-preprocessor" target="_blank" rel="noopener">Cypress Watch Preprocessor</a></li> <li>
+<a href="https://github.com/cypress-io/cypress-webpack-preprocessor" target="_blank" rel="noopener">Cypress webpack Preprocessor</a> </li> </ul> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests.html" class="_attribution-link" target="_blank">https://docs.cypress.io/guides/core-concepts/writing-and-organizing-tests.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,390 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Continuous Integration - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content=" Running Cypress in Continuous Integration is almost the same as running it locally in your terminal. You generally only need to do two things&#58; ">
+  <meta name="keywords" content="continuous, integration, what, you’ll, learn, setting, up, ci, examples, advanced, setup, known, issues, see, also, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/guides/guides/continuous-integration/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Continuous Integration</h1>  <div class="article-content" itemprop="articleBody"> <blockquote class="note info">
+<h1 id="What-you’ll-learn" class="article-heading">
+ What you’ll learn
+</h1>
+<ul> <li>How to run Cypress tests in Continuous Integration</li> <li>How to configure Cypress in various CI Providers</li> <li>How to record tests to the Cypress Dashboard</li> <li>How to run tests in parallel on CI</li> </ul> </blockquote>  <h1 id="Setting-up-CI" class="article-heading">
+Setting up CI
+</h1>
+<h2 id="Basics" class="article-heading">
+Basics
+</h2>
+<p>Running Cypress in Continuous Integration is almost the same as running it locally in your terminal. You generally only need to do two things:</p> <ol> <li>
+<p><strong>Install Cypress</strong></p> <pre class=" language-shell" data-language="javascript">npm install cypress --save-dev
+</pre> </li> <li>
+<p><strong>Run Cypress</strong></p> <pre class=" language-shell" data-language="javascript">cypress run
+</pre> </li> </ol> <p>Depending on which CI provider you use, you may need a config file. You’ll want to refer to your CI provider’s documentation to know where to add the commands to install and run Cypress. For more configuration examples check out our <a href="#Examples">examples</a>.</p> <h2 id="Boot-your-server" class="article-heading">
+Boot your server
+</h2>
+<h3 id="Challenges" class="article-heading">
+Challenges
+</h3>
+<p>Typically you will need to boot a local server prior to running Cypress. When you boot your web server, it runs as a <strong>long running process</strong> that will never exit. Because of this, you’ll need it to run in the <strong>background</strong> - else your CI provider will never move onto the next command.</p> <p>Backgrounding your server process means that your CI provider will continue to execute the next command after executing the signal to start your server.</p> <p>Many people approach this situation by running a command like the following:</p> <pre class=" language-shell" data-language="javascript">npm start &amp; cypress run // Do not do this
+</pre> <p>The problem is - what happens if your server takes time to boot? There is no guarantee that when the next command runs (<code>cypress run</code>) that your web server is up and available. So your Cypress test may start and try to visit your local server before it is ready to be visited.</p> <h3 id="Solutions" class="article-heading">
+Solutions
+</h3>
+<p>Luckily, there are some solutions for this. Instead of introducing arbitrary waits (like <code>sleep 20</code>) you can use a better option.</p> <p><strong><em><code>wait-on</code> module</em></strong></p> <p>Using the <a href="https://github.com/jeffbski/wait-on" target="_blank" rel="noopener">wait-on</a> module, you can block the <code>cypress run</code> command from executing until your server has booted.</p> <pre class=" language-shell" data-language="javascript">npm start &amp; wait-on http://localhost:8080
+</pre> <pre class=" language-shell" data-language="javascript">cypress run
+</pre> <blockquote class="note info">
+<p>Most CI providers will automatically kill background processes so you don’t have to worry about cleaning up your server process once Cypress finishes.</p> <p>However, if you’re running this script locally you’ll have to do a bit more work to collect the backgrounded PID and then kill it after <code>cypress run</code>.</p> </blockquote> <p><strong><em><code>start-server-and-test</code> module</em></strong></p> <p>If the server takes a very long time to start, we recommend trying the <a href="https://github.com/bahmutov/start-server-and-test" target="_blank" rel="noopener">start-server-and-test</a> module.</p> <pre class=" language-shell" data-language="javascript">npm install --save-dev start-server-and-test
+</pre> <p>Pass the command to boot your server, the url your server is hosted on and your Cypress test command.</p> <pre class=" language-json" data-language="javascript">{
+  "scripts": {
+    "start": "my-server -p 3030",
+    "cy:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:3030 cy:run"
+  }
+}
+</pre> <p>In the example above, the <code>cy:run</code> command will only be executed when the URL <code>http://localhost:3030</code> responds with an HTTP status code of 200. The server will also shut down when the tests complete.</p> <p><em>Gotchas</em></p> <p>When <a href="https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users" target="_blank" rel="noopener">working with <code>webpack-dev-server</code></a> that does not respond to <code>HEAD</code> requests, use an explicit <code>GET</code> method to ping the server like this:</p> <pre class=" language-json" data-language="javascript">{
+  "scripts": {
+    "test": "start-server-and-test start http-get://localhost:3030 cy:run"
+  }
+}
+</pre> <p>When working with local <code>https</code> in webpack, set an environment variable to allow local certificate:</p> <pre class=" language-json" data-language="javascript">{
+  "scripts": {
+    "start": "my-server -p 3030 --https",
+    "cy:run": "cypress run",
+    "cy:ci": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start https-get://localhost:3030 cy:run"
+  }
+}
+</pre> <h2 id="Record-tests" class="article-heading">
+Record tests
+</h2>
+<p>Cypress can record your tests and make the results available in the <a href="https://on.cypress.io/dashboard" target="_blank" rel="noopener">Cypress Dashboard</a>.</p> <h3 id="Recording-tests-allow-you-to" class="article-heading">
+Recording tests allow you to:
+</h3>
+<ul> <li>See the number of failed, pending and passing tests.</li> <li>Get the entire stack trace of failed tests.</li> <li>View screenshots taken when tests fail and when using <a href="../../../api/commands/screenshot/"><code>cy.screenshot()</code></a>.</li> <li>Watch a video of your entire test run or a clip at the point of test failure.</li> <li>See which machines ran each test when <a href="../parallelization/">parallelized</a>.</li> </ul> <h3 id="To-record-tests" class="article-heading">
+To record tests:
+</h3>
+<ol> <li><a href="../../dashboard/projects/#Setup">Set up your project to record</a></li> <li>
+<a href="../command-line/#cypress-run">Pass the <code>--record</code> flag to <code>cypress run</code></a> within CI.</li> </ol> <pre class=" language-shell" data-language="javascript">cypress run --record --key=abc123
+</pre> <a href="../../dashboard/introduction/">Read the full guide on the Dashboard Service.</a> <h2 id="Run-tests-in-parallel" class="article-heading">
+Run tests in parallel
+</h2>
+<p>Cypress can run tests in parallel across multiple machines.</p> <p>You’ll want to refer to your CI provider’s documentation on how to set up multiple machines to run in your CI environment.</p> <p>Once multiple machines are available within your CI environment, you can pass the <a href="../command-line/#cypress-run-parallel"><code>--parallel</code></a> flag to have your tests run in parallel.</p> <pre class=" language-shell" data-language="javascript">cypress run --record --key=abc123 --parallel
+</pre> <a href="../parallelization/">Read the full guide on parallelization.</a> <h1 id="Examples" class="article-heading">
+Examples
+</h1>
+<p>Cypress should run on <strong>all</strong> CI providers. We have provided some example projects and configuration for some CI providers to help you get started.</p> <table> <thead> <tr> <th>CI Provider</th> <th>Example Project</th> <th>Example Config</th> </tr> </thead> <tbody> <tr> <td><a href="https://appveyor.com/" target="_blank" rel="noopener">AppVeyor</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink" target="_blank" rel="noopener">cypress-example-kitchensink</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink/blob/master/appveyor.yml" target="_blank" rel="noopener">appveyor.yml</a></td> </tr> <tr> <td><a href="https://dev.azure.com/" target="_blank" rel="noopener">Azure DevOps / VSTS CI / TeamFoundation</a></td> <td><a href="https://github.com/bahmutov/cypress-example-kitchensink" target="_blank" rel="noopener">cypress-example-kitchensink</a></td> <td><a href="https://github.com/bahmutov/cypress-example-kitchensink/blob/master/vsts-ci.yml" target="_blank" rel="noopener">vsts-ci.yml</a></td> </tr> <tr> <td><a href="https://bitbucket.org/product/features/pipelines" target="_blank" rel="noopener">BitBucket</a></td> <td><a href="https://bitbucket.org/cypress-io/cypress-example-kitchensink" target="_blank" rel="noopener">cypress-example-kitchensink</a></td> <td><a href="https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml" target="_blank" rel="noopener">bitbucket-pipelines.yml</a></td> </tr> <tr> <td><a href="https://buildkite.com/" target="_blank" rel="noopener">BuildKite</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink" target="_blank" rel="noopener">cypress-example-kitchensink</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml" target="_blank" rel="noopener">.buildkite/pipeline.yml</a></td> </tr> <tr> <td><a href="https://circleci.com/" target="_blank" rel="noopener">CircleCI</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink" target="_blank" rel="noopener">cypress-example-kitchensink</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink/blob/master/circle.yml" target="_blank" rel="noopener">circle.yml</a></td> </tr> <tr> <td>
+<a href="https://codeship.com/features/basic" target="_blank" rel="noopener">CodeShip Basic</a> (has <a href="https://github.com/cypress-io/cypress/issues/328" target="_blank" rel="noopener noreferrer">cy.exec() issue</a>)</td> <td></td> <td></td> </tr> <tr> <td><a href="https://codeship.com/features/pro" target="_blank" rel="noopener">CodeShip Pro</a></td> <td><a href="https://github.com/cypress-io/cypress-example-docker-codeship" target="_blank" rel="noopener">cypress-example-docker-codeship</a></td> <td></td> </tr> <tr> <td><a href="https://concourse-ci.org/" target="_blank" rel="noopener">Concourse</a></td> <td></td> <td></td> </tr> <tr> <td><a href="https://www.docker.com/" target="_blank" rel="noopener">Docker</a></td> <td><a href="https://github.com/cypress-io/cypress-docker-images" target="_blank" rel="noopener">cypress-docker-images</a></td> <td></td> </tr> <tr> <td><a href="https://gitlab.com/" target="_blank" rel="noopener">GitLab</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink" target="_blank" rel="noopener">cypress-example-kitchensink</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.gitlab-ci.yml" target="_blank" rel="noopener">.gitlab-ci.yml</a></td> </tr> <tr> <td><a href="https://jenkins.io/" target="_blank" rel="noopener">Jenkins</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink" target="_blank" rel="noopener">cypress-example-kitchensink</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink/blob/master/Jenkinsfile" target="_blank" rel="noopener">Jenkinsfile</a></td> </tr> <tr> <td><a href="https://semaphoreci.com/" target="_blank" rel="noopener">Semaphore</a></td> <td></td> <td></td> </tr> <tr> <td><a href="https://app.shippable.com/" target="_blank" rel="noopener">Shippable</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink" target="_blank" rel="noopener">cypress-example-kitchensink</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink/blob/master/shippable.yml" target="_blank" rel="noopener">shippable.yml</a></td> </tr> <tr> <td><a href="https://www.solanolabs.com/" target="_blank" rel="noopener">Solano</a></td> <td></td> <td></td> </tr> <tr> <td><a href="https://travis-ci.org/" target="_blank" rel="noopener">TravisCI</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink" target="_blank" rel="noopener">cypress-example-kitchensink</a></td> <td><a href="https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml" target="_blank" rel="noopener">.travis.yml</a></td> </tr> </tbody> </table> <h2 id="Travis" class="article-heading">
+Travis
+</h2>
+<h3 id="Example-travis-yml-config-file" class="article-heading">
+Example <code>.travis.yml</code> config file
+</h3>
+<pre class=" language-yaml" data-language="javascript">language: node_js
+node_js:
+  - 10
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
+cache:
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
+  npm: true
+  directories:
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
+install:
+  - npm ci
+script:
+  - $(npm bin)/cypress run --record
+</pre> <p>Caching folders with npm modules saves a lot of time after the first build.</p> <h2 id="CircleCI" class="article-heading">
+CircleCI
+</h2>
+<h3 id="Example-CircleCI-Orb" class="article-heading">
+<span class="badge badge-pill badge-success">New</span> Example CircleCI Orb
+</h3>
+<p>The Cypress CircleCI Orb is a piece of configuration set in your <code>circle.yml</code> file to correctly install, cache and run Cypress with very little effort.</p> <p>Full documentation can be found at the <a href="https://github.com/cypress-io/circleci-orb" target="_blank" rel="noopener"><code>cypress-io/circleci-orb</code></a> repo.</p> <p>A typical project can have:</p> <pre class=" language-yaml" data-language="javascript">version: 2.1
+orbs:
+  # "cypress-io/cypress@1" installs the latest published
+  # version "1.x.y" of the orb. We recommend you then use
+  # the strict explicit version "cypress-io/cypress@1.x.y"
+  # to lock the version and prevent unexpected CI changes
+  cypress: cypress-io/cypress@1
+workflows:
+  build:
+    jobs:
+      - cypress/run # "run" job comes from "cypress" orb
+</pre> <p>A more complex project that needs to install dependencies, build an application and run tests across 4 CI machines <a href="../parallelization/">in parallel</a> may have:</p> <pre class=" language-yaml" data-language="javascript">version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1
+workflows:
+  build:
+    jobs:
+      - cypress/install:
+          build: 'npm run build'  # run a custom app build step
+      - cypress/run:
+          requires:
+            - cypress/install
+          record: true        # record results on Cypress Dashboard
+          parallel: true      # split all specs across machines
+          parallelism: 4      # use 4 CircleCI machines to finish quickly
+          group: 'all tests'  # name this group "all tests" on the dashboard
+          start: 'npm start'  # start server before running tests
+</pre> <p>In all cases, you are using <code>run</code> and <code>install</code> job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.</p> <p>You can find multiple examples at <a href="https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md" target="_blank" rel="noopener">our orb examples page</a> and in the <a href="https://github.com/cypress-io/cypress-example-circleci-orb" target="_blank" rel="noopener">cypress-example-circleci-orb</a> project.</p> <h3 id="Example-circle-yml-v2-config-file" class="article-heading">
+Example <code>circle.yml</code> v2 config file
+</h3>
+<pre class=" language-yaml" data-language="javascript">version: 2
+jobs:
+  build:
+    docker:
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-deps-{{ .Branch }}
+            - v1-deps
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - save_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          # cache NPM modules and the folder with the Cypress binary
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - run: $(npm bin)/cypress run --record --key &lt;record_key&gt;
+</pre> <h3 id="Example-circle-yml-v2-config-file-with-yarn" class="article-heading">
+Example <code>circle.yml</code> v2 config file with <code>yarn</code>
+</h3>
+<pre class=" language-yaml" data-language="javascript">version: 2
+jobs:
+  build:
+    docker:
+      - image: cypress/base:8
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
+    working_directory: ~/app
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-deps-{{ .Branch }}
+            - v1-deps
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.cache  ## cache both yarn and Cypress!
+      - run: $(yarn bin)/cypress run --record --key &lt;record_key&gt;
+</pre> <p>Find the complete CircleCI v2 example with caching and artifact upload in the <a href="https://github.com/cypress-io/cypress-example-docker-circle" target="_blank" rel="noopener">cypress-example-docker-circle</a> repo.</p> <h2 id="Docker" class="article-heading">
+Docker
+</h2>
+<p>We have <a href="https://github.com/cypress-io/cypress-docker-images" target="_blank" rel="noopener">created</a> an official <a href="https://hub.docker.com/r/cypress/base/" target="_blank" rel="noopener">cypress/base</a> container with all of the required dependencies installed. Just add Cypress and go! We are also adding images with browsers pre-installed under <a href="https://hub.docker.com/r/cypress/browsers/" target="_blank" rel="noopener">cypress/browsers</a> name. A typical Dockerfile would look like this:</p> <pre class=" language-text" data-language="javascript">FROM cypress/base
+RUN npm install
+RUN $(npm bin)/cypress run
+</pre> <blockquote class="note warning">
+<p>Mounting a project directory with an existing <code>node_modules</code> into a <code>cypress/base</code> docker image <strong>will not work</strong>:</p> <pre class=" language-shell" data-language="javascript">docker run -it -v /app:/app cypress/base:8 bash -c 'cypress run'
+Error: the cypress binary is not installed
+</pre> <p>Instead, you should build a docker container for your project’s version of cypress.</p> </blockquote> <h3 id="Docker-images-amp-CI-examples" class="article-heading">
+Docker images &amp; CI examples
+</h3>
+<p>See our <a href="https://docs.cypress.io/examples/examples/docker.html" target="_blank">examples</a> for additional information on our maintained images and configurations on several CI providers.</p> <h1 id="Advanced-setup" class="article-heading">
+Advanced setup
+</h1>
+<h2 id="Dependencies" class="article-heading">
+Dependencies
+</h2>
+<p>If you are not using one of the above CI providers then make sure your system has these dependencies installed.</p> <pre class=" language-shell" data-language="javascript">apt-get install xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+</pre> <h2 id="Caching" class="article-heading">
+Caching
+</h2>
+<p>As of <a href="../../references/changelog/#3-0-0">Cypress version 3.0</a>, Cypress downloads its binary to the global system cache - on linux that is <code>~/.cache/Cypress</code>. By ensuring this cache persists across builds you can shave minutes off install time by preventing a large binary download.</p> <h3 id="We-recommend-users" class="article-heading">
+We recommend users:
+</h3>
+<ul> <li>
+<p>Cache the <code>~/.cache</code> folder after running <code>npm install</code>, <code>yarn</code>, <a href="https://docs.npmjs.com/cli/ci" target="_blank" rel="noopener"><code>npm ci</code></a> or equivalents as demonstrated in the configs below.</p> </li> <li>
+<p><strong>Do not</strong> cache <code>node_modules</code> across builds. This bypasses more intelligent caching packaged with <code>npm</code> or <code>yarn</code>, and can cause issues with Cypress not downloading the Cypress binary on <code>npm install</code>.</p> </li> <li>
+<p>If you are using <code>npm install</code> in your build process, consider <a href="https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable" target="_blank" rel="noopener">switching to <code>npm ci</code></a> and caching the <code>~/.npm</code> directory for a faster and more reliable build.</p> </li> <li>
+<p>If you are using <code>yarn</code>, caching <code>~/.cache</code> will include both the <code>yarn</code> and Cypress caches. Consider using <code>yarn install --frozen-lockfile</code> as an <a href="https://docs.npmjs.com/cli/ci" target="_blank" rel="noopener"><code>npm ci</code></a> equivalent.</p> </li> </ul> <p>If you need to override the binary location for some reason, use <a href="../../getting-started/installing-cypress/#Binary-cache"><code>CYPRESS_CACHE_FOLDER</code></a> environment variable.</p> <h2 id="Environment-variables" class="article-heading">
+Environment variables
+</h2>
+<p>You can set various environment variables to modify how Cypress runs.</p> <h3 id="Configuration-Values" class="article-heading">
+Configuration Values
+</h3>
+<p>You can set any configuration value as an environment variable. This overrides values in your <code>cypress.json</code>.</p> <p><strong><em>Typical use cases would be modifying things like:</em></strong></p> <ul> <li><code>CYPRESS_BASE_URL</code></li> <li><code>CYPRESS_VIDEO_COMPRESSION</code></li> <li><code>CYPRESS_REPORTER</code></li> <li><code>CYPRESS_INSTALL_BINARY</code></li> </ul> <p>Refer to the <a href="../../references/configuration/#Environment-Variables">Environment Variables recipe</a> for more examples.</p> <p><strong><em>Record Key</em></strong></p> <p>If you are <a href="#Record-tests">recording your runs</a> on a public project, you’ll want to protect your Record Key. <a href="../../dashboard/projects/#Identification">Learn why.</a></p> <p>Instead of hard coding it into your run command like this:</p> <pre class=" language-shell" data-language="javascript">cypress run --record --key abc-key-123
+</pre> <p>You can set the record key as the environment variable, <code>CYPRESS_RECORD_KEY</code>, and we’ll automatically use that value. You can now omit the <code>--key</code> flag when recording.</p> <pre class=" language-shell" data-language="javascript">cypress run --record
+</pre> <p>Typically you’d set this inside of your CI provider.</p> <p><strong><em>CircleCI Environment Variable</em></strong></p> <img src="data:image/png;base64,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" alt="Record key environment variable" class> <p><strong><em>TravisCI Environment Variable</em></strong></p> <img src="data:image/png;base64,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" alt="Travis key environment variable" class> <h3 id="Git-information" class="article-heading">
+Git information
+</h3>
+<p>Cypress uses the <a href="https://github.com/cypress-io/commit-info" target="_blank" rel="noopener">@cypress/commit-info</a> package to extract git information to associate with the run (e.g. branch, commit message, author).</p> <p>It assumes there is a <code>.git</code> folder and uses Git commands to get each property, like <code>git show -s --pretty=%B</code> to get commit message, see <a href="https://github.com/cypress-io/commit-info/blob/master/src/git-api.js" target="_blank" rel="noopener">src/git-api.js</a>.</p> <p>Under some environment setups (e.g. <code>docker</code>/<code>docker-compose</code>) if the <code>.git</code> directory is not available or mounted, you can pass all git related information under custom environment variables.</p> <ul> <li>Branch: <code>COMMIT_INFO_BRANCH</code>
+</li> <li>Message: <code>COMMIT_INFO_MESSAGE</code>
+</li> <li>Author email: <code>COMMIT_INFO_EMAIL</code>
+</li> <li>Author: <code>COMMIT_INFO_AUTHOR</code>
+</li> <li>SHA: <code>COMMIT_INFO_SHA</code>
+</li> <li>Remote: <code>COMMIT_INFO_REMOTE</code>
+</li> </ul> <p>If the commit information is missing in the Dashboard run then <a href="../../dashboard/github-integration/">GitHub Integration</a> or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable <code>DEBUG</code> on your CI machine and inspect the terminal output to see why the commit information is unavailable.</p> <pre class=" language-shell" data-language="javascript">DEBUG=commit-info,cypress:server:record
+</pre> <h3 id="Custom-Environment-Variables" class="article-heading">
+Custom Environment Variables
+</h3>
+<p>You can also set custom environment variables for use in your tests. These enable your code to reference dynamic values.</p> <pre class=" language-shell" data-language="javascript">export "EXTERNAL_API_SERVER=https://corp.acme.co"
+</pre> <p>And then in your tests:</p> <pre class=" language-javascript" data-language="javascript">cy.request({
+  method: 'POST',
+  url: Cypress.env('EXTERNAL_API_SERVER') + '/users/1',
+  body: {
+    foo: 'bar',
+    baz: 'quux'
+  }
+})
+</pre> <p>Refer to the dedicated <a href="../environment-variables/">Environment Variables Guide</a> for more examples.</p> <h2 id="Module-API" class="article-heading">
+Module API
+</h2>
+<p>Oftentimes it can be much easier to programmatically control and boot your servers with a Node script.</p> <p>If you’re using our <a href="../module-api/">Module API</a> then you can write a script that boots and then shuts down the server later. As a bonus you can easily work with the results and do other things.</p> <pre class=" language-js" data-language="javascript">// scripts/run-cypress-tests.js
+
+const cypress = require('cypress')
+const server = require('./lib/my-server')
+
+// start your server
+return server.start()
+.then(() =&gt; {
+  // kick off a cypress run
+  return cypress.run()
+  .then((results) =&gt; {
+    // stop your server when it's complete
+    return server.stop()
+  })
+})
+</pre> <pre class=" language-shell" data-language="javascript">node scripts/run-cypress-tests.js
+</pre> <h1 id="Known-Issues" class="article-heading">
+Known Issues
+</h1>
+<h2 id="In-Docker" class="article-heading">
+In Docker
+</h2>
+<p>If you are running long runs on Docker, you need to set the <code>ipc</code> to <code>host</code> mode. <a href="https://github.com/cypress-io/cypress/issues/350" target="_blank" rel="noopener noreferrer">This issue</a> describes exactly what to do.</p> <h1 id="See-also" class="article-heading">
+See also
+</h1>
+<ul> <li>
+<a href="https://github.com/cypress-io/cypress-example-kitchensink#ci-status" target="_blank" rel="noopener">cypress-example-kitchensink</a> is set up to run on multiple CI providers.</li> <li><a href="https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/" target="_blank" rel="noopener">Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress</a></li> <li>
+<a href="https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/" target="_blank" rel="noopener">Blog: Record Test Artifacts from any Docker CI</a> </li> </ul> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/guides/guides/continuous-integration.html" class="_attribution-link" target="_blank">https://docs.cypress.io/guides/guides/continuous-integration.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

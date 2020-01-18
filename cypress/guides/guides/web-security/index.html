@@ -1,0 +1,234 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Web Security - Cypress - W3cubDocs</title>
+  
+  <meta name="description" content="Browsers adhere to a strict same-origin policy. This means that browsers restrict access between &#60;iframes&#62; when their origin policies do not &hellip;">
+  <meta name="keywords" content="web, security, limitations, common, workarounds, disabling, -, cypress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cypress/guides/guides/web-security/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cypress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cypress/" class="_nav-link" title="" style="margin-left:0;">Cypress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _cypress">
+				
+				
+<h1 class="article-title" itemprop="name">Web Security</h1>  <div class="article-content" itemprop="articleBody"> <p>Browsers adhere to a strict <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener"><code>same-origin policy</code></a>. This means that browsers restrict access between <code>&lt;iframes&gt;</code> when their origin policies do not match.</p> <p>Because Cypress works from within the browser, Cypress must be able to directly communicate with your remote application at all times. Unfortunately, browsers naturally try to prevent Cypress from doing this.</p> <p>To get around these restrictions, Cypress implements some strategies involving JavaScript code, the browser’s internal APIs, and <code>network proxying</code> to <em>play by the rules</em> of <code>same-origin policy</code>. It is our goal to fully automate the application under test without you needing to modify your application’s code - and we are <em>mostly</em> able to do this.</p> <h3 id="Examples-of-what-Cypress-does-under-the-hood" class="article-heading">
+Examples of what Cypress does under the hood:
+</h3>
+<ul> <li>Injects <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/domain" target="_blank" rel="noopener"><code>document.domain</code></a> into <code>text/html</code> pages.</li> <li>Proxies all HTTP / HTTPS traffic.</li> <li>Changes the hosted url to match that of the application under test.</li> <li>Uses the browser’s internal APIs for network level traffic.</li> </ul> <p>When Cypress first loads, the internal Cypress web application is hosted on a random port: something like <code>http://localhost:65874/__/</code>.</p> <p>After the first <a href="../../../api/commands/visit/"><code>cy.visit()</code></a> command is issued in a test, Cypress changes its URL to match the origin of your remote application, thereby solving the first major hurdle of <code>same-origin policy</code>. Your application’s code executes the same as it does outside of Cypress, and everything works as expected.</p> <blockquote class="note info">
+<strong class="note-title foo">  How is HTTPS supported? </strong><p>Cypress does some pretty interesting things under the hood to make testing HTTPs sites work. Cypress enables you to control and stub at the network level. Therefore, Cypress must assign and manage browser certificates to be able to modify the traffic in real time. You’ll notice Chrome display a warning that the ‘SSL certificate does not match’. This is normal and correct. Under the hood we act as our own CA authority and issue certificates dynamically in order to intercept requests otherwise impossible to access. We only do this for the superdomain currently under test, and bypass other traffic. That’s why if you open a tab in Cypress to another host, the certificates match as expected.</p> </blockquote> <h1 id="Limitations" class="article-heading">
+Limitations
+</h1>
+<p>It’s important to note that although we do our <strong>very best</strong> to ensure your application works normally inside of Cypress, there <em>are</em> some limitations you need to be aware of.</p> <h2 id="One-Superdomain-per-Test" class="article-heading">
+One Superdomain per Test
+</h2>
+<p>Because Cypress changes its own host URL to match that of your applications, it requires that your application remain on the same superdomain for the entirety of a single test.</p> <p>If you attempt to visit two different superdomains, Cypress will error. Visiting subdomains works fine. You can visit different superdomains in <em>different</em> tests, just not the <em>same</em> test.</p> <pre class=" language-javascript" data-language="javascript">cy.visit('https://www.cypress.io')
+cy.visit('https://docs.cypress.io') // yup all good
+</pre> <pre class=" language-javascript" data-language="javascript">cy.visit('https://apple.com')
+cy.visit('https://google.com')      // this will immediately error
+</pre> <p>Although Cypress tries to enforce this limitation, it is possible for your application to bypass Cypress’s ability to detect this.</p> <h3 id="Examples-of-test-cases-that-will-error-due-to-superdomain-limitations" class="article-heading">
+Examples of test cases that will error due to superdomain limitations
+</h3>
+<ol> <li>
+<a href="../../../api/commands/click/"><code>.click()</code></a> an <code>&lt;a&gt;</code> with an <code>href</code> to a different superdomain.</li> <li>
+<a href="../../../api/commands/submit/"><code>.submit()</code></a> a <code>&lt;form&gt;</code> that causes your web server to redirect to you a different superdomain.</li> <li>Issue a JavaScript redirect in your application, such as <code>window.location.href = '...'</code>, to a different superdomain.</li> </ol> <p>In each of these situations, Cypress will lose the ability to automate your application and will immediately error.</p> <p>Read on to learn about <a href="../web-security/#Common-Workarounds">working around these common problems</a> or even <a href="../web-security/#Disabling-Web-Security">disabling web security</a> altogether.</p> <h2 id="Cross-origin-iframes" class="article-heading">
+Cross-origin iframes
+</h2>
+<p>If your site embeds an <code>&lt;iframe&gt;</code> that is a cross-origin frame, Cypress will not be able to automate or communicate with this <code>&lt;iframe&gt;</code>.</p> <h3 id="Examples-of-uses-for-cross-origin-iframes" class="article-heading">
+Examples of uses for cross-origin iframes
+</h3>
+<ul> <li>Embedding a Vimeo or YouTube video.</li> <li>Displaying a credit card form from Stripe or Braintree.</li> <li>Displaying an embedded login form from Auth0.</li> <li>Showing comments from Disqus.</li> </ul> <p>It’s actually <em>possible</em> for Cypress to accommodate these situations the same way Selenium does, but you will never have <em>native</em> access to these iframes from inside of Cypress.</p> <p>As a workaround, you may be able to use <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" target="_blank" rel="noopener"><code>window.postMessage</code></a> to directly communicate with these iframes and control them (if the 3rd party iframe supports it).</p> <p>Other than that, you’ll have to wait for us to implement APIs to support this (check our <a href="https://github.com/cypress-io/cypress/issues/136" target="_blank" rel="noopener noreferrer">open issue</a>), or you can <a href="../web-security/#Disabling-Web-Security">disable web security</a>.</p> <h2 id="Insecure-Content" class="article-heading">
+Insecure Content
+</h2>
+<p>Because of the way Cypress is designed, if you are testing an HTTPS site, Cypress will error anytime you attempt to navigate back to an HTTP site. This behavior helps highlight a <em>pretty serious security problem</em> with your application.</p> <h3 id="Example-of-accessing-insecure-content" class="article-heading">
+Example of accessing insecure content
+</h3>
+<pre class=" language-javascript" data-language="javascript">// Test code
+cy.visit('https://app.corp.com')
+</pre> <p>In your application code, you set <code>cookies</code> and store a session on the browser. Now let’s imagine you have a single <code>insecure</code> link (or JavaScript redirect) in your application code.</p> <pre class=" language-html" data-language="javascript">&lt;!-- Application code --&gt;
+&lt;html&gt;
+  &lt;a href="http://app.corp.com/page2"&gt;Page 2&lt;/a&gt;
+&lt;/html&gt;
+</pre> <p>Cypress will immediately fail with the following test code:</p> <pre class=" language-javascript" data-language="javascript">// Test code
+cy.visit('https://app.corp.com')
+cy.get('a').click()               // will immediately fail
+</pre> <p>Browsers refuse to display insecure content on a secure page. Because Cypress initially changed its URL to match <code>https://app.corp.com</code> when the browser followed the <code>href</code> to <code>http://app.corp.com/page2</code>, the browser will refuse to display the contents.</p> <p>Now you may be thinking, <em>This sounds like a problem with Cypress because when I work with my application outside of Cypress it works just fine.</em>😒</p> <p>However, the truth is, Cypress is exposing a <em>security vulnerability</em> in your application, and you <em>want</em> it to fail in Cypress.</p> <p><code>cookies</code> that do not have their <code>secure</code> flag set to <code>true</code> will be sent as clear text to the insecure URL. This leaves your application vulnerable to session hijacking.</p> <p>This security vulnerability exists <strong>even if</strong> your web server forces a <code>301 redirect</code> back to the HTTPS site. The original HTTP request was still made once, exposing insecure session information.</p> <h3 id="The-solution" class="article-heading">
+The solution
+</h3>
+<p>Update your HTML or JavaScript code to not navigate to an insecure HTTP page and instead only use HTTPS. Additionally make sure that cookies have their <code>secure</code> flag set to <code>true</code>.</p> <p>If you’re in a situation where you don’t control the code, or otherwise cannot work around this, you can bypass this restriction in Cypress by <a href="../web-security/#Disabling-Web-Security">disabling web security</a>.</p> <h1 id="Common-Workarounds" class="article-heading">
+Common Workarounds
+</h1>
+<p>Let’s investigate how you might encounter cross-origin errors in your test code and break down how to work around them in Cypress.</p> <h2 id="External-Navigation" class="article-heading">
+External Navigation
+</h2>
+<p>The most common situation where you might encounter this error is when you click on an <code>&lt;a&gt;</code> that navigates to another superdomain.</p> <pre class=" language-html" data-language="javascript">&lt;!-- Application code that is served at `localhost:8080` --&gt;
+&lt;html&gt;
+  &lt;a href="https://google.com"&gt;Google&lt;/a&gt;
+&lt;/html&gt;
+</pre> <pre class=" language-javascript" data-language="javascript">// Test code
+cy.visit('http://localhost:8080') // where your web server + HTML is hosted
+cy.get('a').click()               // browser attempts to load google.com, Cypress errors
+</pre> <p>There is essentially never any reason to visit a site that you don’t control in your tests. It’s prone to error and slow.</p> <p>Instead, all you need to test is that the <code>href</code> property is correct!</p> <pre class=" language-javascript" data-language="javascript">// this is much easier to do and will run considerably faster
+cy.visit('http://localhost:8080')
+cy.get('a').should('have.attr', 'href', 'https://google.com') // no page load!
+</pre> <p>Okay but let’s say you’re worried about <code>google.com</code> serving up the right HTML content. How would you test that? Easy! Just make a <a href="../../../api/commands/request/"><code>cy.request()</code></a> directly to it. <a href="../../../api/commands/request/"><code>cy.request()</code></a> is <em>NOT bound to CORS or same-origin policy</em>.</p> <pre class=" language-javascript" data-language="javascript">cy.visit('http://localhost:8080')
+cy.get('a').then(($a) =&gt; {
+  // pull off the fully qualified href from the &lt;a&gt;
+  const url = $a.prop('href')
+
+  // make a cy.request to it
+  cy.request(url).its('body').should('include', '&lt;/html&gt;')
+})
+</pre> <p>Still not satisfied? Do you really want to click through to another application? Okay then read about <a href="../web-security/#Disabling-Web-Security">disabling web security</a>.</p> <h2 id="Form-Submission-Redirects" class="article-heading">
+Form Submission Redirects
+</h2>
+<p>When you submit a regular HTML form, the browser will follow this <code>HTTP(s) request</code>.</p> <pre class=" language-html" data-language="javascript">&lt;!-- Application code that is served at `localhost:8080`--&gt;
+&lt;html&gt;
+  &lt;form method="POST" action="/submit"&gt;
+    &lt;input type="text" name="email" /&gt;
+    &lt;input type="submit" value="Submit" /&gt;
+  &lt;/form&gt;
+&lt;/html&gt;
+</pre> <pre class=" language-javascript" data-language="javascript">cy.visit('http://localhost:8080')
+cy.get('form').submit()           // submit the form!
+</pre> <p>If your back end server handling the <code>/submit</code> route does a <code>30x</code> redirect to a different superdomain, you will get a <code>cross origin</code> error.</p> <pre class=" language-javascript" data-language="javascript">// imagine this is some node / express code
+// on your localhost:8080 server
+
+app.post('/submit', (req, res) =&gt; {
+  // redirect the browser to google.com
+  res.redirect('https://google.com')
+})
+</pre> <p>A common use case for this is Single sign-on (SSO). In that situation you may <code>POST</code> to a different server and are redirected elsewhere (typically with the session token in the URL).</p> <p>If that’s the case, don’t worry - you can work around it with <a href="../../../api/commands/request/"><code>cy.request()</code></a>. <a href="../../../api/commands/request/"><code>cy.request()</code></a> is special because it is <strong>NOT bound to CORS or same-origin policy</strong>.</p> <p>In fact we can likely bypass the initial visit altogether and just <code>POST</code> directly to your <code>SSO</code> server.</p> <pre class=" language-javascript" data-language="javascript">cy.request('POST', 'https://sso.corp.com/auth', { username: 'foo', password: 'bar' })
+  .then((response) =&gt; {
+    // pull out the location redirect
+    const loc = response.headers['Location']
+
+    // parse out the token from the url (assuming its in there)
+    const token = parseOutMyToken(loc)
+
+    // do something with the token that your web application expects
+    // likely the same behavior as what your SSO does under the hood
+    // assuming it handles query string tokens like this
+    cy.visit('http://localhost:8080?token=' + token)
+
+    // if you don't need to work with the token you can sometimes
+    // just visit the location header directly
+    cy.visit(loc)
+  })
+</pre> <p>Not working for you? Don’t know how to set your token? If you still need to be able to be redirected to your SSO server, you can read about <a href="../web-security/#Disabling-Web-Security">disabling web security</a>.</p> <h2 id="JavaScript-Redirects" class="article-heading">
+JavaScript Redirects
+</h2>
+<p>When we say <em>JavaScript Redirects</em> we are talking about any kind of code that does something like this:</p> <pre class=" language-javascript" data-language="javascript">window.location.href = 'http://some.superdomain.com'
+</pre> <p>This is probably the hardest situation to test because it’s usually happening due to another cause. You will need to figure out why your JavaScript code is redirecting. Perhaps you’re not logged in, and you need to handle that setup elsewhere? Perhaps you’re using a Single sign-on (SSO) server and you just need to read the previous section about working around that?</p> <p>If you can’t figure out why your JavaScript code is redirecting you to a different superdomain, then you might want to just read about <a href="../web-security/#Disabling-Web-Security">disabling web security</a>.</p> <h1 id="Disabling-Web-Security" class="article-heading">
+Disabling Web Security
+</h1>
+<p>So if you cannot work around any of the issues using the suggested workarounds above, you may want to disable web security.</p> <p>One last thing to consider here is that every once in a while we discover bugs in Cypress that lead to <code>cross origin</code> errors that can otherwise be fixed. If you think you’re experiencing a bug, <a href="https://gitter.im/cypress-io/cypress" target="_blank" rel="noopener">come into our chat</a> or <a href="https://github.com/cypress-io/cypress/issues/new" target="_blank" rel="noopener noreferrer">open an issue</a>.</p> <p>To start, you will need to understand that <em>not all browsers expose a way to turn off web security</em>. Some do, some don’t. If you rely on disabling web security, you will not be able to run tests on browsers that do not support this feature.</p> <p><strong>Setting <code>chromeWebSecurity</code> to <code>false</code> allows you to do the following:</strong></p> <ul> <li>Display insecure content</li> <li>Navigate to any superdomain without cross-origin errors</li> <li>Access cross-origin iframes that are embedded in your application.</li> </ul> <p>One thing you may notice though is that Cypress still enforces visiting a single superdomain with <a href="../../../api/commands/visit/"><code>cy.visit()</code></a>, but there is an <a href="https://github.com/cypress-io/cypress/issues/944" target="_blank" rel="noopener noreferrer">issue open</a> to change this restriction.</p> <p>Still here? That’s cool, let’s disable web security!</p> <p><strong><em>Set <code>chromeWebSecurity</code> to <code>false</code> in <code>cypress.json</code> and we’ll take care of the rest.</em></strong></p> <pre class=" language-json" data-language="javascript">{
+  "chromeWebSecurity": false
+}
+</pre> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2017 Cypress.io<br>Licensed under the MIT License.<br>
+    <a href="https://docs.cypress.io/guides/guides/web-security.html" class="_attribution-link" target="_blank">https://docs.cypress.io/guides/guides/web-security.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
