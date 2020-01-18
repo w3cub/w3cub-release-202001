@@ -1,0 +1,183 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>6. Continuous Integration - Yarn - W3cubDocs</title>
+  
+  <meta name="description" content=" Yarn is preinstalled on AppVeyor, so you don’t need to do anything extra in order to use it as part of your build. ">
+  <meta name="keywords" content="continuous, integration, -, yarn">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/yarn/install-ci/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/yarn.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/yarn/" class="_nav-link" title="" style="margin-left:0;">Yarn</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>6. Continuous Integration</h1>  Yarn can easily be used in various continuous integration systems. To speed up builds, the Yarn cache directory can be saved across builds.     <div class="tab-pane" id="appveyor"> <p>Yarn is <a href="https://www.appveyor.com/updates/2016/11/01/" target="_blank">preinstalled on AppVeyor</a>, so you don’t need to do anything extra in order to use it as part of your build.</p> <p>To speed up your builds, you can cache Yarn’s cache folder by adding this to your <code>appveyor.yml</code>:</p> <pre data-language="yml">cache:
+ - "%LOCALAPPDATA%\\Yarn"</pre> </div> <div class="tab-pane" id="circle"> <p><a href="https://circleci.com/" target="_blank">CircleCI</a> provides documentation for Yarn. You can get up and running by following their <a href="https://circleci.com/docs/2.0/yarn/" target="_blank">Yarn documentation</a>.</p> </div> <div class="tab-pane" id="codeship"> <p>Yarn is pre-installed <a href="https://codeship.com/features/basic" target="_blank">Codeship Basic</a>.</p> <p>If you are using <a href="https://pages.codeship.com/docker" target="_blank">Codeship Pro</a> (with Docker), it is recommended to install Yarn via <a href="../install/#linux-tab">our Debian/Ubuntu package</a> instead.</p> </div> <div class="tab-pane" id="travis"> <p><a href="https://travis-ci.org/" target="_blank">Travis CI</a> detects the use of Yarn by the presence of <code>yarn.lock</code> in the repository root. If it is available, Travis CI will install <code>yarn</code> if necessary, and execute <code>yarn</code> as the default install command.</p> <p>If your install phase requires more, it is necessary to install Yarn yourself until it is pre-installed on build images.</p> <pre data-language="yml">before_install: # if "install" is overridden
+  # Repo for Yarn
+  - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
+  - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  - sudo apt-get update -qq
+  - sudo apt-get install -y -qq yarn
+cache:
+  yarn: true</pre>  <p>It is recommended that you lock in a specific version of Yarn, so that all your builds use the same version of Yarn, and you can test new Yarn releases before switching over. You can do this by adding the version number to the <code>apt-get install</code> call:</p> <pre data-language="">sudo apt-get install -y -qq yarn=1.19.0-1</pre> </div> <div class="tab-pane" id="semaphore"> <p><a href="https://semaphoreci.com/" target="_blank">Semaphore</a> has Yarn pre-installed for all supported Node.js versions, and no user interaction is required for the Yarn cache to work.</p> <p>To assure that your local Yarn version matches the one on Semaphore, add the lines below to your setup commands, in Project Settings.</p> <pre data-language="sh">curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+# install-package is a tool for caching APT installations in Semaphore
+# defining a package version is optional
+install-package --update-new yarn=&lt;version&gt;</pre> </div> <div class="tab-pane" id="solano"> <p>Yarn is pre-installed on <a href="https://www.solanolabs.com/" target="_blank">SolanoCI</a>. You can quickly get up and running by following their <a href="https://docs.solanolabs.com/ConfiguringLanguage/nodejs/#configuration" target="_blank">Yarn documentation</a>. For an example configuration file, check out one of <a href="https://github.com/solanolabs/express/blob/master/solano.yml" target="_blank">their sample configuration files</a>.</p> </div> <div class="tab-pane" id="gitlab"> <p>Because <a href="https://about.gitlab.com/product/continuous-integration/" target="_blank">GitLab CI</a> uses docker in the background, you can specify an image with yarn pre-installed.</p> <pre data-language="yml"># .gitlab-ci.yml
+image: node:9.4.0</pre> <p>If you’re using a docker image that doesn’t come with yarn pre-installed you can still install it after the container has loaded.</p> <pre data-language="yml"># .gitlab-ci.yml
+image: does-not-have-yarn
+
+before_script:
+  # Install yarn as outlined in (https://yarnpkg.com/lang/en/docs/install/#alternatives-stable)
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  # Make available in the current terminal
+  - export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"</pre> <p>In either case, it’s good practice to cache your <code>node_modules</code> and <code>.yarn</code> folders as well to speed up your builds.</p> <pre data-language="yml"># .gitlab-ci.yml
+cache:
+  paths:
+    - node_modules/
+    - .yarn</pre> <p>Here’s an example <code>.gitlab-ci.yml</code> file using yarn to run a testing suite. Just save this file to the root of your project and GitLab’s CI will pick up the jobs.</p> <pre data-language="yml"># .gitlab-ci.yml
+image: node:9.11.1
+
+before_script:
+  - yarn install
+
+test:
+  stage: test
+  cache:
+    paths:
+    - node_modules/
+    - .yarn</pre> </div> <div class="tab-pane" id="codefresh"> <p><a href="https://codefresh.io/docs/docs/configure-ci-cd-pipeline/introduction-to-codefresh-pipelines/" target="_blank">Codefresh pipelines</a> use Docker images in all their steps so it is very easy to use any <a href="https://hub.docker.com/_/node/" target="_blank">Yarn version</a> in any pipeline.</p> <p>This pipeline <a href="https://codefresh.io/docs/docs/codefresh-yaml/steps/git-clone/" target="_blank">checks out</a> the source code and then runs <code>yarn</code> with two <a href="https://codefresh.io/docs/docs/codefresh-yaml/steps/freestyle/" target="_blank">freestyle steps</a>.</p> <p><code>codefresh.yml</code></p> <pre data-language="yml">version: '1.0'
+stages:
+  - prepare
+  - test
+  - build
+steps:
+  main_clone:
+    title: Cloning main repository...
+    stage: prepare
+    type: git-clone
+    repo: 'codefresh-contrib/react-sample-app'
+    revision: master
+    git: github
+  MyUnitTests:
+    title: Unit test
+    stage: test
+    image: node:11.0
+    commands:
+      - yarn install
+      - yarn test
+    environment:
+      - CI=true
+  MyReactBuild:
+    title: Packaging application
+    stage: build
+    image: node:8.16
+    commands:
+      - yarn build</pre> <p>Notice that it is possible to use any version of node/yarn that exists in <a href="https://hub.docker.com/_/node/?tab=tags" target="_blank">Dockerhub</a>. In this case we use version 11 for running tests and version 8.6 for packaging the application. You can also use any private docker image that includes <code>yarn</code> and any other tools you need in your pipeline.</p> <p>There is no need for any special caching directives as Codefresh automatically caches the current workdir with all its folders (such as <code>node_modules</code>).</p> <p>For more details see <a href="https://codefresh.io/docs/docs/learn-by-example/nodejs/react/" target="_blank">a complete pipeline with Yarn</a>.</p> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2016–present Yarn Contributors<br>Licensed under the BSD License.<br>
+    <a href="https://yarnpkg.com/en/docs/install-ci" class="_attribution-link" target="_blank">https://yarnpkg.com/en/docs/install-ci</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
