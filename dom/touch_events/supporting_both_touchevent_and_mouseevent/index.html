@@ -1,0 +1,131 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Touch events.Supporting Both TouchEvent and MouseEvent - DOM - W3cubDocs</title>
+  
+  <meta name="description" content="The touch interfaces enable applications to create enhanced user experiences on touch enabled devices. However, the reality is the vast majority of &hellip;">
+  <meta name="keywords" content="touch, events, supporting, both, touchevent, and, mouseevent, -, dom">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/dom/touch_events/supporting_both_touchevent_and_mouseevent/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/dom.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Touch events.Supporting both TouchEvent and MouseEvent</h1> <p>The <a href="../../touch_events/"><code>touch</code></a> interfaces enable applications to create enhanced user experiences on touch enabled devices. However, the reality is the vast majority of today's web content is designed only to work with mouse input. Consequently, even if a browser supports touch, the browser must still <em>emulate</em> mouse events so content that assumes mouse-only input will work <em>as is</em> without direct modification.</p> <p>Ideally, a touch-based application does not need to explicitly address mouse input. However, because the browser must emulate mouse events, there may be some interaction issues that need to be handled. Below are some details about the interaction and the ramifications for application developers.</p> <h2 id="Event_firing">Event firing</h2> <p>The touch events standard defines a few browser requirements regarding touch and mouse interaction (see the <a href="https://w3c.github.io/touch-events/#mouse-events" target="_blank"><em>Interaction with Mouse Events and click</em></a> section for details), noting <em>the browser may fire both touch events and mouse events in response to the same user input</em>. This section describes the requirement that may affect an application.</p> <p>If the browser fires both touch and mouse events because of a single user input, the browser <em>must </em> fire a <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/touchstart" target="_blank">touchstart</a></code> before any mouse events. Consequently, if an application does not want mouse events fired on a specific touch <a href="../../touch/target/"><code>target</code></a> element, the element's touch event handlers should call <a href="../../event/preventdefault/"><code>preventDefault()</code></a> and no additional mouse events will be dispatched.</p> <p>Here is a code snippet of the <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/touchmove" target="_blank">touchmove</a></code> event handler calling <code>preventDefault()</code>.</p> <pre data-language="js">// touchmove handler
+function process_touchmove(ev) {
+  // Call preventDefault() to prevent any further handling
+  ev.preventDefault();
+}
+</pre> <h2 id="Event_order">Event order</h2> <p>Although the specific ordering of touch and mouse events is implementation-defined, the standard indicates the following order is <em>typical:</em> for single input:</p> <ul> <li><code>touchstart</code></li> <li>Zero or more <code>touchmove</code> events, depending on movement of the finger(s)</li> <li><code>touchend</code></li> <li><code>mousemove</code></li> <li><code>mousedown</code></li> <li><code>mouseup</code></li> <li><code>click</code></li> </ul> <p>If the <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/touchstart" target="_blank">touchstart</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/touchmove" target="_blank">touchmove</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/touchend" target="_blank">touchend</a></code> event is canceled during an interaction, no mouse or click events will be fired, and the resulting sequence of events would just be:</p> <ul> <li><code>touchstart</code></li> <li>Zero or more <code>touchmove</code> events, depending on movement of the finger(s)</li> <li><code>touchend</code></li> </ul> <h2 id="Community">Community</h2> <ul> <li><a href="https://github.com/w3c/touch-events" target="_blank">Touch Events Community Group</a></li> <li><a href="https://lists.w3.org/Archives/Public/public-touchevents/" target="_blank">Mail list</a></li> <li><a href="../irc://irc.w3.org:6667//">W3C #touchevents IRC channel</a></li> </ul> <h2 id="Related_topics_and_resources">Related topics and resources</h2> <ul> <li><a href="https://developer.mozilla.org/Web/API/Touch_events" target="_blank">Touch Events Overview</a></li> <li><a href="https://developer.mozilla.org/Web/API/Touch_events/Using_Touch_Events" target="_blank">Using Touch Events</a></li> <li><a href="http://www.html5rocks.com/en/mobile/touchandmouse/" target="_blank">Touch and Mouse (Together Again for the First Time)</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Supporting_both_TouchEvent_and_MouseEvent%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Supporting_both_TouchEvent_and_MouseEvent" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Supporting_both_TouchEvent_and_MouseEvent</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

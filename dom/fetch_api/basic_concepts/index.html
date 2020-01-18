@@ -1,0 +1,130 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Fetch API&#58; Basic Concepts - DOM - W3cubDocs</title>
+  
+  <meta name="description" content=" Draft This page is not complete. ">
+  <meta name="keywords" content="fetch, api, basic, concepts, -, dom">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/dom/fetch_api/basic_concepts/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/dom.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/dom/" class="_nav-link" title="" style="margin-left:0;">DOM</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Fetch API: Basic concepts</h1>
+<div class="blockIndicator draft"> <p><strong>Draft</strong><br> This page is not complete.</p> </div> <div class="summary"> <p>The <a href="../../fetch_api/">Fetch API</a> provides an interface for fetching resources (including across the network). It will seem familiar to anyone who has used <a href="../../xmlhttprequest/"><code>XMLHttpRequest</code></a>, but it provides a more powerful and flexible feature set. This article explains some of the basic concepts of the Fetch API.</p> </div> <div class="note"> <p><strong>Note:</strong> This article will be added to over time. If you find a Fetch concept that you feel needs explaining better, let someone know on the <a href="https://discourse.mozilla-community.org/c/mdn" target="_blank">MDN discussion forum</a>, or <a href="https://wiki.mozilla.org/IRC" target="_blank">Mozilla IRC</a> (#mdn room.)</p> </div> <h2 id="In_a_nutshell">In a nutshell</h2> <p>At the heart of Fetch are the Interface abstractions of HTTP <a href="../../request/"><code>Request</code></a>s, <a href="../../response/"><code>Response</code></a>s, <a href="../../headers/"><code>Headers</code></a>, and <a href="../../body/"><code>Body</code></a> payloads, along with a <a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalFetch/fetch" target="_blank"><code>global fetch</code></a> method for initiating asynchronous resource requests. Because the main components of HTTP are abstracted as JavaScript objects, it is easy for other APIs to make use of such functionality.</p> <p><a href="../../service_worker_api/">Service Workers</a> is an example of an API that makes heavy use of Fetch.</p> <p>Fetch takes the asynchronous nature of such requests one step further. The API is completely <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank"><code>Promise</code></a>-based.</p> <h2 id="Guard">Guard</h2> <p>Guard is a feature of <a href="../../headers/"><code>Headers</code></a> objects, with possible values of <code>immutable</code>, <code>request</code>, <code>request-no-cors</code>, <code>response</code>, or <code>none</code>, depending on where the header is used.</p> <p>When a new <a href="../../headers/"><code>Headers</code></a> object is created using the <a href="../../headers/headers/"><code>Headers()</code></a> <a href="https://developer.mozilla.org/en-US/docs/Glossary/constructor" target="_blank">constructor</a>, its guard is set to <code>none</code> (the default). When a <a href="../../request/"><code>Request</code></a> or <a href="../../response/"><code>Response</code></a> object is created, it has an associated <a href="../../headers/"><code>Headers</code></a> object whose guard is set as summarized below:</p> <div class="_table"><table class="standard-table"> <thead> <tr> <th scope="row">new object's type</th> <th scope="col">creating constructor</th> <th scope="col">guard setting of associated <a href="../../headers/"><code>Headers</code></a> object</th> </tr> </thead> <tbody> <tr> <td rowspan="2"><a href="../../request/"><code>Request</code></a></td> <td><a href="../../request/request/"><code>Request()</code></a></td> <td><code>request</code></td> </tr> <tr> <td>
+<a href="../../request/request/"><code>Request()</code></a> with <a href="../../request/mode/"><code>mode</code></a> of <code>no-cors</code>
+</td> <td><code>request-no-cors</code></td> </tr> <tr> <td rowspan="2"><a href="../../response/"><code>Response</code></a></td> <td><a href="../../response/response/"><code>Response()</code></a></td> <td><code>response</code></td> </tr> <tr> <td>
+<a href="../../response/error/"><code>error()</code></a> or <a href="../../response/redirect/"><code>redirect()</code></a> methods</td> <td><code>immutable</code></td> </tr> </tbody> </table></div> <p>A header's guard affects the <a href="../../headers/set/"><code>set()</code></a>, <a href="../../headers/delete/"><code>delete()</code></a>, and <a href="../../headers/append/"><code>append()</code></a> methods which change the header's contents. A <code>TypeError</code> is thrown if you try to modify a <a href="../../headers/"><code>Headers</code></a> object whose guard is <code>immutable</code>. However, the operation will work if</p> <ul> <li>guard is <code title="">request</code> and the header <var>name</var> isn't a <a href="https://developer.mozilla.org/en-US/docs/Glossary/forbidden_header_name" target="_blank">forbidden header name</a> .</li> <li>guard is <code title="">request-no-cors</code> and the header <var>name</var>/<var>value</var> is a <a href="https://developer.mozilla.org/en-US/docs/Glossary/simple_header" target="_blank">simple header</a> .</li> <li>guard is <code title="">response</code> and the header <var>name</var> isn't a <a href="https://developer.mozilla.org/en-US/docs/Glossary/forbidden_response_header_name" target="_blank">forbidden response header name</a> .</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Basic_concepts%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Basic_concepts" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Basic_concepts</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
