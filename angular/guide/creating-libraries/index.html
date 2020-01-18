@@ -1,0 +1,148 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Creating Libraries - Angular - W3cubDocs</title>
+  
+  <meta name="description" content="You can create and publish new libraries to extend Angular functionality. If you find that you need to solve the same problem in more than one app ( &hellip;">
+  <meta name="keywords" content="creating, libraries, -, angular">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/guide/creating-libraries/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _angular">
+				
+				
+<h1 id="creating-libraries">Creating Libraries</h1> <p>You can create and publish new libraries to extend Angular functionality. If you find that you need to solve the same problem in more than one app (or want to share your solution with other developers), you have a candidate for a library.</p> <p>A simple example might be a button that sends users to your company website, that would be included in all apps that your company builds.</p> <blockquote class="alert is-helpful"> <p>For more details on how a library project is structured you can refer the <a href="../file-structure/#library-project-files">Library Project Files</a></p> </blockquote> <h2 id="getting-started">Getting started</h2> <p>Use the Angular CLI to generate a new library skeleton with the following command:</p> <pre data-language="bash">ng new my-workspace --create-application=false
+ cd my-workspace
+ ng generate library my-lib</pre> <blockquote class="alert is-helpful"> <p>You can use the monorepo model to use the same workspace for multiple projects. See <a href="../file-structure/#multiple-projects">Setting up for a multi-project workspace</a>.</p> </blockquote> <p>This creates the <code>projects/my-lib</code> folder in your workspace, which contains a component and a service inside an NgModule. The workspace configuration file, <code>angular.json</code>, is updated with a project of type 'library'.</p> <pre format="json">"projects": {
+  ...
+  "my-lib": {
+    "root": "projects/my-lib",
+    "sourceRoot": "projects/my-lib/src",
+    "projectType": "library",
+    "prefix": "lib",
+    "architect": {
+      "build": {
+        "builder": "@angular-devkit/build-ng-packagr:build",
+        ...</pre> <p>You can build, test, and lint the project with CLI commands:</p> <pre data-language="bash">ng build my-lib
+ ng test my-lib
+ ng lint my-lib</pre> <p>Notice that the configured builder for the project is different from the default builder for app projects. This builder, among other things, ensures that the library is always built with the <a href="../aot-compiler/">AoT compiler</a>, without the need to specify the <code>--prod</code> flag.</p> <p>To make library code reusable you must define a public API for it. This "user layer" defines what is available to consumers of your library. A user of your library should be able to access public functionality (such as NgModules, service providers and general utility functions) through a single import path.</p> <p>The public API for your library is maintained in the <code>public-api.ts</code> file in your library folder. Anything exported from this file is made public when your library is imported into an application. Use an NgModule to expose services and components.</p> <p>Your library should supply documentation (typically a README file) for installation and maintenance.</p> <h2 id="refactoring-parts-of-an-app-into-a-library">Refactoring parts of an app into a library</h2> <p>To make your solution reusable, you need to adjust it so that it does not depend on app-specific code. Here are some things to consider in migrating application functionality to a library.</p> <ul> <li> <p>Declarations such as components and pipes should be designed as stateless, meaning they don’t rely on or alter external variables. If you do rely on state, you need to evaluate every case and decide whether it is application state or state that the library would manage.</p> </li> <li> <p>Any observables that the components subscribe to internally should be cleaned up and disposed of during the lifecycle of those components.</p> </li> <li> <p>Components should expose their interactions through inputs for providing context, and outputs for communicating events to other components.</p> </li> <li> <p>Services should declare their own providers (rather than declaring providers in the NgModule or a component), so that they are <em>tree-shakable</em>. This allows the compiler to leave the service out of the bundle if it never gets injected into the application that imports the library. For more about this, see <a href="../dependency-injection-providers/#tree-shakable-providers">Tree-shakable providers</a>.</p> </li> <li> <p>If you register global service providers or share providers across multiple NgModules, use the <a href="../singleton-services/"><code>forRoot()</code> and <code>forChild()</code> patterns</a> provided by the <a href="../../api/router/routermodule/">RouterModule</a>.</p> </li> <li> <p>Check all internal dependencies.</p> <ul> <li>For custom classes or interfaces used in components or service, check whether they depend on additional classes or interfaces that also need to be migrated.</li> <li>Similarly, if your library code depends on a service, that service needs to be migrated.</li> <li>If your library code or its templates depend on other libraries (such a Angular Material, for instance), you must configure your library with those dependencies.</li> </ul> </li> </ul> <h2 id="reusable-code-and-schematics">Reusable code and schematics</h2> <p>A library typically includes <em>reusable code</em> that defines components, services, and other Angular artifacts (pipes, directives, and so on) that you simply import into a project. A library is packaged into an npm package for publishing and sharing, and this package can also include <a href="../glossary/#schematic">schematics</a> that provide instructions for generating or transforming code directly in your project, in the same way that the CLI creates a generic skeleton app with <code>ng generate component</code>. A schematic that is combined with a library can, for example, provide the Angular CLI with the information it needs to generate a particular component defined in that library.</p> <p>What you include in your library is determined by the kind of task you are trying to accomplish. For example, if you want a dropdown with some canned data to show how to add it to your app, your library could define a schematic to create it. For a component like a dropdown that would contain different passed-in values each time, you could provide it as a component in a shared library.</p> <p>Suppose you want to read a configuration file and then generate a form based on that configuration. If that form will need additional customization by the user, it might work best as a schematic. However, if the forms will always be the same and not need much customization by developers, then you could create a dynamic component that takes the configuration and generates the form. In general, the more complex the customization, the more useful the schematic approach.</p>  <h2 id="integrating-with-the-cli">Integrating with the CLI</h2> <p>A library can include <a href="../glossary/#schematic">schematics</a> that allow it to integrate with the Angular CLI.</p> <ul> <li> <p>Include an installation schematic so that <code>ng add</code> can add your library to a project.</p> </li> <li> <p>Include generation schematics in your library so that <code>ng generate</code> can scaffold your defined artifacts (components, services, tests, and so on) in a project.</p> </li> <li> <p>Include an update schematic so that <code>ng <a href="../../api/forms/ngmodel/#update" class="code-anchor">update</a></code> can update your library’s dependencies and provide migrations for breaking changes in new releases.</p> </li> </ul> <p>To learn more, see <a href="../schematics/">Schematics Overview</a> and <a href="../schematics-for-libraries/">Schematics for Libraries</a>.</p> <h2 id="publishing-your-library">Publishing your library</h2> <p>Use the Angular CLI and the npm package manager to build and publish your library as an npm package. Libraries are built in <a href="../aot-compiler/">AoT mode</a> by default, so you do not need to specify the <code>-prod</code> flag when building for publication.</p> <pre data-language="bash">ng build my-lib
+cd dist/my-lib
+npm publish</pre> <p>If you've never published a package in npm before, you must create a user account. Read more in <a href="https://docs.npmjs.com/getting-started/publishing-npm-packages" target="_blank">Publishing npm Packages</a>.</p> <h2 id="linked-libraries">Linked libraries</h2> <p>While working on a published library, you can use <a href="https://docs.npmjs.com/cli/link" target="_blank">npm link</a> to avoid reinstalling the library on every build.</p> <p>The library must be rebuilt on every change. When linking a library, make sure that the build step runs in watch mode, and that the library's <code>package.json</code> configuration points at the correct entry points. For example, <code>main</code> should point at a JavaScript file, not a TypeScript file.</p> <h2 id="use-typescript-path-mapping-for-peer-dependencies">Use TypeScript path mapping for peer dependencies</h2> <p>Angular libraries should list all <code>@angular/*</code> dependencies as peer dependencies. This ensures that when modules ask for Angular, they all get the exact same module. If a library lists <code>@angular/core</code> in <code><a href="../../api/core/resolvedreflectivefactory/#dependencies" class="code-anchor">dependencies</a></code> instead of <code>peerDependencies</code>, it might get a different Angular module instead, which would cause your application to break.</p> <p>While developing a library, you must install all peer dependencies through <code>devDependencies</code> to ensure that the library compiles properly. A linked library will then have its own set of Angular libraries that it uses for building, located in its <code>node_modules</code> folder. However, this can cause problems while building or running your application.</p> <p>To get around this problem you can use TypeScript path mapping to tell TypeScript that it should load some modules from a specific location. List all the peer dependencies that your library uses in the workspace TypeScript configuration file <code>./tsconfig.json</code>, and point them at the local copy in the app's <code>node_modules</code> folder.</p> <pre>{
+  "compilerOptions": {
+    // ...
+    // paths are relative to `baseUrl` path.
+    "paths": {
+      "@angular/*": [
+        "./node_modules/@angular/*"
+      ]
+    }
+  }
+}</pre> <p>This mapping ensures that your library always loads the local copies of the modules it needs.</p> <h2 id="using-your-own-library-in-apps">Using your own library in apps</h2> <p>You don't have to publish your library to the npm package manager in order to use it in your own apps, but you do have to build it first.</p> <p>To use your own library in an app:</p> <ul> <li> <p>Build the library. You cannot use a library before it is built. </p>
+<pre data-language="bash">ng build my-lib</pre> </li> <li> <p>In your apps, import from the library by name:</p> <pre>import { myExport } from 'my-lib';</pre> </li> </ul> <h3 id="building-and-rebuilding-your-library">Building and rebuilding your library</h3> <p>The build step is important if you haven't published your library as an npm package and then installed the package back into your app from npm. For instance, if you clone your git repository and run <code>npm install</code>, your editor will show the <code>my-lib</code> imports as missing if you haven't yet built your library.</p> <blockquote class="alert is-helpful"> <p>When you import something from a library in an Angular app, Angular looks for a mapping between the library name and a location on disk. When you install a library package, the mapping is in the <code>node_modules</code> folder. When you build your own library, it has to find the mapping in your <code>tsconfig</code> paths.</p> <p>Generating a library with the Angular CLI automatically adds its path to the <code>tsconfig</code> file. The Angular CLI uses the <code>tsconfig</code> paths to tell the build system where to find the library.</p> </blockquote> <p>If you find that changes to your library are not reflected in your app, your app is probably using an old build of the library.</p> <p>You can rebuild your library whenever you make changes to it, but this extra step takes time. <em>Incremental builds</em> functionality improves the library-development experience. Every time a file is changed a partial build is performed that emits the amended files.</p> <p>Incremental builds can be run as a background process in your dev environment. To take advantage of this feature add the <code>--watch</code> flag to the build command:</p> <pre data-language="bash">ng build my-lib --watch</pre> <blockquote class="alert is-important"> <p>The CLI <code>build</code> command uses a different builder and invokes a different build tool for libraries than it does for applications.</p> <ul> <li>The build system for apps, <code>@angular-devkit/build-angular</code>, is based on <code>webpack</code>, and is included in all new Angular CLI projects.</li> <li>The build system for libraries is based on <code>ng-packagr</code>. It is only added to your dependencies when you add a library using <code>ng generate library my-lib</code>.</li> </ul> <p>The two build systems support different things, and even where they support the same things, they do those things differently. This means that the TypeScript source can result in different JavaScript code in a built library than it would in a built application.</p> <p>For this reason, an app that depends on a library should only use TypeScript path mappings that point to the <em>built library</em>. TypeScript path mappings should <em>not</em> point to the library source <code>.ts</code> files.</p> </blockquote>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/guide/creating-libraries" class="_attribution-link" target="_blank">https://angular.io/guide/creating-libraries</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

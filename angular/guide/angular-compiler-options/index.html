@@ -1,0 +1,142 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Angular Compiler Options - Angular - W3cubDocs</title>
+  
+  <meta name="description" content="When you use AoT compilation, you can control how your application is compiled by specifying template compiler options in the tsconfig.json &hellip;">
+  <meta name="keywords" content="angular, compiler, options, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/guide/angular-compiler-options/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _angular">
+				
+				
+<h1 id="angular-compiler-options">Angular compiler options</h1> <p>When you use <a href="../aot-compiler/">AoT compilation</a>, you can control how your application is compiled by specifying <em>template</em> compiler options in the <code>tsconfig.json</code> <a href="../typescript-configuration/">TypeScript configuration file</a>.</p> <p>The template options object, <code>angularCompilerOptions</code>, is a sibling to the <code>compilerOptions</code> object that supplies standard options to the TypeScript compiler.</p> <pre data-language="json">{
+      "compilerOptions": {
+        "experimentalDecorators": true,
+                  ...
+      },
+      "angularCompilerOptions": {
+        "fullTemplateTypeCheck": true,
+        "preserveWhitespaces": true,
+                  ...
+      }
+  }</pre>  <h2 id="configuration-inheritance-with-extends">Configuration inheritance with extends</h2> <p>Like the TypeScript compiler, The Angular AoT compiler also supports <code>extends</code> in the <code>angularCompilerOptions</code> section of the TypeScript configuration file, <code>tsconfig.json</code>. The <code>extends</code> property is at the top level, parallel to <code>compilerOptions</code> and <code>angularCompilerOptions</code>.</p> <p>A TypeScript configuration can inherit settings from another file using the <code>extends</code> property. The configuration options from the base file are loaded first, then overridden by those in the inheriting <code>tsconfig</code> file.</p> <p>For example:</p> <pre data-language="json">{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    ...
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true,
+    ...
+  }
+}</pre> <p>For more information, see the <a href="https://www.typescriptlang.org/docs/handbook/tsconfig-json.html" target="_blank">TypeScript Handbook</a>.</p> <h2 id="template-options">Template options</h2> <p>The following options are available for configuring the AoT template compiler.</p> <h3 id="allowemptycodegenfiles"><code>allowEmptyCodegenFiles</code></h3> <p>When true, generate all possible files even if they are empty. Default is false. Used by the Bazel build rules to simplify how Bazel rules track file dependencies. Do not use this option outside of the Bazel rules.</p> <h3 id="annotationsas"><code>annotationsAs</code></h3> <p>Modifies how Angular-specific annotations are emitted to improve tree-shaking. Non-Angular annotations are not affected. One of <code><a href="../../api/upgrade/static/" class="code-anchor">static</a> fields</code> (the default) or <code>decorators</code>.</p> <ul> <li> <p>By default, the compiler replaces decorators with a static field in the class, which allows advanced tree-shakers like <a href="https://github.com/google/closure-compiler" target="_blank">Closure compiler</a> to remove unused classes.</p> </li> <li> <p>The <code>decorators</code> value leaves the decorators in place, which makes compilation faster. TypeScript emits calls to the<code>__decorate</code> helper. Use <code>--emitDecoratorMetadata</code> for runtime reflection (but note that the resulting code will not properly tree-shake.</p> </li> </ul> <h3 id="annotateforclosurecompiler"><code>annotateForClosureCompiler</code></h3> <p>When true, use <a href="https://github.com/angular/tsickle" target="_blank">Tsickle</a> to annotate the emitted JavaScript with <a href="http://usejsdoc.org/" target="_blank">JSDoc</a> comments needed by the <a href="https://github.com/google/closure-compiler" target="_blank">Closure Compiler</a>. Default is false.</p> <h3 id="disableexpressionlowering"><code>disableExpressionLowering</code></h3> <p>When true (the default), transforms code that is or could be used in an annotation, to allow it to be imported from template factory modules. See <a href="../aot-compiler/#metadata-rewriting">metadata rewriting</a> for more information.</p> <p>When <code>false</code>, disables this rewriting, requiring the rewriting to be done manually.</p> <h3 id="disabletypescriptversioncheck"><code>disableTypeScriptVersionCheck</code></h3> <p>When <code>true</code>, the compiler does not check the TypeScript version and does not report an error when an unsupported version of TypeScript is used. Not recommended, as unsupported versions of TypeScript might have undefined behavior. Default is false.</p> <h3 id="enableresourceinlining"><code>enableResourceInlining</code></h3> <p>When true, replaces the <code>templateUrl</code> and <code><a href="../../api/core/component/#styleUrls" class="code-anchor">styleUrls</a></code> property in all <code>@<a href="../../api/core/component/" class="code-anchor">Component</a></code> decorators with inlined contents in <code>template</code> and <code>styles</code> properties.</p> <p>When enabled, the <code>.js</code> output of <code>ngc</code> does not include any lazy-loaded template or style URLs.</p>  <h3 id="enablelegacytemplate"><code>enableLegacyTemplate</code></h3> <p>When true, enables use of the <code>&lt;template&gt;</code> element, which was deprecated in Angular 4.0, in favor of <code>&lt;ng-template&gt;</code> (to avoid colliding with the DOM's element of the same name). Default is false. Might be required by some third-party Angular libraries.</p> <h3 id="flatmoduleid"><code>flatModuleId</code></h3> <p>The module ID to use for importing a flat module (when <code>flatModuleOutFile</code> is true). References generated by the template compiler use this module name when importing symbols from the flat module. Ignored if <code>flatModuleOutFile</code> is false.</p> <h3 id="flatmoduleoutfile"><code>flatModuleOutFile</code></h3> <p>When true, generates a flat module index of the given file name and the corresponding flat module metadata. Use to create flat modules that are packaged similarly to <code>@angular/core</code> and <code>@angular/common</code>. When this option is used, the <code>package.json</code> for the library should refer to the generated flat module index instead of the library index file.</p> <p>Produces only one <code>.metadata.json</code> file, which contains all the metadata necessary for symbols exported from the library index. In the generated <code>.ngfactory.js</code> files, the flat module index is used to import symbols that includes both the public API from the library index as well as shrowded internal symbols.</p> <p>By default the <code>.ts</code> file supplied in the <code>files</code> field is assumed to be the library index. If more than one <code>.ts</code> file is specified, <code>libraryIndex</code> is used to select the file to use. If more than one <code>.ts</code> file is supplied without a <code>libraryIndex</code>, an error is produced.</p> <p>A flat module index <code>.d.ts</code> and <code>.js</code> is created with the given <code>flatModuleOutFile</code> name in the same location as the library index <code>.d.ts</code> file.</p> <p>For example, if a library uses the <code>public_api.ts</code> file as the library index of the module, the <code>tsconfig.json</code> <code>files</code> field would be <code>["public_api.ts"]</code>. The <code>flatModuleOutFile</code> options could then be set to (for example) <code>"index.js"</code>, which produces <code>index.d.ts</code> and <code>index.metadata.json</code> files. The <code>module</code> field of the library's <code>package.json</code> would be <code>"index.js"</code> and the <code>typings</code> field would be <code>"index.d.ts"</code>.</p> <h3 id="fulltemplatetypecheck"><code>fullTemplateTypeCheck</code></h3> <p>When true (recommended), enables the <a href="../aot-compiler/#binding-expression-validation">binding expression validation</a> phase of the template compiler, which uses TypeScript to validate binding expressions.</p> <p>Default is currently false.</p> <h3 id="generatecodeforlibraries"><code>generateCodeForLibraries</code></h3> <p>When true (the default), generates factory files (<code>.ngfactory.js</code> and <code>.ngstyle.js</code>) for <code>.d.ts</code> files with a corresponding <code>.metadata.json</code> file.</p> <p>When false, factory files are generated only for <code>.ts</code> files. Do this when using factory summaries.</p> <h3 id="preservewhitespaces"><code><a href="../../api/core/component/#preserveWhitespaces" class="code-anchor">preserveWhitespaces</a></code></h3> <p>When false (the default), removes blank text nodes from compiled templates, which results in smaller emitted template factory modules. Set to true to preserve blank text nodes.</p> <h3 id="skipmetadataemit"><code>skipMetadataEmit</code></h3> <p>When true, does not to produce <code>.metadata.json</code> files. Default is <code>false</code>.</p> <p>The <code>.metadata.json</code> files contain information needed by the template compiler from a <code>.ts</code> file that is not included in the <code>.d.ts</code> file produced by the TypeScript compiler. This information includes, for example, the content of annotations (such as a component's template), which TypeScript emits to the <code>.js</code> file but not to the <code>.d.ts</code> file.</p> <p>You can set to <code>true</code> when using factory summaries, because the factory summaries include a copy of the information that is in the <code>.metadata.json</code> file.</p> <p>Set to <code>true</code> if you are using TypeScript's <code>--outFile</code> option, because the metadata files are not valid for this style of TypeScript output. However, we do not recommend using <code>--outFile</code> with Angular. Use a bundler, such as <a href="https://webpack.js.org/" target="_blank">webpack</a>, instead.</p> <h3 id="skiptemplatecodegen"><code>skipTemplateCodegen</code></h3> <p>When true, does not emit <code>.ngfactory.js</code> and <code>.ngstyle.js</code> files. This turns off most of the template compiler and disables the reporting of template diagnostics.</p> <p>Can be used to instruct the template compiler to produce <code>.metadata.json</code> files for distribution with an <code>npm</code> package while avoiding the production of <code>.ngfactory.js</code> and <code>.ngstyle.js</code> files that cannot be distributed to <code>npm</code>.</p> <h3 id="strictmetadataemit"><code>strictMetadataEmit</code></h3> <p>When true, reports an error to the <code>.metadata.json</code> file if <code>"skipMetadataEmit"</code> is <code>false</code>. Default is false. Use only when <code>"skipMetadataEmit"</code> is false and <code>"skipTemplateCodeGen"</code> is true.</p> <p>This option is intended to validate the <code>.metadata.json</code> files emitted for bundling with an <code>npm</code> package. The validation is strict and can emit errors for metadata that would never produce an error when used by the template compiler. You can choose to suppress the error emitted by this option for an exported symbol by including <code>@dynamic</code> in the comment documenting the symbol.</p> <p>It is valid for <code>.metadata.json</code> files to contain errors. The template compiler reports these errors if the metadata is used to determine the contents of an annotation. The metadata collector cannot predict the symbols that are designed for use in an annotation, so it preemptively includes error nodes in the metadata for the exported symbols. The template compiler can then use the error nodes to report an error if these symbols are used.</p> <p>If the client of a library intends to use a symbol in an annotation, the template compiler does not normally report this until the client uses the symbol. This option allows detection of these errors during the build phase of the library and is used, for example, in producing Angular libraries themselves.</p> <h3 id="strictinjectionparameters"><code>strictInjectionParameters</code></h3> <p>When true (recommended), reports an error for a supplied parameter whose injection type cannot be determined. When false (currently the default), constructor parameters of classes marked with <code>@<a href="../../api/core/injectable/" class="code-anchor">Injectable</a></code> whose type cannot be resolved produce a warning.</p> <h3 id="trace"><code>trace</code></h3> <p>When true, prints extra information while compiling templates. Default is false.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/guide/angular-compiler-options" class="_attribution-link" target="_blank">https://angular.io/guide/angular-compiler-options</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

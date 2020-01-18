@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Providers - Angular - W3cubDocs</title>
+  
+  <meta name="description" content="A provider is an instruction to the Dependency Injection system on how to obtain a value for a dependency. Most of the time, these dependencies are &hellip;">
+  <meta name="keywords" content="providers, -, angular">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular/guide/providers/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/angular.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular/" class="_nav-link" title="" style="margin-left:0;">Angular</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _angular">
+				
+				
+<h1 id="providers">Providers</h1> <p>A provider is an instruction to the <a href="../dependency-injection/">Dependency Injection</a> system on how to obtain a value for a dependency. Most of the time, these dependencies are services that you create and provide.</p> <p>For the final sample app using the provider that this page describes, see the live example.</p> <h2 id="providing-a-service">Providing a service</h2> <p>If you already have an app that was created with the <a href="../cli/">Angular CLI</a>, you can create a service using the <a href="../cli/generate/"><code>ng generate</code></a> CLI command in the root project directory. Replace <em>User</em> with the name of your service.</p> <pre data-language="sh">ng generate service User</pre> <p>This command creates the following <code>UserService</code> skeleton:</p> <pre header="src/app/user.service.ts" data-language="typescript">import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+}</pre> <p>You can now inject <code>UserService</code> anywhere in your application.</p> <p>The service itself is a class that the CLI generated and that's decorated with <code>@<a href="../../api/core/injectable/" class="code-anchor">Injectable</a>()</code>. By default, this decorator has a <code><a href="../../api/core/injectable/#providedIn" class="code-anchor">providedIn</a></code> property, which creates a provider for the service. In this case, <code><a href="../../api/core/injectable/#providedIn" class="code-anchor">providedIn</a>: 'root'</code> specifies that Angular should provide the service in the root injector.</p> <h2 id="provider-scope">Provider scope</h2> <p>When you add a service provider to the root application injector, it’s available throughout the app. Additionally, these providers are also available to all the classes in the app as long they have the lookup token.</p> <p>You should always provide your service in the root injector unless there is a case where you want the service to be available only if the consumer imports a particular <code>@<a href="../../api/core/ngmodule/" class="code-anchor">NgModule</a></code>.</p> <h2 id="providedin-and-ngmodules">
+<code><a href="../../api/core/injectable/#providedIn" class="code-anchor">providedIn</a></code> and NgModules</h2> <p>It's also possible to specify that a service should be provided in a particular <code>@<a href="../../api/core/ngmodule/" class="code-anchor">NgModule</a></code>. For example, if you don't want <code>UserService</code> to be available to applications unless they import a <code>UserModule</code> you've created, you can specify that the service should be provided in the module:</p> <pre header="src/app/user.service.ts" data-language="typescript">import { Injectable } from '@angular/core';
+import { UserModule } from './user.module';
+
+@Injectable({
+  providedIn: UserModule,
+})
+export class UserService {
+}</pre> <p>The example above shows the preferred way to provide a service in a module. This method is preferred because it enables tree-shaking of the service if nothing injects it. If it's not possible to specify in the service which module should provide it, you can also declare a provider for the service within the module:</p> <pre header="src/app/user.module.ts" data-language="typescript">import { NgModule } from '@angular/core';
+
+import { UserService } from './user.service';
+
+@NgModule({
+  providers: [UserService],
+})
+export class UserModule {
+}</pre> <h2 id="limiting-provider-scope-by-lazy-loading-modules">Limiting provider scope by lazy loading modules</h2> <p>In the basic CLI-generated app, modules are eagerly loaded which means that they are all loaded when the app launches. Angular uses an injector system to make things available between modules. In an eagerly loaded app, the root application injector makes all of the providers in all of the modules available throughout the app.</p> <p>This behavior necessarily changes when you use lazy loading. Lazy loading is when you load modules only when you need them; for example, when routing. They aren’t loaded right away like with eagerly loaded modules. This means that any services listed in their provider arrays aren’t available because the root injector doesn’t know about these modules.</p>   <p>When the Angular router lazy-loads a module, it creates a new injector. This injector is a child of the root application injector. Imagine a tree of injectors; there is a single root injector and then a child injector for each lazy loaded module. The router adds all of the providers from the root injector to the child injector. When the router creates a component within the lazy-loaded context, Angular prefers service instances created from these providers to the service instances of the application root injector.</p> <p>Any component created within a lazy loaded module’s context, such as by router navigation, gets the local instance of the service, not the instance in the root application injector. Components in external modules continue to receive the instance created for the application root.</p> <p>Though you can provide services by lazy loading modules, not all services can be lazy loaded. For instance, some modules only work in the root module, such as the Router. The Router works with the global location object in the browser.</p> <h2 id="limiting-provider-scope-with-components">Limiting provider scope with components</h2> <p>Another way to limit provider scope is by adding the service you want to limit to the component’s <code>providers</code> array. Component providers and NgModule providers are independent of each other. This method is helpful for when you want to eagerly load a module that needs a service all to itself. Providing a service in the component limits the service only to that component (other components in the same module can’t access it.)</p> <pre header="src/app/app.component.ts" data-language="typescript">@Component({
+/* . . . */
+  providers: [UserService]
+})</pre> <h2 id="providing-services-in-modules-vs-components">Providing services in modules vs. components</h2> <p>Generally, provide services the whole app needs in the root module and scope services by providing them in lazy loaded modules.</p> <p>The router works at the root level so if you put providers in a component, even <code>AppComponent</code>, lazy loaded modules, which rely on the router, can’t see them.</p>  <p>Register a provider with a component when you must limit a service instance to a component and its component tree, that is, its child components. For example, a user editing component, <code>UserEditorComponent</code>, that needs a private copy of a caching <code>UserService</code> should register the <code>UserService</code> with the <code>UserEditorComponent</code>. Then each new instance of the <code>UserEditorComponent</code> gets its own cached service instance.</p>  <h2 id="more-on-ngmodules">More on NgModules</h2> <p>You may also be interested in:</p> <ul> <li>
+<a href="../singleton-services/">Singleton Services</a>, which elaborates on the concepts covered on this page.</li> <li>
+<a href="../lazy-loading-ngmodules/">Lazy Loading Modules</a>.</li> <li>
+<a href="../dependency-injection-providers/#tree-shakable-providers">Tree-shakable Providers</a>.</li> <li>
+<a href="../ngmodule-faq/">NgModule FAQ</a>.</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://angular.io/guide/providers" class="_attribution-link" target="_blank">https://angular.io/guide/providers</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

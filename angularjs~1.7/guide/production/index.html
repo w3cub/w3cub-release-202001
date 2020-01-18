@@ -1,0 +1,139 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Guide&#58; Running in Production - Angular.js 1.7 - W3cubDocs</title>
+  
+  <meta name="description" content=" There are a few things you might consider when running your AngularJS application in production. ">
+  <meta name="keywords" content="running, angularjs, app, production, guide, -, angular, js, angularjs~1.7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angularjs~1.7/guide/production/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/angularjs~1.7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angularjs~1.7/" class="_nav-link" title="" style="margin-left:0;">Angular.js 1.7</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _angularjs">
+				
+				
+<h1 id="running-an-angularjs-app-in-production">
+<a href="https://github.com/angular/angular.js/edit/v1.7.x/docs/content/guide/production.ngdoc?message=docs(guide%2FRunning%20in%20Production)%3A%20describe%20your%20change..." class="improve-docs btn btn-primary" target="_blank">Improve this Doc</a>Running an AngularJS App in Production</h1> <p>There are a few things you might consider when running your AngularJS application in production.</p> <h2 id="disabling-debug-data">Disabling Debug Data</h2> <p>By default AngularJS attaches information about binding and scopes to DOM nodes, and adds CSS classes to data-bound elements:</p> <ul> <li>
+<p>As a result of <code>ngBind</code>, <code>ngBindHtml</code> or <code>{{...}}</code> interpolations, binding data and CSS class <code>ng-binding</code> are attached to the corresponding element.</p> </li> <li>
+<p>Where the compiler has created a new scope, the scope and either <code>ng-scope</code> or <code>ng-isolated-scope</code> CSS class are attached to the corresponding element. These scope references can then be accessed via <code>element.scope()</code> and <code>element.isolateScope()</code>.</p> </li> <li>
+<p>Placeholder comments for structural directives will contain information about what directive and binding caused the placeholder. E.g. <code>&lt;!-- ngIf: shouldShow() --&gt;</code>.</p> </li> </ul> <p>Tools like <a href="https://github.com/angular/protractor" target="_blank">Protractor</a> and <a href="https://github.com/angular/angularjs-batarang" target="_blank">Batarang</a> need this information to run, but you can disable this in production for a significant performance boost with:</p> <pre data-language="javascript">myApp.config(['$compileProvider', function ($compileProvider) {
+  $compileProvider.debugInfoEnabled(false);
+}]);
+</pre> <p>If you wish to debug an application with this information then you should open up a debug console in the browser then call this method directly in this console:</p> <pre data-language="javascript">angular.reloadWithDebugInfo();
+</pre> <p>The page should reload and the debug information should now be available.</p> <p>For more see the docs pages on <a href="../../api/ng/provider/%24compileprovider/#debugInfoEnabled.html"><code>$compileProvider</code></a> and <a href="../../api/ng/function/angular.reloadwithdebuginfo/"><code>angular.reloadWithDebugInfo</code></a>.</p> <h2 id="strict-di-mode">Strict DI Mode</h2> <p>Using strict di mode in your production application will throw errors when an injectable function is not <a href="../di/#dependency-annotation.html">annotated explicitly</a>. Strict di mode is intended to help you make sure that your code will work when minified. However, it also will force you to make sure that your injectable functions are explicitly annotated which will improve angular's performance when injecting dependencies in your injectable functions because it doesn't have to dynamically discover a function's dependencies. It is recommended to automate the explicit annotation via a tool like <a href="https://github.com/olov/ng-annotate" target="_blank">ng-annotate</a> when you deploy to production (and enable strict di mode)</p> <p>To enable strict di mode, you have two options:</p> <pre data-language="html">&lt;div ng-app="myApp" ng-strict-di&gt;
+  &lt;!-- your app here --&gt;
+&lt;/div&gt;
+</pre> <p>or</p> <pre data-language="javascript">angular.bootstrap(document, ['myApp'], {
+  strictDi: true
+});
+</pre> <p>For more information, see the <a href="../di/#using-strict-dependency-injection.html">DI Guide</a>.</p> <h2 id="disable-comment-and-css-class-directives">Disable comment and css class directives</h2> <p>By default AngularJS compiles and executes all directives inside comments and element classes. In order to perform this task, the AngularJS compiler must look for directives by:</p> <ul> <li>
+<p>Parse all your application element classes.</p> </li> <li>
+<p>Parse all your application html comments.</p> </li> </ul> <p>Nowadays most of the AngularJS projects are using only element and attribute directives, and in such projects there is no need to compile comments and classes.</p> <p>If you are sure that your project only uses element and attribute directives, and you are not using any 3rd party library that uses directives inside element classes or html comments, you can disable the compilation of directives on element classes and comments for the whole application. This results in a compilation performance gain, as the compiler does not have to check comments and element classes looking for directives.</p> <p>To disable comment and css class directives use the <code>$compileProvider</code>:</p> <pre>$compileProvider.commentDirectivesEnabled(false);
+$compileProvider.cssClassDirectivesEnabled(false);
+</pre> <p>For more see the docs pages on <a href="../../api/ng/provider/%24compileprovider/#commentDirectivesEnabled.html"><code>$compileProvider.commentDirectivesEnabled</code></a> and <a href="../../api/ng/provider/%24compileprovider/#cssClassDirectivesEnabled.html"><code>$compileProvider.cssClassDirectivesEnabled</code></a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2018 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://code.angularjs.org/1.7.8/docs/guide/production" class="_attribution-link" target="_blank">https://code.angularjs.org/1.7.8/docs/guide/production</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
