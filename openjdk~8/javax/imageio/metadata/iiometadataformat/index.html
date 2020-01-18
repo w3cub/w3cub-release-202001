@@ -1,0 +1,260 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>IIOMetadataFormat - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="An object describing the structure of metadata documents returned from IIOMetadata.getAsTree and passed to IIOMetadata.setFromTree and mergeTree. &hellip;">
+  <meta name="keywords" content="interface, iiometadataformat, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/javax/imageio/metadata/iiometadataformat/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface IIOMetadataFormat</h1>     <dl> <dt>All Known Implementing Classes:</dt> <dd><a href="../iiometadataformatimpl/">IIOMetadataFormatImpl</a></dd> </dl>   <pre data-language="java">public interface IIOMetadataFormat</pre> <div>
+<p>An object describing the structure of metadata documents returned from <code>IIOMetadata.getAsTree</code> and passed to <code>IIOMetadata.setFromTree</code> and <code>mergeTree</code>. Document structures are described by a set of constraints on the type and number of child elements that may belong to a given parent element type, the names, types, and values of attributes that may belong to an element, and the type and values of <code>Object</code> reference that may be stored at a node. </p>
+<p> N.B: classes that implement this interface should contain a method declared as <code>public static getInstance()</code> which returns an instance of the class. Commonly, an implementation will construct only a single instance and cache it for future invocations of <code>getInstance</code>. </p>
+<p> The structures that may be described by this class are a subset of those expressible using XML document type definitions (DTDs), with the addition of some basic information on the datatypes of attributes and the ability to store an <code>Object</code> reference within a node. In the future, XML Schemas could be used to represent these structures, and many others. </p>
+<p> The differences between <code>IIOMetadataFormat</code>-described structures and DTDs are as follows: </p>
+<ul> <li> Elements may not contain text or mix text with embedded tags. </li>
+<li> The children of an element must conform to one of a few simple patterns, described in the documentation for the <code>CHILD_*</code> constants; </li>
+<li> The in-memory representation of an elements may contain a reference to an <code>Object</code>. There is no provision for representing such objects textually. </li>
+</ul>
+</div>       <h2 id="field.detail">Fields</h2>   <h3 id="CHILD_POLICY_EMPTY">CHILD_POLICY_EMPTY</h3> <pre data-language="java">static final int CHILD_POLICY_EMPTY</pre> <p>A constant returned by <code>getChildPolicy</code> to indicate that an element may not have any children. In other words, it is required to be a leaf node.</p>     <h3 id="CHILD_POLICY_ALL">CHILD_POLICY_ALL</h3> <pre data-language="java">static final int CHILD_POLICY_ALL</pre> <p>A constant returned by <code>getChildPolicy</code> to indicate that an element must have a single instance of each of its legal child elements, in order. In DTD terms, the contents of the element are defined by a sequence <code>a,b,c,d,...</code>.</p>     <h3 id="CHILD_POLICY_SOME">CHILD_POLICY_SOME</h3> <pre data-language="java">static final int CHILD_POLICY_SOME</pre> <p>A constant returned by <code>getChildPolicy</code> to indicate that an element must have zero or one instance of each of its legal child elements, in order. In DTD terms, the contents of the element are defined by a sequence <code>a?,b?,c?,d?,...</code>.</p>     <h3 id="CHILD_POLICY_CHOICE">CHILD_POLICY_CHOICE</h3> <pre data-language="java">static final int CHILD_POLICY_CHOICE</pre> <p>A constant returned by <code>getChildPolicy</code> to indicate that an element must have zero or one children, selected from among its legal child elements. In DTD terms, the contents of the element are defined by a selection <code>a|b|c|d|...</code>.</p>     <h3 id="CHILD_POLICY_SEQUENCE">CHILD_POLICY_SEQUENCE</h3> <pre data-language="java">static final int CHILD_POLICY_SEQUENCE</pre> <p>A constant returned by <code>getChildPolicy</code> to indicate that an element must have a sequence of instances of any of its legal child elements. In DTD terms, the contents of the element are defined by a sequence <code>(a|b|c|d|...)*</code>.</p>     <h3 id="CHILD_POLICY_REPEAT">CHILD_POLICY_REPEAT</h3> <pre data-language="java">static final int CHILD_POLICY_REPEAT</pre> <p>A constant returned by <code>getChildPolicy</code> to indicate that an element must have zero or more instances of its unique legal child element. In DTD terms, the contents of the element are defined by a starred expression <code>a*</code>.</p>     <h3 id="CHILD_POLICY_MAX">CHILD_POLICY_MAX</h3> <pre data-language="java">static final int CHILD_POLICY_MAX</pre> <p>The largest valid <code>CHILD_POLICY_*</code> constant, to be used for range checks.</p>     <h3 id="VALUE_NONE">VALUE_NONE</h3> <pre data-language="java">static final int VALUE_NONE</pre> <p>A constant returned by <code>getObjectValueType</code> to indicate the absence of a user object.</p>     <h3 id="VALUE_ARBITRARY">VALUE_ARBITRARY</h3> <pre data-language="java">static final int VALUE_ARBITRARY</pre> <p>A constant returned by <code>getAttributeValueType</code> and <code>getObjectValueType</code> to indicate that the attribute or user object may be set a single, arbitrary value.</p>     <h3 id="VALUE_RANGE">VALUE_RANGE</h3> <pre data-language="java">static final int VALUE_RANGE</pre> <p>A constant returned by <code>getAttributeValueType</code> and <code>getObjectValueType</code> to indicate that the attribute or user object may be set a range of values. Both the minimum and maximum values of the range are exclusive. It is recommended that ranges of integers be inclusive on both ends, and that exclusive ranges be used only for floating-point data.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../iiometadataformat/#VALUE_RANGE_MIN_MAX_INCLUSIVE"><code>VALUE_RANGE_MIN_MAX_INCLUSIVE</code></a>, Constant Field Values</dd> </dl>    <h3 id="VALUE_RANGE_MIN_INCLUSIVE_MASK">VALUE_RANGE_MIN_INCLUSIVE_MASK</h3> <pre data-language="java">static final int VALUE_RANGE_MIN_INCLUSIVE_MASK</pre> <div>
+<p>A value that may be or'ed with <code>VALUE_RANGE</code> to obtain <code>VALUE_RANGE_MIN_INCLUSIVE</code>, and with <code>VALUE_RANGE_MAX_INCLUSIVE</code> to obtain <code>VALUE_RANGE_MIN_MAX_INCLUSIVE</code>. </p>
+<p> Similarly, the value may be and'ed with the value of <code>getAttributeValueType</code>or <code>getObjectValueType</code> to determine if the minimum value of the range is inclusive.</p>
+</div>     <h3 id="VALUE_RANGE_MAX_INCLUSIVE_MASK">VALUE_RANGE_MAX_INCLUSIVE_MASK</h3> <pre data-language="java">static final int VALUE_RANGE_MAX_INCLUSIVE_MASK</pre> <div>
+<p>A value that may be or'ed with <code>VALUE_RANGE</code> to obtain <code>VALUE_RANGE_MAX_INCLUSIVE</code>, and with <code>VALUE_RANGE_MIN_INCLUSIVE</code> to obtain <code>VALUE_RANGE_MIN_MAX_INCLUSIVE</code>. </p>
+<p> Similarly, the value may be and'ed with the value of <code>getAttributeValueType</code>or <code>getObjectValueType</code> to determine if the maximum value of the range is inclusive.</p>
+</div>     <h3 id="VALUE_RANGE_MIN_INCLUSIVE">VALUE_RANGE_MIN_INCLUSIVE</h3> <pre data-language="java">static final int VALUE_RANGE_MIN_INCLUSIVE</pre> <p>A constant returned by <code>getAttributeValueType</code> and <code>getObjectValueType</code> to indicate that the attribute or user object may be set to a range of values. The minimum (but not the maximum) value of the range is inclusive.</p>     <h3 id="VALUE_RANGE_MAX_INCLUSIVE">VALUE_RANGE_MAX_INCLUSIVE</h3> <pre data-language="java">static final int VALUE_RANGE_MAX_INCLUSIVE</pre> <p>A constant returned by <code>getAttributeValueType</code> and <code>getObjectValueType</code> to indicate that the attribute or user object may be set to a range of values. The maximum (but not the minimum) value of the range is inclusive.</p>     <h3 id="VALUE_RANGE_MIN_MAX_INCLUSIVE">VALUE_RANGE_MIN_MAX_INCLUSIVE</h3> <pre data-language="java">static final int VALUE_RANGE_MIN_MAX_INCLUSIVE</pre> <p>A constant returned by <code>getAttributeValueType</code> and <code>getObjectValueType</code> to indicate that the attribute or user object may be set a range of values. Both the minimum and maximum values of the range are inclusive. It is recommended that ranges of integers be inclusive on both ends, and that exclusive ranges be used only for floating-point data.</p>     <h3 id="VALUE_ENUMERATION">VALUE_ENUMERATION</h3> <pre data-language="java">static final int VALUE_ENUMERATION</pre> <div>
+<p>A constant returned by <code>getAttributeValueType</code> and <code>getObjectValueType</code> to indicate that the attribute or user object may be set one of a number of enumerated values. In the case of attributes, these values are <code>String</code>s; for objects, they are <code>Object</code>s implementing a given class or interface. </p>
+<p> Attribute values of type <code>DATATYPE_BOOLEAN</code> should be marked as enumerations.</p>
+</div>     <h3 id="VALUE_LIST">VALUE_LIST</h3> <pre data-language="java">static final int VALUE_LIST</pre> <p>A constant returned by <code>getAttributeValueType</code> and <code>getObjectValueType</code> to indicate that the attribute or user object may be set to a list or array of values. In the case of attributes, the list will consist of whitespace-separated values within a <code>String</code>; for objects, an array will be used.</p>     <h3 id="DATATYPE_STRING">DATATYPE_STRING</h3> <pre data-language="java">static final int DATATYPE_STRING</pre> <p>A constant returned by <code>getAttributeDataType</code> indicating that the value of an attribute is a general Unicode string.</p>     <h3 id="DATATYPE_BOOLEAN">DATATYPE_BOOLEAN</h3> <pre data-language="java">static final int DATATYPE_BOOLEAN</pre> <p>A constant returned by <code>getAttributeDataType</code> indicating that the value of an attribute is one of the boolean values 'true' or 'false'. Attribute values of type DATATYPE_BOOLEAN should be marked as enumerations, and the permitted values should be the string literal values "TRUE" or "FALSE", although a plugin may also recognise lower or mixed case equivalents.</p>     <h3 id="DATATYPE_INTEGER">DATATYPE_INTEGER</h3> <pre data-language="java">static final int DATATYPE_INTEGER</pre> <p>A constant returned by <code>getAttributeDataType</code> indicating that the value of an attribute is a string representation of an integer.</p>     <h3 id="DATATYPE_FLOAT">DATATYPE_FLOAT</h3> <pre data-language="java">static final int DATATYPE_FLOAT</pre> <p>A constant returned by <code>getAttributeDataType</code> indicating that the value of an attribute is a string representation of a decimal floating-point number.</p>     <h3 id="DATATYPE_DOUBLE">DATATYPE_DOUBLE</h3> <pre data-language="java">static final int DATATYPE_DOUBLE</pre> <p>A constant returned by <code>getAttributeDataType</code> indicating that the value of an attribute is a string representation of a double-precision decimal floating-point number.</p>      <h2 id="method.detail">Methods</h2>   <h3 id="getRootName--">getRootName</h3> <pre data-language="java">String getRootName()</pre> <p>Returns the name of the root element of the format.</p> <dl> <dt>Returns:</dt> <dd>a <code>String</code>.</dd> </dl>    <h3 id="canNodeAppear-java.lang.String-javax.imageio.ImageTypeSpecifier-">canNodeAppear</h3> <pre data-language="java">boolean canNodeAppear(String elementName,
+                      ImageTypeSpecifier imageType)</pre> <p>Returns <code>true</code> if the element (and the subtree below it) is allowed to appear in a metadata document for an image of the given type, defined by an <code>ImageTypeSpecifier</code>. For example, a metadata document format might contain an element that describes the primary colors of the image, which would not be allowed when writing a grayscale image.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dd>
+<code>imageType</code> - an <code>ImageTypeSpecifier</code> indicating the type of the image that will be associated with the metadata.</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the node is meaningful for images of the given type.</dd> </dl>    <h3 id="getElementMinChildren-java.lang.String-">getElementMinChildren</h3> <pre data-language="java">int getElementMinChildren(String elementName)</pre> <p>Returns the minimum number of children of the named element with child policy <code>CHILD_POLICY_REPEAT</code>. For example, an element representing color primary information might be required to have at least 3 children, one for each primary.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>an <code>int</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the named element does not have a child policy of <code>CHILD_POLICY_REPEAT</code>.</dd> </dl>    <h3 id="getElementMaxChildren-java.lang.String-">getElementMaxChildren</h3> <pre data-language="java">int getElementMaxChildren(String elementName)</pre> <p>Returns the maximum number of children of the named element with child policy <code>CHILD_POLICY_REPEAT</code>. For example, an element representing an entry in an 8-bit color palette might be allowed to repeat up to 256 times. A value of <code>Integer.MAX_VALUE</code> may be used to specify that there is no upper bound.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>an <code>int</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the named element does not have a child policy of <code>CHILD_POLICY_REPEAT</code>.</dd> </dl>    <h3 id="getElementDescription-java.lang.String-java.util.Locale-">getElementDescription</h3> <pre data-language="java">String getElementDescription(String elementName,
+                             Locale locale)</pre> <div>
+<p>Returns a <code>String</code> containing a description of the named element, or <code>null</code>. The description will be localized for the supplied <code>Locale</code> if possible. </p>
+<p> If <code>locale</code> is <code>null</code>, the current default <code>Locale</code> returned by <code>Locale.getLocale</code> will be used.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element.</dd> <dd>
+<code>locale</code> - the <code>Locale</code> for which localization will be attempted.</dd> <dt>Returns:</dt> <dd>the element description.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code>, or is not a legal element name for this format.</dd> </dl>    <h3 id="getChildPolicy-java.lang.String-">getChildPolicy</h3> <pre data-language="java">int getChildPolicy(String elementName)</pre> <p>Returns one of the constants starting with <code>CHILD_POLICY_</code>, indicating the legal pattern of children for the named element.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>one of the <code>CHILD_POLICY_*</code> constants.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> </dl>    <h3 id="getChildNames-java.lang.String-">getChildNames</h3> <pre data-language="java">String[] getChildNames(String elementName)</pre> <p>Returns an array of <code>String</code>s indicating the names of the element which are allowed to be children of the named element, in the order in which they should appear. If the element cannot have children, <code>null</code> is returned.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>an array of <code>String</code>s, or null.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> </dl>    <h3 id="getAttributeNames-java.lang.String-">getAttributeNames</h3> <pre data-language="java">String[] getAttributeNames(String elementName)</pre> <p>Returns an array of <code>String</code>s listing the names of the attributes that may be associated with the named element.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>an array of <code>String</code>s.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> </dl>    <h3 id="getAttributeValueType-java.lang.String-java.lang.String-">getAttributeValueType</h3> <pre data-language="java">int getAttributeValueType(String elementName,
+                          String attrName)</pre> <p>Returns one of the constants starting with <code>VALUE_</code>, indicating whether the values of the given attribute within the named element are arbitrary, constrained to lie within a specified range, constrained to be one of a set of enumerated values, or are a whitespace-separated list of arbitrary values.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dd>
+<code>attrName</code> - the name of the attribute being queried.</dd> <dt>Returns:</dt> <dd>one of the <code>VALUE_*</code> constants.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> </dl>    <h3 id="getAttributeDataType-java.lang.String-java.lang.String-">getAttributeDataType</h3> <pre data-language="java">int getAttributeDataType(String elementName,
+                         String attrName)</pre> <p>Returns one of the constants starting with <code>DATATYPE_</code>, indicating the format and interpretation of the value of the given attribute within the named element. If <code>getAttributeValueType</code> returns <code>VALUE_LIST</code>, then the legal value is a whitespace-spearated list of values of the returned datatype.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dd>
+<code>attrName</code> - the name of the attribute being queried.</dd> <dt>Returns:</dt> <dd>one of the <code>DATATYPE_*</code> constants.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> </dl>    <h3 id="isAttributeRequired-java.lang.String-java.lang.String-">isAttributeRequired</h3> <pre data-language="java">boolean isAttributeRequired(String elementName,
+                            String attrName)</pre> <p>Returns <code>true</code> if the named attribute must be present within the named element.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dd>
+<code>attrName</code> - the name of the attribute being queried.</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the attribute must be present.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> </dl>    <h3 id="getAttributeDefaultValue-java.lang.String-java.lang.String-">getAttributeDefaultValue</h3> <pre data-language="java">String getAttributeDefaultValue(String elementName,
+                                String attrName)</pre> <p>Returns the default value of the named attribute, if it is not explicitly present within the named element, as a <code>String</code>, or <code>null</code> if no default value is available.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dd>
+<code>attrName</code> - the name of the attribute being queried.</dd> <dt>Returns:</dt> <dd>a <code>String</code> containing the default value, or <code>null</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> </dl>    <h3 id="getAttributeEnumerations-java.lang.String-java.lang.String-">getAttributeEnumerations</h3> <pre data-language="java">String[] getAttributeEnumerations(String elementName,
+                                  String attrName)</pre> <p>Returns an array of <code>String</code>s containing the legal enumerated values for the given attribute within the named element. This method should only be called if <code>getAttributeValueType</code> returns <code>VALUE_ENUMERATION</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dd>
+<code>attrName</code> - the name of the attribute being queried.</dd> <dt>Returns:</dt> <dd>an array of <code>String</code>s.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the given attribute is not defined as an enumeration.</dd> </dl>    <h3 id="getAttributeMinValue-java.lang.String-java.lang.String-">getAttributeMinValue</h3> <pre data-language="java">String getAttributeMinValue(String elementName,
+                            String attrName)</pre> <p>Returns the minimum legal value for the attribute. Whether this value is inclusive or exclusive may be determined by the value of <code>getAttributeValueType</code>. The value is returned as a <code>String</code>; its interpretation is dependent on the value of <code>getAttributeDataType</code>. This method should only be called if <code>getAttributeValueType</code> returns <code>VALUE_RANGE_*</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dd>
+<code>attrName</code> - the name of the attribute being queried.</dd> <dt>Returns:</dt> <dd>a <code>String</code> containing the smallest legal value for the attribute.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the given attribute is not defined as a range.</dd> </dl>    <h3 id="getAttributeMaxValue-java.lang.String-java.lang.String-">getAttributeMaxValue</h3> <pre data-language="java">String getAttributeMaxValue(String elementName,
+                            String attrName)</pre> <p>Returns the maximum legal value for the attribute. Whether this value is inclusive or exclusive may be determined by the value of <code>getAttributeValueType</code>. The value is returned as a <code>String</code>; its interpretation is dependent on the value of <code>getAttributeDataType</code>. This method should only be called if <code>getAttributeValueType</code> returns <code>VALUE_RANGE_*</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried, as a <code>String</code>.</dd> <dd>
+<code>attrName</code> - the name of the attribute being queried.</dd> <dt>Returns:</dt> <dd>a <code>String</code> containing the largest legal value for the attribute.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the given attribute is not defined as a range.</dd> </dl>    <h3 id="getAttributeListMinLength-java.lang.String-java.lang.String-">getAttributeListMinLength</h3> <pre data-language="java">int getAttributeListMinLength(String elementName,
+                              String attrName)</pre> <p>Returns the minimum number of list items that may be used to define this attribute. The attribute itself is defined as a <code>String</code> containing multiple whitespace-separated items. This method should only be called if <code>getAttributeValueType</code> returns <code>VALUE_LIST</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dd>
+<code>attrName</code> - the name of the attribute being queried.</dd> <dt>Returns:</dt> <dd>the smallest legal number of list items for the attribute.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the given attribute is not defined as a list.</dd> </dl>    <h3 id="getAttributeListMaxLength-java.lang.String-java.lang.String-">getAttributeListMaxLength</h3> <pre data-language="java">int getAttributeListMaxLength(String elementName,
+                              String attrName)</pre> <p>Returns the maximum number of list items that may be used to define this attribute. A value of <code>Integer.MAX_VALUE</code> may be used to specify that there is no upper bound. The attribute itself is defined as a <code>String</code> containing multiple whitespace-separated items. This method should only be called if <code>getAttributeValueType</code> returns <code>VALUE_LIST</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dd>
+<code>attrName</code> - the name of the attribute being queried.</dd> <dt>Returns:</dt> <dd>the largest legal number of list items for the attribute.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the given attribute is not defined as a list.</dd> </dl>    <h3 id="getAttributeDescription-java.lang.String-java.lang.String-java.util.Locale-">getAttributeDescription</h3> <pre data-language="java">String getAttributeDescription(String elementName,
+                               String attrName,
+                               Locale locale)</pre> <div>
+<p>Returns a <code>String</code> containing a description of the named attribute, or <code>null</code>. The description will be localized for the supplied <code>Locale</code> if possible. </p>
+<p> If <code>locale</code> is <code>null</code>, the current default <code>Locale</code> returned by <code>Locale.getLocale</code> will be used.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element.</dd> <dd>
+<code>attrName</code> - the name of the attribute.</dd> <dd>
+<code>locale</code> - the <code>Locale</code> for which localization will be attempted.</dd> <dt>Returns:</dt> <dd>the attribute description.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code>, or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>attrName</code> is <code>null</code> or is not a legal attribute name for this element.</dd> </dl>    <h3 id="getObjectValueType-java.lang.String-">getObjectValueType</h3> <pre data-language="java">int getObjectValueType(String elementName)</pre> <div>
+<p>Returns one of the enumerated values starting with <code>VALUE_</code>, indicating the type of values (enumeration, range, or array) that are allowed for the <code>Object</code> reference. If no object value can be stored within the given element, the result of this method will be <code>VALUE_NONE</code>. </p>
+<p> <code>Object</code> references whose legal values are defined as a range must implement the <code>Comparable</code> interface.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>one of the <code>VALUE_*</code> constants.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dt>See Also:</dt> <dd><a href="../../../../java/lang/comparable/"><code>Comparable</code></a></dd> </dl>    <h3 id="getObjectClass-java.lang.String-">getObjectClass</h3> <pre data-language="java">Class&lt;?&gt; getObjectClass(String elementName)</pre> <div>
+<p>Returns the <code>Class</code> type of the <code>Object</code> reference stored within the element. If this element may not contain an <code>Object</code> reference, an <code>IllegalArgumentException</code> will be thrown. If the class type is an array, this field indicates the underlying class type (<i>e.g</i>, for an array of <code>int</code>s, this method would return <code>int.class</code>). </p>
+<p> <code>Object</code> references whose legal values are defined as a range must implement the <code>Comparable</code> interface.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>a <code>Class</code> object.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the named element cannot contain an object value (<i>i.e.</i>, if <code>getObjectValueType(elementName) == VALUE_NONE</code>).</dd> </dl>    <h3 id="getObjectDefaultValue-java.lang.String-">getObjectDefaultValue</h3> <pre data-language="java">Object getObjectDefaultValue(String elementName)</pre> <p>Returns an <code>Object</code>s containing the default value for the <code>Object</code> reference within the named element.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>an <code>Object</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the named element cannot contain an object value (<i>i.e.</i>, if <code>getObjectValueType(elementName) == VALUE_NONE</code>).</dd> </dl>    <h3 id="getObjectEnumerations-java.lang.String-">getObjectEnumerations</h3> <pre data-language="java">Object[] getObjectEnumerations(String elementName)</pre> <div>
+<p>Returns an array of <code>Object</code>s containing the legal enumerated values for the <code>Object</code> reference within the named element. This method should only be called if <code>getObjectValueType</code> returns <code>VALUE_ENUMERATION</code>. </p>
+<p> The <code>Object</code> associated with a node that accepts enumerated values must be equal to one of the values returned by this method, as defined by the <code>==</code> operator (as opposed to the <code>Object.equals</code> method).</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>an array of <code>Object</code>s.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the named element cannot contain an object value (<i>i.e.</i>, if <code>getObjectValueType(elementName) == VALUE_NONE</code>).</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the <code>Object</code> is not defined as an enumeration.</dd> </dl>    <h3 id="getObjectMinValue-java.lang.String-">getObjectMinValue</h3> <pre data-language="java">Comparable&lt;?&gt; getObjectMinValue(String elementName)</pre> <p>Returns the minimum legal value for the <code>Object</code> reference within the named element. Whether this value is inclusive or exclusive may be determined by the value of <code>getObjectValueType</code>. This method should only be called if <code>getObjectValueType</code> returns one of the constants starting with <code>VALUE_RANGE</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>the smallest legal value for the attribute.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the named element cannot contain an object value (<i>i.e.</i>, if <code>getObjectValueType(elementName) == VALUE_NONE</code>).</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the <code>Object</code> is not defined as a range.</dd> </dl>    <h3 id="getObjectMaxValue-java.lang.String-">getObjectMaxValue</h3> <pre data-language="java">Comparable&lt;?&gt; getObjectMaxValue(String elementName)</pre> <p>Returns the maximum legal value for the <code>Object</code> reference within the named element. Whether this value is inclusive or exclusive may be determined by the value of <code>getObjectValueType</code>. This method should only be called if <code>getObjectValueType</code> returns one of the constants starting with <code>VALUE_RANGE</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>the smallest legal value for the attribute.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the named element cannot contain an object value (<i>i.e.</i>, if <code>getObjectValueType(elementName) == VALUE_NONE</code>).</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the <code>Object</code> is not defined as a range.</dd> </dl>    <h3 id="getObjectArrayMinLength-java.lang.String-">getObjectArrayMinLength</h3> <pre data-language="java">int getObjectArrayMinLength(String elementName)</pre> <p>Returns the minimum number of array elements that may be used to define the <code>Object</code> reference within the named element. This method should only be called if <code>getObjectValueType</code> returns <code>VALUE_LIST</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>the smallest valid array length for the <code>Object</code> reference.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the named element cannot contain an object value (<i>i.e.</i>, if <code>getObjectValueType(elementName) == VALUE_NONE</code>).</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the <code>Object</code> is not an array.</dd> </dl>    <h3 id="getObjectArrayMaxLength-java.lang.String-">getObjectArrayMaxLength</h3> <pre data-language="java">int getObjectArrayMaxLength(String elementName)</pre> <p>Returns the maximum number of array elements that may be used to define the <code>Object</code> reference within the named element. A value of <code>Integer.MAX_VALUE</code> may be used to specify that there is no upper bound. This method should only be called if <code>getObjectValueType</code> returns <code>VALUE_LIST</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elementName</code> - the name of the element being queried.</dd> <dt>Returns:</dt> <dd>the largest valid array length for the <code>Object</code> reference.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>elementName</code> is <code>null</code> or is not a legal element name for this format.</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the named element cannot contain an object value (<i>i.e.</i>, if <code>getObjectValueType(elementName) == VALUE_NONE</code>).</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the <code>Object</code> is not an array.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,299 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Timer - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="Provides the implementation of the timer MBean. The timer MBean sends out an alarm at a specified time that wakes up all the listeners registered to &hellip;">
+  <meta name="keywords" content="class, timer, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/javax/management/timer/timer/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class Timer</h1>   <ul class="inheritance"> <li><a href="../../../../java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../../notificationbroadcastersupport/">javax.management.NotificationBroadcasterSupport</a></li> <li> <ul class="inheritance"> <li>javax.management.timer.Timer</li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../mbeanregistration/">MBeanRegistration</a>, <a href="../../notificationbroadcaster/">NotificationBroadcaster</a>, <a href="../../notificationemitter/">NotificationEmitter</a>, <a href="../timermbean/">TimerMBean</a>
+</dd> </dl>   <pre data-language="java">public class Timer
+extends NotificationBroadcasterSupport
+implements TimerMBean, MBeanRegistration</pre> <div>
+<p>Provides the implementation of the timer MBean. The timer MBean sends out an alarm at a specified time that wakes up all the listeners registered to receive timer notifications. </p>
+<p> This class manages a list of dated timer notifications. A method allows users to add/remove as many notifications as required. When a timer notification is emitted by the timer and becomes obsolete, it is automatically removed from the list of timer notifications. <br>Additional timer notifications can be added into regularly repeating notifications. </p>
+<p> Note: </p>
+<ol> <li>When sending timer notifications, the timer updates the notification sequence number irrespective of the notification type. </li>
+<li>The timer service relies on the system date of the host where the <code>Timer</code> class is loaded. Listeners may receive untimely notifications if their host has a different system date. To avoid such problems, synchronize the system date of all host machines where timing is needed. </li>
+<li>The default behavior for periodic notifications is <i>fixed-delay execution</i>, as specified in <a href="../../../../java/util/timer/"><code>Timer</code></a>. In order to use <i>fixed-rate execution</i>, use the overloaded <a href="../timer/#addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-long-boolean-"><code>addNotification(String, String, Object, Date, long, long, boolean)</code></a> method. </li>
+<li>Notification listeners are potentially all executed in the same thread. Therefore, they should execute rapidly to avoid holding up other listeners or perturbing the regularity of fixed-delay executions. See <a href="../../notificationbroadcastersupport/"><code>NotificationBroadcasterSupport</code></a>. </li>
+</ol>
+</div> <dl> <dt>Since:</dt> <dd>1.5</dd> </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="ONE_SECOND">ONE_SECOND</h3> <pre data-language="java">public static final long ONE_SECOND</pre> <p>Number of milliseconds in one second. Useful constant for the <code>addNotification</code> method.</p>     <h3 id="ONE_MINUTE">ONE_MINUTE</h3> <pre data-language="java">public static final long ONE_MINUTE</pre> <p>Number of milliseconds in one minute. Useful constant for the <code>addNotification</code> method.</p>     <h3 id="ONE_HOUR">ONE_HOUR</h3> <pre data-language="java">public static final long ONE_HOUR</pre> <p>Number of milliseconds in one hour. Useful constant for the <code>addNotification</code> method.</p>     <h3 id="ONE_DAY">ONE_DAY</h3> <pre data-language="java">public static final long ONE_DAY</pre> <p>Number of milliseconds in one day. Useful constant for the <code>addNotification</code> method.</p>     <h3 id="ONE_WEEK">ONE_WEEK</h3> <pre data-language="java">public static final long ONE_WEEK</pre> <p>Number of milliseconds in one week. Useful constant for the <code>addNotification</code> method.</p>      <h2 id="constructor.detail">Constructors</h2>   <h3 id="Timer--">Timer</h3> <pre data-language="java">public Timer()</pre> <p>Default constructor.</p>     <h2 id="method.detail">Methods</h2>   <h3 id="preRegister-javax.management.MBeanServer-javax.management.ObjectName-">preRegister</h3> <pre data-language="java">public ObjectName preRegister(MBeanServer server,
+                              ObjectName name)
+                       throws Exception</pre> <div>
+<p>Allows the timer MBean to perform any operations it needs before being registered in the MBean server. </p>
+<p> Not used in this context.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../mbeanregistration/#preRegister-javax.management.MBeanServer-javax.management.ObjectName-">preRegister</a></code> in interface <code><a href="../../mbeanregistration/">MBeanRegistration</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>server</code> - The MBean server in which the timer MBean will be registered.</dd> <dd>
+<code>name</code> - The object name of the timer MBean.</dd> <dt>Returns:</dt> <dd>The name of the timer MBean registered.</dd> <dt>Throws:</dt> <dd><code><a href="../../../../java/lang/exception/">Exception</a></code></dd> </dl>    <h3 id="postRegister-java.lang.Boolean-">postRegister</h3> <pre data-language="java">public void postRegister(Boolean registrationDone)</pre> <div>
+<p>Allows the timer MBean to perform any operations needed after having been registered in the MBean server or after the registration has failed. </p>
+<p> Not used in this context.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../mbeanregistration/#postRegister-java.lang.Boolean-">postRegister</a></code> in interface <code><a href="../../mbeanregistration/">MBeanRegistration</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>registrationDone</code> - Indicates whether or not the MBean has been successfully registered in the MBean server. The value false means that the registration phase has failed.</dd> </dl>    <h3 id="preDeregister--">preDeregister</h3> <pre data-language="java">public void preDeregister()
+                   throws Exception</pre> <div>
+<p>Allows the timer MBean to perform any operations it needs before being unregistered by the MBean server. </p>
+<p> Stops the timer.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../mbeanregistration/#preDeregister--">preDeregister</a></code> in interface <code><a href="../../mbeanregistration/">MBeanRegistration</a></code>
+</dd> <dt>Throws:</dt> <dd><code><a href="../../../../java/lang/exception/">Exception</a></code></dd> </dl>    <h3 id="postDeregister--">postDeregister</h3> <pre data-language="java">public void postDeregister()</pre> <div>
+<p>Allows the timer MBean to perform any operations needed after having been unregistered by the MBean server. </p>
+<p> Not used in this context.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../mbeanregistration/#postDeregister--">postDeregister</a></code> in interface <code><a href="../../mbeanregistration/">MBeanRegistration</a></code>
+</dd> </dl>    <h3 id="getNotificationInfo--">getNotificationInfo</h3> <pre data-language="java">public MBeanNotificationInfo[] getNotificationInfo()</pre> <p>Description copied from interface: <code><a href="../../notificationbroadcaster/#getNotificationInfo--">NotificationBroadcaster</a></code></p> <div>
+
+<p>Returns an array indicating, for each notification this MBean may send, the name of the Java class of the notification and the notification type.</p> <p>It is not illegal for the MBean to send notifications not described in this array. However, some clients of the MBean server may depend on the array being complete for their correct functioning.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../notificationbroadcaster/#getNotificationInfo--">getNotificationInfo</a></code> in interface <code><a href="../../notificationbroadcaster/">NotificationBroadcaster</a></code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../notificationbroadcastersupport/#getNotificationInfo--">getNotificationInfo</a></code> in class <code><a href="../../notificationbroadcastersupport/">NotificationBroadcasterSupport</a></code>
+</dd> <dt>Returns:</dt> <dd>the array of possible notifications.</dd> </dl>    <h3 id="start--">start</h3> <pre data-language="java">public void start()</pre> <div>
+<p>Starts the timer. </p>
+<p> If there is one or more timer notifications before the time in the list of notifications, the notification is sent according to the <code>sendPastNotifications</code> flag and then, updated according to its period and remaining number of occurrences. If the timer notification date remains earlier than the current date, this notification is just removed from the list of notifications.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#start--">start</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> </dl>    <h3 id="stop--">stop</h3> <pre data-language="java">public void stop()</pre> <p>Stops the timer.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#stop--">stop</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> </dl>    <h3 id="addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-long-boolean-">addNotification</h3> <pre data-language="java">public Integer addNotification(String type,
+                               String message,
+                               Object userData,
+                               Date date,
+                               long period,
+                               long nbOccurences,
+                               boolean fixedRate)
+                        throws IllegalArgumentException</pre> <div>
+<p>Creates a new timer notification with the specified <code>type</code>, <code>message</code> and <code>userData</code> and inserts it into the list of notifications with a given date, period and number of occurrences. </p>
+<p> If the timer notification to be inserted has a date that is before the current date, the method behaves as if the specified date were the current date. <br> For once-off notifications, the notification is delivered immediately. <br> For periodic notifications, the first notification is delivered immediately and the subsequent ones are spaced as specified by the period parameter. </p>
+<p> Note that once the timer notification has been added into the list of notifications, its associated date, period and number of occurrences cannot be updated. </p>
+<p> In the case of a periodic notification, the value of parameter <i>fixedRate</i> is used to specify the execution scheme, as specified in <a href="../../../../java/util/timer/"><code>Timer</code></a>.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-long-boolean-">addNotification</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>type</code> - The timer notification type.</dd> <dd>
+<code>message</code> - The timer notification detailed message.</dd> <dd>
+<code>userData</code> - The timer notification user data object.</dd> <dd>
+<code>date</code> - The date when the notification occurs.</dd> <dd>
+<code>period</code> - The period of the timer notification (in milliseconds).</dd> <dd>
+<code>nbOccurences</code> - The total number the timer notification will be emitted.</dd> <dd>
+<code>fixedRate</code> - If <code>true</code> and if the notification is periodic, the notification is scheduled with a <i>fixed-rate</i> execution scheme. If <code>false</code> and if the notification is periodic, the notification is scheduled with a <i>fixed-delay</i> execution scheme. Ignored if the notification is not periodic.</dd> <dt>Returns:</dt> <dd>The identifier of the new created timer notification.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - The date is <code>null</code> or the period or the number of occurrences is negative.</dd> <dt>See Also:</dt> <dd><a href="../timer/#addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-long-"><code>addNotification(String, String, Object, Date, long, long)</code></a></dd> </dl>    <h3 id="addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-long-">addNotification</h3> <pre data-language="java">public Integer addNotification(String type,
+                               String message,
+                               Object userData,
+                               Date date,
+                               long period,
+                               long nbOccurences)
+                        throws IllegalArgumentException</pre> <div>
+<p>Creates a new timer notification with the specified <code>type</code>, <code>message</code> and <code>userData</code> and inserts it into the list of notifications with a given date, period and number of occurrences. </p>
+<p> If the timer notification to be inserted has a date that is before the current date, the method behaves as if the specified date were the current date. <br> For once-off notifications, the notification is delivered immediately. <br> For periodic notifications, the first notification is delivered immediately and the subsequent ones are spaced as specified by the period parameter. </p>
+<p> Note that once the timer notification has been added into the list of notifications, its associated date, period and number of occurrences cannot be updated. </p>
+<p> In the case of a periodic notification, uses a <i>fixed-delay</i> execution scheme, as specified in <a href="../../../../java/util/timer/"><code>Timer</code></a>. In order to use a <i>fixed-rate</i> execution scheme, use <a href="../timer/#addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-long-boolean-"><code>addNotification(String, String, Object, Date, long, long, boolean)</code></a> instead.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-long-">addNotification</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>type</code> - The timer notification type.</dd> <dd>
+<code>message</code> - The timer notification detailed message.</dd> <dd>
+<code>userData</code> - The timer notification user data object.</dd> <dd>
+<code>date</code> - The date when the notification occurs.</dd> <dd>
+<code>period</code> - The period of the timer notification (in milliseconds).</dd> <dd>
+<code>nbOccurences</code> - The total number the timer notification will be emitted.</dd> <dt>Returns:</dt> <dd>The identifier of the new created timer notification.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - The date is <code>null</code> or the period or the number of occurrences is negative.</dd> <dt>See Also:</dt> <dd><a href="../timer/#addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-long-boolean-"><code>addNotification(String, String, Object, Date, long, long, boolean)</code></a></dd> </dl>    <h3 id="addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-">addNotification</h3> <pre data-language="java">public Integer addNotification(String type,
+                               String message,
+                               Object userData,
+                               Date date,
+                               long period)
+                        throws IllegalArgumentException</pre> <div>
+<p>Creates a new timer notification with the specified <code>type</code>, <code>message</code> and <code>userData</code> and inserts it into the list of notifications with a given date and period and a null number of occurrences. </p>
+<p> The timer notification will repeat continuously using the timer period using a <i>fixed-delay</i> execution scheme, as specified in <a href="../../../../java/util/timer/"><code>Timer</code></a>. In order to use a <i>fixed-rate</i> execution scheme, use <a href="../timer/#addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-long-boolean-"><code>addNotification(String, String, Object, Date, long, long,
+ boolean)</code></a> instead. </p>
+<p> If the timer notification to be inserted has a date that is before the current date, the method behaves as if the specified date were the current date. The first notification is delivered immediately and the subsequent ones are spaced as specified by the period parameter.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-long-">addNotification</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>type</code> - The timer notification type.</dd> <dd>
+<code>message</code> - The timer notification detailed message.</dd> <dd>
+<code>userData</code> - The timer notification user data object.</dd> <dd>
+<code>date</code> - The date when the notification occurs.</dd> <dd>
+<code>period</code> - The period of the timer notification (in milliseconds).</dd> <dt>Returns:</dt> <dd>The identifier of the new created timer notification.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - The date is <code>null</code> or the period is negative.</dd> </dl>    <h3 id="addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-">addNotification</h3> <pre data-language="java">public Integer addNotification(String type,
+                               String message,
+                               Object userData,
+                               Date date)
+                        throws IllegalArgumentException</pre> <div>
+<p>Creates a new timer notification with the specified <code>type</code>, <code>message</code> and <code>userData</code> and inserts it into the list of notifications with a given date and a null period and number of occurrences. </p>
+<p> The timer notification will be handled once at the specified date. </p>
+<p> If the timer notification to be inserted has a date that is before the current date, the method behaves as if the specified date were the current date and the notification is delivered immediately.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#addNotification-java.lang.String-java.lang.String-java.lang.Object-java.util.Date-">addNotification</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>type</code> - The timer notification type.</dd> <dd>
+<code>message</code> - The timer notification detailed message.</dd> <dd>
+<code>userData</code> - The timer notification user data object.</dd> <dd>
+<code>date</code> - The date when the notification occurs.</dd> <dt>Returns:</dt> <dd>The identifier of the new created timer notification.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - The date is <code>null</code>.</dd> </dl>    <h3 id="removeNotification-java.lang.Integer-">removeNotification</h3> <pre data-language="java">public void removeNotification(Integer id)
+                        throws InstanceNotFoundException</pre> <p>Removes the timer notification corresponding to the specified identifier from the list of notifications.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#removeNotification-java.lang.Integer-">removeNotification</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>id</code> - The timer notification identifier.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../instancenotfoundexception/">InstanceNotFoundException</a></code> - The specified identifier does not correspond to any timer notification in the list of notifications of this timer MBean.</dd> </dl>    <h3 id="removeNotifications-java.lang.String-">removeNotifications</h3> <pre data-language="java">public void removeNotifications(String type)
+                         throws InstanceNotFoundException</pre> <p>Removes all the timer notifications corresponding to the specified type from the list of notifications.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#removeNotifications-java.lang.String-">removeNotifications</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>type</code> - The timer notification type.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../instancenotfoundexception/">InstanceNotFoundException</a></code> - The specified type does not correspond to any timer notification in the list of notifications of this timer MBean.</dd> </dl>    <h3 id="removeAllNotifications--">removeAllNotifications</h3> <pre data-language="java">public void removeAllNotifications()</pre> <p>Removes all the timer notifications from the list of notifications and resets the counter used to update the timer notification identifiers.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#removeAllNotifications--">removeAllNotifications</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> </dl>    <h3 id="getNbNotifications--">getNbNotifications</h3> <pre data-language="java">public int getNbNotifications()</pre> <p>Gets the number of timer notifications registered into the list of notifications.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getNbNotifications--">getNbNotifications</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Returns:</dt> <dd>The number of timer notifications.</dd> </dl>    <h3 id="getAllNotificationIDs--">getAllNotificationIDs</h3> <pre data-language="java">public Vector&lt;Integer&gt; getAllNotificationIDs()</pre> <p>Gets all timer notification identifiers registered into the list of notifications.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getAllNotificationIDs--">getAllNotificationIDs</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Returns:</dt> <dd>A vector of <code>Integer</code> objects containing all the timer notification identifiers. <br>The vector is empty if there is no timer notification registered for this timer MBean.</dd> </dl>    <h3 id="getNotificationIDs-java.lang.String-">getNotificationIDs</h3> <pre data-language="java">public Vector&lt;Integer&gt; getNotificationIDs(String type)</pre> <p>Gets all the identifiers of timer notifications corresponding to the specified type.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getNotificationIDs-java.lang.String-">getNotificationIDs</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>type</code> - The timer notification type.</dd> <dt>Returns:</dt> <dd>A vector of <code>Integer</code> objects containing all the identifiers of timer notifications with the specified <code>type</code>. <br>The vector is empty if there is no timer notifications registered for this timer MBean with the specified <code>type</code>.</dd> </dl>    <h3 id="getNotificationType-java.lang.Integer-">getNotificationType</h3> <pre data-language="java">public String getNotificationType(Integer id)</pre> <p>Gets the timer notification type corresponding to the specified identifier.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getNotificationType-java.lang.Integer-">getNotificationType</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>id</code> - The timer notification identifier.</dd> <dt>Returns:</dt> <dd>The timer notification type or null if the identifier is not mapped to any timer notification registered for this timer MBean.</dd> </dl>    <h3 id="getNotificationMessage-java.lang.Integer-">getNotificationMessage</h3> <pre data-language="java">public String getNotificationMessage(Integer id)</pre> <p>Gets the timer notification detailed message corresponding to the specified identifier.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getNotificationMessage-java.lang.Integer-">getNotificationMessage</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>id</code> - The timer notification identifier.</dd> <dt>Returns:</dt> <dd>The timer notification detailed message or null if the identifier is not mapped to any timer notification registered for this timer MBean.</dd> </dl>    <h3 id="getNotificationUserData-java.lang.Integer-">getNotificationUserData</h3> <pre data-language="java">public Object getNotificationUserData(Integer id)</pre> <p>Gets the timer notification user data object corresponding to the specified identifier.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getNotificationUserData-java.lang.Integer-">getNotificationUserData</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>id</code> - The timer notification identifier.</dd> <dt>Returns:</dt> <dd>The timer notification user data object or null if the identifier is not mapped to any timer notification registered for this timer MBean.</dd> </dl>    <h3 id="getDate-java.lang.Integer-">getDate</h3> <pre data-language="java">public Date getDate(Integer id)</pre> <p>Gets a copy of the date associated to a timer notification.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getDate-java.lang.Integer-">getDate</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>id</code> - The timer notification identifier.</dd> <dt>Returns:</dt> <dd>A copy of the date or null if the identifier is not mapped to any timer notification registered for this timer MBean.</dd> </dl>    <h3 id="getPeriod-java.lang.Integer-">getPeriod</h3> <pre data-language="java">public Long getPeriod(Integer id)</pre> <p>Gets a copy of the period (in milliseconds) associated to a timer notification.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getPeriod-java.lang.Integer-">getPeriod</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>id</code> - The timer notification identifier.</dd> <dt>Returns:</dt> <dd>A copy of the period or null if the identifier is not mapped to any timer notification registered for this timer MBean.</dd> </dl>    <h3 id="getNbOccurences-java.lang.Integer-">getNbOccurences</h3> <pre data-language="java">public Long getNbOccurences(Integer id)</pre> <p>Gets a copy of the remaining number of occurrences associated to a timer notification.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getNbOccurences-java.lang.Integer-">getNbOccurences</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>id</code> - The timer notification identifier.</dd> <dt>Returns:</dt> <dd>A copy of the remaining number of occurrences or null if the identifier is not mapped to any timer notification registered for this timer MBean.</dd> </dl>    <h3 id="getFixedRate-java.lang.Integer-">getFixedRate</h3> <pre data-language="java">public Boolean getFixedRate(Integer id)</pre> <p>Gets a copy of the flag indicating whether a periodic notification is executed at <i>fixed-delay</i> or at <i>fixed-rate</i>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getFixedRate-java.lang.Integer-">getFixedRate</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>id</code> - The timer notification identifier.</dd> <dt>Returns:</dt> <dd>A copy of the flag indicating whether a periodic notification is executed at <i>fixed-delay</i> or at <i>fixed-rate</i>.</dd> </dl>    <h3 id="getSendPastNotifications--">getSendPastNotifications</h3> <pre data-language="java">public boolean getSendPastNotifications()</pre> <p>Gets the flag indicating whether or not the timer sends past notifications. <br>The default value of the past notifications sending on/off flag is <code>false</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#getSendPastNotifications--">getSendPastNotifications</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Returns:</dt> <dd>The past notifications sending on/off flag value.</dd> <dt>See Also:</dt> <dd><a href="../timer/#setSendPastNotifications-boolean-"><code>setSendPastNotifications(boolean)</code></a></dd> </dl>    <h3 id="setSendPastNotifications-boolean-">setSendPastNotifications</h3> <pre data-language="java">public void setSendPastNotifications(boolean value)</pre> <p>Sets the flag indicating whether the timer sends past notifications or not. <br>The default value of the past notifications sending on/off flag is <code>false</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#setSendPastNotifications-boolean-">setSendPastNotifications</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>value</code> - The past notifications sending on/off flag value.</dd> <dt>See Also:</dt> <dd><a href="../timer/#getSendPastNotifications--"><code>getSendPastNotifications()</code></a></dd> </dl>    <h3 id="isActive--">isActive</h3> <pre data-language="java">public boolean isActive()</pre> <p>Tests whether the timer MBean is active. A timer MBean is marked active when the <a href="../timer/#start--"><code>start</code></a> method is called. It becomes inactive when the <a href="../timer/#stop--"><code>stop</code></a> method is called. <br>The default value of the active on/off flag is <code>false</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#isActive--">isActive</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the timer MBean is active, <code>false</code> otherwise.</dd> </dl>    <h3 id="isEmpty--">isEmpty</h3> <pre data-language="java">public boolean isEmpty()</pre> <p>Tests whether the list of timer notifications is empty.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../timermbean/#isEmpty--">isEmpty</a></code> in interface <code><a href="../timermbean/">TimerMBean</a></code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the list of timer notifications is empty, <code>false</code> otherwise.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

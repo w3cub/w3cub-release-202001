@@ -1,0 +1,550 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>HTMLDocument.HTMLReader - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content="An HTML reader to load an HTML document with an HTML element structure. This is a set of callbacks from the parser, implemented to create a set of &hellip;">
+  <meta name="keywords" content="class, htmldocument, htmlreader, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/javax/swing/text/html/htmldocument.htmlreader/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class HTMLDocument.HTMLReader</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../htmleditorkit.parsercallback/">javax.swing.text.html.HTMLEditorKit.ParserCallback</a></li> <li> <ul class="inheritance"> <li>javax.swing.text.html.HTMLDocument.HTMLReader</li> </ul> </li> </ul> </li> </ul>   <dl> <dt>Enclosing class:</dt> <dd><a href="../htmldocument/">HTMLDocument</a></dd> </dl>   <pre data-language="java">public class HTMLDocument.HTMLReader
+extends HTMLEditorKit.ParserCallback</pre> <div>
+<p>An HTML reader to load an HTML document with an HTML element structure. This is a set of callbacks from the parser, implemented to create a set of elements tagged with attributes. The parse builds up tokens (ElementSpec) that describe the element subtree desired, and burst it into the document under the protection of a write lock using the insert method on the document outer class. </p>
+<p> The reader can be configured by registering actions (of type <code>HTMLDocument.HTMLReader.TagAction</code>) that describe how to handle the action. The idea behind the actions provided is that the most natural text editing operations can be provided if the element structure boils down to paragraphs with runs of some kind of style in them. Some things are more naturally specified structurally, so arbitrary structure should be allowed above the paragraphs, but will need to be edited with structural actions. The implication of this is that some of the HTML elements specified in the stream being parsed will be collapsed into attributes, and in some cases paragraphs will be synthesized. When HTML elements have been converted to attributes, the attribute key will be of type HTML.Tag, and the value will be of type AttributeSet so that no information is lost. This enables many of the existing actions to work so that the user can type input, hit the return key, backspace, delete, etc and have a reasonable result. Selections can be created, and attributes applied or removed, etc. With this in mind, the work done by the reader can be categorized into the following kinds of tasks: </p>
+<dl> <dt>Block </dt>
+<dd>Build the structure like it's specified in the stream. This produces elements that contain other elements. </dd>
+<dt>Paragraph </dt>
+<dd>Like block except that it's expected that the element will be used with a paragraph view so a paragraph element won't need to be synthesized. </dd>
+<dt>Character </dt>
+<dd>Contribute the element as an attribute that will start and stop at arbitrary text locations. This will ultimately be mixed into a run of text, with all of the currently flattened HTML character elements. </dd>
+<dt>Special </dt>
+<dd>Produce an embedded graphical element. </dd>
+<dt>Form </dt>
+<dd>Produce an element that is like the embedded graphical element, except that it also has a component model associated with it. </dd>
+<dt>Hidden </dt>
+<dd>Create an element that is hidden from view when the document is being viewed read-only, and visible when the document is being edited. This is useful to keep the model from losing information, and used to store things like comments and unrecognized tags. </dd>
+</dl> <p> Currently, &lt;APPLET&gt;, &lt;PARAM&gt;, &lt;MAP&gt;, &lt;AREA&gt;, &lt;LINK&gt;, &lt;SCRIPT&gt; and &lt;STYLE&gt; are unsupported. </p>
+<p> The assignment of the actions described is shown in the following table for the tags defined in <code>HTML.Tag</code>. </p>
+<table> <tr>
+<th>Tag</th>
+<th>Action</th>
+</tr> <tr>
+<td>
+<code>HTML.Tag.A</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.ADDRESS</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.APPLET</code> </td>
+<td>HiddenAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.AREA</code> </td>
+<td>AreaAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.B</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.BASE</code> </td>
+<td>BaseAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.BASEFONT</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.BIG</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td><code>HTML.Tag.BLOCKQUOTE</code></td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.BODY</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.BR</code> </td>
+<td>SpecialAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.CAPTION</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.CENTER</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.CITE</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.CODE</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.DD</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.DFN</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.DIR</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.DIV</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.DL</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.DT</code> </td>
+<td>ParagraphAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.EM</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.FONT</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.FORM</code> </td>
+<td>As of 1.4 a BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.FRAME</code> </td>
+<td>SpecialAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.FRAMESET</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.H1</code> </td>
+<td>ParagraphAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.H2</code> </td>
+<td>ParagraphAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.H3</code> </td>
+<td>ParagraphAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.H4</code> </td>
+<td>ParagraphAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.H5</code> </td>
+<td>ParagraphAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.H6</code> </td>
+<td>ParagraphAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.HEAD</code> </td>
+<td>HeadAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.HR</code> </td>
+<td>SpecialAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.HTML</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.I</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.IMG</code> </td>
+<td>SpecialAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.INPUT</code> </td>
+<td>FormAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.ISINDEX</code> </td>
+<td>IsndexAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.KBD</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.LI</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.LINK</code> </td>
+<td>LinkAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.MAP</code> </td>
+<td>MapAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.MENU</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.META</code> </td>
+<td>MetaAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.NOFRAMES</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.OBJECT</code> </td>
+<td>SpecialAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.OL</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.OPTION</code> </td>
+<td>FormAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.P</code> </td>
+<td>ParagraphAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.PARAM</code> </td>
+<td>HiddenAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.PRE</code> </td>
+<td>PreAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.SAMP</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.SCRIPT</code> </td>
+<td>HiddenAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.SELECT</code> </td>
+<td>FormAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.SMALL</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.STRIKE</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.S</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.STRONG</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.STYLE</code> </td>
+<td>StyleAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.SUB</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.SUP</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.TABLE</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.TD</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.TEXTAREA</code> </td>
+<td>FormAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.TH</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.TITLE</code> </td>
+<td>TitleAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.TR</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.TT</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.U</code> </td>
+<td>CharacterAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.UL</code> </td>
+<td>BlockAction </td>
+</tr>
+<tr>
+<td>
+<code>HTML.Tag.VAR</code> </td>
+<td>CharacterAction </td>
+</tr>
+</table> <p> Once &lt;/html&gt; is encountered, the Actions are no longer notified.</p>
+</div>       <h2 id="nested.class.summary">Nested Classes</h2> <table> <caption>Nested Classes </caption> <tr> <th scope="col">Modifier and Type</th> <th scope="col">Class and Description</th> </tr> <tr> <td><code>class </code></td> <td>
+<code><a href="../htmldocument.htmlreader.blockaction/">HTMLDocument.HTMLReader.BlockAction</a></code> </td> </tr> <tr> <td><code>class </code></td> <td>
+<code><a href="../htmldocument.htmlreader.characteraction/">HTMLDocument.HTMLReader.CharacterAction</a></code> </td> </tr> <tr> <td><code>class </code></td> <td>
+<code><a href="../htmldocument.htmlreader.formaction/">HTMLDocument.HTMLReader.FormAction</a></code> <p>Action to support forms by building all of the elements used to represent form controls.</p> </td> </tr> <tr> <td><code>class </code></td> <td>
+<code><a href="../htmldocument.htmlreader.hiddenaction/">HTMLDocument.HTMLReader.HiddenAction</a></code> </td> </tr> <tr> <td><code>class </code></td> <td>
+<code><a href="../htmldocument.htmlreader.isindexaction/">HTMLDocument.HTMLReader.IsindexAction</a></code> </td> </tr> <tr> <td><code>class </code></td> <td>
+<code><a href="../htmldocument.htmlreader.paragraphaction/">HTMLDocument.HTMLReader.ParagraphAction</a></code> </td> </tr> <tr> <td><code>class </code></td> <td>
+<code><a href="../htmldocument.htmlreader.preaction/">HTMLDocument.HTMLReader.PreAction</a></code> </td> </tr> <tr> <td><code>class </code></td> <td>
+<code><a href="../htmldocument.htmlreader.specialaction/">HTMLDocument.HTMLReader.SpecialAction</a></code> </td> </tr> <tr> <td><code>class </code></td> <td>
+<code><a href="../htmldocument.htmlreader.tagaction/">HTMLDocument.HTMLReader.TagAction</a></code> <p>An action to be performed in response to parsing a tag.</p> </td> </tr> </table>    <h2 id="field.detail">Fields</h2>   <h3 id="parseBuffer">parseBuffer</h3> <pre data-language="java">protected Vector&lt;DefaultStyledDocument.ElementSpec&gt; parseBuffer</pre>    <h3 id="charAttr">charAttr</h3> <pre data-language="java">protected MutableAttributeSet charAttr</pre>     <h2 id="constructor.detail">Constructors</h2>   <h3 id="HTMLReader-int-">HTMLReader</h3> <pre data-language="java">public HTMLReader(int offset)</pre>    <h3 id="HTMLReader-int-int-int-javax.swing.text.html.HTML.Tag-">HTMLReader</h3> <pre data-language="java">public HTMLReader(int offset,
+                  int popDepth,
+                  int pushDepth,
+                  HTML.Tag insertTag)</pre>     <h2 id="method.detail">Methods</h2>   <h3 id="flush--">flush</h3> <pre data-language="java">public void flush()
+           throws BadLocationException</pre> <p>The last method called on the reader. It allows any pending changes to be flushed into the document. Since this is currently loading synchronously, the entire set of changes are pushed in at this point.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../htmleditorkit.parsercallback/#flush--">flush</a></code> in class <code><a href="../htmleditorkit.parsercallback/">HTMLEditorKit.ParserCallback</a></code>
+</dd> <dt>Throws:</dt> <dd><code><a href="../../badlocationexception/">BadLocationException</a></code></dd> </dl>    <h3 id="handleText-char:A-int-">handleText</h3> <pre data-language="java">public void handleText(char[] data,
+                       int pos)</pre> <p>Called by the parser to indicate a block of text was encountered.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../htmleditorkit.parsercallback/#handleText-char:A-int-">handleText</a></code> in class <code><a href="../htmleditorkit.parsercallback/">HTMLEditorKit.ParserCallback</a></code>
+</dd> </dl>    <h3 id="handleStartTag-javax.swing.text.html.HTML.Tag-javax.swing.text.MutableAttributeSet-int-">handleStartTag</h3> <pre data-language="java">public void handleStartTag(HTML.Tag t,
+                           MutableAttributeSet a,
+                           int pos)</pre> <p>Callback from the parser. Route to the appropriate handler for the tag.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../htmleditorkit.parsercallback/#handleStartTag-javax.swing.text.html.HTML.Tag-javax.swing.text.MutableAttributeSet-int-">handleStartTag</a></code> in class <code><a href="../htmleditorkit.parsercallback/">HTMLEditorKit.ParserCallback</a></code>
+</dd> </dl>    <h3 id="handleComment-char:A-int-">handleComment</h3> <pre data-language="java">public void handleComment(char[] data,
+                          int pos)</pre> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../htmleditorkit.parsercallback/#handleComment-char:A-int-">handleComment</a></code> in class <code><a href="../htmleditorkit.parsercallback/">HTMLEditorKit.ParserCallback</a></code>
+</dd> </dl>    <h3 id="handleEndTag-javax.swing.text.html.HTML.Tag-int-">handleEndTag</h3> <pre data-language="java">public void handleEndTag(HTML.Tag t,
+                         int pos)</pre> <p>Callback from the parser. Route to the appropriate handler for the tag.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../htmleditorkit.parsercallback/#handleEndTag-javax.swing.text.html.HTML.Tag-int-">handleEndTag</a></code> in class <code><a href="../htmleditorkit.parsercallback/">HTMLEditorKit.ParserCallback</a></code>
+</dd> </dl>    <h3 id="handleSimpleTag-javax.swing.text.html.HTML.Tag-javax.swing.text.MutableAttributeSet-int-">handleSimpleTag</h3> <pre data-language="java">public void handleSimpleTag(HTML.Tag t,
+                            MutableAttributeSet a,
+                            int pos)</pre> <p>Callback from the parser. Route to the appropriate handler for the tag.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../htmleditorkit.parsercallback/#handleSimpleTag-javax.swing.text.html.HTML.Tag-javax.swing.text.MutableAttributeSet-int-">handleSimpleTag</a></code> in class <code><a href="../htmleditorkit.parsercallback/">HTMLEditorKit.ParserCallback</a></code>
+</dd> </dl>    <h3 id="handleEndOfLineString-java.lang.String-">handleEndOfLineString</h3> <pre data-language="java">public void handleEndOfLineString(String eol)</pre> <p>This is invoked after the stream has been parsed, but before <code>flush</code>. <code>eol</code> will be one of \n, \r or \r\n, which ever is encountered the most in parsing the stream.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../htmleditorkit.parsercallback/#handleEndOfLineString-java.lang.String-">handleEndOfLineString</a></code> in class <code><a href="../htmleditorkit.parsercallback/">HTMLEditorKit.ParserCallback</a></code>
+</dd> <dt>Since:</dt> <dd>1.3</dd> </dl>    <h3 id="registerTag-javax.swing.text.html.HTML.Tag-javax.swing.text.html.HTMLDocument.HTMLReader.TagAction-">registerTag</h3> <pre data-language="java">protected void registerTag(HTML.Tag t,
+                           HTMLDocument.HTMLReader.TagAction a)</pre> <p>Registers a handler for the given tag. By default all of the well-known tags will have been registered. This can be used to change the handling of a particular tag or to add support for custom tags.</p>    <h3 id="pushCharacterStyle--">pushCharacterStyle</h3> <pre data-language="java">protected void pushCharacterStyle()</pre> <p>Pushes the current character style on a stack in preparation for forming a new nested character style.</p>    <h3 id="popCharacterStyle--">popCharacterStyle</h3> <pre data-language="java">protected void popCharacterStyle()</pre> <p>Pops a previously pushed character style off the stack to return to a previous style.</p>    <h3 id="textAreaContent-char:A-">textAreaContent</h3> <pre data-language="java">protected void textAreaContent(char[] data)</pre> <p>Adds the given content to the textarea document. This method gets called when we are in a textarea context. Therefore all text that is seen belongs to the text area and is hence added to the TextAreaDocument associated with the text area.</p>    <h3 id="preContent-char:A-">preContent</h3> <pre data-language="java">protected void preContent(char[] data)</pre> <p>Adds the given content that was encountered in a PRE element. This synthesizes lines to hold the runs of text, and makes calls to addContent to actually add the text.</p>    <h3 id="blockOpen-javax.swing.text.html.HTML.Tag-javax.swing.text.MutableAttributeSet-">blockOpen</h3> <pre data-language="java">protected void blockOpen(HTML.Tag t,
+                         MutableAttributeSet attr)</pre> <p>Adds an instruction to the parse buffer to create a block element with the given attributes.</p>    <h3 id="blockClose-javax.swing.text.html.HTML.Tag-">blockClose</h3> <pre data-language="java">protected void blockClose(HTML.Tag t)</pre> <p>Adds an instruction to the parse buffer to close out a block element of the given type.</p>    <h3 id="addContent-char:A-int-int-">addContent</h3> <pre data-language="java">protected void addContent(char[] data,
+                          int offs,
+                          int length)</pre> <p>Adds some text with the current character attributes.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>data</code> - the content to add</dd> <dd>
+<code>offs</code> - the initial offset</dd> <dd>
+<code>length</code> - the length</dd> </dl>    <h3 id="addContent-char:A-int-int-boolean-">addContent</h3> <pre data-language="java">protected void addContent(char[] data,
+                          int offs,
+                          int length,
+                          boolean generateImpliedPIfNecessary)</pre> <p>Adds some text with the current character attributes.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>data</code> - the content to add</dd> <dd>
+<code>offs</code> - the initial offset</dd> <dd>
+<code>length</code> - the length</dd> <dd>
+<code>generateImpliedPIfNecessary</code> - whether to generate implied paragraphs</dd> </dl>    <h3 id="addSpecialElement-javax.swing.text.html.HTML.Tag-javax.swing.text.MutableAttributeSet-">addSpecialElement</h3> <pre data-language="java">protected void addSpecialElement(HTML.Tag t,
+                                 MutableAttributeSet a)</pre> <p>Adds content that is basically specified entirely in the attribute set.</p>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

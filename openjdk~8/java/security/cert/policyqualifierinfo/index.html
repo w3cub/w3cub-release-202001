@@ -1,0 +1,137 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>PolicyQualifierInfo - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" An immutable policy qualifier represented by the ASN.1 PolicyQualifierInfo structure. ">
+  <meta name="keywords" content="class, policyqualifierinfo, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/security/cert/policyqualifierinfo/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class PolicyQualifierInfo</h1>   <ul class="inheritance"> <li><a href="../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.security.cert.PolicyQualifierInfo</li> </ul> </li> </ul>     <pre data-language="java">public class PolicyQualifierInfo
+extends Object</pre> <div>
+<p>An immutable policy qualifier represented by the ASN.1 PolicyQualifierInfo structure. </p>
+<p>The ASN.1 definition is as follows: </p>
+<pre data-language="java">PolicyQualifierInfo ::= SEQUENCE {
+        policyQualifierId       PolicyQualifierId,
+        qualifier               ANY DEFINED BY policyQualifierId }</pre> <p> A certificate policies extension, if present in an X.509 version 3 certificate, contains a sequence of one or more policy information terms, each of which consists of an object identifier (OID) and optional qualifiers. In an end-entity certificate, these policy information terms indicate the policy under which the certificate has been issued and the purposes for which the certificate may be used. In a CA certificate, these policy information terms limit the set of policies for certification paths which include this certificate. </p>
+<p> A <code>Set</code> of <code>PolicyQualifierInfo</code> objects are returned by the <a href="../policynode/#getPolicyQualifiers--"><code>PolicyNode.getPolicyQualifiers</code></a> method. This allows applications with specific policy requirements to process and validate each policy qualifier. Applications that need to process policy qualifiers should explicitly set the <code>policyQualifiersRejected</code> flag to false (by calling the <a href="../pkixparameters/#setPolicyQualifiersRejected-boolean-"><code>PKIXParameters.setPolicyQualifiersRejected</code></a> method) before validating a certification path. </p>
+<p>Note that the PKIX certification path validation algorithm specifies that any policy qualifier in a certificate policies extension that is marked critical must be processed and validated. Otherwise the certification path must be rejected. If the <code>policyQualifiersRejected</code> flag is set to false, it is up to the application to validate all policy qualifiers in this manner in order to be PKIX compliant. </p>
+<p><b>Concurrent Access</b> </p>
+<p>All <code>PolicyQualifierInfo</code> objects must be immutable and thread-safe. That is, multiple threads may concurrently invoke the methods defined in this class on a single <code>PolicyQualifierInfo</code> object (or more than one) with no ill effects. Requiring <code>PolicyQualifierInfo</code> objects to be immutable and thread-safe allows them to be passed around to various pieces of code without worrying about coordinating access.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.4</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="PolicyQualifierInfo-byte:A-">PolicyQualifierInfo</h3> <pre data-language="java">public PolicyQualifierInfo(byte[] encoded)
+                    throws IOException</pre> <p>Creates an instance of <code>PolicyQualifierInfo</code> from the encoded bytes. The encoded byte array is copied on construction.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>encoded</code> - a byte array containing the qualifier in DER encoding</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - thrown if the byte array does not represent a valid and parsable policy qualifier</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="getPolicyQualifierId--">getPolicyQualifierId</h3> <pre data-language="java">public final String getPolicyQualifierId()</pre> <p>Returns the <code>policyQualifierId</code> field of this <code>PolicyQualifierInfo</code>. The <code>policyQualifierId</code> is an Object Identifier (OID) represented by a set of nonnegative integers separated by periods.</p> <dl> <dt>Returns:</dt> <dd>the OID (never <code>null</code>)</dd> </dl>    <h3 id="getEncoded--">getEncoded</h3> <pre data-language="java">public final byte[] getEncoded()</pre> <p>Returns the ASN.1 DER encoded form of this <code>PolicyQualifierInfo</code>.</p> <dl> <dt>Returns:</dt> <dd>the ASN.1 DER encoded bytes (never <code>null</code>). Note that a copy is returned, so the data is cloned each time this method is called.</dd> </dl>    <h3 id="getPolicyQualifier--">getPolicyQualifier</h3> <pre data-language="java">public final byte[] getPolicyQualifier()</pre> <p>Returns the ASN.1 DER encoded form of the <code>qualifier</code> field of this <code>PolicyQualifierInfo</code>.</p> <dl> <dt>Returns:</dt> <dd>the ASN.1 DER encoded bytes of the <code>qualifier</code> field. Note that a copy is returned, so the data is cloned each time this method is called.</dd> </dl>    <h3 id="toString--">toString</h3> <pre data-language="java">public String toString()</pre> <p>Return a printable representation of this <code>PolicyQualifierInfo</code>.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../../lang/object/#toString--">toString</a></code> in class <code><a href="../../../lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a <code>String</code> describing the contents of this <code>PolicyQualifierInfo</code>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

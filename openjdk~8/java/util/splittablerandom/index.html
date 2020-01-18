@@ -1,0 +1,192 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>SplittableRandom - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A generator of uniform pseudorandom values applicable for use in (among other contexts) isolated parallel computations that may generate subtasks. &hellip;">
+  <meta name="keywords" content="class, splittablerandom, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/splittablerandom/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class SplittableRandom</h1>   <ul class="inheritance"> <li><a href="../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.util.SplittableRandom</li> </ul> </li> </ul>     <pre data-language="java">public final class SplittableRandom
+extends Object</pre> <div>
+<p>A generator of uniform pseudorandom values applicable for use in (among other contexts) isolated parallel computations that may generate subtasks. Class <code>SplittableRandom</code> supports methods for producing pseudorandom numbers of type <code>int</code>, <code>long</code>, and <code>double</code> with similar usages as for class <a href="../random/"><code>Random</code></a> but differs in the following ways: </p>
+<ul> <li>Series of generated values pass the DieHarder suite testing independence and uniformity properties of random number generators. (Most recently validated with <a href="http://www.phy.duke.edu/~rgb/General/dieharder.php" target="_blank"> version 3.31.1</a>.) These tests validate only the methods for certain types and ranges, but similar properties are expected to hold, at least approximately, for others as well. The <em>period</em> (length of any series of generated values before it repeats) is at least 2<sup>64</sup>. </li> <li> Method <a href="../splittablerandom/#split--"><code>split()</code></a> constructs and returns a new SplittableRandom instance that shares no mutable state with the current instance. However, with very high probability, the values collectively generated by the two objects have the same statistical properties as if the same quantity of values were generated by a single thread using a single <code>SplittableRandom</code> object. </li> <li>Instances of SplittableRandom are <em>not</em> thread-safe. They are designed to be split, not shared, across threads. For example, a <a href="../concurrent/forkjointask/"><code>fork/join-style</code></a> computation using random numbers might include a construction of the form <code>new
+ Subtask(aSplittableRandom.split()).fork()</code>. </li>
+<li>This class provides additional methods for generating random streams, that employ the above techniques when used in <code>stream.parallel()</code> mode.</li> </ul> 
+<p>Instances of <code>SplittableRandom</code> are not cryptographically secure. Consider instead using <a href="../../security/securerandom/"><code>SecureRandom</code></a> in security-sensitive applications. Additionally, default-constructed instances do not use a cryptographically random seed unless the <a href="../../lang/system/#getProperty-java.lang.String-">system property</a> <code>java.util.secureRandomSeed</code> is set to <code>true</code>.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.8</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="SplittableRandom-long-">SplittableRandom</h3> <pre data-language="java">public SplittableRandom(long seed)</pre> <p>Creates a new SplittableRandom instance using the specified initial seed. SplittableRandom instances created with the same seed in the same program generate identical sequences of values.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>seed</code> - the initial seed</dd> </dl>    <h3 id="SplittableRandom--">SplittableRandom</h3> <pre data-language="java">public SplittableRandom()</pre> <p>Creates a new SplittableRandom instance that is likely to generate sequences of values that are statistically independent of those of any other instances in the current program; and may, and typically does, vary across program invocations.</p>     <h2 id="method.detail">Methods</h2>   <h3 id="split--">split</h3> <pre data-language="java">public SplittableRandom split()</pre> <p>Constructs and returns a new SplittableRandom instance that shares no mutable state with this instance. However, with very high probability, the set of values collectively generated by the two objects has the same statistical properties as if the same quantity of values were generated by a single thread using a single SplittableRandom object. Either or both of the two objects may be further split using the <code>split()</code> method, and the same expected statistical properties apply to the entire set of generators constructed by such recursive splitting.</p> <dl> <dt>Returns:</dt> <dd>the new SplittableRandom instance</dd> </dl>    <h3 id="nextInt--">nextInt</h3> <pre data-language="java">public int nextInt()</pre> <p>Returns a pseudorandom <code>int</code> value.</p> <dl> <dt>Returns:</dt> <dd>a pseudorandom <code>int</code> value</dd> </dl>    <h3 id="nextInt-int-">nextInt</h3> <pre data-language="java">public int nextInt(int bound)</pre> <p>Returns a pseudorandom <code>int</code> value between zero (inclusive) and the specified bound (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>bound</code> - the upper bound (exclusive). Must be positive.</dd> <dt>Returns:</dt> <dd>a pseudorandom <code>int</code> value between zero (inclusive) and the bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>bound</code> is not positive</dd> </dl>    <h3 id="nextInt-int-int-">nextInt</h3> <pre data-language="java">public int nextInt(int origin,
+                   int bound)</pre> <p>Returns a pseudorandom <code>int</code> value between the specified origin (inclusive) and the specified bound (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>origin</code> - the least value returned</dd> <dd>
+<code>bound</code> - the upper bound (exclusive)</dd> <dt>Returns:</dt> <dd>a pseudorandom <code>int</code> value between the origin (inclusive) and the bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>origin</code> is greater than or equal to <code>bound</code>
+</dd> </dl>    <h3 id="nextLong--">nextLong</h3> <pre data-language="java">public long nextLong()</pre> <p>Returns a pseudorandom <code>long</code> value.</p> <dl> <dt>Returns:</dt> <dd>a pseudorandom <code>long</code> value</dd> </dl>    <h3 id="nextLong-long-">nextLong</h3> <pre data-language="java">public long nextLong(long bound)</pre> <p>Returns a pseudorandom <code>long</code> value between zero (inclusive) and the specified bound (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>bound</code> - the upper bound (exclusive). Must be positive.</dd> <dt>Returns:</dt> <dd>a pseudorandom <code>long</code> value between zero (inclusive) and the bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>bound</code> is not positive</dd> </dl>    <h3 id="nextLong-long-long-">nextLong</h3> <pre data-language="java">public long nextLong(long origin,
+                     long bound)</pre> <p>Returns a pseudorandom <code>long</code> value between the specified origin (inclusive) and the specified bound (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>origin</code> - the least value returned</dd> <dd>
+<code>bound</code> - the upper bound (exclusive)</dd> <dt>Returns:</dt> <dd>a pseudorandom <code>long</code> value between the origin (inclusive) and the bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>origin</code> is greater than or equal to <code>bound</code>
+</dd> </dl>    <h3 id="nextDouble--">nextDouble</h3> <pre data-language="java">public double nextDouble()</pre> <p>Returns a pseudorandom <code>double</code> value between zero (inclusive) and one (exclusive).</p> <dl> <dt>Returns:</dt> <dd>a pseudorandom <code>double</code> value between zero (inclusive) and one (exclusive)</dd> </dl>    <h3 id="nextDouble-double-">nextDouble</h3> <pre data-language="java">public double nextDouble(double bound)</pre> <p>Returns a pseudorandom <code>double</code> value between 0.0 (inclusive) and the specified bound (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>bound</code> - the upper bound (exclusive). Must be positive.</dd> <dt>Returns:</dt> <dd>a pseudorandom <code>double</code> value between zero (inclusive) and the bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>bound</code> is not positive</dd> </dl>    <h3 id="nextDouble-double-double-">nextDouble</h3> <pre data-language="java">public double nextDouble(double origin,
+                         double bound)</pre> <p>Returns a pseudorandom <code>double</code> value between the specified origin (inclusive) and bound (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>origin</code> - the least value returned</dd> <dd>
+<code>bound</code> - the upper bound (exclusive)</dd> <dt>Returns:</dt> <dd>a pseudorandom <code>double</code> value between the origin (inclusive) and the bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>origin</code> is greater than or equal to <code>bound</code>
+</dd> </dl>    <h3 id="nextBoolean--">nextBoolean</h3> <pre data-language="java">public boolean nextBoolean()</pre> <p>Returns a pseudorandom <code>boolean</code> value.</p> <dl> <dt>Returns:</dt> <dd>a pseudorandom <code>boolean</code> value</dd> </dl>    <h3 id="ints-long-">ints</h3> <pre data-language="java">public IntStream ints(long streamSize)</pre> <p>Returns a stream producing the given <code>streamSize</code> number of pseudorandom <code>int</code> values from this generator and/or one split from it.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>streamSize</code> - the number of values to generate</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>int</code> values</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>streamSize</code> is less than zero</dd> </dl>    <h3 id="ints--">ints</h3> <pre data-language="java">public IntStream ints()</pre> <p>Returns an effectively unlimited stream of pseudorandom <code>int</code> values from this generator and/or one split from it.</p> <dl> <dt>Implementation Note:</dt> <dd>This method is implemented to be equivalent to <code>ints(Long.MAX_VALUE)</code>.</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>int</code> values</dd> </dl>    <h3 id="ints-long-int-int-">ints</h3> <pre data-language="java">public IntStream ints(long streamSize,
+                      int randomNumberOrigin,
+                      int randomNumberBound)</pre> <p>Returns a stream producing the given <code>streamSize</code> number of pseudorandom <code>int</code> values from this generator and/or one split from it; each value conforms to the given origin (inclusive) and bound (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>streamSize</code> - the number of values to generate</dd> <dd>
+<code>randomNumberOrigin</code> - the origin (inclusive) of each random value</dd> <dd>
+<code>randomNumberBound</code> - the bound (exclusive) of each random value</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>int</code> values, each with the given origin (inclusive) and bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>streamSize</code> is less than zero, or <code>randomNumberOrigin</code> is greater than or equal to <code>randomNumberBound</code>
+</dd> </dl>    <h3 id="ints-int-int-">ints</h3> <pre data-language="java">public IntStream ints(int randomNumberOrigin,
+                      int randomNumberBound)</pre> <p>Returns an effectively unlimited stream of pseudorandom <code>int</code> values from this generator and/or one split from it; each value conforms to the given origin (inclusive) and bound (exclusive).</p> <dl> <dt>Implementation Note:</dt> <dd>This method is implemented to be equivalent to <code>ints(Long.MAX_VALUE, randomNumberOrigin, randomNumberBound)</code>.</dd> <dt>Parameters:</dt> <dd>
+<code>randomNumberOrigin</code> - the origin (inclusive) of each random value</dd> <dd>
+<code>randomNumberBound</code> - the bound (exclusive) of each random value</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>int</code> values, each with the given origin (inclusive) and bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>randomNumberOrigin</code> is greater than or equal to <code>randomNumberBound</code>
+</dd> </dl>    <h3 id="longs-long-">longs</h3> <pre data-language="java">public LongStream longs(long streamSize)</pre> <p>Returns a stream producing the given <code>streamSize</code> number of pseudorandom <code>long</code> values from this generator and/or one split from it.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>streamSize</code> - the number of values to generate</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>long</code> values</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>streamSize</code> is less than zero</dd> </dl>    <h3 id="longs--">longs</h3> <pre data-language="java">public LongStream longs()</pre> <p>Returns an effectively unlimited stream of pseudorandom <code>long</code> values from this generator and/or one split from it.</p> <dl> <dt>Implementation Note:</dt> <dd>This method is implemented to be equivalent to <code>longs(Long.MAX_VALUE)</code>.</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>long</code> values</dd> </dl>    <h3 id="longs-long-long-long-">longs</h3> <pre data-language="java">public LongStream longs(long streamSize,
+                        long randomNumberOrigin,
+                        long randomNumberBound)</pre> <p>Returns a stream producing the given <code>streamSize</code> number of pseudorandom <code>long</code> values from this generator and/or one split from it; each value conforms to the given origin (inclusive) and bound (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>streamSize</code> - the number of values to generate</dd> <dd>
+<code>randomNumberOrigin</code> - the origin (inclusive) of each random value</dd> <dd>
+<code>randomNumberBound</code> - the bound (exclusive) of each random value</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>long</code> values, each with the given origin (inclusive) and bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>streamSize</code> is less than zero, or <code>randomNumberOrigin</code> is greater than or equal to <code>randomNumberBound</code>
+</dd> </dl>    <h3 id="longs-long-long-">longs</h3> <pre data-language="java">public LongStream longs(long randomNumberOrigin,
+                        long randomNumberBound)</pre> <p>Returns an effectively unlimited stream of pseudorandom <code>long</code> values from this generator and/or one split from it; each value conforms to the given origin (inclusive) and bound (exclusive).</p> <dl> <dt>Implementation Note:</dt> <dd>This method is implemented to be equivalent to <code>longs(Long.MAX_VALUE, randomNumberOrigin, randomNumberBound)</code>.</dd> <dt>Parameters:</dt> <dd>
+<code>randomNumberOrigin</code> - the origin (inclusive) of each random value</dd> <dd>
+<code>randomNumberBound</code> - the bound (exclusive) of each random value</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>long</code> values, each with the given origin (inclusive) and bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>randomNumberOrigin</code> is greater than or equal to <code>randomNumberBound</code>
+</dd> </dl>    <h3 id="doubles-long-">doubles</h3> <pre data-language="java">public DoubleStream doubles(long streamSize)</pre> <p>Returns a stream producing the given <code>streamSize</code> number of pseudorandom <code>double</code> values from this generator and/or one split from it; each value is between zero (inclusive) and one (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>streamSize</code> - the number of values to generate</dd> <dt>Returns:</dt> <dd>a stream of <code>double</code> values</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>streamSize</code> is less than zero</dd> </dl>    <h3 id="doubles--">doubles</h3> <pre data-language="java">public DoubleStream doubles()</pre> <p>Returns an effectively unlimited stream of pseudorandom <code>double</code> values from this generator and/or one split from it; each value is between zero (inclusive) and one (exclusive).</p> <dl> <dt>Implementation Note:</dt> <dd>This method is implemented to be equivalent to <code>doubles(Long.MAX_VALUE)</code>.</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>double</code> values</dd> </dl>    <h3 id="doubles-long-double-double-">doubles</h3> <pre data-language="java">public DoubleStream doubles(long streamSize,
+                            double randomNumberOrigin,
+                            double randomNumberBound)</pre> <p>Returns a stream producing the given <code>streamSize</code> number of pseudorandom <code>double</code> values from this generator and/or one split from it; each value conforms to the given origin (inclusive) and bound (exclusive).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>streamSize</code> - the number of values to generate</dd> <dd>
+<code>randomNumberOrigin</code> - the origin (inclusive) of each random value</dd> <dd>
+<code>randomNumberBound</code> - the bound (exclusive) of each random value</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>double</code> values, each with the given origin (inclusive) and bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>streamSize</code> is less than zero</dd> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>randomNumberOrigin</code> is greater than or equal to <code>randomNumberBound</code>
+</dd> </dl>    <h3 id="doubles-double-double-">doubles</h3> <pre data-language="java">public DoubleStream doubles(double randomNumberOrigin,
+                            double randomNumberBound)</pre> <p>Returns an effectively unlimited stream of pseudorandom <code>double</code> values from this generator and/or one split from it; each value conforms to the given origin (inclusive) and bound (exclusive).</p> <dl> <dt>Implementation Note:</dt> <dd>This method is implemented to be equivalent to <code>doubles(Long.MAX_VALUE, randomNumberOrigin, randomNumberBound)</code>.</dd> <dt>Parameters:</dt> <dd>
+<code>randomNumberOrigin</code> - the origin (inclusive) of each random value</dd> <dd>
+<code>randomNumberBound</code> - the bound (exclusive) of each random value</dd> <dt>Returns:</dt> <dd>a stream of pseudorandom <code>double</code> values, each with the given origin (inclusive) and bound (exclusive)</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>randomNumberOrigin</code> is greater than or equal to <code>randomNumberBound</code>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

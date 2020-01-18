@@ -1,0 +1,317 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ThreadPoolExecutor - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="An ExecutorService that executes each submitted task using one of possibly several pooled threads, normally configured using Executors factory &hellip;">
+  <meta name="keywords" content="class, threadpoolexecutor, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/concurrent/threadpoolexecutor/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class ThreadPoolExecutor</h1>   <ul class="inheritance"> <li><a href="../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../abstractexecutorservice/">java.util.concurrent.AbstractExecutorService</a></li> <li> <ul class="inheritance"> <li>java.util.concurrent.ThreadPoolExecutor</li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../executor/">Executor</a>, <a href="../executorservice/">ExecutorService</a>
+</dd> </dl> <dl> <dt>Direct Known Subclasses:</dt> <dd><a href="../scheduledthreadpoolexecutor/">ScheduledThreadPoolExecutor</a></dd> </dl>   <pre data-language="java">public class ThreadPoolExecutor
+extends AbstractExecutorService</pre> <div>
+<p>An <a href="../executorservice/"><code>ExecutorService</code></a> that executes each submitted task using one of possibly several pooled threads, normally configured using <a href="../executors/"><code>Executors</code></a> factory methods. </p>
+<p>Thread pools address two different problems: they usually provide improved performance when executing large numbers of asynchronous tasks, due to reduced per-task invocation overhead, and they provide a means of bounding and managing the resources, including threads, consumed when executing a collection of tasks. Each <code>ThreadPoolExecutor</code> also maintains some basic statistics, such as the number of completed tasks. </p>
+<p>To be useful across a wide range of contexts, this class provides many adjustable parameters and extensibility hooks. However, programmers are urged to use the more convenient <a href="../executors/"><code>Executors</code></a> factory methods <a href="../executors/#newCachedThreadPool--"><code>Executors.newCachedThreadPool()</code></a> (unbounded thread pool, with automatic thread reclamation), <a href="../executors/#newFixedThreadPool-int-"><code>Executors.newFixedThreadPool(int)</code></a> (fixed size thread pool) and <a href="../executors/#newSingleThreadExecutor--"><code>Executors.newSingleThreadExecutor()</code></a> (single background thread), that preconfigure settings for the most common usage scenarios. Otherwise, use the following guide when manually configuring and tuning this class: </p>
+<dl> <dt>Core and maximum pool sizes</dt> <dd>A <code>ThreadPoolExecutor</code> will automatically adjust the pool size (see <a href="../threadpoolexecutor/#getPoolSize--"><code>getPoolSize()</code></a>) according to the bounds set by corePoolSize (see <a href="../threadpoolexecutor/#getCorePoolSize--"><code>getCorePoolSize()</code></a>) and maximumPoolSize (see <a href="../threadpoolexecutor/#getMaximumPoolSize--"><code>getMaximumPoolSize()</code></a>). When a new task is submitted in method <a href="../threadpoolexecutor/#execute-java.lang.Runnable-"><code>execute(Runnable)</code></a>, and fewer than corePoolSize threads are running, a new thread is created to handle the request, even if other worker threads are idle. If there are more than corePoolSize but less than maximumPoolSize threads running, a new thread will be created only if the queue is full. By setting corePoolSize and maximumPoolSize the same, you create a fixed-size thread pool. By setting maximumPoolSize to an essentially unbounded value such as <code>Integer.MAX_VALUE</code>, you allow the pool to accommodate an arbitrary number of concurrent tasks. Most typically, core and maximum pool sizes are set only upon construction, but they may also be changed dynamically using <a href="../threadpoolexecutor/#setCorePoolSize-int-"><code>setCorePoolSize(int)</code></a> and <a href="../threadpoolexecutor/#setMaximumPoolSize-int-"><code>setMaximumPoolSize(int)</code></a>. </dd> <dt>On-demand construction</dt> <dd>By default, even core threads are initially created and started only when new tasks arrive, but this can be overridden dynamically using method <a href="../threadpoolexecutor/#prestartCoreThread--"><code>prestartCoreThread()</code></a> or <a href="../threadpoolexecutor/#prestartAllCoreThreads--"><code>prestartAllCoreThreads()</code></a>. You probably want to prestart threads if you construct the pool with a non-empty queue. </dd> <dt>Creating new threads</dt> <dd>New threads are created using a <a href="../threadfactory/"><code>ThreadFactory</code></a>. If not otherwise specified, a <a href="../executors/#defaultThreadFactory--"><code>Executors.defaultThreadFactory()</code></a> is used, that creates threads to all be in the same <a href="../../../lang/threadgroup/"><code>ThreadGroup</code></a> and with the same <code>NORM_PRIORITY</code> priority and non-daemon status. By supplying a different ThreadFactory, you can alter the thread's name, thread group, priority, daemon status, etc. If a <code>ThreadFactory</code> fails to create a thread when asked by returning null from <code>newThread</code>, the executor will continue, but might not be able to execute any tasks. Threads should possess the "modifyThread" <code>RuntimePermission</code>. If worker threads or other threads using the pool do not possess this permission, service may be degraded: configuration changes may not take effect in a timely manner, and a shutdown pool may remain in a state in which termination is possible but not completed.</dd> <dt>Keep-alive times</dt> <dd>If the pool currently has more than corePoolSize threads, excess threads will be terminated if they have been idle for more than the keepAliveTime (see <a href="../threadpoolexecutor/#getKeepAliveTime-java.util.concurrent.TimeUnit-"><code>getKeepAliveTime(TimeUnit)</code></a>). This provides a means of reducing resource consumption when the pool is not being actively used. If the pool becomes more active later, new threads will be constructed. This parameter can also be changed dynamically using method <a href="../threadpoolexecutor/#setKeepAliveTime-long-java.util.concurrent.TimeUnit-"><code>setKeepAliveTime(long,
+ TimeUnit)</code></a>. Using a value of <code>Long.MAX_VALUE</code> <a href="../timeunit/#NANOSECONDS"><code>TimeUnit.NANOSECONDS</code></a> effectively disables idle threads from ever terminating prior to shut down. By default, the keep-alive policy applies only when there are more than corePoolSize threads. But method <a href="../threadpoolexecutor/#allowCoreThreadTimeOut-boolean-"><code>allowCoreThreadTimeOut(boolean)</code></a> can be used to apply this time-out policy to core threads as well, so long as the keepAliveTime value is non-zero. </dd> <dt>Queuing</dt> <dd>Any <a href="../blockingqueue/"><code>BlockingQueue</code></a> may be used to transfer and hold submitted tasks. The use of this queue interacts with pool sizing: <ul> <li> If fewer than corePoolSize threads are running, the Executor always prefers adding a new thread rather than queuing.</li> <li> If corePoolSize or more threads are running, the Executor always prefers queuing a request rather than adding a new thread.</li> <li> If a request cannot be queued, a new thread is created unless this would exceed maximumPoolSize, in which case, the task will be rejected.</li> </ul> There are three general strategies for queuing: <ol> <li> <em> Direct handoffs.</em> A good default choice for a work queue is a <a href="../synchronousqueue/"><code>SynchronousQueue</code></a> that hands off tasks to threads without otherwise holding them. Here, an attempt to queue a task will fail if no threads are immediately available to run it, so a new thread will be constructed. This policy avoids lockups when handling sets of requests that might have internal dependencies. Direct handoffs generally require unbounded maximumPoolSizes to avoid rejection of new submitted tasks. This in turn admits the possibility of unbounded thread growth when commands continue to arrive on average faster than they can be processed. </li> <li>
+<em> Unbounded queues.</em> Using an unbounded queue (for example a <a href="../linkedblockingqueue/"><code>LinkedBlockingQueue</code></a> without a predefined capacity) will cause new tasks to wait in the queue when all corePoolSize threads are busy. Thus, no more than corePoolSize threads will ever be created. (And the value of the maximumPoolSize therefore doesn't have any effect.) This may be appropriate when each task is completely independent of others, so tasks cannot affect each others execution; for example, in a web page server. While this style of queuing can be useful in smoothing out transient bursts of requests, it admits the possibility of unbounded work queue growth when commands continue to arrive on average faster than they can be processed. </li> <li>
+<em>Bounded queues.</em> A bounded queue (for example, an <a href="../arrayblockingqueue/"><code>ArrayBlockingQueue</code></a>) helps prevent resource exhaustion when used with finite maximumPoolSizes, but can be more difficult to tune and control. Queue sizes and maximum pool sizes may be traded off for each other: Using large queues and small pools minimizes CPU usage, OS resources, and context-switching overhead, but can lead to artificially low throughput. If tasks frequently block (for example if they are I/O bound), a system may be able to schedule time for more threads than you otherwise allow. Use of small queues generally requires larger pool sizes, which keeps CPUs busier but may encounter unacceptable scheduling overhead, which also decreases throughput. </li> </ol> </dd> <dt>Rejected tasks</dt> <dd>New tasks submitted in method <a href="../threadpoolexecutor/#execute-java.lang.Runnable-"><code>execute(Runnable)</code></a> will be <em>rejected</em> when the Executor has been shut down, and also when the Executor uses finite bounds for both maximum threads and work queue capacity, and is saturated. In either case, the <code>execute</code> method invokes the <a href="../rejectedexecutionhandler/#rejectedExecution-java.lang.Runnable-java.util.concurrent.ThreadPoolExecutor-"><code>RejectedExecutionHandler.rejectedExecution(Runnable, ThreadPoolExecutor)</code></a> method of its <a href="../rejectedexecutionhandler/"><code>RejectedExecutionHandler</code></a>. Four predefined handler policies are provided: <ol> <li> In the default <a href="../threadpoolexecutor.abortpolicy/"><code>ThreadPoolExecutor.AbortPolicy</code></a>, the handler throws a runtime <a href="../rejectedexecutionexception/"><code>RejectedExecutionException</code></a> upon rejection. </li> <li> In <a href="../threadpoolexecutor.callerrunspolicy/"><code>ThreadPoolExecutor.CallerRunsPolicy</code></a>, the thread that invokes <code>execute</code> itself runs the task. This provides a simple feedback control mechanism that will slow down the rate that new tasks are submitted. </li> <li> In <a href="../threadpoolexecutor.discardpolicy/"><code>ThreadPoolExecutor.DiscardPolicy</code></a>, a task that cannot be executed is simply dropped. </li> <li>In <a href="../threadpoolexecutor.discardoldestpolicy/"><code>ThreadPoolExecutor.DiscardOldestPolicy</code></a>, if the executor is not shut down, the task at the head of the work queue is dropped, and then execution is retried (which can fail again, causing this to be repeated.) </li> </ol> It is possible to define and use other kinds of <a href="../rejectedexecutionhandler/"><code>RejectedExecutionHandler</code></a> classes. Doing so requires some care especially when policies are designed to work only under particular capacity or queuing policies. </dd> <dt>Hook methods</dt> <dd>This class provides <code>protected</code> overridable <a href="../threadpoolexecutor/#beforeExecute-java.lang.Thread-java.lang.Runnable-"><code>beforeExecute(Thread, Runnable)</code></a> and <a href="../threadpoolexecutor/#afterExecute-java.lang.Runnable-java.lang.Throwable-"><code>afterExecute(Runnable, Throwable)</code></a> methods that are called before and after execution of each task. These can be used to manipulate the execution environment; for example, reinitializing ThreadLocals, gathering statistics, or adding log entries. Additionally, method <a href="../threadpoolexecutor/#terminated--"><code>terminated()</code></a> can be overridden to perform any special processing that needs to be done once the Executor has fully terminated. <p>If hook or callback methods throw exceptions, internal worker threads may in turn fail and abruptly terminate.</p>
+</dd> <dt>Queue maintenance</dt> <dd>Method <a href="../threadpoolexecutor/#getQueue--"><code>getQueue()</code></a> allows access to the work queue for purposes of monitoring and debugging. Use of this method for any other purpose is strongly discouraged. Two supplied methods, <a href="../threadpoolexecutor/#remove-java.lang.Runnable-"><code>remove(Runnable)</code></a> and <a href="../threadpoolexecutor/#purge--"><code>purge()</code></a> are available to assist in storage reclamation when large numbers of queued tasks become cancelled.</dd> <dt>Finalization</dt> <dd>A pool that is no longer referenced in a program <em>AND</em> has no remaining threads will be <code>shutdown</code> automatically. If you would like to ensure that unreferenced pools are reclaimed even if users forget to call <a href="../threadpoolexecutor/#shutdown--"><code>shutdown()</code></a>, then you must arrange that unused threads eventually die, by setting appropriate keep-alive times, using a lower bound of zero core threads and/or setting <a href="../threadpoolexecutor/#allowCoreThreadTimeOut-boolean-"><code>allowCoreThreadTimeOut(boolean)</code></a>. </dd> </dl> <p><b>Extension example</b>. Most extensions of this class override one or more of the protected hook methods. For example, here is a subclass that adds a simple pause/resume feature: </p>
+<pre data-language="java">class PausableThreadPoolExecutor extends ThreadPoolExecutor {
+   private boolean isPaused;
+   private ReentrantLock pauseLock = new ReentrantLock();
+   private Condition unpaused = pauseLock.newCondition();
+
+   public PausableThreadPoolExecutor(...) { super(...); }
+
+   protected void beforeExecute(Thread t, Runnable r) {
+     super.beforeExecute(t, r);
+     pauseLock.lock();
+     try {
+       while (isPaused) unpaused.await();
+     } catch (InterruptedException ie) {
+       t.interrupt();
+     } finally {
+       pauseLock.unlock();
+     }
+   }
+
+   public void pause() {
+     pauseLock.lock();
+     try {
+       isPaused = true;
+     } finally {
+       pauseLock.unlock();
+     }
+   }
+
+   public void resume() {
+     pauseLock.lock();
+     try {
+       isPaused = false;
+       unpaused.signalAll();
+     } finally {
+       pauseLock.unlock();
+     }
+   }
+ }</pre>
+</div> <dl> <dt>Since:</dt> <dd>1.5</dd> </dl>       <h2 id="nested.class.summary">Nested Classes</h2> <table> <caption>Nested Classes </caption> <tr> <th scope="col">Modifier and Type</th> <th scope="col">Class and Description</th> </tr> <tr> <td><code>static class </code></td> <td>
+<code><a href="../threadpoolexecutor.abortpolicy/">ThreadPoolExecutor.AbortPolicy</a></code> <p>A handler for rejected tasks that throws a <code>RejectedExecutionException</code>.</p> </td> </tr> <tr> <td><code>static class </code></td> <td>
+<code><a href="../threadpoolexecutor.callerrunspolicy/">ThreadPoolExecutor.CallerRunsPolicy</a></code> <p>A handler for rejected tasks that runs the rejected task directly in the calling thread of the <code>execute</code> method, unless the executor has been shut down, in which case the task is discarded.</p> </td> </tr> <tr> <td><code>static class </code></td> <td>
+<code><a href="../threadpoolexecutor.discardoldestpolicy/">ThreadPoolExecutor.DiscardOldestPolicy</a></code> <p>A handler for rejected tasks that discards the oldest unhandled request and then retries <code>execute</code>, unless the executor is shut down, in which case the task is discarded.</p> </td> </tr> <tr> <td><code>static class </code></td> <td>
+<code><a href="../threadpoolexecutor.discardpolicy/">ThreadPoolExecutor.DiscardPolicy</a></code> <p>A handler for rejected tasks that silently discards the rejected task.</p> </td> </tr> </table>    <h2 id="constructor.detail">Constructors</h2>   <h3 id="ThreadPoolExecutor-int-int-long-java.util.concurrent.TimeUnit-java.util.concurrent.BlockingQueue-">ThreadPoolExecutor</h3> <pre data-language="java">public ThreadPoolExecutor(int corePoolSize,
+                          int maximumPoolSize,
+                          long keepAliveTime,
+                          TimeUnit unit,
+                          BlockingQueue&lt;Runnable&gt; workQueue)</pre> <p>Creates a new <code>ThreadPoolExecutor</code> with the given initial parameters and default thread factory and rejected execution handler. It may be more convenient to use one of the <a href="../executors/"><code>Executors</code></a> factory methods instead of this general purpose constructor.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>corePoolSize</code> - the number of threads to keep in the pool, even if they are idle, unless <code>allowCoreThreadTimeOut</code> is set</dd> <dd>
+<code>maximumPoolSize</code> - the maximum number of threads to allow in the pool</dd> <dd>
+<code>keepAliveTime</code> - when the number of threads is greater than the core, this is the maximum time that excess idle threads will wait for new tasks before terminating.</dd> <dd>
+<code>unit</code> - the time unit for the <code>keepAliveTime</code> argument</dd> <dd>
+<code>workQueue</code> - the queue to use for holding tasks before they are executed. This queue will hold only the <code>Runnable</code> tasks submitted by the <code>execute</code> method.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if one of the following holds:<br> <code>corePoolSize &lt; 0</code><br> <code>keepAliveTime &lt; 0</code><br> <code>maximumPoolSize &lt;= 0</code><br> <code>maximumPoolSize &lt; corePoolSize</code>
+</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>workQueue</code> is null</dd> </dl>    <h3 id="ThreadPoolExecutor-int-int-long-java.util.concurrent.TimeUnit-java.util.concurrent.BlockingQueue-java.util.concurrent.ThreadFactory-">ThreadPoolExecutor</h3> <pre data-language="java">public ThreadPoolExecutor(int corePoolSize,
+                          int maximumPoolSize,
+                          long keepAliveTime,
+                          TimeUnit unit,
+                          BlockingQueue&lt;Runnable&gt; workQueue,
+                          ThreadFactory threadFactory)</pre> <p>Creates a new <code>ThreadPoolExecutor</code> with the given initial parameters and default rejected execution handler.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>corePoolSize</code> - the number of threads to keep in the pool, even if they are idle, unless <code>allowCoreThreadTimeOut</code> is set</dd> <dd>
+<code>maximumPoolSize</code> - the maximum number of threads to allow in the pool</dd> <dd>
+<code>keepAliveTime</code> - when the number of threads is greater than the core, this is the maximum time that excess idle threads will wait for new tasks before terminating.</dd> <dd>
+<code>unit</code> - the time unit for the <code>keepAliveTime</code> argument</dd> <dd>
+<code>workQueue</code> - the queue to use for holding tasks before they are executed. This queue will hold only the <code>Runnable</code> tasks submitted by the <code>execute</code> method.</dd> <dd>
+<code>threadFactory</code> - the factory to use when the executor creates a new thread</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if one of the following holds:<br> <code>corePoolSize &lt; 0</code><br> <code>keepAliveTime &lt; 0</code><br> <code>maximumPoolSize &lt;= 0</code><br> <code>maximumPoolSize &lt; corePoolSize</code>
+</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>workQueue</code> or <code>threadFactory</code> is null</dd> </dl>    <h3 id="ThreadPoolExecutor-int-int-long-java.util.concurrent.TimeUnit-java.util.concurrent.BlockingQueue-java.util.concurrent.RejectedExecutionHandler-">ThreadPoolExecutor</h3> <pre data-language="java">public ThreadPoolExecutor(int corePoolSize,
+                          int maximumPoolSize,
+                          long keepAliveTime,
+                          TimeUnit unit,
+                          BlockingQueue&lt;Runnable&gt; workQueue,
+                          RejectedExecutionHandler handler)</pre> <p>Creates a new <code>ThreadPoolExecutor</code> with the given initial parameters and default thread factory.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>corePoolSize</code> - the number of threads to keep in the pool, even if they are idle, unless <code>allowCoreThreadTimeOut</code> is set</dd> <dd>
+<code>maximumPoolSize</code> - the maximum number of threads to allow in the pool</dd> <dd>
+<code>keepAliveTime</code> - when the number of threads is greater than the core, this is the maximum time that excess idle threads will wait for new tasks before terminating.</dd> <dd>
+<code>unit</code> - the time unit for the <code>keepAliveTime</code> argument</dd> <dd>
+<code>workQueue</code> - the queue to use for holding tasks before they are executed. This queue will hold only the <code>Runnable</code> tasks submitted by the <code>execute</code> method.</dd> <dd>
+<code>handler</code> - the handler to use when execution is blocked because the thread bounds and queue capacities are reached</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if one of the following holds:<br> <code>corePoolSize &lt; 0</code><br> <code>keepAliveTime &lt; 0</code><br> <code>maximumPoolSize &lt;= 0</code><br> <code>maximumPoolSize &lt; corePoolSize</code>
+</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>workQueue</code> or <code>handler</code> is null</dd> </dl>    <h3 id="ThreadPoolExecutor-int-int-long-java.util.concurrent.TimeUnit-java.util.concurrent.BlockingQueue-java.util.concurrent.ThreadFactory-java.util.concurrent.RejectedExecutionHandler-">ThreadPoolExecutor</h3> <pre data-language="java">public ThreadPoolExecutor(int corePoolSize,
+                          int maximumPoolSize,
+                          long keepAliveTime,
+                          TimeUnit unit,
+                          BlockingQueue&lt;Runnable&gt; workQueue,
+                          ThreadFactory threadFactory,
+                          RejectedExecutionHandler handler)</pre> <p>Creates a new <code>ThreadPoolExecutor</code> with the given initial parameters.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>corePoolSize</code> - the number of threads to keep in the pool, even if they are idle, unless <code>allowCoreThreadTimeOut</code> is set</dd> <dd>
+<code>maximumPoolSize</code> - the maximum number of threads to allow in the pool</dd> <dd>
+<code>keepAliveTime</code> - when the number of threads is greater than the core, this is the maximum time that excess idle threads will wait for new tasks before terminating.</dd> <dd>
+<code>unit</code> - the time unit for the <code>keepAliveTime</code> argument</dd> <dd>
+<code>workQueue</code> - the queue to use for holding tasks before they are executed. This queue will hold only the <code>Runnable</code> tasks submitted by the <code>execute</code> method.</dd> <dd>
+<code>threadFactory</code> - the factory to use when the executor creates a new thread</dd> <dd>
+<code>handler</code> - the handler to use when execution is blocked because the thread bounds and queue capacities are reached</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if one of the following holds:<br> <code>corePoolSize &lt; 0</code><br> <code>keepAliveTime &lt; 0</code><br> <code>maximumPoolSize &lt;= 0</code><br> <code>maximumPoolSize &lt; corePoolSize</code>
+</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>workQueue</code> or <code>threadFactory</code> or <code>handler</code> is null</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="execute-java.lang.Runnable-">execute</h3> <pre data-language="java">public void execute(Runnable command)</pre> <p>Executes the given task sometime in the future. The task may execute in a new thread or in an existing pooled thread. If the task cannot be submitted for execution, either because this executor has been shutdown or because its capacity has been reached, the task is handled by the current <code>RejectedExecutionHandler</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>command</code> - the task to execute</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - at discretion of <code>RejectedExecutionHandler</code>, if the task cannot be accepted for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>command</code> is null</dd> </dl>    <h3 id="shutdown--">shutdown</h3> <pre data-language="java">public void shutdown()</pre> <div>
+<p>Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will be accepted. Invocation has no additional effect if already shut down. </p>
+<p>This method does not wait for previously submitted tasks to complete execution. Use <a href="../threadpoolexecutor/#awaitTermination-long-java.util.concurrent.TimeUnit-"><code>awaitTermination</code></a> to do that.</p>
+</div> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and shutting down this ExecutorService may manipulate threads that the caller is not permitted to modify because it does not hold <a href="../../../lang/runtimepermission/"><code>RuntimePermission</code></a><code>("modifyThread")</code>, or the security manager's <code>checkAccess</code> method denies access.</dd> </dl>    <h3 id="shutdownNow--">shutdownNow</h3> <pre data-language="java">public List&lt;Runnable&gt; shutdownNow()</pre> <div>
+<p>Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and returns a list of the tasks that were awaiting execution. These tasks are drained (removed) from the task queue upon return from this method. </p>
+<p>This method does not wait for actively executing tasks to terminate. Use <a href="../threadpoolexecutor/#awaitTermination-long-java.util.concurrent.TimeUnit-"><code>awaitTermination</code></a> to do that. </p>
+<p>There are no guarantees beyond best-effort attempts to stop processing actively executing tasks. This implementation cancels tasks via <a href="../../../lang/thread/#interrupt--"><code>Thread.interrupt()</code></a>, so any task that fails to respond to interrupts may never terminate.</p>
+</div> <dl> <dt>Returns:</dt> <dd>list of tasks that never commenced execution</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and shutting down this ExecutorService may manipulate threads that the caller is not permitted to modify because it does not hold <a href="../../../lang/runtimepermission/"><code>RuntimePermission</code></a><code>("modifyThread")</code>, or the security manager's <code>checkAccess</code> method denies access.</dd> </dl>    <h3 id="isShutdown--">isShutdown</h3> <pre data-language="java">public boolean isShutdown()</pre> <p>Description copied from interface: <code><a href="../executorservice/#isShutdown--">ExecutorService</a></code></p> <p>Returns <code>true</code> if this executor has been shut down.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if this executor has been shut down</dd> </dl>    <h3 id="isTerminating--">isTerminating</h3> <pre data-language="java">public boolean isTerminating()</pre> <p>Returns true if this executor is in the process of terminating after <a href="../threadpoolexecutor/#shutdown--"><code>shutdown()</code></a> or <a href="../threadpoolexecutor/#shutdownNow--"><code>shutdownNow()</code></a> but has not completely terminated. This method may be useful for debugging. A return of <code>true</code> reported a sufficient period after shutdown may indicate that submitted tasks have ignored or suppressed interruption, causing this executor not to properly terminate.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if terminating but not yet terminated</dd> </dl>    <h3 id="isTerminated--">isTerminated</h3> <pre data-language="java">public boolean isTerminated()</pre> <p>Description copied from interface: <code><a href="../executorservice/#isTerminated--">ExecutorService</a></code></p> <p>Returns <code>true</code> if all tasks have completed following shut down. Note that <code>isTerminated</code> is never <code>true</code> unless either <code>shutdown</code> or <code>shutdownNow</code> was called first.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if all tasks have completed following shut down</dd> </dl>    <h3 id="awaitTermination-long-java.util.concurrent.TimeUnit-">awaitTermination</h3> <pre data-language="java">public boolean awaitTermination(long timeout,
+                                TimeUnit unit)
+                         throws InterruptedException</pre> <p>Description copied from interface: <code><a href="../executorservice/#awaitTermination-long-java.util.concurrent.TimeUnit-">ExecutorService</a></code></p> <p>Blocks until all tasks have completed execution after a shutdown request, or the timeout occurs, or the current thread is interrupted, whichever happens first.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>timeout</code> - the maximum time to wait</dd> <dd>
+<code>unit</code> - the time unit of the timeout argument</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this executor terminated and <code>false</code> if the timeout elapsed before termination</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting</dd> </dl>    <h3 id="finalize--">finalize</h3> <pre data-language="java">protected void finalize()</pre> <p>Invokes <code>shutdown</code> when this executor is no longer referenced and it has no threads.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../../lang/object/#finalize--">finalize</a></code> in class <code><a href="../../../lang/object/">Object</a></code>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../../../lang/ref/weakreference/"><code>WeakReference</code></a>, <a href="../../../lang/ref/phantomreference/"><code>PhantomReference</code></a>
+</dd> </dl>    <h3 id="setThreadFactory-java.util.concurrent.ThreadFactory-">setThreadFactory</h3> <pre data-language="java">public void setThreadFactory(ThreadFactory threadFactory)</pre> <p>Sets the thread factory used to create new threads.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>threadFactory</code> - the new thread factory</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if threadFactory is null</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#getThreadFactory--"><code>getThreadFactory()</code></a></dd> </dl>    <h3 id="getThreadFactory--">getThreadFactory</h3> <pre data-language="java">public ThreadFactory getThreadFactory()</pre> <p>Returns the thread factory used to create new threads.</p> <dl> <dt>Returns:</dt> <dd>the current thread factory</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#setThreadFactory-java.util.concurrent.ThreadFactory-"><code>setThreadFactory(ThreadFactory)</code></a></dd> </dl>    <h3 id="setRejectedExecutionHandler-java.util.concurrent.RejectedExecutionHandler-">setRejectedExecutionHandler</h3> <pre data-language="java">public void setRejectedExecutionHandler(RejectedExecutionHandler handler)</pre> <p>Sets a new handler for unexecutable tasks.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>handler</code> - the new handler</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if handler is null</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#getRejectedExecutionHandler--"><code>getRejectedExecutionHandler()</code></a></dd> </dl>    <h3 id="getRejectedExecutionHandler--">getRejectedExecutionHandler</h3> <pre data-language="java">public RejectedExecutionHandler getRejectedExecutionHandler()</pre> <p>Returns the current handler for unexecutable tasks.</p> <dl> <dt>Returns:</dt> <dd>the current handler</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#setRejectedExecutionHandler-java.util.concurrent.RejectedExecutionHandler-"><code>setRejectedExecutionHandler(RejectedExecutionHandler)</code></a></dd> </dl>    <h3 id="setCorePoolSize-int-">setCorePoolSize</h3> <pre data-language="java">public void setCorePoolSize(int corePoolSize)</pre> <p>Sets the core number of threads. This overrides any value set in the constructor. If the new value is smaller than the current value, excess existing threads will be terminated when they next become idle. If larger, new threads will, if needed, be started to execute any queued tasks.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>corePoolSize</code> - the new core size</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>corePoolSize &lt; 0</code>
+</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#getCorePoolSize--"><code>getCorePoolSize()</code></a></dd> </dl>    <h3 id="getCorePoolSize--">getCorePoolSize</h3> <pre data-language="java">public int getCorePoolSize()</pre> <p>Returns the core number of threads.</p> <dl> <dt>Returns:</dt> <dd>the core number of threads</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#setCorePoolSize-int-"><code>setCorePoolSize(int)</code></a></dd> </dl>    <h3 id="prestartCoreThread--">prestartCoreThread</h3> <pre data-language="java">public boolean prestartCoreThread()</pre> <p>Starts a core thread, causing it to idly wait for work. This overrides the default policy of starting core threads only when new tasks are executed. This method will return <code>false</code> if all core threads have already been started.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if a thread was started</dd> </dl>    <h3 id="prestartAllCoreThreads--">prestartAllCoreThreads</h3> <pre data-language="java">public int prestartAllCoreThreads()</pre> <p>Starts all core threads, causing them to idly wait for work. This overrides the default policy of starting core threads only when new tasks are executed.</p> <dl> <dt>Returns:</dt> <dd>the number of threads started</dd> </dl>    <h3 id="allowsCoreThreadTimeOut--">allowsCoreThreadTimeOut</h3> <pre data-language="java">public boolean allowsCoreThreadTimeOut()</pre> <p>Returns true if this pool allows core threads to time out and terminate if no tasks arrive within the keepAlive time, being replaced if needed when new tasks arrive. When true, the same keep-alive policy applying to non-core threads applies also to core threads. When false (the default), core threads are never terminated due to lack of incoming tasks.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if core threads are allowed to time out, else <code>false</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="allowCoreThreadTimeOut-boolean-">allowCoreThreadTimeOut</h3> <pre data-language="java">public void allowCoreThreadTimeOut(boolean value)</pre> <p>Sets the policy governing whether core threads may time out and terminate if no tasks arrive within the keep-alive time, being replaced if needed when new tasks arrive. When false, core threads are never terminated due to lack of incoming tasks. When true, the same keep-alive policy applying to non-core threads applies also to core threads. To avoid continual thread replacement, the keep-alive time must be greater than zero when setting <code>true</code>. This method should in general be called before the pool is actively used.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>value</code> - <code>true</code> if should time out, else <code>false</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if value is <code>true</code> and the current keep-alive time is not greater than zero</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="setMaximumPoolSize-int-">setMaximumPoolSize</h3> <pre data-language="java">public void setMaximumPoolSize(int maximumPoolSize)</pre> <p>Sets the maximum allowed number of threads. This overrides any value set in the constructor. If the new value is smaller than the current value, excess existing threads will be terminated when they next become idle.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>maximumPoolSize</code> - the new maximum</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the new maximum is less than or equal to zero, or less than the <a href="../threadpoolexecutor/#getCorePoolSize--">core pool size</a>
+</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#getMaximumPoolSize--"><code>getMaximumPoolSize()</code></a></dd> </dl>    <h3 id="getMaximumPoolSize--">getMaximumPoolSize</h3> <pre data-language="java">public int getMaximumPoolSize()</pre> <p>Returns the maximum allowed number of threads.</p> <dl> <dt>Returns:</dt> <dd>the maximum allowed number of threads</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#setMaximumPoolSize-int-"><code>setMaximumPoolSize(int)</code></a></dd> </dl>    <h3 id="setKeepAliveTime-long-java.util.concurrent.TimeUnit-">setKeepAliveTime</h3> <pre data-language="java">public void setKeepAliveTime(long time,
+                             TimeUnit unit)</pre> <p>Sets the time limit for which threads may remain idle before being terminated. If there are more than the core number of threads currently in the pool, after waiting this amount of time without processing a task, excess threads will be terminated. This overrides any value set in the constructor.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>time</code> - the time to wait. A time value of zero will cause excess threads to terminate immediately after executing tasks.</dd> <dd>
+<code>unit</code> - the time unit of the <code>time</code> argument</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>time</code> less than zero or if <code>time</code> is zero and <code>allowsCoreThreadTimeOut</code>
+</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#getKeepAliveTime-java.util.concurrent.TimeUnit-"><code>getKeepAliveTime(TimeUnit)</code></a></dd> </dl>    <h3 id="getKeepAliveTime-java.util.concurrent.TimeUnit-">getKeepAliveTime</h3> <pre data-language="java">public long getKeepAliveTime(TimeUnit unit)</pre> <p>Returns the thread keep-alive time, which is the amount of time that threads in excess of the core pool size may remain idle before being terminated.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>unit</code> - the desired time unit of the result</dd> <dt>Returns:</dt> <dd>the time limit</dd> <dt>See Also:</dt> <dd><a href="../threadpoolexecutor/#setKeepAliveTime-long-java.util.concurrent.TimeUnit-"><code>setKeepAliveTime(long, TimeUnit)</code></a></dd> </dl>    <h3 id="getQueue--">getQueue</h3> <pre data-language="java">public BlockingQueue&lt;Runnable&gt; getQueue()</pre> <p>Returns the task queue used by this executor. Access to the task queue is intended primarily for debugging and monitoring. This queue may be in active use. Retrieving the task queue does not prevent queued tasks from executing.</p> <dl> <dt>Returns:</dt> <dd>the task queue</dd> </dl>    <h3 id="remove-java.lang.Runnable-">remove</h3> <pre data-language="java">public boolean remove(Runnable task)</pre> <div>
+<p>Removes this task from the executor's internal queue if it is present, thus causing it not to be run if it has not already started. </p>
+<p>This method may be useful as one part of a cancellation scheme. It may fail to remove tasks that have been converted into other forms before being placed on the internal queue. For example, a task entered using <code>submit</code> might be converted into a form that maintains <code>Future</code> status. However, in such cases, method <a href="../threadpoolexecutor/#purge--"><code>purge()</code></a> may be used to remove those Futures that have been cancelled.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>task</code> - the task to remove</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the task was removed</dd> </dl>    <h3 id="purge--">purge</h3> <pre data-language="java">public void purge()</pre> <p>Tries to remove from the work queue all <a href="../future/"><code>Future</code></a> tasks that have been cancelled. This method can be useful as a storage reclamation operation, that has no other impact on functionality. Cancelled tasks are never executed, but may accumulate in work queues until worker threads can actively remove them. Invoking this method instead tries to remove them now. However, this method may fail to remove tasks in the presence of interference by other threads.</p>    <h3 id="getPoolSize--">getPoolSize</h3> <pre data-language="java">public int getPoolSize()</pre> <p>Returns the current number of threads in the pool.</p> <dl> <dt>Returns:</dt> <dd>the number of threads</dd> </dl>    <h3 id="getActiveCount--">getActiveCount</h3> <pre data-language="java">public int getActiveCount()</pre> <p>Returns the approximate number of threads that are actively executing tasks.</p> <dl> <dt>Returns:</dt> <dd>the number of threads</dd> </dl>    <h3 id="getLargestPoolSize--">getLargestPoolSize</h3> <pre data-language="java">public int getLargestPoolSize()</pre> <p>Returns the largest number of threads that have ever simultaneously been in the pool.</p> <dl> <dt>Returns:</dt> <dd>the number of threads</dd> </dl>    <h3 id="getTaskCount--">getTaskCount</h3> <pre data-language="java">public long getTaskCount()</pre> <p>Returns the approximate total number of tasks that have ever been scheduled for execution. Because the states of tasks and threads may change dynamically during computation, the returned value is only an approximation.</p> <dl> <dt>Returns:</dt> <dd>the number of tasks</dd> </dl>    <h3 id="getCompletedTaskCount--">getCompletedTaskCount</h3> <pre data-language="java">public long getCompletedTaskCount()</pre> <p>Returns the approximate total number of tasks that have completed execution. Because the states of tasks and threads may change dynamically during computation, the returned value is only an approximation, but one that does not ever decrease across successive calls.</p> <dl> <dt>Returns:</dt> <dd>the number of tasks</dd> </dl>    <h3 id="toString--">toString</h3> <pre data-language="java">public String toString()</pre> <p>Returns a string identifying this pool, as well as its state, including indications of run state and estimated worker and task counts.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../../lang/object/#toString--">toString</a></code> in class <code><a href="../../../lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a string identifying this pool, as well as its state</dd> </dl>    <h3 id="beforeExecute-java.lang.Thread-java.lang.Runnable-">beforeExecute</h3> <pre data-language="java">protected void beforeExecute(Thread t,
+                             Runnable r)</pre> <div>
+<p>Method invoked prior to executing the given Runnable in the given thread. This method is invoked by thread <code>t</code> that will execute task <code>r</code>, and may be used to re-initialize ThreadLocals, or to perform logging. </p>
+<p>This implementation does nothing, but may be customized in subclasses. Note: To properly nest multiple overridings, subclasses should generally invoke <code>super.beforeExecute</code> at the end of this method.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>t</code> - the thread that will run task <code>r</code>
+</dd> <dd>
+<code>r</code> - the task that will be executed</dd> </dl>    <h3 id="afterExecute-java.lang.Runnable-java.lang.Throwable-">afterExecute</h3> <pre data-language="java">protected void afterExecute(Runnable r,
+                            Throwable t)</pre> <div>
+<p>Method invoked upon completion of execution of the given Runnable. This method is invoked by the thread that executed the task. If non-null, the Throwable is the uncaught <code>RuntimeException</code> or <code>Error</code> that caused execution to terminate abruptly. </p>
+<p>This implementation does nothing, but may be customized in subclasses. Note: To properly nest multiple overridings, subclasses should generally invoke <code>super.afterExecute</code> at the beginning of this method. </p>
+<p><b>Note:</b> When actions are enclosed in tasks (such as <a href="../futuretask/"><code>FutureTask</code></a>) either explicitly or via methods such as <code>submit</code>, these task objects catch and maintain computational exceptions, and so they do not cause abrupt termination, and the internal exceptions are <em>not</em> passed to this method. If you would like to trap both kinds of failures in this method, you can further probe for such cases, as in this sample subclass that prints either the direct cause or the underlying exception if a task has been aborted: </p>
+<pre data-language="java">class ExtendedExecutor extends ThreadPoolExecutor {
+   // ...
+   protected void afterExecute(Runnable r, Throwable t) {
+     super.afterExecute(r, t);
+     if (t == null &amp;&amp; r instanceof Future&lt;?&gt;) {
+       try {
+         Object result = ((Future&lt;?&gt;) r).get();
+       } catch (CancellationException ce) {
+           t = ce;
+       } catch (ExecutionException ee) {
+           t = ee.getCause();
+       } catch (InterruptedException ie) {
+           Thread.currentThread().interrupt(); // ignore/reset
+       }
+     }
+     if (t != null)
+       System.out.println(t);
+   }
+ }</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>r</code> - the runnable that has completed</dd> <dd>
+<code>t</code> - the exception that caused termination, or null if execution completed normally</dd> </dl>    <h3 id="terminated--">terminated</h3> <pre data-language="java">protected void terminated()</pre> <p>Method invoked when the Executor has terminated. Default implementation does nothing. Note: To properly nest multiple overridings, subclasses should generally invoke <code>super.terminated</code> within this method.</p>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

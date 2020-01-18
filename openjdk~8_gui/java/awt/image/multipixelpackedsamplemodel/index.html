@@ -1,0 +1,290 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>MultiPixelPackedSampleModel - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content="The MultiPixelPackedSampleModel class represents one-banded images and can pack multiple one-sample pixels into one data element. Pixels are not &hellip;">
+  <meta name="keywords" content="class, multipixelpackedsamplemodel, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/java/awt/image/multipixelpackedsamplemodel/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class MultiPixelPackedSampleModel</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../samplemodel/">java.awt.image.SampleModel</a></li> <li> <ul class="inheritance"> <li>java.awt.image.MultiPixelPackedSampleModel</li> </ul> </li> </ul> </li> </ul>     <pre data-language="java">public class MultiPixelPackedSampleModel
+extends SampleModel</pre> <div>
+<p>The <code>MultiPixelPackedSampleModel</code> class represents one-banded images and can pack multiple one-sample pixels into one data element. Pixels are not allowed to span data elements. The data type can be DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, or DataBuffer.TYPE_INT. Each pixel must be a power of 2 number of bits and a power of 2 number of pixels must fit exactly in one data element. Pixel bit stride is equal to the number of bits per pixel. Scanline stride is in data elements and the last several data elements might be padded with unused pixels. Data bit offset is the offset in bits from the beginning of the <a href="../databuffer/"><code>DataBuffer</code></a> to the first pixel and must be a multiple of pixel bit stride. </p>
+<p> The following code illustrates extracting the bits for pixel <code>x, y</code> from <code>DataBuffer</code> <code>data</code> and storing the pixel data in data elements of type <code>dataType</code>: </p>
+<pre data-language="java">int dataElementSize = DataBuffer.getDataTypeSize(dataType);
+      int bitnum = dataBitOffset + x*pixelBitStride;
+      int element = data.getElem(y*scanlineStride + bitnum/dataElementSize);
+      int shift = dataElementSize - (bitnum &amp; (dataElementSize-1))
+                  - pixelBitStride;
+      int pixel = (element &gt;&gt; shift) &amp; ((1 &lt;&lt; pixelBitStride) - 1);</pre>
+</div>       <h2 id="field.summary">Fields</h2>  <h2 id="fields.inherited.from.class.java.awt.image.SampleModel">Fields inherited from class java.awt.image.<a href="../samplemodel/">SampleModel</a>
+</h2> <code><a href="../samplemodel/#dataType">dataType</a>, <a href="../samplemodel/#height">height</a>, <a href="../samplemodel/#numBands">numBands</a>, <a href="../samplemodel/#width">width</a></code>    <h2 id="constructor.detail">Constructors</h2>   <h3 id="MultiPixelPackedSampleModel-int-int-int-int-">MultiPixelPackedSampleModel</h3> <pre data-language="java">public MultiPixelPackedSampleModel(int dataType,
+                                   int w,
+                                   int h,
+                                   int numberOfBits)</pre> <p>Constructs a <code>MultiPixelPackedSampleModel</code> with the specified data type, width, height and number of bits per pixel.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>dataType</code> - the data type for storing samples</dd> <dd>
+<code>w</code> - the width, in pixels, of the region of image data described</dd> <dd>
+<code>h</code> - the height, in pixels, of the region of image data described</dd> <dd>
+<code>numberOfBits</code> - the number of bits per pixel</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>dataType</code> is not either <code>DataBuffer.TYPE_BYTE</code>, <code>DataBuffer.TYPE_USHORT</code>, or <code>DataBuffer.TYPE_INT</code>
+</dd> </dl>    <h3 id="MultiPixelPackedSampleModel-int-int-int-int-int-int-">MultiPixelPackedSampleModel</h3> <pre data-language="java">public MultiPixelPackedSampleModel(int dataType,
+                                   int w,
+                                   int h,
+                                   int numberOfBits,
+                                   int scanlineStride,
+                                   int dataBitOffset)</pre> <p>Constructs a <code>MultiPixelPackedSampleModel</code> with specified data type, width, height, number of bits per pixel, scanline stride and data bit offset.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>dataType</code> - the data type for storing samples</dd> <dd>
+<code>w</code> - the width, in pixels, of the region of image data described</dd> <dd>
+<code>h</code> - the height, in pixels, of the region of image data described</dd> <dd>
+<code>numberOfBits</code> - the number of bits per pixel</dd> <dd>
+<code>scanlineStride</code> - the line stride of the image data</dd> <dd>
+<code>dataBitOffset</code> - the data bit offset for the region of image data described</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rasterformatexception/">RasterFormatException</a></code> - if the number of bits per pixel is not a power of 2 or if a power of 2 number of pixels do not fit in one data element.</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>w</code> or <code>h</code> is not greater than 0</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>dataType</code> is not either <code>DataBuffer.TYPE_BYTE</code>, <code>DataBuffer.TYPE_USHORT</code>, or <code>DataBuffer.TYPE_INT</code>
+</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="createCompatibleSampleModel-int-int-">createCompatibleSampleModel</h3> <pre data-language="java">public SampleModel createCompatibleSampleModel(int w,
+                                               int h)</pre> <p>Creates a new <code>MultiPixelPackedSampleModel</code> with the specified width and height. The new <code>MultiPixelPackedSampleModel</code> has the same storage data type and number of bits per pixel as this <code>MultiPixelPackedSampleModel</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#createCompatibleSampleModel-int-int-">createCompatibleSampleModel</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>w</code> - the specified width</dd> <dd>
+<code>h</code> - the specified height</dd> <dt>Returns:</dt> <dd>a <a href="../samplemodel/"><code>SampleModel</code></a> with the specified width and height and with the same storage data type and number of bits per pixel as this <code>MultiPixelPackedSampleModel</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>w</code> or <code>h</code> is not greater than 0</dd> </dl>    <h3 id="createDataBuffer--">createDataBuffer</h3> <pre data-language="java">public DataBuffer createDataBuffer()</pre> <p>Creates a <code>DataBuffer</code> that corresponds to this <code>MultiPixelPackedSampleModel</code>. The <code>DataBuffer</code> object's data type and size is consistent with this <code>MultiPixelPackedSampleModel</code>. The <code>DataBuffer</code> has a single bank.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#createDataBuffer--">createDataBuffer</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Returns:</dt> <dd>a <code>DataBuffer</code> with the same data type and size as this <code>MultiPixelPackedSampleModel</code>.</dd> </dl>    <h3 id="getNumDataElements--">getNumDataElements</h3> <pre data-language="java">public int getNumDataElements()</pre> <p>Returns the number of data elements needed to transfer one pixel via the <a href="../multipixelpackedsamplemodel/#getDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>getDataElements(int, int, java.lang.Object, java.awt.image.DataBuffer)</code></a> and <a href="../multipixelpackedsamplemodel/#setDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>setDataElements(int, int, java.lang.Object, java.awt.image.DataBuffer)</code></a> methods. For a <code>MultiPixelPackedSampleModel</code>, this is one.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#getNumDataElements--">getNumDataElements</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Returns:</dt> <dd>the number of data elements.</dd> <dt>See Also:</dt> <dd>
+<a href="../samplemodel/#getDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>SampleModel.getDataElements(int, int, Object, DataBuffer)</code></a>, <a href="../samplemodel/#getDataElements-int-int-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>SampleModel.getDataElements(int, int, int, int, Object, DataBuffer)</code></a>, <a href="../samplemodel/#setDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>SampleModel.setDataElements(int, int, Object, DataBuffer)</code></a>, <a href="../samplemodel/#setDataElements-int-int-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>SampleModel.setDataElements(int, int, int, int, Object, DataBuffer)</code></a>, <a href="../samplemodel/#getTransferType--"><code>SampleModel.getTransferType()</code></a>
+</dd> </dl>    <h3 id="getSampleSize--">getSampleSize</h3> <pre data-language="java">public int[] getSampleSize()</pre> <p>Returns the number of bits per sample for all bands.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#getSampleSize--">getSampleSize</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Returns:</dt> <dd>the number of bits per sample.</dd> </dl>    <h3 id="getSampleSize-int-">getSampleSize</h3> <pre data-language="java">public int getSampleSize(int band)</pre> <p>Returns the number of bits per sample for the specified band.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#getSampleSize-int-">getSampleSize</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>band</code> - the specified band</dd> <dt>Returns:</dt> <dd>the number of bits per sample for the specified band.</dd> </dl>    <h3 id="getOffset-int-int-">getOffset</h3> <pre data-language="java">public int getOffset(int x,
+                     int y)</pre> <p>Returns the offset of pixel (x, y) in data array elements.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>x</code> - the X coordinate of the specified pixel</dd> <dd>
+<code>y</code> - the Y coordinate of the specified pixel</dd> <dt>Returns:</dt> <dd>the offset of the specified pixel.</dd> </dl>    <h3 id="getBitOffset-int-">getBitOffset</h3> <pre data-language="java">public int getBitOffset(int x)</pre> <p>Returns the offset, in bits, into the data element in which it is stored for the <code>x</code>th pixel of a scanline. This offset is the same for all scanlines.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>x</code> - the specified pixel</dd> <dt>Returns:</dt> <dd>the bit offset of the specified pixel.</dd> </dl>    <h3 id="getScanlineStride--">getScanlineStride</h3> <pre data-language="java">public int getScanlineStride()</pre> <p>Returns the scanline stride.</p> <dl> <dt>Returns:</dt> <dd>the scanline stride of this <code>MultiPixelPackedSampleModel</code>.</dd> </dl>    <h3 id="getPixelBitStride--">getPixelBitStride</h3> <pre data-language="java">public int getPixelBitStride()</pre> <p>Returns the pixel bit stride in bits. This value is the same as the number of bits per pixel.</p> <dl> <dt>Returns:</dt> <dd>the <code>pixelBitStride</code> of this <code>MultiPixelPackedSampleModel</code>.</dd> </dl>    <h3 id="getDataBitOffset--">getDataBitOffset</h3> <pre data-language="java">public int getDataBitOffset()</pre> <p>Returns the data bit offset in bits.</p> <dl> <dt>Returns:</dt> <dd>the <code>dataBitOffset</code> of this <code>MultiPixelPackedSampleModel</code>.</dd> </dl>    <h3 id="getTransferType--">getTransferType</h3> <pre data-language="java">public int getTransferType()</pre> <p>Returns the TransferType used to transfer pixels by way of the <code>getDataElements</code> and <code>setDataElements</code> methods. The TransferType might or might not be the same as the storage DataType. The TransferType is one of DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, or DataBuffer.TYPE_INT.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../samplemodel/#getTransferType--">getTransferType</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Returns:</dt> <dd>the transfertype.</dd> <dt>See Also:</dt> <dd>
+<a href="../samplemodel/#getDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>SampleModel.getDataElements(int, int, Object, DataBuffer)</code></a>, <a href="../samplemodel/#getDataElements-int-int-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>SampleModel.getDataElements(int, int, int, int, Object, DataBuffer)</code></a>, <a href="../samplemodel/#setDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>SampleModel.setDataElements(int, int, Object, DataBuffer)</code></a>, <a href="../samplemodel/#setDataElements-int-int-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>SampleModel.setDataElements(int, int, int, int, Object, DataBuffer)</code></a>, <a href="../samplemodel/#getNumDataElements--"><code>SampleModel.getNumDataElements()</code></a>, <a href="../databuffer/"><code>DataBuffer</code></a>
+</dd> </dl>    <h3 id="createSubsetSampleModel-int:A-">createSubsetSampleModel</h3> <pre data-language="java">public SampleModel createSubsetSampleModel(int[] bands)</pre> <p>Creates a new <code>MultiPixelPackedSampleModel</code> with a subset of the bands of this <code>MultiPixelPackedSampleModel</code>. Since a <code>MultiPixelPackedSampleModel</code> only has one band, the bands argument must have a length of one and indicate the zeroth band.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#createSubsetSampleModel-int:A-">createSubsetSampleModel</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>bands</code> - the specified bands</dd> <dt>Returns:</dt> <dd>a new <code>SampleModel</code> with a subset of bands of this <code>MultiPixelPackedSampleModel</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rasterformatexception/">RasterFormatException</a></code> - if the number of bands requested is not one.</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>w</code> or <code>h</code> is not greater than 0</dd> </dl>    <h3 id="getSample-int-int-int-java.awt.image.DataBuffer-">getSample</h3> <pre data-language="java">public int getSample(int x,
+                     int y,
+                     int b,
+                     DataBuffer data)</pre> <p>Returns as <code>int</code> the sample in a specified band for the pixel located at (x, y). An <code>ArrayIndexOutOfBoundsException</code> is thrown if the coordinates are not in bounds.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#getSample-int-int-int-java.awt.image.DataBuffer-">getSample</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>x</code> - the X coordinate of the specified pixel</dd> <dd>
+<code>y</code> - the Y coordinate of the specified pixel</dd> <dd>
+<code>b</code> - the band to return, which is assumed to be 0</dd> <dd>
+<code>data</code> - the <code>DataBuffer</code> containing the image data</dd> <dt>Returns:</dt> <dd>the specified band containing the sample of the specified pixel.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/arrayindexoutofboundsexception/">ArrayIndexOutOfBoundsException</a></code> - if the specified coordinates are not in bounds.</dd> <dt>See Also:</dt> <dd><a href="../multipixelpackedsamplemodel/#setSample-int-int-int-int-java.awt.image.DataBuffer-"><code>setSample(int, int, int, int, DataBuffer)</code></a></dd> </dl>    <h3 id="setSample-int-int-int-int-java.awt.image.DataBuffer-">setSample</h3> <pre data-language="java">public void setSample(int x,
+                      int y,
+                      int b,
+                      int s,
+                      DataBuffer data)</pre> <p>Sets a sample in the specified band for the pixel located at (x, y) in the <code>DataBuffer</code> using an <code>int</code> for input. An <code>ArrayIndexOutOfBoundsException</code> is thrown if the coordinates are not in bounds.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#setSample-int-int-int-int-java.awt.image.DataBuffer-">setSample</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>x</code> - the X coordinate of the specified pixel</dd> <dd>
+<code>y</code> - the Y coordinate of the specified pixel</dd> <dd>
+<code>b</code> - the band to return, which is assumed to be 0</dd> <dd>
+<code>s</code> - the input sample as an <code>int</code>
+</dd> <dd>
+<code>data</code> - the <code>DataBuffer</code> where image data is stored</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/arrayindexoutofboundsexception/">ArrayIndexOutOfBoundsException</a></code> - if the coordinates are not in bounds.</dd> <dt>See Also:</dt> <dd><a href="../multipixelpackedsamplemodel/#getSample-int-int-int-java.awt.image.DataBuffer-"><code>getSample(int, int, int, DataBuffer)</code></a></dd> </dl>    <h3 id="getDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-">getDataElements</h3> <pre data-language="java">public Object getDataElements(int x,
+                              int y,
+                              Object obj,
+                              DataBuffer data)</pre> <div>
+<p>Returns data for a single pixel in a primitive array of type TransferType. For a <code>MultiPixelPackedSampleModel</code>, the array has one element, and the type is the smallest of DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, or DataBuffer.TYPE_INT that can hold a single pixel. Generally, <code>obj</code> should be passed in as <code>null</code>, so that the <code>Object</code> is created automatically and is the correct primitive data type. </p>
+<p> The following code illustrates transferring data for one pixel from <code>DataBuffer</code> <code>db1</code>, whose storage layout is described by <code>MultiPixelPackedSampleModel</code> <code>mppsm1</code>, to <code>DataBuffer</code> <code>db2</code>, whose storage layout is described by <code>MultiPixelPackedSampleModel</code> <code>mppsm2</code>. The transfer is generally more efficient than using <code>getPixel</code> or <code>setPixel</code>. </p>
+<pre data-language="java">MultiPixelPackedSampleModel mppsm1, mppsm2;
+       DataBufferInt db1, db2;
+       mppsm2.setDataElements(x, y, mppsm1.getDataElements(x, y, null,
+                              db1), db2);</pre> Using <code>getDataElements</code> or <code>setDataElements</code> to transfer between two <code>DataBuffer/SampleModel</code> pairs is legitimate if the <code>SampleModels</code> have the same number of bands, corresponding bands have the same number of bits per sample, and the TransferTypes are the same. <p> If <code>obj</code> is not <code>null</code>, it should be a primitive array of type TransferType. Otherwise, a <code>ClassCastException</code> is thrown. An <code>ArrayIndexOutOfBoundsException</code> is thrown if the coordinates are not in bounds, or if <code>obj</code> is not <code>null</code> and is not large enough to hold the pixel data.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#getDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-">getDataElements</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>x</code> - the X coordinate of the specified pixel</dd> <dd>
+<code>y</code> - the Y coordinate of the specified pixel</dd> <dd>
+<code>obj</code> - a primitive array in which to return the pixel data or <code>null</code>.</dd> <dd>
+<code>data</code> - the <code>DataBuffer</code> containing the image data.</dd> <dt>Returns:</dt> <dd>an <code>Object</code> containing data for the specified pixel.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/classcastexception/">ClassCastException</a></code> - if <code>obj</code> is not a primitive array of type TransferType or is not <code>null</code>
+</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/arrayindexoutofboundsexception/">ArrayIndexOutOfBoundsException</a></code> - if the coordinates are not in bounds, or if <code>obj</code> is not <code>null</code> or not large enough to hold the pixel data</dd> <dt>See Also:</dt> <dd><a href="../multipixelpackedsamplemodel/#setDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>setDataElements(int, int, Object, DataBuffer)</code></a></dd> </dl>    <h3 id="getPixel-int-int-int:A-java.awt.image.DataBuffer-">getPixel</h3> <pre data-language="java">public int[] getPixel(int x,
+                      int y,
+                      int[] iArray,
+                      DataBuffer data)</pre> <p>Returns the specified single band pixel in the first element of an <code>int</code> array. <code>ArrayIndexOutOfBoundsException</code> is thrown if the coordinates are not in bounds.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../samplemodel/#getPixel-int-int-int:A-java.awt.image.DataBuffer-">getPixel</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>x</code> - the X coordinate of the specified pixel</dd> <dd>
+<code>y</code> - the Y coordinate of the specified pixel</dd> <dd>
+<code>iArray</code> - the array containing the pixel to be returned or <code>null</code>
+</dd> <dd>
+<code>data</code> - the <code>DataBuffer</code> where image data is stored</dd> <dt>Returns:</dt> <dd>an array containing the specified pixel.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/arrayindexoutofboundsexception/">ArrayIndexOutOfBoundsException</a></code> - if the coordinates are not in bounds</dd> <dt>See Also:</dt> <dd><a href="../multipixelpackedsamplemodel/#setPixel-int-int-int:A-java.awt.image.DataBuffer-"><code>setPixel(int, int, int[], DataBuffer)</code></a></dd> </dl>    <h3 id="setDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-">setDataElements</h3> <pre data-language="java">public void setDataElements(int x,
+                            int y,
+                            Object obj,
+                            DataBuffer data)</pre> <div>
+<p>Sets the data for a single pixel in the specified <code>DataBuffer</code> from a primitive array of type TransferType. For a <code>MultiPixelPackedSampleModel</code>, only the first element of the array holds valid data, and the type must be the smallest of DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, or DataBuffer.TYPE_INT that can hold a single pixel. </p>
+<p> The following code illustrates transferring data for one pixel from <code>DataBuffer</code> <code>db1</code>, whose storage layout is described by <code>MultiPixelPackedSampleModel</code> <code>mppsm1</code>, to <code>DataBuffer</code> <code>db2</code>, whose storage layout is described by <code>MultiPixelPackedSampleModel</code> <code>mppsm2</code>. The transfer is generally more efficient than using <code>getPixel</code> or <code>setPixel</code>. </p>
+<pre data-language="java">MultiPixelPackedSampleModel mppsm1, mppsm2;
+       DataBufferInt db1, db2;
+       mppsm2.setDataElements(x, y, mppsm1.getDataElements(x, y, null,
+                              db1), db2);</pre> Using <code>getDataElements</code> or <code>setDataElements</code> to transfer between two <code>DataBuffer/SampleModel</code> pairs is legitimate if the <code>SampleModel</code> objects have the same number of bands, corresponding bands have the same number of bits per sample, and the TransferTypes are the same. <p> <code>obj</code> must be a primitive array of type TransferType. Otherwise, a <code>ClassCastException</code> is thrown. An <code>ArrayIndexOutOfBoundsException</code> is thrown if the coordinates are not in bounds, or if <code>obj</code> is not large enough to hold the pixel data.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../samplemodel/#setDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-">setDataElements</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>x</code> - the X coordinate of the pixel location</dd> <dd>
+<code>y</code> - the Y coordinate of the pixel location</dd> <dd>
+<code>obj</code> - a primitive array containing pixel data</dd> <dd>
+<code>data</code> - the <code>DataBuffer</code> containing the image data</dd> <dt>See Also:</dt> <dd><a href="../multipixelpackedsamplemodel/#getDataElements-int-int-java.lang.Object-java.awt.image.DataBuffer-"><code>getDataElements(int, int, Object, DataBuffer)</code></a></dd> </dl>    <h3 id="setPixel-int-int-int:A-java.awt.image.DataBuffer-">setPixel</h3> <pre data-language="java">public void setPixel(int x,
+                     int y,
+                     int[] iArray,
+                     DataBuffer data)</pre> <p>Sets a pixel in the <code>DataBuffer</code> using an <code>int</code> array for input. <code>ArrayIndexOutOfBoundsException</code> is thrown if the coordinates are not in bounds.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../samplemodel/#setPixel-int-int-int:A-java.awt.image.DataBuffer-">setPixel</a></code> in class <code><a href="../samplemodel/">SampleModel</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>x</code> - the X coordinate of the pixel location</dd> <dd>
+<code>y</code> - the Y coordinate of the pixel location</dd> <dd>
+<code>iArray</code> - the input pixel in an <code>int</code> array</dd> <dd>
+<code>data</code> - the <code>DataBuffer</code> containing the image data</dd> <dt>See Also:</dt> <dd><a href="../multipixelpackedsamplemodel/#getPixel-int-int-int:A-java.awt.image.DataBuffer-"><code>getPixel(int, int, int[], DataBuffer)</code></a></dd> </dl>    <h3 id="equals-java.lang.Object-">equals</h3> <pre data-language="java">public boolean equals(Object o)</pre> <p>Description copied from class: <code><a href="..//openjdk~8/java/lang/object/">Object</a></code></p> <div>
+<p>Indicates whether some other object is "equal to" this one. </p>
+<p> The <code>equals</code> method implements an equivalence relation on non-null object references: </p>
+<ul> <li>It is <i>reflexive</i>: for any non-null reference value <code>x</code>, <code>x.equals(x)</code> should return <code>true</code>. </li>
+<li>It is <i>symmetric</i>: for any non-null reference values <code>x</code> and <code>y</code>, <code>x.equals(y)</code> should return <code>true</code> if and only if <code>y.equals(x)</code> returns <code>true</code>. </li>
+<li>It is <i>transitive</i>: for any non-null reference values <code>x</code>, <code>y</code>, and <code>z</code>, if <code>x.equals(y)</code> returns <code>true</code> and <code>y.equals(z)</code> returns <code>true</code>, then <code>x.equals(z)</code> should return <code>true</code>. </li>
+<li>It is <i>consistent</i>: for any non-null reference values <code>x</code> and <code>y</code>, multiple invocations of <code>x.equals(y)</code> consistently return <code>true</code> or consistently return <code>false</code>, provided no information used in <code>equals</code> comparisons on the objects is modified. </li>
+<li>For any non-null reference value <code>x</code>, <code>x.equals(null)</code> should return <code>false</code>. </li>
+</ul> <p> The <code>equals</code> method for class <code>Object</code> implements the most discriminating possible equivalence relation on objects; that is, for any non-null reference values <code>x</code> and <code>y</code>, this method returns <code>true</code> if and only if <code>x</code> and <code>y</code> refer to the same object (<code>x == y</code> has the value <code>true</code>). </p>
+<p> Note that it is generally necessary to override the <code>hashCode</code> method whenever this method is overridden, so as to maintain the general contract for the <code>hashCode</code> method, which states that equal objects must have equal hash codes.</p>
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/object/">equals</a></code> in class <code><a href="..//openjdk~8/java/lang/object/">Object</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>o</code> - the reference object with which to compare.</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this object is the same as the obj argument; <code>false</code> otherwise.</dd> <dt>See Also:</dt> <dd>
+<a href="..//openjdk~8/java/lang/object/"><code>Object.hashCode()</code></a>, <a href="..//openjdk~8/java/util/hashmap/"><code>HashMap</code></a>
+</dd> </dl>    <h3 id="hashCode--">hashCode</h3> <pre data-language="java">public int hashCode()</pre> <p>Description copied from class: <code><a href="..//openjdk~8/java/lang/object/">Object</a></code></p> <div>
+<p>Returns a hash code value for the object. This method is supported for the benefit of hash tables such as those provided by <a href="..//openjdk~8/java/util/hashmap/"><code>HashMap</code></a>. </p>
+<p> The general contract of <code>hashCode</code> is: </p>
+<ul> <li>Whenever it is invoked on the same object more than once during an execution of a Java application, the <code>hashCode</code> method must consistently return the same integer, provided no information used in <code>equals</code> comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application. </li>
+<li>If two objects are equal according to the <code>equals(Object)</code> method, then calling the <code>hashCode</code> method on each of the two objects must produce the same integer result. </li>
+<li>It is <em>not</em> required that if two objects are unequal according to the <a href="..//openjdk~8/java/lang/object/"><code>Object.equals(java.lang.Object)</code></a> method, then calling the <code>hashCode</code> method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables. </li>
+</ul> <p> As much as is reasonably practical, the hashCode method defined by class <code>Object</code> does return distinct integers for distinct objects. (This is typically implemented by converting the internal address of the object into an integer, but this implementation technique is not required by the Java™ programming language.)</p>
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/object/">hashCode</a></code> in class <code><a href="..//openjdk~8/java/lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a hash code value for this object.</dd> <dt>See Also:</dt> <dd>
+<a href="..//openjdk~8/java/lang/object/"><code>Object.equals(java.lang.Object)</code></a>, <a href="..//openjdk~8/java/lang/system/"><code>System.identityHashCode(java.lang.Object)</code></a>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,166 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>CallSite - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A CallSite is a holder for a variable MethodHandle, which is called its target. An invokedynamic instruction linked to a CallSite delegates all &hellip;">
+  <meta name="keywords" content="class, callsite, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/lang/invoke/callsite/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class CallSite</h1>   <ul class="inheritance"> <li><a href="../../object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.lang.invoke.CallSite</li> </ul> </li> </ul>   <dl> <dt>Direct Known Subclasses:</dt> <dd>
+<a href="../constantcallsite/">ConstantCallSite</a>, <a href="../mutablecallsite/">MutableCallSite</a>, <a href="../volatilecallsite/">VolatileCallSite</a>
+</dd> </dl>   <pre data-language="java">public abstract class CallSite
+extends Object</pre> <div>
+<p>A <code>CallSite</code> is a holder for a variable <a href="../methodhandle/"><code>MethodHandle</code></a>, which is called its <code>target</code>. An <code>invokedynamic</code> instruction linked to a <code>CallSite</code> delegates all calls to the site's current target. A <code>CallSite</code> may be associated with several <code>invokedynamic</code> instructions, or it may be "free floating", associated with none. In any case, it may be invoked through an associated method handle called its <a href="../callsite/#dynamicInvoker--">dynamic invoker</a>. </p>
+<p> <code>CallSite</code> is an abstract class which does not allow direct subclassing by users. It has three immediate, concrete subclasses that may be either instantiated or subclassed. </p>
+<ul> <li>If a mutable target is not required, an <code>invokedynamic</code> instruction may be permanently bound by means of a <a href="../constantcallsite/">constant call site</a>. </li>
+<li>If a mutable target is required which has volatile variable semantics, because updates to the target must be immediately and reliably witnessed by other threads, a <a href="../volatilecallsite/">volatile call site</a> may be used. </li>
+<li>Otherwise, if a mutable target is required, a <a href="../mutablecallsite/">mutable call site</a> may be used. </li>
+</ul> <p> A non-constant call site may be <em>relinked</em> by changing its target. The new target must have the same <a href="../methodhandle/#type--">type</a> as the previous target. Thus, though a call site can be relinked to a series of successive targets, it cannot change its type. </p>
+<p> Here is a sample use of call sites and bootstrap methods which links every dynamic call site to print its arguments: </p>
+<pre data-language="java">static void test() throws Throwable {
+    // THE FOLLOWING LINE IS PSEUDOCODE FOR A JVM INSTRUCTION
+    InvokeDynamic[#bootstrapDynamic].baz("baz arg", 2, 3.14);
+}
+private static void printArgs(Object... args) {
+  System.out.println(java.util.Arrays.deepToString(args));
+}
+private static final MethodHandle printArgs;
+static {
+  MethodHandles.Lookup lookup = MethodHandles.lookup();
+  Class thisClass = lookup.lookupClass();  // (who am I?)
+  printArgs = lookup.findStatic(thisClass,
+      "printArgs", MethodType.methodType(void.class, Object[].class));
+}
+private static CallSite bootstrapDynamic(MethodHandles.Lookup caller, String name, MethodType type) {
+  // ignore caller and name, but match the type:
+  return new ConstantCallSite(printArgs.asType(type));
+}</pre>
+</div>       <h2 id="method.detail">Methods</h2>   <h3 id="type--">type</h3> <pre data-language="java">public MethodType type()</pre> <p>Returns the type of this call site's target. Although targets may change, any call site's type is permanent, and can never change to an unequal type. The <code>setTarget</code> method enforces this invariant by refusing any new target that does not have the previous target's type.</p> <dl> <dt>Returns:</dt> <dd>the type of the current target, which is also the type of any future target</dd> </dl>    <h3 id="getTarget--">getTarget</h3> <pre data-language="java">public abstract MethodHandle getTarget()</pre> <p>Returns the target method of the call site, according to the behavior defined by this call site's specific class. The immediate subclasses of <code>CallSite</code> document the class-specific behaviors of this method.</p> <dl> <dt>Returns:</dt> <dd>the current linkage state of the call site, its target method handle</dd> <dt>See Also:</dt> <dd>
+<a href="../constantcallsite/"><code>ConstantCallSite</code></a>, <a href="../volatilecallsite/"><code>VolatileCallSite</code></a>, <a href="../callsite/#setTarget-java.lang.invoke.MethodHandle-"><code>setTarget(java.lang.invoke.MethodHandle)</code></a>, <a href="../constantcallsite/#getTarget--"><code>ConstantCallSite.getTarget()</code></a>, <a href="../mutablecallsite/#getTarget--"><code>MutableCallSite.getTarget()</code></a>, <a href="../volatilecallsite/#getTarget--"><code>VolatileCallSite.getTarget()</code></a>
+</dd> </dl>    <h3 id="setTarget-java.lang.invoke.MethodHandle-">setTarget</h3> <pre data-language="java">public abstract void setTarget(MethodHandle newTarget)</pre> <div>
+<p>Updates the target method of this call site, according to the behavior defined by this call site's specific class. The immediate subclasses of <code>CallSite</code> document the class-specific behaviors of this method. </p>
+<p> The type of the new target must be <a href="../methodtype/#equals-java.lang.Object-">equal to</a> the type of the old target.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>newTarget</code> - the new target</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the proposed new target is null</dd> <dd>
+<code><a href="../wrongmethodtypeexception/">WrongMethodTypeException</a></code> - if the proposed new target has a method type that differs from the previous target</dd> <dt>See Also:</dt> <dd>
+<a href="../callsite/#getTarget--"><code>getTarget()</code></a>, <a href="../constantcallsite/#setTarget-java.lang.invoke.MethodHandle-"><code>ConstantCallSite.setTarget(java.lang.invoke.MethodHandle)</code></a>, <a href="../mutablecallsite/#setTarget-java.lang.invoke.MethodHandle-"><code>MutableCallSite.setTarget(java.lang.invoke.MethodHandle)</code></a>, <a href="../volatilecallsite/#setTarget-java.lang.invoke.MethodHandle-"><code>VolatileCallSite.setTarget(java.lang.invoke.MethodHandle)</code></a>
+</dd> </dl>    <h3 id="dynamicInvoker--">dynamicInvoker</h3> <pre data-language="java">public abstract MethodHandle dynamicInvoker()</pre> <div>
+<p>Produces a method handle equivalent to an invokedynamic instruction which has been linked to this call site. </p>
+<p> This method is equivalent to the following code: </p>
+<pre data-language="java">MethodHandle getTarget, invoker, result;
+getTarget = MethodHandles.publicLookup().bind(this, "getTarget", MethodType.methodType(MethodHandle.class));
+invoker = MethodHandles.exactInvoker(this.type());
+result = MethodHandles.foldArguments(invoker, getTarget)</pre>
+</div> <dl> <dt>Returns:</dt> <dd>a method handle which always invokes this call site's current target</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

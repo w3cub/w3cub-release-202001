@@ -1,0 +1,157 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>DirectoryStream - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="An object to iterate over the entries in a directory. A directory stream allows for the convenient use of the for-each construct to iterate over a &hellip;">
+  <meta name="keywords" content="interface, directorystream, t, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/nio/file/directorystream/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface DirectoryStream&lt;T&gt;</h1>     <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - The type of element returned by the iterator</dd> </dl> <dl> <dt>All Superinterfaces:</dt> <dd>
+<a href="../../../lang/autocloseable/">AutoCloseable</a>, <a href="../../../io/closeable/">Closeable</a>, <a href="../../../lang/iterable/">Iterable</a>&lt;T&gt;</dd> </dl> <dl> <dt>All Known Subinterfaces:</dt> <dd>
+<a href="../securedirectorystream/">SecureDirectoryStream</a>&lt;T&gt;</dd> </dl>   <pre data-language="java">public interface DirectoryStream&lt;T&gt;
+extends Closeable, Iterable&lt;T&gt;</pre> <div>
+<p>An object to iterate over the entries in a directory. A directory stream allows for the convenient use of the for-each construct to iterate over a directory. </p>
+<p> <b> While <code>DirectoryStream</code> extends <code>Iterable</code>, it is not a general-purpose <code>Iterable</code> as it supports only a single <code>Iterator</code>; invoking the <a href="../directorystream/#iterator--"><code>iterator</code></a> method to obtain a second or subsequent iterator throws <code>IllegalStateException</code>. </b> </p>
+<p> An important property of the directory stream's <code>Iterator</code> is that its <a href="../../../util/iterator/#hasNext--"><code>hasNext</code></a> method is guaranteed to read-ahead by at least one element. If <code>hasNext</code> method returns <code>true</code>, and is followed by a call to the <code>next</code> method, it is guaranteed that the <code>next</code> method will not throw an exception due to an I/O error, or because the stream has been <a href="../../../io/closeable/#close--"><code>closed</code></a>. The <code>Iterator</code> does not support the <a href="../../../util/iterator/#remove--"><code>remove</code></a> operation. </p>
+<p> A <code>DirectoryStream</code> is opened upon creation and is closed by invoking the <code>close</code> method. Closing a directory stream releases any resources associated with the stream. Failure to close the stream may result in a resource leak. The try-with-resources statement provides a useful construct to ensure that the stream is closed: </p>
+<pre data-language="java">Path dir = ...
+   try (DirectoryStream&lt;Path&gt; stream = Files.newDirectoryStream(dir)) {
+       for (Path entry: stream) {
+           ...
+       }
+   }</pre> <p> Once a directory stream is closed, then further access to the directory, using the <code>Iterator</code>, behaves as if the end of stream has been reached. Due to read-ahead, the <code>Iterator</code> may return one or more elements after the directory stream has been closed. Once these buffered elements have been read, then subsequent calls to the <code>hasNext</code> method returns <code>false</code>, and subsequent calls to the <code>next</code> method will throw <code>NoSuchElementException</code>. </p>
+<p> A directory stream is not required to be <i>asynchronously closeable</i>. If a thread is blocked on the directory stream's iterator reading from the directory, and another thread invokes the <code>close</code> method, then the second thread may block until the read operation is complete. </p>
+<p> If an I/O error is encountered when accessing the directory then it causes the <code>Iterator</code>'s <code>hasNext</code> or <code>next</code> methods to throw <a href="../directoryiteratorexception/"><code>DirectoryIteratorException</code></a> with the <a href="../../../io/ioexception/"><code>IOException</code></a> as the cause. As stated above, the <code>hasNext</code> method is guaranteed to read-ahead by at least one element. This means that if <code>hasNext</code> method returns <code>true</code>, and is followed by a call to the <code>next</code> method, then it is guaranteed that the <code>next</code> method will not fail with a <code>DirectoryIteratorException</code>. </p>
+<p> The elements returned by the iterator are in no specific order. Some file systems maintain special links to the directory itself and the directory's parent directory. Entries representing these links are not returned by the iterator. </p>
+<p> The iterator is <i>weakly consistent</i>. It is thread safe but does not freeze the directory while iterating, so it may (or may not) reflect updates to the directory that occur after the <code>DirectoryStream</code> is created. </p>
+<p> <b>Usage Examples:</b> Suppose we want a list of the source files in a directory. This example uses both the for-each and try-with-resources constructs. </p>
+<pre data-language="java">List&lt;Path&gt; listSourceFiles(Path dir) throws IOException {
+       List&lt;Path&gt; result = new ArrayList&lt;&gt;();
+       try (DirectoryStream&lt;Path&gt; stream = Files.newDirectoryStream(dir, "*.{c,h,cpp,hpp,java}")) {
+           for (Path entry: stream) {
+               result.add(entry);
+           }
+       } catch (DirectoryIteratorException ex) {
+           // I/O error encounted during the iteration, the cause is an IOException
+           throw ex.getCause();
+       }
+       return result;
+   }</pre>
+</div> <dl> <dt>Since:</dt> <dd>1.7</dd> <dt>See Also:</dt> <dd><a href="../files/#newDirectoryStream-java.nio.file.Path-"><code>Files.newDirectoryStream(Path)</code></a></dd> </dl>       <h2 id="nested.class.summary">Nested Classes</h2> <table> <caption>Nested Classes </caption> <tr> <th scope="col">Modifier and Type</th> <th scope="col">Interface and Description</th> </tr> <tr> <td><code>static interface </code></td> <td>
+<code><a href="../directorystream.filter/">DirectoryStream.Filter</a>&lt;<a href="../directorystream.filter/">T</a>&gt;</code> <p>An interface that is implemented by objects that decide if a directory entry should be accepted or filtered.</p> </td> </tr> </table>    <h2 id="method.detail">Methods</h2>   <h3 id="iterator--">iterator</h3> <pre data-language="java">Iterator&lt;T&gt; iterator()</pre> <p>Returns the iterator associated with this <code>DirectoryStream</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../lang/iterable/#iterator--">iterator</a></code> in interface <code><a href="../../../lang/iterable/">Iterable</a>&lt;<a href="../directorystream/">T</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>the iterator associated with this <code>DirectoryStream</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalstateexception/">IllegalStateException</a></code> - if this directory stream is closed or the iterator has already been returned</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

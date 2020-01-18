@@ -1,0 +1,286 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ScheduledThreadPoolExecutor - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A ThreadPoolExecutor that can additionally schedule commands to run after a given delay, or to execute periodically. This class is preferable to &hellip;">
+  <meta name="keywords" content="class, scheduledthreadpoolexecutor, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/concurrent/scheduledthreadpoolexecutor/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class ScheduledThreadPoolExecutor</h1>   <ul class="inheritance"> <li><a href="../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../abstractexecutorservice/">java.util.concurrent.AbstractExecutorService</a></li> <li> <ul class="inheritance"> <li><a href="../threadpoolexecutor/">java.util.concurrent.ThreadPoolExecutor</a></li> <li> <ul class="inheritance"> <li>java.util.concurrent.ScheduledThreadPoolExecutor</li> </ul> </li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../executor/">Executor</a>, <a href="../executorservice/">ExecutorService</a>, <a href="../scheduledexecutorservice/">ScheduledExecutorService</a>
+</dd> </dl>   <pre data-language="java">public class ScheduledThreadPoolExecutor
+extends ThreadPoolExecutor
+implements ScheduledExecutorService</pre> <div>
+<p>A <a href="../threadpoolexecutor/"><code>ThreadPoolExecutor</code></a> that can additionally schedule commands to run after a given delay, or to execute periodically. This class is preferable to <a href="../../timer/"><code>Timer</code></a> when multiple worker threads are needed, or when the additional flexibility or capabilities of <a href="../threadpoolexecutor/"><code>ThreadPoolExecutor</code></a> (which this class extends) are required. </p>
+<p>Delayed tasks execute no sooner than they are enabled, but without any real-time guarantees about when, after they are enabled, they will commence. Tasks scheduled for exactly the same execution time are enabled in first-in-first-out (FIFO) order of submission. </p>
+<p>When a submitted task is cancelled before it is run, execution is suppressed. By default, such a cancelled task is not automatically removed from the work queue until its delay elapses. While this enables further inspection and monitoring, it may also cause unbounded retention of cancelled tasks. To avoid this, set <a href="../scheduledthreadpoolexecutor/#setRemoveOnCancelPolicy-boolean-"><code>setRemoveOnCancelPolicy(boolean)</code></a> to <code>true</code>, which causes tasks to be immediately removed from the work queue at time of cancellation. </p>
+<p>Successive executions of a task scheduled via <code>scheduleAtFixedRate</code> or <code>scheduleWithFixedDelay</code> do not overlap. While different executions may be performed by different threads, the effects of prior executions <a href="../package-summary/#MemoryVisibility"><i>happen-before</i></a> those of subsequent ones. </p>
+<p>While this class inherits from <a href="../threadpoolexecutor/"><code>ThreadPoolExecutor</code></a>, a few of the inherited tuning methods are not useful for it. In particular, because it acts as a fixed-sized pool using <code>corePoolSize</code> threads and an unbounded queue, adjustments to <code>maximumPoolSize</code> have no useful effect. Additionally, it is almost never a good idea to set <code>corePoolSize</code> to zero or use <code>allowCoreThreadTimeOut</code> because this may leave the pool without threads to handle tasks once they become eligible to run. </p>
+<p><b>Extension notes:</b> This class overrides the <a href="../threadpoolexecutor/#execute-java.lang.Runnable-"><code>execute</code></a> and <a href="../abstractexecutorservice/#submit-java.lang.Runnable-"><code>submit</code></a> methods to generate internal <a href="../scheduledfuture/"><code>ScheduledFuture</code></a> objects to control per-task delays and scheduling. To preserve functionality, any further overrides of these methods in subclasses must invoke superclass versions, which effectively disables additional task customization. However, this class provides alternative protected extension method <code>decorateTask</code> (one version each for <code>Runnable</code> and <code>Callable</code>) that can be used to customize the concrete task types used to execute commands entered via <code>execute</code>, <code>submit</code>, <code>schedule</code>, <code>scheduleAtFixedRate</code>, and <code>scheduleWithFixedDelay</code>. By default, a <code>ScheduledThreadPoolExecutor</code> uses a task type extending <a href="../futuretask/"><code>FutureTask</code></a>. However, this may be modified or replaced using subclasses of the form: </p>
+<pre data-language="java">public class CustomScheduledExecutor extends ScheduledThreadPoolExecutor {
+
+   static class CustomTask&lt;V&gt; implements RunnableScheduledFuture&lt;V&gt; { ... }
+
+   protected &lt;V&gt; RunnableScheduledFuture&lt;V&gt; decorateTask(
+                Runnable r, RunnableScheduledFuture&lt;V&gt; task) {
+       return new CustomTask&lt;V&gt;(r, task);
+   }
+
+   protected &lt;V&gt; RunnableScheduledFuture&lt;V&gt; decorateTask(
+                Callable&lt;V&gt; c, RunnableScheduledFuture&lt;V&gt; task) {
+       return new CustomTask&lt;V&gt;(c, task);
+   }
+   // ... add constructors, etc.
+ }</pre>
+</div> <dl> <dt>Since:</dt> <dd>1.5</dd> </dl>       <h2 id="nested.class.summary">Nested Classes</h2>  <h2 id="nested.classes.inherited.from.class.java.util.concurrent.ThreadPoolExecutor">Nested classes/interfaces inherited from class java.util.concurrent.<a href="../threadpoolexecutor/">ThreadPoolExecutor</a>
+</h2> <code><a href="../threadpoolexecutor.abortpolicy/">ThreadPoolExecutor.AbortPolicy</a>, <a href="../threadpoolexecutor.callerrunspolicy/">ThreadPoolExecutor.CallerRunsPolicy</a>, <a href="../threadpoolexecutor.discardoldestpolicy/">ThreadPoolExecutor.DiscardOldestPolicy</a>, <a href="../threadpoolexecutor.discardpolicy/">ThreadPoolExecutor.DiscardPolicy</a></code>    <h2 id="constructor.detail">Constructors</h2>   <h3 id="ScheduledThreadPoolExecutor-int-">ScheduledThreadPoolExecutor</h3> <pre data-language="java">public ScheduledThreadPoolExecutor(int corePoolSize)</pre> <p>Creates a new <code>ScheduledThreadPoolExecutor</code> with the given core pool size.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>corePoolSize</code> - the number of threads to keep in the pool, even if they are idle, unless <code>allowCoreThreadTimeOut</code> is set</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>corePoolSize &lt; 0</code>
+</dd> </dl>    <h3 id="ScheduledThreadPoolExecutor-int-java.util.concurrent.ThreadFactory-">ScheduledThreadPoolExecutor</h3> <pre data-language="java">public ScheduledThreadPoolExecutor(int corePoolSize,
+                                   ThreadFactory threadFactory)</pre> <p>Creates a new <code>ScheduledThreadPoolExecutor</code> with the given initial parameters.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>corePoolSize</code> - the number of threads to keep in the pool, even if they are idle, unless <code>allowCoreThreadTimeOut</code> is set</dd> <dd>
+<code>threadFactory</code> - the factory to use when the executor creates a new thread</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>corePoolSize &lt; 0</code>
+</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>threadFactory</code> is null</dd> </dl>    <h3 id="ScheduledThreadPoolExecutor-int-java.util.concurrent.RejectedExecutionHandler-">ScheduledThreadPoolExecutor</h3> <pre data-language="java">public ScheduledThreadPoolExecutor(int corePoolSize,
+                                   RejectedExecutionHandler handler)</pre> <p>Creates a new ScheduledThreadPoolExecutor with the given initial parameters.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>corePoolSize</code> - the number of threads to keep in the pool, even if they are idle, unless <code>allowCoreThreadTimeOut</code> is set</dd> <dd>
+<code>handler</code> - the handler to use when execution is blocked because the thread bounds and queue capacities are reached</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>corePoolSize &lt; 0</code>
+</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>handler</code> is null</dd> </dl>    <h3 id="ScheduledThreadPoolExecutor-int-java.util.concurrent.ThreadFactory-java.util.concurrent.RejectedExecutionHandler-">ScheduledThreadPoolExecutor</h3> <pre data-language="java">public ScheduledThreadPoolExecutor(int corePoolSize,
+                                   ThreadFactory threadFactory,
+                                   RejectedExecutionHandler handler)</pre> <p>Creates a new ScheduledThreadPoolExecutor with the given initial parameters.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>corePoolSize</code> - the number of threads to keep in the pool, even if they are idle, unless <code>allowCoreThreadTimeOut</code> is set</dd> <dd>
+<code>threadFactory</code> - the factory to use when the executor creates a new thread</dd> <dd>
+<code>handler</code> - the handler to use when execution is blocked because the thread bounds and queue capacities are reached</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>corePoolSize &lt; 0</code>
+</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>threadFactory</code> or <code>handler</code> is null</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="decorateTask-java.lang.Runnable-java.util.concurrent.RunnableScheduledFuture-">decorateTask</h3> <pre data-language="java">protected &lt;V&gt; RunnableScheduledFuture&lt;V&gt; decorateTask(Runnable runnable,
+                                                      RunnableScheduledFuture&lt;V&gt; task)</pre> <p>Modifies or replaces the task used to execute a runnable. This method can be used to override the concrete class used for managing internal tasks. The default implementation simply returns the given task.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>V</code> - the type of the task's result</dd> <dt>Parameters:</dt> <dd>
+<code>runnable</code> - the submitted Runnable</dd> <dd>
+<code>task</code> - the task created to execute the runnable</dd> <dt>Returns:</dt> <dd>a task that can execute the runnable</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="decorateTask-java.util.concurrent.Callable-java.util.concurrent.RunnableScheduledFuture-">decorateTask</h3> <pre data-language="java">protected &lt;V&gt; RunnableScheduledFuture&lt;V&gt; decorateTask(Callable&lt;V&gt; callable,
+                                                      RunnableScheduledFuture&lt;V&gt; task)</pre> <p>Modifies or replaces the task used to execute a callable. This method can be used to override the concrete class used for managing internal tasks. The default implementation simply returns the given task.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>V</code> - the type of the task's result</dd> <dt>Parameters:</dt> <dd>
+<code>callable</code> - the submitted Callable</dd> <dd>
+<code>task</code> - the task created to execute the callable</dd> <dt>Returns:</dt> <dd>a task that can execute the callable</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule</h3> <pre data-language="java">public ScheduledFuture&lt;?&gt; schedule(Runnable command,
+                                   long delay,
+                                   TimeUnit unit)</pre> <p>Description copied from interface: <code><a href="../scheduledexecutorservice/#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">ScheduledExecutorService</a></code></p> <p>Creates and executes a one-shot action that becomes enabled after the given delay.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../scheduledexecutorservice/#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-">schedule</a></code> in interface <code><a href="../scheduledexecutorservice/">ScheduledExecutorService</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>command</code> - the task to execute</dd> <dd>
+<code>delay</code> - the time from now to delay execution</dd> <dd>
+<code>unit</code> - the time unit of the delay parameter</dd> <dt>Returns:</dt> <dd>a ScheduledFuture representing pending completion of the task and whose <code>get()</code> method will return <code>null</code> upon completion</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if command is null</dd> </dl>    <h3 id="schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule</h3> <pre data-language="java">public &lt;V&gt; ScheduledFuture&lt;V&gt; schedule(Callable&lt;V&gt; callable,
+                                       long delay,
+                                       TimeUnit unit)</pre> <p>Description copied from interface: <code><a href="../scheduledexecutorservice/#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">ScheduledExecutorService</a></code></p> <p>Creates and executes a ScheduledFuture that becomes enabled after the given delay.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../scheduledexecutorservice/#schedule-java.util.concurrent.Callable-long-java.util.concurrent.TimeUnit-">schedule</a></code> in interface <code><a href="../scheduledexecutorservice/">ScheduledExecutorService</a></code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>V</code> - the type of the callable's result</dd> <dt>Parameters:</dt> <dd>
+<code>callable</code> - the function to execute</dd> <dd>
+<code>delay</code> - the time from now to delay execution</dd> <dd>
+<code>unit</code> - the time unit of the delay parameter</dd> <dt>Returns:</dt> <dd>a ScheduledFuture that can be used to extract result or cancel</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if callable is null</dd> </dl>    <h3 id="scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate</h3> <pre data-language="java">public ScheduledFuture&lt;?&gt; scheduleAtFixedRate(Runnable command,
+                                              long initialDelay,
+                                              long period,
+                                              TimeUnit unit)</pre> <p>Description copied from interface: <code><a href="../scheduledexecutorservice/#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">ScheduledExecutorService</a></code></p> <p>Creates and executes a periodic action that becomes enabled first after the given initial delay, and subsequently with the given period; that is executions will commence after <code>initialDelay</code> then <code>initialDelay+period</code>, then <code>initialDelay + 2 * period</code>, and so on. If any execution of the task encounters an exception, subsequent executions are suppressed. Otherwise, the task will only terminate via cancellation or termination of the executor. If any execution of this task takes longer than its period, then subsequent executions may start late, but will not concurrently execute.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../scheduledexecutorservice/#scheduleAtFixedRate-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleAtFixedRate</a></code> in interface <code><a href="../scheduledexecutorservice/">ScheduledExecutorService</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>command</code> - the task to execute</dd> <dd>
+<code>initialDelay</code> - the time to delay first execution</dd> <dd>
+<code>period</code> - the period between successive executions</dd> <dd>
+<code>unit</code> - the time unit of the initialDelay and period parameters</dd> <dt>Returns:</dt> <dd>a ScheduledFuture representing pending completion of the task, and whose <code>get()</code> method will throw an exception upon cancellation</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if command is null</dd> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if period less than or equal to zero</dd> </dl>    <h3 id="scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay</h3> <pre data-language="java">public ScheduledFuture&lt;?&gt; scheduleWithFixedDelay(Runnable command,
+                                                 long initialDelay,
+                                                 long delay,
+                                                 TimeUnit unit)</pre> <p>Description copied from interface: <code><a href="../scheduledexecutorservice/#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">ScheduledExecutorService</a></code></p> <p>Creates and executes a periodic action that becomes enabled first after the given initial delay, and subsequently with the given delay between the termination of one execution and the commencement of the next. If any execution of the task encounters an exception, subsequent executions are suppressed. Otherwise, the task will only terminate via cancellation or termination of the executor.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../scheduledexecutorservice/#scheduleWithFixedDelay-java.lang.Runnable-long-long-java.util.concurrent.TimeUnit-">scheduleWithFixedDelay</a></code> in interface <code><a href="../scheduledexecutorservice/">ScheduledExecutorService</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>command</code> - the task to execute</dd> <dd>
+<code>initialDelay</code> - the time to delay first execution</dd> <dd>
+<code>delay</code> - the delay between the termination of one execution and the commencement of the next</dd> <dd>
+<code>unit</code> - the time unit of the initialDelay and delay parameters</dd> <dt>Returns:</dt> <dd>a ScheduledFuture representing pending completion of the task, and whose <code>get()</code> method will throw an exception upon cancellation</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if command is null</dd> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if delay less than or equal to zero</dd> </dl>    <h3 id="execute-java.lang.Runnable-">execute</h3> <pre data-language="java">public void execute(Runnable command)</pre> <div>
+<p>Executes <code>command</code> with zero required delay. This has effect equivalent to <a href="../scheduledthreadpoolexecutor/#schedule-java.lang.Runnable-long-java.util.concurrent.TimeUnit-"><code>schedule(command, 0, anyUnit)</code></a>. Note that inspections of the queue and of the list returned by <code>shutdownNow</code> will access the zero-delayed <a href="../scheduledfuture/"><code>ScheduledFuture</code></a>, not the <code>command</code> itself. </p>
+<p>A consequence of the use of <code>ScheduledFuture</code> objects is that <a href="../threadpoolexecutor/#afterExecute-java.lang.Runnable-java.lang.Throwable-"><code>afterExecute</code></a> is always called with a null second <code>Throwable</code> argument, even if the <code>command</code> terminated abruptly. Instead, the <code>Throwable</code> thrown by such a task can be obtained via <a href="../future/#get--"><code>Future.get()</code></a>.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../executor/#execute-java.lang.Runnable-">execute</a></code> in interface <code><a href="../executor/">Executor</a></code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../threadpoolexecutor/#execute-java.lang.Runnable-">execute</a></code> in class <code><a href="../threadpoolexecutor/">ThreadPoolExecutor</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>command</code> - the task to execute</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - at discretion of <code>RejectedExecutionHandler</code>, if the task cannot be accepted for execution because the executor has been shut down</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>command</code> is null</dd> </dl>    <h3 id="submit-java.lang.Runnable-">submit</h3> <pre data-language="java">public Future&lt;?&gt; submit(Runnable task)</pre> <p>Description copied from interface: <code><a href="../executorservice/#submit-java.lang.Runnable-">ExecutorService</a></code></p> <p>Submits a Runnable task for execution and returns a Future representing that task. The Future's <code>get</code> method will return <code>null</code> upon <em>successful</em> completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../executorservice/#submit-java.lang.Runnable-">submit</a></code> in interface <code><a href="../executorservice/">ExecutorService</a></code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../abstractexecutorservice/#submit-java.lang.Runnable-">submit</a></code> in class <code><a href="../abstractexecutorservice/">AbstractExecutorService</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>task</code> - the task to submit</dd> <dt>Returns:</dt> <dd>a Future representing pending completion of the task</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the task is null</dd> </dl>    <h3 id="submit-java.lang.Runnable-T-">submit</h3> <pre data-language="java">public &lt;T&gt; Future&lt;T&gt; submit(Runnable task,
+                            T result)</pre> <p>Description copied from interface: <code><a href="../executorservice/#submit-java.lang.Runnable-T-">ExecutorService</a></code></p> <p>Submits a Runnable task for execution and returns a Future representing that task. The Future's <code>get</code> method will return the given result upon successful completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../executorservice/#submit-java.lang.Runnable-T-">submit</a></code> in interface <code><a href="../executorservice/">ExecutorService</a></code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../abstractexecutorservice/#submit-java.lang.Runnable-T-">submit</a></code> in class <code><a href="../abstractexecutorservice/">AbstractExecutorService</a></code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the result</dd> <dt>Parameters:</dt> <dd>
+<code>task</code> - the task to submit</dd> <dd>
+<code>result</code> - the result to return</dd> <dt>Returns:</dt> <dd>a Future representing pending completion of the task</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the task is null</dd> </dl>    <h3 id="submit-java.util.concurrent.Callable-">submit</h3> <pre data-language="java">public &lt;T&gt; Future&lt;T&gt; submit(Callable&lt;T&gt; task)</pre> <p>Description copied from interface: <code><a href="../executorservice/#submit-java.util.concurrent.Callable-">ExecutorService</a></code></p> <div>
+<p>Submits a value-returning task for execution and returns a Future representing the pending results of the task. The Future's <code>get</code> method will return the task's result upon successful completion. </p>
+<p> If you would like to immediately block waiting for a task, you can use constructions of the form <code>result = exec.submit(aCallable).get();</code> </p>
+<p>Note: The <a href="../executors/"><code>Executors</code></a> class includes a set of methods that can convert some other common closure-like objects, for example, <a href="../../../security/privilegedaction/"><code>PrivilegedAction</code></a> to <a href="../callable/"><code>Callable</code></a> form so they can be submitted.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../executorservice/#submit-java.util.concurrent.Callable-">submit</a></code> in interface <code><a href="../executorservice/">ExecutorService</a></code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../abstractexecutorservice/#submit-java.util.concurrent.Callable-">submit</a></code> in class <code><a href="../abstractexecutorservice/">AbstractExecutorService</a></code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the task's result</dd> <dt>Parameters:</dt> <dd>
+<code>task</code> - the task to submit</dd> <dt>Returns:</dt> <dd>a Future representing pending completion of the task</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the task is null</dd> </dl>    <h3 id="setContinueExistingPeriodicTasksAfterShutdownPolicy-boolean-">setContinueExistingPeriodicTasksAfterShutdownPolicy</h3> <pre data-language="java">public void setContinueExistingPeriodicTasksAfterShutdownPolicy(boolean value)</pre> <p>Sets the policy on whether to continue executing existing periodic tasks even when this executor has been <code>shutdown</code>. In this case, these tasks will only terminate upon <code>shutdownNow</code> or after setting the policy to <code>false</code> when already shutdown. This value is by default <code>false</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>value</code> - if <code>true</code>, continue after shutdown, else don't</dd> <dt>See Also:</dt> <dd><a href="../scheduledthreadpoolexecutor/#getContinueExistingPeriodicTasksAfterShutdownPolicy--"><code>getContinueExistingPeriodicTasksAfterShutdownPolicy()</code></a></dd> </dl>    <h3 id="getContinueExistingPeriodicTasksAfterShutdownPolicy--">getContinueExistingPeriodicTasksAfterShutdownPolicy</h3> <pre data-language="java">public boolean getContinueExistingPeriodicTasksAfterShutdownPolicy()</pre> <p>Gets the policy on whether to continue executing existing periodic tasks even when this executor has been <code>shutdown</code>. In this case, these tasks will only terminate upon <code>shutdownNow</code> or after setting the policy to <code>false</code> when already shutdown. This value is by default <code>false</code>.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if will continue after shutdown</dd> <dt>See Also:</dt> <dd><a href="../scheduledthreadpoolexecutor/#setContinueExistingPeriodicTasksAfterShutdownPolicy-boolean-"><code>setContinueExistingPeriodicTasksAfterShutdownPolicy(boolean)</code></a></dd> </dl>    <h3 id="setExecuteExistingDelayedTasksAfterShutdownPolicy-boolean-">setExecuteExistingDelayedTasksAfterShutdownPolicy</h3> <pre data-language="java">public void setExecuteExistingDelayedTasksAfterShutdownPolicy(boolean value)</pre> <p>Sets the policy on whether to execute existing delayed tasks even when this executor has been <code>shutdown</code>. In this case, these tasks will only terminate upon <code>shutdownNow</code>, or after setting the policy to <code>false</code> when already shutdown. This value is by default <code>true</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>value</code> - if <code>true</code>, execute after shutdown, else don't</dd> <dt>See Also:</dt> <dd><a href="../scheduledthreadpoolexecutor/#getExecuteExistingDelayedTasksAfterShutdownPolicy--"><code>getExecuteExistingDelayedTasksAfterShutdownPolicy()</code></a></dd> </dl>    <h3 id="getExecuteExistingDelayedTasksAfterShutdownPolicy--">getExecuteExistingDelayedTasksAfterShutdownPolicy</h3> <pre data-language="java">public boolean getExecuteExistingDelayedTasksAfterShutdownPolicy()</pre> <p>Gets the policy on whether to execute existing delayed tasks even when this executor has been <code>shutdown</code>. In this case, these tasks will only terminate upon <code>shutdownNow</code>, or after setting the policy to <code>false</code> when already shutdown. This value is by default <code>true</code>.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if will execute after shutdown</dd> <dt>See Also:</dt> <dd><a href="../scheduledthreadpoolexecutor/#setExecuteExistingDelayedTasksAfterShutdownPolicy-boolean-"><code>setExecuteExistingDelayedTasksAfterShutdownPolicy(boolean)</code></a></dd> </dl>    <h3 id="setRemoveOnCancelPolicy-boolean-">setRemoveOnCancelPolicy</h3> <pre data-language="java">public void setRemoveOnCancelPolicy(boolean value)</pre> <p>Sets the policy on whether cancelled tasks should be immediately removed from the work queue at time of cancellation. This value is by default <code>false</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>value</code> - if <code>true</code>, remove on cancellation, else don't</dd> <dt>Since:</dt> <dd>1.7</dd> <dt>See Also:</dt> <dd><a href="../scheduledthreadpoolexecutor/#getRemoveOnCancelPolicy--"><code>getRemoveOnCancelPolicy()</code></a></dd> </dl>    <h3 id="getRemoveOnCancelPolicy--">getRemoveOnCancelPolicy</h3> <pre data-language="java">public boolean getRemoveOnCancelPolicy()</pre> <p>Gets the policy on whether cancelled tasks should be immediately removed from the work queue at time of cancellation. This value is by default <code>false</code>.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if cancelled tasks are immediately removed from the queue</dd> <dt>Since:</dt> <dd>1.7</dd> <dt>See Also:</dt> <dd><a href="../scheduledthreadpoolexecutor/#setRemoveOnCancelPolicy-boolean-"><code>setRemoveOnCancelPolicy(boolean)</code></a></dd> </dl>    <h3 id="shutdown--">shutdown</h3> <pre data-language="java">public void shutdown()</pre> <div>
+<p>Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will be accepted. Invocation has no additional effect if already shut down. </p>
+<p>This method does not wait for previously submitted tasks to complete execution. Use <a href="../threadpoolexecutor/#awaitTermination-long-java.util.concurrent.TimeUnit-"><code>awaitTermination</code></a> to do that. </p>
+<p>If the <code>ExecuteExistingDelayedTasksAfterShutdownPolicy</code> has been set <code>false</code>, existing delayed tasks whose delays have not yet elapsed are cancelled. And unless the <code>ContinueExistingPeriodicTasksAfterShutdownPolicy</code> has been set <code>true</code>, future executions of existing periodic tasks will be cancelled.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../executorservice/#shutdown--">shutdown</a></code> in interface <code><a href="../executorservice/">ExecutorService</a></code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../threadpoolexecutor/#shutdown--">shutdown</a></code> in class <code><a href="../threadpoolexecutor/">ThreadPoolExecutor</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and shutting down this ExecutorService may manipulate threads that the caller is not permitted to modify because it does not hold <a href="../../../lang/runtimepermission/"><code>RuntimePermission</code></a><code>("modifyThread")</code>, or the security manager's <code>checkAccess</code> method denies access.</dd> </dl>    <h3 id="shutdownNow--">shutdownNow</h3> <pre data-language="java">public List&lt;Runnable&gt; shutdownNow()</pre> <div>
+<p>Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and returns a list of the tasks that were awaiting execution. </p>
+<p>This method does not wait for actively executing tasks to terminate. Use <a href="../threadpoolexecutor/#awaitTermination-long-java.util.concurrent.TimeUnit-"><code>awaitTermination</code></a> to do that. </p>
+<p>There are no guarantees beyond best-effort attempts to stop processing actively executing tasks. This implementation cancels tasks via <a href="../../../lang/thread/#interrupt--"><code>Thread.interrupt()</code></a>, so any task that fails to respond to interrupts may never terminate.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../executorservice/#shutdownNow--">shutdownNow</a></code> in interface <code><a href="../executorservice/">ExecutorService</a></code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../threadpoolexecutor/#shutdownNow--">shutdownNow</a></code> in class <code><a href="../threadpoolexecutor/">ThreadPoolExecutor</a></code>
+</dd> <dt>Returns:</dt> <dd>list of tasks that never commenced execution. Each element of this list is a <a href="../scheduledfuture/"><code>ScheduledFuture</code></a>, including those tasks submitted using <code>execute</code>, which are for scheduling purposes used as the basis of a zero-delay <code>ScheduledFuture</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and shutting down this ExecutorService may manipulate threads that the caller is not permitted to modify because it does not hold <a href="../../../lang/runtimepermission/"><code>RuntimePermission</code></a><code>("modifyThread")</code>, or the security manager's <code>checkAccess</code> method denies access.</dd> </dl>    <h3 id="getQueue--">getQueue</h3> <pre data-language="java">public BlockingQueue&lt;Runnable&gt; getQueue()</pre> <p>Returns the task queue used by this executor. Each element of this queue is a <a href="../scheduledfuture/"><code>ScheduledFuture</code></a>, including those tasks submitted using <code>execute</code> which are for scheduling purposes used as the basis of a zero-delay <code>ScheduledFuture</code>. Iteration over this queue is <em>not</em> guaranteed to traverse tasks in the order in which they will execute.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../threadpoolexecutor/#getQueue--">getQueue</a></code> in class <code><a href="../threadpoolexecutor/">ThreadPoolExecutor</a></code>
+</dd> <dt>Returns:</dt> <dd>the task queue</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

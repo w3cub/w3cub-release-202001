@@ -1,0 +1,547 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ImageInputStreamImpl - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="An abstract class implementing the ImageInputStream interface. This class is designed to reduce the number of methods that must be implemented by &hellip;">
+  <meta name="keywords" content="class, imageinputstreamimpl, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/javax/imageio/stream/imageinputstreamimpl/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class ImageInputStreamImpl</h1>   <ul class="inheritance"> <li><a href="../../../../java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>javax.imageio.stream.ImageInputStreamImpl</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../../../java/io/closeable/">Closeable</a>, <a href="../../../../java/io/datainput/">DataInput</a>, <a href="../../../../java/lang/autocloseable/">AutoCloseable</a>, <a href="../imageinputstream/">ImageInputStream</a>
+</dd> </dl> <dl> <dt>Direct Known Subclasses:</dt> <dd>
+<a href="../filecacheimageinputstream/">FileCacheImageInputStream</a>, <a href="../fileimageinputstream/">FileImageInputStream</a>, <a href="../imageoutputstreamimpl/">ImageOutputStreamImpl</a>, <a href="../memorycacheimageinputstream/">MemoryCacheImageInputStream</a>
+</dd> </dl>   <pre data-language="java">public abstract class ImageInputStreamImpl
+extends Object
+implements ImageInputStream</pre> <div>
+<p>An abstract class implementing the <code>ImageInputStream</code> interface. This class is designed to reduce the number of methods that must be implemented by subclasses. </p>
+<p> In particular, this class handles most or all of the details of byte order interpretation, buffering, mark/reset, discarding, closing, and disposing.</p>
+</div>       <h2 id="field.detail">Fields</h2>   <h3 id="byteOrder">byteOrder</h3> <pre data-language="java">protected ByteOrder byteOrder</pre> <p>The byte order of the stream as an instance of the enumeration class <code>java.nio.ByteOrder</code>, where <code>ByteOrder.BIG_ENDIAN</code> indicates network byte order and <code>ByteOrder.LITTLE_ENDIAN</code> indicates the reverse order. By default, the value is <code>ByteOrder.BIG_ENDIAN</code>.</p>    <h3 id="streamPos">streamPos</h3> <pre data-language="java">protected long streamPos</pre> <p>The current read position within the stream. Subclasses are responsible for keeping this value current from any method they override that alters the read position.</p>    <h3 id="bitOffset">bitOffset</h3> <pre data-language="java">protected int bitOffset</pre> <p>The current bit offset within the stream. Subclasses are responsible for keeping this value current from any method they override that alters the bit offset.</p>    <h3 id="flushedPos">flushedPos</h3> <pre data-language="java">protected long flushedPos</pre> <p>The position prior to which data may be discarded. Seeking to a smaller position is not allowed. <code>flushedPos</code> will always be &gt;= 0.</p>     <h2 id="constructor.detail">Constructors</h2>   <h3 id="ImageInputStreamImpl--">ImageInputStreamImpl</h3> <pre data-language="java">public ImageInputStreamImpl()</pre> <p>Constructs an <code>ImageInputStreamImpl</code>.</p>     <h2 id="method.detail">Methods</h2>   <h3 id="checkClosed--">checkClosed</h3> <pre data-language="java">protected final void checkClosed()
+                          throws IOException</pre> <p>Throws an <code>IOException</code> if the stream has been closed. Subclasses may call this method from any of their methods that require the stream not to be closed.</p> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if the stream is closed.</dd> </dl>    <h3 id="setByteOrder-java.nio.ByteOrder-">setByteOrder</h3> <pre data-language="java">public void setByteOrder(ByteOrder byteOrder)</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#setByteOrder-java.nio.ByteOrder-">ImageInputStream</a></code></p> <div>
+<p>Sets the desired byte order for future reads of data values from this stream. For example, the sequence of bytes '0x01 0x02 0x03 0x04' if read as a 4-byte integer would have the value '0x01020304' using network byte order and the value '0x04030201' under the reverse byte order. </p>
+<p> The enumeration class <code>java.nio.ByteOrder</code> is used to specify the byte order. A value of <code>ByteOrder.BIG_ENDIAN</code> specifies so-called big-endian or network byte order, in which the high-order byte comes first. Motorola and Sparc processors store data in this format, while Intel processors store data in the reverse <code>ByteOrder.LITTLE_ENDIAN</code> order. </p>
+<p> The byte order has no effect on the results returned from the <code>readBits</code> method (or the value written by <code>ImageOutputStream.writeBits</code>).</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#setByteOrder-java.nio.ByteOrder-">setByteOrder</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>byteOrder</code> - one of <code>ByteOrder.BIG_ENDIAN</code> or <code>java.nio.ByteOrder.LITTLE_ENDIAN</code>, indicating whether network byte order or its reverse will be used for future reads.</dd> <dt>See Also:</dt> <dd>
+<a href="../../../../java/nio/byteorder/"><code>ByteOrder</code></a>, <a href="../imageinputstream/#getByteOrder--"><code>ImageInputStream.getByteOrder()</code></a>, <a href="../imageinputstream/#readBits-int-"><code>ImageInputStream.readBits(int)</code></a>
+</dd> </dl>    <h3 id="getByteOrder--">getByteOrder</h3> <pre data-language="java">public ByteOrder getByteOrder()</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#getByteOrder--">ImageInputStream</a></code></p> <p>Returns the byte order with which data values will be read from this stream as an instance of the <code>java.nio.ByteOrder</code> enumeration.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#getByteOrder--">getByteOrder</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>one of <code>ByteOrder.BIG_ENDIAN</code> or <code>ByteOrder.LITTLE_ENDIAN</code>, indicating which byte order is being used.</dd> <dt>See Also:</dt> <dd>
+<a href="../../../../java/nio/byteorder/"><code>ByteOrder</code></a>, <a href="../imageinputstream/#setByteOrder-java.nio.ByteOrder-"><code>ImageInputStream.setByteOrder(java.nio.ByteOrder)</code></a>
+</dd> </dl>    <h3 id="read--">read</h3> <pre data-language="java">public abstract int read()
+                  throws IOException</pre> <div>
+<p>Reads a single byte from the stream and returns it as an <code>int</code> between 0 and 255. If EOF is reached, <code>-1</code> is returned. </p>
+<p> Subclasses must provide an implementation for this method. The subclass implementation should update the stream position before exiting. </p>
+<p> The bit offset within the stream must be reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#read--">read</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>the value of the next byte in the stream, or <code>-1</code> if EOF is reached.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if the stream has been closed.</dd> </dl>    <h3 id="read-byte:A-">read</h3> <pre data-language="java">public int read(byte[] b)
+         throws IOException</pre> <div>
+<p>A convenience method that calls <code>read(b, 0, b.length)</code>. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#read-byte:A-">read</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>b</code> - an array of bytes to be written to.</dd> <dt>Returns:</dt> <dd>the number of bytes actually read, or <code>-1</code> to indicate EOF.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>b</code> is <code>null</code>.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="read-byte:A-int-int-">read</h3> <pre data-language="java">public abstract int read(byte[] b,
+                         int off,
+                         int len)
+                  throws IOException</pre> <div>
+<p>Reads up to <code>len</code> bytes from the stream, and stores them into <code>b</code> starting at index <code>off</code>. If no bytes can be read because the end of the stream has been reached, <code>-1</code> is returned. </p>
+<p> The bit offset within the stream must be reset to zero before the read occurs. </p>
+<p> Subclasses must provide an implementation for this method. The subclass implementation should update the stream position before exiting.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#read-byte:A-int-int-">read</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>b</code> - an array of bytes to be written to.</dd> <dd>
+<code>off</code> - the starting position within <code>b</code> to write to.</dd> <dd>
+<code>len</code> - the maximum number of bytes to read.</dd> <dt>Returns:</dt> <dd>the number of bytes actually read, or <code>-1</code> to indicate EOF.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/indexoutofboundsexception/">IndexOutOfBoundsException</a></code> - if <code>off</code> is negative, <code>len</code> is negative, or <code>off +
+ len</code> is greater than <code>b.length</code>.</dd> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>b</code> is <code>null</code>.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readBytes-javax.imageio.stream.IIOByteBuffer-int-">readBytes</h3> <pre data-language="java">public void readBytes(IIOByteBuffer buf,
+                      int len)
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readBytes-javax.imageio.stream.IIOByteBuffer-int-">ImageInputStream</a></code></p> <div>
+<p>Reads up to <code>len</code> bytes from the stream, and modifies the supplied <code>IIOByteBuffer</code> to indicate the byte array, offset, and length where the data may be found. The caller should not attempt to modify the data found in the <code>IIOByteBuffer</code>. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readBytes-javax.imageio.stream.IIOByteBuffer-int-">readBytes</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>buf</code> - an IIOByteBuffer object to be modified.</dd> <dd>
+<code>len</code> - the maximum number of <code>byte</code>s to read.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readBoolean--">readBoolean</h3> <pre data-language="java">public boolean readBoolean()
+                    throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readBoolean--">ImageInputStream</a></code></p> <div>
+<p>Reads a byte from the stream and returns a <code>boolean</code> value of <code>true</code> if it is nonzero, <code>false</code> if it is zero. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readBoolean--">readBoolean</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readBoolean--">readBoolean</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a boolean value from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the end of the stream is reached.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readByte--">readByte</h3> <pre data-language="java">public byte readByte()
+              throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readByte--">ImageInputStream</a></code></p> <div>
+<p>Reads a byte from the stream and returns it as a <code>byte</code> value. Byte values between <code>0x00</code> and <code>0x7f</code> represent integer values between <code>0</code> and <code>127</code>. Values between <code>0x80</code> and <code>0xff</code> represent negative values from <code>-128</code> to <code>/1</code>. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readByte--">readByte</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readByte--">readByte</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a signed byte value from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the end of the stream is reached.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readUnsignedByte--">readUnsignedByte</h3> <pre data-language="java">public int readUnsignedByte()
+                     throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readUnsignedByte--">ImageInputStream</a></code></p> <div>
+<p>Reads a byte from the stream, and (conceptually) converts it to an int, masks it with <code>0xff</code> in order to strip off any sign-extension bits, and returns it as a <code>byte</code> value. </p>
+<p> Thus, byte values between <code>0x00</code> and <code>0x7f</code> are simply returned as integer values between <code>0</code> and <code>127</code>. Values between <code>0x80</code> and <code>0xff</code>, which normally represent negative <code>byte</code>values, will be mapped into positive integers between <code>128</code> and <code>255</code>. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readUnsignedByte--">readUnsignedByte</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readUnsignedByte--">readUnsignedByte</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>an unsigned byte value from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the end of the stream is reached.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readShort--">readShort</h3> <pre data-language="java">public short readShort()
+                throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readShort--">ImageInputStream</a></code></p> <div>
+<p>Reads two bytes from the stream, and (conceptually) concatenates them according to the current byte order, and returns the result as a <code>short</code> value. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readShort--">readShort</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readShort--">readShort</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a signed short value from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#getByteOrder--"><code>ImageInputStream.getByteOrder()</code></a></dd> </dl>    <h3 id="readUnsignedShort--">readUnsignedShort</h3> <pre data-language="java">public int readUnsignedShort()
+                      throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readUnsignedShort--">ImageInputStream</a></code></p> <div>
+<p>Reads two bytes from the stream, and (conceptually) concatenates them according to the current byte order, converts the resulting value to an <code>int</code>, masks it with <code>0xffff</code> in order to strip off any sign-extension buts, and returns the result as an unsigned <code>int</code> value. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readUnsignedShort--">readUnsignedShort</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readUnsignedShort--">readUnsignedShort</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>an unsigned short value from the stream, as an int.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#getByteOrder--"><code>ImageInputStream.getByteOrder()</code></a></dd> </dl>    <h3 id="readChar--">readChar</h3> <pre data-language="java">public char readChar()
+              throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readChar--">ImageInputStream</a></code></p> <div>
+<p>Equivalent to <code>readUnsignedShort</code>, except that the result is returned using the <code>char</code> datatype. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readChar--">readChar</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readChar--">readChar</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>an unsigned char value from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#readUnsignedShort--"><code>ImageInputStream.readUnsignedShort()</code></a></dd> </dl>    <h3 id="readInt--">readInt</h3> <pre data-language="java">public int readInt()
+            throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readInt--">ImageInputStream</a></code></p> <div>
+<p>Reads 4 bytes from the stream, and (conceptually) concatenates them according to the current byte order and returns the result as an <code>int</code>. </p>
+<p> The bit offset within the stream is ignored and treated as though it were zero.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readInt--">readInt</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readInt--">readInt</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a signed int value from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#getByteOrder--"><code>ImageInputStream.getByteOrder()</code></a></dd> </dl>    <h3 id="readUnsignedInt--">readUnsignedInt</h3> <pre data-language="java">public long readUnsignedInt()
+                     throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readUnsignedInt--">ImageInputStream</a></code></p> <div>
+<p>Reads 4 bytes from the stream, and (conceptually) concatenates them according to the current byte order, converts the result to a long, masks it with <code>0xffffffffL</code> in order to strip off any sign-extension bits, and returns the result as an unsigned <code>long</code> value. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readUnsignedInt--">readUnsignedInt</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>an unsigned int value from the stream, as a long.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#getByteOrder--"><code>ImageInputStream.getByteOrder()</code></a></dd> </dl>    <h3 id="readLong--">readLong</h3> <pre data-language="java">public long readLong()
+              throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readLong--">ImageInputStream</a></code></p> <div>
+<p>Reads 8 bytes from the stream, and (conceptually) concatenates them according to the current byte order and returns the result as a <code>long</code>. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readLong--">readLong</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readLong--">readLong</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a signed long value from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#getByteOrder--"><code>ImageInputStream.getByteOrder()</code></a></dd> </dl>    <h3 id="readFloat--">readFloat</h3> <pre data-language="java">public float readFloat()
+                throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readFloat--">ImageInputStream</a></code></p> <div>
+<p>Reads 4 bytes from the stream, and (conceptually) concatenates them according to the current byte order and returns the result as a <code>float</code>. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readFloat--">readFloat</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readFloat--">readFloat</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a float value from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#getByteOrder--"><code>ImageInputStream.getByteOrder()</code></a></dd> </dl>    <h3 id="readDouble--">readDouble</h3> <pre data-language="java">public double readDouble()
+                  throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readDouble--">ImageInputStream</a></code></p> <div>
+<p>Reads 8 bytes from the stream, and (conceptually) concatenates them according to the current byte order and returns the result as a <code>double</code>. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readDouble--">readDouble</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readDouble--">readDouble</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a double value from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#getByteOrder--"><code>ImageInputStream.getByteOrder()</code></a></dd> </dl>    <h3 id="readLine--">readLine</h3> <pre data-language="java">public String readLine()
+                throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readLine--">ImageInputStream</a></code></p> <div>
+<p>Reads the next line of text from the input stream. It reads successive bytes, converting each byte separately into a character, until it encounters a line terminator or end of file; the characters read are then returned as a <code>String</code>. Note that because this method processes bytes, it does not support input of the full Unicode character set. </p>
+<p> If end of file is encountered before even one byte can be read, then <code>null</code> is returned. Otherwise, each byte that is read is converted to type <code>char</code> by zero-extension. If the character <code>'\n'</code> is encountered, it is discarded and reading ceases. If the character <code>'\r'</code> is encountered, it is discarded and, if the following byte converts to the character <code>'\n'</code>, then that is discarded also; reading then ceases. If end of file is encountered before either of the characters <code>'\n'</code> and <code>'\r'</code> is encountered, reading ceases. Once reading has ceased, a <code>String</code> is returned that contains all the characters read and not discarded, taken in order. Note that every character in this string will have a value less than <code>\u0100</code>, that is, <code>(char)256</code>. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readLine--">readLine</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readLine--">readLine</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a String containing a line of text from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readUTF--">readUTF</h3> <pre data-language="java">public String readUTF()
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readUTF--">ImageInputStream</a></code></p> <div>
+<p>Reads in a string that has been encoded using a <a href="../../../../java/io/datainput/#modified-utf-8">modified UTF-8</a> format. The general contract of <code>readUTF</code> is that it reads a representation of a Unicode character string encoded in modified UTF-8 format; this string of characters is then returned as a <code>String</code>. </p>
+<p> First, two bytes are read and used to construct an unsigned 16-bit integer in the manner of the <code>readUnsignedShort</code> method, using network byte order (regardless of the current byte order setting). This integer value is called the <i>UTF length</i> and specifies the number of additional bytes to be read. These bytes are then converted to characters by considering them in groups. The length of each group is computed from the value of the first byte of the group. The byte following a group, if any, is the first byte of the next group. </p>
+<p> If the first byte of a group matches the bit pattern <code>0xxxxxxx</code> (where <code>x</code> means "may be <code>0</code> or <code>1</code>"), then the group consists of just that byte. The byte is zero-extended to form a character. </p>
+<p> If the first byte of a group matches the bit pattern <code>110xxxxx</code>, then the group consists of that byte <code>a</code> and a second byte <code>b</code>. If there is no byte <code>b</code> (because byte <code>a</code> was the last of the bytes to be read), or if byte <code>b</code> does not match the bit pattern <code>10xxxxxx</code>, then a <code>UTFDataFormatException</code> is thrown. Otherwise, the group is converted to the character: </p>
+
+<pre data-language="java">(char)(((a&amp; 0x1F) &lt;&lt; 6) | (b &amp; 0x3F))</pre> If the first byte of a group matches the bit pattern <code>1110xxxx</code>, then the group consists of that byte <code>a</code> and two more bytes <code>b</code> and <code>c</code>. If there is no byte <code>c</code> (because byte <code>a</code> was one of the last two of the bytes to be read), or either byte <code>b</code> or byte <code>c</code> does not match the bit pattern <code>10xxxxxx</code>, then a <code>UTFDataFormatException</code> is thrown. Otherwise, the group is converted to the character: 
+<pre data-language="java">(char)(((a &amp; 0x0F) &lt;&lt; 12) | ((b &amp; 0x3F) &lt;&lt; 6) | (c &amp; 0x3F))</pre> If the first byte of a group matches the pattern <code>1111xxxx</code> or the pattern <code>10xxxxxx</code>, then a <code>UTFDataFormatException</code> is thrown. <p> If end of file is encountered at any time during this entire process, then an <code>java.io.EOFException</code> is thrown. </p>
+<p> After every group has been converted to a character by this process, the characters are gathered, in the same order in which their corresponding groups were read from the input stream, to form a <code>String</code>, which is returned. </p>
+<p> The current byte order setting is ignored. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs. </p>
+<p><strong>Note:</strong> This method should not be used in the implementation of image formats that use standard UTF-8, because the modified UTF-8 used here is incompatible with standard UTF-8.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readUTF--">readUTF</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readUTF--">readUTF</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a String read from the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if this stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/utfdataformatexception/">UTFDataFormatException</a></code> - if the bytes do not represent a valid modified UTF-8 encoding of a string.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readFully-byte:A-int-int-">readFully</h3> <pre data-language="java">public void readFully(byte[] b,
+                      int off,
+                      int len)
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readFully-byte:A-int-int-">ImageInputStream</a></code></p> <div>
+<p>Reads <code>len</code> bytes from the stream, and stores them into <code>b</code> starting at index <code>off</code>. If the end of the stream is reached, an <code>java.io.EOFException</code> will be thrown. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readFully-byte:A-int-int-">readFully</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readFully-byte:A-int-int-">readFully</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>b</code> - an array of bytes to be written to.</dd> <dd>
+<code>off</code> - the starting position within <code>b</code> to write to.</dd> <dd>
+<code>len</code> - the maximum number of <code>byte</code>s to read.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readFully-byte:A-">readFully</h3> <pre data-language="java">public void readFully(byte[] b)
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readFully-byte:A-">ImageInputStream</a></code></p> <div>
+<p>Reads <code>b.length</code> bytes from the stream, and stores them into <code>b</code> starting at index <code>0</code>. If the end of the stream is reached, an <code>java.io.EOFException</code> will be thrown. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#readFully-byte:A-">readFully</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readFully-byte:A-">readFully</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>b</code> - an array of <code>byte</code>s.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readFully-short:A-int-int-">readFully</h3> <pre data-language="java">public void readFully(short[] s,
+                      int off,
+                      int len)
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readFully-short:A-int-int-">ImageInputStream</a></code></p> <div>
+<p>Reads <code>len</code> shorts (signed 16-bit integers) from the stream according to the current byte order, and stores them into <code>s</code> starting at index <code>off</code>. If the end of the stream is reached, an <code>java.io.EOFException</code> will be thrown. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readFully-short:A-int-int-">readFully</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>s</code> - an array of shorts to be written to.</dd> <dd>
+<code>off</code> - the starting position within <code>s</code> to write to.</dd> <dd>
+<code>len</code> - the maximum number of <code>short</code>s to read.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readFully-char:A-int-int-">readFully</h3> <pre data-language="java">public void readFully(char[] c,
+                      int off,
+                      int len)
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readFully-char:A-int-int-">ImageInputStream</a></code></p> <div>
+<p>Reads <code>len</code> chars (unsigned 16-bit integers) from the stream according to the current byte order, and stores them into <code>c</code> starting at index <code>off</code>. If the end of the stream is reached, an <code>java.io.EOFException</code> will be thrown. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readFully-char:A-int-int-">readFully</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>c</code> - an array of chars to be written to.</dd> <dd>
+<code>off</code> - the starting position within <code>c</code> to write to.</dd> <dd>
+<code>len</code> - the maximum number of <code>char</code>s to read.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readFully-int:A-int-int-">readFully</h3> <pre data-language="java">public void readFully(int[] i,
+                      int off,
+                      int len)
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readFully-int:A-int-int-">ImageInputStream</a></code></p> <div>
+<p>Reads <code>len</code> ints (signed 32-bit integers) from the stream according to the current byte order, and stores them into <code>i</code> starting at index <code>off</code>. If the end of the stream is reached, an <code>java.io.EOFException</code> will be thrown. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readFully-int:A-int-int-">readFully</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>i</code> - an array of ints to be written to.</dd> <dd>
+<code>off</code> - the starting position within <code>i</code> to write to.</dd> <dd>
+<code>len</code> - the maximum number of <code>int</code>s to read.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readFully-long:A-int-int-">readFully</h3> <pre data-language="java">public void readFully(long[] l,
+                      int off,
+                      int len)
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readFully-long:A-int-int-">ImageInputStream</a></code></p> <div>
+<p>Reads <code>len</code> longs (signed 64-bit integers) from the stream according to the current byte order, and stores them into <code>l</code> starting at index <code>off</code>. If the end of the stream is reached, an <code>java.io.EOFException</code> will be thrown. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readFully-long:A-int-int-">readFully</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>l</code> - an array of longs to be written to.</dd> <dd>
+<code>off</code> - the starting position within <code>l</code> to write to.</dd> <dd>
+<code>len</code> - the maximum number of <code>long</code>s to read.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readFully-float:A-int-int-">readFully</h3> <pre data-language="java">public void readFully(float[] f,
+                      int off,
+                      int len)
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readFully-float:A-int-int-">ImageInputStream</a></code></p> <div>
+<p>Reads <code>len</code> floats (32-bit IEEE single-precision floats) from the stream according to the current byte order, and stores them into <code>f</code> starting at index <code>off</code>. If the end of the stream is reached, an <code>java.io.EOFException</code> will be thrown. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readFully-float:A-int-int-">readFully</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>f</code> - an array of floats to be written to.</dd> <dd>
+<code>off</code> - the starting position within <code>f</code> to write to.</dd> <dd>
+<code>len</code> - the maximum number of <code>float</code>s to read.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readFully-double:A-int-int-">readFully</h3> <pre data-language="java">public void readFully(double[] d,
+                      int off,
+                      int len)
+               throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readFully-double:A-int-int-">ImageInputStream</a></code></p> <div>
+<p>Reads <code>len</code> doubles (64-bit IEEE double-precision floats) from the stream according to the current byte order, and stores them into <code>d</code> starting at index <code>off</code>. If the end of the stream is reached, an <code>java.io.EOFException</code> will be thrown. </p>
+<p> The bit offset within the stream is reset to zero before the read occurs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readFully-double:A-int-int-">readFully</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>d</code> - an array of doubles to be written to.</dd> <dd>
+<code>off</code> - the starting position within <code>d</code> to write to.</dd> <dd>
+<code>len</code> - the maximum number of <code>double</code>s to read.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bytes.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="getStreamPosition--">getStreamPosition</h3> <pre data-language="java">public long getStreamPosition()
+                       throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#getStreamPosition--">ImageInputStream</a></code></p> <p>Returns the current byte position of the stream. The next read will take place starting at this offset.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#getStreamPosition--">getStreamPosition</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>a long containing the position of the stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="getBitOffset--">getBitOffset</h3> <pre data-language="java">public int getBitOffset()
+                 throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#getBitOffset--">ImageInputStream</a></code></p> <div>
+<p>Returns the current bit offset, as an integer between 0 and 7, inclusive. The bit offset is updated implicitly by calls to the <code>readBits</code> method. A value of 0 indicates the most-significant bit, and a value of 7 indicates the least significant bit, of the byte being read. </p>
+<p> The bit offset is set to 0 when a stream is first opened, and is reset to 0 by calls to <code>seek</code>, <code>skipBytes</code>, or any <code>read</code> or <code>readFully</code> method.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#getBitOffset--">getBitOffset</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>an <code>int</code> containing the bit offset between 0 and 7, inclusive.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#setBitOffset-int-"><code>ImageInputStream.setBitOffset(int)</code></a></dd> </dl>    <h3 id="setBitOffset-int-">setBitOffset</h3> <pre data-language="java">public void setBitOffset(int bitOffset)
+                  throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#setBitOffset-int-">ImageInputStream</a></code></p> <p>Sets the bit offset to an integer between 0 and 7, inclusive. The byte offset within the stream, as returned by <code>getStreamPosition</code>, is left unchanged. A value of 0 indicates the most-significant bit, and a value of 7 indicates the least significant bit, of the byte being read.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#setBitOffset-int-">setBitOffset</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>bitOffset</code> - the desired offset, as an <code>int</code> between 0 and 7, inclusive.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> <dt>See Also:</dt> <dd><a href="../imageinputstream/#getBitOffset--"><code>ImageInputStream.getBitOffset()</code></a></dd> </dl>    <h3 id="readBit--">readBit</h3> <pre data-language="java">public int readBit()
+            throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readBit--">ImageInputStream</a></code></p> <p>Reads a single bit from the stream and returns it as an <code>int</code> with the value <code>0</code> or <code>1</code>. The bit offset is advanced by one and reduced modulo 8.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readBit--">readBit</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>an <code>int</code> containing the value <code>0</code> or <code>1</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bits.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="readBits-int-">readBits</h3> <pre data-language="java">public long readBits(int numBits)
+              throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#readBits-int-">ImageInputStream</a></code></p> <div>
+<p>Reads a bitstring from the stream and returns it as a <code>long</code>, with the first bit read becoming the most significant bit of the output. The read starts within the byte indicated by <code>getStreamPosition</code>, at the bit given by <code>getBitOffset</code>. The bit offset is advanced by <code>numBits</code> and reduced modulo 8. </p>
+<p> The byte order of the stream has no effect on this method. The return value of this method is constructed as though the bits were read one at a time, and shifted into the right side of the return value, as shown by the following pseudo-code: </p>
+<pre data-language="java">long accum = 0L;
+ for (int i = 0; i &lt; numBits; i++) {
+   accum &lt;&lt;= 1; // Shift left one bit to make room
+   accum |= readBit();
+ }</pre> Note that the result of <code>readBits(32)</code> may thus not be equal to that of <code>readInt()</code> if a reverse network byte order is being used (i.e., <code>getByteOrder() ==
+ false</code>). <p> If the end of the stream is encountered before all the bits have been read, an <code>java.io.EOFException</code> is thrown.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#readBits-int-">readBits</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>numBits</code> - the number of bits to read, as an <code>int</code> between 0 and 64, inclusive.</dd> <dt>Returns:</dt> <dd>the bitstring, as a <code>long</code> with the last bit read stored in the least significant bit.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/eofexception/">EOFException</a></code> - if the stream reaches the end before reading all the bits.</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="length--">length</h3> <pre data-language="java">public long length()</pre> <p>Returns <code>-1L</code> to indicate that the stream has unknown length. Subclasses must override this method to provide actual length information.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#length--">length</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>-1L to indicate unknown length.</dd> </dl>    <h3 id="skipBytes-int-">skipBytes</h3> <pre data-language="java">public int skipBytes(int n)
+              throws IOException</pre> <div>
+<p>Advances the current stream position by calling <code>seek(getStreamPosition() + n)</code>. </p>
+<p> The bit offset is reset to zero.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/datainput/#skipBytes-int-">skipBytes</a></code> in interface <code><a href="../../../../java/io/datainput/">DataInput</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#skipBytes-int-">skipBytes</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>n</code> - the number of bytes to seek forward.</dd> <dt>Returns:</dt> <dd>an <code>int</code> representing the number of bytes skipped.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if <code>getStreamPosition</code> throws an <code>IOException</code> when computing either the starting or ending position.</dd> </dl>    <h3 id="skipBytes-long-">skipBytes</h3> <pre data-language="java">public long skipBytes(long n)
+               throws IOException</pre> <div>
+<p>Advances the current stream position by calling <code>seek(getStreamPosition() + n)</code>. </p>
+<p> The bit offset is reset to zero.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#skipBytes-long-">skipBytes</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>n</code> - the number of bytes to seek forward.</dd> <dt>Returns:</dt> <dd>a <code>long</code> representing the number of bytes skipped.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if <code>getStreamPosition</code> throws an <code>IOException</code> when computing either the starting or ending position.</dd> </dl>    <h3 id="seek-long-">seek</h3> <pre data-language="java">public void seek(long pos)
+          throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#seek-long-">ImageInputStream</a></code></p> <div>
+<p>Sets the current stream position to the desired location. The next read will occur at this location. The bit offset is set to 0. </p>
+<p> An <code>IndexOutOfBoundsException</code> will be thrown if <code>pos</code> is smaller than the flushed position (as returned by <code>getflushedPosition</code>). </p>
+<p> It is legal to seek past the end of the file; an <code>java.io.EOFException</code> will be thrown only if a read is performed.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#seek-long-">seek</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>pos</code> - a <code>long</code> containing the desired file pointer position.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if any other I/O error occurs.</dd> </dl>    <h3 id="mark--">mark</h3> <pre data-language="java">public void mark()</pre> <p>Pushes the current stream position onto a stack of marked positions.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#mark--">mark</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> </dl>    <h3 id="reset--">reset</h3> <pre data-language="java">public void reset()
+           throws IOException</pre> <div>
+<p>Resets the current stream byte and bit positions from the stack of marked positions. </p>
+<p> An <code>IOException</code> will be thrown if the previous marked position lies in the discarded portion of the stream.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#reset--">reset</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="flushBefore-long-">flushBefore</h3> <pre data-language="java">public void flushBefore(long pos)
+                 throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#flushBefore-long-">ImageInputStream</a></code></p> <div>
+<p>Discards the initial portion of the stream prior to the indicated position. Attempting to seek to an offset within the flushed portion of the stream will result in an <code>IndexOutOfBoundsException</code>. </p>
+<p> Calling <code>flushBefore</code> may allow classes implementing this interface to free up resources such as memory or disk space that are being used to store data from the stream.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#flushBefore-long-">flushBefore</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>pos</code> - a <code>long</code> containing the length of the stream prefix that may be flushed.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="flush--">flush</h3> <pre data-language="java">public void flush()
+           throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#flush--">ImageInputStream</a></code></p> <p>Discards the initial position of the stream prior to the current stream position. Equivalent to <code>flushBefore(getStreamPosition())</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#flush--">flush</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="getFlushedPosition--">getFlushedPosition</h3> <pre data-language="java">public long getFlushedPosition()</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#getFlushedPosition--">ImageInputStream</a></code></p> <p>Returns the earliest position in the stream to which seeking may be performed. The returned value will be the maximum of all values passed into previous calls to <code>flushBefore</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#getFlushedPosition--">getFlushedPosition</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>the earliest legal position for seeking, as a <code>long</code>.</dd> </dl>    <h3 id="isCached--">isCached</h3> <pre data-language="java">public boolean isCached()</pre> <p>Default implementation returns false. Subclasses should override this if they cache data.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#isCached--">isCached</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this <code>ImageInputStream</code> caches data.</dd> <dt>See Also:</dt> <dd>
+<a href="../imageinputstream/#isCachedMemory--"><code>ImageInputStream.isCachedMemory()</code></a>, <a href="../imageinputstream/#isCachedFile--"><code>ImageInputStream.isCachedFile()</code></a>
+</dd> </dl>    <h3 id="isCachedMemory--">isCachedMemory</h3> <pre data-language="java">public boolean isCachedMemory()</pre> <p>Default implementation returns false. Subclasses should override this if they cache data in main memory.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#isCachedMemory--">isCachedMemory</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this <code>ImageInputStream</code> caches data in main memory.</dd> <dt>See Also:</dt> <dd>
+<a href="../imageinputstream/#isCached--"><code>ImageInputStream.isCached()</code></a>, <a href="../imageinputstream/#isCachedFile--"><code>ImageInputStream.isCachedFile()</code></a>
+</dd> </dl>    <h3 id="isCachedFile--">isCachedFile</h3> <pre data-language="java">public boolean isCachedFile()</pre> <p>Default implementation returns false. Subclasses should override this if they cache data in a temporary file.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#isCachedFile--">isCachedFile</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this <code>ImageInputStream</code> caches data in a temporary file.</dd> <dt>See Also:</dt> <dd>
+<a href="../imageinputstream/#isCached--"><code>ImageInputStream.isCached()</code></a>, <a href="../imageinputstream/#isCachedMemory--"><code>ImageInputStream.isCachedMemory()</code></a>
+</dd> </dl>    <h3 id="close--">close</h3> <pre data-language="java">public void close()
+           throws IOException</pre> <p>Description copied from interface: <code><a href="../imageinputstream/#close--">ImageInputStream</a></code></p> <p>Closes the stream. Attempts to access a stream that has been closed may result in <code>IOException</code>s or incorrect behavior. Calling this method may allow classes implementing this interface to release resources associated with the stream such as memory, disk space, or file descriptors.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/io/closeable/#close--">close</a></code> in interface <code><a href="../../../../java/io/closeable/">Closeable</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../java/lang/autocloseable/#close--">close</a></code> in interface <code><a href="../../../../java/lang/autocloseable/">AutoCloseable</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../imageinputstream/#close--">close</a></code> in interface <code><a href="../imageinputstream/">ImageInputStream</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O error occurs.</dd> </dl>    <h3 id="finalize--">finalize</h3> <pre data-language="java">protected void finalize()
+                 throws Throwable</pre> <p>Finalizes this object prior to garbage collection. The <code>close</code> method is called to close any open input source. This method should not be called from application code.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../../../java/lang/object/#finalize--">finalize</a></code> in class <code><a href="../../../../java/lang/object/">Object</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/throwable/">Throwable</a></code> - if an error occurs during superclass finalization.</dd> <dt>See Also:</dt> <dd>
+<a href="../../../../java/lang/ref/weakreference/"><code>WeakReference</code></a>, <a href="../../../../java/lang/ref/phantomreference/"><code>PhantomReference</code></a>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

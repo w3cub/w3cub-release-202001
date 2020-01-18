@@ -1,0 +1,281 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>PixelGrabber - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content="The PixelGrabber class implements an ImageConsumer which can be attached to an Image or ImageProducer object to retrieve a subset of the pixels in &hellip;">
+  <meta name="keywords" content="class, pixelgrabber, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/java/awt/image/pixelgrabber/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class PixelGrabber</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.awt.image.PixelGrabber</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="../imageconsumer/">ImageConsumer</a></dd> </dl>   <pre data-language="java">public class PixelGrabber
+extends Object
+implements ImageConsumer</pre> <p>The PixelGrabber class implements an ImageConsumer which can be attached to an Image or ImageProducer object to retrieve a subset of the pixels in that image. Here is an example: </p>
+<pre data-language="java">public void handlesinglepixel(int x, int y, int pixel) {
+      int alpha = (pixel &gt;&gt; 24) &amp; 0xff;
+      int red   = (pixel &gt;&gt; 16) &amp; 0xff;
+      int green = (pixel &gt;&gt;  8) &amp; 0xff;
+      int blue  = (pixel      ) &amp; 0xff;
+      // Deal with the pixel as necessary...
+ }
+
+ public void handlepixels(Image img, int x, int y, int w, int h) {
+      int[] pixels = new int[w * h];
+      PixelGrabber pg = new PixelGrabber(img, x, y, w, h, pixels, 0, w);
+      try {
+          pg.grabPixels();
+      } catch (InterruptedException e) {
+          System.err.println("interrupted waiting for pixels!");
+          return;
+      }
+      if ((pg.getStatus() &amp; ImageObserver.ABORT) != 0) {
+          System.err.println("image fetch aborted or errored");
+          return;
+      }
+      for (int j = 0; j &lt; h; j++) {
+          for (int i = 0; i &lt; w; i++) {
+              handlesinglepixel(x+i, y+j, pixels[j * w + i]);
+          }
+      }
+ }</pre> <dl> <dt>See Also:</dt> <dd><a href="../colormodel/#getRGBdefault--"><code>ColorModel.getRGBdefault()</code></a></dd> </dl>       <h2 id="field.summary">Fields</h2>  <h2 id="fields.inherited.from.class.java.awt.image.ImageConsumer">Fields inherited from interface java.awt.image.<a href="../imageconsumer/">ImageConsumer</a>
+</h2> <code><a href="../imageconsumer/#COMPLETESCANLINES">COMPLETESCANLINES</a>, <a href="../imageconsumer/#IMAGEABORTED">IMAGEABORTED</a>, <a href="../imageconsumer/#IMAGEERROR">IMAGEERROR</a>, <a href="../imageconsumer/#RANDOMPIXELORDER">RANDOMPIXELORDER</a>, <a href="../imageconsumer/#SINGLEFRAME">SINGLEFRAME</a>, <a href="../imageconsumer/#SINGLEFRAMEDONE">SINGLEFRAMEDONE</a>, <a href="../imageconsumer/#SINGLEPASS">SINGLEPASS</a>, <a href="../imageconsumer/#STATICIMAGEDONE">STATICIMAGEDONE</a>, <a href="../imageconsumer/#TOPDOWNLEFTRIGHT">TOPDOWNLEFTRIGHT</a></code>    <h2 id="constructor.detail">Constructors</h2>   <h3 id="PixelGrabber-java.awt.Image-int-int-int-int-int:A-int-int-">PixelGrabber</h3> <pre data-language="java">public PixelGrabber(Image img,
+                    int x,
+                    int y,
+                    int w,
+                    int h,
+                    int[] pix,
+                    int off,
+                    int scansize)</pre> <p>Create a PixelGrabber object to grab the (x, y, w, h) rectangular section of pixels from the specified image into the given array. The pixels are stored into the array in the default RGB ColorModel. The RGB data for pixel (i, j) where (i, j) is inside the rectangle (x, y, w, h) is stored in the array at <code>pix[(j - y) * scansize + (i - x) + off]</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>img</code> - the image to retrieve pixels from</dd> <dd>
+<code>x</code> - the x coordinate of the upper left corner of the rectangle of pixels to retrieve from the image, relative to the default (unscaled) size of the image</dd> <dd>
+<code>y</code> - the y coordinate of the upper left corner of the rectangle of pixels to retrieve from the image</dd> <dd>
+<code>w</code> - the width of the rectangle of pixels to retrieve</dd> <dd>
+<code>h</code> - the height of the rectangle of pixels to retrieve</dd> <dd>
+<code>pix</code> - the array of integers which are to be used to hold the RGB pixels retrieved from the image</dd> <dd>
+<code>off</code> - the offset into the array of where to store the first pixel</dd> <dd>
+<code>scansize</code> - the distance from one row of pixels to the next in the array</dd> <dt>See Also:</dt> <dd><a href="../colormodel/#getRGBdefault--"><code>ColorModel.getRGBdefault()</code></a></dd> </dl>    <h3 id="PixelGrabber-java.awt.image.ImageProducer-int-int-int-int-int:A-int-int-">PixelGrabber</h3> <pre data-language="java">public PixelGrabber(ImageProducer ip,
+                    int x,
+                    int y,
+                    int w,
+                    int h,
+                    int[] pix,
+                    int off,
+                    int scansize)</pre> <p>Create a PixelGrabber object to grab the (x, y, w, h) rectangular section of pixels from the image produced by the specified ImageProducer into the given array. The pixels are stored into the array in the default RGB ColorModel. The RGB data for pixel (i, j) where (i, j) is inside the rectangle (x, y, w, h) is stored in the array at <code>pix[(j - y) * scansize + (i - x) + off]</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>ip</code> - the <code>ImageProducer</code> that produces the image from which to retrieve pixels</dd> <dd>
+<code>x</code> - the x coordinate of the upper left corner of the rectangle of pixels to retrieve from the image, relative to the default (unscaled) size of the image</dd> <dd>
+<code>y</code> - the y coordinate of the upper left corner of the rectangle of pixels to retrieve from the image</dd> <dd>
+<code>w</code> - the width of the rectangle of pixels to retrieve</dd> <dd>
+<code>h</code> - the height of the rectangle of pixels to retrieve</dd> <dd>
+<code>pix</code> - the array of integers which are to be used to hold the RGB pixels retrieved from the image</dd> <dd>
+<code>off</code> - the offset into the array of where to store the first pixel</dd> <dd>
+<code>scansize</code> - the distance from one row of pixels to the next in the array</dd> <dt>See Also:</dt> <dd><a href="../colormodel/#getRGBdefault--"><code>ColorModel.getRGBdefault()</code></a></dd> </dl>    <h3 id="PixelGrabber-java.awt.Image-int-int-int-int-boolean-">PixelGrabber</h3> <pre data-language="java">public PixelGrabber(Image img,
+                    int x,
+                    int y,
+                    int w,
+                    int h,
+                    boolean forceRGB)</pre> <p>Create a PixelGrabber object to grab the (x, y, w, h) rectangular section of pixels from the specified image. The pixels are accumulated in the original ColorModel if the same ColorModel is used for every call to setPixels, otherwise the pixels are accumulated in the default RGB ColorModel. If the forceRGB parameter is true, then the pixels will be accumulated in the default RGB ColorModel anyway. A buffer is allocated by the PixelGrabber to hold the pixels in either case. If <code>(w &lt; 0)</code> or <code>(h &lt; 0)</code>, then they will default to the remaining width and height of the source data when that information is delivered.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>img</code> - the image to retrieve the image data from</dd> <dd>
+<code>x</code> - the x coordinate of the upper left corner of the rectangle of pixels to retrieve from the image, relative to the default (unscaled) size of the image</dd> <dd>
+<code>y</code> - the y coordinate of the upper left corner of the rectangle of pixels to retrieve from the image</dd> <dd>
+<code>w</code> - the width of the rectangle of pixels to retrieve</dd> <dd>
+<code>h</code> - the height of the rectangle of pixels to retrieve</dd> <dd>
+<code>forceRGB</code> - true if the pixels should always be converted to the default RGB ColorModel</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="startGrabbing--">startGrabbing</h3> <pre data-language="java">public void startGrabbing()</pre> <p>Request the PixelGrabber to start fetching the pixels.</p>    <h3 id="abortGrabbing--">abortGrabbing</h3> <pre data-language="java">public void abortGrabbing()</pre> <p>Request the PixelGrabber to abort the image fetch.</p>    <h3 id="grabPixels--">grabPixels</h3> <pre data-language="java">public boolean grabPixels()
+                   throws InterruptedException</pre> <p>Request the Image or ImageProducer to start delivering pixels and wait for all of the pixels in the rectangle of interest to be delivered.</p> <dl> <dt>Returns:</dt> <dd>true if the pixels were successfully grabbed, false on abort, error or timeout</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/interruptedexception/">InterruptedException</a></code> - Another thread has interrupted this thread.</dd> </dl>    <h3 id="grabPixels-long-">grabPixels</h3> <pre data-language="java">public boolean grabPixels(long ms)
+                   throws InterruptedException</pre> <p>Request the Image or ImageProducer to start delivering pixels and wait for all of the pixels in the rectangle of interest to be delivered or until the specified timeout has elapsed. This method behaves in the following ways, depending on the value of <code>ms</code>: </p>
+<ul> <li> If <code>ms == 0</code>, waits until all pixels are delivered </li>
+<li> If <code>ms &gt; 0</code>, waits until all pixels are delivered as timeout expires. </li>
+<li> If <code>ms &lt; 0</code>, returns <code>true</code> if all pixels are grabbed, <code>false</code> otherwise and does not wait. </li>
+</ul> <dl> <dt>Parameters:</dt> <dd>
+<code>ms</code> - the number of milliseconds to wait for the image pixels to arrive before timing out</dd> <dt>Returns:</dt> <dd>true if the pixels were successfully grabbed, false on abort, error or timeout</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/interruptedexception/">InterruptedException</a></code> - Another thread has interrupted this thread.</dd> </dl>    <h3 id="getStatus--">getStatus</h3> <pre data-language="java">public int getStatus()</pre> <p>Return the status of the pixels. The ImageObserver flags representing the available pixel information are returned.</p> <dl> <dt>Returns:</dt> <dd>the bitwise OR of all relevant ImageObserver flags</dd> <dt>See Also:</dt> <dd><a href="../imageobserver/"><code>ImageObserver</code></a></dd> </dl>    <h3 id="getWidth--">getWidth</h3> <pre data-language="java">public int getWidth()</pre> <p>Get the width of the pixel buffer (after adjusting for image width). If no width was specified for the rectangle of pixels to grab then then this information will only be available after the image has delivered the dimensions.</p> <dl> <dt>Returns:</dt> <dd>the final width used for the pixel buffer or -1 if the width is not yet known</dd> <dt>See Also:</dt> <dd><a href="../pixelgrabber/#getStatus--"><code>getStatus()</code></a></dd> </dl>    <h3 id="getHeight--">getHeight</h3> <pre data-language="java">public int getHeight()</pre> <p>Get the height of the pixel buffer (after adjusting for image height). If no width was specified for the rectangle of pixels to grab then then this information will only be available after the image has delivered the dimensions.</p> <dl> <dt>Returns:</dt> <dd>the final height used for the pixel buffer or -1 if the height is not yet known</dd> <dt>See Also:</dt> <dd><a href="../pixelgrabber/#getStatus--"><code>getStatus()</code></a></dd> </dl>    <h3 id="getPixels--">getPixels</h3> <pre data-language="java">public Object getPixels()</pre> <p>Get the pixel buffer. If the PixelGrabber was not constructed with an explicit pixel buffer to hold the pixels then this method will return null until the size and format of the image data is known. Since the PixelGrabber may fall back on accumulating the data in the default RGB ColorModel at any time if the source image uses more than one ColorModel to deliver the data, the array object returned by this method may change over time until the image grab is complete.</p> <dl> <dt>Returns:</dt> <dd>either a byte array or an int array</dd> <dt>See Also:</dt> <dd>
+<a href="../pixelgrabber/#getStatus--"><code>getStatus()</code></a>, <a href="../pixelgrabber/#setPixels-int-int-int-int-java.awt.image.ColorModel-byte:A-int-int-"><code>setPixels(int, int, int, int, ColorModel, byte[], int, int)</code></a>, <a href="../pixelgrabber/#setPixels-int-int-int-int-java.awt.image.ColorModel-int:A-int-int-"><code>setPixels(int, int, int, int, ColorModel, int[], int, int)</code></a>
+</dd> </dl>    <h3 id="getColorModel--">getColorModel</h3> <pre data-language="java">public ColorModel getColorModel()</pre> <p>Get the ColorModel for the pixels stored in the array. If the PixelGrabber was constructed with an explicit pixel buffer then this method will always return the default RGB ColorModel, otherwise it may return null until the ColorModel used by the ImageProducer is known. Since the PixelGrabber may fall back on accumulating the data in the default RGB ColorModel at any time if the source image uses more than one ColorModel to deliver the data, the ColorModel object returned by this method may change over time until the image grab is complete and may not reflect any of the ColorModel objects that was used by the ImageProducer to deliver the pixels.</p> <dl> <dt>Returns:</dt> <dd>the ColorModel object used for storing the pixels</dd> <dt>See Also:</dt> <dd>
+<a href="../pixelgrabber/#getStatus--"><code>getStatus()</code></a>, <a href="../colormodel/#getRGBdefault--"><code>ColorModel.getRGBdefault()</code></a>, <a href="../pixelgrabber/#setColorModel-java.awt.image.ColorModel-"><code>setColorModel(ColorModel)</code></a>
+</dd> </dl>    <h3 id="setDimensions-int-int-">setDimensions</h3> <pre data-language="java">public void setDimensions(int width,
+                          int height)</pre> <div>
+<p>The setDimensions method is part of the ImageConsumer API which this class must implement to retrieve the pixels. </p>
+<p> Note: This method is intended to be called by the ImageProducer of the Image whose pixels are being grabbed. Developers using this class to retrieve pixels from an image should avoid calling this method directly since that operation could result in problems with retrieving the requested pixels.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageconsumer/#setDimensions-int-int-">setDimensions</a></code> in interface <code><a href="../imageconsumer/">ImageConsumer</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>width</code> - the width of the dimension</dd> <dd>
+<code>height</code> - the height of the dimension</dd> </dl>    <h3 id="setHints-int-">setHints</h3> <pre data-language="java">public void setHints(int hints)</pre> <div>
+<p>The setHints method is part of the ImageConsumer API which this class must implement to retrieve the pixels. </p>
+<p> Note: This method is intended to be called by the ImageProducer of the Image whose pixels are being grabbed. Developers using this class to retrieve pixels from an image should avoid calling this method directly since that operation could result in problems with retrieving the requested pixels.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageconsumer/#setHints-int-">setHints</a></code> in interface <code><a href="../imageconsumer/">ImageConsumer</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>hints</code> - a set of hints used to process the pixels</dd> </dl>    <h3 id="setProperties-java.util.Hashtable-">setProperties</h3> <pre data-language="java">public void setProperties(Hashtable&lt;?,?&gt; props)</pre> <div>
+<p>The setProperties method is part of the ImageConsumer API which this class must implement to retrieve the pixels. </p>
+<p> Note: This method is intended to be called by the ImageProducer of the Image whose pixels are being grabbed. Developers using this class to retrieve pixels from an image should avoid calling this method directly since that operation could result in problems with retrieving the requested pixels.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageconsumer/#setProperties-java.util.Hashtable-">setProperties</a></code> in interface <code><a href="../imageconsumer/">ImageConsumer</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>props</code> - the list of properties</dd> </dl>    <h3 id="setColorModel-java.awt.image.ColorModel-">setColorModel</h3> <pre data-language="java">public void setColorModel(ColorModel model)</pre> <div>
+<p>The setColorModel method is part of the ImageConsumer API which this class must implement to retrieve the pixels. </p>
+<p> Note: This method is intended to be called by the ImageProducer of the Image whose pixels are being grabbed. Developers using this class to retrieve pixels from an image should avoid calling this method directly since that operation could result in problems with retrieving the requested pixels.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageconsumer/#setColorModel-java.awt.image.ColorModel-">setColorModel</a></code> in interface <code><a href="../imageconsumer/">ImageConsumer</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>model</code> - the specified <code>ColorModel</code>
+</dd> <dt>See Also:</dt> <dd><a href="../pixelgrabber/#getColorModel--"><code>getColorModel()</code></a></dd> </dl>    <h3 id="setPixels-int-int-int-int-java.awt.image.ColorModel-byte:A-int-int-">setPixels</h3> <pre data-language="java">public void setPixels(int srcX,
+                      int srcY,
+                      int srcW,
+                      int srcH,
+                      ColorModel model,
+                      byte[] pixels,
+                      int srcOff,
+                      int srcScan)</pre> <div>
+<p>The setPixels method is part of the ImageConsumer API which this class must implement to retrieve the pixels. </p>
+<p> Note: This method is intended to be called by the ImageProducer of the Image whose pixels are being grabbed. Developers using this class to retrieve pixels from an image should avoid calling this method directly since that operation could result in problems with retrieving the requested pixels.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageconsumer/#setPixels-int-int-int-int-java.awt.image.ColorModel-byte:A-int-int-">setPixels</a></code> in interface <code><a href="../imageconsumer/">ImageConsumer</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>srcX</code> - the X coordinate of the upper-left corner of the area of pixels to be set</dd> <dd>
+<code>srcY</code> - the Y coordinate of the upper-left corner of the area of pixels to be set</dd> <dd>
+<code>srcW</code> - the width of the area of pixels</dd> <dd>
+<code>srcH</code> - the height of the area of pixels</dd> <dd>
+<code>model</code> - the specified <code>ColorModel</code>
+</dd> <dd>
+<code>pixels</code> - the array of pixels</dd> <dd>
+<code>srcOff</code> - the offset into the pixels array</dd> <dd>
+<code>srcScan</code> - the distance from one row of pixels to the next in the pixels array</dd> <dt>See Also:</dt> <dd><a href="../pixelgrabber/#getPixels--"><code>getPixels()</code></a></dd> </dl>    <h3 id="setPixels-int-int-int-int-java.awt.image.ColorModel-int:A-int-int-">setPixels</h3> <pre data-language="java">public void setPixels(int srcX,
+                      int srcY,
+                      int srcW,
+                      int srcH,
+                      ColorModel model,
+                      int[] pixels,
+                      int srcOff,
+                      int srcScan)</pre> <div>
+<p>The setPixels method is part of the ImageConsumer API which this class must implement to retrieve the pixels. </p>
+<p> Note: This method is intended to be called by the ImageProducer of the Image whose pixels are being grabbed. Developers using this class to retrieve pixels from an image should avoid calling this method directly since that operation could result in problems with retrieving the requested pixels.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageconsumer/#setPixels-int-int-int-int-java.awt.image.ColorModel-int:A-int-int-">setPixels</a></code> in interface <code><a href="../imageconsumer/">ImageConsumer</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>srcX</code> - the X coordinate of the upper-left corner of the area of pixels to be set</dd> <dd>
+<code>srcY</code> - the Y coordinate of the upper-left corner of the area of pixels to be set</dd> <dd>
+<code>srcW</code> - the width of the area of pixels</dd> <dd>
+<code>srcH</code> - the height of the area of pixels</dd> <dd>
+<code>model</code> - the specified <code>ColorModel</code>
+</dd> <dd>
+<code>pixels</code> - the array of pixels</dd> <dd>
+<code>srcOff</code> - the offset into the pixels array</dd> <dd>
+<code>srcScan</code> - the distance from one row of pixels to the next in the pixels array</dd> <dt>See Also:</dt> <dd><a href="../pixelgrabber/#getPixels--"><code>getPixels()</code></a></dd> </dl>    <h3 id="imageComplete-int-">imageComplete</h3> <pre data-language="java">public void imageComplete(int status)</pre> <div>
+<p>The imageComplete method is part of the ImageConsumer API which this class must implement to retrieve the pixels. </p>
+<p> Note: This method is intended to be called by the ImageProducer of the Image whose pixels are being grabbed. Developers using this class to retrieve pixels from an image should avoid calling this method directly since that operation could result in problems with retrieving the requested pixels.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../imageconsumer/#imageComplete-int-">imageComplete</a></code> in interface <code><a href="../imageconsumer/">ImageConsumer</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>status</code> - the status of image loading</dd> <dt>See Also:</dt> <dd><a href="../imageproducer/#removeConsumer-java.awt.image.ImageConsumer-"><code>ImageProducer.removeConsumer(java.awt.image.ImageConsumer)</code></a></dd> </dl>    <h3 id="status--">status</h3> <pre data-language="java">public int status()</pre> <p>Returns the status of the pixels. The ImageObserver flags representing the available pixel information are returned. This method and <a href="../pixelgrabber/#getStatus--"><code>getStatus</code></a> have the same implementation, but <code>getStatus</code> is the preferred method because it conforms to the convention of naming information-retrieval methods with the form "getXXX".</p> <dl> <dt>Returns:</dt> <dd>the bitwise OR of all relevant ImageObserver flags</dd> <dt>See Also:</dt> <dd>
+<a href="../imageobserver/"><code>ImageObserver</code></a>, <a href="../pixelgrabber/#getStatus--"><code>getStatus()</code></a>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

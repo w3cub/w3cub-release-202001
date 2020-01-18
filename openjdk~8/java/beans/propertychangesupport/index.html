@@ -1,0 +1,241 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>PropertyChangeSupport - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="This is a utility class that can be used by beans that support bound properties. It manages a list of listeners and dispatches PropertyChangeEvents &hellip;">
+  <meta name="keywords" content="class, propertychangesupport, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/beans/propertychangesupport/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class PropertyChangeSupport</h1>   <ul class="inheritance"> <li><a href="../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.beans.PropertyChangeSupport</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="../../io/serializable/">Serializable</a></dd> </dl> <dl> <dt>Direct Known Subclasses:</dt> <dd><a href="..//openjdk~8_gui/javax/swing/event/swingpropertychangesupport/">SwingPropertyChangeSupport</a></dd> </dl>   <pre data-language="java">public class PropertyChangeSupport
+extends Object
+implements Serializable</pre> <div>
+<p>This is a utility class that can be used by beans that support bound properties. It manages a list of listeners and dispatches <a href="../propertychangeevent/"><code>PropertyChangeEvent</code></a>s to them. You can use an instance of this class as a member field of your bean and delegate these types of work to it. The <a href="../propertychangelistener/"><code>PropertyChangeListener</code></a> can be registered for all properties or for a property specified by name. </p>
+<p> Here is an example of <code>PropertyChangeSupport</code> usage that follows the rules and recommendations laid out in the JavaBeans™ specification: </p>
+<pre data-language="java">public class MyBean {
+     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+     public void addPropertyChangeListener(PropertyChangeListener listener) {
+         this.pcs.addPropertyChangeListener(listener);
+     }
+
+     public void removePropertyChangeListener(PropertyChangeListener listener) {
+         this.pcs.removePropertyChangeListener(listener);
+     }
+
+     private String value;
+
+     public String getValue() {
+         return this.value;
+     }
+
+     public void setValue(String newValue) {
+         String oldValue = this.value;
+         this.value = newValue;
+         this.pcs.firePropertyChange("value", oldValue, newValue);
+     }
+
+     [...]
+ }</pre> <p> A <code>PropertyChangeSupport</code> instance is thread-safe. </p>
+<p> This class is serializable. When it is serialized it will save (and restore) any listeners that are themselves serializable. Any non-serializable listeners will be skipped during serialization.</p>
+</div> <dl> <dt>See Also:</dt> <dd>
+<a href="../vetoablechangesupport/"><code>VetoableChangeSupport</code></a>, Serialized Form</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="PropertyChangeSupport-java.lang.Object-">PropertyChangeSupport</h3> <pre data-language="java">public PropertyChangeSupport(Object sourceBean)</pre> <p>Constructs a <code>PropertyChangeSupport</code> object.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>sourceBean</code> - The bean to be given as the source for any events.</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="addPropertyChangeListener-java.beans.PropertyChangeListener-">addPropertyChangeListener</h3> <pre data-language="java">public void addPropertyChangeListener(PropertyChangeListener listener)</pre> <p>Add a PropertyChangeListener to the listener list. The listener is registered for all properties. The same listener object may be added more than once, and will be called as many times as it is added. If <code>listener</code> is null, no exception is thrown and no action is taken.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>listener</code> - The PropertyChangeListener to be added</dd> </dl>    <h3 id="removePropertyChangeListener-java.beans.PropertyChangeListener-">removePropertyChangeListener</h3> <pre data-language="java">public void removePropertyChangeListener(PropertyChangeListener listener)</pre> <p>Remove a PropertyChangeListener from the listener list. This removes a PropertyChangeListener that was registered for all properties. If <code>listener</code> was added more than once to the same event source, it will be notified one less time after being removed. If <code>listener</code> is null, or was never added, no exception is thrown and no action is taken.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>listener</code> - The PropertyChangeListener to be removed</dd> </dl>    <h3 id="getPropertyChangeListeners--">getPropertyChangeListeners</h3> <pre data-language="java">public PropertyChangeListener[] getPropertyChangeListeners()</pre> <div>
+<p>Returns an array of all the listeners that were added to the PropertyChangeSupport object with addPropertyChangeListener(). </p>
+<p> If some listeners have been added with a named property, then the returned array will be a mixture of PropertyChangeListeners and <code>PropertyChangeListenerProxy</code>s. If the calling method is interested in distinguishing the listeners then it must test each element to see if it's a <code>PropertyChangeListenerProxy</code>, perform the cast, and examine the parameter. </p>
+<pre data-language="java">PropertyChangeListener[] listeners = bean.getPropertyChangeListeners();
+ for (int i = 0; i &lt; listeners.length; i++) {
+   if (listeners[i] instanceof PropertyChangeListenerProxy) {
+     PropertyChangeListenerProxy proxy =
+                    (PropertyChangeListenerProxy)listeners[i];
+     if (proxy.getPropertyName().equals("foo")) {
+       // proxy is a PropertyChangeListener which was associated
+       // with the property named "foo"
+     }
+   }
+ }</pre>
+</div> <dl> <dt>Returns:</dt> <dd>all of the <code>PropertyChangeListeners</code> added or an empty array if no listeners have been added</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../propertychangelistenerproxy/"><code>PropertyChangeListenerProxy</code></a></dd> </dl>    <h3 id="addPropertyChangeListener-java.lang.String-java.beans.PropertyChangeListener-">addPropertyChangeListener</h3> <pre data-language="java">public void addPropertyChangeListener(String propertyName,
+                                      PropertyChangeListener listener)</pre> <p>Add a PropertyChangeListener for a specific property. The listener will be invoked only when a call on firePropertyChange names that specific property. The same listener object may be added more than once. For each property, the listener will be invoked the number of times it was added for that property. If <code>propertyName</code> or <code>listener</code> is null, no exception is thrown and no action is taken.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - The name of the property to listen on.</dd> <dd>
+<code>listener</code> - The PropertyChangeListener to be added</dd> </dl>    <h3 id="removePropertyChangeListener-java.lang.String-java.beans.PropertyChangeListener-">removePropertyChangeListener</h3> <pre data-language="java">public void removePropertyChangeListener(String propertyName,
+                                         PropertyChangeListener listener)</pre> <p>Remove a PropertyChangeListener for a specific property. If <code>listener</code> was added more than once to the same event source for the specified property, it will be notified one less time after being removed. If <code>propertyName</code> is null, no exception is thrown and no action is taken. If <code>listener</code> is null, or was never added for the specified property, no exception is thrown and no action is taken.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - The name of the property that was listened on.</dd> <dd>
+<code>listener</code> - The PropertyChangeListener to be removed</dd> </dl>    <h3 id="getPropertyChangeListeners-java.lang.String-">getPropertyChangeListeners</h3> <pre data-language="java">public PropertyChangeListener[] getPropertyChangeListeners(String propertyName)</pre> <p>Returns an array of all the listeners which have been associated with the named property.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - The name of the property being listened to</dd> <dt>Returns:</dt> <dd>all of the <code>PropertyChangeListeners</code> associated with the named property. If no such listeners have been added, or if <code>propertyName</code> is null, an empty array is returned.</dd> <dt>Since:</dt> <dd>1.4</dd> </dl>    <h3 id="firePropertyChange-java.lang.String-java.lang.Object-java.lang.Object-">firePropertyChange</h3> <pre data-language="java">public void firePropertyChange(String propertyName,
+                               Object oldValue,
+                               Object newValue)</pre> <div>
+<p>Reports a bound property update to listeners that have been registered to track updates of all properties or a property with the specified name. </p>
+<p> No event is fired if old and new values are equal and non-null. </p>
+<p> This is merely a convenience wrapper around the more general <a href="../propertychangesupport/#firePropertyChange-java.beans.PropertyChangeEvent-"><code>firePropertyChange(PropertyChangeEvent)</code></a> method.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - the programmatic name of the property that was changed</dd> <dd>
+<code>oldValue</code> - the old value of the property</dd> <dd>
+<code>newValue</code> - the new value of the property</dd> </dl>    <h3 id="firePropertyChange-java.lang.String-int-int-">firePropertyChange</h3> <pre data-language="java">public void firePropertyChange(String propertyName,
+                               int oldValue,
+                               int newValue)</pre> <div>
+<p>Reports an integer bound property update to listeners that have been registered to track updates of all properties or a property with the specified name. </p>
+<p> No event is fired if old and new values are equal. </p>
+<p> This is merely a convenience wrapper around the more general <a href="../propertychangesupport/#firePropertyChange-java.lang.String-java.lang.Object-java.lang.Object-"><code>firePropertyChange(String, Object, Object)</code></a> method.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - the programmatic name of the property that was changed</dd> <dd>
+<code>oldValue</code> - the old value of the property</dd> <dd>
+<code>newValue</code> - the new value of the property</dd> </dl>    <h3 id="firePropertyChange-java.lang.String-boolean-boolean-">firePropertyChange</h3> <pre data-language="java">public void firePropertyChange(String propertyName,
+                               boolean oldValue,
+                               boolean newValue)</pre> <div>
+<p>Reports a boolean bound property update to listeners that have been registered to track updates of all properties or a property with the specified name. </p>
+<p> No event is fired if old and new values are equal. </p>
+<p> This is merely a convenience wrapper around the more general <a href="../propertychangesupport/#firePropertyChange-java.lang.String-java.lang.Object-java.lang.Object-"><code>firePropertyChange(String, Object, Object)</code></a> method.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - the programmatic name of the property that was changed</dd> <dd>
+<code>oldValue</code> - the old value of the property</dd> <dd>
+<code>newValue</code> - the new value of the property</dd> </dl>    <h3 id="firePropertyChange-java.beans.PropertyChangeEvent-">firePropertyChange</h3> <pre data-language="java">public void firePropertyChange(PropertyChangeEvent event)</pre> <div>
+<p>Fires a property change event to listeners that have been registered to track updates of all properties or a property with the specified name. </p>
+<p> No event is fired if the given event's old and new values are equal and non-null.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>event</code> - the <code>PropertyChangeEvent</code> to be fired</dd> </dl>    <h3 id="fireIndexedPropertyChange-java.lang.String-int-java.lang.Object-java.lang.Object-">fireIndexedPropertyChange</h3> <pre data-language="java">public void fireIndexedPropertyChange(String propertyName,
+                                      int index,
+                                      Object oldValue,
+                                      Object newValue)</pre> <div>
+<p>Reports a bound indexed property update to listeners that have been registered to track updates of all properties or a property with the specified name. </p>
+<p> No event is fired if old and new values are equal and non-null. </p>
+<p> This is merely a convenience wrapper around the more general <a href="../propertychangesupport/#firePropertyChange-java.beans.PropertyChangeEvent-"><code>firePropertyChange(PropertyChangeEvent)</code></a> method.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - the programmatic name of the property that was changed</dd> <dd>
+<code>index</code> - the index of the property element that was changed</dd> <dd>
+<code>oldValue</code> - the old value of the property</dd> <dd>
+<code>newValue</code> - the new value of the property</dd> <dt>Since:</dt> <dd>1.5</dd> </dl>    <h3 id="fireIndexedPropertyChange-java.lang.String-int-int-int-">fireIndexedPropertyChange</h3> <pre data-language="java">public void fireIndexedPropertyChange(String propertyName,
+                                      int index,
+                                      int oldValue,
+                                      int newValue)</pre> <div>
+<p>Reports an integer bound indexed property update to listeners that have been registered to track updates of all properties or a property with the specified name. </p>
+<p> No event is fired if old and new values are equal. </p>
+<p> This is merely a convenience wrapper around the more general <a href="../propertychangesupport/#fireIndexedPropertyChange-java.lang.String-int-java.lang.Object-java.lang.Object-"><code>fireIndexedPropertyChange(String, int, Object, Object)</code></a> method.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - the programmatic name of the property that was changed</dd> <dd>
+<code>index</code> - the index of the property element that was changed</dd> <dd>
+<code>oldValue</code> - the old value of the property</dd> <dd>
+<code>newValue</code> - the new value of the property</dd> <dt>Since:</dt> <dd>1.5</dd> </dl>    <h3 id="fireIndexedPropertyChange-java.lang.String-int-boolean-boolean-">fireIndexedPropertyChange</h3> <pre data-language="java">public void fireIndexedPropertyChange(String propertyName,
+                                      int index,
+                                      boolean oldValue,
+                                      boolean newValue)</pre> <div>
+<p>Reports a boolean bound indexed property update to listeners that have been registered to track updates of all properties or a property with the specified name. </p>
+<p> No event is fired if old and new values are equal. </p>
+<p> This is merely a convenience wrapper around the more general <a href="../propertychangesupport/#fireIndexedPropertyChange-java.lang.String-int-java.lang.Object-java.lang.Object-"><code>fireIndexedPropertyChange(String, int, Object, Object)</code></a> method.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - the programmatic name of the property that was changed</dd> <dd>
+<code>index</code> - the index of the property element that was changed</dd> <dd>
+<code>oldValue</code> - the old value of the property</dd> <dd>
+<code>newValue</code> - the new value of the property</dd> <dt>Since:</dt> <dd>1.5</dd> </dl>    <h3 id="hasListeners-java.lang.String-">hasListeners</h3> <pre data-language="java">public boolean hasListeners(String propertyName)</pre> <p>Check if there are any listeners for a specific property, including those registered on all properties. If <code>propertyName</code> is null, only check for listeners registered on all properties.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>propertyName</code> - the property name.</dd> <dt>Returns:</dt> <dd>true if there are one or more listeners for the given property</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

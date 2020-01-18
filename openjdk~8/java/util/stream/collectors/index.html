@@ -1,0 +1,467 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Collectors - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="Implementations of Collector that implement various useful reduction operations, such as accumulating elements into collections, summarizing &hellip;">
+  <meta name="keywords" content="class, collectors, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/stream/collectors/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class Collectors</h1>   <ul class="inheritance"> <li><a href="../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.util.stream.Collectors</li> </ul> </li> </ul>     <pre data-language="java">public final class Collectors
+extends Object</pre> <div>
+<p>Implementations of <a href="../collector/"><code>Collector</code></a> that implement various useful reduction operations, such as accumulating elements into collections, summarizing elements according to various criteria, etc. </p>
+<p>The following are examples of using the predefined collectors to perform common mutable reduction tasks: </p>
+<pre data-language="java">// Accumulate names into a List
+     List&lt;String&gt; list = people.stream().map(Person::getName).collect(Collectors.toList());
+
+     // Accumulate names into a TreeSet
+     Set&lt;String&gt; set = people.stream().map(Person::getName).collect(Collectors.toCollection(TreeSet::new));
+
+     // Convert elements to strings and concatenate them, separated by commas
+     String joined = things.stream()
+                           .map(Object::toString)
+                           .collect(Collectors.joining(", "));
+
+     // Compute sum of salaries of employee
+     int total = employees.stream()
+                          .collect(Collectors.summingInt(Employee::getSalary)));
+
+     // Group employees by department
+     Map&lt;Department, List&lt;Employee&gt;&gt; byDept
+         = employees.stream()
+                    .collect(Collectors.groupingBy(Employee::getDepartment));
+
+     // Compute sum of salaries by department
+     Map&lt;Department, Integer&gt; totalByDept
+         = employees.stream()
+                    .collect(Collectors.groupingBy(Employee::getDepartment,
+                                                   Collectors.summingInt(Employee::getSalary)));
+
+     // Partition students into passing and failing
+     Map&lt;Boolean, List&lt;Student&gt;&gt; passingFailing =
+         students.stream()
+                 .collect(Collectors.partitioningBy(s -&gt; s.getGrade() &gt;= PASS_THRESHOLD));</pre>
+</div> <dl> <dt>Since:</dt> <dd>1.8</dd> </dl>       <h2 id="method.detail">Methods</h2>   <h3 id="toCollection-java.util.function.Supplier-">toCollection</h3> <pre data-language="java">public static &lt;T,C extends Collection&lt;T&gt;&gt; Collector&lt;T,?,C&gt; toCollection(Supplier&lt;C&gt; collectionFactory)</pre> <p>Returns a <code>Collector</code> that accumulates the input elements into a new <code>Collection</code>, in encounter order. The <code>Collection</code> is created by the provided factory.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>C</code> - the type of the resulting <code>Collection</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>collectionFactory</code> - a <code>Supplier</code> which returns a new, empty <code>Collection</code> of the appropriate type</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> which collects all the input elements into a <code>Collection</code>, in encounter order</dd> </dl>    <h3 id="toList--">toList</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,List&lt;T&gt;&gt; toList()</pre> <p>Returns a <code>Collector</code> that accumulates the input elements into a new <code>List</code>. There are no guarantees on the type, mutability, serializability, or thread-safety of the <code>List</code> returned; if more control over the returned <code>List</code> is required, use <a href="../collectors/#toCollection-java.util.function.Supplier-"><code>toCollection(Supplier)</code></a>.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> which collects all the input elements into a <code>List</code>, in encounter order</dd> </dl>    <h3 id="toSet--">toSet</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Set&lt;T&gt;&gt; toSet()</pre> <div>
+<p>Returns a <code>Collector</code> that accumulates the input elements into a new <code>Set</code>. There are no guarantees on the type, mutability, serializability, or thread-safety of the <code>Set</code> returned; if more control over the returned <code>Set</code> is required, use <a href="../collectors/#toCollection-java.util.function.Supplier-"><code>toCollection(Supplier)</code></a>. </p>
+<p>This is an <a href="../collector.characteristics/#UNORDERED"><code>unordered</code></a> Collector.</p>
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> which collects all the input elements into a <code>Set</code>
+</dd> </dl>    <h3 id="joining--">joining</h3> <pre data-language="java">public static Collector&lt;CharSequence,?,String&gt; joining()</pre> <p>Returns a <code>Collector</code> that concatenates the input elements into a <code>String</code>, in encounter order.</p> <dl> <dt>Returns:</dt> <dd>a <code>Collector</code> that concatenates the input elements into a <code>String</code>, in encounter order</dd> </dl>    <h3 id="joining-java.lang.CharSequence-">joining</h3> <pre data-language="java">public static Collector&lt;CharSequence,?,String&gt; joining(CharSequence delimiter)</pre> <p>Returns a <code>Collector</code> that concatenates the input elements, separated by the specified delimiter, in encounter order.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>delimiter</code> - the delimiter to be used between each element</dd> <dt>Returns:</dt> <dd>A <code>Collector</code> which concatenates CharSequence elements, separated by the specified delimiter, in encounter order</dd> </dl>    <h3 id="joining-java.lang.CharSequence-java.lang.CharSequence-java.lang.CharSequence-">joining</h3> <pre data-language="java">public static Collector&lt;CharSequence,?,String&gt; joining(CharSequence delimiter,
+                                                       CharSequence prefix,
+                                                       CharSequence suffix)</pre> <p>Returns a <code>Collector</code> that concatenates the input elements, separated by the specified delimiter, with the specified prefix and suffix, in encounter order.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>delimiter</code> - the delimiter to be used between each element</dd> <dd>
+<code>prefix</code> - the sequence of characters to be used at the beginning of the joined result</dd> <dd>
+<code>suffix</code> - the sequence of characters to be used at the end of the joined result</dd> <dt>Returns:</dt> <dd>A <code>Collector</code> which concatenates CharSequence elements, separated by the specified delimiter, in encounter order</dd> </dl>    <h3 id="mapping-java.util.function.Function-java.util.stream.Collector-">mapping</h3> <pre data-language="java">public static &lt;T,U,A,R&gt; Collector&lt;T,?,R&gt; mapping(Function&lt;? super T,? extends U&gt; mapper,
+                                                 Collector&lt;? super U,A,R&gt; downstream)</pre> <p>Adapts a <code>Collector</code> accepting elements of type <code>U</code> to one accepting elements of type <code>T</code> by applying a mapping function to each input element before accumulation.</p> <dl> <dt>API Note:</dt> <dd>The <code>mapping()</code> collectors are most useful when used in a multi-level reduction, such as downstream of a <code>groupingBy</code> or <code>partitioningBy</code>. For example, given a stream of <code>Person</code>, to accumulate the set of last names in each city: <pre data-language="java">Map&lt;City, Set&lt;String&gt;&gt; lastNamesByCity
+         = people.stream().collect(groupingBy(Person::getCity,
+                                              mapping(Person::getLastName, toSet())));</pre>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>U</code> - type of elements accepted by downstream collector</dd> <dd>
+<code>A</code> - intermediate accumulation type of the downstream collector</dd> <dd>
+<code>R</code> - result type of collector</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - a function to be applied to the input elements</dd> <dd>
+<code>downstream</code> - a collector which will accept mapped values</dd> <dt>Returns:</dt> <dd>a collector which applies the mapping function to the input elements and provides the mapped results to the downstream collector</dd> </dl>    <h3 id="collectingAndThen-java.util.stream.Collector-java.util.function.Function-">collectingAndThen</h3> <pre data-language="java">public static &lt;T,A,R,RR&gt; Collector&lt;T,A,RR&gt; collectingAndThen(Collector&lt;T,A,R&gt; downstream,
+                                                             Function&lt;R,RR&gt; finisher)</pre> <p>Adapts a <code>Collector</code> to perform an additional finishing transformation. For example, one could adapt the <a href="../collectors/#toList--"><code>toList()</code></a> collector to always produce an immutable list with: </p>
+<pre data-language="java">List&lt;String&gt; people
+         = people.stream().collect(collectingAndThen(toList(), Collections::unmodifiableList));</pre> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>A</code> - intermediate accumulation type of the downstream collector</dd> <dd>
+<code>R</code> - result type of the downstream collector</dd> <dd>
+<code>RR</code> - result type of the resulting collector</dd> <dt>Parameters:</dt> <dd>
+<code>downstream</code> - a collector</dd> <dd>
+<code>finisher</code> - a function to be applied to the final result of the downstream collector</dd> <dt>Returns:</dt> <dd>a collector which performs the action of the downstream collector, followed by an additional finishing step</dd> </dl>    <h3 id="counting--">counting</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Long&gt; counting()</pre> <p>Returns a <code>Collector</code> accepting elements of type <code>T</code> that counts the number of input elements. If no elements are present, the result is 0.</p> <dl> <dt>Implementation Requirements:</dt> <dd>This produces a result equivalent to: <pre data-language="java">reducing(0L, e -&gt; 1L, Long::sum)</pre>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> that counts the input elements</dd> </dl>    <h3 id="minBy-java.util.Comparator-">minBy</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Optional&lt;T&gt;&gt; minBy(Comparator&lt;? super T&gt; comparator)</pre> <p>Returns a <code>Collector</code> that produces the minimal element according to a given <code>Comparator</code>, described as an <code>Optional&lt;T&gt;</code>.</p> <dl> <dt>Implementation Requirements:</dt> <dd>This produces a result equivalent to: <pre data-language="java">reducing(BinaryOperator.minBy(comparator))</pre>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>comparator</code> - a <code>Comparator</code> for comparing elements</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> that produces the minimal value</dd> </dl>    <h3 id="maxBy-java.util.Comparator-">maxBy</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Optional&lt;T&gt;&gt; maxBy(Comparator&lt;? super T&gt; comparator)</pre> <p>Returns a <code>Collector</code> that produces the maximal element according to a given <code>Comparator</code>, described as an <code>Optional&lt;T&gt;</code>.</p> <dl> <dt>Implementation Requirements:</dt> <dd>This produces a result equivalent to: <pre data-language="java">reducing(BinaryOperator.maxBy(comparator))</pre>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>comparator</code> - a <code>Comparator</code> for comparing elements</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> that produces the maximal value</dd> </dl>    <h3 id="summingInt-java.util.function.ToIntFunction-">summingInt</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Integer&gt; summingInt(ToIntFunction&lt;? super T&gt; mapper)</pre> <p>Returns a <code>Collector</code> that produces the sum of a integer-valued function applied to the input elements. If no elements are present, the result is 0.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - a function extracting the property to be summed</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> that produces the sum of a derived property</dd> </dl>    <h3 id="summingLong-java.util.function.ToLongFunction-">summingLong</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Long&gt; summingLong(ToLongFunction&lt;? super T&gt; mapper)</pre> <p>Returns a <code>Collector</code> that produces the sum of a long-valued function applied to the input elements. If no elements are present, the result is 0.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - a function extracting the property to be summed</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> that produces the sum of a derived property</dd> </dl>    <h3 id="summingDouble-java.util.function.ToDoubleFunction-">summingDouble</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Double&gt; summingDouble(ToDoubleFunction&lt;? super T&gt; mapper)</pre> <div>
+<p>Returns a <code>Collector</code> that produces the sum of a double-valued function applied to the input elements. If no elements are present, the result is 0. </p>
+<p>The sum returned can vary depending upon the order in which values are recorded, due to accumulated rounding error in addition of values of differing magnitudes. Values sorted by increasing absolute magnitude tend to yield more accurate results. If any recorded value is a <code>NaN</code> or the sum is at any point a <code>NaN</code> then the sum will be <code>NaN</code>.</p>
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - a function extracting the property to be summed</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> that produces the sum of a derived property</dd> </dl>    <h3 id="averagingInt-java.util.function.ToIntFunction-">averagingInt</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Double&gt; averagingInt(ToIntFunction&lt;? super T&gt; mapper)</pre> <p>Returns a <code>Collector</code> that produces the arithmetic mean of an integer-valued function applied to the input elements. If no elements are present, the result is 0.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - a function extracting the property to be summed</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> that produces the sum of a derived property</dd> </dl>    <h3 id="averagingLong-java.util.function.ToLongFunction-">averagingLong</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Double&gt; averagingLong(ToLongFunction&lt;? super T&gt; mapper)</pre> <p>Returns a <code>Collector</code> that produces the arithmetic mean of a long-valued function applied to the input elements. If no elements are present, the result is 0.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - a function extracting the property to be summed</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> that produces the sum of a derived property</dd> </dl>    <h3 id="averagingDouble-java.util.function.ToDoubleFunction-">averagingDouble</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Double&gt; averagingDouble(ToDoubleFunction&lt;? super T&gt; mapper)</pre> <div>
+<p>Returns a <code>Collector</code> that produces the arithmetic mean of a double-valued function applied to the input elements. If no elements are present, the result is 0. </p>
+<p>The average returned can vary depending upon the order in which values are recorded, due to accumulated rounding error in addition of values of differing magnitudes. Values sorted by increasing absolute magnitude tend to yield more accurate results. If any recorded value is a <code>NaN</code> or the sum is at any point a <code>NaN</code> then the average will be <code>NaN</code>.</p>
+</div> <dl> <dt>Implementation Note:</dt> <dd>The <code>double</code> format can represent all consecutive integers in the range -2<sup>53</sup> to 2<sup>53</sup>. If the pipeline has more than 2<sup>53</sup> values, the divisor in the average computation will saturate at 2<sup>53</sup>, leading to additional numerical errors.</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - a function extracting the property to be summed</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> that produces the sum of a derived property</dd> </dl>    <h3 id="reducing-T-java.util.function.BinaryOperator-">reducing</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,T&gt; reducing(T identity,
+                                            BinaryOperator&lt;T&gt; op)</pre> <p>Returns a <code>Collector</code> which performs a reduction of its input elements under a specified <code>BinaryOperator</code> using the provided identity.</p> <dl> <dt>API Note:</dt> <dd>The <code>reducing()</code> collectors are most useful when used in a multi-level reduction, downstream of <code>groupingBy</code> or <code>partitioningBy</code>. To perform a simple reduction on a stream, use <a href="../stream/#reduce-T-java.util.function.BinaryOperator-"><code>Stream.reduce(Object, BinaryOperator)</code></a>} instead.</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - element type for the input and output of the reduction</dd> <dt>Parameters:</dt> <dd>
+<code>identity</code> - the identity value for the reduction (also, the value that is returned when there are no input elements)</dd> <dd>
+<code>op</code> - a <code>BinaryOperator&lt;T&gt;</code> used to reduce the input elements</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> which implements the reduction operation</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#reducing-java.util.function.BinaryOperator-"><code>reducing(BinaryOperator)</code></a>, <a href="../collectors/#reducing-U-java.util.function.Function-java.util.function.BinaryOperator-"><code>reducing(Object, Function, BinaryOperator)</code></a>
+</dd> </dl>    <h3 id="reducing-java.util.function.BinaryOperator-">reducing</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Optional&lt;T&gt;&gt; reducing(BinaryOperator&lt;T&gt; op)</pre> <p>Returns a <code>Collector</code> which performs a reduction of its input elements under a specified <code>BinaryOperator</code>. The result is described as an <code>Optional&lt;T&gt;</code>.</p> <dl> <dt>API Note:</dt> <dd>The <code>reducing()</code> collectors are most useful when used in a multi-level reduction, downstream of <code>groupingBy</code> or <code>partitioningBy</code>. To perform a simple reduction on a stream, use <a href="../stream/#reduce-java.util.function.BinaryOperator-"><code>Stream.reduce(BinaryOperator)</code></a> instead. <p>For example, given a stream of <code>Person</code>, to calculate tallest person in each city: </p>
+<pre data-language="java">Comparator&lt;Person&gt; byHeight = Comparator.comparing(Person::getHeight);
+     Map&lt;City, Person&gt; tallestByCity
+         = people.stream().collect(groupingBy(Person::getCity, reducing(BinaryOperator.maxBy(byHeight))));</pre>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - element type for the input and output of the reduction</dd> <dt>Parameters:</dt> <dd>
+<code>op</code> - a <code>BinaryOperator&lt;T&gt;</code> used to reduce the input elements</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> which implements the reduction operation</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#reducing-T-java.util.function.BinaryOperator-"><code>reducing(Object, BinaryOperator)</code></a>, <a href="../collectors/#reducing-U-java.util.function.Function-java.util.function.BinaryOperator-"><code>reducing(Object, Function, BinaryOperator)</code></a>
+</dd> </dl>    <h3 id="reducing-U-java.util.function.Function-java.util.function.BinaryOperator-">reducing</h3> <pre data-language="java">public static &lt;T,U&gt; Collector&lt;T,?,U&gt; reducing(U identity,
+                                              Function&lt;? super T,? extends U&gt; mapper,
+                                              BinaryOperator&lt;U&gt; op)</pre> <p>Returns a <code>Collector</code> which performs a reduction of its input elements under a specified mapping function and <code>BinaryOperator</code>. This is a generalization of <a href="../collectors/#reducing-T-java.util.function.BinaryOperator-"><code>reducing(Object, BinaryOperator)</code></a> which allows a transformation of the elements before reduction.</p> <dl> <dt>API Note:</dt> <dd>The <code>reducing()</code> collectors are most useful when used in a multi-level reduction, downstream of <code>groupingBy</code> or <code>partitioningBy</code>. To perform a simple map-reduce on a stream, use <a href="../stream/#map-java.util.function.Function-"><code>Stream.map(Function)</code></a> and <a href="../stream/#reduce-T-java.util.function.BinaryOperator-"><code>Stream.reduce(Object, BinaryOperator)</code></a> instead. <p>For example, given a stream of <code>Person</code>, to calculate the longest last name of residents in each city: </p>
+<pre data-language="java">Comparator&lt;String&gt; byLength = Comparator.comparing(String::length);
+     Map&lt;City, String&gt; longestLastNameByCity
+         = people.stream().collect(groupingBy(Person::getCity,
+                                              reducing(Person::getLastName, BinaryOperator.maxBy(byLength))));</pre>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>U</code> - the type of the mapped values</dd> <dt>Parameters:</dt> <dd>
+<code>identity</code> - the identity value for the reduction (also, the value that is returned when there are no input elements)</dd> <dd>
+<code>mapper</code> - a mapping function to apply to each input value</dd> <dd>
+<code>op</code> - a <code>BinaryOperator&lt;U&gt;</code> used to reduce the mapped values</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> implementing the map-reduce operation</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#reducing-T-java.util.function.BinaryOperator-"><code>reducing(Object, BinaryOperator)</code></a>, <a href="../collectors/#reducing-java.util.function.BinaryOperator-"><code>reducing(BinaryOperator)</code></a>
+</dd> </dl>    <h3 id="groupingBy-java.util.function.Function-">groupingBy</h3> <pre data-language="java">public static &lt;T,K&gt; Collector&lt;T,?,Map&lt;K,List&lt;T&gt;&gt;&gt; groupingBy(Function&lt;? super T,? extends K&gt; classifier)</pre> <div>
+<p>Returns a <code>Collector</code> implementing a "group by" operation on input elements of type <code>T</code>, grouping elements according to a classification function, and returning the results in a <code>Map</code>. </p>
+<p>The classification function maps elements to some key type <code>K</code>. The collector produces a <code>Map&lt;K, List&lt;T&gt;&gt;</code> whose keys are the values resulting from applying the classification function to the input elements, and whose corresponding values are <code>List</code>s containing the input elements which map to the associated key under the classification function. </p>
+<p>There are no guarantees on the type, mutability, serializability, or thread-safety of the <code>Map</code> or <code>List</code> objects returned.</p>
+</div> <dl> <dt>Implementation Requirements:</dt> <dd>This produces a result similar to: <pre data-language="java">groupingBy(classifier, toList());</pre>
+</dd> <dt>Implementation Note:</dt> <dd>The returned <code>Collector</code> is not concurrent. For parallel stream pipelines, the <code>combiner</code> function operates by merging the keys from one map into another, which can be an expensive operation. If preservation of the order in which elements appear in the resulting <code>Map</code> collector is not required, using <a href="../collectors/#groupingByConcurrent-java.util.function.Function-"><code>groupingByConcurrent(Function)</code></a> may offer better parallel performance.</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the type of the keys</dd> <dt>Parameters:</dt> <dd>
+<code>classifier</code> - the classifier function mapping input elements to keys</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> implementing the group-by operation</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#groupingBy-java.util.function.Function-java.util.stream.Collector-"><code>groupingBy(Function, Collector)</code></a>, <a href="../collectors/#groupingBy-java.util.function.Function-java.util.function.Supplier-java.util.stream.Collector-"><code>groupingBy(Function, Supplier, Collector)</code></a>, <a href="../collectors/#groupingByConcurrent-java.util.function.Function-"><code>groupingByConcurrent(Function)</code></a>
+</dd> </dl>    <h3 id="groupingBy-java.util.function.Function-java.util.stream.Collector-">groupingBy</h3> <pre data-language="java">public static &lt;T,K,A,D&gt; Collector&lt;T,?,Map&lt;K,D&gt;&gt; groupingBy(Function&lt;? super T,? extends K&gt; classifier,
+                                                           Collector&lt;? super T,A,D&gt; downstream)</pre> <div>
+<p>Returns a <code>Collector</code> implementing a cascaded "group by" operation on input elements of type <code>T</code>, grouping elements according to a classification function, and then performing a reduction operation on the values associated with a given key using the specified downstream <code>Collector</code>. </p>
+<p>The classification function maps elements to some key type <code>K</code>. The downstream collector operates on elements of type <code>T</code> and produces a result of type <code>D</code>. The resulting collector produces a <code>Map&lt;K, D&gt;</code>. </p>
+<p>There are no guarantees on the type, mutability, serializability, or thread-safety of the <code>Map</code> returned. </p>
+<p>For example, to compute the set of last names of people in each city: </p>
+<pre data-language="java">Map&lt;City, Set&lt;String&gt;&gt; namesByCity
+         = people.stream().collect(groupingBy(Person::getCity,
+                                              mapping(Person::getLastName, toSet())));</pre>
+</div> <dl> <dt>Implementation Note:</dt> <dd>The returned <code>Collector</code> is not concurrent. For parallel stream pipelines, the <code>combiner</code> function operates by merging the keys from one map into another, which can be an expensive operation. If preservation of the order in which elements are presented to the downstream collector is not required, using <a href="../collectors/#groupingByConcurrent-java.util.function.Function-java.util.stream.Collector-"><code>groupingByConcurrent(Function, Collector)</code></a> may offer better parallel performance.</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the type of the keys</dd> <dd>
+<code>A</code> - the intermediate accumulation type of the downstream collector</dd> <dd>
+<code>D</code> - the result type of the downstream reduction</dd> <dt>Parameters:</dt> <dd>
+<code>classifier</code> - a classifier function mapping input elements to keys</dd> <dd>
+<code>downstream</code> - a <code>Collector</code> implementing the downstream reduction</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> implementing the cascaded group-by operation</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#groupingBy-java.util.function.Function-"><code>groupingBy(Function)</code></a>, <a href="../collectors/#groupingBy-java.util.function.Function-java.util.function.Supplier-java.util.stream.Collector-"><code>groupingBy(Function, Supplier, Collector)</code></a>, <a href="../collectors/#groupingByConcurrent-java.util.function.Function-java.util.stream.Collector-"><code>groupingByConcurrent(Function, Collector)</code></a>
+</dd> </dl>    <h3 id="groupingBy-java.util.function.Function-java.util.function.Supplier-java.util.stream.Collector-">groupingBy</h3> <pre data-language="java">public static &lt;T,K,D,A,M extends Map&lt;K,D&gt;&gt; Collector&lt;T,?,M&gt; groupingBy(Function&lt;? super T,? extends K&gt; classifier,
+                                                                       Supplier&lt;M&gt; mapFactory,
+                                                                       Collector&lt;? super T,A,D&gt; downstream)</pre> <div>
+<p>Returns a <code>Collector</code> implementing a cascaded "group by" operation on input elements of type <code>T</code>, grouping elements according to a classification function, and then performing a reduction operation on the values associated with a given key using the specified downstream <code>Collector</code>. The <code>Map</code> produced by the Collector is created with the supplied factory function. </p>
+<p>The classification function maps elements to some key type <code>K</code>. The downstream collector operates on elements of type <code>T</code> and produces a result of type <code>D</code>. The resulting collector produces a <code>Map&lt;K, D&gt;</code>. </p>
+<p>For example, to compute the set of last names of people in each city, where the city names are sorted: </p>
+<pre data-language="java">Map&lt;City, Set&lt;String&gt;&gt; namesByCity
+         = people.stream().collect(groupingBy(Person::getCity, TreeMap::new,
+                                              mapping(Person::getLastName, toSet())));</pre>
+</div> <dl> <dt>Implementation Note:</dt> <dd>The returned <code>Collector</code> is not concurrent. For parallel stream pipelines, the <code>combiner</code> function operates by merging the keys from one map into another, which can be an expensive operation. If preservation of the order in which elements are presented to the downstream collector is not required, using <a href="../collectors/#groupingByConcurrent-java.util.function.Function-java.util.function.Supplier-java.util.stream.Collector-"><code>groupingByConcurrent(Function, Supplier, Collector)</code></a> may offer better parallel performance.</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the type of the keys</dd> <dd>
+<code>A</code> - the intermediate accumulation type of the downstream collector</dd> <dd>
+<code>D</code> - the result type of the downstream reduction</dd> <dd>
+<code>M</code> - the type of the resulting <code>Map</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>classifier</code> - a classifier function mapping input elements to keys</dd> <dd>
+<code>downstream</code> - a <code>Collector</code> implementing the downstream reduction</dd> <dd>
+<code>mapFactory</code> - a function which, when called, produces a new empty <code>Map</code> of the desired type</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> implementing the cascaded group-by operation</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#groupingBy-java.util.function.Function-java.util.stream.Collector-"><code>groupingBy(Function, Collector)</code></a>, <a href="../collectors/#groupingBy-java.util.function.Function-"><code>groupingBy(Function)</code></a>, <a href="../collectors/#groupingByConcurrent-java.util.function.Function-java.util.function.Supplier-java.util.stream.Collector-"><code>groupingByConcurrent(Function, Supplier, Collector)</code></a>
+</dd> </dl>    <h3 id="groupingByConcurrent-java.util.function.Function-">groupingByConcurrent</h3> <pre data-language="java">public static &lt;T,K&gt; Collector&lt;T,?,ConcurrentMap&lt;K,List&lt;T&gt;&gt;&gt; groupingByConcurrent(Function&lt;? super T,? extends K&gt; classifier)</pre> <div>
+<p>Returns a concurrent <code>Collector</code> implementing a "group by" operation on input elements of type <code>T</code>, grouping elements according to a classification function. </p>
+<p>This is a <a href="../collector.characteristics/#CONCURRENT"><code>concurrent</code></a> and <a href="../collector.characteristics/#UNORDERED"><code>unordered</code></a> Collector. </p>
+<p>The classification function maps elements to some key type <code>K</code>. The collector produces a <code>ConcurrentMap&lt;K, List&lt;T&gt;&gt;</code> whose keys are the values resulting from applying the classification function to the input elements, and whose corresponding values are <code>List</code>s containing the input elements which map to the associated key under the classification function. </p>
+<p>There are no guarantees on the type, mutability, or serializability of the <code>Map</code> or <code>List</code> objects returned, or of the thread-safety of the <code>List</code> objects returned.</p>
+</div> <dl> <dt>Implementation Requirements:</dt> <dd>This produces a result similar to: <pre data-language="java">groupingByConcurrent(classifier, toList());</pre>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the type of the keys</dd> <dt>Parameters:</dt> <dd>
+<code>classifier</code> - a classifier function mapping input elements to keys</dd> <dt>Returns:</dt> <dd>a concurrent, unordered <code>Collector</code> implementing the group-by operation</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#groupingBy-java.util.function.Function-"><code>groupingBy(Function)</code></a>, <a href="../collectors/#groupingByConcurrent-java.util.function.Function-java.util.stream.Collector-"><code>groupingByConcurrent(Function, Collector)</code></a>, <a href="../collectors/#groupingByConcurrent-java.util.function.Function-java.util.function.Supplier-java.util.stream.Collector-"><code>groupingByConcurrent(Function, Supplier, Collector)</code></a>
+</dd> </dl>    <h3 id="groupingByConcurrent-java.util.function.Function-java.util.stream.Collector-">groupingByConcurrent</h3> <pre data-language="java">public static &lt;T,K,A,D&gt; Collector&lt;T,?,ConcurrentMap&lt;K,D&gt;&gt; groupingByConcurrent(Function&lt;? super T,? extends K&gt; classifier,
+                                                                               Collector&lt;? super T,A,D&gt; downstream)</pre> <div>
+<p>Returns a concurrent <code>Collector</code> implementing a cascaded "group by" operation on input elements of type <code>T</code>, grouping elements according to a classification function, and then performing a reduction operation on the values associated with a given key using the specified downstream <code>Collector</code>. </p>
+<p>This is a <a href="../collector.characteristics/#CONCURRENT"><code>concurrent</code></a> and <a href="../collector.characteristics/#UNORDERED"><code>unordered</code></a> Collector. </p>
+<p>The classification function maps elements to some key type <code>K</code>. The downstream collector operates on elements of type <code>T</code> and produces a result of type <code>D</code>. The resulting collector produces a <code>Map&lt;K, D&gt;</code>. </p>
+<p>For example, to compute the set of last names of people in each city, where the city names are sorted: </p>
+<pre data-language="java">ConcurrentMap&lt;City, Set&lt;String&gt;&gt; namesByCity
+         = people.stream().collect(groupingByConcurrent(Person::getCity,
+                                                        mapping(Person::getLastName, toSet())));</pre>
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the type of the keys</dd> <dd>
+<code>A</code> - the intermediate accumulation type of the downstream collector</dd> <dd>
+<code>D</code> - the result type of the downstream reduction</dd> <dt>Parameters:</dt> <dd>
+<code>classifier</code> - a classifier function mapping input elements to keys</dd> <dd>
+<code>downstream</code> - a <code>Collector</code> implementing the downstream reduction</dd> <dt>Returns:</dt> <dd>a concurrent, unordered <code>Collector</code> implementing the cascaded group-by operation</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#groupingBy-java.util.function.Function-java.util.stream.Collector-"><code>groupingBy(Function, Collector)</code></a>, <a href="../collectors/#groupingByConcurrent-java.util.function.Function-"><code>groupingByConcurrent(Function)</code></a>, <a href="../collectors/#groupingByConcurrent-java.util.function.Function-java.util.function.Supplier-java.util.stream.Collector-"><code>groupingByConcurrent(Function, Supplier, Collector)</code></a>
+</dd> </dl>    <h3 id="groupingByConcurrent-java.util.function.Function-java.util.function.Supplier-java.util.stream.Collector-">groupingByConcurrent</h3> <pre data-language="java">public static &lt;T,K,A,D,M extends ConcurrentMap&lt;K,D&gt;&gt; Collector&lt;T,?,M&gt; groupingByConcurrent(Function&lt;? super T,? extends K&gt; classifier,
+                                                                                           Supplier&lt;M&gt; mapFactory,
+                                                                                           Collector&lt;? super T,A,D&gt; downstream)</pre> <div>
+<p>Returns a concurrent <code>Collector</code> implementing a cascaded "group by" operation on input elements of type <code>T</code>, grouping elements according to a classification function, and then performing a reduction operation on the values associated with a given key using the specified downstream <code>Collector</code>. The <code>ConcurrentMap</code> produced by the Collector is created with the supplied factory function. </p>
+<p>This is a <a href="../collector.characteristics/#CONCURRENT"><code>concurrent</code></a> and <a href="../collector.characteristics/#UNORDERED"><code>unordered</code></a> Collector. </p>
+<p>The classification function maps elements to some key type <code>K</code>. The downstream collector operates on elements of type <code>T</code> and produces a result of type <code>D</code>. The resulting collector produces a <code>Map&lt;K, D&gt;</code>. </p>
+<p>For example, to compute the set of last names of people in each city, where the city names are sorted: </p>
+<pre data-language="java">ConcurrentMap&lt;City, Set&lt;String&gt;&gt; namesByCity
+         = people.stream().collect(groupingBy(Person::getCity, ConcurrentSkipListMap::new,
+                                              mapping(Person::getLastName, toSet())));</pre>
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the type of the keys</dd> <dd>
+<code>A</code> - the intermediate accumulation type of the downstream collector</dd> <dd>
+<code>D</code> - the result type of the downstream reduction</dd> <dd>
+<code>M</code> - the type of the resulting <code>ConcurrentMap</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>classifier</code> - a classifier function mapping input elements to keys</dd> <dd>
+<code>downstream</code> - a <code>Collector</code> implementing the downstream reduction</dd> <dd>
+<code>mapFactory</code> - a function which, when called, produces a new empty <code>ConcurrentMap</code> of the desired type</dd> <dt>Returns:</dt> <dd>a concurrent, unordered <code>Collector</code> implementing the cascaded group-by operation</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#groupingByConcurrent-java.util.function.Function-"><code>groupingByConcurrent(Function)</code></a>, <a href="../collectors/#groupingByConcurrent-java.util.function.Function-java.util.stream.Collector-"><code>groupingByConcurrent(Function, Collector)</code></a>, <a href="../collectors/#groupingBy-java.util.function.Function-java.util.function.Supplier-java.util.stream.Collector-"><code>groupingBy(Function, Supplier, Collector)</code></a>
+</dd> </dl>    <h3 id="partitioningBy-java.util.function.Predicate-">partitioningBy</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,Map&lt;Boolean,List&lt;T&gt;&gt;&gt; partitioningBy(Predicate&lt;? super T&gt; predicate)</pre> <p>Returns a <code>Collector</code> which partitions the input elements according to a <code>Predicate</code>, and organizes them into a <code>Map&lt;Boolean, List&lt;T&gt;&gt;</code>. There are no guarantees on the type, mutability, serializability, or thread-safety of the <code>Map</code> returned.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>predicate</code> - a predicate used for classifying input elements</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> implementing the partitioning operation</dd> <dt>See Also:</dt> <dd><a href="../collectors/#partitioningBy-java.util.function.Predicate-java.util.stream.Collector-"><code>partitioningBy(Predicate, Collector)</code></a></dd> </dl>    <h3 id="partitioningBy-java.util.function.Predicate-java.util.stream.Collector-">partitioningBy</h3> <pre data-language="java">public static &lt;T,D,A&gt; Collector&lt;T,?,Map&lt;Boolean,D&gt;&gt; partitioningBy(Predicate&lt;? super T&gt; predicate,
+                                                                   Collector&lt;? super T,A,D&gt; downstream)</pre> <div>
+<p>Returns a <code>Collector</code> which partitions the input elements according to a <code>Predicate</code>, reduces the values in each partition according to another <code>Collector</code>, and organizes them into a <code>Map&lt;Boolean, D&gt;</code> whose values are the result of the downstream reduction. </p>
+<p>There are no guarantees on the type, mutability, serializability, or thread-safety of the <code>Map</code> returned.</p>
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>A</code> - the intermediate accumulation type of the downstream collector</dd> <dd>
+<code>D</code> - the result type of the downstream reduction</dd> <dt>Parameters:</dt> <dd>
+<code>predicate</code> - a predicate used for classifying input elements</dd> <dd>
+<code>downstream</code> - a <code>Collector</code> implementing the downstream reduction</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> implementing the cascaded partitioning operation</dd> <dt>See Also:</dt> <dd><a href="../collectors/#partitioningBy-java.util.function.Predicate-"><code>partitioningBy(Predicate)</code></a></dd> </dl>    <h3 id="toMap-java.util.function.Function-java.util.function.Function-">toMap</h3> <pre data-language="java">public static &lt;T,K,U&gt; Collector&lt;T,?,Map&lt;K,U&gt;&gt; toMap(Function&lt;? super T,? extends K&gt; keyMapper,
+                                                    Function&lt;? super T,? extends U&gt; valueMapper)</pre> <div>
+<p>Returns a <code>Collector</code> that accumulates elements into a <code>Map</code> whose keys and values are the result of applying the provided mapping functions to the input elements. </p>
+<p>If the mapped keys contains duplicates (according to <a href="../../../lang/object/#equals-java.lang.Object-"><code>Object.equals(Object)</code></a>), an <code>IllegalStateException</code> is thrown when the collection operation is performed. If the mapped keys may have duplicates, use <a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-"><code>toMap(Function, Function, BinaryOperator)</code></a> instead.</p>
+</div> <dl> <dt>API Note:</dt> <dd>It is common for either the key or the value to be the input elements. In this case, the utility method <a href="../../function/function/#identity--"><code>Function.identity()</code></a> may be helpful. For example, the following produces a <code>Map</code> mapping students to their grade point average: <pre data-language="java">Map&lt;Student, Double&gt; studentToGPA
+         students.stream().collect(toMap(Functions.identity(),
+                                         student -&gt; computeGPA(student)));</pre> And the following produces a <code>Map</code> mapping a unique identifier to students: <pre data-language="java">Map&lt;String, Student&gt; studentIdToStudent
+         students.stream().collect(toMap(Student::getId,
+                                         Functions.identity());</pre>
+</dd> <dt>Implementation Note:</dt> <dd>The returned <code>Collector</code> is not concurrent. For parallel stream pipelines, the <code>combiner</code> function operates by merging the keys from one map into another, which can be an expensive operation. If it is not required that results are inserted into the <code>Map</code> in encounter order, using <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-"><code>toConcurrentMap(Function, Function)</code></a> may offer better parallel performance.</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the output type of the key mapping function</dd> <dd>
+<code>U</code> - the output type of the value mapping function</dd> <dt>Parameters:</dt> <dd>
+<code>keyMapper</code> - a mapping function to produce keys</dd> <dd>
+<code>valueMapper</code> - a mapping function to produce values</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> which collects elements into a <code>Map</code> whose keys and values are the result of applying mapping functions to the input elements</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-"><code>toMap(Function, Function, BinaryOperator)</code></a>, <a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-java.util.function.Supplier-"><code>toMap(Function, Function, BinaryOperator, Supplier)</code></a>, <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-"><code>toConcurrentMap(Function, Function)</code></a>
+</dd> </dl>    <h3 id="toMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-">toMap</h3> <pre data-language="java">public static &lt;T,K,U&gt; Collector&lt;T,?,Map&lt;K,U&gt;&gt; toMap(Function&lt;? super T,? extends K&gt; keyMapper,
+                                                    Function&lt;? super T,? extends U&gt; valueMapper,
+                                                    BinaryOperator&lt;U&gt; mergeFunction)</pre> <div>
+<p>Returns a <code>Collector</code> that accumulates elements into a <code>Map</code> whose keys and values are the result of applying the provided mapping functions to the input elements. </p>
+<p>If the mapped keys contains duplicates (according to <a href="../../../lang/object/#equals-java.lang.Object-"><code>Object.equals(Object)</code></a>), the value mapping function is applied to each equal element, and the results are merged using the provided merging function.</p>
+</div> <dl> <dt>API Note:</dt> <dd>There are multiple ways to deal with collisions between multiple elements mapping to the same key. The other forms of <code>toMap</code> simply use a merge function that throws unconditionally, but you can easily write more flexible merge policies. For example, if you have a stream of <code>Person</code>, and you want to produce a "phone book" mapping name to address, but it is possible that two persons have the same name, you can do as follows to gracefully deals with these collisions, and produce a <code>Map</code> mapping names to a concatenated list of addresses: <pre data-language="java">Map&lt;String, String&gt; phoneBook
+         people.stream().collect(toMap(Person::getName,
+                                       Person::getAddress,
+                                       (s, a) -&gt; s + ", " + a));</pre>
+</dd> <dt>Implementation Note:</dt> <dd>The returned <code>Collector</code> is not concurrent. For parallel stream pipelines, the <code>combiner</code> function operates by merging the keys from one map into another, which can be an expensive operation. If it is not required that results are merged into the <code>Map</code> in encounter order, using <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-"><code>toConcurrentMap(Function, Function, BinaryOperator)</code></a> may offer better parallel performance.</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the output type of the key mapping function</dd> <dd>
+<code>U</code> - the output type of the value mapping function</dd> <dt>Parameters:</dt> <dd>
+<code>keyMapper</code> - a mapping function to produce keys</dd> <dd>
+<code>valueMapper</code> - a mapping function to produce values</dd> <dd>
+<code>mergeFunction</code> - a merge function, used to resolve collisions between values associated with the same key, as supplied to <a href="../../map/#merge-K-V-java.util.function.BiFunction-"><code>Map.merge(Object, Object, BiFunction)</code></a>
+</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> which collects elements into a <code>Map</code> whose keys are the result of applying a key mapping function to the input elements, and whose values are the result of applying a value mapping function to all input elements equal to the key and combining them using the merge function</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-"><code>toMap(Function, Function)</code></a>, <a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-java.util.function.Supplier-"><code>toMap(Function, Function, BinaryOperator, Supplier)</code></a>, <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-"><code>toConcurrentMap(Function, Function, BinaryOperator)</code></a>
+</dd> </dl>    <h3 id="toMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-java.util.function.Supplier-">toMap</h3> <pre data-language="java">public static &lt;T,K,U,M extends Map&lt;K,U&gt;&gt; Collector&lt;T,?,M&gt; toMap(Function&lt;? super T,? extends K&gt; keyMapper,
+                                                                Function&lt;? super T,? extends U&gt; valueMapper,
+                                                                BinaryOperator&lt;U&gt; mergeFunction,
+                                                                Supplier&lt;M&gt; mapSupplier)</pre> <div>
+<p>Returns a <code>Collector</code> that accumulates elements into a <code>Map</code> whose keys and values are the result of applying the provided mapping functions to the input elements. </p>
+<p>If the mapped keys contains duplicates (according to <a href="../../../lang/object/#equals-java.lang.Object-"><code>Object.equals(Object)</code></a>), the value mapping function is applied to each equal element, and the results are merged using the provided merging function. The <code>Map</code> is created by a provided supplier function.</p>
+</div> <dl> <dt>Implementation Note:</dt> <dd>The returned <code>Collector</code> is not concurrent. For parallel stream pipelines, the <code>combiner</code> function operates by merging the keys from one map into another, which can be an expensive operation. If it is not required that results are merged into the <code>Map</code> in encounter order, using <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-java.util.function.Supplier-"><code>toConcurrentMap(Function, Function, BinaryOperator, Supplier)</code></a> may offer better parallel performance.</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the output type of the key mapping function</dd> <dd>
+<code>U</code> - the output type of the value mapping function</dd> <dd>
+<code>M</code> - the type of the resulting <code>Map</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>keyMapper</code> - a mapping function to produce keys</dd> <dd>
+<code>valueMapper</code> - a mapping function to produce values</dd> <dd>
+<code>mergeFunction</code> - a merge function, used to resolve collisions between values associated with the same key, as supplied to <a href="../../map/#merge-K-V-java.util.function.BiFunction-"><code>Map.merge(Object, Object, BiFunction)</code></a>
+</dd> <dd>
+<code>mapSupplier</code> - a function which returns a new, empty <code>Map</code> into which the results will be inserted</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> which collects elements into a <code>Map</code> whose keys are the result of applying a key mapping function to the input elements, and whose values are the result of applying a value mapping function to all input elements equal to the key and combining them using the merge function</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-"><code>toMap(Function, Function)</code></a>, <a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-"><code>toMap(Function, Function, BinaryOperator)</code></a>, <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-java.util.function.Supplier-"><code>toConcurrentMap(Function, Function, BinaryOperator, Supplier)</code></a>
+</dd> </dl>    <h3 id="toConcurrentMap-java.util.function.Function-java.util.function.Function-">toConcurrentMap</h3> <pre data-language="java">public static &lt;T,K,U&gt; Collector&lt;T,?,ConcurrentMap&lt;K,U&gt;&gt; toConcurrentMap(Function&lt;? super T,? extends K&gt; keyMapper,
+                                                                        Function&lt;? super T,? extends U&gt; valueMapper)</pre> <div>
+<p>Returns a concurrent <code>Collector</code> that accumulates elements into a <code>ConcurrentMap</code> whose keys and values are the result of applying the provided mapping functions to the input elements. </p>
+<p>If the mapped keys contains duplicates (according to <a href="../../../lang/object/#equals-java.lang.Object-"><code>Object.equals(Object)</code></a>), an <code>IllegalStateException</code> is thrown when the collection operation is performed. If the mapped keys may have duplicates, use <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-"><code>toConcurrentMap(Function, Function, BinaryOperator)</code></a> instead.</p>
+</div> <dl> <dt>API Note:</dt> <dd>It is common for either the key or the value to be the input elements. In this case, the utility method <a href="../../function/function/#identity--"><code>Function.identity()</code></a> may be helpful. For example, the following produces a <code>Map</code> mapping students to their grade point average: <pre data-language="java">Map&lt;Student, Double&gt; studentToGPA
+         students.stream().collect(toMap(Functions.identity(),
+                                         student -&gt; computeGPA(student)));</pre> And the following produces a <code>Map</code> mapping a unique identifier to students: <pre data-language="java">Map&lt;String, Student&gt; studentIdToStudent
+         students.stream().collect(toConcurrentMap(Student::getId,
+                                                   Functions.identity());</pre> <p>This is a <a href="../collector.characteristics/#CONCURRENT"><code>concurrent</code></a> and <a href="../collector.characteristics/#UNORDERED"><code>unordered</code></a> Collector.</p>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the output type of the key mapping function</dd> <dd>
+<code>U</code> - the output type of the value mapping function</dd> <dt>Parameters:</dt> <dd>
+<code>keyMapper</code> - the mapping function to produce keys</dd> <dd>
+<code>valueMapper</code> - the mapping function to produce values</dd> <dt>Returns:</dt> <dd>a concurrent, unordered <code>Collector</code> which collects elements into a <code>ConcurrentMap</code> whose keys are the result of applying a key mapping function to the input elements, and whose values are the result of applying a value mapping function to the input elements</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-"><code>toMap(Function, Function)</code></a>, <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-"><code>toConcurrentMap(Function, Function, BinaryOperator)</code></a>, <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-java.util.function.Supplier-"><code>toConcurrentMap(Function, Function, BinaryOperator, Supplier)</code></a>
+</dd> </dl>    <h3 id="toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-">toConcurrentMap</h3> <pre data-language="java">public static &lt;T,K,U&gt; Collector&lt;T,?,ConcurrentMap&lt;K,U&gt;&gt; toConcurrentMap(Function&lt;? super T,? extends K&gt; keyMapper,
+                                                                        Function&lt;? super T,? extends U&gt; valueMapper,
+                                                                        BinaryOperator&lt;U&gt; mergeFunction)</pre> <div>
+<p>Returns a concurrent <code>Collector</code> that accumulates elements into a <code>ConcurrentMap</code> whose keys and values are the result of applying the provided mapping functions to the input elements. </p>
+<p>If the mapped keys contains duplicates (according to <a href="../../../lang/object/#equals-java.lang.Object-"><code>Object.equals(Object)</code></a>), the value mapping function is applied to each equal element, and the results are merged using the provided merging function.</p>
+</div> <dl> <dt>API Note:</dt> <dd>There are multiple ways to deal with collisions between multiple elements mapping to the same key. The other forms of <code>toConcurrentMap</code> simply use a merge function that throws unconditionally, but you can easily write more flexible merge policies. For example, if you have a stream of <code>Person</code>, and you want to produce a "phone book" mapping name to address, but it is possible that two persons have the same name, you can do as follows to gracefully deals with these collisions, and produce a <code>Map</code> mapping names to a concatenated list of addresses: <pre data-language="java">Map&lt;String, String&gt; phoneBook
+         people.stream().collect(toConcurrentMap(Person::getName,
+                                                 Person::getAddress,
+                                                 (s, a) -&gt; s + ", " + a));</pre> <p>This is a <a href="../collector.characteristics/#CONCURRENT"><code>concurrent</code></a> and <a href="../collector.characteristics/#UNORDERED"><code>unordered</code></a> Collector.</p>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the output type of the key mapping function</dd> <dd>
+<code>U</code> - the output type of the value mapping function</dd> <dt>Parameters:</dt> <dd>
+<code>keyMapper</code> - a mapping function to produce keys</dd> <dd>
+<code>valueMapper</code> - a mapping function to produce values</dd> <dd>
+<code>mergeFunction</code> - a merge function, used to resolve collisions between values associated with the same key, as supplied to <a href="../../map/#merge-K-V-java.util.function.BiFunction-"><code>Map.merge(Object, Object, BiFunction)</code></a>
+</dd> <dt>Returns:</dt> <dd>a concurrent, unordered <code>Collector</code> which collects elements into a <code>ConcurrentMap</code> whose keys are the result of applying a key mapping function to the input elements, and whose values are the result of applying a value mapping function to all input elements equal to the key and combining them using the merge function</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-"><code>toConcurrentMap(Function, Function)</code></a>, <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-java.util.function.Supplier-"><code>toConcurrentMap(Function, Function, BinaryOperator, Supplier)</code></a>, <a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-"><code>toMap(Function, Function, BinaryOperator)</code></a>
+</dd> </dl>    <h3 id="toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-java.util.function.Supplier-">toConcurrentMap</h3> <pre data-language="java">public static &lt;T,K,U,M extends ConcurrentMap&lt;K,U&gt;&gt; Collector&lt;T,?,M&gt; toConcurrentMap(Function&lt;? super T,? extends K&gt; keyMapper,
+                                                                                    Function&lt;? super T,? extends U&gt; valueMapper,
+                                                                                    BinaryOperator&lt;U&gt; mergeFunction,
+                                                                                    Supplier&lt;M&gt; mapSupplier)</pre> <div>
+<p>Returns a concurrent <code>Collector</code> that accumulates elements into a <code>ConcurrentMap</code> whose keys and values are the result of applying the provided mapping functions to the input elements. </p>
+<p>If the mapped keys contains duplicates (according to <a href="../../../lang/object/#equals-java.lang.Object-"><code>Object.equals(Object)</code></a>), the value mapping function is applied to each equal element, and the results are merged using the provided merging function. The <code>ConcurrentMap</code> is created by a provided supplier function. </p>
+<p>This is a <a href="../collector.characteristics/#CONCURRENT"><code>concurrent</code></a> and <a href="../collector.characteristics/#UNORDERED"><code>unordered</code></a> Collector.</p>
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dd>
+<code>K</code> - the output type of the key mapping function</dd> <dd>
+<code>U</code> - the output type of the value mapping function</dd> <dd>
+<code>M</code> - the type of the resulting <code>ConcurrentMap</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>keyMapper</code> - a mapping function to produce keys</dd> <dd>
+<code>valueMapper</code> - a mapping function to produce values</dd> <dd>
+<code>mergeFunction</code> - a merge function, used to resolve collisions between values associated with the same key, as supplied to <a href="../../map/#merge-K-V-java.util.function.BiFunction-"><code>Map.merge(Object, Object, BiFunction)</code></a>
+</dd> <dd>
+<code>mapSupplier</code> - a function which returns a new, empty <code>Map</code> into which the results will be inserted</dd> <dt>Returns:</dt> <dd>a concurrent, unordered <code>Collector</code> which collects elements into a <code>ConcurrentMap</code> whose keys are the result of applying a key mapping function to the input elements, and whose values are the result of applying a value mapping function to all input elements equal to the key and combining them using the merge function</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-"><code>toConcurrentMap(Function, Function)</code></a>, <a href="../collectors/#toConcurrentMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-"><code>toConcurrentMap(Function, Function, BinaryOperator)</code></a>, <a href="../collectors/#toMap-java.util.function.Function-java.util.function.Function-java.util.function.BinaryOperator-java.util.function.Supplier-"><code>toMap(Function, Function, BinaryOperator, Supplier)</code></a>
+</dd> </dl>    <h3 id="summarizingInt-java.util.function.ToIntFunction-">summarizingInt</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,IntSummaryStatistics&gt; summarizingInt(ToIntFunction&lt;? super T&gt; mapper)</pre> <p>Returns a <code>Collector</code> which applies an <code>int</code>-producing mapping function to each input element, and returns summary statistics for the resulting values.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - a mapping function to apply to each element</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> implementing the summary-statistics reduction</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#summarizingDouble-java.util.function.ToDoubleFunction-"><code>summarizingDouble(ToDoubleFunction)</code></a>, <a href="../collectors/#summarizingLong-java.util.function.ToLongFunction-"><code>summarizingLong(ToLongFunction)</code></a>
+</dd> </dl>    <h3 id="summarizingLong-java.util.function.ToLongFunction-">summarizingLong</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,LongSummaryStatistics&gt; summarizingLong(ToLongFunction&lt;? super T&gt; mapper)</pre> <p>Returns a <code>Collector</code> which applies an <code>long</code>-producing mapping function to each input element, and returns summary statistics for the resulting values.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - the mapping function to apply to each element</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> implementing the summary-statistics reduction</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#summarizingDouble-java.util.function.ToDoubleFunction-"><code>summarizingDouble(ToDoubleFunction)</code></a>, <a href="../collectors/#summarizingInt-java.util.function.ToIntFunction-"><code>summarizingInt(ToIntFunction)</code></a>
+</dd> </dl>    <h3 id="summarizingDouble-java.util.function.ToDoubleFunction-">summarizingDouble</h3> <pre data-language="java">public static &lt;T&gt; Collector&lt;T,?,DoubleSummaryStatistics&gt; summarizingDouble(ToDoubleFunction&lt;? super T&gt; mapper)</pre> <p>Returns a <code>Collector</code> which applies an <code>double</code>-producing mapping function to each input element, and returns summary statistics for the resulting values.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the input elements</dd> <dt>Parameters:</dt> <dd>
+<code>mapper</code> - a mapping function to apply to each element</dd> <dt>Returns:</dt> <dd>a <code>Collector</code> implementing the summary-statistics reduction</dd> <dt>See Also:</dt> <dd>
+<a href="../collectors/#summarizingLong-java.util.function.ToLongFunction-"><code>summarizingLong(ToLongFunction)</code></a>, <a href="../collectors/#summarizingInt-java.util.function.ToIntFunction-"><code>summarizingInt(ToIntFunction)</code></a>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

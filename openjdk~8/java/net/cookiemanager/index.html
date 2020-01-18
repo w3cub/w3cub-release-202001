@@ -1,0 +1,175 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>CookieManager - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="CookieManager provides a concrete implementation of CookieHandler, which separates the storage of cookies from the policy surrounding accepting and &hellip;">
+  <meta name="keywords" content="class, cookiemanager, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/net/cookiemanager/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class CookieManager</h1>   <ul class="inheritance"> <li><a href="../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../cookiehandler/">java.net.CookieHandler</a></li> <li> <ul class="inheritance"> <li>java.net.CookieManager</li> </ul> </li> </ul> </li> </ul>     <pre data-language="java">public class CookieManager
+extends CookieHandler</pre> <div>
+<p>CookieManager provides a concrete implementation of <a href="../cookiehandler/"><code>CookieHandler</code></a>, which separates the storage of cookies from the policy surrounding accepting and rejecting cookies. A CookieManager is initialized with a <a href="../cookiestore/"><code>CookieStore</code></a> which manages storage, and a <a href="../cookiepolicy/"><code>CookiePolicy</code></a> object, which makes policy decisions on cookie acceptance/rejection. </p>
+<p> The HTTP cookie management in java.net package looks like: </p>
+<blockquote> <pre data-language="java">use
+ CookieHandler &lt;------- HttpURLConnection
+       ^
+       | impl
+       |         use
+ CookieManager -------&gt; CookiePolicy
+             |   use
+             |--------&gt; HttpCookie
+             |              ^
+             |              | use
+             |   use        |
+             |--------&gt; CookieStore
+                            ^
+                            | impl
+                            |
+                  Internal in-memory implementation</pre> <ul> <li> CookieHandler is at the core of cookie management. User can call CookieHandler.setDefault to set a concrete CookieHanlder implementation to be used. </li> <li> CookiePolicy.shouldAccept will be called by CookieManager.put to see whether or not one cookie should be accepted and put into cookie store. User can use any of three pre-defined CookiePolicy, namely ACCEPT_ALL, ACCEPT_NONE and ACCEPT_ORIGINAL_SERVER, or user can define his own CookiePolicy implementation and tell CookieManager to use it. </li> <li> CookieStore is the place where any accepted HTTP cookie is stored in. If not specified when created, a CookieManager instance will use an internal in-memory implementation. Or user can implements one and tell CookieManager to use it. </li> <li> Currently, only CookieStore.add(URI, HttpCookie) and CookieStore.get(URI) are used by CookieManager. Others are for completeness and might be needed by a more sophisticated CookieStore implementation, e.g. a NetscapeCookieSotre. </li> </ul> </blockquote> <p>There're various ways user can hook up his own HTTP cookie management behavior, e.g. </p>
+<blockquote> <ul> <li>Use CookieHandler.setDefault to set a brand new <a href="../cookiehandler/"><code>CookieHandler</code></a> implementation </li>
+<li>Let CookieManager be the default <a href="../cookiehandler/"><code>CookieHandler</code></a> implementation, but implement user's own <a href="../cookiestore/"><code>CookieStore</code></a> and <a href="../cookiepolicy/"><code>CookiePolicy</code></a> and tell default CookieManager to use them: <pre data-language="java">// this should be done at the beginning of an HTTP session
+CookieHandler.setDefault(new CookieManager(new MyCookieStore(), new MyCookiePolicy()));</pre> </li>
+<li>Let CookieManager be the default <a href="../cookiehandler/"><code>CookieHandler</code></a> implementation, but use customized <a href="../cookiepolicy/"><code>CookiePolicy</code></a>: <pre data-language="java">// this should be done at the beginning of an HTTP session
+CookieHandler.setDefault(new CookieManager());
+// this can be done at any point of an HTTP session
+((CookieManager)CookieHandler.getDefault()).setCookiePolicy(new MyCookiePolicy());</pre> </li>
+</ul> </blockquote> <p>The implementation conforms to <a href="http://www.ietf.org/rfc/rfc2965.txt" target="_blank">RFC 2965</a>, section 3.3.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.6</dd> <dt>See Also:</dt> <dd><a href="../cookiepolicy/"><code>CookiePolicy</code></a></dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="CookieManager--">CookieManager</h3> <pre data-language="java">public CookieManager()</pre> <div>
+<p>Create a new cookie manager. </p>
+<p>This constructor will create new cookie manager with default cookie store and accept policy. The effect is same as <code>CookieManager(null, null)</code>.</p>
+</div>    <h3 id="CookieManager-java.net.CookieStore-java.net.CookiePolicy-">CookieManager</h3> <pre data-language="java">public CookieManager(CookieStore store,
+                     CookiePolicy cookiePolicy)</pre> <p>Create a new cookie manager with specified cookie store and cookie policy.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>store</code> - a <code>CookieStore</code> to be used by cookie manager. if <code>null</code>, cookie manager will use a default one, which is an in-memory CookieStore implementation.</dd> <dd>
+<code>cookiePolicy</code> - a <code>CookiePolicy</code> instance to be used by cookie manager as policy callback. if <code>null</code>, ACCEPT_ORIGINAL_SERVER will be used.</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="setCookiePolicy-java.net.CookiePolicy-">setCookiePolicy</h3> <pre data-language="java">public void setCookiePolicy(CookiePolicy cookiePolicy)</pre> <div>
+<p>To set the cookie policy of this cookie manager. </p>
+<p> A instance of <code>CookieManager</code> will have cookie policy ACCEPT_ORIGINAL_SERVER by default. Users always can call this method to set another cookie policy.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>cookiePolicy</code> - the cookie policy. Can be <code>null</code>, which has no effects on current cookie policy.</dd> </dl>    <h3 id="getCookieStore--">getCookieStore</h3> <pre data-language="java">public CookieStore getCookieStore()</pre> <p>To retrieve current cookie store.</p> <dl> <dt>Returns:</dt> <dd>the cookie store currently used by cookie manager.</dd> </dl>    <h3 id="get-java.net.URI-java.util.Map-">get</h3> <pre data-language="java">public Map&lt;String,List&lt;String&gt;&gt; get(URI uri,
+                                    Map&lt;String,List&lt;String&gt;&gt; requestHeaders)
+                             throws IOException</pre> <p>Description copied from class: <code><a href="../cookiehandler/#get-java.net.URI-java.util.Map-">CookieHandler</a></code></p> <div>
+<p>Gets all the applicable cookies from a cookie cache for the specified uri in the request header. </p>
+<p>The <code>URI</code> passed as an argument specifies the intended use for the cookies. In particular the scheme should reflect whether the cookies will be sent over http, https or used in another context like javascript. The host part should reflect either the destination of the cookies or their origin in the case of javascript.</p> <p>It is up to the implementation to take into account the <code>URI</code> and the cookies attributes and security settings to determine which ones should be returned.</p> <p>HTTP protocol implementers should make sure that this method is called after all request headers related to choosing cookies are added, and before the request is sent.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../cookiehandler/#get-java.net.URI-java.util.Map-">get</a></code> in class <code><a href="../cookiehandler/">CookieHandler</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>uri</code> - a <code>URI</code> representing the intended use for the cookies</dd> <dd>
+<code>requestHeaders</code> - - a Map from request header field names to lists of field values representing the current request headers</dd> <dt>Returns:</dt> <dd>an immutable map from state management headers, with field names "Cookie" or "Cookie2" to a list of cookies containing state information</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if an I/O error occurs</dd> <dt>See Also:</dt> <dd><a href="../cookiehandler/#put-java.net.URI-java.util.Map-"><code>CookieHandler.put(URI, Map)</code></a></dd> </dl>    <h3 id="put-java.net.URI-java.util.Map-">put</h3> <pre data-language="java">public void put(URI uri,
+                Map&lt;String,List&lt;String&gt;&gt; responseHeaders)
+         throws IOException</pre> <p>Description copied from class: <code><a href="../cookiehandler/#put-java.net.URI-java.util.Map-">CookieHandler</a></code></p> <p>Sets all the applicable cookies, examples are response header fields that are named Set-Cookie2, present in the response headers into a cookie cache.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../cookiehandler/#put-java.net.URI-java.util.Map-">put</a></code> in class <code><a href="../cookiehandler/">CookieHandler</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>uri</code> - a <code>URI</code> where the cookies come from</dd> <dd>
+<code>responseHeaders</code> - an immutable map from field names to lists of field values representing the response header fields returned</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if an I/O error occurs</dd> <dt>See Also:</dt> <dd><a href="../cookiehandler/#get-java.net.URI-java.util.Map-"><code>CookieHandler.get(URI, Map)</code></a></dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

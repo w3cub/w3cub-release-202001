@@ -1,0 +1,489 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>MethodHandles.Lookup - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A lookup object is a factory for creating method handles, when the creation requires access checking. Method handles do not perform access checks &hellip;">
+  <meta name="keywords" content="class, methodhandles, lookuplookup, factory, methodsaccess, checkingsecurity, manager, interactionscaller, sensitive, methods, lookup, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/lang/invoke/methodhandles.lookup/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class MethodHandles.Lookup</h1>   <ul class="inheritance"> <li><a href="../../object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.lang.invoke.MethodHandles.Lookup</li> </ul> </li> </ul>   <dl> <dt>Enclosing class:</dt> <dd><a href="../methodhandles/">MethodHandles</a></dd> </dl>   <pre data-language="java">public static final class MethodHandles.Lookup
+extends Object</pre> <div>
+<p>A <em>lookup object</em> is a factory for creating method handles, when the creation requires access checking. Method handles do not perform access checks when they are called, but rather when they are created. Therefore, method handle access restrictions must be enforced when a method handle is created. The caller class against which those restrictions are enforced is known as the <a href="../methodhandles.lookup/#lookupClass">lookup class</a>. </p>
+<p> A lookup class which needs to create method handles will call <a href="../methodhandles/#lookup--"><code>MethodHandles.lookup</code></a> to create a factory for itself. When the <code>Lookup</code> factory object is created, the identity of the lookup class is determined, and securely stored in the <code>Lookup</code> object. The lookup class (or its delegates) may then use factory methods on the <code>Lookup</code> object to create method handles for access-checked members. This includes all methods, constructors, and fields which are allowed to the lookup class, even private ones. </p>
+<h1>Lookup Factory Methods</h1> The factory methods on a <code>Lookup</code> object correspond to all major use cases for methods, constructors, and fields. Each method handle created by a factory method is the functional equivalent of a particular <em>bytecode behavior</em>. (Bytecode behaviors are described in section 5.4.3.5 of the Java Virtual Machine Specification.) Here is a summary of the correspondence between these factory methods and the behavior the resulting method handles: <table> <tr> <th>lookup expression</th> <th>member</th> <th>bytecode behavior</th> </tr> <tr> <td><a href="../methodhandles.lookup/#findGetter-java.lang.Class-java.lang.String-java.lang.Class-"><code>lookup.findGetter(C.class,"f",FT.class)</code></a></td> <td><code>FT f;</code></td>
+<td><code>(T) this.f;</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#findStaticGetter-java.lang.Class-java.lang.String-java.lang.Class-"><code>lookup.findStaticGetter(C.class,"f",FT.class)</code></a></td> <td>
+<code>static</code><br><code>FT f;</code>
+</td>
+<td><code>(T) C.f;</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#findSetter-java.lang.Class-java.lang.String-java.lang.Class-"><code>lookup.findSetter(C.class,"f",FT.class)</code></a></td> <td><code>FT f;</code></td>
+<td><code>this.f = x;</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#findStaticSetter-java.lang.Class-java.lang.String-java.lang.Class-"><code>lookup.findStaticSetter(C.class,"f",FT.class)</code></a></td> <td>
+<code>static</code><br><code>FT f;</code>
+</td>
+<td><code>C.f = arg;</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#findVirtual-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-"><code>lookup.findVirtual(C.class,"m",MT)</code></a></td> <td><code>T m(A*);</code></td>
+<td><code>(T) this.m(arg*);</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#findStatic-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-"><code>lookup.findStatic(C.class,"m",MT)</code></a></td> <td>
+<code>static</code><br><code>T m(A*);</code>
+</td>
+<td><code>(T) C.m(arg*);</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#findSpecial-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-java.lang.Class-"><code>lookup.findSpecial(C.class,"m",MT,this.class)</code></a></td> <td><code>T m(A*);</code></td>
+<td><code>(T) super.m(arg*);</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#findConstructor-java.lang.Class-java.lang.invoke.MethodType-"><code>lookup.findConstructor(C.class,MT)</code></a></td> <td><code>C(A*);</code></td>
+<td><code>new C(arg*);</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#unreflectGetter-java.lang.reflect.Field-"><code>lookup.unreflectGetter(aField)</code></a></td> <td>(<code>static</code>)?<br><code>FT f;</code>
+</td>
+<td><code>(FT) aField.get(thisOrNull);</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#unreflectSetter-java.lang.reflect.Field-"><code>lookup.unreflectSetter(aField)</code></a></td> <td>(<code>static</code>)?<br><code>FT f;</code>
+</td>
+<td><code>aField.set(thisOrNull, arg);</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#unreflect-java.lang.reflect.Method-"><code>lookup.unreflect(aMethod)</code></a></td> <td>(<code>static</code>)?<br><code>T m(A*);</code>
+</td>
+<td><code>(T) aMethod.invoke(thisOrNull, arg*);</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#unreflectConstructor-java.lang.reflect.Constructor-"><code>lookup.unreflectConstructor(aConstructor)</code></a></td> <td><code>C(A*);</code></td>
+<td><code>(C) aConstructor.newInstance(arg*);</code></td> </tr> <tr> <td><a href="../methodhandles.lookup/#unreflect-java.lang.reflect.Method-"><code>lookup.unreflect(aMethod)</code></a></td> <td>(<code>static</code>)?<br><code>T m(A*);</code>
+</td>
+<td><code>(T) aMethod.invoke(thisOrNull, arg*);</code></td> </tr> </table> Here, the type <code>C</code> is the class or interface being searched for a member, documented as a parameter named <code>refc</code> in the lookup methods. The method type <code>MT</code> is composed from the return type <code>T</code> and the sequence of argument types <code>A*</code>. The constructor also has a sequence of argument types <code>A*</code> and is deemed to return the newly-created object of type <code>C</code>. Both <code>MT</code> and the field type <code>FT</code> are documented as a parameter named <code>type</code>. The formal parameter <code>this</code> stands for the self-reference of type <code>C</code>; if it is present, it is always the leading argument to the method handle invocation. (In the case of some <code>protected</code> members, <code>this</code> may be restricted in type to the lookup class; see below.) The name <code>arg</code> stands for all the other method handle arguments. In the code examples for the Core Reflection API, the name <code>thisOrNull</code> stands for a null reference if the accessed method or field is static, and <code>this</code> otherwise. The names <code>aMethod</code>, <code>aField</code>, and <code>aConstructor</code> stand for reflective objects corresponding to the given members. <p> In cases where the given member is of variable arity (i.e., a method or constructor) the returned method handle will also be of <a href="../methodhandle/#asVarargsCollector-java.lang.Class-">variable arity</a>. In all other cases, the returned method handle will be of fixed arity. </p>
+<p style="font-size:smaller;"> <em>Discussion:</em> The equivalence between looked-up method handles and underlying class members and bytecode behaviors can break down in a few ways: </p>
+<ul style="font-size:smaller;"> <li>If <code>C</code> is not symbolically accessible from the lookup class's loader, the lookup can still succeed, even when there is no equivalent Java expression or bytecoded constant. </li>
+<li>Likewise, if <code>T</code> or <code>MT</code> is not symbolically accessible from the lookup class's loader, the lookup can still succeed. For example, lookups for <code>MethodHandle.invokeExact</code> and <code>MethodHandle.invoke</code> will always succeed, regardless of requested type. </li>
+<li>If there is a security manager installed, it can forbid the lookup on various grounds (<a href="../methodhandles.lookup/#secmgr">see below</a>). By contrast, the <code>ldc</code> instruction on a <code>CONSTANT_MethodHandle</code> constant is not subject to security manager checks. </li>
+<li>If the looked-up method has a <a href="../methodhandle/#maxarity">very large arity</a>, the method handle creation may fail, due to the method handle type having too many parameters. </li>
+</ul> <h1>Access checking</h1> Access checks are applied in the factory methods of <code>Lookup</code>, when a method handle is created. This is a key difference from the Core Reflection API, since <a href="../../reflect/method/#invoke-java.lang.Object-java.lang.Object...-"><code>java.lang.reflect.Method.invoke</code></a> performs access checking against every caller, on every call. <p> All access checks start from a <code>Lookup</code> object, which compares its recorded lookup class against all requests to create method handles. A single <code>Lookup</code> object can be used to create any number of access-checked method handles, all checked against a single lookup class. </p>
+<p> A <code>Lookup</code> object can be shared with other trusted code, such as a metaobject protocol. A shared <code>Lookup</code> object delegates the capability to create method handles on private members of the lookup class. Even if privileged code uses the <code>Lookup</code> object, the access checking is confined to the privileges of the original lookup class. </p>
+<p> A lookup can fail, because the containing class is not accessible to the lookup class, or because the desired class member is missing, or because the desired class member is not accessible to the lookup class, or because the lookup object is not trusted enough to access the member. In any of these cases, a <code>ReflectiveOperationException</code> will be thrown from the attempted lookup. The exact class will be one of the following: </p>
+<ul> <li>NoSuchMethodException — if a method is requested but does not exist </li>
+<li>NoSuchFieldException — if a field is requested but does not exist </li>
+<li>IllegalAccessException — if the member exists but an access check fails </li>
+</ul> <p> In general, the conditions under which a method handle may be looked up for a method <code>M</code> are no more restrictive than the conditions under which the lookup class could have compiled, verified, and resolved a call to <code>M</code>. Where the JVM would raise exceptions like <code>NoSuchMethodError</code>, a method handle lookup will generally raise a corresponding checked exception, such as <code>NoSuchMethodException</code>. And the effect of invoking the method handle resulting from the lookup is <a href="../methodhandles.lookup/#equiv">exactly equivalent</a> to executing the compiled, verified, and resolved call to <code>M</code>. The same point is true of fields and constructors. </p>
+<p style="font-size:smaller;"> <em>Discussion:</em> Access checks only apply to named and reflected methods, constructors, and fields. Other method handle creation methods, such as <a href="../methodhandle/#asType-java.lang.invoke.MethodType-"><code>MethodHandle.asType</code></a>, do not require any access checks, and are used independently of any <code>Lookup</code> object. </p>
+<p> If the desired member is <code>protected</code>, the usual JVM rules apply, including the requirement that the lookup class must be either be in the same package as the desired member, or must inherit that member. (See the Java Virtual Machine Specification, sections 4.9.2, 5.4.3.5, and 6.4.) In addition, if the desired member is a non-static field or method in a different package, the resulting method handle may only be applied to objects of the lookup class or one of its subclasses. This requirement is enforced by narrowing the type of the leading <code>this</code> parameter from <code>C</code> (which will necessarily be a superclass of the lookup class) to the lookup class itself. </p>
+<p> The JVM imposes a similar requirement on <code>invokespecial</code> instruction, that the receiver argument must match both the resolved method <em>and</em> the current class. Again, this requirement is enforced by narrowing the type of the leading parameter to the resulting method handle. (See the Java Virtual Machine Specification, section 4.10.1.9.) </p>
+<p> The JVM represents constructors and static initializer blocks as internal methods with special names (<code>"&lt;init&gt;"</code> and <code>"&lt;clinit&gt;"</code>). The internal syntax of invocation instructions allows them to refer to such internal methods as if they were normal methods, but the JVM bytecode verifier rejects them. A lookup of such an internal method will produce a <code>NoSuchMethodException</code>. </p>
+<p> In some cases, access between nested classes is obtained by the Java compiler by creating an wrapper method to access a private method of another class in the same top-level declaration. For example, a nested class <code>C.D</code> can access private members within other related classes such as <code>C</code>, <code>C.D.E</code>, or <code>C.B</code>, but the Java compiler may need to generate wrapper methods in those related classes. In such cases, a <code>Lookup</code> object on <code>C.E</code> would be unable to those private members. A workaround for this limitation is the <a href="../methodhandles.lookup/#in-java.lang.Class-"><code>Lookup.in</code></a> method, which can transform a lookup on <code>C.E</code> into one on any of those other classes, without special elevation of privilege. </p>
+<p> The accesses permitted to a given lookup object may be limited, according to its set of <a href="../methodhandles.lookup/#lookupModes--"><code>lookupModes</code></a>, to a subset of members normally accessible to the lookup class. For example, the <a href="../methodhandles/#publicLookup--"><code>publicLookup</code></a> method produces a lookup object which is only allowed to access public members in public classes. The caller sensitive method <a href="../methodhandles/#lookup--"><code>lookup</code></a> produces a lookup object with full capabilities relative to its caller class, to emulate all supported bytecode behaviors. Also, the <a href="../methodhandles.lookup/#in-java.lang.Class-"><code>Lookup.in</code></a> method may produce a lookup object with fewer access modes than the original lookup object. </p>
+<p style="font-size:smaller;">  <em id="privacc">Discussion of private access:</em> We say that a lookup has <em>private access</em> if its <a href="../methodhandles.lookup/#lookupModes--">lookup modes</a> include the possibility of accessing <code>private</code> members. As documented in the relevant methods elsewhere, only lookups with private access possess the following capabilities: </p>
+<ul style="font-size:smaller;"> <li>access private fields, methods, and constructors of the lookup class </li>
+<li>create method handles which invoke <a href="../methodhandles.lookup/#callsens">caller sensitive</a> methods, such as <code>Class.forName</code> </li>
+<li>create method handles which <a href="../methodhandles.lookup/#findSpecial-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-java.lang.Class-"><code>emulate invokespecial</code></a> instructions </li>
+<li>avoid <a href="../methodhandles.lookup/#secmgr">package access checks</a> for classes accessible to the lookup class </li>
+<li>create <a href="../methodhandles.lookup/#in-java.lang.Class-"><code>delegated lookup objects</code></a> which have private access to other classes within the same package member </li>
+</ul> <p style="font-size:smaller;"> Each of these permissions is a consequence of the fact that a lookup object with private access can be securely traced back to an originating class, whose <a href="../methodhandles.lookup/#equiv">bytecode behaviors</a> and Java language access permissions can be reliably determined and emulated by method handles. </p>
+<h1>Security manager interactions</h1> Although bytecode instructions can only refer to classes in a related class loader, this API can search for methods in any class, as long as a reference to its <code>Class</code> object is available. Such cross-loader references are also possible with the Core Reflection API, and are impossible to bytecode instructions such as <code>invokestatic</code> or <code>getfield</code>. There is a <a href="../../securitymanager/">security manager API</a> to allow applications to check such cross-loader references. These checks apply to both the <code>MethodHandles.Lookup</code> API and the Core Reflection API (as found on <a href="../../class/"><code>Class</code></a>). <p> If a security manager is present, member lookups are subject to additional checks. From one to three calls are made to the security manager. Any of these calls can refuse access by throwing a <a href="../../securityexception/"><code>SecurityException</code></a>. Define <code>smgr</code> as the security manager, <code>lookc</code> as the lookup class of the current lookup object, <code>refc</code> as the containing class in which the member is being sought, and <code>defc</code> as the class in which the member is actually defined. The value <code>lookc</code> is defined as <em>not present</em> if the current lookup object does not have <a href="../methodhandles.lookup/#privacc">private access</a>. The calls are made according to the following rules: </p>
+<ul> <li>
+<b>Step 1:</b> If <code>lookc</code> is not present, or if its class loader is not the same as or an ancestor of the class loader of <code>refc</code>, then <a href="../../securitymanager/#checkPackageAccess-java.lang.String-"><code>smgr.checkPackageAccess(refcPkg)</code></a> is called, where <code>refcPkg</code> is the package of <code>refc</code>. </li>
+<li>
+<b>Step 2:</b> If the retrieved member is not public and <code>lookc</code> is not present, then <a href="../../securitymanager/#checkPermission-java.security.Permission-"><code>smgr.checkPermission</code></a> with <code>RuntimePermission("accessDeclaredMembers")</code> is called. </li>
+<li>
+<b>Step 3:</b> If the retrieved member is not public, and if <code>lookc</code> is not present, and if <code>defc</code> and <code>refc</code> are different, then <a href="../../securitymanager/#checkPackageAccess-java.lang.String-"><code>smgr.checkPackageAccess(defcPkg)</code></a> is called, where <code>defcPkg</code> is the package of <code>defc</code>. </li>
+</ul> Security checks are performed after other access checks have passed. Therefore, the above rules presuppose a member that is public, or else that is being accessed from a lookup class that has rights to access the member. <h1>Caller sensitive methods</h1> A small number of Java methods have a special property called caller sensitivity. A <em>caller-sensitive</em> method can behave differently depending on the identity of its immediate caller. <p> If a method handle for a caller-sensitive method is requested, the general rules for <a href="../methodhandles.lookup/#equiv">bytecode behaviors</a> apply, but they take account of the lookup class in a special way. The resulting method handle behaves as if it were called from an instruction contained in the lookup class, so that the caller-sensitive method detects the lookup class. (By contrast, the invoker of the method handle is disregarded.) Thus, in the case of caller-sensitive methods, different lookup classes may give rise to differently behaving method handles. </p>
+<p> In cases where the lookup object is <a href="../methodhandles/#publicLookup--"><code>publicLookup()</code></a>, or some other lookup object without <a href="../methodhandles.lookup/#privacc">private access</a>, the lookup class is disregarded. In such cases, no caller-sensitive method handle can be created, access is forbidden, and the lookup fails with an <code>IllegalAccessException</code>. </p>
+<p style="font-size:smaller;"> <em>Discussion:</em> For example, the caller-sensitive method <a href="../../class/#forName-java.lang.String-"><code>Class.forName(x)</code></a> can return varying classes or throw varying exceptions, depending on the class loader of the class that calls it. A public lookup of <code>Class.forName</code> will fail, because there is no reasonable way to determine its bytecode behavior. </p>
+<p style="font-size:smaller;"> If an application caches method handles for broad sharing, it should use <code>publicLookup()</code> to create them. If there is a lookup of <code>Class.forName</code>, it will fail, and the application must take appropriate action in that case. It may be that a later lookup, perhaps during the invocation of a bootstrap method, can incorporate the specific identity of the caller, making the method accessible. </p>
+<p style="font-size:smaller;"> The function <code>MethodHandles.lookup</code> is caller sensitive so that there can be a secure foundation for lookups. Nearly all other methods in the JSR 292 API rely on lookup objects to check access requests.</p>
+</div>       <h2 id="field.detail">Fields</h2>   <h3 id="PUBLIC">PUBLIC</h3> <pre data-language="java">public static final int PUBLIC</pre> <p>A single-bit mask representing <code>public</code> access, which may contribute to the result of <a href="../methodhandles.lookup/#lookupModes--"><code>lookupModes</code></a>. The value, <code>0x01</code>, happens to be the same as the value of the <code>public</code> <a href="../../reflect/modifier/#PUBLIC">modifier bit</a>.</p>     <h3 id="PRIVATE">PRIVATE</h3> <pre data-language="java">public static final int PRIVATE</pre> <p>A single-bit mask representing <code>private</code> access, which may contribute to the result of <a href="../methodhandles.lookup/#lookupModes--"><code>lookupModes</code></a>. The value, <code>0x02</code>, happens to be the same as the value of the <code>private</code> <a href="../../reflect/modifier/#PRIVATE">modifier bit</a>.</p>     <h3 id="PROTECTED">PROTECTED</h3> <pre data-language="java">public static final int PROTECTED</pre> <p>A single-bit mask representing <code>protected</code> access, which may contribute to the result of <a href="../methodhandles.lookup/#lookupModes--"><code>lookupModes</code></a>. The value, <code>0x04</code>, happens to be the same as the value of the <code>protected</code> <a href="../../reflect/modifier/#PROTECTED">modifier bit</a>.</p>     <h3 id="PACKAGE">PACKAGE</h3> <pre data-language="java">public static final int PACKAGE</pre> <p>A single-bit mask representing <code>package</code> access (default access), which may contribute to the result of <a href="../methodhandles.lookup/#lookupModes--"><code>lookupModes</code></a>. The value is <code>0x08</code>, which does not correspond meaningfully to any particular <a href="../../reflect/modifier/">modifier bit</a>.</p>      <h2 id="method.detail">Methods</h2>   <h3 id="lookupClass--">lookupClass</h3> <pre data-language="java">public Class&lt;?&gt; lookupClass()</pre> <div>
+<p>Tells which class is performing the lookup. It is this class against which checks are performed for visibility and access permissions. </p>
+<p> The class implies a maximum level of access permission, but the permissions may be additionally limited by the bitmask <a href="../methodhandles.lookup/#lookupModes--"><code>lookupModes</code></a>, which controls whether non-public members can be accessed.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the lookup class, on behalf of which this lookup object finds members</dd> </dl>    <h3 id="lookupModes--">lookupModes</h3> <pre data-language="java">public int lookupModes()</pre> <div>
+<p>Tells which access-protection classes of members this lookup object can produce. The result is a bit-mask of the bits <a href="../methodhandles.lookup/#PUBLIC">PUBLIC (0x01)</a>, <a href="../methodhandles.lookup/#PRIVATE">PRIVATE (0x02)</a>, <a href="../methodhandles.lookup/#PROTECTED">PROTECTED (0x04)</a>, and <a href="../methodhandles.lookup/#PACKAGE">PACKAGE (0x08)</a>. </p>
+<p> A freshly-created lookup object on the <a href="../methodhandles/#lookup--">caller's class</a> has all possible bits set, since the caller class can access all its own members. A lookup object on a new lookup class <a href="../methodhandles.lookup/#in-java.lang.Class-">created from a previous lookup object</a> may have some mode bits set to zero. The purpose of this is to restrict access via the new lookup object, so that it can access only names which can be reached by the original lookup object, and also by the new lookup class.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the lookup modes, which limit the kinds of access performed by this lookup object</dd> </dl>    <h3 id="in-java.lang.Class-">in</h3> <pre data-language="java">public MethodHandles.Lookup in(Class&lt;?&gt; requestedLookupClass)</pre> <div>
+<p>Creates a lookup on the specified new lookup class. The resulting object will report the specified class as its own <a href="../methodhandles.lookup/#lookupClass"><code>lookupClass</code></a>. </p>
+<p> However, the resulting <code>Lookup</code> object is guaranteed to have no more access capabilities than the original. In particular, access capabilities can be lost as follows:</p>
+<ul> <li>If the new lookup class differs from the old one, protected members will not be accessible by virtue of inheritance. (Protected members may continue to be accessible because of package sharing.) </li>
+<li>If the new lookup class is in a different package than the old one, protected and default (package) members will not be accessible. </li>
+<li>If the new lookup class is not within the same package member as the old one, private members will not be accessible. </li>
+<li>If the new lookup class is not accessible to the old lookup class, then no members, not even public members, will be accessible. (In all other cases, public members will continue to be accessible.) </li>
+</ul>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>requestedLookupClass</code> - the desired lookup class for the new lookup object</dd> <dt>Returns:</dt> <dd>a lookup object which reports the desired lookup class</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the argument is null</dd> </dl>    <h3 id="toString--">toString</h3> <pre data-language="java">public String toString()</pre> <div>
+<p>Displays the name of the class from which lookups are to be made. (The name is the one reported by <a href="../../class/#getName--"><code>Class.getName</code></a>.) If there are restrictions on the access permitted to this lookup, this is indicated by adding a suffix to the class name, consisting of a slash and a keyword. The keyword represents the strongest allowed access, and is chosen as follows: </p>
+<ul> <li>If no access is allowed, the suffix is "/noaccess". </li>
+<li>If only public access is allowed, the suffix is "/public". </li>
+<li>If only public and package access are allowed, the suffix is "/package". </li>
+<li>If only public, package, and private access are allowed, the suffix is "/private". </li>
+</ul> If none of the above cases apply, it is the case that full access (public, package, private, and protected) is allowed. In this case, no suffix is added. This is true only of an object obtained originally from <a href="../methodhandles/#lookup--"><code>MethodHandles.lookup</code></a>. Objects created by <a href="../methodhandles.lookup/#in-java.lang.Class-"><code>Lookup.in</code></a> always have restricted access, and will display a suffix. 
+<p> (It may seem strange that protected access should be stronger than private access. Viewed independently from package access, protected access is the first to be lost, because it requires a direct subclass relationship between caller and callee.)</p>
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../object/#toString--">toString</a></code> in class <code><a href="../../object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a string representation of the object.</dd> <dt>See Also:</dt> <dd><a href="../methodhandles.lookup/#in-java.lang.Class-"><code>in(java.lang.Class&lt;?&gt;)</code></a></dd> </dl>    <h3 id="findStatic-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-">findStatic</h3> <pre data-language="java">public MethodHandle findStatic(Class&lt;?&gt; refc,
+                               String name,
+                               MethodType type)
+                        throws NoSuchMethodException,
+                               IllegalAccessException</pre> <div>
+<p>Produces a method handle for a static method. The type of the method handle will be that of the method. (Since static methods do not take receivers, there is no additional receiver argument inserted into the method handle type, as there would be with <a href="../methodhandles.lookup/#findVirtual-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-"><code>findVirtual</code></a> or <a href="../methodhandles.lookup/#findSpecial-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-java.lang.Class-"><code>findSpecial</code></a>.) The method and all its argument types must be accessible to the lookup object. </p>
+<p> The returned method handle will have <a href="../methodhandle/#asVarargsCollector-java.lang.Class-">variable arity</a> if and only if the method's variable arity modifier bit (<code>0x0080</code>) is set. </p>
+<p> If the returned method handle is invoked, the method's class will be initialized, if it has not already been initialized. </p>
+<p><b>Example:</b> </p>
+<pre data-language="java">import static java.lang.invoke.MethodHandles.*;
+import static java.lang.invoke.MethodType.*;
+...
+MethodHandle MH_asList = publicLookup().findStatic(Arrays.class,
+  "asList", methodType(List.class, Object[].class));
+assertEquals("[x, y]", MH_asList.invoke("x", "y").toString());</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>refc</code> - the class from which the method is accessed</dd> <dd>
+<code>name</code> - the name of the method</dd> <dd>
+<code>type</code> - the type of the method</dd> <dt>Returns:</dt> <dd>the desired method handle</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nosuchmethodexception/">NoSuchMethodException</a></code> - if the method does not exist</dd> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails, or if the method is not <code>static</code>, or if the method's variable arity modifier bit is set and <code>asVarargsCollector</code> fails</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> </dl>    <h3 id="findVirtual-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-">findVirtual</h3> <pre data-language="java">public MethodHandle findVirtual(Class&lt;?&gt; refc,
+                                String name,
+                                MethodType type)
+                         throws NoSuchMethodException,
+                                IllegalAccessException</pre> <div>
+<p>Produces a method handle for a virtual method. The type of the method handle will be that of the method, with the receiver type (usually <code>refc</code>) prepended. The method and all its argument types must be accessible to the lookup object. </p>
+<p> When called, the handle will treat the first argument as a receiver and dispatch on the receiver's type to determine which method implementation to enter. (The dispatching action is identical with that performed by an <code>invokevirtual</code> or <code>invokeinterface</code> instruction.) </p>
+<p> The first argument will be of type <code>refc</code> if the lookup class has full privileges to access the member. Otherwise the member must be <code>protected</code> and the first argument will be restricted in type to the lookup class. </p>
+<p> The returned method handle will have <a href="../methodhandle/#asVarargsCollector-java.lang.Class-">variable arity</a> if and only if the method's variable arity modifier bit (<code>0x0080</code>) is set. </p>
+<p> Because of the general <a href="../methodhandles.lookup/#equiv">equivalence</a> between <code>invokevirtual</code> instructions and method handles produced by <code>findVirtual</code>, if the class is <code>MethodHandle</code> and the name string is <code>invokeExact</code> or <code>invoke</code>, the resulting method handle is equivalent to one produced by <a href="../methodhandles/#exactInvoker-java.lang.invoke.MethodType-"><code>MethodHandles.exactInvoker</code></a> or <a href="../methodhandles/#invoker-java.lang.invoke.MethodType-"><code>MethodHandles.invoker</code></a> with the same <code>type</code> argument. <b>Example:</b> </p>
+<pre data-language="java">import static java.lang.invoke.MethodHandles.*;
+import static java.lang.invoke.MethodType.*;
+...
+MethodHandle MH_concat = publicLookup().findVirtual(String.class,
+  "concat", methodType(String.class, String.class));
+MethodHandle MH_hashCode = publicLookup().findVirtual(Object.class,
+  "hashCode", methodType(int.class));
+MethodHandle MH_hashCode_String = publicLookup().findVirtual(String.class,
+  "hashCode", methodType(int.class));
+assertEquals("xy", (String) MH_concat.invokeExact("x", "y"));
+assertEquals("xy".hashCode(), (int) MH_hashCode.invokeExact((Object)"xy"));
+assertEquals("xy".hashCode(), (int) MH_hashCode_String.invokeExact("xy"));
+// interface method:
+MethodHandle MH_subSequence = publicLookup().findVirtual(CharSequence.class,
+  "subSequence", methodType(CharSequence.class, int.class, int.class));
+assertEquals("def", MH_subSequence.invoke("abcdefghi", 3, 6).toString());
+// constructor "internal method" must be accessed differently:
+MethodType MT_newString = methodType(void.class); //()V for new String()
+try { assertEquals("impossible", lookup()
+        .findVirtual(String.class, "&lt;init&gt;", MT_newString));
+ } catch (NoSuchMethodException ex) { } // OK
+MethodHandle MH_newString = publicLookup()
+  .findConstructor(String.class, MT_newString);
+assertEquals("", (String) MH_newString.invokeExact());</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>refc</code> - the class or interface from which the method is accessed</dd> <dd>
+<code>name</code> - the name of the method</dd> <dd>
+<code>type</code> - the type of the method, with the receiver argument omitted</dd> <dt>Returns:</dt> <dd>the desired method handle</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nosuchmethodexception/">NoSuchMethodException</a></code> - if the method does not exist</dd> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails, or if the method is <code>static</code> or if the method's variable arity modifier bit is set and <code>asVarargsCollector</code> fails</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> </dl>    <h3 id="findConstructor-java.lang.Class-java.lang.invoke.MethodType-">findConstructor</h3> <pre data-language="java">public MethodHandle findConstructor(Class&lt;?&gt; refc,
+                                    MethodType type)
+                             throws NoSuchMethodException,
+                                    IllegalAccessException</pre> <div>
+<p>Produces a method handle which creates an object and initializes it, using the constructor of the specified type. The parameter types of the method handle will be those of the constructor, while the return type will be a reference to the constructor's class. The constructor and all its argument types must be accessible to the lookup object. </p>
+<p> The requested type must have a return type of <code>void</code>. (This is consistent with the JVM's treatment of constructor type descriptors.) </p>
+<p> The returned method handle will have <a href="../methodhandle/#asVarargsCollector-java.lang.Class-">variable arity</a> if and only if the constructor's variable arity modifier bit (<code>0x0080</code>) is set. </p>
+<p> If the returned method handle is invoked, the constructor's class will be initialized, if it has not already been initialized. </p>
+<p><b>Example:</b> </p>
+<pre data-language="java">import static java.lang.invoke.MethodHandles.*;
+import static java.lang.invoke.MethodType.*;
+...
+MethodHandle MH_newArrayList = publicLookup().findConstructor(
+  ArrayList.class, methodType(void.class, Collection.class));
+Collection orig = Arrays.asList("x", "y");
+Collection copy = (ArrayList) MH_newArrayList.invokeExact(orig);
+assert(orig != copy);
+assertEquals(orig, copy);
+// a variable-arity constructor:
+MethodHandle MH_newProcessBuilder = publicLookup().findConstructor(
+  ProcessBuilder.class, methodType(void.class, String[].class));
+ProcessBuilder pb = (ProcessBuilder)
+  MH_newProcessBuilder.invoke("x", "y", "z");
+assertEquals("[x, y, z]", pb.command().toString());</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>refc</code> - the class or interface from which the method is accessed</dd> <dd>
+<code>type</code> - the type of the method, with the receiver argument omitted, and a void return type</dd> <dt>Returns:</dt> <dd>the desired method handle</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nosuchmethodexception/">NoSuchMethodException</a></code> - if the constructor does not exist</dd> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails or if the method's variable arity modifier bit is set and <code>asVarargsCollector</code> fails</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> </dl>    <h3 id="findSpecial-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-java.lang.Class-">findSpecial</h3> <pre data-language="java">public MethodHandle findSpecial(Class&lt;?&gt; refc,
+                                String name,
+                                MethodType type,
+                                Class&lt;?&gt; specialCaller)
+                         throws NoSuchMethodException,
+                                IllegalAccessException</pre> <div>
+<p>Produces an early-bound method handle for a virtual method. It will bypass checks for overriding methods on the receiver, <a href="../methodhandles.lookup/#equiv">as if called</a> from an <code>invokespecial</code> instruction from within the explicitly specified <code>specialCaller</code>. The type of the method handle will be that of the method, with a suitably restricted receiver type prepended. (The receiver type will be <code>specialCaller</code> or a subtype.) The method and all its argument types must be accessible to the lookup object. </p>
+<p> Before method resolution, if the explicitly specified caller class is not identical with the lookup class, or if this lookup object does not have <a href="../methodhandles.lookup/#privacc">private access</a> privileges, the access fails. </p>
+<p> The returned method handle will have <a href="../methodhandle/#asVarargsCollector-java.lang.Class-">variable arity</a> if and only if the method's variable arity modifier bit (<code>0x0080</code>) is set. </p>
+<p style="font-size:smaller;"> <em>(Note: JVM internal methods named <code>"&lt;init&gt;"</code> are not visible to this API, even though the <code>invokespecial</code> instruction can refer to them in special circumstances. Use <a href="../methodhandles.lookup/#findConstructor-java.lang.Class-java.lang.invoke.MethodType-"><code>findConstructor</code></a> to access instance initialization methods in a safe manner.)</em> </p>
+<p><b>Example:</b> </p>
+<pre data-language="java">import static java.lang.invoke.MethodHandles.*;
+import static java.lang.invoke.MethodType.*;
+...
+static class Listie extends ArrayList {
+  public String toString() { return "[wee Listie]"; }
+  static Lookup lookup() { return MethodHandles.lookup(); }
+}
+...
+// no access to constructor via invokeSpecial:
+MethodHandle MH_newListie = Listie.lookup()
+  .findConstructor(Listie.class, methodType(void.class));
+Listie l = (Listie) MH_newListie.invokeExact();
+try { assertEquals("impossible", Listie.lookup().findSpecial(
+        Listie.class, "&lt;init&gt;", methodType(void.class), Listie.class));
+ } catch (NoSuchMethodException ex) { } // OK
+// access to super and self methods via invokeSpecial:
+MethodHandle MH_super = Listie.lookup().findSpecial(
+  ArrayList.class, "toString" , methodType(String.class), Listie.class);
+MethodHandle MH_this = Listie.lookup().findSpecial(
+  Listie.class, "toString" , methodType(String.class), Listie.class);
+MethodHandle MH_duper = Listie.lookup().findSpecial(
+  Object.class, "toString" , methodType(String.class), Listie.class);
+assertEquals("[]", (String) MH_super.invokeExact(l));
+assertEquals(""+l, (String) MH_this.invokeExact(l));
+assertEquals("[]", (String) MH_duper.invokeExact(l)); // ArrayList method
+try { assertEquals("inaccessible", Listie.lookup().findSpecial(
+        String.class, "toString", methodType(String.class), Listie.class));
+ } catch (IllegalAccessException ex) { } // OK
+Listie subl = new Listie() { public String toString() { return "[subclass]"; } };
+assertEquals(""+l, (String) MH_this.invokeExact(subl)); // Listie method</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>refc</code> - the class or interface from which the method is accessed</dd> <dd>
+<code>name</code> - the name of the method (which must not be "&lt;init&gt;")</dd> <dd>
+<code>type</code> - the type of the method, with the receiver argument omitted</dd> <dd>
+<code>specialCaller</code> - the proposed calling class to perform the <code>invokespecial</code>
+</dd> <dt>Returns:</dt> <dd>the desired method handle</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nosuchmethodexception/">NoSuchMethodException</a></code> - if the method does not exist</dd> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails or if the method's variable arity modifier bit is set and <code>asVarargsCollector</code> fails</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> </dl>    <h3 id="findGetter-java.lang.Class-java.lang.String-java.lang.Class-">findGetter</h3> <pre data-language="java">public MethodHandle findGetter(Class&lt;?&gt; refc,
+                               String name,
+                               Class&lt;?&gt; type)
+                        throws NoSuchFieldException,
+                               IllegalAccessException</pre> <p>Produces a method handle giving read access to a non-static field. The type of the method handle will have a return type of the field's value type. The method handle's single argument will be the instance containing the field. Access checking is performed immediately on behalf of the lookup class.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>refc</code> - the class or interface from which the method is accessed</dd> <dd>
+<code>name</code> - the field's name</dd> <dd>
+<code>type</code> - the field's type</dd> <dt>Returns:</dt> <dd>a method handle which can load values from the field</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nosuchfieldexception/">NoSuchFieldException</a></code> - if the field does not exist</dd> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails, or if the field is <code>static</code>
+</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> </dl>    <h3 id="findSetter-java.lang.Class-java.lang.String-java.lang.Class-">findSetter</h3> <pre data-language="java">public MethodHandle findSetter(Class&lt;?&gt; refc,
+                               String name,
+                               Class&lt;?&gt; type)
+                        throws NoSuchFieldException,
+                               IllegalAccessException</pre> <p>Produces a method handle giving write access to a non-static field. The type of the method handle will have a void return type. The method handle will take two arguments, the instance containing the field, and the value to be stored. The second argument will be of the field's value type. Access checking is performed immediately on behalf of the lookup class.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>refc</code> - the class or interface from which the method is accessed</dd> <dd>
+<code>name</code> - the field's name</dd> <dd>
+<code>type</code> - the field's type</dd> <dt>Returns:</dt> <dd>a method handle which can store values into the field</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nosuchfieldexception/">NoSuchFieldException</a></code> - if the field does not exist</dd> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails, or if the field is <code>static</code>
+</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> </dl>    <h3 id="findStaticGetter-java.lang.Class-java.lang.String-java.lang.Class-">findStaticGetter</h3> <pre data-language="java">public MethodHandle findStaticGetter(Class&lt;?&gt; refc,
+                                     String name,
+                                     Class&lt;?&gt; type)
+                              throws NoSuchFieldException,
+                                     IllegalAccessException</pre> <div>
+<p>Produces a method handle giving read access to a static field. The type of the method handle will have a return type of the field's value type. The method handle will take no arguments. Access checking is performed immediately on behalf of the lookup class. </p>
+<p> If the returned method handle is invoked, the field's class will be initialized, if it has not already been initialized.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>refc</code> - the class or interface from which the method is accessed</dd> <dd>
+<code>name</code> - the field's name</dd> <dd>
+<code>type</code> - the field's type</dd> <dt>Returns:</dt> <dd>a method handle which can load values from the field</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nosuchfieldexception/">NoSuchFieldException</a></code> - if the field does not exist</dd> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails, or if the field is not <code>static</code>
+</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> </dl>    <h3 id="findStaticSetter-java.lang.Class-java.lang.String-java.lang.Class-">findStaticSetter</h3> <pre data-language="java">public MethodHandle findStaticSetter(Class&lt;?&gt; refc,
+                                     String name,
+                                     Class&lt;?&gt; type)
+                              throws NoSuchFieldException,
+                                     IllegalAccessException</pre> <div>
+<p>Produces a method handle giving write access to a static field. The type of the method handle will have a void return type. The method handle will take a single argument, of the field's value type, the value to be stored. Access checking is performed immediately on behalf of the lookup class. </p>
+<p> If the returned method handle is invoked, the field's class will be initialized, if it has not already been initialized.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>refc</code> - the class or interface from which the method is accessed</dd> <dd>
+<code>name</code> - the field's name</dd> <dd>
+<code>type</code> - the field's type</dd> <dt>Returns:</dt> <dd>a method handle which can store values into the field</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nosuchfieldexception/">NoSuchFieldException</a></code> - if the field does not exist</dd> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails, or if the field is not <code>static</code>
+</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> </dl>    <h3 id="bind-java.lang.Object-java.lang.String-java.lang.invoke.MethodType-">bind</h3> <pre data-language="java">public MethodHandle bind(Object receiver,
+                         String name,
+                         MethodType type)
+                  throws NoSuchMethodException,
+                         IllegalAccessException</pre> <div>
+<p>Produces an early-bound method handle for a non-static method. The receiver must have a supertype <code>defc</code> in which a method of the given name and type is accessible to the lookup class. The method and all its argument types must be accessible to the lookup object. The type of the method handle will be that of the method, without any insertion of an additional receiver parameter. The given receiver will be bound into the method handle, so that every call to the method handle will invoke the requested method on the given receiver. </p>
+<p> The returned method handle will have <a href="../methodhandle/#asVarargsCollector-java.lang.Class-">variable arity</a> if and only if the method's variable arity modifier bit (<code>0x0080</code>) is set <em>and</em> the trailing array argument is not the only argument. (If the trailing array argument is the only argument, the given receiver value will be bound to it.) </p>
+<p> This is equivalent to the following code: </p>
+<pre data-language="java">import static java.lang.invoke.MethodHandles.*;
+import static java.lang.invoke.MethodType.*;
+...
+MethodHandle mh0 = lookup().findVirtual(defc, name, type);
+MethodHandle mh1 = mh0.bindTo(receiver);
+MethodType mt1 = mh1.type();
+if (mh0.isVarargsCollector())
+  mh1 = mh1.asVarargsCollector(mt1.parameterType(mt1.parameterCount()-1));
+return mh1;</pre> where <code>defc</code> is either <code>receiver.getClass()</code> or a super type of that class, in which the requested method is accessible to the lookup class. (Note that <code>bindTo</code> does not preserve variable arity.)</div> <dl> <dt>Parameters:</dt> <dd>
+<code>receiver</code> - the object from which the method is accessed</dd> <dd>
+<code>name</code> - the name of the method</dd> <dd>
+<code>type</code> - the type of the method, with the receiver argument omitted</dd> <dt>Returns:</dt> <dd>the desired method handle</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nosuchmethodexception/">NoSuchMethodException</a></code> - if the method does not exist</dd> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails or if the method's variable arity modifier bit is set and <code>asVarargsCollector</code> fails</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> <dt>See Also:</dt> <dd>
+<a href="../methodhandle/#bindTo-java.lang.Object-"><code>MethodHandle.bindTo(java.lang.Object)</code></a>, <a href="../methodhandles.lookup/#findVirtual-java.lang.Class-java.lang.String-java.lang.invoke.MethodType-"><code>findVirtual(java.lang.Class&lt;?&gt;, java.lang.String, java.lang.invoke.MethodType)</code></a>
+</dd> </dl>    <h3 id="unreflect-java.lang.reflect.Method-">unreflect</h3> <pre data-language="java">public MethodHandle unreflect(Method m)
+                       throws IllegalAccessException</pre> <div>
+<p>Makes a <a href="../methodhandleinfo/#directmh">direct method handle</a> to <i>m</i>, if the lookup class has permission. If <i>m</i> is non-static, the receiver argument is treated as an initial argument. If <i>m</i> is virtual, overriding is respected on every call. Unlike the Core Reflection API, exceptions are <em>not</em> wrapped. The type of the method handle will be that of the method, with the receiver type prepended (but only if it is non-static). If the method's <code>accessible</code> flag is not set, access checking is performed immediately on behalf of the lookup class. If <i>m</i> is not public, do not share the resulting handle with untrusted parties. </p>
+<p> The returned method handle will have <a href="../methodhandle/#asVarargsCollector-java.lang.Class-">variable arity</a> if and only if the method's variable arity modifier bit (<code>0x0080</code>) is set. </p>
+<p> If <i>m</i> is static, and if the returned method handle is invoked, the method's class will be initialized, if it has not already been initialized.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>m</code> - the reflected method</dd> <dt>Returns:</dt> <dd>a method handle which can invoke the reflected method</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails or if the method's variable arity modifier bit is set and <code>asVarargsCollector</code> fails</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the argument is null</dd> </dl>    <h3 id="unreflectSpecial-java.lang.reflect.Method-java.lang.Class-">unreflectSpecial</h3> <pre data-language="java">public MethodHandle unreflectSpecial(Method m,
+                                     Class&lt;?&gt; specialCaller)
+                              throws IllegalAccessException</pre> <div>
+<p>Produces a method handle for a reflected method. It will bypass checks for overriding methods on the receiver, <a href="../methodhandles.lookup/#equiv">as if called</a> from an <code>invokespecial</code> instruction from within the explicitly specified <code>specialCaller</code>. The type of the method handle will be that of the method, with a suitably restricted receiver type prepended. (The receiver type will be <code>specialCaller</code> or a subtype.) If the method's <code>accessible</code> flag is not set, access checking is performed immediately on behalf of the lookup class, as if <code>invokespecial</code> instruction were being linked. </p>
+<p> Before method resolution, if the explicitly specified caller class is not identical with the lookup class, or if this lookup object does not have <a href="../methodhandles.lookup/#privacc">private access</a> privileges, the access fails. </p>
+<p> The returned method handle will have <a href="../methodhandle/#asVarargsCollector-java.lang.Class-">variable arity</a> if and only if the method's variable arity modifier bit (<code>0x0080</code>) is set.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>m</code> - the reflected method</dd> <dd>
+<code>specialCaller</code> - the class nominally calling the method</dd> <dt>Returns:</dt> <dd>a method handle which can invoke the reflected method</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails or if the method's variable arity modifier bit is set and <code>asVarargsCollector</code> fails</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if any argument is null</dd> </dl>    <h3 id="unreflectConstructor-java.lang.reflect.Constructor-">unreflectConstructor</h3> <pre data-language="java">public MethodHandle unreflectConstructor(Constructor&lt;?&gt; c)
+                                  throws IllegalAccessException</pre> <div>
+<p>Produces a method handle for a reflected constructor. The type of the method handle will be that of the constructor, with the return type changed to the declaring class. The method handle will perform a <code>newInstance</code> operation, creating a new instance of the constructor's class on the arguments passed to the method handle. </p>
+<p> If the constructor's <code>accessible</code> flag is not set, access checking is performed immediately on behalf of the lookup class. </p>
+<p> The returned method handle will have <a href="../methodhandle/#asVarargsCollector-java.lang.Class-">variable arity</a> if and only if the constructor's variable arity modifier bit (<code>0x0080</code>) is set. </p>
+<p> If the returned method handle is invoked, the constructor's class will be initialized, if it has not already been initialized.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>c</code> - the reflected constructor</dd> <dt>Returns:</dt> <dd>a method handle which can invoke the reflected constructor</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails or if the method's variable arity modifier bit is set and <code>asVarargsCollector</code> fails</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the argument is null</dd> </dl>    <h3 id="unreflectGetter-java.lang.reflect.Field-">unreflectGetter</h3> <pre data-language="java">public MethodHandle unreflectGetter(Field f)
+                             throws IllegalAccessException</pre> <div>
+<p>Produces a method handle giving read access to a reflected field. The type of the method handle will have a return type of the field's value type. If the field is static, the method handle will take no arguments. Otherwise, its single argument will be the instance containing the field. If the field's <code>accessible</code> flag is not set, access checking is performed immediately on behalf of the lookup class. </p>
+<p> If the field is static, and if the returned method handle is invoked, the field's class will be initialized, if it has not already been initialized.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>f</code> - the reflected field</dd> <dt>Returns:</dt> <dd>a method handle which can load values from the reflected field</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the argument is null</dd> </dl>    <h3 id="unreflectSetter-java.lang.reflect.Field-">unreflectSetter</h3> <pre data-language="java">public MethodHandle unreflectSetter(Field f)
+                             throws IllegalAccessException</pre> <div>
+<p>Produces a method handle giving write access to a reflected field. The type of the method handle will have a void return type. If the field is static, the method handle will take a single argument, of the field's value type, the value to be stored. Otherwise, the two arguments will be the instance containing the field, and the value to be stored. If the field's <code>accessible</code> flag is not set, access checking is performed immediately on behalf of the lookup class. </p>
+<p> If the field is static, and if the returned method handle is invoked, the field's class will be initialized, if it has not already been initialized.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>f</code> - the reflected field</dd> <dt>Returns:</dt> <dd>a method handle which can store values into the reflected field</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../illegalaccessexception/">IllegalAccessException</a></code> - if access checking fails</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the argument is null</dd> </dl>    <h3 id="revealDirect-java.lang.invoke.MethodHandle-">revealDirect</h3> <pre data-language="java">public MethodHandleInfo revealDirect(MethodHandle target)</pre> <p>Cracks a <a href="../methodhandleinfo/#directmh">direct method handle</a> created by this lookup object or a similar one. Security and access checks are performed to ensure that this lookup object is capable of reproducing the target method handle. This means that the cracking may fail if target is a direct method handle but was created by an unrelated lookup object. This can happen if the method handle is <a href="../methodhandles.lookup/#callsens">caller sensitive</a> and was created by a lookup object for a different class.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>target</code> - a direct method handle to crack into symbolic reference components</dd> <dt>Returns:</dt> <dd>a symbolic reference which can be used to reconstruct this method handle from this lookup object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager is present and it <a href="../methodhandles.lookup/#secmgr">refuses access</a>
+</dd> <dd>
+<code><a href="../../illegalargumentexception/">IllegalArgumentException</a></code> - if the target is not a direct method handle or if access checking fails</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the target is <code>null</code>
+</dd> <dt>Since:</dt> <dd>1.8</dd> <dt>See Also:</dt> <dd><a href="../methodhandleinfo/"><code>MethodHandleInfo</code></a></dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

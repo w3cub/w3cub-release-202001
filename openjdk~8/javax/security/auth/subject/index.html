@@ -1,0 +1,298 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Subject - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A Subject represents a grouping of related information for a single entity, such as a person. Such information includes the Subject&#39;s identities &hellip;">
+  <meta name="keywords" content="class, subject, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/javax/security/auth/subject/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class Subject</h1>   <ul class="inheritance"> <li><a href="../../../../java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>javax.security.auth.Subject</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="../../../../java/io/serializable/">Serializable</a></dd> </dl>   <pre data-language="java">public final class Subject
+extends Object
+implements Serializable</pre> <div>
+
+<p> A <code>Subject</code> represents a grouping of related information for a single entity, such as a person. Such information includes the Subject's identities as well as its security-related attributes (passwords and cryptographic keys, for example). </p>
+<p> Subjects may potentially have multiple identities. Each identity is represented as a <code>Principal</code> within the <code>Subject</code>. Principals simply bind names to a <code>Subject</code>. For example, a <code>Subject</code> that happens to be a person, Alice, might have two Principals: one which binds "Alice Bar", the name on her driver license, to the <code>Subject</code>, and another which binds, "999-99-9999", the number on her student identification card, to the <code>Subject</code>. Both Principals refer to the same <code>Subject</code> even though each has a different name. </p>
+<p> A <code>Subject</code> may also own security-related attributes, which are referred to as credentials. Sensitive credentials that require special protection, such as private cryptographic keys, are stored within a private credential <code>Set</code>. Credentials intended to be shared, such as public key certificates or Kerberos server tickets are stored within a public credential <code>Set</code>. Different permissions are required to access and modify the different credential Sets. </p>
+<p> To retrieve all the Principals associated with a <code>Subject</code>, invoke the <code>getPrincipals</code> method. To retrieve all the public or private credentials belonging to a <code>Subject</code>, invoke the <code>getPublicCredentials</code> method or <code>getPrivateCredentials</code> method, respectively. To modify the returned <code>Set</code> of Principals and credentials, use the methods defined in the <code>Set</code> class. For example: </p>
+<pre data-language="java">Subject subject;
+      Principal principal;
+      Object credential;
+
+      // add a Principal and credential to the Subject
+      subject.getPrincipals().add(principal);
+      subject.getPublicCredentials().add(credential);</pre> <p> This <code>Subject</code> class implements <code>Serializable</code>. While the Principals associated with the <code>Subject</code> are serialized, the credentials associated with the <code>Subject</code> are not. Note that the <code>java.security.Principal</code> class does not implement <code>Serializable</code>. Therefore all concrete <code>Principal</code> implementations associated with Subjects must implement <code>Serializable</code>.</p>
+</div> <dl> <dt>See Also:</dt> <dd>
+<a href="../../../../java/security/principal/"><code>Principal</code></a>, <a href="../../../../java/security/domaincombiner/"><code>DomainCombiner</code></a>, Serialized Form</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="Subject--">Subject</h3> <pre data-language="java">public Subject()</pre> <div>
+<p>Create an instance of a <code>Subject</code> with an empty <code>Set</code> of Principals and empty Sets of public and private credentials. </p>
+<p> The newly constructed Sets check whether this <code>Subject</code> has been set read-only before permitting subsequent modifications. The newly created Sets also prevent illegal modifications by ensuring that callers have sufficient permissions. </p>
+<p> To modify the Principals Set, the caller must have <code>AuthPermission("modifyPrincipals")</code>. To modify the public credential Set, the caller must have <code>AuthPermission("modifyPublicCredentials")</code>. To modify the private credential Set, the caller must have <code>AuthPermission("modifyPrivateCredentials")</code>.</p>
+</div>    <h3 id="Subject-boolean-java.util.Set-java.util.Set-java.util.Set-">Subject</h3> <pre data-language="java">public Subject(boolean readOnly,
+               Set&lt;? extends Principal&gt; principals,
+               Set&lt;?&gt; pubCredentials,
+               Set&lt;?&gt; privCredentials)</pre> <div>
+<p>Create an instance of a <code>Subject</code> with Principals and credentials. </p>
+<p> The Principals and credentials from the specified Sets are copied into newly constructed Sets. These newly created Sets check whether this <code>Subject</code> has been set read-only before permitting subsequent modifications. The newly created Sets also prevent illegal modifications by ensuring that callers have sufficient permissions. </p>
+<p> To modify the Principals Set, the caller must have <code>AuthPermission("modifyPrincipals")</code>. To modify the public credential Set, the caller must have <code>AuthPermission("modifyPublicCredentials")</code>. To modify the private credential Set, the caller must have <code>AuthPermission("modifyPrivateCredentials")</code>. </p>
+
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>readOnly</code> - true if the <code>Subject</code> is to be read-only, and false otherwise. 
+</dd> <dd>
+<code>principals</code> - the <code>Set</code> of Principals to be associated with this <code>Subject</code>. 
+</dd> <dd>
+<code>pubCredentials</code> - the <code>Set</code> of public credentials to be associated with this <code>Subject</code>. 
+</dd> <dd>
+<code>privCredentials</code> - the <code>Set</code> of private credentials to be associated with this <code>Subject</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if the specified <code>principals</code>, <code>pubCredentials</code>, or <code>privCredentials</code> are <code>null</code>.</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="setReadOnly--">setReadOnly</h3> <pre data-language="java">public void setReadOnly()</pre> <div>
+<p>Set this <code>Subject</code> to be read-only. </p>
+<p> Modifications (additions and removals) to this Subject's <code>Principal</code> <code>Set</code> and credential Sets will be disallowed. The <code>destroy</code> operation on this Subject's credentials will still be permitted. </p>
+<p> Subsequent attempts to modify the Subject's <code>Principal</code> and credential Sets will result in an <code>IllegalStateException</code> being thrown. Also, once a <code>Subject</code> is read-only, it can not be reset to being writable again. </p>
+
+</div> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if the caller does not have permission to set this <code>Subject</code> to be read-only.</dd> </dl>    <h3 id="isReadOnly--">isReadOnly</h3> <pre data-language="java">public boolean isReadOnly()</pre> <div>
+<p>Query whether this <code>Subject</code> is read-only. </p>
+
+</div> <dl> <dt>Returns:</dt> <dd>true if this <code>Subject</code> is read-only, false otherwise.</dd> </dl>    <h3 id="getSubject-java.security.AccessControlContext-">getSubject</h3> <pre data-language="java">public static Subject getSubject(AccessControlContext acc)</pre> <div>
+<p>Get the <code>Subject</code> associated with the provided <code>AccessControlContext</code>. </p>
+<p> The <code>AccessControlContext</code> may contain many Subjects (from nested <code>doAs</code> calls). In this situation, the most recent <code>Subject</code> associated with the <code>AccessControlContext</code> is returned. </p>
+
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>acc</code> - the <code>AccessControlContext</code> from which to retrieve the <code>Subject</code>.</dd> <dt>Returns:</dt> <dd>the <code>Subject</code> associated with the provided <code>AccessControlContext</code>, or <code>null</code> if no <code>Subject</code> is associated with the provided <code>AccessControlContext</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if the caller does not have permission to get the <code>Subject</code>. 
+</dd> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if the provided <code>AccessControlContext</code> is <code>null</code>.</dd> </dl>    <h3 id="doAs-javax.security.auth.Subject-java.security.PrivilegedAction-">doAs</h3> <pre data-language="java">public static &lt;T&gt; T doAs(Subject subject,
+                         PrivilegedAction&lt;T&gt; action)</pre> <div>
+<p>Perform work as a particular <code>Subject</code>. </p>
+<p> This method first retrieves the current Thread's <code>AccessControlContext</code> via <code>AccessController.getContext</code>, and then instantiates a new <code>AccessControlContext</code> using the retrieved context along with a new <code>SubjectDomainCombiner</code> (constructed using the provided <code>Subject</code>). Finally, this method invokes <code>AccessController.doPrivileged</code>, passing it the provided <code>PrivilegedAction</code>, as well as the newly constructed <code>AccessControlContext</code>. </p>
+
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the value returned by the PrivilegedAction's <code>run</code> method.</dd> <dt>Parameters:</dt> <dd>
+<code>subject</code> - the <code>Subject</code> that the specified <code>action</code> will run as. This parameter may be <code>null</code>. 
+</dd> <dd>
+<code>action</code> - the code to be run as the specified <code>Subject</code>. 
+</dd> <dt>Returns:</dt> <dd>the value returned by the PrivilegedAction's <code>run</code> method.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if the <code>PrivilegedAction</code> is <code>null</code>. 
+</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if the caller does not have permission to invoke this method.</dd> </dl>    <h3 id="doAs-javax.security.auth.Subject-java.security.PrivilegedExceptionAction-">doAs</h3> <pre data-language="java">public static &lt;T&gt; T doAs(Subject subject,
+                         PrivilegedExceptionAction&lt;T&gt; action)
+                  throws PrivilegedActionException</pre> <div>
+<p>Perform work as a particular <code>Subject</code>. </p>
+<p> This method first retrieves the current Thread's <code>AccessControlContext</code> via <code>AccessController.getContext</code>, and then instantiates a new <code>AccessControlContext</code> using the retrieved context along with a new <code>SubjectDomainCombiner</code> (constructed using the provided <code>Subject</code>). Finally, this method invokes <code>AccessController.doPrivileged</code>, passing it the provided <code>PrivilegedExceptionAction</code>, as well as the newly constructed <code>AccessControlContext</code>. </p>
+
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the value returned by the PrivilegedExceptionAction's <code>run</code> method.</dd> <dt>Parameters:</dt> <dd>
+<code>subject</code> - the <code>Subject</code> that the specified <code>action</code> will run as. This parameter may be <code>null</code>. 
+</dd> <dd>
+<code>action</code> - the code to be run as the specified <code>Subject</code>. 
+</dd> <dt>Returns:</dt> <dd>the value returned by the PrivilegedExceptionAction's <code>run</code> method.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/security/privilegedactionexception/">PrivilegedActionException</a></code> - if the <code>PrivilegedExceptionAction.run</code> method throws a checked exception. 
+</dd> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if the specified <code>PrivilegedExceptionAction</code> is <code>null</code>. 
+</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if the caller does not have permission to invoke this method.</dd> </dl>    <h3 id="doAsPrivileged-javax.security.auth.Subject-java.security.PrivilegedAction-java.security.AccessControlContext-">doAsPrivileged</h3> <pre data-language="java">public static &lt;T&gt; T doAsPrivileged(Subject subject,
+                                   PrivilegedAction&lt;T&gt; action,
+                                   AccessControlContext acc)</pre> <div>
+<p>Perform privileged work as a particular <code>Subject</code>. </p>
+<p> This method behaves exactly as <code>Subject.doAs</code>, except that instead of retrieving the current Thread's <code>AccessControlContext</code>, it uses the provided <code>AccessControlContext</code>. If the provided <code>AccessControlContext</code> is <code>null</code>, this method instantiates a new <code>AccessControlContext</code> with an empty collection of ProtectionDomains. </p>
+
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the value returned by the PrivilegedAction's <code>run</code> method.</dd> <dt>Parameters:</dt> <dd>
+<code>subject</code> - the <code>Subject</code> that the specified <code>action</code> will run as. This parameter may be <code>null</code>. 
+</dd> <dd>
+<code>action</code> - the code to be run as the specified <code>Subject</code>. 
+</dd> <dd>
+<code>acc</code> - the <code>AccessControlContext</code> to be tied to the specified <i>subject</i> and <i>action</i>. 
+</dd> <dt>Returns:</dt> <dd>the value returned by the PrivilegedAction's <code>run</code> method.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if the <code>PrivilegedAction</code> is <code>null</code>. 
+</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if the caller does not have permission to invoke this method.</dd> </dl>    <h3 id="doAsPrivileged-javax.security.auth.Subject-java.security.PrivilegedExceptionAction-java.security.AccessControlContext-">doAsPrivileged</h3> <pre data-language="java">public static &lt;T&gt; T doAsPrivileged(Subject subject,
+                                   PrivilegedExceptionAction&lt;T&gt; action,
+                                   AccessControlContext acc)
+                            throws PrivilegedActionException</pre> <div>
+<p>Perform privileged work as a particular <code>Subject</code>. </p>
+<p> This method behaves exactly as <code>Subject.doAs</code>, except that instead of retrieving the current Thread's <code>AccessControlContext</code>, it uses the provided <code>AccessControlContext</code>. If the provided <code>AccessControlContext</code> is <code>null</code>, this method instantiates a new <code>AccessControlContext</code> with an empty collection of ProtectionDomains. </p>
+
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the value returned by the PrivilegedExceptionAction's <code>run</code> method.</dd> <dt>Parameters:</dt> <dd>
+<code>subject</code> - the <code>Subject</code> that the specified <code>action</code> will run as. This parameter may be <code>null</code>. 
+</dd> <dd>
+<code>action</code> - the code to be run as the specified <code>Subject</code>. 
+</dd> <dd>
+<code>acc</code> - the <code>AccessControlContext</code> to be tied to the specified <i>subject</i> and <i>action</i>. 
+</dd> <dt>Returns:</dt> <dd>the value returned by the PrivilegedExceptionAction's <code>run</code> method.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/security/privilegedactionexception/">PrivilegedActionException</a></code> - if the <code>PrivilegedExceptionAction.run</code> method throws a checked exception. 
+</dd> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if the specified <code>PrivilegedExceptionAction</code> is <code>null</code>. 
+</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if the caller does not have permission to invoke this method.</dd> </dl>    <h3 id="getPrincipals--">getPrincipals</h3> <pre data-language="java">public Set&lt;Principal&gt; getPrincipals()</pre> <div>
+<p>Return the <code>Set</code> of Principals associated with this <code>Subject</code>. Each <code>Principal</code> represents an identity for this <code>Subject</code>. </p>
+<p> The returned <code>Set</code> is backed by this Subject's internal <code>Principal</code> <code>Set</code>. Any modification to the returned <code>Set</code> affects the internal <code>Principal</code> <code>Set</code> as well. </p>
+
+</div> <dl> <dt>Returns:</dt> <dd>The <code>Set</code> of Principals associated with this <code>Subject</code>.</dd> </dl>    <h3 id="getPrincipals-java.lang.Class-">getPrincipals</h3> <pre data-language="java">public &lt;T extends Principal&gt; Set&lt;T&gt; getPrincipals(Class&lt;T&gt; c)</pre> <div>
+<p>Return a <code>Set</code> of Principals associated with this <code>Subject</code> that are instances or subclasses of the specified <code>Class</code>. </p>
+<p> The returned <code>Set</code> is not backed by this Subject's internal <code>Principal</code> <code>Set</code>. A new <code>Set</code> is created and returned for each method invocation. Modifications to the returned <code>Set</code> will not affect the internal <code>Principal</code> <code>Set</code>. </p>
+
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the class modeled by <code>c</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>c</code> - the returned <code>Set</code> of Principals will all be instances of this class.</dd> <dt>Returns:</dt> <dd>a <code>Set</code> of Principals that are instances of the specified <code>Class</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if the specified <code>Class</code> is <code>null</code>.</dd> </dl>    <h3 id="getPublicCredentials--">getPublicCredentials</h3> <pre data-language="java">public Set&lt;Object&gt; getPublicCredentials()</pre> <div>
+<p>Return the <code>Set</code> of public credentials held by this <code>Subject</code>. </p>
+<p> The returned <code>Set</code> is backed by this Subject's internal public Credential <code>Set</code>. Any modification to the returned <code>Set</code> affects the internal public Credential <code>Set</code> as well. </p>
+
+</div> <dl> <dt>Returns:</dt> <dd>A <code>Set</code> of public credentials held by this <code>Subject</code>.</dd> </dl>    <h3 id="getPrivateCredentials--">getPrivateCredentials</h3> <pre data-language="java">public Set&lt;Object&gt; getPrivateCredentials()</pre> <div>
+<p>Return the <code>Set</code> of private credentials held by this <code>Subject</code>. </p>
+<p> The returned <code>Set</code> is backed by this Subject's internal private Credential <code>Set</code>. Any modification to the returned <code>Set</code> affects the internal private Credential <code>Set</code> as well. </p>
+<p> A caller requires permissions to access the Credentials in the returned <code>Set</code>, or to modify the <code>Set</code> itself. A <code>SecurityException</code> is thrown if the caller does not have the proper permissions. </p>
+<p> While iterating through the <code>Set</code>, a <code>SecurityException</code> is thrown if the caller does not have permission to access a particular Credential. The <code>Iterator</code> is nevertheless advanced to next element in the <code>Set</code>. </p>
+
+</div> <dl> <dt>Returns:</dt> <dd>A <code>Set</code> of private credentials held by this <code>Subject</code>.</dd> </dl>    <h3 id="getPublicCredentials-java.lang.Class-">getPublicCredentials</h3> <pre data-language="java">public &lt;T&gt; Set&lt;T&gt; getPublicCredentials(Class&lt;T&gt; c)</pre> <div>
+<p>Return a <code>Set</code> of public credentials associated with this <code>Subject</code> that are instances or subclasses of the specified <code>Class</code>. </p>
+<p> The returned <code>Set</code> is not backed by this Subject's internal public Credential <code>Set</code>. A new <code>Set</code> is created and returned for each method invocation. Modifications to the returned <code>Set</code> will not affect the internal public Credential <code>Set</code>. </p>
+
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the class modeled by <code>c</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>c</code> - the returned <code>Set</code> of public credentials will all be instances of this class.</dd> <dt>Returns:</dt> <dd>a <code>Set</code> of public credentials that are instances of the specified <code>Class</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if the specified <code>Class</code> is <code>null</code>.</dd> </dl>    <h3 id="getPrivateCredentials-java.lang.Class-">getPrivateCredentials</h3> <pre data-language="java">public &lt;T&gt; Set&lt;T&gt; getPrivateCredentials(Class&lt;T&gt; c)</pre> <div>
+<p>Return a <code>Set</code> of private credentials associated with this <code>Subject</code> that are instances or subclasses of the specified <code>Class</code>. </p>
+<p> The caller must have permission to access all of the requested Credentials, or a <code>SecurityException</code> will be thrown. </p>
+<p> The returned <code>Set</code> is not backed by this Subject's internal private Credential <code>Set</code>. A new <code>Set</code> is created and returned for each method invocation. Modifications to the returned <code>Set</code> will not affect the internal private Credential <code>Set</code>. </p>
+
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the class modeled by <code>c</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>c</code> - the returned <code>Set</code> of private credentials will all be instances of this class.</dd> <dt>Returns:</dt> <dd>a <code>Set</code> of private credentials that are instances of the specified <code>Class</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/nullpointerexception/">NullPointerException</a></code> - if the specified <code>Class</code> is <code>null</code>.</dd> </dl>    <h3 id="equals-java.lang.Object-">equals</h3> <pre data-language="java">public boolean equals(Object o)</pre> <div>
+<p>Compares the specified Object with this <code>Subject</code> for equality. Returns true if the given object is also a Subject and the two <code>Subject</code> instances are equivalent. More formally, two <code>Subject</code> instances are equal if their <code>Principal</code> and <code>Credential</code> Sets are equal. </p>
+
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../../../java/lang/object/#equals-java.lang.Object-">equals</a></code> in class <code><a href="../../../../java/lang/object/">Object</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>o</code> - Object to be compared for equality with this <code>Subject</code>.</dd> <dt>Returns:</dt> <dd>true if the specified Object is equal to this <code>Subject</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if the caller does not have permission to access the private credentials for this <code>Subject</code>, or if the caller does not have permission to access the private credentials for the provided <code>Subject</code>.</dd> <dt>See Also:</dt> <dd>
+<a href="../../../../java/lang/object/#hashCode--"><code>Object.hashCode()</code></a>, <a href="../../../../java/util/hashmap/"><code>HashMap</code></a>
+</dd> </dl>    <h3 id="toString--">toString</h3> <pre data-language="java">public String toString()</pre> <div>
+<p>Return the String representation of this <code>Subject</code>. </p>
+
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../../../java/lang/object/#toString--">toString</a></code> in class <code><a href="../../../../java/lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>the String representation of this <code>Subject</code>.</dd> </dl>    <h3 id="hashCode--">hashCode</h3> <pre data-language="java">public int hashCode()</pre> <div>
+<p>Returns a hashcode for this <code>Subject</code>. </p>
+
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../../../java/lang/object/#hashCode--">hashCode</a></code> in class <code><a href="../../../../java/lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a hashcode for this <code>Subject</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if the caller does not have permission to access this Subject's private credentials.</dd> <dt>See Also:</dt> <dd>
+<a href="../../../../java/lang/object/#equals-java.lang.Object-"><code>Object.equals(java.lang.Object)</code></a>, <a href="../../../../java/lang/system/#identityHashCode-java.lang.Object-"><code>System.identityHashCode(java.lang.Object)</code></a>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

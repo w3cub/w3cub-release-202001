@@ -1,0 +1,171 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>AbstractInterruptibleChannel - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" Base implementation class for interruptible channels. ">
+  <meta name="keywords" content="class, abstractinterruptiblechannel, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/nio/channels/spi/abstractinterruptiblechannel/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class AbstractInterruptibleChannel</h1>   <ul class="inheritance"> <li><a href="../../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.nio.channels.spi.AbstractInterruptibleChannel</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../../../io/closeable/">Closeable</a>, <a href="../../../../lang/autocloseable/">AutoCloseable</a>, <a href="../../channel/">Channel</a>, <a href="../../interruptiblechannel/">InterruptibleChannel</a>
+</dd> </dl> <dl> <dt>Direct Known Subclasses:</dt> <dd>
+<a href="../../filechannel/">FileChannel</a>, <a href="../../selectablechannel/">SelectableChannel</a>
+</dd> </dl>   <pre data-language="java">public abstract class AbstractInterruptibleChannel
+extends Object
+implements Channel, InterruptibleChannel</pre> <div>
+<p>Base implementation class for interruptible channels. </p>
+<p> This class encapsulates the low-level machinery required to implement the asynchronous closing and interruption of channels. A concrete channel class must invoke the <a href="../abstractinterruptiblechannel/#begin--"><code>begin</code></a> and <a href="../abstractinterruptiblechannel/#end-boolean-"><code>end</code></a> methods before and after, respectively, invoking an I/O operation that might block indefinitely. In order to ensure that the <a href="../abstractinterruptiblechannel/#end-boolean-"><code>end</code></a> method is always invoked, these methods should be used within a <code>try</code> ... <code>finally</code> block: </p>
+<pre data-language="java">boolean completed = false;
+try {
+    begin();
+    completed = ...;    // Perform blocking I/O operation
+    return ...;         // Return result
+} finally {
+    end(completed);
+}</pre> <p> The <code>completed</code> argument to the <a href="../abstractinterruptiblechannel/#end-boolean-"><code>end</code></a> method tells whether or not the I/O operation actually completed, that is, whether it had any effect that would be visible to the invoker. In the case of an operation that reads bytes, for example, this argument should be <code>true</code> if, and only if, some bytes were actually transferred into the invoker's target buffer. </p>
+<p> A concrete channel class must also implement the <a href="../abstractinterruptiblechannel/#implCloseChannel--"><code>implCloseChannel</code></a> method in such a way that if it is invoked while another thread is blocked in a native I/O operation upon the channel then that operation will immediately return, either by throwing an exception or by returning normally. If a thread is interrupted or the channel upon which it is blocked is asynchronously closed then the channel's <a href="../abstractinterruptiblechannel/#end-boolean-"><code>end</code></a> method will throw the appropriate exception. </p>
+<p> This class performs the synchronization required to implement the <a href="../../channel/"><code>Channel</code></a> specification. Implementations of the <a href="../abstractinterruptiblechannel/#implCloseChannel--"><code>implCloseChannel</code></a> method need not synchronize against other threads that might be attempting to close the channel. </p>
+</div> <dl> <dt>Since:</dt> <dd>1.4</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="AbstractInterruptibleChannel--">AbstractInterruptibleChannel</h3> <pre data-language="java">protected AbstractInterruptibleChannel()</pre> <p>Initializes a new instance of this class.</p>     <h2 id="method.detail">Methods</h2>   <h3 id="close--">close</h3> <pre data-language="java">public final void close()
+                 throws IOException</pre> <div>
+<p>Closes this channel. </p>
+<p> If the channel has already been closed then this method returns immediately. Otherwise it marks the channel as closed and then invokes the <a href="../abstractinterruptiblechannel/#implCloseChannel--"><code>implCloseChannel</code></a> method in order to complete the close operation. </p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../io/closeable/#close--">close</a></code> in interface <code><a href="../../../../io/closeable/">Closeable</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../../../lang/autocloseable/#close--">close</a></code> in interface <code><a href="../../../../lang/autocloseable/">AutoCloseable</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../channel/#close--">close</a></code> in interface <code><a href="../../channel/">Channel</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../interruptiblechannel/#close--">close</a></code> in interface <code><a href="../../interruptiblechannel/">InterruptibleChannel</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../io/ioexception/">IOException</a></code> - If an I/O error occurs</dd> </dl>    <h3 id="implCloseChannel--">implCloseChannel</h3> <pre data-language="java">protected abstract void implCloseChannel()
+                                  throws IOException</pre> <div>
+<p>Closes this channel. </p>
+<p> This method is invoked by the <a href="../abstractinterruptiblechannel/#close--"><code>close</code></a> method in order to perform the actual work of closing the channel. This method is only invoked if the channel has not yet been closed, and it is never invoked more than once. </p>
+<p> An implementation of this method must arrange for any other thread that is blocked in an I/O operation upon this channel to return immediately, either by throwing an exception or by returning normally. </p>
+</div> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../../../../io/ioexception/">IOException</a></code> - If an I/O error occurs while closing the channel</dd> </dl>    <h3 id="isOpen--">isOpen</h3> <pre data-language="java">public final boolean isOpen()</pre> <p>Description copied from interface: <code><a href="../../channel/#isOpen--">Channel</a></code></p> <p>Tells whether or not this channel is open.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../channel/#isOpen--">isOpen</a></code> in interface <code><a href="../../channel/">Channel</a></code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if, and only if, this channel is open</dd> </dl>    <h3 id="begin--">begin</h3> <pre data-language="java">protected final void begin()</pre> <div>
+<p>Marks the beginning of an I/O operation that might block indefinitely. </p>
+<p> This method should be invoked in tandem with the <a href="../abstractinterruptiblechannel/#end-boolean-"><code>end</code></a> method, using a <code>try</code> ... <code>finally</code> block as shown <a href="#be">above</a>, in order to implement asynchronous closing and interruption for this channel. </p>
+</div>    <h3 id="end-boolean-">end</h3> <pre data-language="java">protected final void end(boolean completed)
+                  throws AsynchronousCloseException</pre> <div>
+<p>Marks the end of an I/O operation that might block indefinitely. </p>
+<p> This method should be invoked in tandem with the <a href="../abstractinterruptiblechannel/#begin--"><code>begin</code></a> method, using a <code>try</code> ... <code>finally</code> block as shown <a href="#be">above</a>, in order to implement asynchronous closing and interruption for this channel. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>completed</code> - <code>true</code> if, and only if, the I/O operation completed successfully, that is, had some effect that would be visible to the operation's invoker</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../asynchronouscloseexception/">AsynchronousCloseException</a></code> - If the channel was asynchronously closed</dd> <dd>
+<code><a href="../../closedbyinterruptexception/">ClosedByInterruptException</a></code> - If the thread blocked in the I/O operation was interrupted</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

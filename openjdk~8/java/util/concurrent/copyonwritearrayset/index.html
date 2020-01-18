@@ -1,0 +1,299 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>CopyOnWriteArraySet - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" A Set that uses an internal CopyOnWriteArrayList for all of its operations. Thus, it shares the same basic properties&#58; ">
+  <meta name="keywords" content="class, copyonwritearrayset, e, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/concurrent/copyonwritearrayset/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class CopyOnWriteArraySet&lt;E&gt;</h1>   <ul class="inheritance"> <li><a href="../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>
+<a href="../../abstractcollection/">java.util.AbstractCollection</a>&lt;E&gt;</li> <li> <ul class="inheritance"> <li>
+<a href="../../abstractset/">java.util.AbstractSet</a>&lt;E&gt;</li> <li> <ul class="inheritance"> <li>java.util.concurrent.CopyOnWriteArraySet&lt;E&gt;</li> </ul> </li> </ul> </li> </ul> </li> </ul>   <dl> <dt>Type Parameters:</dt> <dd>
+<code>E</code> - the type of elements held in this collection</dd> </dl> <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../../io/serializable/">Serializable</a>, <a href="../../../lang/iterable/">Iterable</a>&lt;E&gt;, <a href="../../collection/">Collection</a>&lt;E&gt;, <a href="../../set/">Set</a>&lt;E&gt;</dd> </dl>   <pre data-language="java">public class CopyOnWriteArraySet&lt;E&gt;
+extends AbstractSet&lt;E&gt;
+implements Serializable</pre> <div>
+<p>A <a href="../../set/"><code>Set</code></a> that uses an internal <a href="../copyonwritearraylist/"><code>CopyOnWriteArrayList</code></a> for all of its operations. Thus, it shares the same basic properties: </p>
+<ul> <li>It is best suited for applications in which set sizes generally stay small, read-only operations vastly outnumber mutative operations, and you need to prevent interference among threads during traversal. </li>
+<li>It is thread-safe. </li>
+<li>Mutative operations (<code>add</code>, <code>set</code>, <code>remove</code>, etc.) are expensive since they usually entail copying the entire underlying array. </li>
+<li>Iterators do not support the mutative <code>remove</code> operation. </li>
+<li>Traversal via iterators is fast and cannot encounter interference from other threads. Iterators rely on unchanging snapshots of the array at the time the iterators were constructed. </li>
+</ul> 
+<p><b>Sample Usage.</b> The following code sketch uses a copy-on-write set to maintain a set of Handler objects that perform some action upon state updates. </p>
+<pre data-language="java">class Handler { void handle(); ... }
+
+ class X {
+   private final CopyOnWriteArraySet&lt;Handler&gt; handlers
+     = new CopyOnWriteArraySet&lt;Handler&gt;();
+   public void addHandler(Handler h) { handlers.add(h); }
+
+   private long internalState;
+   private synchronized void changeState() { internalState = ...; }
+
+   public void update() {
+     changeState();
+     for (Handler handler : handlers)
+       handler.handle();
+   }
+ }</pre> <p>This class is a member of the <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/collections/index.html" target="_blank"> Java Collections Framework</a>.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.5</dd> <dt>See Also:</dt> <dd>
+<a href="../copyonwritearraylist/"><code>CopyOnWriteArrayList</code></a>, Serialized Form</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="CopyOnWriteArraySet--">CopyOnWriteArraySet</h3> <pre data-language="java">public CopyOnWriteArraySet()</pre> <p>Creates an empty set.</p>    <h3 id="CopyOnWriteArraySet-java.util.Collection-">CopyOnWriteArraySet</h3> <pre data-language="java">public CopyOnWriteArraySet(Collection&lt;? extends E&gt; c)</pre> <p>Creates a set containing all of the elements of the specified collection.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>c</code> - the collection of elements to initially contain</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the specified collection is null</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="size--">size</h3> <pre data-language="java">public int size()</pre> <p>Returns the number of elements in this set.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#size--">size</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#size--">size</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../abstractcollection/#size--">size</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>the number of elements in this set</dd> </dl>    <h3 id="isEmpty--">isEmpty</h3> <pre data-language="java">public boolean isEmpty()</pre> <p>Returns <code>true</code> if this set contains no elements.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#isEmpty--">isEmpty</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#isEmpty--">isEmpty</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#isEmpty--">isEmpty</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this set contains no elements</dd> </dl>    <h3 id="contains-java.lang.Object-">contains</h3> <pre data-language="java">public boolean contains(Object o)</pre> <p>Returns <code>true</code> if this set contains the specified element. More formally, returns <code>true</code> if and only if this set contains an element <code>e</code> such that <code>(o==null ? e==null : o.equals(e))</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#contains-java.lang.Object-">contains</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#contains-java.lang.Object-">contains</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#contains-java.lang.Object-">contains</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>o</code> - element whose presence in this set is to be tested</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this set contains the specified element</dd> </dl>    <h3 id="toArray--">toArray</h3> <pre data-language="java">public Object[] toArray()</pre> <div>
+<p>Returns an array containing all of the elements in this set. If this set makes any guarantees as to what order its elements are returned by its iterator, this method must return the elements in the same order. </p>
+<p>The returned array will be "safe" in that no references to it are maintained by this set. (In other words, this method must allocate a new array even if this set is backed by an array). The caller is thus free to modify the returned array. </p>
+<p>This method acts as bridge between array-based and collection-based APIs.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#toArray--">toArray</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#toArray--">toArray</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#toArray--">toArray</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>an array containing all the elements in this set</dd> </dl>    <h3 id="toArray-T:A-">toArray</h3> <pre data-language="java">public &lt;T&gt; T[] toArray(T[] a)</pre> <div>
+<p>Returns an array containing all of the elements in this set; the runtime type of the returned array is that of the specified array. If the set fits in the specified array, it is returned therein. Otherwise, a new array is allocated with the runtime type of the specified array and the size of this set. </p>
+<p>If this set fits in the specified array with room to spare (i.e., the array has more elements than this set), the element in the array immediately following the end of the set is set to <code>null</code>. (This is useful in determining the length of this set <i>only</i> if the caller knows that this set does not contain any null elements.) </p>
+<p>If this set makes any guarantees as to what order its elements are returned by its iterator, this method must return the elements in the same order. </p>
+<p>Like the <a href="../copyonwritearrayset/#toArray--"><code>toArray()</code></a> method, this method acts as bridge between array-based and collection-based APIs. Further, this method allows precise control over the runtime type of the output array, and may, under certain circumstances, be used to save allocation costs. </p>
+<p>Suppose <code>x</code> is a set known to contain only strings. The following code can be used to dump the set into a newly allocated array of <code>String</code>: </p>
+<pre data-language="java">String[] y = x.toArray(new String[0]);</pre> Note that <code>toArray(new Object[0])</code> is identical in function to <code>toArray()</code>.</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#toArray-T:A-">toArray</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#toArray-T:A-">toArray</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#toArray-T:A-">toArray</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the runtime type of the array to contain the collection</dd> <dt>Parameters:</dt> <dd>
+<code>a</code> - the array into which the elements of this set are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose.</dd> <dt>Returns:</dt> <dd>an array containing all the elements in this set</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/arraystoreexception/">ArrayStoreException</a></code> - if the runtime type of the specified array is not a supertype of the runtime type of every element in this set</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the specified array is null</dd> </dl>    <h3 id="clear--">clear</h3> <pre data-language="java">public void clear()</pre> <p>Removes all of the elements from this set. The set will be empty after this call returns.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#clear--">clear</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#clear--">clear</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#clear--">clear</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> </dl>    <h3 id="remove-java.lang.Object-">remove</h3> <pre data-language="java">public boolean remove(Object o)</pre> <p>Removes the specified element from this set if it is present. More formally, removes an element <code>e</code> such that <code>(o==null ? e==null : o.equals(e))</code>, if this set contains such an element. Returns <code>true</code> if this set contained the element (or equivalently, if this set changed as a result of the call). (This set will not contain the element once the call returns.)</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#remove-java.lang.Object-">remove</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#remove-java.lang.Object-">remove</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#remove-java.lang.Object-">remove</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>o</code> - object to be removed from this set, if present</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this set contained the specified element</dd> </dl>    <h3 id="add-E-">add</h3> <pre data-language="java">public boolean add(E e)</pre> <p>Adds the specified element to this set if it is not already present. More formally, adds the specified element <code>e</code> to this set if the set contains no element <code>e2</code> such that <code>(e==null ? e2==null : e.equals(e2))</code>. If this set already contains the element, the call leaves the set unchanged and returns <code>false</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#add-E-">add</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#add-E-">add</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#add-E-">add</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>e</code> - element to be added to this set</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this set did not already contain the specified element</dd> </dl>    <h3 id="containsAll-java.util.Collection-">containsAll</h3> <pre data-language="java">public boolean containsAll(Collection&lt;?&gt; c)</pre> <p>Returns <code>true</code> if this set contains all of the elements of the specified collection. If the specified collection is also a set, this method returns <code>true</code> if it is a <i>subset</i> of this set.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#containsAll-java.util.Collection-">containsAll</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#containsAll-java.util.Collection-">containsAll</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#containsAll-java.util.Collection-">containsAll</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>c</code> - collection to be checked for containment in this set</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this set contains all of the elements of the specified collection</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the specified collection is null</dd> <dt>See Also:</dt> <dd><a href="../copyonwritearrayset/#contains-java.lang.Object-"><code>contains(Object)</code></a></dd> </dl>    <h3 id="addAll-java.util.Collection-">addAll</h3> <pre data-language="java">public boolean addAll(Collection&lt;? extends E&gt; c)</pre> <p>Adds all of the elements in the specified collection to this set if they're not already present. If the specified collection is also a set, the <code>addAll</code> operation effectively modifies this set so that its value is the <i>union</i> of the two sets. The behavior of this operation is undefined if the specified collection is modified while the operation is in progress.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#addAll-java.util.Collection-">addAll</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#addAll-java.util.Collection-">addAll</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#addAll-java.util.Collection-">addAll</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>c</code> - collection containing elements to be added to this set</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this set changed as a result of the call</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the specified collection is null</dd> <dt>See Also:</dt> <dd><a href="../copyonwritearrayset/#add-E-"><code>add(Object)</code></a></dd> </dl>    <h3 id="removeAll-java.util.Collection-">removeAll</h3> <pre data-language="java">public boolean removeAll(Collection&lt;?&gt; c)</pre> <p>Removes from this set all of its elements that are contained in the specified collection. If the specified collection is also a set, this operation effectively modifies this set so that its value is the <i>asymmetric set difference</i> of the two sets.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#removeAll-java.util.Collection-">removeAll</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#removeAll-java.util.Collection-">removeAll</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractset/#removeAll-java.util.Collection-">removeAll</a></code> in class <code><a href="../../abstractset/">AbstractSet</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>c</code> - collection containing elements to be removed from this set</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this set changed as a result of the call</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/classcastexception/">ClassCastException</a></code> - if the class of an element of this set is incompatible with the specified collection (optional)</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if this set contains a null element and the specified collection does not permit null elements (optional), or if the specified collection is null</dd> <dt>See Also:</dt> <dd><a href="../copyonwritearrayset/#remove-java.lang.Object-"><code>remove(Object)</code></a></dd> </dl>    <h3 id="retainAll-java.util.Collection-">retainAll</h3> <pre data-language="java">public boolean retainAll(Collection&lt;?&gt; c)</pre> <p>Retains only the elements in this set that are contained in the specified collection. In other words, removes from this set all of its elements that are not contained in the specified collection. If the specified collection is also a set, this operation effectively modifies this set so that its value is the <i>intersection</i> of the two sets.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#retainAll-java.util.Collection-">retainAll</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#retainAll-java.util.Collection-">retainAll</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractcollection/#retainAll-java.util.Collection-">retainAll</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>c</code> - collection containing elements to be retained in this set</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this set changed as a result of the call</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/classcastexception/">ClassCastException</a></code> - if the class of an element of this set is incompatible with the specified collection (optional)</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if this set contains a null element and the specified collection does not permit null elements (optional), or if the specified collection is null</dd> <dt>See Also:</dt> <dd><a href="../copyonwritearrayset/#remove-java.lang.Object-"><code>remove(Object)</code></a></dd> </dl>    <h3 id="iterator--">iterator</h3> <pre data-language="java">public Iterator&lt;E&gt; iterator()</pre> <div>
+<p>Returns an iterator over the elements contained in this set in the order in which these elements were added. </p>
+<p>The returned iterator provides a snapshot of the state of the set when the iterator was constructed. No synchronization is needed while traversing the iterator. The iterator does <em>NOT</em> support the <code>remove</code> method.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../lang/iterable/#iterator--">iterator</a></code> in interface <code><a href="../../../lang/iterable/">Iterable</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#iterator--">iterator</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#iterator--">iterator</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../abstractcollection/#iterator--">iterator</a></code> in class <code><a href="../../abstractcollection/">AbstractCollection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>an iterator over the elements in this set</dd> </dl>    <h3 id="equals-java.lang.Object-">equals</h3> <pre data-language="java">public boolean equals(Object o)</pre> <p>Compares the specified object with this set for equality. Returns <code>true</code> if the specified object is the same object as this object, or if it is also a <a href="../../set/"><code>Set</code></a> and the elements returned by an <a href="../../set/#iterator--">iterator</a> over the specified set are the same as the elements returned by an iterator over this set. More formally, the two iterators are considered to return the same elements if they return the same number of elements and for every element <code>e1</code> returned by the iterator over the specified set, there is an element <code>e2</code> returned by the iterator over this set such that <code>(e1==null ? e2==null : e1.equals(e2))</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#equals-java.lang.Object-">equals</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#equals-java.lang.Object-">equals</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../abstractset/#equals-java.lang.Object-">equals</a></code> in class <code><a href="../../abstractset/">AbstractSet</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>o</code> - object to be compared for equality with this set</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the specified object is equal to this set</dd> <dt>See Also:</dt> <dd>
+<a href="../../../lang/object/#hashCode--"><code>Object.hashCode()</code></a>, <a href="../../hashmap/"><code>HashMap</code></a>
+</dd> </dl>    <h3 id="removeIf-java.util.function.Predicate-">removeIf</h3> <pre data-language="java">public boolean removeIf(Predicate&lt;? super E&gt; filter)</pre> <p>Description copied from interface: <code><a href="../../collection/#removeIf-java.util.function.Predicate-">Collection</a></code></p> <p>Removes all of the elements of this collection that satisfy the given predicate. Errors or runtime exceptions thrown during iteration or by the predicate are relayed to the caller.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#removeIf-java.util.function.Predicate-">removeIf</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>filter</code> - a predicate which returns <code>true</code> for elements to be removed</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if any elements were removed</dd> </dl>    <h3 id="forEach-java.util.function.Consumer-">forEach</h3> <pre data-language="java">public void forEach(Consumer&lt;? super E&gt; action)</pre> <p>Description copied from interface: <code><a href="../../../lang/iterable/#forEach-java.util.function.Consumer-">Iterable</a></code></p> <p>Performs the given action for each element of the <code>Iterable</code> until all elements have been processed or the action throws an exception. Unless otherwise specified by the implementing class, actions are performed in the order of iteration (if an iteration order is specified). Exceptions thrown by the action are relayed to the caller.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../lang/iterable/#forEach-java.util.function.Consumer-">forEach</a></code> in interface <code><a href="../../../lang/iterable/">Iterable</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - The action to be performed for each element</dd> </dl>    <h3 id="spliterator--">spliterator</h3> <pre data-language="java">public Spliterator&lt;E&gt; spliterator()</pre> <div>
+<p>Returns a <a href="../../spliterator/"><code>Spliterator</code></a> over the elements in this set in the order in which these elements were added. </p>
+<p>The <code>Spliterator</code> reports <a href="../../spliterator/#IMMUTABLE"><code>Spliterator.IMMUTABLE</code></a>, <a href="../../spliterator/#DISTINCT"><code>Spliterator.DISTINCT</code></a>, <a href="../../spliterator/#SIZED"><code>Spliterator.SIZED</code></a>, and <a href="../../spliterator/#SUBSIZED"><code>Spliterator.SUBSIZED</code></a>. </p>
+<p>The spliterator provides a snapshot of the state of the set when the spliterator was constructed. No synchronization is needed while operating on the spliterator.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../lang/iterable/#spliterator--">spliterator</a></code> in interface <code><a href="../../../lang/iterable/">Iterable</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../collection/#spliterator--">spliterator</a></code> in interface <code><a href="../../collection/">Collection</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../set/#spliterator--">spliterator</a></code> in interface <code><a href="../../set/">Set</a>&lt;<a href="../copyonwritearrayset/">E</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>a <code>Spliterator</code> over the elements in this set</dd> <dt>Since:</dt> <dd>1.8</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

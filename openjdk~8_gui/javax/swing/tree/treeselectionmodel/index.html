@@ -1,0 +1,149 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>TreeSelectionModel - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content="This interface represents the current state of the selection for the tree component. For information and examples of using tree selection models, &hellip;">
+  <meta name="keywords" content="interface, treeselectionmodel, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/javax/swing/tree/treeselectionmodel/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface TreeSelectionModel</h1>     <dl> <dt>All Known Implementing Classes:</dt> <dd>
+<a href="../defaulttreeselectionmodel/">DefaultTreeSelectionModel</a>, <a href="../../jtree.emptyselectionmodel/">JTree.EmptySelectionModel</a>
+</dd> </dl>   <pre data-language="java">public interface TreeSelectionModel</pre> <div>
+<p>This interface represents the current state of the selection for the tree component. For information and examples of using tree selection models, see <a href="https://docs.oracle.com/javase/tutorial/uiswing/components/tree.html" target="_blank">How to Use Trees</a> in <em>The Java Tutorial.</em> </p>
+<p> The state of the tree selection is characterized by a set of TreePaths, and optionally a set of integers. The mapping from TreePath to integer is done by way of an instance of RowMapper. It is not necessary for a TreeSelectionModel to have a RowMapper to correctly operate, but without a RowMapper <code>getSelectionRows</code> will return null. </p>
+<p> A TreeSelectionModel can be configured to allow only one path (<code>SINGLE_TREE_SELECTION</code>) a number of contiguous paths (<code>CONTIGUOUS_TREE_SELECTION</code>) or a number of discontiguous paths (<code>DISCONTIGUOUS_TREE_SELECTION</code>). A <code>RowMapper</code> is used to determine if TreePaths are contiguous. In the absence of a RowMapper <code>CONTIGUOUS_TREE_SELECTION</code> and <code>DISCONTIGUOUS_TREE_SELECTION</code> behave the same, that is they allow any number of paths to be contained in the TreeSelectionModel. </p>
+<p> For a selection model of <code>CONTIGUOUS_TREE_SELECTION</code> any time the paths are changed (<code>setSelectionPath</code>, <code>addSelectionPath</code> ...) the TreePaths are again checked to make they are contiguous. A check of the TreePaths can also be forced by invoking <code>resetRowSelection</code>. How a set of discontiguous TreePaths is mapped to a contiguous set is left to implementors of this interface to enforce a particular policy. </p>
+<p> Implementations should combine duplicate TreePaths that are added to the selection. For example, the following code </p>
+<pre data-language="java">TreePath[] paths = new TreePath[] { treePath, treePath };
+   treeSelectionModel.setSelectionPaths(paths);</pre> should result in only one path being selected: <code>treePath</code>, and not two copies of <code>treePath</code>. <p> The lead TreePath is the last path that was added (or set). The lead row is then the row that corresponds to the TreePath as determined from the RowMapper.</p>
+</div>       <h2 id="field.detail">Fields</h2>   <h3 id="SINGLE_TREE_SELECTION">SINGLE_TREE_SELECTION</h3> <pre data-language="java">static final int SINGLE_TREE_SELECTION</pre> <p>Selection can only contain one path at a time.</p>     <h3 id="CONTIGUOUS_TREE_SELECTION">CONTIGUOUS_TREE_SELECTION</h3> <pre data-language="java">static final int CONTIGUOUS_TREE_SELECTION</pre> <p>Selection can only be contiguous. This will only be enforced if a RowMapper instance is provided. That is, if no RowMapper is set this behaves the same as DISCONTIGUOUS_TREE_SELECTION.</p>     <h3 id="DISCONTIGUOUS_TREE_SELECTION">DISCONTIGUOUS_TREE_SELECTION</h3> <pre data-language="java">static final int DISCONTIGUOUS_TREE_SELECTION</pre> <p>Selection can contain any number of items that are not necessarily contiguous.</p>      <h2 id="method.detail">Methods</h2>   <h3 id="setSelectionMode-int-">setSelectionMode</h3> <pre data-language="java">void setSelectionMode(int mode)</pre> <div>
+<p>Sets the selection model, which must be one of SINGLE_TREE_SELECTION, CONTIGUOUS_TREE_SELECTION or DISCONTIGUOUS_TREE_SELECTION. </p>
+<p> This may change the selection if the current selection is not valid for the new mode. For example, if three TreePaths are selected when the mode is changed to <code>SINGLE_TREE_SELECTION</code>, only one TreePath will remain selected. It is up to the particular implementation to decide what TreePath remains selected.</p>
+</div>    <h3 id="getSelectionMode--">getSelectionMode</h3> <pre data-language="java">int getSelectionMode()</pre> <p>Returns the current selection mode, one of <code>SINGLE_TREE_SELECTION</code>, <code>CONTIGUOUS_TREE_SELECTION</code> or <code>DISCONTIGUOUS_TREE_SELECTION</code>.</p>    <h3 id="setSelectionPath-javax.swing.tree.TreePath-">setSelectionPath</h3> <pre data-language="java">void setSelectionPath(TreePath path)</pre> <p>Sets the selection to path. If this represents a change, then the TreeSelectionListeners are notified. If <code>path</code> is null, this has the same effect as invoking <code>clearSelection</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>path</code> - new path to select</dd> </dl>    <h3 id="setSelectionPaths-javax.swing.tree.TreePath:A-">setSelectionPaths</h3> <pre data-language="java">void setSelectionPaths(TreePath[] paths)</pre> <p>Sets the selection to path. If this represents a change, then the TreeSelectionListeners are notified. If <code>paths</code> is null, this has the same effect as invoking <code>clearSelection</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>paths</code> - new selection</dd> </dl>    <h3 id="addSelectionPath-javax.swing.tree.TreePath-">addSelectionPath</h3> <pre data-language="java">void addSelectionPath(TreePath path)</pre> <p>Adds path to the current selection. If path is not currently in the selection the TreeSelectionListeners are notified. This has no effect if <code>path</code> is null.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>path</code> - the new path to add to the current selection</dd> </dl>    <h3 id="addSelectionPaths-javax.swing.tree.TreePath:A-">addSelectionPaths</h3> <pre data-language="java">void addSelectionPaths(TreePath[] paths)</pre> <p>Adds paths to the current selection. If any of the paths in paths are not currently in the selection the TreeSelectionListeners are notified. This has no effect if <code>paths</code> is null.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>paths</code> - the new paths to add to the current selection</dd> </dl>    <h3 id="removeSelectionPath-javax.swing.tree.TreePath-">removeSelectionPath</h3> <pre data-language="java">void removeSelectionPath(TreePath path)</pre> <p>Removes path from the selection. If path is in the selection The TreeSelectionListeners are notified. This has no effect if <code>path</code> is null.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>path</code> - the path to remove from the selection</dd> </dl>    <h3 id="removeSelectionPaths-javax.swing.tree.TreePath:A-">removeSelectionPaths</h3> <pre data-language="java">void removeSelectionPaths(TreePath[] paths)</pre> <p>Removes paths from the selection. If any of the paths in <code>paths</code> are in the selection, the TreeSelectionListeners are notified. This method has no effect if <code>paths</code> is null.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>paths</code> - the path to remove from the selection</dd> </dl>    <h3 id="getSelectionPath--">getSelectionPath</h3> <pre data-language="java">TreePath getSelectionPath()</pre> <p>Returns the first path in the selection. How first is defined is up to implementors, and may not necessarily be the TreePath with the smallest integer value as determined from the <code>RowMapper</code>.</p>    <h3 id="getSelectionPaths--">getSelectionPaths</h3> <pre data-language="java">TreePath[] getSelectionPaths()</pre> <p>Returns the paths in the selection. This will return null (or an empty array) if nothing is currently selected.</p>    <h3 id="getSelectionCount--">getSelectionCount</h3> <pre data-language="java">int getSelectionCount()</pre> <p>Returns the number of paths that are selected.</p>    <h3 id="isPathSelected-javax.swing.tree.TreePath-">isPathSelected</h3> <pre data-language="java">boolean isPathSelected(TreePath path)</pre> <p>Returns true if the path, <code>path</code>, is in the current selection.</p>    <h3 id="isSelectionEmpty--">isSelectionEmpty</h3> <pre data-language="java">boolean isSelectionEmpty()</pre> <p>Returns true if the selection is currently empty.</p>    <h3 id="clearSelection--">clearSelection</h3> <pre data-language="java">void clearSelection()</pre> <p>Empties the current selection. If this represents a change in the current selection, the selection listeners are notified.</p>    <h3 id="setRowMapper-javax.swing.tree.RowMapper-">setRowMapper</h3> <pre data-language="java">void setRowMapper(RowMapper newMapper)</pre> <p>Sets the RowMapper instance. This instance is used to determine the row for a particular TreePath.</p>    <h3 id="getRowMapper--">getRowMapper</h3> <pre data-language="java">RowMapper getRowMapper()</pre> <p>Returns the RowMapper instance that is able to map a TreePath to a row.</p>    <h3 id="getSelectionRows--">getSelectionRows</h3> <pre data-language="java">int[] getSelectionRows()</pre> <p>Returns all of the currently selected rows. This will return null (or an empty array) if there are no selected TreePaths or a RowMapper has not been set.</p>    <h3 id="getMinSelectionRow--">getMinSelectionRow</h3> <pre data-language="java">int getMinSelectionRow()</pre> <p>Returns the smallest value obtained from the RowMapper for the current set of selected TreePaths. If nothing is selected, or there is no RowMapper, this will return -1.</p>    <h3 id="getMaxSelectionRow--">getMaxSelectionRow</h3> <pre data-language="java">int getMaxSelectionRow()</pre> <p>Returns the largest value obtained from the RowMapper for the current set of selected TreePaths. If nothing is selected, or there is no RowMapper, this will return -1.</p>    <h3 id="isRowSelected-int-">isRowSelected</h3> <pre data-language="java">boolean isRowSelected(int row)</pre> <p>Returns true if the row identified by <code>row</code> is selected.</p>    <h3 id="resetRowSelection--">resetRowSelection</h3> <pre data-language="java">void resetRowSelection()</pre> <div>
+<p>Updates this object's mapping from TreePaths to rows. This should be invoked when the mapping from TreePaths to integers has changed (for example, a node has been expanded). </p>
+<p> You do not normally have to call this; JTree and its associated listeners will invoke this for you. If you are implementing your own view class, then you will have to invoke this.</p>
+</div>    <h3 id="getLeadSelectionRow--">getLeadSelectionRow</h3> <pre data-language="java">int getLeadSelectionRow()</pre> <p>Returns the lead selection index. That is the last index that was added.</p>    <h3 id="getLeadSelectionPath--">getLeadSelectionPath</h3> <pre data-language="java">TreePath getLeadSelectionPath()</pre> <p>Returns the last path that was added. This may differ from the leadSelectionPath property maintained by the JTree.</p>    <h3 id="addPropertyChangeListener-java.beans.PropertyChangeListener-">addPropertyChangeListener</h3> <pre data-language="java">void addPropertyChangeListener(PropertyChangeListener listener)</pre> <div>
+<p>Adds a PropertyChangeListener to the listener list. The listener is registered for all properties. </p>
+<p> A PropertyChangeEvent will get fired when the selection mode changes.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>listener</code> - the PropertyChangeListener to be added</dd> </dl>    <h3 id="removePropertyChangeListener-java.beans.PropertyChangeListener-">removePropertyChangeListener</h3> <pre data-language="java">void removePropertyChangeListener(PropertyChangeListener listener)</pre> <p>Removes a PropertyChangeListener from the listener list. This removes a PropertyChangeListener that was registered for all properties.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>listener</code> - the PropertyChangeListener to be removed</dd> </dl>    <h3 id="addTreeSelectionListener-javax.swing.event.TreeSelectionListener-">addTreeSelectionListener</h3> <pre data-language="java">void addTreeSelectionListener(TreeSelectionListener x)</pre> <p>Adds x to the list of listeners that are notified each time the set of selected TreePaths changes.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>x</code> - the new listener to be added</dd> </dl>    <h3 id="removeTreeSelectionListener-javax.swing.event.TreeSelectionListener-">removeTreeSelectionListener</h3> <pre data-language="java">void removeTreeSelectionListener(TreeSelectionListener x)</pre> <p>Removes x from the list of listeners that are notified each time the set of selected TreePaths changes.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>x</code> - the listener to remove</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

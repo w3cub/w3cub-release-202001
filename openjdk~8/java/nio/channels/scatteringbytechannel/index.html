@@ -1,0 +1,160 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ScatteringByteChannel - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" A channel that can read bytes into a sequence of buffers. ">
+  <meta name="keywords" content="interface, scatteringbytechannel, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/nio/channels/scatteringbytechannel/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface ScatteringByteChannel</h1>     <dl> <dt>All Superinterfaces:</dt> <dd>
+<a href="../../../lang/autocloseable/">AutoCloseable</a>, <a href="../channel/">Channel</a>, <a href="../../../io/closeable/">Closeable</a>, <a href="../readablebytechannel/">ReadableByteChannel</a>
+</dd> </dl> <dl> <dt>All Known Implementing Classes:</dt> <dd>
+<a href="../datagramchannel/">DatagramChannel</a>, <a href="../filechannel/">FileChannel</a>, <a href="../pipe.sourcechannel/">Pipe.SourceChannel</a>, <a href="../socketchannel/">SocketChannel</a>
+</dd> </dl>   <pre data-language="java">public interface ScatteringByteChannel
+extends ReadableByteChannel</pre> <div>
+<p>A channel that can read bytes into a sequence of buffers. </p>
+<p> A <i>scattering</i> read operation reads, in a single invocation, a sequence of bytes into one or more of a given sequence of buffers. Scattering reads are often useful when implementing network protocols or file formats that, for example, group data into segments consisting of one or more fixed-length headers followed by a variable-length body. Similar <i>gathering</i> write operations are defined in the <a href="../gatheringbytechannel/"><code>GatheringByteChannel</code></a> interface. </p>
+</div> <dl> <dt>Since:</dt> <dd>1.4</dd> </dl>       <h2 id="method.detail">Methods</h2>   <h3 id="read-java.nio.ByteBuffer:A-int-int-">read</h3> <pre data-language="java">long read(ByteBuffer[] dsts,
+          int offset,
+          int length)
+   throws IOException</pre> <div>
+<p>Reads a sequence of bytes from this channel into a subsequence of the given buffers. </p>
+<p> An invocation of this method attempts to read up to <i>r</i> bytes from this channel, where <i>r</i> is the total number of bytes remaining the specified subsequence of the given buffer array, that is, </p>
+<pre data-language="java">dsts[offset].remaining()
+    + dsts[offset+1].remaining()
+    + ... + dsts[offset+length-1].remaining()</pre> at the moment that this method is invoked. <p> Suppose that a byte sequence of length <i>n</i> is read, where <code>0</code> <code>&lt;=</code> <i>n</i> <code>&lt;=</code> <i>r</i>. Up to the first <code>dsts[offset].remaining()</code> bytes of this sequence are transferred into buffer <code>dsts[offset]</code>, up to the next <code>dsts[offset+1].remaining()</code> bytes are transferred into buffer <code>dsts[offset+1]</code>, and so forth, until the entire byte sequence is transferred into the given buffers. As many bytes as possible are transferred into each buffer, hence the final position of each updated buffer, except the last updated buffer, is guaranteed to be equal to that buffer's limit. </p>
+<p> This method may be invoked at any time. If another thread has already initiated a read operation upon this channel, however, then an invocation of this method will block until the first operation is complete. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>dsts</code> - The buffers into which bytes are to be transferred</dd> <dd>
+<code>offset</code> - The offset within the buffer array of the first buffer into which bytes are to be transferred; must be non-negative and no larger than <code>dsts.length</code>
+</dd> <dd>
+<code>length</code> - The maximum number of buffers to be accessed; must be non-negative and no larger than <code>dsts.length</code> - <code>offset</code>
+</dd> <dt>Returns:</dt> <dd>The number of bytes read, possibly zero, or <code>-1</code> if the channel has reached end-of-stream</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/indexoutofboundsexception/">IndexOutOfBoundsException</a></code> - If the preconditions on the <code>offset</code> and <code>length</code> parameters do not hold</dd> <dd>
+<code><a href="../nonreadablechannelexception/">NonReadableChannelException</a></code> - If this channel was not opened for reading</dd> <dd>
+<code><a href="../closedchannelexception/">ClosedChannelException</a></code> - If this channel is closed</dd> <dd>
+<code><a href="../asynchronouscloseexception/">AsynchronousCloseException</a></code> - If another thread closes this channel while the read operation is in progress</dd> <dd>
+<code><a href="../closedbyinterruptexception/">ClosedByInterruptException</a></code> - If another thread interrupts the current thread while the read operation is in progress, thereby closing the channel and setting the current thread's interrupt status</dd> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - If some other I/O error occurs</dd> </dl>    <h3 id="read-java.nio.ByteBuffer:A-">read</h3> <pre data-language="java">long read(ByteBuffer[] dsts)
+   throws IOException</pre> <div>
+<p>Reads a sequence of bytes from this channel into the given buffers. </p>
+<p> An invocation of this method of the form <code>c.read(dsts)</code> behaves in exactly the same manner as the invocation </p>
+<pre data-language="java">c.read(dsts, 0, dsts.length);</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>dsts</code> - The buffers into which bytes are to be transferred</dd> <dt>Returns:</dt> <dd>The number of bytes read, possibly zero, or <code>-1</code> if the channel has reached end-of-stream</dd> <dt>Throws:</dt> <dd>
+<code><a href="../nonreadablechannelexception/">NonReadableChannelException</a></code> - If this channel was not opened for reading</dd> <dd>
+<code><a href="../closedchannelexception/">ClosedChannelException</a></code> - If this channel is closed</dd> <dd>
+<code><a href="../asynchronouscloseexception/">AsynchronousCloseException</a></code> - If another thread closes this channel while the read operation is in progress</dd> <dd>
+<code><a href="../closedbyinterruptexception/">ClosedByInterruptException</a></code> - If another thread interrupts the current thread while the read operation is in progress, thereby closing the channel and setting the current thread's interrupt status</dd> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - If some other I/O error occurs</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

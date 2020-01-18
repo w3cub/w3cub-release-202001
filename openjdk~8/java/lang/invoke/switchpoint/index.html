@@ -1,0 +1,184 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>SwitchPoint - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A SwitchPoint is an object which can publish state transitions to other threads. A switch point is initially in the valid state, but may at any time &hellip;">
+  <meta name="keywords" content="class, switchpoint, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/lang/invoke/switchpoint/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class SwitchPoint</h1>   <ul class="inheritance"> <li><a href="../../object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.lang.invoke.SwitchPoint</li> </ul> </li> </ul>     <pre data-language="java">public class SwitchPoint
+extends Object</pre> <div>
+
+<p> A <code>SwitchPoint</code> is an object which can publish state transitions to other threads. A switch point is initially in the <em>valid</em> state, but may at any time be changed to the <em>invalid</em> state. Invalidation cannot be reversed. A switch point can combine a <em>guarded pair</em> of method handles into a <em>guarded delegator</em>. The guarded delegator is a method handle which delegates to one of the old method handles. The state of the switch point determines which of the two gets the delegation. </p>
+<p> A single switch point may be used to control any number of method handles. (Indirectly, therefore, it can control any number of call sites.) This is done by using the single switch point as a factory for combining any number of guarded method handle pairs into guarded delegators. </p>
+<p> When a guarded delegator is created from a guarded pair, the pair is wrapped in a new method handle <code>M</code>, which is permanently associated with the switch point that created it. Each pair consists of a target <code>T</code> and a fallback <code>F</code>. While the switch point is valid, invocations to <code>M</code> are delegated to <code>T</code>. After it is invalidated, invocations are delegated to <code>F</code>. </p>
+<p> Invalidation is global and immediate, as if the switch point contained a volatile boolean variable consulted on every call to <code>M</code>. The invalidation is also permanent, which means the switch point can change state only once. The switch point will always delegate to <code>F</code> after being invalidated. At that point <code>guardWithTest</code> may ignore <code>T</code> and return <code>F</code>. </p>
+<p> Here is an example of a switch point in action: </p>
+<pre data-language="java">MethodHandle MH_strcat = MethodHandles.lookup()
+     .findVirtual(String.class, "concat", MethodType.methodType(String.class, String.class));
+ SwitchPoint spt = new SwitchPoint();
+ assert(!spt.hasBeenInvalidated());
+ // the following steps may be repeated to re-use the same switch point:
+ MethodHandle worker1 = MH_strcat;
+ MethodHandle worker2 = MethodHandles.permuteArguments(MH_strcat, MH_strcat.type(), 1, 0);
+ MethodHandle worker = spt.guardWithTest(worker1, worker2);
+ assertEquals("method", (String) worker.invokeExact("met", "hod"));
+ SwitchPoint.invalidateAll(new SwitchPoint[]{ spt });
+ assert(spt.hasBeenInvalidated());
+ assertEquals("hodmet", (String) worker.invokeExact("met", "hod"));</pre> <p style="font-size:smaller;"> <em>Discussion:</em> Switch points are useful without subclassing. They may also be subclassed. This may be useful in order to associate application-specific invalidation logic with the switch point. Notice that there is no permanent association between a switch point and the method handles it produces and consumes. The garbage collector may collect method handles produced or consumed by a switch point independently of the lifetime of the switch point itself. </p>
+<p style="font-size:smaller;"> <em>Implementation Note:</em> A switch point behaves as if implemented on top of <a href="../mutablecallsite/"><code>MutableCallSite</code></a>, approximately as follows: </p>
+<pre data-language="java">public class SwitchPoint {
+     private static final MethodHandle
+         K_true  = MethodHandles.constant(boolean.class, true),
+         K_false = MethodHandles.constant(boolean.class, false);
+     private final MutableCallSite mcs;
+     private final MethodHandle mcsInvoker;
+     public SwitchPoint() {
+         this.mcs = new MutableCallSite(K_true);
+         this.mcsInvoker = mcs.dynamicInvoker();
+     }
+     public MethodHandle guardWithTest(
+             MethodHandle target, MethodHandle fallback) {
+         // Note:  mcsInvoker is of type ()boolean.
+         // Target and fallback may take any arguments, but must have the same type.
+         return MethodHandles.guardWithTest(this.mcsInvoker, target, fallback);
+     }
+     public static void invalidateAll(SwitchPoint[] spts) {
+         List&lt;MutableCallSite&gt; mcss = new ArrayList&lt;&gt;();
+         for (SwitchPoint spt : spts)  mcss.add(spt.mcs);
+         for (MutableCallSite mcs : mcss)  mcs.setTarget(K_false);
+         MutableCallSite.syncAll(mcss.toArray(new MutableCallSite[0]));
+     }
+ }</pre>
+</div>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="SwitchPoint--">SwitchPoint</h3> <pre data-language="java">public SwitchPoint()</pre> <p>Creates a new switch point.</p>     <h2 id="method.detail">Methods</h2>   <h3 id="hasBeenInvalidated--">hasBeenInvalidated</h3> <pre data-language="java">public boolean hasBeenInvalidated()</pre> <div>
+<p>Determines if this switch point has been invalidated yet. </p>
+<p style="font-size:smaller;"> <em>Discussion:</em> Because of the one-way nature of invalidation, once a switch point begins to return true for <code>hasBeenInvalidated</code>, it will always do so in the future. On the other hand, a valid switch point visible to other threads may be invalidated at any moment, due to a request by another thread. </p>
+<p style="font-size:smaller;"> Since invalidation is a global and immediate operation, the execution of this query, on a valid switchpoint, must be internally sequenced with any other threads that could cause invalidation. This query may therefore be expensive. The recommended way to build a boolean-valued method handle which queries the invalidation state of a switch point <code>s</code> is to call <code>s.guardWithTest</code> on <a href="../methodhandles/#constant-java.lang.Class-java.lang.Object-"><code>constant</code></a> true and false method handles.</p>
+</div> <dl> <dt>Returns:</dt> <dd>true if this switch point has been invalidated</dd> </dl>    <h3 id="guardWithTest-java.lang.invoke.MethodHandle-java.lang.invoke.MethodHandle-">guardWithTest</h3> <pre data-language="java">public MethodHandle guardWithTest(MethodHandle target,
+                                  MethodHandle fallback)</pre> <div>
+<p>Returns a method handle which always delegates either to the target or the fallback. The method handle will delegate to the target exactly as long as the switch point is valid. After that, it will permanently delegate to the fallback. </p>
+<p> The target and fallback must be of exactly the same method type, and the resulting combined method handle will also be of this type.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>target</code> - the method handle selected by the switch point as long as it is valid</dd> <dd>
+<code>fallback</code> - the method handle selected by the switch point after it is invalidated</dd> <dt>Returns:</dt> <dd>a combined method handle which always calls either the target or fallback</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if either argument is null</dd> <dd>
+<code><a href="../../illegalargumentexception/">IllegalArgumentException</a></code> - if the two method types do not match</dd> <dt>See Also:</dt> <dd><a href="../methodhandles/#guardWithTest-java.lang.invoke.MethodHandle-java.lang.invoke.MethodHandle-java.lang.invoke.MethodHandle-"><code>MethodHandles.guardWithTest(java.lang.invoke.MethodHandle, java.lang.invoke.MethodHandle, java.lang.invoke.MethodHandle)</code></a></dd> </dl>    <h3 id="invalidateAll-java.lang.invoke.SwitchPoint:A-">invalidateAll</h3> <pre data-language="java">public static void invalidateAll(SwitchPoint[] switchPoints)</pre> <div>
+<p>Sets all of the given switch points into the invalid state. After this call executes, no thread will observe any of the switch points to be in a valid state. </p>
+<p> This operation is likely to be expensive and should be used sparingly. If possible, it should be buffered for batch processing on sets of switch points. </p>
+<p> If <code>switchPoints</code> contains a null element, a <code>NullPointerException</code> will be raised. In this case, some non-null elements in the array may be processed before the method returns abnormally. Which elements these are (if any) is implementation-dependent. </p>
+<p style="font-size:smaller;"> <em>Discussion:</em> For performance reasons, <code>invalidateAll</code> is not a virtual method on a single switch point, but rather applies to a set of switch points. Some implementations may incur a large fixed overhead cost for processing one or more invalidation operations, but a small incremental cost for each additional invalidation. In any case, this operation is likely to be costly, since other threads may have to be somehow interrupted in order to make them notice the updated switch point state. However, it may be observed that a single call to invalidate several switch points has the same formal effect as many calls, each on just one of the switch points. </p>
+<p style="font-size:smaller;"> <em>Implementation Note:</em> Simple implementations of <code>SwitchPoint</code> may use a private <a href="../mutablecallsite/"><code>MutableCallSite</code></a> to publish the state of a switch point. In such an implementation, the <code>invalidateAll</code> method can simply change the call site's target, and issue one call to <a href="../mutablecallsite/#syncAll-java.lang.invoke.MutableCallSite:A-">synchronize</a> all the private call sites.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>switchPoints</code> - an array of call sites to be synchronized</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the <code>switchPoints</code> array reference is null or the array contains a null</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

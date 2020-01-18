@@ -1,0 +1,171 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ZoneView - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content="ZoneView is a View implementation that creates zones for which the child views are not created or stored until they are needed for display or model &hellip;">
+  <meta name="keywords" content="class, zoneview, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/javax/swing/text/zoneview/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class ZoneView</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../view/">javax.swing.text.View</a></li> <li> <ul class="inheritance"> <li><a href="../compositeview/">javax.swing.text.CompositeView</a></li> <li> <ul class="inheritance"> <li><a href="../boxview/">javax.swing.text.BoxView</a></li> <li> <ul class="inheritance"> <li>javax.swing.text.ZoneView</li> </ul> </li> </ul> </li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="../../swingconstants/">SwingConstants</a></dd> </dl>   <pre data-language="java">public class ZoneView
+extends BoxView</pre> <div>
+<p>ZoneView is a View implementation that creates zones for which the child views are not created or stored until they are needed for display or model/view translations. This enables a substantial reduction in memory consumption for situations where the model being represented is very large, by building view objects only for the region being actively viewed/edited. The size of the children can be estimated in some way, or calculated asynchronously with only the result being saved. </p>
+<p> ZoneView extends BoxView to provide a box that implements zones for its children. The zones are special View implementations (the children of an instance of this class) that represent only a portion of the model that an instance of ZoneView is responsible for. The zones don't create child views until an attempt is made to display them. A box shaped view is well suited to this because: </p>
+<ul> <li> Boxes are a heavily used view, and having a box that provides this behavior gives substantial opportunity to plug the behavior into a view hierarchy from the view factory. </li>
+<li> Boxes are tiled in one direction, so it is easy to divide them into zones in a reliable way. </li>
+<li> Boxes typically have a simple relationship to the model (i.e. they create child views that directly represent the child elements). </li>
+<li> Boxes are easier to estimate the size of than some other shapes. </li>
+</ul> <p> The default behavior is controlled by two properties, maxZoneSize and maxZonesLoaded. Setting maxZoneSize to Integer.MAX_VALUE would have the effect of causing only one zone to be created. This would effectively turn the view into an implementation of the decorator pattern. Setting maxZonesLoaded to a value of Integer.MAX_VALUE would cause zones to never be unloaded. For simplicity, zones are created on boundaries represented by the child elements of the element the view is responsible for. The zones can be any View implementation, but the default implementation is based upon AsyncBoxView which supports fairly large zones efficiently.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.3</dd> <dt>See Also:</dt> <dd><a href="../view/"><code>View</code></a></dd> </dl>       <h2 id="field.summary">Fields</h2>  <h2 id="fields.inherited.from.class.javax.swing.text.View">Fields inherited from class javax.swing.text.<a href="../view/">View</a>
+</h2> <code><a href="../view/#BadBreakWeight">BadBreakWeight</a>, <a href="../view/#ExcellentBreakWeight">ExcellentBreakWeight</a>, <a href="../view/#ForcedBreakWeight">ForcedBreakWeight</a>, <a href="../view/#GoodBreakWeight">GoodBreakWeight</a>, <a href="../view/#X_AXIS">X_AXIS</a>, <a href="../view/#Y_AXIS">Y_AXIS</a></code>  <h2 id="fields.inherited.from.class.javax.swing.SwingConstants">Fields inherited from interface javax.swing.<a href="../../swingconstants/">SwingConstants</a>
+</h2> <code><a href="../../swingconstants/#BOTTOM">BOTTOM</a>, <a href="../../swingconstants/#CENTER">CENTER</a>, <a href="../../swingconstants/#EAST">EAST</a>, <a href="../../swingconstants/#HORIZONTAL">HORIZONTAL</a>, <a href="../../swingconstants/#LEADING">LEADING</a>, <a href="../../swingconstants/#LEFT">LEFT</a>, <a href="../../swingconstants/#NEXT">NEXT</a>, <a href="../../swingconstants/#NORTH">NORTH</a>, <a href="../../swingconstants/#NORTH_EAST">NORTH_EAST</a>, <a href="../../swingconstants/#NORTH_WEST">NORTH_WEST</a>, <a href="../../swingconstants/#PREVIOUS">PREVIOUS</a>, <a href="../../swingconstants/#RIGHT">RIGHT</a>, <a href="../../swingconstants/#SOUTH">SOUTH</a>, <a href="../../swingconstants/#SOUTH_EAST">SOUTH_EAST</a>, <a href="../../swingconstants/#SOUTH_WEST">SOUTH_WEST</a>, <a href="../../swingconstants/#TOP">TOP</a>, <a href="../../swingconstants/#TRAILING">TRAILING</a>, <a href="../../swingconstants/#VERTICAL">VERTICAL</a>, <a href="../../swingconstants/#WEST">WEST</a></code>    <h2 id="constructor.detail">Constructors</h2>   <h3 id="ZoneView-javax.swing.text.Element-int-">ZoneView</h3> <pre data-language="java">public ZoneView(Element elem,
+                int axis)</pre> <p>Constructs a ZoneView.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>elem</code> - the element this view is responsible for</dd> <dd>
+<code>axis</code> - either View.X_AXIS or View.Y_AXIS</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="getMaximumZoneSize--">getMaximumZoneSize</h3> <pre data-language="java">public int getMaximumZoneSize()</pre> <p>Get the current maximum zone size.</p>    <h3 id="setMaximumZoneSize-int-">setMaximumZoneSize</h3> <pre data-language="java">public void setMaximumZoneSize(int size)</pre> <p>Set the desired maximum zone size. A zone may get larger than this size if a single child view is larger than this size since zones are formed on child view boundaries.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>size</code> - the number of characters the zone may represent before attempting to break the zone into a smaller size.</dd> </dl>    <h3 id="getMaxZonesLoaded--">getMaxZonesLoaded</h3> <pre data-language="java">public int getMaxZonesLoaded()</pre> <p>Get the current setting of the number of zones allowed to be loaded at the same time.</p>    <h3 id="setMaxZonesLoaded-int-">setMaxZonesLoaded</h3> <pre data-language="java">public void setMaxZonesLoaded(int mzl)</pre> <p>Sets the current setting of the number of zones allowed to be loaded at the same time. This will throw an <code>IllegalArgumentException</code> if <code>mzl</code> is less than 1.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>mzl</code> - the desired maximum number of zones to be actively loaded, must be greater than 0</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>mzl</code> is &lt; 1</dd> </dl>    <h3 id="zoneWasLoaded-javax.swing.text.View-">zoneWasLoaded</h3> <pre data-language="java">protected void zoneWasLoaded(View zone)</pre> <p>Called by a zone when it gets loaded. This happens when an attempt is made to display or perform a model/view translation on a zone that was in an unloaded state. This is implemented to check if the maximum number of zones was reached and to unload the oldest zone if so.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>zone</code> - the child view that was just loaded.</dd> </dl>    <h3 id="unloadZone-javax.swing.text.View-">unloadZone</h3> <pre data-language="java">protected void unloadZone(View zone)</pre> <p>Unload a zone (Convert the zone to its memory saving state). The zones are expected to represent a subset of the child elements of the element this view is responsible for. Therefore, the default implementation is to simple remove all the children.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>zone</code> - the child view desired to be set to an unloaded state.</dd> </dl>    <h3 id="isZoneLoaded-javax.swing.text.View-">isZoneLoaded</h3> <pre data-language="java">protected boolean isZoneLoaded(View zone)</pre> <p>Determine if a zone is in the loaded state. The zones are expected to represent a subset of the child elements of the element this view is responsible for. Therefore, the default implementation is to return true if the view has children.</p>    <h3 id="createZone-int-int-">createZone</h3> <pre data-language="java">protected View createZone(int p0,
+                          int p1)</pre> <p>Create a view to represent a zone for the given range within the model (which should be within the range of this objects responsibility). This is called by the zone management logic to create new zones. Subclasses can provide a different implementation for a zone by changing this method.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>p0</code> - the start of the desired zone. This should be &gt;= getStartOffset() and &lt; getEndOffset(). This value should also be &lt; p1.</dd> <dd>
+<code>p1</code> - the end of the desired zone. This should be &gt; getStartOffset() and &lt;= getEndOffset(). This value should also be &gt; p0.</dd> </dl>    <h3 id="loadChildren-javax.swing.text.ViewFactory-">loadChildren</h3> <pre data-language="java">protected void loadChildren(ViewFactory f)</pre> <p>Loads all of the children to initialize the view. This is called by the <code>setParent</code> method. This is reimplemented to not load any children directly (as they are created by the zones). This method creates the initial set of zones. Zones don't actually get populated however until an attempt is made to display them or to do model/view coordinate translation.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../compositeview/#loadChildren-javax.swing.text.ViewFactory-">loadChildren</a></code> in class <code><a href="../compositeview/">CompositeView</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>f</code> - the view factory</dd> <dt>See Also:</dt> <dd><a href="../compositeview/#setParent-javax.swing.text.View-"><code>CompositeView.setParent(javax.swing.text.View)</code></a></dd> </dl>    <h3 id="getViewIndexAtPosition-int-">getViewIndexAtPosition</h3> <pre data-language="java">protected int getViewIndexAtPosition(int pos)</pre> <p>Returns the child view index representing the given position in the model.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../compositeview/#getViewIndexAtPosition-int-">getViewIndexAtPosition</a></code> in class <code><a href="../compositeview/">CompositeView</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>pos</code> - the position &gt;= 0</dd> <dt>Returns:</dt> <dd>index of the view representing the given position, or -1 if no view represents that position</dd> </dl>    <h3 id="updateChildren-javax.swing.event.DocumentEvent.ElementChange-javax.swing.event.DocumentEvent-javax.swing.text.ViewFactory-">updateChildren</h3> <pre data-language="java">protected boolean updateChildren(DocumentEvent.ElementChange ec,
+                                 DocumentEvent e,
+                                 ViewFactory f)</pre> <p>The superclass behavior will try to update the child views which is not desired in this case, since the children are zones and not directly effected by the changes to the associated element. This is reimplemented to do nothing and return false.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../view/#updateChildren-javax.swing.event.DocumentEvent.ElementChange-javax.swing.event.DocumentEvent-javax.swing.text.ViewFactory-">updateChildren</a></code> in class <code><a href="../view/">View</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>ec</code> - the change information for the element this view is responsible for. This should not be <code>null</code> if this method gets called</dd> <dd>
+<code>e</code> - the change information from the associated document</dd> <dd>
+<code>f</code> - the factory to use to build child views</dd> <dt>Returns:</dt> <dd>whether or not the child views represent the child elements of the element this view is responsible for. Some views create children that represent a portion of the element they are responsible for, and should return false. This information is used to determine if views in the range of the added elements should be forwarded to or not</dd> <dt>See Also:</dt> <dd>
+<a href="../view/#insertUpdate-javax.swing.event.DocumentEvent-java.awt.Shape-javax.swing.text.ViewFactory-"><code>View.insertUpdate(javax.swing.event.DocumentEvent, java.awt.Shape, javax.swing.text.ViewFactory)</code></a>, <a href="../view/#removeUpdate-javax.swing.event.DocumentEvent-java.awt.Shape-javax.swing.text.ViewFactory-"><code>View.removeUpdate(javax.swing.event.DocumentEvent, java.awt.Shape, javax.swing.text.ViewFactory)</code></a>, <a href="../view/#changedUpdate-javax.swing.event.DocumentEvent-java.awt.Shape-javax.swing.text.ViewFactory-"><code>View.changedUpdate(javax.swing.event.DocumentEvent, java.awt.Shape, javax.swing.text.ViewFactory)</code></a>
+</dd> </dl>    <h3 id="insertUpdate-javax.swing.event.DocumentEvent-java.awt.Shape-javax.swing.text.ViewFactory-">insertUpdate</h3> <pre data-language="java">public void insertUpdate(DocumentEvent changes,
+                         Shape a,
+                         ViewFactory f)</pre> <p>Gives notification that something was inserted into the document in a location that this view is responsible for. This is largely delegated to the superclass, but is reimplemented to update the relevant zone (i.e. determine if a zone needs to be split into a set of 2 or more zones).</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../view/#insertUpdate-javax.swing.event.DocumentEvent-java.awt.Shape-javax.swing.text.ViewFactory-">insertUpdate</a></code> in class <code><a href="../view/">View</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>changes</code> - the change information from the associated document</dd> <dd>
+<code>a</code> - the current allocation of the view</dd> <dd>
+<code>f</code> - the factory to use to rebuild if the view has children</dd> <dt>See Also:</dt> <dd><a href="../view/#insertUpdate-javax.swing.event.DocumentEvent-java.awt.Shape-javax.swing.text.ViewFactory-"><code>View.insertUpdate(javax.swing.event.DocumentEvent, java.awt.Shape, javax.swing.text.ViewFactory)</code></a></dd> </dl>    <h3 id="removeUpdate-javax.swing.event.DocumentEvent-java.awt.Shape-javax.swing.text.ViewFactory-">removeUpdate</h3> <pre data-language="java">public void removeUpdate(DocumentEvent changes,
+                         Shape a,
+                         ViewFactory f)</pre> <p>Gives notification that something was removed from the document in a location that this view is responsible for. This is largely delegated to the superclass, but is reimplemented to update the relevant zones (i.e. determine if zones need to be removed or joined with another zone).</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../view/#removeUpdate-javax.swing.event.DocumentEvent-java.awt.Shape-javax.swing.text.ViewFactory-">removeUpdate</a></code> in class <code><a href="../view/">View</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>changes</code> - the change information from the associated document</dd> <dd>
+<code>a</code> - the current allocation of the view</dd> <dd>
+<code>f</code> - the factory to use to rebuild if the view has children</dd> <dt>See Also:</dt> <dd><a href="../view/#removeUpdate-javax.swing.event.DocumentEvent-java.awt.Shape-javax.swing.text.ViewFactory-"><code>View.removeUpdate(javax.swing.event.DocumentEvent, java.awt.Shape, javax.swing.text.ViewFactory)</code></a></dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

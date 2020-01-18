@@ -1,0 +1,293 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>RadialGradientPaint - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content="The RadialGradientPaint class provides a way to fill a shape with a circular radial color gradient pattern. The user may specify 2 or more gradient &hellip;">
+  <meta name="keywords" content="class, radialgradientpaint, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/java/awt/radialgradientpaint/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class RadialGradientPaint</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../multiplegradientpaint/">java.awt.MultipleGradientPaint</a></li> <li> <ul class="inheritance"> <li>java.awt.RadialGradientPaint</li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../paint/">Paint</a>, <a href="../transparency/">Transparency</a>
+</dd> </dl>   <pre data-language="java">public final class RadialGradientPaint
+extends MultipleGradientPaint</pre> <div>
+<p>The <code>RadialGradientPaint</code> class provides a way to fill a shape with a circular radial color gradient pattern. The user may specify 2 or more gradient colors, and this paint will provide an interpolation between each color. </p>
+<p> The user must specify the circle controlling the gradient pattern, which is described by a center point and a radius. The user can also specify a separate focus point within that circle, which controls the location of the first color of the gradient. By default the focus is set to be the center of the circle. </p>
+<p> This paint will map the first color of the gradient to the focus point, and the last color to the perimeter of the circle, interpolating smoothly for any in-between colors specified by the user. Any line drawn from the focus point to the circumference will thus span all the gradient colors. </p>
+<p> Specifying a focus point outside of the radius of the circle will cause the rings of the gradient pattern to be centered on the point just inside the edge of the circle in the direction of the focus point. The rendering will internally use this modified location as if it were the specified focus point. </p>
+<p> The user must provide an array of floats specifying how to distribute the colors along the gradient. These values should range from 0.0 to 1.0 and act like keyframes along the gradient (they mark where the gradient should be exactly a particular color). </p>
+<p> In the event that the user does not set the first keyframe value equal to 0 and/or the last keyframe value equal to 1, keyframes will be created at these positions and the first and last colors will be replicated there. So, if a user specifies the following arrays to construct a gradient:<br> </p>
+<pre data-language="java">{Color.BLUE, Color.RED}, {.3f, .7f}</pre> this will be converted to a gradient with the following keyframes:<br> <pre data-language="java">{Color.BLUE, Color.BLUE, Color.RED, Color.RED}, {0f, .3f, .7f, 1f}</pre> <p> The user may also select what action the <code>RadialGradientPaint</code> object takes when it is filling the space outside the circle's radius by setting <code>CycleMethod</code> to either <code>REFLECTION</code> or <code>REPEAT</code>. The gradient color proportions are equal for any particular line drawn from the focus point. The following figure shows that the distance AB is equal to the distance BC, and the distance AD is equal to the distance DE. </p>
+ If the gradient and graphics rendering transforms are uniformly scaled and the user sets the focus so that it coincides with the center of the circle, the gradient color proportions are equal for any line drawn from the center. The following figure shows the distances AB, BC, AD, and DE. They are all equal.  Note that some minor variations in distances may occur due to sampling at the granularity of a pixel. If no cycle method is specified, <code>NO_CYCLE</code> will be chosen by default, which means the the last keyframe color will be used to fill the remaining area. <p> The colorSpace parameter allows the user to specify in which colorspace the interpolation should be performed, default sRGB or linearized RGB. </p>
+<p> The following code demonstrates typical usage of <code>RadialGradientPaint</code>, where the center and focus points are the same: </p>
+<pre data-language="java">Point2D center = new Point2D.Float(50, 50);
+     float radius = 25;
+     float[] dist = {0.0f, 0.2f, 1.0f};
+     Color[] colors = {Color.RED, Color.WHITE, Color.BLUE};
+     RadialGradientPaint p =
+         new RadialGradientPaint(center, radius, dist, colors);</pre> <p> This image demonstrates the example code above, with default (centered) focus for each of the three cycle methods: </p>
+ <p> It is also possible to specify a non-centered focus point, as in the following code: </p>
+<pre data-language="java">Point2D center = new Point2D.Float(50, 50);
+     float radius = 25;
+     Point2D focus = new Point2D.Float(40, 40);
+     float[] dist = {0.0f, 0.2f, 1.0f};
+     Color[] colors = {Color.RED, Color.WHITE, Color.BLUE};
+     RadialGradientPaint p =
+         new RadialGradientPaint(center, radius, focus,
+                                 dist, colors,
+                                 CycleMethod.NO_CYCLE);</pre> <p> This image demonstrates the previous example code, with non-centered focus for each of the three cycle methods: </p>
+
+</div> <dl> <dt>Since:</dt> <dd>1.6</dd> <dt>See Also:</dt> <dd>
+<a href="../paint/"><code>Paint</code></a>, <a href="../graphics2d/#setPaint-java.awt.Paint-"><code>Graphics2D.setPaint(java.awt.Paint)</code></a>
+</dd> </dl>       <h2 id="nested.class.summary">Nested Classes</h2>  <h2 id="nested.classes.inherited.from.class.java.awt.MultipleGradientPaint">Nested classes/interfaces inherited from class java.awt.<a href="../multiplegradientpaint/">MultipleGradientPaint</a>
+</h2> <code><a href="../multiplegradientpaint.colorspacetype/">MultipleGradientPaint.ColorSpaceType</a>, <a href="../multiplegradientpaint.cyclemethod/">MultipleGradientPaint.CycleMethod</a></code>    <h2 id="field.summary">Fields</h2>  <h2 id="fields.inherited.from.class.java.awt.Transparency">Fields inherited from interface java.awt.<a href="../transparency/">Transparency</a>
+</h2> <code><a href="../transparency/#BITMASK">BITMASK</a>, <a href="../transparency/#OPAQUE">OPAQUE</a>, <a href="../transparency/#TRANSLUCENT">TRANSLUCENT</a></code>    <h2 id="constructor.detail">Constructors</h2>   <h3 id="RadialGradientPaint-float-float-float-float:A-java.awt.Color:A-">RadialGradientPaint</h3> <pre data-language="java">public RadialGradientPaint(float cx,
+                           float cy,
+                           float radius,
+                           float[] fractions,
+                           Color[] colors)</pre> <p>Constructs a <code>RadialGradientPaint</code> with a default <code>NO_CYCLE</code> repeating method and <code>SRGB</code> color space, using the center as the focus point.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>cx</code> - the X coordinate in user space of the center point of the circle defining the gradient. The last color of the gradient is mapped to the perimeter of this circle.</dd> <dd>
+<code>cy</code> - the Y coordinate in user space of the center point of the circle defining the gradient. The last color of the gradient is mapped to the perimeter of this circle.</dd> <dd>
+<code>radius</code> - the radius of the circle defining the extents of the color gradient</dd> <dd>
+<code>fractions</code> - numbers ranging from 0.0 to 1.0 specifying the distribution of colors along the gradient</dd> <dd>
+<code>colors</code> - array of colors to use in the gradient. The first color is used at the focus point, the last color around the perimeter of the circle.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>fractions</code> array is null, or <code>colors</code> array is null</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>radius</code> is non-positive, or <code>fractions.length != colors.length</code>, or <code>colors</code> is less than 2 in size, or a <code>fractions</code> value is less than 0.0 or greater than 1.0, or the <code>fractions</code> are not provided in strictly increasing order</dd> </dl>    <h3 id="RadialGradientPaint-java.awt.geom.Point2D-float-float:A-java.awt.Color:A-">RadialGradientPaint</h3> <pre data-language="java">public RadialGradientPaint(Point2D center,
+                           float radius,
+                           float[] fractions,
+                           Color[] colors)</pre> <p>Constructs a <code>RadialGradientPaint</code> with a default <code>NO_CYCLE</code> repeating method and <code>SRGB</code> color space, using the center as the focus point.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>center</code> - the center point, in user space, of the circle defining the gradient</dd> <dd>
+<code>radius</code> - the radius of the circle defining the extents of the color gradient</dd> <dd>
+<code>fractions</code> - numbers ranging from 0.0 to 1.0 specifying the distribution of colors along the gradient</dd> <dd>
+<code>colors</code> - array of colors to use in the gradient. The first color is used at the focus point, the last color around the perimeter of the circle.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>center</code> point is null, or <code>fractions</code> array is null, or <code>colors</code> array is null</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>radius</code> is non-positive, or <code>fractions.length != colors.length</code>, or <code>colors</code> is less than 2 in size, or a <code>fractions</code> value is less than 0.0 or greater than 1.0, or the <code>fractions</code> are not provided in strictly increasing order</dd> </dl>    <h3 id="RadialGradientPaint-float-float-float-float:A-java.awt.Color:A-java.awt.MultipleGradientPaint.CycleMethod-">RadialGradientPaint</h3> <pre data-language="java">public RadialGradientPaint(float cx,
+                           float cy,
+                           float radius,
+                           float[] fractions,
+                           Color[] colors,
+                           MultipleGradientPaint.CycleMethod cycleMethod)</pre> <p>Constructs a <code>RadialGradientPaint</code> with a default <code>SRGB</code> color space, using the center as the focus point.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>cx</code> - the X coordinate in user space of the center point of the circle defining the gradient. The last color of the gradient is mapped to the perimeter of this circle.</dd> <dd>
+<code>cy</code> - the Y coordinate in user space of the center point of the circle defining the gradient. The last color of the gradient is mapped to the perimeter of this circle.</dd> <dd>
+<code>radius</code> - the radius of the circle defining the extents of the color gradient</dd> <dd>
+<code>fractions</code> - numbers ranging from 0.0 to 1.0 specifying the distribution of colors along the gradient</dd> <dd>
+<code>colors</code> - array of colors to use in the gradient. The first color is used at the focus point, the last color around the perimeter of the circle.</dd> <dd>
+<code>cycleMethod</code> - either <code>NO_CYCLE</code>, <code>REFLECT</code>, or <code>REPEAT</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>fractions</code> array is null, or <code>colors</code> array is null, or <code>cycleMethod</code> is null</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>radius</code> is non-positive, or <code>fractions.length != colors.length</code>, or <code>colors</code> is less than 2 in size, or a <code>fractions</code> value is less than 0.0 or greater than 1.0, or the <code>fractions</code> are not provided in strictly increasing order</dd> </dl>    <h3 id="RadialGradientPaint-java.awt.geom.Point2D-float-float:A-java.awt.Color:A-java.awt.MultipleGradientPaint.CycleMethod-">RadialGradientPaint</h3> <pre data-language="java">public RadialGradientPaint(Point2D center,
+                           float radius,
+                           float[] fractions,
+                           Color[] colors,
+                           MultipleGradientPaint.CycleMethod cycleMethod)</pre> <p>Constructs a <code>RadialGradientPaint</code> with a default <code>SRGB</code> color space, using the center as the focus point.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>center</code> - the center point, in user space, of the circle defining the gradient</dd> <dd>
+<code>radius</code> - the radius of the circle defining the extents of the color gradient</dd> <dd>
+<code>fractions</code> - numbers ranging from 0.0 to 1.0 specifying the distribution of colors along the gradient</dd> <dd>
+<code>colors</code> - array of colors to use in the gradient. The first color is used at the focus point, the last color around the perimeter of the circle.</dd> <dd>
+<code>cycleMethod</code> - either <code>NO_CYCLE</code>, <code>REFLECT</code>, or <code>REPEAT</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>center</code> point is null, or <code>fractions</code> array is null, or <code>colors</code> array is null, or <code>cycleMethod</code> is null</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>radius</code> is non-positive, or <code>fractions.length != colors.length</code>, or <code>colors</code> is less than 2 in size, or a <code>fractions</code> value is less than 0.0 or greater than 1.0, or the <code>fractions</code> are not provided in strictly increasing order</dd> </dl>    <h3 id="RadialGradientPaint-float-float-float-float-float-float:A-java.awt.Color:A-java.awt.MultipleGradientPaint.CycleMethod-">RadialGradientPaint</h3> <pre data-language="java">public RadialGradientPaint(float cx,
+                           float cy,
+                           float radius,
+                           float fx,
+                           float fy,
+                           float[] fractions,
+                           Color[] colors,
+                           MultipleGradientPaint.CycleMethod cycleMethod)</pre> <p>Constructs a <code>RadialGradientPaint</code> with a default <code>SRGB</code> color space.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>cx</code> - the X coordinate in user space of the center point of the circle defining the gradient. The last color of the gradient is mapped to the perimeter of this circle.</dd> <dd>
+<code>cy</code> - the Y coordinate in user space of the center point of the circle defining the gradient. The last color of the gradient is mapped to the perimeter of this circle.</dd> <dd>
+<code>radius</code> - the radius of the circle defining the extents of the color gradient</dd> <dd>
+<code>fx</code> - the X coordinate of the point in user space to which the first color is mapped</dd> <dd>
+<code>fy</code> - the Y coordinate of the point in user space to which the first color is mapped</dd> <dd>
+<code>fractions</code> - numbers ranging from 0.0 to 1.0 specifying the distribution of colors along the gradient</dd> <dd>
+<code>colors</code> - array of colors to use in the gradient. The first color is used at the focus point, the last color around the perimeter of the circle.</dd> <dd>
+<code>cycleMethod</code> - either <code>NO_CYCLE</code>, <code>REFLECT</code>, or <code>REPEAT</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>fractions</code> array is null, or <code>colors</code> array is null, or <code>cycleMethod</code> is null</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>radius</code> is non-positive, or <code>fractions.length != colors.length</code>, or <code>colors</code> is less than 2 in size, or a <code>fractions</code> value is less than 0.0 or greater than 1.0, or the <code>fractions</code> are not provided in strictly increasing order</dd> </dl>    <h3 id="RadialGradientPaint-java.awt.geom.Point2D-float-java.awt.geom.Point2D-float:A-java.awt.Color:A-java.awt.MultipleGradientPaint.CycleMethod-">RadialGradientPaint</h3> <pre data-language="java">public RadialGradientPaint(Point2D center,
+                           float radius,
+                           Point2D focus,
+                           float[] fractions,
+                           Color[] colors,
+                           MultipleGradientPaint.CycleMethod cycleMethod)</pre> <p>Constructs a <code>RadialGradientPaint</code> with a default <code>SRGB</code> color space.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>center</code> - the center point, in user space, of the circle defining the gradient. The last color of the gradient is mapped to the perimeter of this circle.</dd> <dd>
+<code>radius</code> - the radius of the circle defining the extents of the color gradient</dd> <dd>
+<code>focus</code> - the point in user space to which the first color is mapped</dd> <dd>
+<code>fractions</code> - numbers ranging from 0.0 to 1.0 specifying the distribution of colors along the gradient</dd> <dd>
+<code>colors</code> - array of colors to use in the gradient. The first color is used at the focus point, the last color around the perimeter of the circle.</dd> <dd>
+<code>cycleMethod</code> - either <code>NO_CYCLE</code>, <code>REFLECT</code>, or <code>REPEAT</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if one of the points is null, or <code>fractions</code> array is null, or <code>colors</code> array is null, or <code>cycleMethod</code> is null</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>radius</code> is non-positive, or <code>fractions.length != colors.length</code>, or <code>colors</code> is less than 2 in size, or a <code>fractions</code> value is less than 0.0 or greater than 1.0, or the <code>fractions</code> are not provided in strictly increasing order</dd> </dl>    <h3 id="RadialGradientPaint-java.awt.geom.Point2D-float-java.awt.geom.Point2D-float:A-java.awt.Color:A-java.awt.MultipleGradientPaint.CycleMethod-java.awt.MultipleGradientPaint.ColorSpaceType-java.awt.geom.AffineTransform-">RadialGradientPaint</h3> <pre data-language="java">@ConstructorProperties(value={"centerPoint","radius","focusPoint","fractions","colors","cycleMethod","colorSpace","transform"})
+public RadialGradientPaint(Point2D center,
+                                                                                                                                                           float radius,
+                                                                                                                                                           Point2D focus,
+                                                                                                                                                           float[] fractions,
+                                                                                                                                                           Color[] colors,
+                                                                                                                                                           MultipleGradientPaint.CycleMethod cycleMethod,
+                                                                                                                                                           MultipleGradientPaint.ColorSpaceType colorSpace,
+                                                                                                                                                           AffineTransform gradientTransform)</pre> <p>Constructs a <code>RadialGradientPaint</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>center</code> - the center point in user space of the circle defining the gradient. The last color of the gradient is mapped to the perimeter of this circle.</dd> <dd>
+<code>radius</code> - the radius of the circle defining the extents of the color gradient</dd> <dd>
+<code>focus</code> - the point in user space to which the first color is mapped</dd> <dd>
+<code>fractions</code> - numbers ranging from 0.0 to 1.0 specifying the distribution of colors along the gradient</dd> <dd>
+<code>colors</code> - array of colors to use in the gradient. The first color is used at the focus point, the last color around the perimeter of the circle.</dd> <dd>
+<code>cycleMethod</code> - either <code>NO_CYCLE</code>, <code>REFLECT</code>, or <code>REPEAT</code>
+</dd> <dd>
+<code>colorSpace</code> - which color space to use for interpolation, either <code>SRGB</code> or <code>LINEAR_RGB</code>
+</dd> <dd>
+<code>gradientTransform</code> - transform to apply to the gradient</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if one of the points is null, or <code>fractions</code> array is null, or <code>colors</code> array is null, or <code>cycleMethod</code> is null, or <code>colorSpace</code> is null, or <code>gradientTransform</code> is null</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>radius</code> is non-positive, or <code>fractions.length != colors.length</code>, or <code>colors</code> is less than 2 in size, or a <code>fractions</code> value is less than 0.0 or greater than 1.0, or the <code>fractions</code> are not provided in strictly increasing order</dd> </dl>    <h3 id="RadialGradientPaint-java.awt.geom.Rectangle2D-float:A-java.awt.Color:A-java.awt.MultipleGradientPaint.CycleMethod-">RadialGradientPaint</h3> <pre data-language="java">public RadialGradientPaint(Rectangle2D gradientBounds,
+                           float[] fractions,
+                           Color[] colors,
+                           MultipleGradientPaint.CycleMethod cycleMethod)</pre> <div>
+<p>Constructs a <code>RadialGradientPaint</code> with a default <code>SRGB</code> color space. The gradient circle of the <code>RadialGradientPaint</code> is defined by the given bounding box. </p>
+<p> This constructor is a more convenient way to express the following (equivalent) code:<br> </p>
+<pre data-language="java">double gw = gradientBounds.getWidth();
+     double gh = gradientBounds.getHeight();
+     double cx = gradientBounds.getCenterX();
+     double cy = gradientBounds.getCenterY();
+     Point2D center = new Point2D.Double(cx, cy);
+
+     AffineTransform gradientTransform = new AffineTransform();
+     gradientTransform.translate(cx, cy);
+     gradientTransform.scale(gw / 2, gh / 2);
+     gradientTransform.translate(-cx, -cy);
+
+     RadialGradientPaint gp =
+         new RadialGradientPaint(center, 1.0f, center,
+                                 fractions, colors,
+                                 cycleMethod,
+                                 ColorSpaceType.SRGB,
+                                 gradientTransform);</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>gradientBounds</code> - the bounding box, in user space, of the circle defining the outermost extent of the gradient</dd> <dd>
+<code>fractions</code> - numbers ranging from 0.0 to 1.0 specifying the distribution of colors along the gradient</dd> <dd>
+<code>colors</code> - array of colors to use in the gradient. The first color is used at the focus point, the last color around the perimeter of the circle.</dd> <dd>
+<code>cycleMethod</code> - either <code>NO_CYCLE</code>, <code>REFLECT</code>, or <code>REPEAT</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>gradientBounds</code> is null, or <code>fractions</code> array is null, or <code>colors</code> array is null, or <code>cycleMethod</code> is null</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>gradientBounds</code> is empty, or <code>fractions.length != colors.length</code>, or <code>colors</code> is less than 2 in size, or a <code>fractions</code> value is less than 0.0 or greater than 1.0, or the <code>fractions</code> are not provided in strictly increasing order</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="createContext-java.awt.image.ColorModel-java.awt.Rectangle-java.awt.geom.Rectangle2D-java.awt.geom.AffineTransform-java.awt.RenderingHints-">createContext</h3> <pre data-language="java">public PaintContext createContext(ColorModel cm,
+                                  Rectangle deviceBounds,
+                                  Rectangle2D userBounds,
+                                  AffineTransform transform,
+                                  RenderingHints hints)</pre> <p>Creates and returns a <a href="../paintcontext/"><code>PaintContext</code></a> used to generate a circular radial color gradient pattern. See the description of the <a href="../paint/#createContext-java.awt.image.ColorModel-java.awt.Rectangle-java.awt.geom.Rectangle2D-java.awt.geom.AffineTransform-java.awt.RenderingHints-"><code>createContext</code></a> method for information on null parameter handling.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>cm</code> - the preferred <a href="../image/colormodel/"><code>ColorModel</code></a> which represents the most convenient format for the caller to receive the pixel data, or <code>null</code> if there is no preference.</dd> <dd>
+<code>deviceBounds</code> - the device space bounding box of the graphics primitive being rendered.</dd> <dd>
+<code>userBounds</code> - the user space bounding box of the graphics primitive being rendered.</dd> <dd>
+<code>transform</code> - the <a href="../geom/affinetransform/"><code>AffineTransform</code></a> from user space into device space.</dd> <dd>
+<code>hints</code> - the set of hints that the context object can use to choose between rendering alternatives.</dd> <dt>Returns:</dt> <dd>the <code>PaintContext</code> for generating color patterns.</dd> <dt>See Also:</dt> <dd>
+<a href="../paint/"><code>Paint</code></a>, <a href="../paintcontext/"><code>PaintContext</code></a>, <a href="../image/colormodel/"><code>ColorModel</code></a>, <a href="../rectangle/"><code>Rectangle</code></a>, <a href="../geom/rectangle2d/"><code>Rectangle2D</code></a>, <a href="../geom/affinetransform/"><code>AffineTransform</code></a>, <a href="../renderinghints/"><code>RenderingHints</code></a>
+</dd> </dl>    <h3 id="getCenterPoint--">getCenterPoint</h3> <pre data-language="java">public Point2D getCenterPoint()</pre> <p>Returns a copy of the center point of the radial gradient.</p> <dl> <dt>Returns:</dt> <dd>a <code>Point2D</code> object that is a copy of the center point</dd> </dl>    <h3 id="getFocusPoint--">getFocusPoint</h3> <pre data-language="java">public Point2D getFocusPoint()</pre> <p>Returns a copy of the focus point of the radial gradient. Note that if the focus point specified when the radial gradient was constructed lies outside of the radius of the circle, this method will still return the original focus point even though the rendering may center the rings of color on a different point that lies inside the radius.</p> <dl> <dt>Returns:</dt> <dd>a <code>Point2D</code> object that is a copy of the focus point</dd> </dl>    <h3 id="getRadius--">getRadius</h3> <pre data-language="java">public float getRadius()</pre> <p>Returns the radius of the circle defining the radial gradient.</p> <dl> <dt>Returns:</dt> <dd>the radius of the circle defining the radial gradient</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

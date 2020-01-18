@@ -1,0 +1,310 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>AudioSystem - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="The AudioSystem class acts as the entry point to the sampled-audio system resources. This class lets you query and access the mixers that are &hellip;">
+  <meta name="keywords" content="class, audiosystem, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/javax/sound/sampled/audiosystem/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class AudioSystem</h1>   <ul class="inheritance"> <li><a href="../../../../java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>javax.sound.sampled.AudioSystem</li> </ul> </li> </ul>     <pre data-language="java">public class AudioSystem
+extends Object</pre> <div>
+<p>The <code>AudioSystem</code> class acts as the entry point to the sampled-audio system resources. This class lets you query and access the mixers that are installed on the system. <code>AudioSystem</code> includes a number of methods for converting audio data between different formats, and for translating between audio files and streams. It also provides a method for obtaining a <code><a href="../line/"><code>Line</code></a></code> directly from the <code>AudioSystem</code> without dealing explicitly with mixers. </p>
+<p>Properties can be used to specify the default mixer for specific line types. Both system properties and a properties file are considered. The <code>sound.properties</code> properties file is read from an implementation-specific location (typically it is the <code>lib</code> directory in the Java installation directory). If a property exists both as a system property and in the properties file, the system property takes precedence. If none is specified, a suitable default is chosen among the available devices. The syntax of the properties file is specified in <a href="../../../../java/util/properties/#load-java.io.InputStream-"><code>Properties.load</code></a>. The following table lists the available property keys and which methods consider them: </p>
+<table> <caption>Audio System Property Keys</caption> <tr> <th>Property Key</th> <th>Interface</th> <th>Affected Method(s)</th> </tr> <tr> <td><code>javax.sound.sampled.Clip</code></td> <td><a href="../clip/"><code>Clip</code></a></td> <td>
+<a href="../audiosystem/#getLine-javax.sound.sampled.Line.Info-"><code>getLine(javax.sound.sampled.Line.Info)</code></a>, <a href="../audiosystem/#getClip--"><code>getClip()</code></a>
+</td> </tr> <tr> <td><code>javax.sound.sampled.Port</code></td> <td><a href="../port/"><code>Port</code></a></td> <td><a href="../audiosystem/#getLine-javax.sound.sampled.Line.Info-"><code>getLine(javax.sound.sampled.Line.Info)</code></a></td> </tr> <tr> <td><code>javax.sound.sampled.SourceDataLine</code></td> <td><a href="../sourcedataline/"><code>SourceDataLine</code></a></td> <td>
+<a href="../audiosystem/#getLine-javax.sound.sampled.Line.Info-"><code>getLine(javax.sound.sampled.Line.Info)</code></a>, <a href="../audiosystem/#getSourceDataLine-javax.sound.sampled.AudioFormat-"><code>getSourceDataLine(javax.sound.sampled.AudioFormat)</code></a>
+</td> </tr> <tr> <td><code>javax.sound.sampled.TargetDataLine</code></td> <td><a href="../targetdataline/"><code>TargetDataLine</code></a></td> <td>
+<a href="../audiosystem/#getLine-javax.sound.sampled.Line.Info-"><code>getLine(javax.sound.sampled.Line.Info)</code></a>, <a href="../audiosystem/#getTargetDataLine-javax.sound.sampled.AudioFormat-"><code>getTargetDataLine(javax.sound.sampled.AudioFormat)</code></a>
+</td> </tr> </table> The property value consists of the provider class name and the mixer name, separated by the hash mark ("#"). The provider class name is the fully-qualified name of a concrete <a href="../spi/mixerprovider/"><code>mixer provider</code></a> class. The mixer name is matched against the <code>String</code> returned by the <code>getName</code> method of <code>Mixer.Info</code>. Either the class name, or the mixer name may be omitted. If only the class name is specified, the trailing hash mark is optional. <p>If the provider class is specified, and it can be successfully retrieved from the installed providers, the list of <code>Mixer.Info</code> objects is retrieved from the provider. Otherwise, or when these mixers do not provide a subsequent match, the list is retrieved from <a href="../audiosystem/#getMixerInfo--"><code>getMixerInfo()</code></a> to contain all available <code>Mixer.Info</code> objects. </p>
+<p>If a mixer name is specified, the resulting list of <code>Mixer.Info</code> objects is searched: the first one with a matching name, and whose <code>Mixer</code> provides the respective line interface, will be returned. If no matching <code>Mixer.Info</code> object is found, or the mixer name is not specified, the first mixer from the resulting list, which provides the respective line interface, will be returned. For example, the property <code>javax.sound.sampled.Clip</code> with a value <code>"com.sun.media.sound.MixerProvider#SunClip"</code> will have the following consequences when <code>getLine</code> is called requesting a <code>Clip</code> instance: if the class <code>com.sun.media.sound.MixerProvider</code> exists in the list of installed mixer providers, the first <code>Clip</code> from the first mixer with name <code>"SunClip"</code> will be returned. If it cannot be found, the first <code>Clip</code> from the first mixer of the specified provider will be returned, regardless of name. If there is none, the first <code>Clip</code> from the first <code>Mixer</code> with name <code>"SunClip"</code> in the list of all mixers (as returned by <code>getMixerInfo</code>) will be returned, or, if not found, the first <code>Clip</code> of the first <code>Mixer</code>that can be found in the list of all mixers is returned. If that fails, too, an <code>IllegalArgumentException</code> is thrown.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.3</dd> <dt>See Also:</dt> <dd>
+<a href="../audioformat/"><code>AudioFormat</code></a>, <a href="../audioinputstream/"><code>AudioInputStream</code></a>, <a href="../mixer/"><code>Mixer</code></a>, <a href="../line/"><code>Line</code></a>, <a href="../line.info/"><code>Line.Info</code></a>
+</dd> </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="NOT_SPECIFIED">NOT_SPECIFIED</h3> <pre data-language="java">public static final int NOT_SPECIFIED</pre> <p>An integer that stands for an unknown numeric value. This value is appropriate only for signed quantities that do not normally take negative values. Examples include file sizes, frame sizes, buffer sizes, and sample rates. A number of Java Sound constructors accept a value of <code>NOT_SPECIFIED</code> for such parameters. Other methods may also accept or return this value, as documented.</p>      <h2 id="method.detail">Methods</h2>   <h3 id="getMixerInfo--">getMixerInfo</h3> <pre data-language="java">public static Mixer.Info[] getMixerInfo()</pre> <p>Obtains an array of mixer info objects that represents the set of audio mixers that are currently installed on the system.</p> <dl> <dt>Returns:</dt> <dd>an array of info objects for the currently installed mixers. If no mixers are available on the system, an array of length 0 is returned.</dd> <dt>See Also:</dt> <dd><a href="../audiosystem/#getMixer-javax.sound.sampled.Mixer.Info-"><code>getMixer(javax.sound.sampled.Mixer.Info)</code></a></dd> </dl>    <h3 id="getMixer-javax.sound.sampled.Mixer.Info-">getMixer</h3> <pre data-language="java">public static Mixer getMixer(Mixer.Info info)</pre> <p>Obtains the requested audio mixer.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - a <code>Mixer.Info</code> object representing the desired mixer, or <code>null</code> for the system default mixer</dd> <dt>Returns:</dt> <dd>the requested mixer</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if the requested mixer is unavailable because of security restrictions</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the info object does not represent a mixer installed on the system</dd> <dt>See Also:</dt> <dd><a href="../audiosystem/#getMixerInfo--"><code>getMixerInfo()</code></a></dd> </dl>    <h3 id="getSourceLineInfo-javax.sound.sampled.Line.Info-">getSourceLineInfo</h3> <pre data-language="java">public static Line.Info[] getSourceLineInfo(Line.Info info)</pre> <p>Obtains information about all source lines of a particular type that are supported by the installed mixers.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - a <code>Line.Info</code> object that specifies the kind of lines about which information is requested</dd> <dt>Returns:</dt> <dd>an array of <code>Line.Info</code> objects describing source lines matching the type requested. If no matching source lines are supported, an array of length 0 is returned.</dd> <dt>See Also:</dt> <dd><a href="../mixer/#getSourceLineInfo-javax.sound.sampled.Line.Info-"><code>Mixer.getSourceLineInfo(Line.Info)</code></a></dd> </dl>    <h3 id="getTargetLineInfo-javax.sound.sampled.Line.Info-">getTargetLineInfo</h3> <pre data-language="java">public static Line.Info[] getTargetLineInfo(Line.Info info)</pre> <p>Obtains information about all target lines of a particular type that are supported by the installed mixers.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - a <code>Line.Info</code> object that specifies the kind of lines about which information is requested</dd> <dt>Returns:</dt> <dd>an array of <code>Line.Info</code> objects describing target lines matching the type requested. If no matching target lines are supported, an array of length 0 is returned.</dd> <dt>See Also:</dt> <dd><a href="../mixer/#getTargetLineInfo-javax.sound.sampled.Line.Info-"><code>Mixer.getTargetLineInfo(Line.Info)</code></a></dd> </dl>    <h3 id="isLineSupported-javax.sound.sampled.Line.Info-">isLineSupported</h3> <pre data-language="java">public static boolean isLineSupported(Line.Info info)</pre> <p>Indicates whether the system supports any lines that match the specified <code>Line.Info</code> object. A line is supported if any installed mixer supports it.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - a <code>Line.Info</code> object describing the line for which support is queried</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if at least one matching line is supported, otherwise <code>false</code>
+</dd> <dt>See Also:</dt> <dd><a href="../mixer/#isLineSupported-javax.sound.sampled.Line.Info-"><code>Mixer.isLineSupported(Line.Info)</code></a></dd> </dl>    <h3 id="getLine-javax.sound.sampled.Line.Info-">getLine</h3> <pre data-language="java">public static Line getLine(Line.Info info)
+                    throws LineUnavailableException</pre> <div>
+<p>Obtains a line that matches the description in the specified <code>Line.Info</code> object. </p>
+<p>If a <code>DataLine</code> is requested, and <code>info</code> is an instance of <code>DataLine.Info</code> specifying at least one fully qualified audio format, the last one will be used as the default format of the returned <code>DataLine</code>. </p>
+<p>If system properties <code>javax.sound.sampled.Clip</code>, <code>javax.sound.sampled.Port</code>, <code>javax.sound.sampled.SourceDataLine</code> and <code>javax.sound.sampled.TargetDataLine</code> are defined or they are defined in the file "sound.properties", they are used to retrieve default lines. For details, refer to the <a href="../audiosystem/"><code>class description</code></a>. If the respective property is not set, or the mixer requested in the property is not installed or does not provide the requested line, all installed mixers are queried for the requested line type. A Line will be returned from the first mixer providing the requested line type.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - a <code>Line.Info</code> object describing the desired kind of line</dd> <dt>Returns:</dt> <dd>a line of the requested kind</dd> <dt>Throws:</dt> <dd>
+<code><a href="../lineunavailableexception/">LineUnavailableException</a></code> - if a matching line is not available due to resource restrictions</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if a matching line is not available due to security restrictions</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the system does not support at least one line matching the specified <code>Line.Info</code> object through any installed mixer</dd> </dl>    <h3 id="getClip--">getClip</h3> <pre data-language="java">public static Clip getClip()
+                    throws LineUnavailableException</pre> <div>
+<p>Obtains a clip that can be used for playing back an audio file or an audio stream. The returned clip will be provided by the default system mixer, or, if not possible, by any other mixer installed in the system that supports a <code>Clip</code> object. </p>
+<p>The returned clip must be opened with the <code>open(AudioFormat)</code> or <code>open(AudioInputStream)</code> method. </p>
+<p>This is a high-level method that uses <code>getMixer</code> and <code>getLine</code> internally. </p>
+<p>If the system property <code>javax.sound.sampled.Clip</code> is defined or it is defined in the file "sound.properties", it is used to retrieve the default clip. For details, refer to the <a href="../audiosystem/"><code>class description</code></a>.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the desired clip object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../lineunavailableexception/">LineUnavailableException</a></code> - if a clip object is not available due to resource restrictions</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if a clip object is not available due to security restrictions</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the system does not support at least one clip instance through any installed mixer</dd> <dt>Since:</dt> <dd>1.5</dd> <dt>See Also:</dt> <dd><a href="../audiosystem/#getClip-javax.sound.sampled.Mixer.Info-"><code>getClip(Mixer.Info)</code></a></dd> </dl>    <h3 id="getClip-javax.sound.sampled.Mixer.Info-">getClip</h3> <pre data-language="java">public static Clip getClip(Mixer.Info mixerInfo)
+                    throws LineUnavailableException</pre> <div>
+<p>Obtains a clip from the specified mixer that can be used for playing back an audio file or an audio stream. </p>
+<p>The returned clip must be opened with the <code>open(AudioFormat)</code> or <code>open(AudioInputStream)</code> method. </p>
+<p>This is a high-level method that uses <code>getMixer</code> and <code>getLine</code> internally.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>mixerInfo</code> - a <code>Mixer.Info</code> object representing the desired mixer, or <code>null</code> for the system default mixer</dd> <dt>Returns:</dt> <dd>a clip object from the specified mixer</dd> <dt>Throws:</dt> <dd>
+<code><a href="../lineunavailableexception/">LineUnavailableException</a></code> - if a clip is not available from this mixer due to resource restrictions</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if a clip is not available from this mixer due to security restrictions</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the system does not support at least one clip through the specified mixer</dd> <dt>Since:</dt> <dd>1.5</dd> <dt>See Also:</dt> <dd><a href="../audiosystem/#getClip--"><code>getClip()</code></a></dd> </dl>    <h3 id="getSourceDataLine-javax.sound.sampled.AudioFormat-">getSourceDataLine</h3> <pre data-language="java">public static SourceDataLine getSourceDataLine(AudioFormat format)
+                                        throws LineUnavailableException</pre> <div>
+<p>Obtains a source data line that can be used for playing back audio data in the format specified by the <code>AudioFormat</code> object. The returned line will be provided by the default system mixer, or, if not possible, by any other mixer installed in the system that supports a matching <code>SourceDataLine</code> object. </p>
+<p>The returned line should be opened with the <code>open(AudioFormat)</code> or <code>open(AudioFormat, int)</code> method. </p>
+<p>This is a high-level method that uses <code>getMixer</code> and <code>getLine</code> internally. </p>
+<p>The returned <code>SourceDataLine</code>'s default audio format will be initialized with <code>format</code>. </p>
+<p>If the system property <code>javax.sound.sampled.SourceDataLine</code> is defined or it is defined in the file "sound.properties", it is used to retrieve the default source data line. For details, refer to the <a href="../audiosystem/"><code>class description</code></a>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>format</code> - an <code>AudioFormat</code> object specifying the supported audio format of the returned line, or <code>null</code> for any audio format</dd> <dt>Returns:</dt> <dd>the desired <code>SourceDataLine</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../lineunavailableexception/">LineUnavailableException</a></code> - if a matching source data line is not available due to resource restrictions</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if a matching source data line is not available due to security restrictions</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the system does not support at least one source data line supporting the specified audio format through any installed mixer</dd> <dt>Since:</dt> <dd>1.5</dd> <dt>See Also:</dt> <dd><a href="../audiosystem/#getSourceDataLine-javax.sound.sampled.AudioFormat-javax.sound.sampled.Mixer.Info-"><code>getSourceDataLine(AudioFormat, Mixer.Info)</code></a></dd> </dl>    <h3 id="getSourceDataLine-javax.sound.sampled.AudioFormat-javax.sound.sampled.Mixer.Info-">getSourceDataLine</h3> <pre data-language="java">public static SourceDataLine getSourceDataLine(AudioFormat format,
+                                               Mixer.Info mixerinfo)
+                                        throws LineUnavailableException</pre> <div>
+<p>Obtains a source data line that can be used for playing back audio data in the format specified by the <code>AudioFormat</code> object, provided by the mixer specified by the <code>Mixer.Info</code> object. </p>
+<p>The returned line should be opened with the <code>open(AudioFormat)</code> or <code>open(AudioFormat, int)</code> method. </p>
+<p>This is a high-level method that uses <code>getMixer</code> and <code>getLine</code> internally. </p>
+<p>The returned <code>SourceDataLine</code>'s default audio format will be initialized with <code>format</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>format</code> - an <code>AudioFormat</code> object specifying the supported audio format of the returned line, or <code>null</code> for any audio format</dd> <dd>
+<code>mixerinfo</code> - a <code>Mixer.Info</code> object representing the desired mixer, or <code>null</code> for the system default mixer</dd> <dt>Returns:</dt> <dd>the desired <code>SourceDataLine</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../lineunavailableexception/">LineUnavailableException</a></code> - if a matching source data line is not available from the specified mixer due to resource restrictions</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if a matching source data line is not available from the specified mixer due to security restrictions</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the specified mixer does not support at least one source data line supporting the specified audio format</dd> <dt>Since:</dt> <dd>1.5</dd> <dt>See Also:</dt> <dd><a href="../audiosystem/#getSourceDataLine-javax.sound.sampled.AudioFormat-"><code>getSourceDataLine(AudioFormat)</code></a></dd> </dl>    <h3 id="getTargetDataLine-javax.sound.sampled.AudioFormat-">getTargetDataLine</h3> <pre data-language="java">public static TargetDataLine getTargetDataLine(AudioFormat format)
+                                        throws LineUnavailableException</pre> <div>
+<p>Obtains a target data line that can be used for recording audio data in the format specified by the <code>AudioFormat</code> object. The returned line will be provided by the default system mixer, or, if not possible, by any other mixer installed in the system that supports a matching <code>TargetDataLine</code> object. </p>
+<p>The returned line should be opened with the <code>open(AudioFormat)</code> or <code>open(AudioFormat, int)</code> method. </p>
+<p>This is a high-level method that uses <code>getMixer</code> and <code>getLine</code> internally. </p>
+<p>The returned <code>TargetDataLine</code>'s default audio format will be initialized with <code>format</code>. </p>
+<p>If the system property <code>javax.sound.sampled.TargetDataLine</code> is defined or it is defined in the file "sound.properties", it is used to retrieve the default target data line. For details, refer to the <a href="../audiosystem/"><code>class description</code></a>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>format</code> - an <code>AudioFormat</code> object specifying the supported audio format of the returned line, or <code>null</code> for any audio format</dd> <dt>Returns:</dt> <dd>the desired <code>TargetDataLine</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../lineunavailableexception/">LineUnavailableException</a></code> - if a matching target data line is not available due to resource restrictions</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if a matching target data line is not available due to security restrictions</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the system does not support at least one target data line supporting the specified audio format through any installed mixer</dd> <dt>Since:</dt> <dd>1.5</dd> <dt>See Also:</dt> <dd>
+<a href="../audiosystem/#getTargetDataLine-javax.sound.sampled.AudioFormat-javax.sound.sampled.Mixer.Info-"><code>getTargetDataLine(AudioFormat, Mixer.Info)</code></a>, <a href="../audiopermission/"><code>AudioPermission</code></a>
+</dd> </dl>    <h3 id="getTargetDataLine-javax.sound.sampled.AudioFormat-javax.sound.sampled.Mixer.Info-">getTargetDataLine</h3> <pre data-language="java">public static TargetDataLine getTargetDataLine(AudioFormat format,
+                                               Mixer.Info mixerinfo)
+                                        throws LineUnavailableException</pre> <div>
+<p>Obtains a target data line that can be used for recording audio data in the format specified by the <code>AudioFormat</code> object, provided by the mixer specified by the <code>Mixer.Info</code> object. </p>
+<p>The returned line should be opened with the <code>open(AudioFormat)</code> or <code>open(AudioFormat, int)</code> method. </p>
+<p>This is a high-level method that uses <code>getMixer</code> and <code>getLine</code> internally. </p>
+<p>The returned <code>TargetDataLine</code>'s default audio format will be initialized with <code>format</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>format</code> - an <code>AudioFormat</code> object specifying the supported audio format of the returned line, or <code>null</code> for any audio format</dd> <dd>
+<code>mixerinfo</code> - a <code>Mixer.Info</code> object representing the desired mixer, or <code>null</code> for the system default mixer</dd> <dt>Returns:</dt> <dd>the desired <code>TargetDataLine</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../lineunavailableexception/">LineUnavailableException</a></code> - if a matching target data line is not available from the specified mixer due to resource restrictions</dd> <dd>
+<code><a href="../../../../java/lang/securityexception/">SecurityException</a></code> - if a matching target data line is not available from the specified mixer due to security restrictions</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the specified mixer does not support at least one target data line supporting the specified audio format</dd> <dt>Since:</dt> <dd>1.5</dd> <dt>See Also:</dt> <dd>
+<a href="../audiosystem/#getTargetDataLine-javax.sound.sampled.AudioFormat-"><code>getTargetDataLine(AudioFormat)</code></a>, <a href="../audiopermission/"><code>AudioPermission</code></a>
+</dd> </dl>    <h3 id="getTargetEncodings-javax.sound.sampled.AudioFormat.Encoding-">getTargetEncodings</h3> <pre data-language="java">public static AudioFormat.Encoding[] getTargetEncodings(AudioFormat.Encoding sourceEncoding)</pre> <p>Obtains the encodings that the system can obtain from an audio input stream with the specified encoding using the set of installed format converters.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>sourceEncoding</code> - the encoding for which conversion support is queried</dd> <dt>Returns:</dt> <dd>array of encodings. If <code>sourceEncoding</code>is not supported, an array of length 0 is returned. Otherwise, the array will have a length of at least 1, representing <code>sourceEncoding</code> (no conversion).</dd> </dl>    <h3 id="getTargetEncodings-javax.sound.sampled.AudioFormat-">getTargetEncodings</h3> <pre data-language="java">public static AudioFormat.Encoding[] getTargetEncodings(AudioFormat sourceFormat)</pre> <p>Obtains the encodings that the system can obtain from an audio input stream with the specified format using the set of installed format converters.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>sourceFormat</code> - the audio format for which conversion is queried</dd> <dt>Returns:</dt> <dd>array of encodings. If <code>sourceFormat</code>is not supported, an array of length 0 is returned. Otherwise, the array will have a length of at least 1, representing the encoding of <code>sourceFormat</code> (no conversion).</dd> </dl>    <h3 id="isConversionSupported-javax.sound.sampled.AudioFormat.Encoding-javax.sound.sampled.AudioFormat-">isConversionSupported</h3> <pre data-language="java">public static boolean isConversionSupported(AudioFormat.Encoding targetEncoding,
+                                            AudioFormat sourceFormat)</pre> <p>Indicates whether an audio input stream of the specified encoding can be obtained from an audio input stream that has the specified format.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>targetEncoding</code> - the desired encoding after conversion</dd> <dd>
+<code>sourceFormat</code> - the audio format before conversion</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the conversion is supported, otherwise <code>false</code>
+</dd> </dl>    <h3 id="getAudioInputStream-javax.sound.sampled.AudioFormat.Encoding-javax.sound.sampled.AudioInputStream-">getAudioInputStream</h3> <pre data-language="java">public static AudioInputStream getAudioInputStream(AudioFormat.Encoding targetEncoding,
+                                                   AudioInputStream sourceStream)</pre> <p>Obtains an audio input stream of the indicated encoding, by converting the provided audio input stream.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>targetEncoding</code> - the desired encoding after conversion</dd> <dd>
+<code>sourceStream</code> - the stream to be converted</dd> <dt>Returns:</dt> <dd>an audio input stream of the indicated encoding</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the conversion is not supported</dd> <dt>See Also:</dt> <dd>
+<a href="../audiosystem/#getTargetEncodings-javax.sound.sampled.AudioFormat.Encoding-"><code>getTargetEncodings(AudioFormat.Encoding)</code></a>, <a href="../audiosystem/#getTargetEncodings-javax.sound.sampled.AudioFormat-"><code>getTargetEncodings(AudioFormat)</code></a>, <a href="../audiosystem/#isConversionSupported-javax.sound.sampled.AudioFormat.Encoding-javax.sound.sampled.AudioFormat-"><code>isConversionSupported(AudioFormat.Encoding, AudioFormat)</code></a>, <a href="../audiosystem/#getAudioInputStream-javax.sound.sampled.AudioFormat-javax.sound.sampled.AudioInputStream-"><code>getAudioInputStream(AudioFormat, AudioInputStream)</code></a>
+</dd> </dl>    <h3 id="getTargetFormats-javax.sound.sampled.AudioFormat.Encoding-javax.sound.sampled.AudioFormat-">getTargetFormats</h3> <pre data-language="java">public static AudioFormat[] getTargetFormats(AudioFormat.Encoding targetEncoding,
+                                             AudioFormat sourceFormat)</pre> <p>Obtains the formats that have a particular encoding and that the system can obtain from a stream of the specified format using the set of installed format converters.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>targetEncoding</code> - the desired encoding after conversion</dd> <dd>
+<code>sourceFormat</code> - the audio format before conversion</dd> <dt>Returns:</dt> <dd>array of formats. If no formats of the specified encoding are supported, an array of length 0 is returned.</dd> </dl>    <h3 id="isConversionSupported-javax.sound.sampled.AudioFormat-javax.sound.sampled.AudioFormat-">isConversionSupported</h3> <pre data-language="java">public static boolean isConversionSupported(AudioFormat targetFormat,
+                                            AudioFormat sourceFormat)</pre> <p>Indicates whether an audio input stream of a specified format can be obtained from an audio input stream of another specified format.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>targetFormat</code> - the desired audio format after conversion</dd> <dd>
+<code>sourceFormat</code> - the audio format before conversion</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the conversion is supported, otherwise <code>false</code>
+</dd> </dl>    <h3 id="getAudioInputStream-javax.sound.sampled.AudioFormat-javax.sound.sampled.AudioInputStream-">getAudioInputStream</h3> <pre data-language="java">public static AudioInputStream getAudioInputStream(AudioFormat targetFormat,
+                                                   AudioInputStream sourceStream)</pre> <p>Obtains an audio input stream of the indicated format, by converting the provided audio input stream.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>targetFormat</code> - the desired audio format after conversion</dd> <dd>
+<code>sourceStream</code> - the stream to be converted</dd> <dt>Returns:</dt> <dd>an audio input stream of the indicated format</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the conversion is not supported #see #getTargetEncodings(AudioFormat)</dd> <dt>See Also:</dt> <dd>
+<a href="../audiosystem/#getTargetFormats-javax.sound.sampled.AudioFormat.Encoding-javax.sound.sampled.AudioFormat-"><code>getTargetFormats(AudioFormat.Encoding, AudioFormat)</code></a>, <a href="../audiosystem/#isConversionSupported-javax.sound.sampled.AudioFormat-javax.sound.sampled.AudioFormat-"><code>isConversionSupported(AudioFormat, AudioFormat)</code></a>, <a href="../audiosystem/#getAudioInputStream-javax.sound.sampled.AudioFormat.Encoding-javax.sound.sampled.AudioInputStream-"><code>getAudioInputStream(AudioFormat.Encoding, AudioInputStream)</code></a>
+</dd> </dl>    <h3 id="getAudioFileFormat-java.io.InputStream-">getAudioFileFormat</h3> <pre data-language="java">public static AudioFileFormat getAudioFileFormat(InputStream stream)
+                                          throws UnsupportedAudioFileException,
+                                                 IOException</pre> <p>Obtains the audio file format of the provided input stream. The stream must point to valid audio file data. The implementation of this method may require multiple parsers to examine the stream to determine whether they support it. These parsers must be able to mark the stream, read enough data to determine whether they support the stream, and, if not, reset the stream's read pointer to its original position. If the input stream does not support these operations, this method may fail with an <code>IOException</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>stream</code> - the input stream from which file format information should be extracted</dd> <dt>Returns:</dt> <dd>an <code>AudioFileFormat</code> object describing the stream's audio file format</dd> <dt>Throws:</dt> <dd>
+<code><a href="../unsupportedaudiofileexception/">UnsupportedAudioFileException</a></code> - if the stream does not point to valid audio file data recognized by the system</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an input/output exception occurs</dd> <dt>See Also:</dt> <dd>
+<a href="../../../../java/io/inputstream/#markSupported--"><code>InputStream.markSupported()</code></a>, <a href="../../../../java/io/inputstream/#mark-int-"><code>InputStream.mark(int)</code></a>
+</dd> </dl>    <h3 id="getAudioFileFormat-java.net.URL-">getAudioFileFormat</h3> <pre data-language="java">public static AudioFileFormat getAudioFileFormat(URL url)
+                                          throws UnsupportedAudioFileException,
+                                                 IOException</pre> <p>Obtains the audio file format of the specified URL. The URL must point to valid audio file data.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>url</code> - the URL from which file format information should be extracted</dd> <dt>Returns:</dt> <dd>an <code>AudioFileFormat</code> object describing the audio file format</dd> <dt>Throws:</dt> <dd>
+<code><a href="../unsupportedaudiofileexception/">UnsupportedAudioFileException</a></code> - if the URL does not point to valid audio file data recognized by the system</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an input/output exception occurs</dd> </dl>    <h3 id="getAudioFileFormat-java.io.File-">getAudioFileFormat</h3> <pre data-language="java">public static AudioFileFormat getAudioFileFormat(File file)
+                                          throws UnsupportedAudioFileException,
+                                                 IOException</pre> <p>Obtains the audio file format of the specified <code>File</code>. The <code>File</code> must point to valid audio file data.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>file</code> - the <code>File</code> from which file format information should be extracted</dd> <dt>Returns:</dt> <dd>an <code>AudioFileFormat</code> object describing the audio file format</dd> <dt>Throws:</dt> <dd>
+<code><a href="../unsupportedaudiofileexception/">UnsupportedAudioFileException</a></code> - if the <code>File</code> does not point to valid audio file data recognized by the system</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O exception occurs</dd> </dl>    <h3 id="getAudioInputStream-java.io.InputStream-">getAudioInputStream</h3> <pre data-language="java">public static AudioInputStream getAudioInputStream(InputStream stream)
+                                            throws UnsupportedAudioFileException,
+                                                   IOException</pre> <p>Obtains an audio input stream from the provided input stream. The stream must point to valid audio file data. The implementation of this method may require multiple parsers to examine the stream to determine whether they support it. These parsers must be able to mark the stream, read enough data to determine whether they support the stream, and, if not, reset the stream's read pointer to its original position. If the input stream does not support these operation, this method may fail with an <code>IOException</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>stream</code> - the input stream from which the <code>AudioInputStream</code> should be constructed</dd> <dt>Returns:</dt> <dd>an <code>AudioInputStream</code> object based on the audio file data contained in the input stream.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../unsupportedaudiofileexception/">UnsupportedAudioFileException</a></code> - if the stream does not point to valid audio file data recognized by the system</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O exception occurs</dd> <dt>See Also:</dt> <dd>
+<a href="../../../../java/io/inputstream/#markSupported--"><code>InputStream.markSupported()</code></a>, <a href="../../../../java/io/inputstream/#mark-int-"><code>InputStream.mark(int)</code></a>
+</dd> </dl>    <h3 id="getAudioInputStream-java.net.URL-">getAudioInputStream</h3> <pre data-language="java">public static AudioInputStream getAudioInputStream(URL url)
+                                            throws UnsupportedAudioFileException,
+                                                   IOException</pre> <p>Obtains an audio input stream from the URL provided. The URL must point to valid audio file data.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>url</code> - the URL for which the <code>AudioInputStream</code> should be constructed</dd> <dt>Returns:</dt> <dd>an <code>AudioInputStream</code> object based on the audio file data pointed to by the URL</dd> <dt>Throws:</dt> <dd>
+<code><a href="../unsupportedaudiofileexception/">UnsupportedAudioFileException</a></code> - if the URL does not point to valid audio file data recognized by the system</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O exception occurs</dd> </dl>    <h3 id="getAudioInputStream-java.io.File-">getAudioInputStream</h3> <pre data-language="java">public static AudioInputStream getAudioInputStream(File file)
+                                            throws UnsupportedAudioFileException,
+                                                   IOException</pre> <p>Obtains an audio input stream from the provided <code>File</code>. The <code>File</code> must point to valid audio file data.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>file</code> - the <code>File</code> for which the <code>AudioInputStream</code> should be constructed</dd> <dt>Returns:</dt> <dd>an <code>AudioInputStream</code> object based on the audio file data pointed to by the <code>File</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../unsupportedaudiofileexception/">UnsupportedAudioFileException</a></code> - if the <code>File</code> does not point to valid audio file data recognized by the system</dd> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O exception occurs</dd> </dl>    <h3 id="getAudioFileTypes--">getAudioFileTypes</h3> <pre data-language="java">public static AudioFileFormat.Type[] getAudioFileTypes()</pre> <p>Obtains the file types for which file writing support is provided by the system.</p> <dl> <dt>Returns:</dt> <dd>array of unique file types. If no file types are supported, an array of length 0 is returned.</dd> </dl>    <h3 id="isFileTypeSupported-javax.sound.sampled.AudioFileFormat.Type-">isFileTypeSupported</h3> <pre data-language="java">public static boolean isFileTypeSupported(AudioFileFormat.Type fileType)</pre> <p>Indicates whether file writing support for the specified file type is provided by the system.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>fileType</code> - the file type for which write capabilities are queried</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the file type is supported, otherwise <code>false</code>
+</dd> </dl>    <h3 id="getAudioFileTypes-javax.sound.sampled.AudioInputStream-">getAudioFileTypes</h3> <pre data-language="java">public static AudioFileFormat.Type[] getAudioFileTypes(AudioInputStream stream)</pre> <p>Obtains the file types that the system can write from the audio input stream specified.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>stream</code> - the audio input stream for which audio file type support is queried</dd> <dt>Returns:</dt> <dd>array of file types. If no file types are supported, an array of length 0 is returned.</dd> </dl>    <h3 id="isFileTypeSupported-javax.sound.sampled.AudioFileFormat.Type-javax.sound.sampled.AudioInputStream-">isFileTypeSupported</h3> <pre data-language="java">public static boolean isFileTypeSupported(AudioFileFormat.Type fileType,
+                                          AudioInputStream stream)</pre> <p>Indicates whether an audio file of the specified file type can be written from the indicated audio input stream.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>fileType</code> - the file type for which write capabilities are queried</dd> <dd>
+<code>stream</code> - the stream for which file-writing support is queried</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the file type is supported for this audio input stream, otherwise <code>false</code>
+</dd> </dl>    <h3 id="write-javax.sound.sampled.AudioInputStream-javax.sound.sampled.AudioFileFormat.Type-java.io.OutputStream-">write</h3> <pre data-language="java">public static int write(AudioInputStream stream,
+                        AudioFileFormat.Type fileType,
+                        OutputStream out)
+                 throws IOException</pre> <p>Writes a stream of bytes representing an audio file of the specified file type to the output stream provided. Some file types require that the length be written into the file header; such files cannot be written from start to finish unless the length is known in advance. An attempt to write a file of such a type will fail with an IOException if the length in the audio file type is <code>AudioSystem.NOT_SPECIFIED</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>stream</code> - the audio input stream containing audio data to be written to the file</dd> <dd>
+<code>fileType</code> - the kind of audio file to write</dd> <dd>
+<code>out</code> - the stream to which the file data should be written</dd> <dt>Returns:</dt> <dd>the number of bytes written to the output stream</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an input/output exception occurs</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the file type is not supported by the system</dd> <dt>See Also:</dt> <dd>
+<a href="../audiosystem/#isFileTypeSupported-javax.sound.sampled.AudioFileFormat.Type-"><code>isFileTypeSupported(javax.sound.sampled.AudioFileFormat.Type)</code></a>, <a href="../audiosystem/#getAudioFileTypes--"><code>getAudioFileTypes()</code></a>
+</dd> </dl>    <h3 id="write-javax.sound.sampled.AudioInputStream-javax.sound.sampled.AudioFileFormat.Type-java.io.File-">write</h3> <pre data-language="java">public static int write(AudioInputStream stream,
+                        AudioFileFormat.Type fileType,
+                        File out)
+                 throws IOException</pre> <p>Writes a stream of bytes representing an audio file of the specified file type to the external file provided.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>stream</code> - the audio input stream containing audio data to be written to the file</dd> <dd>
+<code>fileType</code> - the kind of audio file to write</dd> <dd>
+<code>out</code> - the external file to which the file data should be written</dd> <dt>Returns:</dt> <dd>the number of bytes written to the file</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/io/ioexception/">IOException</a></code> - if an I/O exception occurs</dd> <dd>
+<code><a href="../../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the file type is not supported by the system</dd> <dt>See Also:</dt> <dd>
+<a href="../audiosystem/#isFileTypeSupported-javax.sound.sampled.AudioFileFormat.Type-"><code>isFileTypeSupported(javax.sound.sampled.AudioFileFormat.Type)</code></a>, <a href="../audiosystem/#getAudioFileTypes--"><code>getAudioFileTypes()</code></a>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

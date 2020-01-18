@@ -1,0 +1,624 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>JList - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content="A component that displays a list of objects and allows the user to select one or more items. A separate model, ListModel, maintains the contents of &hellip;">
+  <meta name="keywords" content="class, jlist, e, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/javax/swing/jlist/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class JList&lt;E&gt;</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../../../java/awt/component/">java.awt.Component</a></li> <li> <ul class="inheritance"> <li><a href="../../../java/awt/container/">java.awt.Container</a></li> <li> <ul class="inheritance"> <li><a href="../jcomponent/">javax.swing.JComponent</a></li> <li> <ul class="inheritance"> <li>javax.swing.JList&lt;E&gt;</li> </ul> </li> </ul> </li> </ul> </li> </ul> </li> </ul>   <dl> <dt>Type Parameters:</dt> <dd>
+<code>E</code> - the type of the elements of this list</dd> </dl> <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../../java/awt/image/imageobserver/">ImageObserver</a>, <a href="../../../java/awt/menucontainer/">MenuContainer</a>, <a href="..//openjdk~8/java/io/serializable/">Serializable</a>, <a href="..//openjdk~8_web/javax/accessibility/accessible/">Accessible</a>, <a href="../scrollable/">Scrollable</a>
+</dd> </dl>   <pre data-language="java">public class JList&lt;E&gt;
+extends JComponent
+implements Scrollable, Accessible</pre> <div>
+<p>A component that displays a list of objects and allows the user to select one or more items. A separate model, <code>ListModel</code>, maintains the contents of the list. </p>
+<p> It's easy to display an array or Vector of objects, using the <code>JList</code> constructor that automatically builds a read-only <code>ListModel</code> instance for you: </p>
+<pre data-language="java">// Create a JList that displays strings from an array
+
+ String[] data = {"one", "two", "three", "four"};
+ JList&lt;String&gt; myList = new JList&lt;String&gt;(data);
+
+ // Create a JList that displays the superclasses of JList.class, by
+ // creating it with a Vector populated with this data
+
+ Vector&lt;Class&lt;?&gt;&gt; superClasses = new Vector&lt;Class&lt;?&gt;&gt;();
+ Class&lt;JList&gt; rootClass = javax.swing.JList.class;
+ for(Class&lt;?&gt; cls = rootClass; cls != null; cls = cls.getSuperclass()) {
+     superClasses.addElement(cls);
+ }
+ JList&lt;Class&lt;?&gt;&gt; myList = new JList&lt;Class&lt;?&gt;&gt;(superClasses);
+
+ // The automatically created model is stored in JList's "model"
+ // property, which you can retrieve
+
+ ListModel&lt;Class&lt;?&gt;&gt; model = myList.getModel();
+ for(int i = 0; i &lt; model.getSize(); i++) {
+     System.out.println(model.getElementAt(i));
+ }</pre> <p> A <code>ListModel</code> can be supplied directly to a <code>JList</code> by way of a constructor or the <code>setModel</code> method. The contents need not be static - the number of items, and the values of items can change over time. A correct <code>ListModel</code> implementation notifies the set of <code>javax.swing.event.ListDataListener</code>s that have been added to it, each time a change occurs. These changes are characterized by a <code>javax.swing.event.ListDataEvent</code>, which identifies the range of list indices that have been modified, added, or removed. <code>JList</code>'s <code>ListUI</code> is responsible for keeping the visual representation up to date with changes, by listening to the model. </p>
+<p> Simple, dynamic-content, <code>JList</code> applications can use the <code>DefaultListModel</code> class to maintain list elements. This class implements the <code>ListModel</code> interface and also provides a <code>java.util.Vector</code>-like API. Applications that need a more custom <code>ListModel</code> implementation may instead wish to subclass <code>AbstractListModel</code>, which provides basic support for managing and notifying listeners. For example, a read-only implementation of <code>AbstractListModel</code>: </p>
+<pre data-language="java">// This list model has about 2^16 elements.  Enjoy scrolling.
+
+ ListModel&lt;String&gt; bigData = new AbstractListModel&lt;String&gt;() {
+     public int getSize() { return Short.MAX_VALUE; }
+     public String getElementAt(int index) { return "Index " + index; }
+ };</pre> <p> The selection state of a <code>JList</code> is managed by another separate model, an instance of <code>ListSelectionModel</code>. <code>JList</code> is initialized with a selection model on construction, and also contains methods to query or set this selection model. Additionally, <code>JList</code> provides convenient methods for easily managing the selection. These methods, such as <code>setSelectedIndex</code> and <code>getSelectedValue</code>, are cover methods that take care of the details of interacting with the selection model. By default, <code>JList</code>'s selection model is configured to allow any combination of items to be selected at a time; selection mode <code>MULTIPLE_INTERVAL_SELECTION</code>. The selection mode can be changed on the selection model directly, or via <code>JList</code>'s cover method. Responsibility for updating the selection model in response to user gestures lies with the list's <code>ListUI</code>. </p>
+<p> A correct <code>ListSelectionModel</code> implementation notifies the set of <code>javax.swing.event.ListSelectionListener</code>s that have been added to it each time a change to the selection occurs. These changes are characterized by a <code>javax.swing.event.ListSelectionEvent</code>, which identifies the range of the selection change. </p>
+<p> The preferred way to listen for changes in list selection is to add <code>ListSelectionListener</code>s directly to the <code>JList</code>. <code>JList</code> then takes care of listening to the the selection model and notifying your listeners of change. </p>
+<p> Responsibility for listening to selection changes in order to keep the list's visual representation up to date lies with the list's <code>ListUI</code>. </p>
+<p>  Painting of cells in a <code id="renderer">JList</code> is handled by a delegate called a cell renderer, installed on the list as the <code>cellRenderer</code> property. The renderer provides a <code>java.awt.Component</code> that is used like a "rubber stamp" to paint the cells. Each time a cell needs to be painted, the list's <code>ListUI</code> asks the cell renderer for the component, moves it into place, and has it paint the contents of the cell by way of its <code>paint</code> method. A default cell renderer, which uses a <code>JLabel</code> component to render, is installed by the lists's <code>ListUI</code>. You can substitute your own renderer using code like this: </p>
+<pre data-language="java">// Display an icon and a string for each object in the list.
+
+ class MyCellRenderer extends JLabel implements ListCellRenderer&lt;Object&gt; {
+     final static ImageIcon longIcon = new ImageIcon("long.gif");
+     final static ImageIcon shortIcon = new ImageIcon("short.gif");
+
+     // This is the only method defined by ListCellRenderer.
+     // We just reconfigure the JLabel each time we're called.
+
+     public Component getListCellRendererComponent(
+       JList&lt;?&gt; list,           // the list
+       Object value,            // value to display
+       int index,               // cell index
+       boolean isSelected,      // is the cell selected
+       boolean cellHasFocus)    // does the cell have focus
+     {
+         String s = value.toString();
+         setText(s);
+         setIcon((s.length() &gt; 10) ? longIcon : shortIcon);
+         if (isSelected) {
+             setBackground(list.getSelectionBackground());
+             setForeground(list.getSelectionForeground());
+         } else {
+             setBackground(list.getBackground());
+             setForeground(list.getForeground());
+         }
+         setEnabled(list.isEnabled());
+         setFont(list.getFont());
+         setOpaque(true);
+         return this;
+     }
+ }
+
+ myList.setCellRenderer(new MyCellRenderer());</pre> <p> Another job for the cell renderer is in helping to determine sizing information for the list. By default, the list's <code>ListUI</code> determines the size of cells by asking the cell renderer for its preferred size for each list item. This can be expensive for large lists of items. To avoid these calculations, you can set a <code>fixedCellWidth</code> and <code>fixedCellHeight</code> on the list, or have these values calculated automatically based on a single prototype value:  </p>
+<pre data-language="java">JList&lt;String&gt; bigDataList = new JList&lt;String&gt;(bigData);
+
+ // We don't want the JList implementation to compute the width
+ // or height of all of the list cells, so we give it a string
+ // that's as big as we'll need for any cell.  It uses this to
+ // compute values for the fixedCellWidth and fixedCellHeight
+ // properties.
+
+ bigDataList.setPrototypeCellValue("Index 1234567890");</pre> <p> <code>JList</code> doesn't implement scrolling directly. To create a list that scrolls, make it the viewport view of a <code>JScrollPane</code>. For example: </p>
+<pre data-language="java">JScrollPane scrollPane = new JScrollPane(myList);
+
+ // Or in two steps:
+ JScrollPane scrollPane = new JScrollPane();
+ scrollPane.getViewport().setView(myList);</pre> <p> <code>JList</code> doesn't provide any special handling of double or triple (or N) mouse clicks, but it's easy to add a <code>MouseListener</code> if you wish to take action on these events. Use the <code>locationToIndex</code> method to determine what cell was clicked. For example: </p>
+<pre data-language="java">MouseListener mouseListener = new MouseAdapter() {
+     public void mouseClicked(MouseEvent e) {
+         if (e.getClickCount() == 2) {
+             int index = list.locationToIndex(e.getPoint());
+             System.out.println("Double clicked on Item " + index);
+          }
+     }
+ };
+ list.addMouseListener(mouseListener);</pre> <p> <strong>Warning:</strong> Swing is not thread safe. For more information see <a href="../package-summary/#threading">Swing's Threading Policy</a>. </p>
+<p> <strong>Warning:</strong> Serialized objects of this class will not be compatible with future Swing releases. The current serialization support is appropriate for short term storage or RMI between applications running the same version of Swing. As of 1.4, support for long term storage of all JavaBeans™ has been added to the <code>java.beans</code> package. Please see <a href="..//openjdk~8/java/beans/xmlencoder/"><code>XMLEncoder</code></a>. </p>
+<p> See <a href="https://docs.oracle.com/javase/tutorial/uiswing/components/list.html" target="_blank">How to Use Lists</a> in <a href="https://docs.oracle.com/javase/tutorial/" target="_blank"><em>The Java Tutorial</em></a> for further documentation. </p>
+
+</div> <dl> <dt>See Also:</dt> <dd>
+<a href="../listmodel/"><code>ListModel</code></a>, <a href="../abstractlistmodel/"><code>AbstractListModel</code></a>, <a href="../defaultlistmodel/"><code>DefaultListModel</code></a>, <a href="../listselectionmodel/"><code>ListSelectionModel</code></a>, <a href="../defaultlistselectionmodel/"><code>DefaultListSelectionModel</code></a>, <a href="../listcellrenderer/"><code>ListCellRenderer</code></a>, <a href="../defaultlistcellrenderer/"><code>DefaultListCellRenderer</code></a>
+</dd> </dl>       <h2 id="nested.class.summary">Nested Classes</h2> <table> <caption>Nested Classes </caption> <tr> <th scope="col">Modifier and Type</th> <th scope="col">Class and Description</th> </tr> <tr> <td><code>protected class </code></td> <td>
+<code><a href="../jlist.accessiblejlist/">JList.AccessibleJList</a></code> <p>This class implements accessibility support for the <code>JList</code> class.</p> </td> </tr> <tr> <td><code>static class </code></td> <td>
+<code><a href="../jlist.droplocation/">JList.DropLocation</a></code> <p>A subclass of <code>TransferHandler.DropLocation</code> representing a drop location for a <code>JList</code>.</p> </td> </tr> </table>  <h2 id="nested.classes.inherited.from.class.javax.swing.JComponent">Nested classes/interfaces inherited from class javax.swing.<a href="../jcomponent/">JComponent</a>
+</h2> <code><a href="../jcomponent.accessiblejcomponent/">JComponent.AccessibleJComponent</a></code>  <h2 id="nested.classes.inherited.from.class.java.awt.Container">Nested classes/interfaces inherited from class java.awt.<a href="../../../java/awt/container/">Container</a>
+</h2> <code><a href="../../../java/awt/container.accessibleawtcontainer/">Container.AccessibleAWTContainer</a></code>  <h2 id="nested.classes.inherited.from.class.java.awt.Component">Nested classes/interfaces inherited from class java.awt.<a href="../../../java/awt/component/">Component</a>
+</h2> <code><a href="../../../java/awt/component.accessibleawtcomponent/">Component.AccessibleAWTComponent</a>, <a href="../../../java/awt/component.baselineresizebehavior/">Component.BaselineResizeBehavior</a>, <a href="../../../java/awt/component.bltbufferstrategy/">Component.BltBufferStrategy</a>, <a href="../../../java/awt/component.flipbufferstrategy/">Component.FlipBufferStrategy</a></code>    <h2 id="field.detail">Fields</h2>   <h3 id="VERTICAL">VERTICAL</h3> <pre data-language="java">public static final int VERTICAL</pre> <p>Indicates a vertical layout of cells, in a single column; the default layout.</p> <dl> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setLayoutOrientation-int-"><code>setLayoutOrientation(int)</code></a>, Constant Field Values</dd> </dl>    <h3 id="VERTICAL_WRAP">VERTICAL_WRAP</h3> <pre data-language="java">public static final int VERTICAL_WRAP</pre> <p>Indicates a "newspaper style" layout with cells flowing vertically then horizontally.</p> <dl> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setLayoutOrientation-int-"><code>setLayoutOrientation(int)</code></a>, Constant Field Values</dd> </dl>    <h3 id="HORIZONTAL_WRAP">HORIZONTAL_WRAP</h3> <pre data-language="java">public static final int HORIZONTAL_WRAP</pre> <p>Indicates a "newspaper style" layout with cells flowing horizontally then vertically.</p> <dl> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setLayoutOrientation-int-"><code>setLayoutOrientation(int)</code></a>, Constant Field Values</dd> </dl>     <h2 id="constructor.detail">Constructors</h2>   <h3 id="JList-javax.swing.ListModel-">JList</h3> <pre data-language="java">public JList(ListModel&lt;E&gt; dataModel)</pre> <div>
+<p>Constructs a <code>JList</code> that displays elements from the specified, <code>non-null</code>, model. All <code>JList</code> constructors delegate to this one. </p>
+<p> This constructor registers the list with the <code>ToolTipManager</code>, allowing for tooltips to be provided by the cell renderers.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>dataModel</code> - the model for the list</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the model is <code>null</code>
+</dd> </dl>    <h3 id="JList-E:A-">JList</h3> <pre data-language="java">public JList(E[] listData)</pre> <div>
+<p>Constructs a <code>JList</code> that displays the elements in the specified array. This constructor creates a read-only model for the given array, and then delegates to the constructor that takes a <code>ListModel</code>. </p>
+<p> Attempts to pass a <code>null</code> value to this method results in undefined behavior and, most likely, exceptions. The created model references the given array directly. Attempts to modify the array after constructing the list results in undefined behavior.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>listData</code> - the array of Objects to be loaded into the data model, <code>non-null</code>
+</dd> </dl>    <h3 id="JList-java.util.Vector-">JList</h3> <pre data-language="java">public JList(Vector&lt;? extends E&gt; listData)</pre> <div>
+<p>Constructs a <code>JList</code> that displays the elements in the specified <code>Vector</code>. This constructor creates a read-only model for the given <code>Vector</code>, and then delegates to the constructor that takes a <code>ListModel</code>. </p>
+<p> Attempts to pass a <code>null</code> value to this method results in undefined behavior and, most likely, exceptions. The created model references the given <code>Vector</code> directly. Attempts to modify the <code>Vector</code> after constructing the list results in undefined behavior.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>listData</code> - the <code>Vector</code> to be loaded into the data model, <code>non-null</code>
+</dd> </dl>    <h3 id="JList--">JList</h3> <pre data-language="java">public JList()</pre> <p>Constructs a <code>JList</code> with an empty, read-only, model.</p>     <h2 id="method.detail">Methods</h2>   <h3 id="getUI--">getUI</h3> <pre data-language="java">public ListUI getUI()</pre> <p>Returns the <code>ListUI</code>, the look and feel object that renders this component.</p> <dl> <dt>Returns:</dt> <dd>the <code>ListUI</code> object that renders this component</dd> </dl>    <h3 id="setUI-javax.swing.plaf.ListUI-">setUI</h3> <pre data-language="java">public void setUI(ListUI ui)</pre> <p>Sets the <code>ListUI</code>, the look and feel object that renders this component.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>ui</code> - the <code>ListUI</code> object</dd> <dt>See Also:</dt> <dd><a href="../uidefaults/#getUI-javax.swing.JComponent-"><code>UIDefaults.getUI(javax.swing.JComponent)</code></a></dd> </dl>    <h3 id="updateUI--">updateUI</h3> <pre data-language="java">public void updateUI()</pre> <p>Resets the <code>ListUI</code> property by setting it to the value provided by the current look and feel. If the current cell renderer was installed by the developer (rather than the look and feel itself), this also causes the cell renderer and its children to be updated, by calling <code>SwingUtilities.updateComponentTreeUI</code> on it.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../jcomponent/#updateUI--">updateUI</a></code> in class <code><a href="../jcomponent/">JComponent</a></code>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../uimanager/#getUI-javax.swing.JComponent-"><code>UIManager.getUI(javax.swing.JComponent)</code></a>, <a href="../swingutilities/#updateComponentTreeUI-java.awt.Component-"><code>SwingUtilities.updateComponentTreeUI(java.awt.Component)</code></a>
+</dd> </dl>    <h3 id="getUIClassID--">getUIClassID</h3> <pre data-language="java">public String getUIClassID()</pre> <p>Returns <code>"ListUI"</code>, the <code>UIDefaults</code> key used to look up the name of the <code>javax.swing.plaf.ListUI</code> class that defines the look and feel for this component.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../jcomponent/#getUIClassID--">getUIClassID</a></code> in class <code><a href="../jcomponent/">JComponent</a></code>
+</dd> <dt>Returns:</dt> <dd>the string "ListUI"</dd> <dt>See Also:</dt> <dd>
+<a href="../jcomponent/#getUIClassID--"><code>JComponent.getUIClassID()</code></a>, <a href="../uidefaults/#getUI-javax.swing.JComponent-"><code>UIDefaults.getUI(javax.swing.JComponent)</code></a>
+</dd> </dl>    <h3 id="getPrototypeCellValue--">getPrototypeCellValue</h3> <pre data-language="java">public E getPrototypeCellValue()</pre> <p>Returns the "prototypical" cell value -- a value used to calculate a fixed width and height for cells. This can be <code>null</code> if there is no such value.</p> <dl> <dt>Returns:</dt> <dd>the value of the <code>prototypeCellValue</code> property</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setPrototypeCellValue-E-"><code>setPrototypeCellValue(E)</code></a></dd> </dl>    <h3 id="setPrototypeCellValue-E-">setPrototypeCellValue</h3> <pre data-language="java">public void setPrototypeCellValue(E prototypeCellValue)</pre> <div>
+<p>Sets the <code>prototypeCellValue</code> property, and then (if the new value is <code>non-null</code>), computes the <code>fixedCellWidth</code> and <code>fixedCellHeight</code> properties by requesting the cell renderer component for the given value (and index 0) from the cell renderer, and using that component's preferred size. </p>
+<p> This method is useful when the list is too long to allow the <code>ListUI</code> to compute the width/height of each cell, and there is a single cell value that is known to occupy as much space as any of the others, a so-called prototype. </p>
+<p> While all three of the <code>prototypeCellValue</code>, <code>fixedCellHeight</code>, and <code>fixedCellWidth</code> properties may be modified by this method, <code>PropertyChangeEvent</code> notifications are only sent when the <code>prototypeCellValue</code> property changes. </p>
+<p> To see an example which sets this property, see the <a href="#prototype_example">class description</a> above. </p>
+<p> The default value of this property is <code>null</code>. </p>
+<p> This is a JavaBeans bound property.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>prototypeCellValue</code> - the value on which to base <code>fixedCellWidth</code> and <code>fixedCellHeight</code>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getPrototypeCellValue--"><code>getPrototypeCellValue()</code></a>, <a href="../jlist/#setFixedCellWidth-int-"><code>setFixedCellWidth(int)</code></a>, <a href="../jlist/#setFixedCellHeight-int-"><code>setFixedCellHeight(int)</code></a>, <a href="../../../java/awt/container/#addPropertyChangeListener-java.beans.PropertyChangeListener-"><code>Container.addPropertyChangeListener(java.beans.PropertyChangeListener)</code></a>
+</dd> </dl>    <h3 id="getFixedCellWidth--">getFixedCellWidth</h3> <pre data-language="java">public int getFixedCellWidth()</pre> <p>Returns the value of the <code>fixedCellWidth</code> property.</p> <dl> <dt>Returns:</dt> <dd>the fixed cell width</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setFixedCellWidth-int-"><code>setFixedCellWidth(int)</code></a></dd> </dl>    <h3 id="setFixedCellWidth-int-">setFixedCellWidth</h3> <pre data-language="java">public void setFixedCellWidth(int width)</pre> <div>
+<p>Sets a fixed value to be used for the width of every cell in the list. If <code>width</code> is -1, cell widths are computed in the <code>ListUI</code> by applying <code>getPreferredSize</code> to the cell renderer component for each list element. </p>
+<p> The default value of this property is <code>-1</code>. </p>
+<p> This is a JavaBeans bound property.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>width</code> - the width to be used for all cells in the list</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setPrototypeCellValue-E-"><code>setPrototypeCellValue(E)</code></a>, <a href="../jlist/#setFixedCellWidth-int-"><code>setFixedCellWidth(int)</code></a>, <a href="../../../java/awt/container/#addPropertyChangeListener-java.beans.PropertyChangeListener-"><code>Container.addPropertyChangeListener(java.beans.PropertyChangeListener)</code></a>
+</dd> </dl>    <h3 id="getFixedCellHeight--">getFixedCellHeight</h3> <pre data-language="java">public int getFixedCellHeight()</pre> <p>Returns the value of the <code>fixedCellHeight</code> property.</p> <dl> <dt>Returns:</dt> <dd>the fixed cell height</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setFixedCellHeight-int-"><code>setFixedCellHeight(int)</code></a></dd> </dl>    <h3 id="setFixedCellHeight-int-">setFixedCellHeight</h3> <pre data-language="java">public void setFixedCellHeight(int height)</pre> <div>
+<p>Sets a fixed value to be used for the height of every cell in the list. If <code>height</code> is -1, cell heights are computed in the <code>ListUI</code> by applying <code>getPreferredSize</code> to the cell renderer component for each list element. </p>
+<p> The default value of this property is <code>-1</code>. </p>
+<p> This is a JavaBeans bound property.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>height</code> - the height to be used for for all cells in the list</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setPrototypeCellValue-E-"><code>setPrototypeCellValue(E)</code></a>, <a href="../jlist/#setFixedCellWidth-int-"><code>setFixedCellWidth(int)</code></a>, <a href="../../../java/awt/container/#addPropertyChangeListener-java.beans.PropertyChangeListener-"><code>Container.addPropertyChangeListener(java.beans.PropertyChangeListener)</code></a>
+</dd> </dl>    <h3 id="getCellRenderer--">getCellRenderer</h3> <pre data-language="java">public ListCellRenderer&lt;? super E&gt; getCellRenderer()</pre> <p>Returns the object responsible for painting list items.</p> <dl> <dt>Returns:</dt> <dd>the value of the <code>cellRenderer</code> property</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setCellRenderer-javax.swing.ListCellRenderer-"><code>setCellRenderer(javax.swing.ListCellRenderer&lt;? super E&gt;)</code></a></dd> </dl>    <h3 id="setCellRenderer-javax.swing.ListCellRenderer-">setCellRenderer</h3> <pre data-language="java">public void setCellRenderer(ListCellRenderer&lt;? super E&gt; cellRenderer)</pre> <div>
+<p>Sets the delegate that is used to paint each cell in the list. The job of a cell renderer is discussed in detail in the <a href="#renderer">class level documentation</a>. </p>
+<p> If the <code>prototypeCellValue</code> property is <code>non-null</code>, setting the cell renderer also causes the <code>fixedCellWidth</code> and <code>fixedCellHeight</code> properties to be re-calculated. Only one <code>PropertyChangeEvent</code> is generated however - for the <code>cellRenderer</code> property. </p>
+<p> The default value of this property is provided by the <code>ListUI</code> delegate, i.e. by the look and feel implementation. </p>
+<p> This is a JavaBeans bound property.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>cellRenderer</code> - the <code>ListCellRenderer</code> that paints list cells</dd> <dt>See Also:</dt> <dd><a href="../jlist/#getCellRenderer--"><code>getCellRenderer()</code></a></dd> </dl>    <h3 id="getSelectionForeground--">getSelectionForeground</h3> <pre data-language="java">public Color getSelectionForeground()</pre> <p>Returns the color used to draw the foreground of selected items. <code>DefaultListCellRenderer</code> uses this color to draw the foreground of items in the selected state, as do the renderers installed by most <code>ListUI</code> implementations.</p> <dl> <dt>Returns:</dt> <dd>the color to draw the foreground of selected items</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setSelectionForeground-java.awt.Color-"><code>setSelectionForeground(java.awt.Color)</code></a>, <a href="../defaultlistcellrenderer/"><code>DefaultListCellRenderer</code></a>
+</dd> </dl>    <h3 id="setSelectionForeground-java.awt.Color-">setSelectionForeground</h3> <pre data-language="java">public void setSelectionForeground(Color selectionForeground)</pre> <div>
+<p>Sets the color used to draw the foreground of selected items, which cell renderers can use to render text and graphics. <code>DefaultListCellRenderer</code> uses this color to draw the foreground of items in the selected state, as do the renderers installed by most <code>ListUI</code> implementations. </p>
+<p> The default value of this property is defined by the look and feel implementation. </p>
+<p> This is a JavaBeans bound property.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>selectionForeground</code> - the <code>Color</code> to use in the foreground for selected list items</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getSelectionForeground--"><code>getSelectionForeground()</code></a>, <a href="../jlist/#setSelectionBackground-java.awt.Color-"><code>setSelectionBackground(java.awt.Color)</code></a>, <a href="../jcomponent/#setForeground-java.awt.Color-"><code>JComponent.setForeground(java.awt.Color)</code></a>, <a href="../jcomponent/#setBackground-java.awt.Color-"><code>JComponent.setBackground(java.awt.Color)</code></a>, <a href="../jcomponent/#setFont-java.awt.Font-"><code>JComponent.setFont(java.awt.Font)</code></a>, <a href="../defaultlistcellrenderer/"><code>DefaultListCellRenderer</code></a>
+</dd> </dl>    <h3 id="getSelectionBackground--">getSelectionBackground</h3> <pre data-language="java">public Color getSelectionBackground()</pre> <p>Returns the color used to draw the background of selected items. <code>DefaultListCellRenderer</code> uses this color to draw the background of items in the selected state, as do the renderers installed by most <code>ListUI</code> implementations.</p> <dl> <dt>Returns:</dt> <dd>the color to draw the background of selected items</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setSelectionBackground-java.awt.Color-"><code>setSelectionBackground(java.awt.Color)</code></a>, <a href="../defaultlistcellrenderer/"><code>DefaultListCellRenderer</code></a>
+</dd> </dl>    <h3 id="setSelectionBackground-java.awt.Color-">setSelectionBackground</h3> <pre data-language="java">public void setSelectionBackground(Color selectionBackground)</pre> <div>
+<p>Sets the color used to draw the background of selected items, which cell renderers can use fill selected cells. <code>DefaultListCellRenderer</code> uses this color to fill the background of items in the selected state, as do the renderers installed by most <code>ListUI</code> implementations. </p>
+<p> The default value of this property is defined by the look and feel implementation. </p>
+<p> This is a JavaBeans bound property.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>selectionBackground</code> - the <code>Color</code> to use for the background of selected cells</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getSelectionBackground--"><code>getSelectionBackground()</code></a>, <a href="../jlist/#setSelectionForeground-java.awt.Color-"><code>setSelectionForeground(java.awt.Color)</code></a>, <a href="../jcomponent/#setForeground-java.awt.Color-"><code>JComponent.setForeground(java.awt.Color)</code></a>, <a href="../jcomponent/#setBackground-java.awt.Color-"><code>JComponent.setBackground(java.awt.Color)</code></a>, <a href="../jcomponent/#setFont-java.awt.Font-"><code>JComponent.setFont(java.awt.Font)</code></a>, <a href="../defaultlistcellrenderer/"><code>DefaultListCellRenderer</code></a>
+</dd> </dl>    <h3 id="getVisibleRowCount--">getVisibleRowCount</h3> <pre data-language="java">public int getVisibleRowCount()</pre> <p>Returns the value of the <code>visibleRowCount</code> property. See the documentation for <a href="../jlist/#setVisibleRowCount-int-"><code>setVisibleRowCount(int)</code></a> for details on how to interpret this value.</p> <dl> <dt>Returns:</dt> <dd>the value of the <code>visibleRowCount</code> property.</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setVisibleRowCount-int-"><code>setVisibleRowCount(int)</code></a></dd> </dl>    <h3 id="setVisibleRowCount-int-">setVisibleRowCount</h3> <pre data-language="java">public void setVisibleRowCount(int visibleRowCount)</pre> <div>
+<p>Sets the <code>visibleRowCount</code> property, which has different meanings depending on the layout orientation: For a <code>VERTICAL</code> layout orientation, this sets the preferred number of rows to display without requiring scrolling; for other orientations, it affects the wrapping of cells. </p>
+<p> In <code>VERTICAL</code> orientation:<br> Setting this property affects the return value of the <a href="../jlist/#getPreferredScrollableViewportSize--"><code>getPreferredScrollableViewportSize()</code></a> method, which is used to calculate the preferred size of an enclosing viewport. See that method's documentation for more details. </p>
+<p> In <code>HORIZONTAL_WRAP</code> and <code>VERTICAL_WRAP</code> orientations:<br> This affects how cells are wrapped. See the documentation of <a href="../jlist/#setLayoutOrientation-int-"><code>setLayoutOrientation(int)</code></a> for more details. </p>
+<p> The default value of this property is <code>8</code>. </p>
+<p> Calling this method with a negative value results in the property being set to <code>0</code>. </p>
+<p> This is a JavaBeans bound property.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>visibleRowCount</code> - an integer specifying the preferred number of rows to display without requiring scrolling</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getVisibleRowCount--"><code>getVisibleRowCount()</code></a>, <a href="../jlist/#getPreferredScrollableViewportSize--"><code>getPreferredScrollableViewportSize()</code></a>, <a href="../jlist/#setLayoutOrientation-int-"><code>setLayoutOrientation(int)</code></a>, <a href="../jcomponent/#getVisibleRect--"><code>JComponent.getVisibleRect()</code></a>, <a href="../jviewport/"><code>JViewport</code></a>
+</dd> </dl>    <h3 id="getLayoutOrientation--">getLayoutOrientation</h3> <pre data-language="java">public int getLayoutOrientation()</pre> <p>Returns the layout orientation property for the list: <code>VERTICAL</code> if the layout is a single column of cells, <code>VERTICAL_WRAP</code> if the layout is "newspaper style" with the content flowing vertically then horizontally, or <code>HORIZONTAL_WRAP</code> if the layout is "newspaper style" with the content flowing horizontally then vertically.</p> <dl> <dt>Returns:</dt> <dd>the value of the <code>layoutOrientation</code> property</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setLayoutOrientation-int-"><code>setLayoutOrientation(int)</code></a></dd> </dl>    <h3 id="setLayoutOrientation-int-">setLayoutOrientation</h3> <pre data-language="java">public void setLayoutOrientation(int layoutOrientation)</pre> <div>
+<p>Defines the way list cells are layed out. Consider a <code>JList</code> with five cells. Cells can be layed out in one of the following ways: </p>
+<pre data-language="java">VERTICAL:          0
+                    1
+                    2
+                    3
+                    4
+
+ HORIZONTAL_WRAP:   0  1  2
+                    3  4
+
+ VERTICAL_WRAP:     0  3
+                    1  4
+                    2</pre> 
+<p> A description of these layouts follows: </p>
+<table> <tr>
+<th><p style="text-align:left">Value</p></th>
+<th><p style="text-align:left">Description</p></th>
+</tr> <tr>
+<td>
+<code>VERTICAL</code> </td>
+<td>Cells are layed out vertically in a single column. </td>
+</tr>
+<tr>
+<td>
+<code>HORIZONTAL_WRAP</code> </td>
+<td>Cells are layed out horizontally, wrapping to a new row as necessary. If the <code>visibleRowCount</code> property is less than or equal to zero, wrapping is determined by the width of the list; otherwise wrapping is done in such a way as to ensure <code>visibleRowCount</code> rows in the list. </td>
+</tr>
+<tr>
+<td>
+<code>VERTICAL_WRAP</code> </td>
+<td>Cells are layed out vertically, wrapping to a new column as necessary. If the <code>visibleRowCount</code> property is less than or equal to zero, wrapping is determined by the height of the list; otherwise wrapping is done at <code>visibleRowCount</code> rows. </td>
+</tr>
+</table> <p> The default value of this property is <code>VERTICAL</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>layoutOrientation</code> - the new layout orientation, one of: <code>VERTICAL</code>, <code>HORIZONTAL_WRAP</code> or <code>VERTICAL_WRAP</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>layoutOrientation</code> isn't one of the allowable values</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getLayoutOrientation--"><code>getLayoutOrientation()</code></a>, <a href="../jlist/#setVisibleRowCount-int-"><code>setVisibleRowCount(int)</code></a>, <a href="../jlist/#getScrollableTracksViewportHeight--"><code>getScrollableTracksViewportHeight()</code></a>, <a href="../jlist/#getScrollableTracksViewportWidth--"><code>getScrollableTracksViewportWidth()</code></a>
+</dd> </dl>    <h3 id="getFirstVisibleIndex--">getFirstVisibleIndex</h3> <pre data-language="java">public int getFirstVisibleIndex()</pre> <p>Returns the smallest list index that is currently visible. In a left-to-right <code>componentOrientation</code>, the first visible cell is found closest to the list's upper-left corner. In right-to-left orientation, it is found closest to the upper-right corner. If nothing is visible or the list is empty, <code>-1</code> is returned. Note that the returned cell may only be partially visible.</p> <dl> <dt>Returns:</dt> <dd>the index of the first visible cell</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getLastVisibleIndex--"><code>getLastVisibleIndex()</code></a>, <a href="../jcomponent/#getVisibleRect--"><code>JComponent.getVisibleRect()</code></a>
+</dd> </dl>    <h3 id="getLastVisibleIndex--">getLastVisibleIndex</h3> <pre data-language="java">public int getLastVisibleIndex()</pre> <p>Returns the largest list index that is currently visible. If nothing is visible or the list is empty, <code>-1</code> is returned. Note that the returned cell may only be partially visible.</p> <dl> <dt>Returns:</dt> <dd>the index of the last visible cell</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getFirstVisibleIndex--"><code>getFirstVisibleIndex()</code></a>, <a href="../jcomponent/#getVisibleRect--"><code>JComponent.getVisibleRect()</code></a>
+</dd> </dl>    <h3 id="ensureIndexIsVisible-int-">ensureIndexIsVisible</h3> <pre data-language="java">public void ensureIndexIsVisible(int index)</pre> <div>
+<p>Scrolls the list within an enclosing viewport to make the specified cell completely visible. This calls <code>scrollRectToVisible</code> with the bounds of the specified cell. For this method to work, the <code>JList</code> must be within a <code>JViewport</code>. </p>
+<p> If the given index is outside the list's range of cells, this method results in nothing.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>index</code> - the index of the cell to make visible</dd> <dt>See Also:</dt> <dd>
+<a href="../jcomponent/#scrollRectToVisible-java.awt.Rectangle-"><code>JComponent.scrollRectToVisible(java.awt.Rectangle)</code></a>, <a href="../jcomponent/#getVisibleRect--"><code>JComponent.getVisibleRect()</code></a>
+</dd> </dl>    <h3 id="setDragEnabled-boolean-">setDragEnabled</h3> <pre data-language="java">public void setDragEnabled(boolean b)</pre> <div>
+<p>Turns on or off automatic drag handling. In order to enable automatic drag handling, this property should be set to <code>true</code>, and the list's <code>TransferHandler</code> needs to be <code>non-null</code>. The default value of the <code>dragEnabled</code> property is <code>false</code>. </p>
+<p> The job of honoring this property, and recognizing a user drag gesture, lies with the look and feel implementation, and in particular, the list's <code>ListUI</code>. When automatic drag handling is enabled, most look and feels (including those that subclass <code>BasicLookAndFeel</code>) begin a drag and drop operation whenever the user presses the mouse button over an item and then moves the mouse a few pixels. Setting this property to <code>true</code> can therefore have a subtle effect on how selections behave. </p>
+<p> If a look and feel is used that ignores this property, you can still begin a drag and drop operation by calling <code>exportAsDrag</code> on the list's <code>TransferHandler</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>b</code> - whether or not to enable automatic drag handling</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../java/awt/headlessexception/">HeadlessException</a></code> - if <code>b</code> is <code>true</code> and <code>GraphicsEnvironment.isHeadless()</code> returns <code>true</code>
+</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../../../java/awt/graphicsenvironment/#isHeadless--"><code>GraphicsEnvironment.isHeadless()</code></a>, <a href="../jlist/#getDragEnabled--"><code>getDragEnabled()</code></a>, <a href="../jcomponent/#setTransferHandler-javax.swing.TransferHandler-"><code>JComponent.setTransferHandler(javax.swing.TransferHandler)</code></a>, <a href="../transferhandler/"><code>TransferHandler</code></a>
+</dd> </dl>    <h3 id="getDragEnabled--">getDragEnabled</h3> <pre data-language="java">public boolean getDragEnabled()</pre> <p>Returns whether or not automatic drag handling is enabled.</p> <dl> <dt>Returns:</dt> <dd>the value of the <code>dragEnabled</code> property</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setDragEnabled-boolean-"><code>setDragEnabled(boolean)</code></a></dd> </dl>    <h3 id="setDropMode-javax.swing.DropMode-">setDropMode</h3> <pre data-language="java">public final void setDropMode(DropMode dropMode)</pre> <div>
+<p>Sets the drop mode for this component. For backward compatibility, the default for this property is <code>DropMode.USE_SELECTION</code>. Usage of one of the other modes is recommended, however, for an improved user experience. <code>DropMode.ON</code>, for instance, offers similar behavior of showing items as selected, but does so without affecting the actual selection in the list. </p>
+<p> <code>JList</code> supports the following drop modes: </p>
+<ul> <li><code>DropMode.USE_SELECTION</code></li> <li><code>DropMode.ON</code></li> <li><code>DropMode.INSERT</code></li> <li><code>DropMode.ON_OR_INSERT</code></li> </ul> The drop mode is only meaningful if this component has a <code>TransferHandler</code> that accepts drops.</div> <dl> <dt>Parameters:</dt> <dd>
+<code>dropMode</code> - the drop mode to use</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the drop mode is unsupported or <code>null</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getDropMode--"><code>getDropMode()</code></a>, <a href="../jlist/#getDropLocation--"><code>getDropLocation()</code></a>, <a href="../jcomponent/#setTransferHandler-javax.swing.TransferHandler-"><code>JComponent.setTransferHandler(javax.swing.TransferHandler)</code></a>, <a href="../transferhandler/"><code>TransferHandler</code></a>
+</dd> </dl>    <h3 id="getDropMode--">getDropMode</h3> <pre data-language="java">public final DropMode getDropMode()</pre> <p>Returns the drop mode for this component.</p> <dl> <dt>Returns:</dt> <dd>the drop mode for this component</dd> <dt>Since:</dt> <dd>1.6</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setDropMode-javax.swing.DropMode-"><code>setDropMode(javax.swing.DropMode)</code></a></dd> </dl>    <h3 id="getDropLocation--">getDropLocation</h3> <pre data-language="java">public final JList.DropLocation getDropLocation()</pre> <div>
+<p>Returns the location that this component should visually indicate as the drop location during a DnD operation over the component, or <code>null</code> if no location is to currently be shown. </p>
+<p> This method is not meant for querying the drop location from a <code>TransferHandler</code>, as the drop location is only set after the <code>TransferHandler</code>'s <code>canImport</code> has returned and has allowed for the location to be shown. </p>
+<p> When this property changes, a property change event with name "dropLocation" is fired by the component. </p>
+<p> By default, responsibility for listening for changes to this property and indicating the drop location visually lies with the list's <code>ListUI</code>, which may paint it directly and/or install a cell renderer to do so. Developers wishing to implement custom drop location painting and/or replace the default cell renderer, may need to honor this property.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the drop location</dd> <dt>Since:</dt> <dd>1.6</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setDropMode-javax.swing.DropMode-"><code>setDropMode(javax.swing.DropMode)</code></a>, <a href="../transferhandler/#canImport-javax.swing.TransferHandler.TransferSupport-"><code>TransferHandler.canImport(TransferHandler.TransferSupport)</code></a>
+</dd> </dl>    <h3 id="getNextMatch-java.lang.String-int-javax.swing.text.Position.Bias-">getNextMatch</h3> <pre data-language="java">public int getNextMatch(String prefix,
+                        int startIndex,
+                        Position.Bias bias)</pre> <p>Returns the next list element whose <code>toString</code> value starts with the given prefix.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>prefix</code> - the string to test for a match</dd> <dd>
+<code>startIndex</code> - the index for starting the search</dd> <dd>
+<code>bias</code> - the search direction, either Position.Bias.Forward or Position.Bias.Backward.</dd> <dt>Returns:</dt> <dd>the index of the next list element that starts with the prefix; otherwise <code>-1</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if prefix is <code>null</code> or startIndex is out of bounds</dd> <dt>Since:</dt> <dd>1.4</dd> </dl>    <h3 id="getToolTipText-java.awt.event.MouseEvent-">getToolTipText</h3> <pre data-language="java">public String getToolTipText(MouseEvent event)</pre> <div>
+<p>Returns the tooltip text to be used for the given event. This overrides <code>JComponent</code>'s <code>getToolTipText</code> to first check the cell renderer component for the cell over which the event occurred, returning its tooltip text, if any. This implementation allows you to specify tooltip text on the cell level, by using <code>setToolTipText</code> on your cell renderer component. </p>
+<p> <strong>Note:</strong> For <code>JList</code> to properly display the tooltips of its renderers in this manner, <code>JList</code> must be a registered component with the <code>ToolTipManager</code>. This registration is done automatically in the constructor. However, if at a later point <code>JList</code> is unregistered, by way of a call to <code>setToolTipText(null)</code>, tips from the renderers will no longer display.</p>
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../jcomponent/#getToolTipText-java.awt.event.MouseEvent-">getToolTipText</a></code> in class <code><a href="../jcomponent/">JComponent</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>event</code> - the <code>MouseEvent</code> to fetch the tooltip text for</dd> <dt>See Also:</dt> <dd>
+<a href="../jcomponent/#setToolTipText-java.lang.String-"><code>JComponent.setToolTipText(java.lang.String)</code></a>, <a href="../jcomponent/#getToolTipText--"><code>JComponent.getToolTipText()</code></a>
+</dd> </dl>    <h3 id="locationToIndex-java.awt.Point-">locationToIndex</h3> <pre data-language="java">public int locationToIndex(Point location)</pre> <div>
+<p>Returns the cell index closest to the given location in the list's coordinate system. To determine if the cell actually contains the specified location, compare the point against the cell's bounds, as provided by <code>getCellBounds</code>. This method returns <code>-1</code> if the model is empty </p>
+<p> This is a cover method that delegates to the method of the same name in the list's <code>ListUI</code>. It returns <code>-1</code> if the list has no <code>ListUI</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>location</code> - the coordinates of the point</dd> <dt>Returns:</dt> <dd>the cell index closest to the given location, or <code>-1</code>
+</dd> </dl>    <h3 id="indexToLocation-int-">indexToLocation</h3> <pre data-language="java">public Point indexToLocation(int index)</pre> <div>
+<p>Returns the origin of the specified item in the list's coordinate system. This method returns <code>null</code> if the index isn't valid. </p>
+<p> This is a cover method that delegates to the method of the same name in the list's <code>ListUI</code>. It returns <code>null</code> if the list has no <code>ListUI</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>index</code> - the cell index</dd> <dt>Returns:</dt> <dd>the origin of the cell, or <code>null</code>
+</dd> </dl>    <h3 id="getCellBounds-int-int-">getCellBounds</h3> <pre data-language="java">public Rectangle getCellBounds(int index0,
+                               int index1)</pre> <div>
+<p>Returns the bounding rectangle, in the list's coordinate system, for the range of cells specified by the two indices. These indices can be supplied in any order. </p>
+<p> If the smaller index is outside the list's range of cells, this method returns <code>null</code>. If the smaller index is valid, but the larger index is outside the list's range, the bounds of just the first index is returned. Otherwise, the bounds of the valid range is returned. </p>
+<p> This is a cover method that delegates to the method of the same name in the list's <code>ListUI</code>. It returns <code>null</code> if the list has no <code>ListUI</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>index0</code> - the first index in the range</dd> <dd>
+<code>index1</code> - the second index in the range</dd> <dt>Returns:</dt> <dd>the bounding rectangle for the range of cells, or <code>null</code>
+</dd> </dl>    <h3 id="getModel--">getModel</h3> <pre data-language="java">public ListModel&lt;E&gt; getModel()</pre> <p>Returns the data model that holds the list of items displayed by the <code>JList</code> component.</p> <dl> <dt>Returns:</dt> <dd>the <code>ListModel</code> that provides the displayed list of items</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setModel-javax.swing.ListModel-"><code>setModel(javax.swing.ListModel&lt;E&gt;)</code></a></dd> </dl>    <h3 id="setModel-javax.swing.ListModel-">setModel</h3> <pre data-language="java">public void setModel(ListModel&lt;E&gt; model)</pre> <div>
+<p>Sets the model that represents the contents or "value" of the list, notifies property change listeners, and then clears the list's selection. </p>
+<p> This is a JavaBeans bound property.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>model</code> - the <code>ListModel</code> that provides the list of items for display</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>model</code> is <code>null</code>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getModel--"><code>getModel()</code></a>, <a href="../jlist/#clearSelection--"><code>clearSelection()</code></a>
+</dd> </dl>    <h3 id="setListData-E:A-">setListData</h3> <pre data-language="java">public void setListData(E[] listData)</pre> <div>
+<p>Constructs a read-only <code>ListModel</code> from an array of items, and calls <code>setModel</code> with this model. </p>
+<p> Attempts to pass a <code>null</code> value to this method results in undefined behavior and, most likely, exceptions. The created model references the given array directly. Attempts to modify the array after invoking this method results in undefined behavior.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>listData</code> - an array of <code>E</code> containing the items to display in the list</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setModel-javax.swing.ListModel-"><code>setModel(javax.swing.ListModel&lt;E&gt;)</code></a></dd> </dl>    <h3 id="setListData-java.util.Vector-">setListData</h3> <pre data-language="java">public void setListData(Vector&lt;? extends E&gt; listData)</pre> <div>
+<p>Constructs a read-only <code>ListModel</code> from a <code>Vector</code> and calls <code>setModel</code> with this model. </p>
+<p> Attempts to pass a <code>null</code> value to this method results in undefined behavior and, most likely, exceptions. The created model references the given <code>Vector</code> directly. Attempts to modify the <code>Vector</code> after invoking this method results in undefined behavior.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>listData</code> - a <code>Vector</code> containing the items to display in the list</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setModel-javax.swing.ListModel-"><code>setModel(javax.swing.ListModel&lt;E&gt;)</code></a></dd> </dl>    <h3 id="createSelectionModel--">createSelectionModel</h3> <pre data-language="java">protected ListSelectionModel createSelectionModel()</pre> <p>Returns an instance of <code>DefaultListSelectionModel</code>; called during construction to initialize the list's selection model property.</p> <dl> <dt>Returns:</dt> <dd>a <code>DefaultListSelecitonModel</code>, used to initialize the list's selection model property during construction</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setSelectionModel-javax.swing.ListSelectionModel-"><code>setSelectionModel(javax.swing.ListSelectionModel)</code></a>, <a href="../defaultlistselectionmodel/"><code>DefaultListSelectionModel</code></a>
+</dd> </dl>    <h3 id="getSelectionModel--">getSelectionModel</h3> <pre data-language="java">public ListSelectionModel getSelectionModel()</pre> <p>Returns the current selection model. The selection model maintains the selection state of the list. See the class level documentation for more details.</p> <dl> <dt>Returns:</dt> <dd>the <code>ListSelectionModel</code> that maintains the list's selections</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setSelectionModel-javax.swing.ListSelectionModel-"><code>setSelectionModel(javax.swing.ListSelectionModel)</code></a>, <a href="../listselectionmodel/"><code>ListSelectionModel</code></a>
+</dd> </dl>    <h3 id="fireSelectionValueChanged-int-int-boolean-">fireSelectionValueChanged</h3> <pre data-language="java">protected void fireSelectionValueChanged(int firstIndex,
+                                         int lastIndex,
+                                         boolean isAdjusting)</pre> <div>
+<p>Notifies <code>ListSelectionListener</code>s added directly to the list of selection changes made to the selection model. <code>JList</code> listens for changes made to the selection in the selection model, and forwards notification to listeners added to the list directly, by calling this method. </p>
+<p> This method constructs a <code>ListSelectionEvent</code> with this list as the source, and the specified arguments, and sends it to the registered <code>ListSelectionListeners</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>firstIndex</code> - the first index in the range, <code>&lt;= lastIndex</code>
+</dd> <dd>
+<code>lastIndex</code> - the last index in the range, <code>&gt;= firstIndex</code>
+</dd> <dd>
+<code>isAdjusting</code> - whether or not this is one in a series of multiple events, where changes are still being made</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>, <a href="../jlist/#removeListSelectionListener-javax.swing.event.ListSelectionListener-"><code>removeListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>, <a href="../event/listselectionevent/"><code>ListSelectionEvent</code></a>, <a href="../event/eventlistenerlist/"><code>EventListenerList</code></a>
+</dd> </dl>    <h3 id="addListSelectionListener-javax.swing.event.ListSelectionListener-">addListSelectionListener</h3> <pre data-language="java">public void addListSelectionListener(ListSelectionListener listener)</pre> <p>Adds a listener to the list, to be notified each time a change to the selection occurs; the preferred way of listening for selection state changes. <code>JList</code> takes care of listening for selection state changes in the selection model, and notifies the given listener of each change. <code>ListSelectionEvent</code>s sent to the listener have a <code>source</code> property set to this list.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>listener</code> - the <code>ListSelectionListener</code> to add</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getSelectionModel--"><code>getSelectionModel()</code></a>, <a href="../jlist/#getListSelectionListeners--"><code>getListSelectionListeners()</code></a>
+</dd> </dl>    <h3 id="removeListSelectionListener-javax.swing.event.ListSelectionListener-">removeListSelectionListener</h3> <pre data-language="java">public void removeListSelectionListener(ListSelectionListener listener)</pre> <p>Removes a selection listener from the list.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>listener</code> - the <code>ListSelectionListener</code> to remove</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>, <a href="../jlist/#getSelectionModel--"><code>getSelectionModel()</code></a>
+</dd> </dl>    <h3 id="getListSelectionListeners--">getListSelectionListeners</h3> <pre data-language="java">public ListSelectionListener[] getListSelectionListeners()</pre> <p>Returns an array of all the <code>ListSelectionListener</code>s added to this <code>JList</code> by way of <code>addListSelectionListener</code>.</p> <dl> <dt>Returns:</dt> <dd>all of the <code>ListSelectionListener</code>s on this list, or an empty array if no listeners have been added</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a></dd> </dl>    <h3 id="setSelectionModel-javax.swing.ListSelectionModel-">setSelectionModel</h3> <pre data-language="java">public void setSelectionModel(ListSelectionModel selectionModel)</pre> <div>
+<p>Sets the <code>selectionModel</code> for the list to a non-<code>null</code> <code>ListSelectionModel</code> implementation. The selection model handles the task of making single selections, selections of contiguous ranges, and non-contiguous selections. </p>
+<p> This is a JavaBeans bound property.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>selectionModel</code> - the <code>ListSelectionModel</code> that implements the selections</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>selectionModel</code> is <code>null</code>
+</dd> <dt>See Also:</dt> <dd><a href="../jlist/#getSelectionModel--"><code>getSelectionModel()</code></a></dd> </dl>    <h3 id="setSelectionMode-int-">setSelectionMode</h3> <pre data-language="java">public void setSelectionMode(int selectionMode)</pre> <div>
+<p>Sets the selection mode for the list. This is a cover method that sets the selection mode directly on the selection model. </p>
+<p> The following list describes the accepted selection modes: </p>
+<ul> <li>
+<code>ListSelectionModel.SINGLE_SELECTION</code> - Only one list index can be selected at a time. In this mode, <code>setSelectionInterval</code> and <code>addSelectionInterval</code> are equivalent, both replacing the current selection with the index represented by the second argument (the "lead"). </li>
+<li>
+<code>ListSelectionModel.SINGLE_INTERVAL_SELECTION</code> - Only one contiguous interval can be selected at a time. In this mode, <code>addSelectionInterval</code> behaves like <code>setSelectionInterval</code> (replacing the current selection}, unless the given interval is immediately adjacent to or overlaps the existing selection, and can be used to grow the selection. </li>
+<li>
+<code>ListSelectionModel.MULTIPLE_INTERVAL_SELECTION</code> - In this mode, there's no restriction on what can be selected. This mode is the default. </li>
+</ul>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>selectionMode</code> - the selection mode</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the selection mode isn't one of those allowed</dd> <dt>See Also:</dt> <dd><a href="../jlist/#getSelectionMode--"><code>getSelectionMode()</code></a></dd> </dl>    <h3 id="getSelectionMode--">getSelectionMode</h3> <pre data-language="java">public int getSelectionMode()</pre> <p>Returns the current selection mode for the list. This is a cover method that delegates to the method of the same name on the list's selection model.</p> <dl> <dt>Returns:</dt> <dd>the current selection mode</dd> <dt>See Also:</dt> <dd><a href="../jlist/#setSelectionMode-int-"><code>setSelectionMode(int)</code></a></dd> </dl>    <h3 id="getAnchorSelectionIndex--">getAnchorSelectionIndex</h3> <pre data-language="java">public int getAnchorSelectionIndex()</pre> <p>Returns the anchor selection index. This is a cover method that delegates to the method of the same name on the list's selection model.</p> <dl> <dt>Returns:</dt> <dd>the anchor selection index</dd> <dt>See Also:</dt> <dd><a href="../listselectionmodel/#getAnchorSelectionIndex--"><code>ListSelectionModel.getAnchorSelectionIndex()</code></a></dd> </dl>    <h3 id="getLeadSelectionIndex--">getLeadSelectionIndex</h3> <pre data-language="java">public int getLeadSelectionIndex()</pre> <p>Returns the lead selection index. This is a cover method that delegates to the method of the same name on the list's selection model.</p> <dl> <dt>Returns:</dt> <dd>the lead selection index</dd> <dt>See Also:</dt> <dd><a href="../listselectionmodel/#getLeadSelectionIndex--"><code>ListSelectionModel.getLeadSelectionIndex()</code></a></dd> </dl>    <h3 id="getMinSelectionIndex--">getMinSelectionIndex</h3> <pre data-language="java">public int getMinSelectionIndex()</pre> <p>Returns the smallest selected cell index, or <code>-1</code> if the selection is empty. This is a cover method that delegates to the method of the same name on the list's selection model.</p> <dl> <dt>Returns:</dt> <dd>the smallest selected cell index, or <code>-1</code>
+</dd> <dt>See Also:</dt> <dd><a href="../listselectionmodel/#getMinSelectionIndex--"><code>ListSelectionModel.getMinSelectionIndex()</code></a></dd> </dl>    <h3 id="getMaxSelectionIndex--">getMaxSelectionIndex</h3> <pre data-language="java">public int getMaxSelectionIndex()</pre> <p>Returns the largest selected cell index, or <code>-1</code> if the selection is empty. This is a cover method that delegates to the method of the same name on the list's selection model.</p> <dl> <dt>Returns:</dt> <dd>the largest selected cell index</dd> <dt>See Also:</dt> <dd><a href="../listselectionmodel/#getMaxSelectionIndex--"><code>ListSelectionModel.getMaxSelectionIndex()</code></a></dd> </dl>    <h3 id="isSelectedIndex-int-">isSelectedIndex</h3> <pre data-language="java">public boolean isSelectedIndex(int index)</pre> <p>Returns <code>true</code> if the specified index is selected, else <code>false</code>. This is a cover method that delegates to the method of the same name on the list's selection model.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>index</code> - index to be queried for selection state</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the specified index is selected, else <code>false</code>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../listselectionmodel/#isSelectedIndex-int-"><code>ListSelectionModel.isSelectedIndex(int)</code></a>, <a href="../jlist/#setSelectedIndex-int-"><code>setSelectedIndex(int)</code></a>
+</dd> </dl>    <h3 id="isSelectionEmpty--">isSelectionEmpty</h3> <pre data-language="java">public boolean isSelectionEmpty()</pre> <p>Returns <code>true</code> if nothing is selected, else <code>false</code>. This is a cover method that delegates to the method of the same name on the list's selection model.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if nothing is selected, else <code>false</code>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../listselectionmodel/#isSelectionEmpty--"><code>ListSelectionModel.isSelectionEmpty()</code></a>, <a href="../jlist/#clearSelection--"><code>clearSelection()</code></a>
+</dd> </dl>    <h3 id="clearSelection--">clearSelection</h3> <pre data-language="java">public void clearSelection()</pre> <p>Clears the selection; after calling this method, <code>isSelectionEmpty</code> will return <code>true</code>. This is a cover method that delegates to the method of the same name on the list's selection model.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../listselectionmodel/#clearSelection--"><code>ListSelectionModel.clearSelection()</code></a>, <a href="../jlist/#isSelectionEmpty--"><code>isSelectionEmpty()</code></a>
+</dd> </dl>    <h3 id="setSelectionInterval-int-int-">setSelectionInterval</h3> <pre data-language="java">public void setSelectionInterval(int anchor,
+                                 int lead)</pre> <div>
+<p>Selects the specified interval. Both <code>anchor</code> and <code>lead</code> indices are included. <code>anchor</code> doesn't have to be less than or equal to <code>lead</code>. This is a cover method that delegates to the method of the same name on the list's selection model. </p>
+<p> Refer to the documentation of the selection model class being used for details on how values less than <code>0</code> are handled.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>anchor</code> - the first index to select</dd> <dd>
+<code>lead</code> - the last index to select</dd> <dt>See Also:</dt> <dd>
+<a href="../listselectionmodel/#setSelectionInterval-int-int-"><code>ListSelectionModel.setSelectionInterval(int, int)</code></a>, <a href="../defaultlistselectionmodel/#setSelectionInterval-int-int-"><code>DefaultListSelectionModel.setSelectionInterval(int, int)</code></a>, <a href="../jlist/#createSelectionModel--"><code>createSelectionModel()</code></a>, <a href="../jlist/#addSelectionInterval-int-int-"><code>addSelectionInterval(int, int)</code></a>, <a href="../jlist/#removeSelectionInterval-int-int-"><code>removeSelectionInterval(int, int)</code></a>
+</dd> </dl>    <h3 id="addSelectionInterval-int-int-">addSelectionInterval</h3> <pre data-language="java">public void addSelectionInterval(int anchor,
+                                 int lead)</pre> <div>
+<p>Sets the selection to be the union of the specified interval with current selection. Both the <code>anchor</code> and <code>lead</code> indices are included. <code>anchor</code> doesn't have to be less than or equal to <code>lead</code>. This is a cover method that delegates to the method of the same name on the list's selection model. </p>
+<p> Refer to the documentation of the selection model class being used for details on how values less than <code>0</code> are handled.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>anchor</code> - the first index to add to the selection</dd> <dd>
+<code>lead</code> - the last index to add to the selection</dd> <dt>See Also:</dt> <dd>
+<a href="../listselectionmodel/#addSelectionInterval-int-int-"><code>ListSelectionModel.addSelectionInterval(int, int)</code></a>, <a href="../defaultlistselectionmodel/#addSelectionInterval-int-int-"><code>DefaultListSelectionModel.addSelectionInterval(int, int)</code></a>, <a href="../jlist/#createSelectionModel--"><code>createSelectionModel()</code></a>, <a href="../jlist/#setSelectionInterval-int-int-"><code>setSelectionInterval(int, int)</code></a>, <a href="../jlist/#removeSelectionInterval-int-int-"><code>removeSelectionInterval(int, int)</code></a>
+</dd> </dl>    <h3 id="removeSelectionInterval-int-int-">removeSelectionInterval</h3> <pre data-language="java">public void removeSelectionInterval(int index0,
+                                    int index1)</pre> <div>
+<p>Sets the selection to be the set difference of the specified interval and the current selection. Both the <code>index0</code> and <code>index1</code> indices are removed. <code>index0</code> doesn't have to be less than or equal to <code>index1</code>. This is a cover method that delegates to the method of the same name on the list's selection model. </p>
+<p> Refer to the documentation of the selection model class being used for details on how values less than <code>0</code> are handled.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>index0</code> - the first index to remove from the selection</dd> <dd>
+<code>index1</code> - the last index to remove from the selection</dd> <dt>See Also:</dt> <dd>
+<a href="../listselectionmodel/#removeSelectionInterval-int-int-"><code>ListSelectionModel.removeSelectionInterval(int, int)</code></a>, <a href="../defaultlistselectionmodel/#removeSelectionInterval-int-int-"><code>DefaultListSelectionModel.removeSelectionInterval(int, int)</code></a>, <a href="../jlist/#createSelectionModel--"><code>createSelectionModel()</code></a>, <a href="../jlist/#setSelectionInterval-int-int-"><code>setSelectionInterval(int, int)</code></a>, <a href="../jlist/#addSelectionInterval-int-int-"><code>addSelectionInterval(int, int)</code></a>
+</dd> </dl>    <h3 id="setValueIsAdjusting-boolean-">setValueIsAdjusting</h3> <pre data-language="java">public void setValueIsAdjusting(boolean b)</pre> <div>
+<p>Sets the selection model's <code>valueIsAdjusting</code> property. When <code>true</code>, upcoming changes to selection should be considered part of a single change. This property is used internally and developers typically need not call this method. For example, when the model is being updated in response to a user drag, the value of the property is set to <code>true</code> when the drag is initiated and set to <code>false</code> when the drag is finished. This allows listeners to update only when a change has been finalized, rather than handling all of the intermediate values. </p>
+<p> You may want to use this directly if making a series of changes that should be considered part of a single change. </p>
+<p> This is a cover method that delegates to the method of the same name on the list's selection model. See the documentation for <a href="../listselectionmodel/#setValueIsAdjusting-boolean-"><code>ListSelectionModel.setValueIsAdjusting(boolean)</code></a> for more details.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>b</code> - the new value for the property</dd> <dt>See Also:</dt> <dd>
+<a href="../listselectionmodel/#setValueIsAdjusting-boolean-"><code>ListSelectionModel.setValueIsAdjusting(boolean)</code></a>, <a href="../event/listselectionevent/#getValueIsAdjusting--"><code>ListSelectionEvent.getValueIsAdjusting()</code></a>, <a href="../jlist/#getValueIsAdjusting--"><code>getValueIsAdjusting()</code></a>
+</dd> </dl>    <h3 id="getValueIsAdjusting--">getValueIsAdjusting</h3> <pre data-language="java">public boolean getValueIsAdjusting()</pre> <div>
+<p>Returns the value of the selection model's <code>isAdjusting</code> property. </p>
+<p> This is a cover method that delegates to the method of the same name on the list's selection model.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the value of the selection model's <code>isAdjusting</code> property.</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#setValueIsAdjusting-boolean-"><code>setValueIsAdjusting(boolean)</code></a>, <a href="../listselectionmodel/#getValueIsAdjusting--"><code>ListSelectionModel.getValueIsAdjusting()</code></a>
+</dd> </dl>    <h3 id="getSelectedIndices--">getSelectedIndices</h3> <pre data-language="java">public int[] getSelectedIndices()</pre> <p>Returns an array of all of the selected indices, in increasing order.</p> <dl> <dt>Returns:</dt> <dd>all of the selected indices, in increasing order, or an empty array if nothing is selected</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#removeSelectionInterval-int-int-"><code>removeSelectionInterval(int, int)</code></a>, <a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>
+</dd> </dl>    <h3 id="setSelectedIndex-int-">setSelectedIndex</h3> <pre data-language="java">public void setSelectedIndex(int index)</pre> <p>Selects a single cell. Does nothing if the given index is greater than or equal to the model size. This is a convenience method that uses <code>setSelectionInterval</code> on the selection model. Refer to the documentation for the selection model class being used for details on how values less than <code>0</code> are handled.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>index</code> - the index of the cell to select</dd> <dt>See Also:</dt> <dd>
+<a href="../listselectionmodel/#setSelectionInterval-int-int-"><code>ListSelectionModel.setSelectionInterval(int, int)</code></a>, <a href="../jlist/#isSelectedIndex-int-"><code>isSelectedIndex(int)</code></a>, <a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>
+</dd> </dl>    <h3 id="setSelectedIndices-int:A-">setSelectedIndices</h3> <pre data-language="java">public void setSelectedIndices(int[] indices)</pre> <p>Changes the selection to be the set of indices specified by the given array. Indices greater than or equal to the model size are ignored. This is a convenience method that clears the selection and then uses <code>addSelectionInterval</code> on the selection model to add the indices. Refer to the documentation of the selection model class being used for details on how values less than <code>0</code> are handled.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>indices</code> - an array of the indices of the cells to select, <code>non-null</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if the given array is <code>null</code>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../listselectionmodel/#addSelectionInterval-int-int-"><code>ListSelectionModel.addSelectionInterval(int, int)</code></a>, <a href="../jlist/#isSelectedIndex-int-"><code>isSelectedIndex(int)</code></a>, <a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>
+</dd> </dl>    <h3 id="getSelectedValues--">getSelectedValues</h3> <pre data-language="java">@Deprecated
+public Object[] getSelectedValues()</pre> <p><strong>Deprecated.</strong> As of JDK 1.7, replaced by <a href="../jlist/#getSelectedValuesList--"><code>getSelectedValuesList()</code></a></p> <p>Returns an array of all the selected values, in increasing order based on their indices in the list.</p> <dl> <dt>Returns:</dt> <dd>the selected values, or an empty array if nothing is selected</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#isSelectedIndex-int-"><code>isSelectedIndex(int)</code></a>, <a href="../jlist/#getModel--"><code>getModel()</code></a>, <a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>
+</dd> </dl>    <h3 id="getSelectedValuesList--">getSelectedValuesList</h3> <pre data-language="java">public List&lt;E&gt; getSelectedValuesList()</pre> <p>Returns a list of all the selected items, in increasing order based on their indices in the list.</p> <dl> <dt>Returns:</dt> <dd>the selected items, or an empty list if nothing is selected</dd> <dt>Since:</dt> <dd>1.7</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#isSelectedIndex-int-"><code>isSelectedIndex(int)</code></a>, <a href="../jlist/#getModel--"><code>getModel()</code></a>, <a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>
+</dd> </dl>    <h3 id="getSelectedIndex--">getSelectedIndex</h3> <pre data-language="java">public int getSelectedIndex()</pre> <div>
+<p>Returns the smallest selected cell index; <i>the selection</i> when only a single item is selected in the list. When multiple items are selected, it is simply the smallest selected index. Returns <code>-1</code> if there is no selection. </p>
+<p> This method is a cover that delegates to <code>getMinSelectionIndex</code>.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the smallest selected cell index</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getMinSelectionIndex--"><code>getMinSelectionIndex()</code></a>, <a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>
+</dd> </dl>    <h3 id="getSelectedValue--">getSelectedValue</h3> <pre data-language="java">public E getSelectedValue()</pre> <div>
+<p>Returns the value for the smallest selected cell index; <i>the selected value</i> when only a single item is selected in the list. When multiple items are selected, it is simply the value for the smallest selected index. Returns <code>null</code> if there is no selection. </p>
+<p> This is a convenience method that simply returns the model value for <code>getMinSelectionIndex</code>.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the first selected value</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getMinSelectionIndex--"><code>getMinSelectionIndex()</code></a>, <a href="../jlist/#getModel--"><code>getModel()</code></a>, <a href="../jlist/#addListSelectionListener-javax.swing.event.ListSelectionListener-"><code>addListSelectionListener(javax.swing.event.ListSelectionListener)</code></a>
+</dd> </dl>    <h3 id="setSelectedValue-java.lang.Object-boolean-">setSelectedValue</h3> <pre data-language="java">public void setSelectedValue(Object anObject,
+                             boolean shouldScroll)</pre> <p>Selects the specified object from the list.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>anObject</code> - the object to select</dd> <dd>
+<code>shouldScroll</code> - <code>true</code> if the list should scroll to display the selected object, if one exists; otherwise <code>false</code>
+</dd> </dl>    <h3 id="getPreferredScrollableViewportSize--">getPreferredScrollableViewportSize</h3> <pre data-language="java">public Dimension getPreferredScrollableViewportSize()</pre> <div>
+<p>Computes the size of viewport needed to display <code>visibleRowCount</code> rows. The value returned by this method depends on the layout orientation: </p>
+<p> <b><code>VERTICAL</code>:</b> <br> This is trivial if both <code>fixedCellWidth</code> and <code>fixedCellHeight</code> have been set (either explicitly or by specifying a prototype cell value). The width is simply the <code>fixedCellWidth</code> plus the list's horizontal insets. The height is the <code>fixedCellHeight</code> multiplied by the <code>visibleRowCount</code>, plus the list's vertical insets. </p>
+<p> If either <code>fixedCellWidth</code> or <code>fixedCellHeight</code> haven't been specified, heuristics are used. If the model is empty, the width is the <code>fixedCellWidth</code>, if greater than <code>0</code>, or a hard-coded value of <code>256</code>. The height is the <code>fixedCellHeight</code> multiplied by <code>visibleRowCount</code>, if <code>fixedCellHeight</code> is greater than <code>0</code>, otherwise it is a hard-coded value of <code>16</code> multiplied by <code>visibleRowCount</code>. </p>
+<p> If the model isn't empty, the width is the preferred size's width, typically the width of the widest list element. The height is the <code>fixedCellHeight</code> multiplied by the <code>visibleRowCount</code>, plus the list's vertical insets. </p>
+<p> <b><code>VERTICAL_WRAP</code> or <code>HORIZONTAL_WRAP</code>:</b> <br> This method simply returns the value from <code>getPreferredSize</code>. The list's <code>ListUI</code> is expected to override <code>getPreferredSize</code> to return an appropriate value.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../scrollable/#getPreferredScrollableViewportSize--">getPreferredScrollableViewportSize</a></code> in interface <code><a href="../scrollable/">Scrollable</a></code>
+</dd> <dt>Returns:</dt> <dd>a dimension containing the size of the viewport needed to display <code>visibleRowCount</code> rows</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getPreferredScrollableViewportSize--"><code>getPreferredScrollableViewportSize()</code></a>, <a href="../jlist/#setPrototypeCellValue-E-"><code>setPrototypeCellValue(E)</code></a>
+</dd> </dl>    <h3 id="getScrollableUnitIncrement-java.awt.Rectangle-int-int-">getScrollableUnitIncrement</h3> <pre data-language="java">public int getScrollableUnitIncrement(Rectangle visibleRect,
+                                      int orientation,
+                                      int direction)</pre> <div>
+<p>Returns the distance to scroll to expose the next or previous row (for vertical scrolling) or column (for horizontal scrolling). </p>
+<p> For horizontal scrolling, if the layout orientation is <code>VERTICAL</code>, then the list's font size is returned (or <code>1</code> if the font is <code>null</code>).</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../scrollable/#getScrollableUnitIncrement-java.awt.Rectangle-int-int-">getScrollableUnitIncrement</a></code> in interface <code><a href="../scrollable/">Scrollable</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>visibleRect</code> - the view area visible within the viewport</dd> <dd>
+<code>orientation</code> - <code>SwingConstants.HORIZONTAL</code> or <code>SwingConstants.VERTICAL</code>
+</dd> <dd>
+<code>direction</code> - less or equal to zero to scroll up/back, greater than zero for down/forward</dd> <dt>Returns:</dt> <dd>the "unit" increment for scrolling in the specified direction; always positive</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>visibleRect</code> is <code>null</code>, or <code>orientation</code> isn't one of <code>SwingConstants.VERTICAL</code> or <code>SwingConstants.HORIZONTAL</code>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getScrollableBlockIncrement-java.awt.Rectangle-int-int-"><code>getScrollableBlockIncrement(java.awt.Rectangle, int, int)</code></a>, <a href="../scrollable/#getScrollableUnitIncrement-java.awt.Rectangle-int-int-"><code>Scrollable.getScrollableUnitIncrement(java.awt.Rectangle, int, int)</code></a>
+</dd> </dl>    <h3 id="getScrollableBlockIncrement-java.awt.Rectangle-int-int-">getScrollableBlockIncrement</h3> <pre data-language="java">public int getScrollableBlockIncrement(Rectangle visibleRect,
+                                       int orientation,
+                                       int direction)</pre> <div>
+<p>Returns the distance to scroll to expose the next or previous block. </p>
+<p> For vertical scrolling, the following rules are used: </p>
+<ul> <li>if scrolling down, returns the distance to scroll so that the last visible element becomes the first completely visible element </li>
+<li>if scrolling up, returns the distance to scroll so that the first visible element becomes the last completely visible element </li>
+<li>returns <code>visibleRect.height</code> if the list is empty </li>
+</ul> <p> For horizontal scrolling, when the layout orientation is either <code>VERTICAL_WRAP</code> or <code>HORIZONTAL_WRAP</code>: </p>
+<ul> <li>if scrolling right, returns the distance to scroll so that the last visible element becomes the first completely visible element </li>
+<li>if scrolling left, returns the distance to scroll so that the first visible element becomes the last completely visible element </li>
+<li>returns <code>visibleRect.width</code> if the list is empty </li>
+</ul> <p> For horizontal scrolling and <code>VERTICAL</code> orientation, returns <code>visibleRect.width</code>. </p>
+<p> Note that the value of <code>visibleRect</code> must be the equal to <code>this.getVisibleRect()</code>.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../scrollable/#getScrollableBlockIncrement-java.awt.Rectangle-int-int-">getScrollableBlockIncrement</a></code> in interface <code><a href="../scrollable/">Scrollable</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>visibleRect</code> - the view area visible within the viewport</dd> <dd>
+<code>orientation</code> - <code>SwingConstants.HORIZONTAL</code> or <code>SwingConstants.VERTICAL</code>
+</dd> <dd>
+<code>direction</code> - less or equal to zero to scroll up/back, greater than zero for down/forward</dd> <dt>Returns:</dt> <dd>the "block" increment for scrolling in the specified direction; always positive</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>visibleRect</code> is <code>null</code>, or <code>orientation</code> isn't one of <code>SwingConstants.VERTICAL</code> or <code>SwingConstants.HORIZONTAL</code>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../jlist/#getScrollableUnitIncrement-java.awt.Rectangle-int-int-"><code>getScrollableUnitIncrement(java.awt.Rectangle, int, int)</code></a>, <a href="../scrollable/#getScrollableBlockIncrement-java.awt.Rectangle-int-int-"><code>Scrollable.getScrollableBlockIncrement(java.awt.Rectangle, int, int)</code></a>
+</dd> </dl>    <h3 id="getScrollableTracksViewportWidth--">getScrollableTracksViewportWidth</h3> <pre data-language="java">public boolean getScrollableTracksViewportWidth()</pre> <div>
+<p>Returns <code>true</code> if this <code>JList</code> is displayed in a <code>JViewport</code> and the viewport is wider than the list's preferred width, or if the layout orientation is <code>HORIZONTAL_WRAP</code> and <code>visibleRowCount &lt;= 0</code>; otherwise returns <code>false</code>. </p>
+<p> If <code>false</code>, then don't track the viewport's width. This allows horizontal scrolling if the <code>JViewport</code> is itself embedded in a <code>JScrollPane</code>.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../scrollable/#getScrollableTracksViewportWidth--">getScrollableTracksViewportWidth</a></code> in interface <code><a href="../scrollable/">Scrollable</a></code>
+</dd> <dt>Returns:</dt> <dd>whether or not an enclosing viewport should force the list's width to match its own</dd> <dt>See Also:</dt> <dd><a href="../scrollable/#getScrollableTracksViewportWidth--"><code>Scrollable.getScrollableTracksViewportWidth()</code></a></dd> </dl>    <h3 id="getScrollableTracksViewportHeight--">getScrollableTracksViewportHeight</h3> <pre data-language="java">public boolean getScrollableTracksViewportHeight()</pre> <div>
+<p>Returns <code>true</code> if this <code>JList</code> is displayed in a <code>JViewport</code> and the viewport is taller than the list's preferred height, or if the layout orientation is <code>VERTICAL_WRAP</code> and <code>visibleRowCount &lt;= 0</code>; otherwise returns <code>false</code>. </p>
+<p> If <code>false</code>, then don't track the viewport's height. This allows vertical scrolling if the <code>JViewport</code> is itself embedded in a <code>JScrollPane</code>.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../scrollable/#getScrollableTracksViewportHeight--">getScrollableTracksViewportHeight</a></code> in interface <code><a href="../scrollable/">Scrollable</a></code>
+</dd> <dt>Returns:</dt> <dd>whether or not an enclosing viewport should force the list's height to match its own</dd> <dt>See Also:</dt> <dd><a href="../scrollable/#getScrollableTracksViewportHeight--"><code>Scrollable.getScrollableTracksViewportHeight()</code></a></dd> </dl>    <h3 id="paramString--">paramString</h3> <pre data-language="java">protected String paramString()</pre> <p>Returns a <code>String</code> representation of this <code>JList</code>. This method is intended to be used only for debugging purposes, and the content and format of the returned <code>String</code> may vary between implementations. The returned <code>String</code> may be empty, but may not be <code>null</code>.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../jcomponent/#paramString--">paramString</a></code> in class <code><a href="../jcomponent/">JComponent</a></code>
+</dd> <dt>Returns:</dt> <dd>a <code>String</code> representation of this <code>JList</code>.</dd> </dl>    <h3 id="getAccessibleContext--">getAccessibleContext</h3> <pre data-language="java">public AccessibleContext getAccessibleContext()</pre> <div>
+<p>Gets the <code>AccessibleContext</code> associated with this <code>JList</code>. For <code>JList</code>, the <code>AccessibleContext</code> takes the form of an <code>AccessibleJList</code>. </p>
+<p> A new <code>AccessibleJList</code> instance is created if necessary.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="..//openjdk~8_web/javax/accessibility/accessible/">getAccessibleContext</a></code> in interface <code><a href="..//openjdk~8_web/javax/accessibility/accessible/">Accessible</a></code>
+</dd> <dt>Overrides:</dt> <dd>
+<code><a href="../../../java/awt/component/#getAccessibleContext--">getAccessibleContext</a></code> in class <code><a href="../../../java/awt/component/">Component</a></code>
+</dd> <dt>Returns:</dt> <dd>an <code>AccessibleJList</code> that serves as the <code>AccessibleContext</code> of this <code>JList</code>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

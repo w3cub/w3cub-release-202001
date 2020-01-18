@@ -1,0 +1,440 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Duration - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" A time-based amount of time, such as &#39;34.5 seconds&#39;. ">
+  <meta name="keywords" content="class, duration, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/time/duration/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class Duration</h1>   <ul class="inheritance"> <li><a href="../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.time.Duration</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../io/serializable/">Serializable</a>, <a href="../../lang/comparable/">Comparable</a>&lt;<a href="../duration/">Duration</a>&gt;, <a href="../temporal/temporalamount/">TemporalAmount</a>
+</dd> </dl>   <pre data-language="java">public final class Duration
+extends Object
+implements TemporalAmount, Comparable&lt;Duration&gt;, Serializable</pre> <div>
+<p>A time-based amount of time, such as '34.5 seconds'. </p>
+<p> This class models a quantity or amount of time in terms of seconds and nanoseconds. It can be accessed using other duration-based units, such as minutes and hours. In addition, the <a href="../temporal/chronounit/#DAYS"><code>DAYS</code></a> unit can be used and is treated as exactly equal to 24 hours, thus ignoring daylight savings effects. See <a href="../period/"><code>Period</code></a> for the date-based equivalent to this class. </p>
+<p> A physical duration could be of infinite length. For practicality, the duration is stored with constraints similar to <a href="../instant/"><code>Instant</code></a>. The duration uses nanosecond resolution with a maximum value of the seconds that can be held in a <code>long</code>. This is greater than the current estimated age of the universe. </p>
+<p> The range of a duration requires the storage of a number larger than a <code>long</code>. To achieve this, the class stores a <code>long</code> representing seconds and an <code>int</code> representing nanosecond-of-second, which will always be between 0 and 999,999,999. The model is of a directed duration, meaning that the duration may be negative. </p>
+<p> The duration is measured in "seconds", but these are not necessarily identical to the scientific "SI second" definition based on atomic clocks. This difference only impacts durations measured near a leap-second and should not affect most applications. See <a href="../instant/"><code>Instant</code></a> for a discussion as to the meaning of the second and time-scales. </p>
+<p> This is a value-based class; use of identity-sensitive operations (including reference equality (<code>==</code>), identity hash code, or synchronization) on instances of <code>Duration</code> may have unpredictable results and should be avoided. The <code>equals</code> method should be used for comparisons.</p>
+</div> <dl> <dt>Implementation Requirements:</dt> <dd>This class is immutable and thread-safe.</dd> <dt>Since:</dt> <dd>1.8</dd>   </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="ZERO">ZERO</h3> <pre data-language="java">public static final Duration ZERO</pre> <p>Constant for a duration of zero.</p>     <h2 id="method.detail">Methods</h2>   <h3 id="ofDays-long-">ofDays</h3> <pre data-language="java">public static Duration ofDays(long days)</pre> <div>
+<p>Obtains a <code>Duration</code> representing a number of standard 24 hour days. </p>
+<p> The seconds are calculated based on the standard definition of a day, where each day is 86400 seconds which implies a 24 hour day. The nanosecond in second field is set to zero.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>days</code> - the number of days, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code>, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if the input days exceeds the capacity of <code>Duration</code>
+</dd> </dl>    <h3 id="ofHours-long-">ofHours</h3> <pre data-language="java">public static Duration ofHours(long hours)</pre> <div>
+<p>Obtains a <code>Duration</code> representing a number of standard hours. </p>
+<p> The seconds are calculated based on the standard definition of an hour, where each hour is 3600 seconds. The nanosecond in second field is set to zero.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>hours</code> - the number of hours, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code>, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if the input hours exceeds the capacity of <code>Duration</code>
+</dd> </dl>    <h3 id="ofMinutes-long-">ofMinutes</h3> <pre data-language="java">public static Duration ofMinutes(long minutes)</pre> <div>
+<p>Obtains a <code>Duration</code> representing a number of standard minutes. </p>
+<p> The seconds are calculated based on the standard definition of a minute, where each minute is 60 seconds. The nanosecond in second field is set to zero.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>minutes</code> - the number of minutes, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code>, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if the input minutes exceeds the capacity of <code>Duration</code>
+</dd> </dl>    <h3 id="ofSeconds-long-">ofSeconds</h3> <pre data-language="java">public static Duration ofSeconds(long seconds)</pre> <div>
+<p>Obtains a <code>Duration</code> representing a number of seconds. </p>
+<p> The nanosecond in second field is set to zero.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>seconds</code> - the number of seconds, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code>, not null</dd> </dl>    <h3 id="ofSeconds-long-long-">ofSeconds</h3> <pre data-language="java">public static Duration ofSeconds(long seconds,
+                                 long nanoAdjustment)</pre> <div>
+<p>Obtains a <code>Duration</code> representing a number of seconds and an adjustment in nanoseconds. </p>
+<p> This method allows an arbitrary number of nanoseconds to be passed in. The factory will alter the values of the second and nanosecond in order to ensure that the stored nanosecond is in the range 0 to 999,999,999. For example, the following will result in the exactly the same duration: </p>
+<pre data-language="java">Duration.ofSeconds(3, 1);
+  Duration.ofSeconds(4, -999_999_999);
+  Duration.ofSeconds(2, 1000_000_001);</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>seconds</code> - the number of seconds, positive or negative</dd> <dd>
+<code>nanoAdjustment</code> - the nanosecond adjustment to the number of seconds, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code>, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if the adjustment causes the seconds to exceed the capacity of <code>Duration</code>
+</dd> </dl>    <h3 id="ofMillis-long-">ofMillis</h3> <pre data-language="java">public static Duration ofMillis(long millis)</pre> <div>
+<p>Obtains a <code>Duration</code> representing a number of milliseconds. </p>
+<p> The seconds and nanoseconds are extracted from the specified milliseconds.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>millis</code> - the number of milliseconds, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code>, not null</dd> </dl>    <h3 id="ofNanos-long-">ofNanos</h3> <pre data-language="java">public static Duration ofNanos(long nanos)</pre> <div>
+<p>Obtains a <code>Duration</code> representing a number of nanoseconds. </p>
+<p> The seconds and nanoseconds are extracted from the specified nanoseconds.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>nanos</code> - the number of nanoseconds, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code>, not null</dd> </dl>    <h3 id="of-long-java.time.temporal.TemporalUnit-">of</h3> <pre data-language="java">public static Duration of(long amount,
+                          TemporalUnit unit)</pre> <div>
+<p>Obtains a <code>Duration</code> representing an amount in the specified unit. </p>
+<p> The parameters represent the two parts of a phrase like '6 Hours'. For example: </p>
+<pre data-language="java">Duration.of(3, SECONDS);
+  Duration.of(465, HOURS);</pre> Only a subset of units are accepted by this method. The unit must either have an <a href="../temporal/temporalunit/#isDurationEstimated--">exact duration</a> or be <a href="../temporal/chronounit/#DAYS"><code>ChronoUnit.DAYS</code></a> which is treated as 24 hours. Other units throw an exception.</div> <dl> <dt>Parameters:</dt> <dd>
+<code>amount</code> - the amount of the duration, measured in terms of the unit, positive or negative</dd> <dd>
+<code>unit</code> - the unit that the duration is measured in, must have an exact duration, not null</dd> <dt>Returns:</dt> <dd>a <code>Duration</code>, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../datetimeexception/">DateTimeException</a></code> - if the period unit has an estimated duration</dd> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if a numeric overflow occurs</dd> </dl>    <h3 id="from-java.time.temporal.TemporalAmount-">from</h3> <pre data-language="java">public static Duration from(TemporalAmount amount)</pre> <div>
+<p>Obtains an instance of <code>Duration</code> from a temporal amount. </p>
+<p> This obtains a duration based on the specified amount. A <code>TemporalAmount</code> represents an amount of time, which may be date-based or time-based, which this factory extracts to a duration. </p>
+<p> The conversion loops around the set of units from the amount and uses the <a href="../temporal/temporalunit/#getDuration--">duration</a> of the unit to calculate the total <code>Duration</code>. Only a subset of units are accepted by this method. The unit must either have an <a href="../temporal/temporalunit/#isDurationEstimated--">exact duration</a> or be <a href="../temporal/chronounit/#DAYS"><code>ChronoUnit.DAYS</code></a> which is treated as 24 hours. If any other units are found then an exception is thrown.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>amount</code> - the temporal amount to convert, not null</dd> <dt>Returns:</dt> <dd>the equivalent duration, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../datetimeexception/">DateTimeException</a></code> - if unable to convert to a <code>Duration</code>
+</dd> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="parse-java.lang.CharSequence-">parse</h3> <pre data-language="java">public static Duration parse(CharSequence text)</pre> <div>
+<p>Obtains a <code>Duration</code> from a text string such as <code>PnDTnHnMn.nS</code>. </p>
+<p> This will parse a textual representation of a duration, including the string produced by <code>toString()</code>. The formats accepted are based on the ISO-8601 duration format <code>PnDTnHnMn.nS</code> with days considered to be exactly 24 hours. </p>
+<p> The string starts with an optional sign, denoted by the ASCII negative or positive symbol. If negative, the whole period is negated. The ASCII letter "P" is next in upper or lower case. There are then four sections, each consisting of a number and a suffix. The sections have suffixes in ASCII of "D", "H", "M" and "S" for days, hours, minutes and seconds, accepted in upper or lower case. The suffixes must occur in order. The ASCII letter "T" must occur before the first occurrence, if any, of an hour, minute or second section. At least one of the four sections must be present, and if "T" is present there must be at least one section after the "T". The number part of each section must consist of one or more ASCII digits. The number may be prefixed by the ASCII negative or positive symbol. The number of days, hours and minutes must parse to an <code>long</code>. The number of seconds must parse to an <code>long</code> with optional fraction. The decimal point may be either a dot or a comma. The fractional part may have from zero to 9 digits. </p>
+<p> The leading plus/minus sign, and negative values for other units are not part of the ISO-8601 standard. </p>
+<p> Examples: </p>
+<pre data-language="java">"PT20.345S" -- parses as "20.345 seconds"
+    "PT15M"     -- parses as "15 minutes" (where a minute is 60 seconds)
+    "PT10H"     -- parses as "10 hours" (where an hour is 3600 seconds)
+    "P2D"       -- parses as "2 days" (where a day is 24 hours or 86400 seconds)
+    "P2DT3H4M"  -- parses as "2 days, 3 hours and 4 minutes"
+    "P-6H3M"    -- parses as "-6 hours and +3 minutes"
+    "-P6H3M"    -- parses as "-6 hours and -3 minutes"
+    "-P-6H+3M"  -- parses as "+6 hours and -3 minutes"</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>text</code> - the text to parse, not null</dd> <dt>Returns:</dt> <dd>the parsed duration, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../format/datetimeparseexception/">DateTimeParseException</a></code> - if the text cannot be parsed to a duration</dd> </dl>    <h3 id="between-java.time.temporal.Temporal-java.time.temporal.Temporal-">between</h3> <pre data-language="java">public static Duration between(Temporal startInclusive,
+                               Temporal endExclusive)</pre> <div>
+<p>Obtains a <code>Duration</code> representing the duration between two temporal objects. </p>
+<p> This calculates the duration between two temporal objects. If the objects are of different types, then the duration is calculated based on the type of the first object. For example, if the first argument is a <code>LocalTime</code> then the second argument is converted to a <code>LocalTime</code>. </p>
+<p> The specified temporal objects must support the <a href="../temporal/chronounit/#SECONDS"><code>SECONDS</code></a> unit. For full accuracy, either the <a href="../temporal/chronounit/#NANOS"><code>NANOS</code></a> unit or the <a href="../temporal/chronofield/#NANO_OF_SECOND"><code>NANO_OF_SECOND</code></a> field should be supported. </p>
+<p> The result of this method can be a negative period if the end is before the start. To guarantee to obtain a positive duration call <a href="../duration/#abs--"><code>abs()</code></a> on the result.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>startInclusive</code> - the start instant, inclusive, not null</dd> <dd>
+<code>endExclusive</code> - the end instant, exclusive, not null</dd> <dt>Returns:</dt> <dd>a <code>Duration</code>, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../datetimeexception/">DateTimeException</a></code> - if the seconds between the temporals cannot be obtained</dd> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if the calculation exceeds the capacity of <code>Duration</code>
+</dd> </dl>    <h3 id="get-java.time.temporal.TemporalUnit-">get</h3> <pre data-language="java">public long get(TemporalUnit unit)</pre> <div>
+<p>Gets the value of the requested unit. </p>
+<p> This returns a value for each of the two supported units, <a href="../temporal/chronounit/#SECONDS"><code>SECONDS</code></a> and <a href="../temporal/chronounit/#NANOS"><code>NANOS</code></a>. All other units throw an exception.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../temporal/temporalamount/#get-java.time.temporal.TemporalUnit-">get</a></code> in interface <code><a href="../temporal/temporalamount/">TemporalAmount</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>unit</code> - the <code>TemporalUnit</code> for which to return the value</dd> <dt>Returns:</dt> <dd>the long value of the unit</dd> <dt>Throws:</dt> <dd>
+<code><a href="../datetimeexception/">DateTimeException</a></code> - if the unit is not supported</dd> <dd>
+<code><a href="../temporal/unsupportedtemporaltypeexception/">UnsupportedTemporalTypeException</a></code> - if the unit is not supported</dd> </dl>    <h3 id="getUnits--">getUnits</h3> <pre data-language="java">public List&lt;TemporalUnit&gt; getUnits()</pre> <div>
+<p>Gets the set of units supported by this duration. </p>
+<p> The supported units are <a href="../temporal/chronounit/#SECONDS"><code>SECONDS</code></a>, and <a href="../temporal/chronounit/#NANOS"><code>NANOS</code></a>. They are returned in the order seconds, nanos. </p>
+<p> This set can be used in conjunction with <a href="../duration/#get-java.time.temporal.TemporalUnit-"><code>get(TemporalUnit)</code></a> to access the entire state of the duration.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../temporal/temporalamount/#getUnits--">getUnits</a></code> in interface <code><a href="../temporal/temporalamount/">TemporalAmount</a></code>
+</dd> <dt>Returns:</dt> <dd>a list containing the seconds and nanos units, not null</dd> </dl>    <h3 id="isZero--">isZero</h3> <pre data-language="java">public boolean isZero()</pre> <div>
+<p>Checks if this duration is zero length. </p>
+<p> A <code>Duration</code> represents a directed distance between two points on the time-line and can therefore be positive, zero or negative. This method checks whether the length is zero.</p>
+</div> <dl> <dt>Returns:</dt> <dd>true if this duration has a total length equal to zero</dd> </dl>    <h3 id="isNegative--">isNegative</h3> <pre data-language="java">public boolean isNegative()</pre> <div>
+<p>Checks if this duration is negative, excluding zero. </p>
+<p> A <code>Duration</code> represents a directed distance between two points on the time-line and can therefore be positive, zero or negative. This method checks whether the length is less than zero.</p>
+</div> <dl> <dt>Returns:</dt> <dd>true if this duration has a total length less than zero</dd> </dl>    <h3 id="getSeconds--">getSeconds</h3> <pre data-language="java">public long getSeconds()</pre> <div>
+<p>Gets the number of seconds in this duration. </p>
+<p> The length of the duration is stored using two fields - seconds and nanoseconds. The nanoseconds part is a value from 0 to 999,999,999 that is an adjustment to the length in seconds. The total duration is defined by calling this method and <a href="../duration/#getNano--"><code>getNano()</code></a>. </p>
+<p> A <code>Duration</code> represents a directed distance between two points on the time-line. A negative duration is expressed by the negative sign of the seconds part. A duration of -1 nanosecond is stored as -1 seconds plus 999,999,999 nanoseconds.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the whole seconds part of the length of the duration, positive or negative</dd> </dl>    <h3 id="getNano--">getNano</h3> <pre data-language="java">public int getNano()</pre> <div>
+<p>Gets the number of nanoseconds within the second in this duration. </p>
+<p> The length of the duration is stored using two fields - seconds and nanoseconds. The nanoseconds part is a value from 0 to 999,999,999 that is an adjustment to the length in seconds. The total duration is defined by calling this method and <a href="../duration/#getSeconds--"><code>getSeconds()</code></a>. </p>
+<p> A <code>Duration</code> represents a directed distance between two points on the time-line. A negative duration is expressed by the negative sign of the seconds part. A duration of -1 nanosecond is stored as -1 seconds plus 999,999,999 nanoseconds.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the nanoseconds within the second part of the length of the duration, from 0 to 999,999,999</dd> </dl>    <h3 id="withSeconds-long-">withSeconds</h3> <pre data-language="java">public Duration withSeconds(long seconds)</pre> <div>
+<p>Returns a copy of this duration with the specified amount of seconds. </p>
+<p> This returns a duration with the specified seconds, retaining the nano-of-second part of this duration. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>seconds</code> - the seconds to represent, may be negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this period with the requested seconds, not null</dd> </dl>    <h3 id="withNanos-int-">withNanos</h3> <pre data-language="java">public Duration withNanos(int nanoOfSecond)</pre> <div>
+<p>Returns a copy of this duration with the specified nano-of-second. </p>
+<p> This returns a duration with the specified nano-of-second, retaining the seconds part of this duration. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>nanoOfSecond</code> - the nano-of-second to represent, from 0 to 999,999,999</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this period with the requested nano-of-second, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../datetimeexception/">DateTimeException</a></code> - if the nano-of-second is invalid</dd> </dl>    <h3 id="plus-java.time.Duration-">plus</h3> <pre data-language="java">public Duration plus(Duration duration)</pre> <div>
+<p>Returns a copy of this duration with the specified duration added. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>duration</code> - the duration to add, positive or negative, not null</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified duration added, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="plus-long-java.time.temporal.TemporalUnit-">plus</h3> <pre data-language="java">public Duration plus(long amountToAdd,
+                     TemporalUnit unit)</pre> <div>
+<p>Returns a copy of this duration with the specified duration added. </p>
+<p> The duration amount is measured in terms of the specified unit. Only a subset of units are accepted by this method. The unit must either have an <a href="../temporal/temporalunit/#isDurationEstimated--">exact duration</a> or be <a href="../temporal/chronounit/#DAYS"><code>ChronoUnit.DAYS</code></a> which is treated as 24 hours. Other units throw an exception. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>amountToAdd</code> - the amount to add, measured in terms of the unit, positive or negative</dd> <dd>
+<code>unit</code> - the unit that the amount is measured in, must have an exact duration, not null</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified duration added, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../temporal/unsupportedtemporaltypeexception/">UnsupportedTemporalTypeException</a></code> - if the unit is not supported</dd> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="plusDays-long-">plusDays</h3> <pre data-language="java">public Duration plusDays(long daysToAdd)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in standard 24 hour days added. </p>
+<p> The number of days is multiplied by 86400 to obtain the number of seconds to add. This is based on the standard definition of a day as 24 hours. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>daysToAdd</code> - the days to add, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified days added, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="plusHours-long-">plusHours</h3> <pre data-language="java">public Duration plusHours(long hoursToAdd)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in hours added. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>hoursToAdd</code> - the hours to add, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified hours added, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="plusMinutes-long-">plusMinutes</h3> <pre data-language="java">public Duration plusMinutes(long minutesToAdd)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in minutes added. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>minutesToAdd</code> - the minutes to add, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified minutes added, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="plusSeconds-long-">plusSeconds</h3> <pre data-language="java">public Duration plusSeconds(long secondsToAdd)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in seconds added. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>secondsToAdd</code> - the seconds to add, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified seconds added, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="plusMillis-long-">plusMillis</h3> <pre data-language="java">public Duration plusMillis(long millisToAdd)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in milliseconds added. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>millisToAdd</code> - the milliseconds to add, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified milliseconds added, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="plusNanos-long-">plusNanos</h3> <pre data-language="java">public Duration plusNanos(long nanosToAdd)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in nanoseconds added. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>nanosToAdd</code> - the nanoseconds to add, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified nanoseconds added, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="minus-java.time.Duration-">minus</h3> <pre data-language="java">public Duration minus(Duration duration)</pre> <div>
+<p>Returns a copy of this duration with the specified duration subtracted. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>duration</code> - the duration to subtract, positive or negative, not null</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified duration subtracted, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="minus-long-java.time.temporal.TemporalUnit-">minus</h3> <pre data-language="java">public Duration minus(long amountToSubtract,
+                      TemporalUnit unit)</pre> <div>
+<p>Returns a copy of this duration with the specified duration subtracted. </p>
+<p> The duration amount is measured in terms of the specified unit. Only a subset of units are accepted by this method. The unit must either have an <a href="../temporal/temporalunit/#isDurationEstimated--">exact duration</a> or be <a href="../temporal/chronounit/#DAYS"><code>ChronoUnit.DAYS</code></a> which is treated as 24 hours. Other units throw an exception. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>amountToSubtract</code> - the amount to subtract, measured in terms of the unit, positive or negative</dd> <dd>
+<code>unit</code> - the unit that the amount is measured in, must have an exact duration, not null</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified duration subtracted, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="minusDays-long-">minusDays</h3> <pre data-language="java">public Duration minusDays(long daysToSubtract)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in standard 24 hour days subtracted. </p>
+<p> The number of days is multiplied by 86400 to obtain the number of seconds to subtract. This is based on the standard definition of a day as 24 hours. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>daysToSubtract</code> - the days to subtract, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified days subtracted, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="minusHours-long-">minusHours</h3> <pre data-language="java">public Duration minusHours(long hoursToSubtract)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in hours subtracted. </p>
+<p> The number of hours is multiplied by 3600 to obtain the number of seconds to subtract. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>hoursToSubtract</code> - the hours to subtract, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified hours subtracted, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="minusMinutes-long-">minusMinutes</h3> <pre data-language="java">public Duration minusMinutes(long minutesToSubtract)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in minutes subtracted. </p>
+<p> The number of hours is multiplied by 60 to obtain the number of seconds to subtract. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>minutesToSubtract</code> - the minutes to subtract, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified minutes subtracted, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="minusSeconds-long-">minusSeconds</h3> <pre data-language="java">public Duration minusSeconds(long secondsToSubtract)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in seconds subtracted. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>secondsToSubtract</code> - the seconds to subtract, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified seconds subtracted, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="minusMillis-long-">minusMillis</h3> <pre data-language="java">public Duration minusMillis(long millisToSubtract)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in milliseconds subtracted. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>millisToSubtract</code> - the milliseconds to subtract, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified milliseconds subtracted, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="minusNanos-long-">minusNanos</h3> <pre data-language="java">public Duration minusNanos(long nanosToSubtract)</pre> <div>
+<p>Returns a copy of this duration with the specified duration in nanoseconds subtracted. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>nanosToSubtract</code> - the nanoseconds to subtract, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the specified nanoseconds subtracted, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="multipliedBy-long-">multipliedBy</h3> <pre data-language="java">public Duration multipliedBy(long multiplicand)</pre> <div>
+<p>Returns a copy of this duration multiplied by the scalar. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>multiplicand</code> - the value to multiply the duration by, positive or negative</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration multiplied by the specified scalar, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="dividedBy-long-">dividedBy</h3> <pre data-language="java">public Duration dividedBy(long divisor)</pre> <div>
+<p>Returns a copy of this duration divided by the specified value. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>divisor</code> - the value to divide the duration by, positive or negative, not zero</dd> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration divided by the specified divisor, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if the divisor is zero or if numeric overflow occurs</dd> </dl>    <h3 id="negated--">negated</h3> <pre data-language="java">public Duration negated()</pre> <div>
+<p>Returns a copy of this duration with the length negated. </p>
+<p> This method swaps the sign of the total length of this duration. For example, <code>PT1.3S</code> will be returned as <code>PT-1.3S</code>. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with the amount negated, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="abs--">abs</h3> <pre data-language="java">public Duration abs()</pre> <div>
+<p>Returns a copy of this duration with a positive length. </p>
+<p> This method returns a positive duration by effectively removing the sign from any negative total length. For example, <code>PT-1.3S</code> will be returned as <code>PT1.3S</code>. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Returns:</dt> <dd>a <code>Duration</code> based on this duration with an absolute length, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="addTo-java.time.temporal.Temporal-">addTo</h3> <pre data-language="java">public Temporal addTo(Temporal temporal)</pre> <div>
+<p>Adds this duration to the specified temporal object. </p>
+<p> This returns a temporal object of the same observable type as the input with this duration added. </p>
+<p> In most cases, it is clearer to reverse the calling pattern by using <a href="../temporal/temporal/#plus-java.time.temporal.TemporalAmount-"><code>Temporal.plus(TemporalAmount)</code></a>. </p>
+<pre data-language="java">// these two lines are equivalent, but the second approach is recommended
+   dateTime = thisDuration.addTo(dateTime);
+   dateTime = dateTime.plus(thisDuration);</pre> <p> The calculation will add the seconds, then nanos. Only non-zero amounts will be added. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../temporal/temporalamount/#addTo-java.time.temporal.Temporal-">addTo</a></code> in interface <code><a href="../temporal/temporalamount/">TemporalAmount</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>temporal</code> - the temporal object to adjust, not null</dd> <dt>Returns:</dt> <dd>an object of the same type with the adjustment made, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../datetimeexception/">DateTimeException</a></code> - if unable to add</dd> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="subtractFrom-java.time.temporal.Temporal-">subtractFrom</h3> <pre data-language="java">public Temporal subtractFrom(Temporal temporal)</pre> <div>
+<p>Subtracts this duration from the specified temporal object. </p>
+<p> This returns a temporal object of the same observable type as the input with this duration subtracted. </p>
+<p> In most cases, it is clearer to reverse the calling pattern by using <a href="../temporal/temporal/#minus-java.time.temporal.TemporalAmount-"><code>Temporal.minus(TemporalAmount)</code></a>. </p>
+<pre data-language="java">// these two lines are equivalent, but the second approach is recommended
+   dateTime = thisDuration.subtractFrom(dateTime);
+   dateTime = dateTime.minus(thisDuration);</pre> <p> The calculation will subtract the seconds, then nanos. Only non-zero amounts will be added. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../temporal/temporalamount/#subtractFrom-java.time.temporal.Temporal-">subtractFrom</a></code> in interface <code><a href="../temporal/temporalamount/">TemporalAmount</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>temporal</code> - the temporal object to adjust, not null</dd> <dt>Returns:</dt> <dd>an object of the same type with the adjustment made, not null</dd> <dt>Throws:</dt> <dd>
+<code><a href="../datetimeexception/">DateTimeException</a></code> - if unable to subtract</dd> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="toDays--">toDays</h3> <pre data-language="java">public long toDays()</pre> <div>
+<p>Gets the number of days in this duration. </p>
+<p> This returns the total number of days in the duration by dividing the number of seconds by 86400. This is based on the standard definition of a day as 24 hours. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the number of days in the duration, may be negative</dd> </dl>    <h3 id="toHours--">toHours</h3> <pre data-language="java">public long toHours()</pre> <div>
+<p>Gets the number of hours in this duration. </p>
+<p> This returns the total number of hours in the duration by dividing the number of seconds by 3600. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the number of hours in the duration, may be negative</dd> </dl>    <h3 id="toMinutes--">toMinutes</h3> <pre data-language="java">public long toMinutes()</pre> <div>
+<p>Gets the number of minutes in this duration. </p>
+<p> This returns the total number of minutes in the duration by dividing the number of seconds by 60. </p>
+<p> This instance is immutable and unaffected by this method call.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the number of minutes in the duration, may be negative</dd> </dl>    <h3 id="toMillis--">toMillis</h3> <pre data-language="java">public long toMillis()</pre> <div>
+<p>Converts this duration to the total length in milliseconds. </p>
+<p> If this duration is too large to fit in a <code>long</code> milliseconds, then an exception is thrown. </p>
+<p> If this duration has greater than millisecond precision, then the conversion will drop any excess precision information as though the amount in nanoseconds was subject to integer division by one million.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the total length of the duration in milliseconds</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="toNanos--">toNanos</h3> <pre data-language="java">public long toNanos()</pre> <div>
+<p>Converts this duration to the total length in nanoseconds expressed as a <code>long</code>. </p>
+<p> If this duration is too large to fit in a <code>long</code> nanoseconds, then an exception is thrown.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the total length of the duration in nanoseconds</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/arithmeticexception/">ArithmeticException</a></code> - if numeric overflow occurs</dd> </dl>    <h3 id="compareTo-java.time.Duration-">compareTo</h3> <pre data-language="java">public int compareTo(Duration otherDuration)</pre> <div>
+<p>Compares this duration to the specified <code>Duration</code>. </p>
+<p> The comparison is based on the total length of the durations. It is "consistent with equals", as defined by <a href="../../lang/comparable/"><code>Comparable</code></a>.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../lang/comparable/#compareTo-T-">compareTo</a></code> in interface <code><a href="../../lang/comparable/">Comparable</a>&lt;<a href="../duration/">Duration</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>otherDuration</code> - the other duration to compare to, not null</dd> <dt>Returns:</dt> <dd>the comparator value, negative if less, positive if greater</dd> </dl>    <h3 id="equals-java.lang.Object-">equals</h3> <pre data-language="java">public boolean equals(Object otherDuration)</pre> <div>
+<p>Checks if this duration is equal to the specified <code>Duration</code>. </p>
+<p> The comparison is based on the total length of the durations.</p>
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../lang/object/#equals-java.lang.Object-">equals</a></code> in class <code><a href="../../lang/object/">Object</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>otherDuration</code> - the other duration, null returns false</dd> <dt>Returns:</dt> <dd>true if the other duration is equal to this one</dd> <dt>See Also:</dt> <dd>
+<a href="../../lang/object/#hashCode--"><code>Object.hashCode()</code></a>, <a href="../../util/hashmap/"><code>HashMap</code></a>
+</dd> </dl>    <h3 id="hashCode--">hashCode</h3> <pre data-language="java">public int hashCode()</pre> <p>A hash code for this duration.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../lang/object/#hashCode--">hashCode</a></code> in class <code><a href="../../lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a suitable hash code</dd> <dt>See Also:</dt> <dd>
+<a href="../../lang/object/#equals-java.lang.Object-"><code>Object.equals(java.lang.Object)</code></a>, <a href="../../lang/system/#identityHashCode-java.lang.Object-"><code>System.identityHashCode(java.lang.Object)</code></a>
+</dd> </dl>    <h3 id="toString--">toString</h3> <pre data-language="java">public String toString()</pre> <div>
+<p>A string representation of this duration using ISO-8601 seconds based representation, such as <code>PT8H6M12.345S</code>. </p>
+<p> The format of the returned string will be <code>PTnHnMnS</code>, where n is the relevant hours, minutes or seconds part of the duration. Any fractional seconds are placed after a decimal point i the seconds section. If a section has a zero value, it is omitted. The hours, minutes and seconds will all have the same sign. </p>
+<p> Examples: </p>
+<pre data-language="java">"20.345 seconds"                 -- "PT20.345S
+    "15 minutes" (15 * 60 seconds)   -- "PT15M"
+    "10 hours" (10 * 3600 seconds)   -- "PT10H"
+    "2 days" (2 * 86400 seconds)     -- "PT48H"</pre> Note that multiples of 24 hours are not output as days to avoid confusion with <code>Period</code>.</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../lang/object/#toString--">toString</a></code> in class <code><a href="../../lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>an ISO-8601 representation of this duration, not null</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

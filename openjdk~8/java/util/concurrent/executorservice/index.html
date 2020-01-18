@@ -1,0 +1,249 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ExecutorService - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="An Executor that provides methods to manage termination and methods that can produce a Future for tracking progress of one or more asynchronous &hellip;">
+  <meta name="keywords" content="interface, executorservice, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/concurrent/executorservice/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface ExecutorService</h1>     <dl> <dt>All Superinterfaces:</dt> <dd><a href="../executor/">Executor</a></dd> </dl> <dl> <dt>All Known Subinterfaces:</dt> <dd><a href="../scheduledexecutorservice/">ScheduledExecutorService</a></dd> </dl> <dl> <dt>All Known Implementing Classes:</dt> <dd>
+<a href="../abstractexecutorservice/">AbstractExecutorService</a>, <a href="../forkjoinpool/">ForkJoinPool</a>, <a href="../scheduledthreadpoolexecutor/">ScheduledThreadPoolExecutor</a>, <a href="../threadpoolexecutor/">ThreadPoolExecutor</a>
+</dd> </dl>   <pre data-language="java">public interface ExecutorService
+extends Executor</pre> <div>
+<p>An <a href="../executor/"><code>Executor</code></a> that provides methods to manage termination and methods that can produce a <a href="../future/"><code>Future</code></a> for tracking progress of one or more asynchronous tasks. </p>
+<p>An <code>ExecutorService</code> can be shut down, which will cause it to reject new tasks. Two different methods are provided for shutting down an <code>ExecutorService</code>. The <a href="../executorservice/#shutdown--"><code>shutdown()</code></a> method will allow previously submitted tasks to execute before terminating, while the <a href="../executorservice/#shutdownNow--"><code>shutdownNow()</code></a> method prevents waiting tasks from starting and attempts to stop currently executing tasks. Upon termination, an executor has no tasks actively executing, no tasks awaiting execution, and no new tasks can be submitted. An unused <code>ExecutorService</code> should be shut down to allow reclamation of its resources. </p>
+<p>Method <code>submit</code> extends base method <a href="../executor/#execute-java.lang.Runnable-"><code>Executor.execute(Runnable)</code></a> by creating and returning a <a href="../future/"><code>Future</code></a> that can be used to cancel execution and/or wait for completion. Methods <code>invokeAny</code> and <code>invokeAll</code> perform the most commonly useful forms of bulk execution, executing a collection of tasks and then waiting for at least one, or all, to complete. (Class <a href="../executorcompletionservice/"><code>ExecutorCompletionService</code></a> can be used to write customized variants of these methods.) </p>
+<p>The <a href="../executors/"><code>Executors</code></a> class provides factory methods for the executor services provided in this package. </p>
+<h2>Usage Examples</h2> Here is a sketch of a network service in which threads in a thread pool service incoming requests. It uses the preconfigured <a href="../executors/#newFixedThreadPool-int-"><code>Executors.newFixedThreadPool(int)</code></a> factory method: <pre data-language="java">class NetworkService implements Runnable {
+   private final ServerSocket serverSocket;
+   private final ExecutorService pool;
+
+   public NetworkService(int port, int poolSize)
+       throws IOException {
+     serverSocket = new ServerSocket(port);
+     pool = Executors.newFixedThreadPool(poolSize);
+   }
+
+   public void run() { // run the service
+     try {
+       for (;;) {
+         pool.execute(new Handler(serverSocket.accept()));
+       }
+     } catch (IOException ex) {
+       pool.shutdown();
+     }
+   }
+ }
+
+ class Handler implements Runnable {
+   private final Socket socket;
+   Handler(Socket socket) { this.socket = socket; }
+   public void run() {
+     // read and service request on socket
+   }
+ }</pre> The following method shuts down an <code>ExecutorService</code> in two phases, first by calling <code>shutdown</code> to reject incoming tasks, and then calling <code>shutdownNow</code>, if necessary, to cancel any lingering tasks: <pre data-language="java">void shutdownAndAwaitTermination(ExecutorService pool) {
+   pool.shutdown(); // Disable new tasks from being submitted
+   try {
+     // Wait a while for existing tasks to terminate
+     if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
+       pool.shutdownNow(); // Cancel currently executing tasks
+       // Wait a while for tasks to respond to being cancelled
+       if (!pool.awaitTermination(60, TimeUnit.SECONDS))
+           System.err.println("Pool did not terminate");
+     }
+   } catch (InterruptedException ie) {
+     // (Re-)Cancel if current thread also interrupted
+     pool.shutdownNow();
+     // Preserve interrupt status
+     Thread.currentThread().interrupt();
+   }
+ }</pre> <p>Memory consistency effects: Actions in a thread prior to the submission of a <code>Runnable</code> or <code>Callable</code> task to an <code>ExecutorService</code> <a href="../package-summary/#MemoryVisibility"><i>happen-before</i></a> any actions taken by that task, which in turn <i>happen-before</i> the result is retrieved via <code>Future.get()</code>.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.5</dd> </dl>       <h2 id="method.detail">Methods</h2>   <h3 id="shutdown--">shutdown</h3> <pre data-language="java">void shutdown()</pre> <div>
+<p>Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will be accepted. Invocation has no additional effect if already shut down. </p>
+<p>This method does not wait for previously submitted tasks to complete execution. Use <a href="../executorservice/#awaitTermination-long-java.util.concurrent.TimeUnit-"><code>awaitTermination</code></a> to do that.</p>
+</div> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and shutting down this ExecutorService may manipulate threads that the caller is not permitted to modify because it does not hold <a href="../../../lang/runtimepermission/"><code>RuntimePermission</code></a><code>("modifyThread")</code>, or the security manager's <code>checkAccess</code> method denies access.</dd> </dl>    <h3 id="shutdownNow--">shutdownNow</h3> <pre data-language="java">List&lt;Runnable&gt; shutdownNow()</pre> <div>
+<p>Attempts to stop all actively executing tasks, halts the processing of waiting tasks, and returns a list of the tasks that were awaiting execution. </p>
+<p>This method does not wait for actively executing tasks to terminate. Use <a href="../executorservice/#awaitTermination-long-java.util.concurrent.TimeUnit-"><code>awaitTermination</code></a> to do that. </p>
+<p>There are no guarantees beyond best-effort attempts to stop processing actively executing tasks. For example, typical implementations will cancel via <a href="../../../lang/thread/#interrupt--"><code>Thread.interrupt()</code></a>, so any task that fails to respond to interrupts may never terminate.</p>
+</div> <dl> <dt>Returns:</dt> <dd>list of tasks that never commenced execution</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and shutting down this ExecutorService may manipulate threads that the caller is not permitted to modify because it does not hold <a href="../../../lang/runtimepermission/"><code>RuntimePermission</code></a><code>("modifyThread")</code>, or the security manager's <code>checkAccess</code> method denies access.</dd> </dl>    <h3 id="isShutdown--">isShutdown</h3> <pre data-language="java">boolean isShutdown()</pre> <p>Returns <code>true</code> if this executor has been shut down.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if this executor has been shut down</dd> </dl>    <h3 id="isTerminated--">isTerminated</h3> <pre data-language="java">boolean isTerminated()</pre> <p>Returns <code>true</code> if all tasks have completed following shut down. Note that <code>isTerminated</code> is never <code>true</code> unless either <code>shutdown</code> or <code>shutdownNow</code> was called first.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if all tasks have completed following shut down</dd> </dl>    <h3 id="awaitTermination-long-java.util.concurrent.TimeUnit-">awaitTermination</h3> <pre data-language="java">boolean awaitTermination(long timeout,
+                         TimeUnit unit)
+                  throws InterruptedException</pre> <p>Blocks until all tasks have completed execution after a shutdown request, or the timeout occurs, or the current thread is interrupted, whichever happens first.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>timeout</code> - the maximum time to wait</dd> <dd>
+<code>unit</code> - the time unit of the timeout argument</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this executor terminated and <code>false</code> if the timeout elapsed before termination</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting</dd> </dl>    <h3 id="submit-java.util.concurrent.Callable-">submit</h3> <pre data-language="java">&lt;T&gt; Future&lt;T&gt; submit(Callable&lt;T&gt; task)</pre> <div>
+<p>Submits a value-returning task for execution and returns a Future representing the pending results of the task. The Future's <code>get</code> method will return the task's result upon successful completion. </p>
+<p> If you would like to immediately block waiting for a task, you can use constructions of the form <code>result = exec.submit(aCallable).get();</code> </p>
+<p>Note: The <a href="../executors/"><code>Executors</code></a> class includes a set of methods that can convert some other common closure-like objects, for example, <a href="../../../security/privilegedaction/"><code>PrivilegedAction</code></a> to <a href="../callable/"><code>Callable</code></a> form so they can be submitted.</p>
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the task's result</dd> <dt>Parameters:</dt> <dd>
+<code>task</code> - the task to submit</dd> <dt>Returns:</dt> <dd>a Future representing pending completion of the task</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the task is null</dd> </dl>    <h3 id="submit-java.lang.Runnable-T-">submit</h3> <pre data-language="java">&lt;T&gt; Future&lt;T&gt; submit(Runnable task,
+                     T result)</pre> <p>Submits a Runnable task for execution and returns a Future representing that task. The Future's <code>get</code> method will return the given result upon successful completion.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the result</dd> <dt>Parameters:</dt> <dd>
+<code>task</code> - the task to submit</dd> <dd>
+<code>result</code> - the result to return</dd> <dt>Returns:</dt> <dd>a Future representing pending completion of the task</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the task is null</dd> </dl>    <h3 id="submit-java.lang.Runnable-">submit</h3> <pre data-language="java">Future&lt;?&gt; submit(Runnable task)</pre> <p>Submits a Runnable task for execution and returns a Future representing that task. The Future's <code>get</code> method will return <code>null</code> upon <em>successful</em> completion.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>task</code> - the task to submit</dd> <dt>Returns:</dt> <dd>a Future representing pending completion of the task</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the task is null</dd> </dl>    <h3 id="invokeAll-java.util.Collection-">invokeAll</h3> <pre data-language="java">&lt;T&gt; List&lt;Future&lt;T&gt;&gt; invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)
+                       throws InterruptedException</pre> <p>Executes the given tasks, returning a list of Futures holding their status and results when all complete. <a href="../future/#isDone--"><code>Future.isDone()</code></a> is <code>true</code> for each element of the returned list. Note that a <em>completed</em> task could have terminated either normally or by throwing an exception. The results of this method are undefined if the given collection is modified while this operation is in progress.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the values returned from the tasks</dd> <dt>Parameters:</dt> <dd>
+<code>tasks</code> - the collection of tasks</dd> <dt>Returns:</dt> <dd>a list of Futures representing the tasks, in the same sequential order as produced by the iterator for the given task list, each of which has completed</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting, in which case unfinished tasks are cancelled</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if tasks or any of its elements are <code>null</code>
+</dd> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if any task cannot be scheduled for execution</dd> </dl>    <h3 id="invokeAll-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAll</h3> <pre data-language="java">&lt;T&gt; List&lt;Future&lt;T&gt;&gt; invokeAll(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks,
+                              long timeout,
+                              TimeUnit unit)
+                       throws InterruptedException</pre> <p>Executes the given tasks, returning a list of Futures holding their status and results when all complete or the timeout expires, whichever happens first. <a href="../future/#isDone--"><code>Future.isDone()</code></a> is <code>true</code> for each element of the returned list. Upon return, tasks that have not completed are cancelled. Note that a <em>completed</em> task could have terminated either normally or by throwing an exception. The results of this method are undefined if the given collection is modified while this operation is in progress.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the values returned from the tasks</dd> <dt>Parameters:</dt> <dd>
+<code>tasks</code> - the collection of tasks</dd> <dd>
+<code>timeout</code> - the maximum time to wait</dd> <dd>
+<code>unit</code> - the time unit of the timeout argument</dd> <dt>Returns:</dt> <dd>a list of Futures representing the tasks, in the same sequential order as produced by the iterator for the given task list. If the operation did not time out, each task will have completed. If it did time out, some of these tasks will not have completed.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting, in which case unfinished tasks are cancelled</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if tasks, any of its elements, or unit are <code>null</code>
+</dd> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if any task cannot be scheduled for execution</dd> </dl>    <h3 id="invokeAny-java.util.Collection-">invokeAny</h3> <pre data-language="java">&lt;T&gt; T invokeAny(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)
+         throws InterruptedException,
+                ExecutionException</pre> <p>Executes the given tasks, returning the result of one that has completed successfully (i.e., without throwing an exception), if any do. Upon normal or exceptional return, tasks that have not completed are cancelled. The results of this method are undefined if the given collection is modified while this operation is in progress.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the values returned from the tasks</dd> <dt>Parameters:</dt> <dd>
+<code>tasks</code> - the collection of tasks</dd> <dt>Returns:</dt> <dd>the result returned by one of the tasks</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if tasks or any element task subject to execution is <code>null</code>
+</dd> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if tasks is empty</dd> <dd>
+<code><a href="../executionexception/">ExecutionException</a></code> - if no task successfully completes</dd> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if tasks cannot be scheduled for execution</dd> </dl>    <h3 id="invokeAny-java.util.Collection-long-java.util.concurrent.TimeUnit-">invokeAny</h3> <pre data-language="java">&lt;T&gt; T invokeAny(Collection&lt;? extends Callable&lt;T&gt;&gt; tasks,
+                long timeout,
+                TimeUnit unit)
+         throws InterruptedException,
+                ExecutionException,
+                TimeoutException</pre> <p>Executes the given tasks, returning the result of one that has completed successfully (i.e., without throwing an exception), if any do before the given timeout elapses. Upon normal or exceptional return, tasks that have not completed are cancelled. The results of this method are undefined if the given collection is modified while this operation is in progress.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - the type of the values returned from the tasks</dd> <dt>Parameters:</dt> <dd>
+<code>tasks</code> - the collection of tasks</dd> <dd>
+<code>timeout</code> - the maximum time to wait</dd> <dd>
+<code>unit</code> - the time unit of the timeout argument</dd> <dt>Returns:</dt> <dd>the result returned by one of the tasks</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if tasks, or unit, or any element task subject to execution is <code>null</code>
+</dd> <dd>
+<code><a href="../timeoutexception/">TimeoutException</a></code> - if the given timeout elapses before any task successfully completes</dd> <dd>
+<code><a href="../executionexception/">ExecutionException</a></code> - if no task successfully completes</dd> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if tasks cannot be scheduled for execution</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

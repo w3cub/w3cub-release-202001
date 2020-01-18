@@ -1,0 +1,1730 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>SynthPainter - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content="SynthPainter is used for painting portions of JComponents. At a minimum each JComponent has two paint methods&#58; one for the border and one for &hellip;">
+  <meta name="keywords" content="class, synthpainter, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/javax/swing/plaf/synth/synthpainter/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class SynthPainter</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>javax.swing.plaf.synth.SynthPainter</li> </ul> </li> </ul>     <pre data-language="java">public abstract class SynthPainter
+extends Object</pre> <div>
+<p><code>SynthPainter</code> is used for painting portions of <code>JComponent</code>s. At a minimum each <code>JComponent</code> has two paint methods: one for the border and one for the background. Some <code>JComponent</code>s have more than one <code>Region</code>, and as a consequence more paint methods. </p>
+<p> Instances of <code>SynthPainter</code> are obtained from the <a href="../synthstyle/#getPainter-javax.swing.plaf.synth.SynthContext-"><code>SynthStyle.getPainter(javax.swing.plaf.synth.SynthContext)</code></a> method. </p>
+<p> You typically supply a <code>SynthPainter</code> by way of Synth's file format. The following example registers a painter for all <code>JButton</code>s that will render the image <code>myImage.png</code>: </p>
+<pre data-language="java">&lt;style id="buttonStyle"&gt;
+    &lt;imagePainter path="myImage.png" sourceInsets="2 2 2 2"
+                  paintCenter="true" stretch="true"/&gt;
+    &lt;insets top="2" bottom="2" left="2" right="2"/&gt;
+  &lt;/style&gt;
+  &lt;bind style="buttonStyle" type="REGION" key="button"/&gt;</pre> <p> <code>SynthPainter</code> is abstract in so far as it does no painting, all the methods are empty. While none of these methods are typed to throw an exception, subclasses can assume that valid arguments are passed in, and if not they can throw a <code>NullPointerException</code> or <code>IllegalArgumentException</code> in response to invalid arguments.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.5</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="SynthPainter--">SynthPainter</h3> <pre data-language="java">public SynthPainter()</pre>     <h2 id="method.detail">Methods</h2>   <h3 id="paintArrowButtonBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintArrowButtonBackground</h3> <pre data-language="java">public void paintArrowButtonBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h)</pre> <p>Paints the background of an arrow button. Arrow buttons are created by some components, such as <code>JScrollBar</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintArrowButtonBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintArrowButtonBorder</h3> <pre data-language="java">public void paintArrowButtonBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the border of an arrow button. Arrow buttons are created by some components, such as <code>JScrollBar</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintArrowButtonForeground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintArrowButtonForeground</h3> <pre data-language="java">public void paintArrowButtonForeground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h,
+                                       int direction)</pre> <p>Paints the foreground of an arrow button. This method is responsible for drawing a graphical representation of a direction, typically an arrow. Arrow buttons are created by some components, such as <code>JScrollBar</code></p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>direction</code> - One of SwingConstants.NORTH, SwingConstants.SOUTH SwingConstants.EAST or SwingConstants.WEST</dd> </dl>    <h3 id="paintButtonBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintButtonBackground</h3> <pre data-language="java">public void paintButtonBackground(SynthContext context,
+                                  Graphics g,
+                                  int x,
+                                  int y,
+                                  int w,
+                                  int h)</pre> <p>Paints the background of a button.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintButtonBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintButtonBorder</h3> <pre data-language="java">public void paintButtonBorder(SynthContext context,
+                              Graphics g,
+                              int x,
+                              int y,
+                              int w,
+                              int h)</pre> <p>Paints the border of a button.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintCheckBoxMenuItemBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintCheckBoxMenuItemBackground</h3> <pre data-language="java">public void paintCheckBoxMenuItemBackground(SynthContext context,
+                                            Graphics g,
+                                            int x,
+                                            int y,
+                                            int w,
+                                            int h)</pre> <p>Paints the background of a check box menu item.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintCheckBoxMenuItemBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintCheckBoxMenuItemBorder</h3> <pre data-language="java">public void paintCheckBoxMenuItemBorder(SynthContext context,
+                                        Graphics g,
+                                        int x,
+                                        int y,
+                                        int w,
+                                        int h)</pre> <p>Paints the border of a check box menu item.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintCheckBoxBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintCheckBoxBackground</h3> <pre data-language="java">public void paintCheckBoxBackground(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the background of a check box.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintCheckBoxBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintCheckBoxBorder</h3> <pre data-language="java">public void paintCheckBoxBorder(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the border of a check box.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintColorChooserBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintColorChooserBackground</h3> <pre data-language="java">public void paintColorChooserBackground(SynthContext context,
+                                        Graphics g,
+                                        int x,
+                                        int y,
+                                        int w,
+                                        int h)</pre> <p>Paints the background of a color chooser.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintColorChooserBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintColorChooserBorder</h3> <pre data-language="java">public void paintColorChooserBorder(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the border of a color chooser.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintComboBoxBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintComboBoxBackground</h3> <pre data-language="java">public void paintComboBoxBackground(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the background of a combo box.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintComboBoxBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintComboBoxBorder</h3> <pre data-language="java">public void paintComboBoxBorder(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the border of a combo box.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintDesktopIconBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintDesktopIconBackground</h3> <pre data-language="java">public void paintDesktopIconBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h)</pre> <p>Paints the background of a desktop icon.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintDesktopIconBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintDesktopIconBorder</h3> <pre data-language="java">public void paintDesktopIconBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the border of a desktop icon.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintDesktopPaneBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintDesktopPaneBackground</h3> <pre data-language="java">public void paintDesktopPaneBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h)</pre> <p>Paints the background of a desktop pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintDesktopPaneBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintDesktopPaneBorder</h3> <pre data-language="java">public void paintDesktopPaneBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the background of a desktop pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintEditorPaneBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintEditorPaneBackground</h3> <pre data-language="java">public void paintEditorPaneBackground(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h)</pre> <p>Paints the background of an editor pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintEditorPaneBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintEditorPaneBorder</h3> <pre data-language="java">public void paintEditorPaneBorder(SynthContext context,
+                                  Graphics g,
+                                  int x,
+                                  int y,
+                                  int w,
+                                  int h)</pre> <p>Paints the border of an editor pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintFileChooserBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintFileChooserBackground</h3> <pre data-language="java">public void paintFileChooserBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h)</pre> <p>Paints the background of a file chooser.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintFileChooserBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintFileChooserBorder</h3> <pre data-language="java">public void paintFileChooserBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the border of a file chooser.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintFormattedTextFieldBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintFormattedTextFieldBackground</h3> <pre data-language="java">public void paintFormattedTextFieldBackground(SynthContext context,
+                                              Graphics g,
+                                              int x,
+                                              int y,
+                                              int w,
+                                              int h)</pre> <p>Paints the background of a formatted text field.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintFormattedTextFieldBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintFormattedTextFieldBorder</h3> <pre data-language="java">public void paintFormattedTextFieldBorder(SynthContext context,
+                                          Graphics g,
+                                          int x,
+                                          int y,
+                                          int w,
+                                          int h)</pre> <p>Paints the border of a formatted text field.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintInternalFrameTitlePaneBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintInternalFrameTitlePaneBackground</h3> <pre data-language="java">public void paintInternalFrameTitlePaneBackground(SynthContext context,
+                                                  Graphics g,
+                                                  int x,
+                                                  int y,
+                                                  int w,
+                                                  int h)</pre> <p>Paints the background of an internal frame title pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintInternalFrameTitlePaneBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintInternalFrameTitlePaneBorder</h3> <pre data-language="java">public void paintInternalFrameTitlePaneBorder(SynthContext context,
+                                              Graphics g,
+                                              int x,
+                                              int y,
+                                              int w,
+                                              int h)</pre> <p>Paints the border of an internal frame title pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintInternalFrameBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintInternalFrameBackground</h3> <pre data-language="java">public void paintInternalFrameBackground(SynthContext context,
+                                         Graphics g,
+                                         int x,
+                                         int y,
+                                         int w,
+                                         int h)</pre> <p>Paints the background of an internal frame.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintInternalFrameBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintInternalFrameBorder</h3> <pre data-language="java">public void paintInternalFrameBorder(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h)</pre> <p>Paints the border of an internal frame.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintLabelBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintLabelBackground</h3> <pre data-language="java">public void paintLabelBackground(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h)</pre> <p>Paints the background of a label.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintLabelBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintLabelBorder</h3> <pre data-language="java">public void paintLabelBorder(SynthContext context,
+                             Graphics g,
+                             int x,
+                             int y,
+                             int w,
+                             int h)</pre> <p>Paints the border of a label.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintListBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintListBackground</h3> <pre data-language="java">public void paintListBackground(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the background of a list.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintListBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintListBorder</h3> <pre data-language="java">public void paintListBorder(SynthContext context,
+                            Graphics g,
+                            int x,
+                            int y,
+                            int w,
+                            int h)</pre> <p>Paints the border of a list.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintMenuBarBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintMenuBarBackground</h3> <pre data-language="java">public void paintMenuBarBackground(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the background of a menu bar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintMenuBarBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintMenuBarBorder</h3> <pre data-language="java">public void paintMenuBarBorder(SynthContext context,
+                               Graphics g,
+                               int x,
+                               int y,
+                               int w,
+                               int h)</pre> <p>Paints the border of a menu bar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintMenuItemBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintMenuItemBackground</h3> <pre data-language="java">public void paintMenuItemBackground(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the background of a menu item.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintMenuItemBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintMenuItemBorder</h3> <pre data-language="java">public void paintMenuItemBorder(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the border of a menu item.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintMenuBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintMenuBackground</h3> <pre data-language="java">public void paintMenuBackground(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the background of a menu.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintMenuBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintMenuBorder</h3> <pre data-language="java">public void paintMenuBorder(SynthContext context,
+                            Graphics g,
+                            int x,
+                            int y,
+                            int w,
+                            int h)</pre> <p>Paints the border of a menu.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintOptionPaneBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintOptionPaneBackground</h3> <pre data-language="java">public void paintOptionPaneBackground(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h)</pre> <p>Paints the background of an option pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintOptionPaneBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintOptionPaneBorder</h3> <pre data-language="java">public void paintOptionPaneBorder(SynthContext context,
+                                  Graphics g,
+                                  int x,
+                                  int y,
+                                  int w,
+                                  int h)</pre> <p>Paints the border of an option pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintPanelBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintPanelBackground</h3> <pre data-language="java">public void paintPanelBackground(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h)</pre> <p>Paints the background of a panel.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintPanelBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintPanelBorder</h3> <pre data-language="java">public void paintPanelBorder(SynthContext context,
+                             Graphics g,
+                             int x,
+                             int y,
+                             int w,
+                             int h)</pre> <p>Paints the border of a panel.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintPasswordFieldBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintPasswordFieldBackground</h3> <pre data-language="java">public void paintPasswordFieldBackground(SynthContext context,
+                                         Graphics g,
+                                         int x,
+                                         int y,
+                                         int w,
+                                         int h)</pre> <p>Paints the background of a password field.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintPasswordFieldBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintPasswordFieldBorder</h3> <pre data-language="java">public void paintPasswordFieldBorder(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h)</pre> <p>Paints the border of a password field.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintPopupMenuBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintPopupMenuBackground</h3> <pre data-language="java">public void paintPopupMenuBackground(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h)</pre> <p>Paints the background of a popup menu.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintPopupMenuBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintPopupMenuBorder</h3> <pre data-language="java">public void paintPopupMenuBorder(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h)</pre> <p>Paints the border of a popup menu.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintProgressBarBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintProgressBarBackground</h3> <pre data-language="java">public void paintProgressBarBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h)</pre> <p>Paints the background of a progress bar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintProgressBarBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintProgressBarBackground</h3> <pre data-language="java">public void paintProgressBarBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h,
+                                       int orientation)</pre> <p>Paints the background of a progress bar. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - one of <code>JProgressBar.HORIZONTAL</code> or <code>JProgressBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintProgressBarBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintProgressBarBorder</h3> <pre data-language="java">public void paintProgressBarBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the border of a progress bar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintProgressBarBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintProgressBarBorder</h3> <pre data-language="java">public void paintProgressBarBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h,
+                                   int orientation)</pre> <p>Paints the border of a progress bar. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - one of <code>JProgressBar.HORIZONTAL</code> or <code>JProgressBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintProgressBarForeground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintProgressBarForeground</h3> <pre data-language="java">public void paintProgressBarForeground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h,
+                                       int orientation)</pre> <p>Paints the foreground of a progress bar. is responsible for providing an indication of the progress of the progress bar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - one of <code>JProgressBar.HORIZONTAL</code> or <code>JProgressBar.VERTICAL</code>
+</dd> </dl>    <h3 id="paintRadioButtonMenuItemBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintRadioButtonMenuItemBackground</h3> <pre data-language="java">public void paintRadioButtonMenuItemBackground(SynthContext context,
+                                               Graphics g,
+                                               int x,
+                                               int y,
+                                               int w,
+                                               int h)</pre> <p>Paints the background of a radio button menu item.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintRadioButtonMenuItemBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintRadioButtonMenuItemBorder</h3> <pre data-language="java">public void paintRadioButtonMenuItemBorder(SynthContext context,
+                                           Graphics g,
+                                           int x,
+                                           int y,
+                                           int w,
+                                           int h)</pre> <p>Paints the border of a radio button menu item.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintRadioButtonBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintRadioButtonBackground</h3> <pre data-language="java">public void paintRadioButtonBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h)</pre> <p>Paints the background of a radio button.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintRadioButtonBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintRadioButtonBorder</h3> <pre data-language="java">public void paintRadioButtonBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the border of a radio button.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintRootPaneBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintRootPaneBackground</h3> <pre data-language="java">public void paintRootPaneBackground(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the background of a root pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintRootPaneBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintRootPaneBorder</h3> <pre data-language="java">public void paintRootPaneBorder(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the border of a root pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintScrollBarBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintScrollBarBackground</h3> <pre data-language="java">public void paintScrollBarBackground(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h)</pre> <p>Paints the background of a scrollbar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintScrollBarBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintScrollBarBackground</h3> <pre data-language="java">public void paintScrollBarBackground(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h,
+                                     int orientation)</pre> <p>Paints the background of a scrollbar. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - Orientation of the JScrollBar, one of <code>JScrollBar.HORIZONTAL</code> or <code>JScrollBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintScrollBarBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintScrollBarBorder</h3> <pre data-language="java">public void paintScrollBarBorder(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h)</pre> <p>Paints the border of a scrollbar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintScrollBarBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintScrollBarBorder</h3> <pre data-language="java">public void paintScrollBarBorder(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h,
+                                 int orientation)</pre> <p>Paints the border of a scrollbar. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - Orientation of the JScrollBar, one of <code>JScrollBar.HORIZONTAL</code> or <code>JScrollBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintScrollBarThumbBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintScrollBarThumbBackground</h3> <pre data-language="java">public void paintScrollBarThumbBackground(SynthContext context,
+                                          Graphics g,
+                                          int x,
+                                          int y,
+                                          int w,
+                                          int h,
+                                          int orientation)</pre> <p>Paints the background of the thumb of a scrollbar. The thumb provides a graphical indication as to how much of the Component is visible in a <code>JScrollPane</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - Orientation of the JScrollBar, one of <code>JScrollBar.HORIZONTAL</code> or <code>JScrollBar.VERTICAL</code>
+</dd> </dl>    <h3 id="paintScrollBarThumbBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintScrollBarThumbBorder</h3> <pre data-language="java">public void paintScrollBarThumbBorder(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h,
+                                      int orientation)</pre> <p>Paints the border of the thumb of a scrollbar. The thumb provides a graphical indication as to how much of the Component is visible in a <code>JScrollPane</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - Orientation of the JScrollBar, one of <code>JScrollBar.HORIZONTAL</code> or <code>JScrollBar.VERTICAL</code>
+</dd> </dl>    <h3 id="paintScrollBarTrackBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintScrollBarTrackBackground</h3> <pre data-language="java">public void paintScrollBarTrackBackground(SynthContext context,
+                                          Graphics g,
+                                          int x,
+                                          int y,
+                                          int w,
+                                          int h)</pre> <p>Paints the background of the track of a scrollbar. The track contains the thumb.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintScrollBarTrackBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintScrollBarTrackBackground</h3> <pre data-language="java">public void paintScrollBarTrackBackground(SynthContext context,
+                                          Graphics g,
+                                          int x,
+                                          int y,
+                                          int w,
+                                          int h,
+                                          int orientation)</pre> <p>Paints the background of the track of a scrollbar. The track contains the thumb. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - Orientation of the JScrollBar, one of <code>JScrollBar.HORIZONTAL</code> or <code>JScrollBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintScrollBarTrackBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintScrollBarTrackBorder</h3> <pre data-language="java">public void paintScrollBarTrackBorder(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h)</pre> <p>Paints the border of the track of a scrollbar. The track contains the thumb.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintScrollBarTrackBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintScrollBarTrackBorder</h3> <pre data-language="java">public void paintScrollBarTrackBorder(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h,
+                                      int orientation)</pre> <p>Paints the border of the track of a scrollbar. The track contains the thumb. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - Orientation of the JScrollBar, one of <code>JScrollBar.HORIZONTAL</code> or <code>JScrollBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintScrollPaneBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintScrollPaneBackground</h3> <pre data-language="java">public void paintScrollPaneBackground(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h)</pre> <p>Paints the background of a scroll pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintScrollPaneBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintScrollPaneBorder</h3> <pre data-language="java">public void paintScrollPaneBorder(SynthContext context,
+                                  Graphics g,
+                                  int x,
+                                  int y,
+                                  int w,
+                                  int h)</pre> <p>Paints the border of a scroll pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSeparatorBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSeparatorBackground</h3> <pre data-language="java">public void paintSeparatorBackground(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h)</pre> <p>Paints the background of a separator.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSeparatorBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSeparatorBackground</h3> <pre data-language="java">public void paintSeparatorBackground(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h,
+                                     int orientation)</pre> <p>Paints the background of a separator. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSeparator.HORIZONTAL</code> or <code>JSeparator.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintSeparatorBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSeparatorBorder</h3> <pre data-language="java">public void paintSeparatorBorder(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h)</pre> <p>Paints the border of a separator.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSeparatorBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSeparatorBorder</h3> <pre data-language="java">public void paintSeparatorBorder(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h,
+                                 int orientation)</pre> <p>Paints the border of a separator. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSeparator.HORIZONTAL</code> or <code>JSeparator.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintSeparatorForeground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSeparatorForeground</h3> <pre data-language="java">public void paintSeparatorForeground(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h,
+                                     int orientation)</pre> <p>Paints the foreground of a separator.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSeparator.HORIZONTAL</code> or <code>JSeparator.VERTICAL</code>
+</dd> </dl>    <h3 id="paintSliderBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSliderBackground</h3> <pre data-language="java">public void paintSliderBackground(SynthContext context,
+                                  Graphics g,
+                                  int x,
+                                  int y,
+                                  int w,
+                                  int h)</pre> <p>Paints the background of a slider.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSliderBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSliderBackground</h3> <pre data-language="java">public void paintSliderBackground(SynthContext context,
+                                  Graphics g,
+                                  int x,
+                                  int y,
+                                  int w,
+                                  int h,
+                                  int orientation)</pre> <p>Paints the background of a slider. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSlider.HORIZONTAL</code> or <code>JSlider.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintSliderBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSliderBorder</h3> <pre data-language="java">public void paintSliderBorder(SynthContext context,
+                              Graphics g,
+                              int x,
+                              int y,
+                              int w,
+                              int h)</pre> <p>Paints the border of a slider.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSliderBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSliderBorder</h3> <pre data-language="java">public void paintSliderBorder(SynthContext context,
+                              Graphics g,
+                              int x,
+                              int y,
+                              int w,
+                              int h,
+                              int orientation)</pre> <p>Paints the border of a slider. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSlider.HORIZONTAL</code> or <code>JSlider.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintSliderThumbBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSliderThumbBackground</h3> <pre data-language="java">public void paintSliderThumbBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h,
+                                       int orientation)</pre> <p>Paints the background of the thumb of a slider.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSlider.HORIZONTAL</code> or <code>JSlider.VERTICAL</code>
+</dd> </dl>    <h3 id="paintSliderThumbBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSliderThumbBorder</h3> <pre data-language="java">public void paintSliderThumbBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h,
+                                   int orientation)</pre> <p>Paints the border of the thumb of a slider.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSlider.HORIZONTAL</code> or <code>JSlider.VERTICAL</code>
+</dd> </dl>    <h3 id="paintSliderTrackBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSliderTrackBackground</h3> <pre data-language="java">public void paintSliderTrackBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h)</pre> <p>Paints the background of the track of a slider.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSliderTrackBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSliderTrackBackground</h3> <pre data-language="java">public void paintSliderTrackBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h,
+                                       int orientation)</pre> <p>Paints the background of the track of a slider. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSlider.HORIZONTAL</code> or <code>JSlider.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintSliderTrackBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSliderTrackBorder</h3> <pre data-language="java">public void paintSliderTrackBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the border of the track of a slider.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSliderTrackBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSliderTrackBorder</h3> <pre data-language="java">public void paintSliderTrackBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h,
+                                   int orientation)</pre> <p>Paints the border of the track of a slider. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSlider.HORIZONTAL</code> or <code>JSlider.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintSpinnerBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSpinnerBackground</h3> <pre data-language="java">public void paintSpinnerBackground(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the background of a spinner.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSpinnerBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSpinnerBorder</h3> <pre data-language="java">public void paintSpinnerBorder(SynthContext context,
+                               Graphics g,
+                               int x,
+                               int y,
+                               int w,
+                               int h)</pre> <p>Paints the border of a spinner.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSplitPaneDividerBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSplitPaneDividerBackground</h3> <pre data-language="java">public void paintSplitPaneDividerBackground(SynthContext context,
+                                            Graphics g,
+                                            int x,
+                                            int y,
+                                            int w,
+                                            int h)</pre> <p>Paints the background of the divider of a split pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSplitPaneDividerBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSplitPaneDividerBackground</h3> <pre data-language="java">public void paintSplitPaneDividerBackground(SynthContext context,
+                                            Graphics g,
+                                            int x,
+                                            int y,
+                                            int w,
+                                            int h,
+                                            int orientation)</pre> <p>Paints the background of the divider of a split pane. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSplitPane.HORIZONTAL_SPLIT</code> or <code>JSplitPane.VERTICAL_SPLIT</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintSplitPaneDividerForeground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSplitPaneDividerForeground</h3> <pre data-language="java">public void paintSplitPaneDividerForeground(SynthContext context,
+                                            Graphics g,
+                                            int x,
+                                            int y,
+                                            int w,
+                                            int h,
+                                            int orientation)</pre> <p>Paints the foreground of the divider of a split pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSplitPane.HORIZONTAL_SPLIT</code> or <code>JSplitPane.VERTICAL_SPLIT</code>
+</dd> </dl>    <h3 id="paintSplitPaneDragDivider-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintSplitPaneDragDivider</h3> <pre data-language="java">public void paintSplitPaneDragDivider(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h,
+                                      int orientation)</pre> <p>Paints the divider, when the user is dragging the divider, of a split pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JSplitPane.HORIZONTAL_SPLIT</code> or <code>JSplitPane.VERTICAL_SPLIT</code>
+</dd> </dl>    <h3 id="paintSplitPaneBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSplitPaneBackground</h3> <pre data-language="java">public void paintSplitPaneBackground(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h)</pre> <p>Paints the background of a split pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintSplitPaneBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintSplitPaneBorder</h3> <pre data-language="java">public void paintSplitPaneBorder(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h)</pre> <p>Paints the border of a split pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTabbedPaneBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTabbedPaneBackground</h3> <pre data-language="java">public void paintTabbedPaneBackground(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h)</pre> <p>Paints the background of a tabbed pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTabbedPaneBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTabbedPaneBorder</h3> <pre data-language="java">public void paintTabbedPaneBorder(SynthContext context,
+                                  Graphics g,
+                                  int x,
+                                  int y,
+                                  int w,
+                                  int h)</pre> <p>Paints the border of a tabbed pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTabbedPaneTabAreaBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTabbedPaneTabAreaBackground</h3> <pre data-language="java">public void paintTabbedPaneTabAreaBackground(SynthContext context,
+                                             Graphics g,
+                                             int x,
+                                             int y,
+                                             int w,
+                                             int h)</pre> <p>Paints the background of the area behind the tabs of a tabbed pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTabbedPaneTabAreaBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintTabbedPaneTabAreaBackground</h3> <pre data-language="java">public void paintTabbedPaneTabAreaBackground(SynthContext context,
+                                             Graphics g,
+                                             int x,
+                                             int y,
+                                             int w,
+                                             int h,
+                                             int orientation)</pre> <p>Paints the background of the area behind the tabs of a tabbed pane. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JTabbedPane.TOP</code>, <code>JTabbedPane.LEFT</code>, <code>JTabbedPane.BOTTOM</code>, or <code>JTabbedPane.RIGHT</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintTabbedPaneTabAreaBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTabbedPaneTabAreaBorder</h3> <pre data-language="java">public void paintTabbedPaneTabAreaBorder(SynthContext context,
+                                         Graphics g,
+                                         int x,
+                                         int y,
+                                         int w,
+                                         int h)</pre> <p>Paints the border of the area behind the tabs of a tabbed pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTabbedPaneTabAreaBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintTabbedPaneTabAreaBorder</h3> <pre data-language="java">public void paintTabbedPaneTabAreaBorder(SynthContext context,
+                                         Graphics g,
+                                         int x,
+                                         int y,
+                                         int w,
+                                         int h,
+                                         int orientation)</pre> <p>Paints the border of the area behind the tabs of a tabbed pane. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JTabbedPane.TOP</code>, <code>JTabbedPane.LEFT</code>, <code>JTabbedPane.BOTTOM</code>, or <code>JTabbedPane.RIGHT</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintTabbedPaneTabBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintTabbedPaneTabBackground</h3> <pre data-language="java">public void paintTabbedPaneTabBackground(SynthContext context,
+                                         Graphics g,
+                                         int x,
+                                         int y,
+                                         int w,
+                                         int h,
+                                         int tabIndex)</pre> <p>Paints the background of a tab of a tabbed pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>tabIndex</code> - Index of tab being painted.</dd> </dl>    <h3 id="paintTabbedPaneTabBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-int-">paintTabbedPaneTabBackground</h3> <pre data-language="java">public void paintTabbedPaneTabBackground(SynthContext context,
+                                         Graphics g,
+                                         int x,
+                                         int y,
+                                         int w,
+                                         int h,
+                                         int tabIndex,
+                                         int orientation)</pre> <p>Paints the background of a tab of a tabbed pane. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>tabIndex</code> - Index of tab being painted.</dd> <dd>
+<code>orientation</code> - One of <code>JTabbedPane.TOP</code>, <code>JTabbedPane.LEFT</code>, <code>JTabbedPane.BOTTOM</code>, or <code>JTabbedPane.RIGHT</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintTabbedPaneTabBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintTabbedPaneTabBorder</h3> <pre data-language="java">public void paintTabbedPaneTabBorder(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h,
+                                     int tabIndex)</pre> <p>Paints the border of a tab of a tabbed pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>tabIndex</code> - Index of tab being painted.</dd> </dl>    <h3 id="paintTabbedPaneTabBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-int-">paintTabbedPaneTabBorder</h3> <pre data-language="java">public void paintTabbedPaneTabBorder(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h,
+                                     int tabIndex,
+                                     int orientation)</pre> <p>Paints the border of a tab of a tabbed pane. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>tabIndex</code> - Index of tab being painted.</dd> <dd>
+<code>orientation</code> - One of <code>JTabbedPane.TOP</code>, <code>JTabbedPane.LEFT</code>, <code>JTabbedPane.BOTTOM</code>, or <code>JTabbedPane.RIGHT</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintTabbedPaneContentBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTabbedPaneContentBackground</h3> <pre data-language="java">public void paintTabbedPaneContentBackground(SynthContext context,
+                                             Graphics g,
+                                             int x,
+                                             int y,
+                                             int w,
+                                             int h)</pre> <p>Paints the background of the area that contains the content of the selected tab of a tabbed pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTabbedPaneContentBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTabbedPaneContentBorder</h3> <pre data-language="java">public void paintTabbedPaneContentBorder(SynthContext context,
+                                         Graphics g,
+                                         int x,
+                                         int y,
+                                         int w,
+                                         int h)</pre> <p>Paints the border of the area that contains the content of the selected tab of a tabbed pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTableHeaderBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTableHeaderBackground</h3> <pre data-language="java">public void paintTableHeaderBackground(SynthContext context,
+                                       Graphics g,
+                                       int x,
+                                       int y,
+                                       int w,
+                                       int h)</pre> <p>Paints the background of the header of a table.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTableHeaderBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTableHeaderBorder</h3> <pre data-language="java">public void paintTableHeaderBorder(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the border of the header of a table.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTableBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTableBackground</h3> <pre data-language="java">public void paintTableBackground(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h)</pre> <p>Paints the background of a table.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTableBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTableBorder</h3> <pre data-language="java">public void paintTableBorder(SynthContext context,
+                             Graphics g,
+                             int x,
+                             int y,
+                             int w,
+                             int h)</pre> <p>Paints the border of a table.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTextAreaBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTextAreaBackground</h3> <pre data-language="java">public void paintTextAreaBackground(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the background of a text area.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTextAreaBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTextAreaBorder</h3> <pre data-language="java">public void paintTextAreaBorder(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the border of a text area.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTextPaneBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTextPaneBackground</h3> <pre data-language="java">public void paintTextPaneBackground(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the background of a text pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTextPaneBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTextPaneBorder</h3> <pre data-language="java">public void paintTextPaneBorder(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the border of a text pane.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTextFieldBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTextFieldBackground</h3> <pre data-language="java">public void paintTextFieldBackground(SynthContext context,
+                                     Graphics g,
+                                     int x,
+                                     int y,
+                                     int w,
+                                     int h)</pre> <p>Paints the background of a text field.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTextFieldBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTextFieldBorder</h3> <pre data-language="java">public void paintTextFieldBorder(SynthContext context,
+                                 Graphics g,
+                                 int x,
+                                 int y,
+                                 int w,
+                                 int h)</pre> <p>Paints the border of a text field.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToggleButtonBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToggleButtonBackground</h3> <pre data-language="java">public void paintToggleButtonBackground(SynthContext context,
+                                        Graphics g,
+                                        int x,
+                                        int y,
+                                        int w,
+                                        int h)</pre> <p>Paints the background of a toggle button.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToggleButtonBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToggleButtonBorder</h3> <pre data-language="java">public void paintToggleButtonBorder(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the border of a toggle button.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToolBarBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToolBarBackground</h3> <pre data-language="java">public void paintToolBarBackground(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the background of a tool bar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToolBarBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintToolBarBackground</h3> <pre data-language="java">public void paintToolBarBackground(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h,
+                                   int orientation)</pre> <p>Paints the background of a tool bar. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JToolBar.HORIZONTAL</code> or <code>JToolBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintToolBarBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToolBarBorder</h3> <pre data-language="java">public void paintToolBarBorder(SynthContext context,
+                               Graphics g,
+                               int x,
+                               int y,
+                               int w,
+                               int h)</pre> <p>Paints the border of a tool bar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToolBarBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintToolBarBorder</h3> <pre data-language="java">public void paintToolBarBorder(SynthContext context,
+                               Graphics g,
+                               int x,
+                               int y,
+                               int w,
+                               int h,
+                               int orientation)</pre> <p>Paints the border of a tool bar. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JToolBar.HORIZONTAL</code> or <code>JToolBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintToolBarContentBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToolBarContentBackground</h3> <pre data-language="java">public void paintToolBarContentBackground(SynthContext context,
+                                          Graphics g,
+                                          int x,
+                                          int y,
+                                          int w,
+                                          int h)</pre> <p>Paints the background of the tool bar's content area.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToolBarContentBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintToolBarContentBackground</h3> <pre data-language="java">public void paintToolBarContentBackground(SynthContext context,
+                                          Graphics g,
+                                          int x,
+                                          int y,
+                                          int w,
+                                          int h,
+                                          int orientation)</pre> <p>Paints the background of the tool bar's content area. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JToolBar.HORIZONTAL</code> or <code>JToolBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintToolBarContentBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToolBarContentBorder</h3> <pre data-language="java">public void paintToolBarContentBorder(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h)</pre> <p>Paints the border of the content area of a tool bar.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToolBarContentBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintToolBarContentBorder</h3> <pre data-language="java">public void paintToolBarContentBorder(SynthContext context,
+                                      Graphics g,
+                                      int x,
+                                      int y,
+                                      int w,
+                                      int h,
+                                      int orientation)</pre> <p>Paints the border of the content area of a tool bar. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JToolBar.HORIZONTAL</code> or <code>JToolBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintToolBarDragWindowBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToolBarDragWindowBackground</h3> <pre data-language="java">public void paintToolBarDragWindowBackground(SynthContext context,
+                                             Graphics g,
+                                             int x,
+                                             int y,
+                                             int w,
+                                             int h)</pre> <p>Paints the background of the window containing the tool bar when it has been detached from its primary frame.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToolBarDragWindowBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintToolBarDragWindowBackground</h3> <pre data-language="java">public void paintToolBarDragWindowBackground(SynthContext context,
+                                             Graphics g,
+                                             int x,
+                                             int y,
+                                             int w,
+                                             int h,
+                                             int orientation)</pre> <p>Paints the background of the window containing the tool bar when it has been detached from its primary frame. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JToolBar.HORIZONTAL</code> or <code>JToolBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintToolBarDragWindowBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToolBarDragWindowBorder</h3> <pre data-language="java">public void paintToolBarDragWindowBorder(SynthContext context,
+                                         Graphics g,
+                                         int x,
+                                         int y,
+                                         int w,
+                                         int h)</pre> <p>Paints the border of the window containing the tool bar when it has been detached from it's primary frame.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToolBarDragWindowBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-int-">paintToolBarDragWindowBorder</h3> <pre data-language="java">public void paintToolBarDragWindowBorder(SynthContext context,
+                                         Graphics g,
+                                         int x,
+                                         int y,
+                                         int w,
+                                         int h,
+                                         int orientation)</pre> <p>Paints the border of the window containing the tool bar when it has been detached from it's primary frame. This implementation invokes the method of the same name without the orientation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> <dd>
+<code>orientation</code> - One of <code>JToolBar.HORIZONTAL</code> or <code>JToolBar.VERTICAL</code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="paintToolTipBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToolTipBackground</h3> <pre data-language="java">public void paintToolTipBackground(SynthContext context,
+                                   Graphics g,
+                                   int x,
+                                   int y,
+                                   int w,
+                                   int h)</pre> <p>Paints the background of a tool tip.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintToolTipBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintToolTipBorder</h3> <pre data-language="java">public void paintToolTipBorder(SynthContext context,
+                               Graphics g,
+                               int x,
+                               int y,
+                               int w,
+                               int h)</pre> <p>Paints the border of a tool tip.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTreeBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTreeBackground</h3> <pre data-language="java">public void paintTreeBackground(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the background of a tree.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTreeBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTreeBorder</h3> <pre data-language="java">public void paintTreeBorder(SynthContext context,
+                            Graphics g,
+                            int x,
+                            int y,
+                            int w,
+                            int h)</pre> <p>Paints the border of a tree.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTreeCellBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTreeCellBackground</h3> <pre data-language="java">public void paintTreeCellBackground(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the background of the row containing a cell in a tree.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTreeCellBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTreeCellBorder</h3> <pre data-language="java">public void paintTreeCellBorder(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the border of the row containing a cell in a tree.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintTreeCellFocus-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintTreeCellFocus</h3> <pre data-language="java">public void paintTreeCellFocus(SynthContext context,
+                               Graphics g,
+                               int x,
+                               int y,
+                               int w,
+                               int h)</pre> <p>Paints the focus indicator for a cell in a tree when it has focus.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintViewportBackground-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintViewportBackground</h3> <pre data-language="java">public void paintViewportBackground(SynthContext context,
+                                    Graphics g,
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)</pre> <p>Paints the background of the viewport.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>    <h3 id="paintViewportBorder-javax.swing.plaf.synth.SynthContext-java.awt.Graphics-int-int-int-int-">paintViewportBorder</h3> <pre data-language="java">public void paintViewportBorder(SynthContext context,
+                                Graphics g,
+                                int x,
+                                int y,
+                                int w,
+                                int h)</pre> <p>Paints the border of a viewport.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - SynthContext identifying the <code>JComponent</code> and <code>Region</code> to paint to</dd> <dd>
+<code>g</code> - <code>Graphics</code> to paint to</dd> <dd>
+<code>x</code> - X coordinate of the area to paint to</dd> <dd>
+<code>y</code> - Y coordinate of the area to paint to</dd> <dd>
+<code>w</code> - Width of the area to paint to</dd> <dd>
+<code>h</code> - Height of the area to paint to</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

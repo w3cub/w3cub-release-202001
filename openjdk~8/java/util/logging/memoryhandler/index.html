@@ -1,0 +1,170 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>MemoryHandler - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" Handler that buffers requests in a circular buffer in memory. ">
+  <meta name="keywords" content="class, memoryhandler, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/logging/memoryhandler/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class MemoryHandler</h1>   <ul class="inheritance"> <li><a href="../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../handler/">java.util.logging.Handler</a></li> <li> <ul class="inheritance"> <li>java.util.logging.MemoryHandler</li> </ul> </li> </ul> </li> </ul>     <pre data-language="java">public class MemoryHandler
+extends Handler</pre> <div>
+<p><code>Handler</code> that buffers requests in a circular buffer in memory. </p>
+<p> Normally this <code>Handler</code> simply stores incoming <code>LogRecords</code> into its memory buffer and discards earlier records. This buffering is very cheap and avoids formatting costs. On certain trigger conditions, the <code>MemoryHandler</code> will push out its current buffer contents to a target <code>Handler</code>, which will typically publish them to the outside world. </p>
+<p> There are three main models for triggering a push of the buffer: </p>
+<ul> <li> An incoming <code>LogRecord</code> has a type that is greater than a pre-defined level, the <code>pushLevel</code>. </li> <li> An external class calls the <code>push</code> method explicitly. </li> <li> A subclass overrides the <code>log</code> method and scans each incoming <code>LogRecord</code> and calls <code>push</code> if a record matches some desired criteria. </li> </ul> <p> <b>Configuration:</b> By default each <code>MemoryHandler</code> is initialized using the following <code>LogManager</code> configuration properties where <code>&lt;handler-name&gt;</code> refers to the fully-qualified class name of the handler. If properties are not defined (or have invalid values) then the specified default values are used. If no default value is defined then a RuntimeException is thrown. </p>
+<ul> <li> &lt;handler-name&gt;.level specifies the level for the <code>Handler</code> (defaults to <code>Level.ALL</code>). </li> <li> &lt;handler-name&gt;.filter specifies the name of a <code>Filter</code> class to use (defaults to no <code>Filter</code>). </li> <li> &lt;handler-name&gt;.size defines the buffer size (defaults to 1000). </li> <li> &lt;handler-name&gt;.push defines the <code>pushLevel</code> (defaults to <code>level.SEVERE</code>). </li> <li> &lt;handler-name&gt;.target specifies the name of the target <code>Handler </code> class. (no default). </li> </ul> <p> For example, the properties for <code>MemoryHandler</code> would be: </p>
+<ul> <li> java.util.logging.MemoryHandler.level=INFO </li> <li> java.util.logging.MemoryHandler.formatter=java.util.logging.SimpleFormatter </li> </ul> <p> For a custom handler, e.g. com.foo.MyHandler, the properties would be: </p>
+<ul> <li> com.foo.MyHandler.level=INFO </li> <li> com.foo.MyHandler.formatter=java.util.logging.SimpleFormatter </li> </ul> 
+</div> <dl> <dt>Since:</dt> <dd>1.4</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="MemoryHandler--">MemoryHandler</h3> <pre data-language="java">public MemoryHandler()</pre> <p>Create a <code>MemoryHandler</code> and configure it based on <code>LogManager</code> configuration properties.</p>    <h3 id="MemoryHandler-java.util.logging.Handler-int-java.util.logging.Level-">MemoryHandler</h3> <pre data-language="java">public MemoryHandler(Handler target,
+                     int size,
+                     Level pushLevel)</pre> <div>
+<p>Create a <code>MemoryHandler</code>. </p>
+<p> The <code>MemoryHandler</code> is configured based on <code>LogManager</code> properties (or their default values) except that the given <code>pushLevel</code> argument and buffer size argument are used.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>target</code> - the Handler to which to publish output.</dd> <dd>
+<code>size</code> - the number of log records to buffer (must be greater than zero)</dd> <dd>
+<code>pushLevel</code> - message level to push on</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>size is &lt;= 0</code>
+</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="publish-java.util.logging.LogRecord-">publish</h3> <pre data-language="java">public void publish(LogRecord record)</pre> <div>
+<p>Store a <code>LogRecord</code> in an internal buffer. </p>
+<p> If there is a <code>Filter</code>, its <code>isLoggable</code> method is called to check if the given log record is loggable. If not we return. Otherwise the given record is copied into an internal circular buffer. Then the record's level property is compared with the <code>pushLevel</code>. If the given level is greater than or equal to the <code>pushLevel</code> then <code>push</code> is called to write all buffered records to the target output <code>Handler</code>.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../handler/#publish-java.util.logging.LogRecord-">publish</a></code> in class <code><a href="../handler/">Handler</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>record</code> - description of the log event. A null record is silently ignored and is not published</dd> </dl>    <h3 id="push--">push</h3> <pre data-language="java">public void push()</pre> <div>
+<p>Push any buffered output to the target <code>Handler</code>. </p>
+<p> The buffer is then cleared.</p>
+</div>    <h3 id="flush--">flush</h3> <pre data-language="java">public void flush()</pre> <div>
+<p>Causes a flush on the target <code>Handler</code>. </p>
+<p> Note that the current contents of the <code>MemoryHandler</code> buffer are <b>not</b> written out. That requires a "push".</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../handler/#flush--">flush</a></code> in class <code><a href="../handler/">Handler</a></code>
+</dd> </dl>    <h3 id="close--">close</h3> <pre data-language="java">public void close()
+           throws SecurityException</pre> <p>Close the <code>Handler</code> and free all associated resources. This will also close the target <code>Handler</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../handler/#close--">close</a></code> in class <code><a href="../handler/">Handler</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and if the caller does not have <code>LoggingPermission("control")</code>.</dd> </dl>    <h3 id="setPushLevel-java.util.logging.Level-">setPushLevel</h3> <pre data-language="java">public void setPushLevel(Level newLevel)
+                  throws SecurityException</pre> <p>Set the <code>pushLevel</code>. After a <code>LogRecord</code> is copied into our internal buffer, if its level is greater than or equal to the <code>pushLevel</code>, then <code>push</code> will be called.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>newLevel</code> - the new value of the <code>pushLevel</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and if the caller does not have <code>LoggingPermission("control")</code>.</dd> </dl>    <h3 id="getPushLevel--">getPushLevel</h3> <pre data-language="java">public Level getPushLevel()</pre> <p>Get the <code>pushLevel</code>.</p> <dl> <dt>Returns:</dt> <dd>the value of the <code>pushLevel</code>
+</dd> </dl>    <h3 id="isLoggable-java.util.logging.LogRecord-">isLoggable</h3> <pre data-language="java">public boolean isLoggable(LogRecord record)</pre> <div>
+<p>Check if this <code>Handler</code> would actually log a given <code>LogRecord</code> into its internal buffer. </p>
+<p> This method checks if the <code>LogRecord</code> has an appropriate level and whether it satisfies any <code>Filter</code>. However it does <b>not</b> check whether the <code>LogRecord</code> would result in a "push" of the buffer contents. It will return false if the <code>LogRecord</code> is null. </p>
+
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../handler/#isLoggable-java.util.logging.LogRecord-">isLoggable</a></code> in class <code><a href="../handler/">Handler</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>record</code> - a <code>LogRecord</code>
+</dd> <dt>Returns:</dt> <dd>true if the <code>LogRecord</code> would be logged.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,149 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ICC_ProfileRGB - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content=" The ICC_ProfileRGB class is a subclass of the ICC_Profile class that represents profiles which meet the following criteria&#58; ">
+  <meta name="keywords" content="class, icc, profilergb, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/java/awt/color/icc_profilergb/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class ICC_ProfileRGB</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../icc_profile/">java.awt.color.ICC_Profile</a></li> <li> <ul class="inheritance"> <li>java.awt.color.ICC_ProfileRGB</li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="..//openjdk~8/java/io/serializable/">Serializable</a></dd> </dl>   <pre data-language="java">public class ICC_ProfileRGB
+extends ICC_Profile</pre> <div>
+<p>The ICC_ProfileRGB class is a subclass of the ICC_Profile class that represents profiles which meet the following criteria: </p>
+<ul> <li>The profile's color space type is RGB.</li> <li>The profile includes the <code>redColorantTag</code>, <code>greenColorantTag</code>, <code>blueColorantTag</code>, <code>redTRCTag</code>, <code>greenTRCTag</code>, <code>blueTRCTag</code>, and <code>mediaWhitePointTag</code> tags.</li> </ul> The <code>ICC_Profile</code> <code>getInstance</code> method will return an <code>ICC_ProfileRGB</code> object when these conditions are met. Three-component, matrix-based input profiles and RGB display profiles are examples of this type of profile. 
+<p> This profile class provides color transform matrices and lookup tables that Java or native methods can use directly to optimize color conversion in some cases. </p>
+<p> To transform from a device profile color space to the CIEXYZ Profile Connection Space, each device color component is first linearized by a lookup through the corresponding tone reproduction curve (TRC). The resulting linear RGB components are converted to the CIEXYZ PCS using a a 3x3 matrix constructed from the RGB colorants. </p>
+<pre data-language="java">                linearR = redTRC[deviceR]
+
+                 linearG = greenTRC[deviceG]
+
+                 linearB = blueTRC[deviceB]
+
+   _      _       _                                             _   _         _
+  [  PCSX  ]     [  redColorantX  greenColorantX  blueColorantX  ] [  linearR  ]
+  [        ]     [                                               ] [           ]
+  [  PCSY  ]  =  [  redColorantY  greenColorantY  blueColorantY  ] [  linearG  ]
+  [        ]     [                                               ] [           ]
+  [_ PCSZ _]     [_ redColorantZ  greenColorantZ  blueColorantZ _] [_ linearB _]</pre> The inverse transform is performed by converting PCS XYZ components to linear RGB components through the inverse of the above 3x3 matrix, and then converting linear RGB to device RGB through inverses of the TRCs.</div>        <h2 id="field.detail">Fields</h2>   <h3 id="REDCOMPONENT">REDCOMPONENT</h3> <pre data-language="java">public static final int REDCOMPONENT</pre> <p>Used to get a gamma value or TRC for the red component.</p>     <h3 id="GREENCOMPONENT">GREENCOMPONENT</h3> <pre data-language="java">public static final int GREENCOMPONENT</pre> <p>Used to get a gamma value or TRC for the green component.</p>     <h3 id="BLUECOMPONENT">BLUECOMPONENT</h3> <pre data-language="java">public static final int BLUECOMPONENT</pre> <p>Used to get a gamma value or TRC for the blue component.</p>      <h2 id="method.detail">Methods</h2>   <h3 id="getMediaWhitePoint--">getMediaWhitePoint</h3> <pre data-language="java">public float[] getMediaWhitePoint()</pre> <p>Returns an array that contains the components of the profile's <code>mediaWhitePointTag</code>.</p> <dl> <dt>Returns:</dt> <dd>A 3-element <code>float</code> array containing the x, y, and z components of the profile's <code>mediaWhitePointTag</code>.</dd> </dl>    <h3 id="getMatrix--">getMatrix</h3> <pre data-language="java">public float[][] getMatrix()</pre> <div>
+<p>Returns a 3x3 <code>float</code> matrix constructed from the X, Y, and Z components of the profile's <code>redColorantTag</code>, <code>greenColorantTag</code>, and <code>blueColorantTag</code>. </p>
+<p> This matrix can be used for color transforms in the forward direction of the profile--from the profile color space to the CIEXYZ PCS.</p>
+</div> <dl> <dt>Returns:</dt> <dd>A 3x3 <code>float</code> array that contains the x, y, and z components of the profile's <code>redColorantTag</code>, <code>greenColorantTag</code>, and <code>blueColorantTag</code>.</dd> </dl>    <h3 id="getGamma-int-">getGamma</h3> <pre data-language="java">public float getGamma(int component)</pre> <div>
+<p>Returns a gamma value representing the tone reproduction curve (TRC) for a particular component. The component parameter must be one of REDCOMPONENT, GREENCOMPONENT, or BLUECOMPONENT. </p>
+<p> If the profile represents the TRC for the corresponding component as a table rather than a single gamma value, an exception is thrown. In this case the actual table can be obtained through the <a href="../icc_profilergb/#getTRC-int-"><code>getTRC(int)</code></a> method. When using a gamma value, the linear component (R, G, or B) is computed as follows: </p>
+<pre data-language="java">                                          gamma
+          linearComponent = deviceComponent</pre>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>component</code> - The <code>ICC_ProfileRGB</code> constant that represents the component whose TRC you want to retrieve</dd> <dt>Returns:</dt> <dd>the gamma value as a float.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../profiledataexception/">ProfileDataException</a></code> - if the profile does not specify the corresponding TRC as a single gamma value.</dd> </dl>    <h3 id="getTRC-int-">getTRC</h3> <pre data-language="java">public short[] getTRC(int component)</pre> <p>Returns the TRC for a particular component as an array. Component must be <code>REDCOMPONENT</code>, <code>GREENCOMPONENT</code>, or <code>BLUECOMPONENT</code>. Otherwise the returned array represents a lookup table where the input component value is conceptually in the range [0.0, 1.0]. Value 0.0 maps to array index 0 and value 1.0 maps to array index length-1. Interpolation might be used to generate output values for input values that do not map exactly to an index in the array. Output values also map linearly to the range [0.0, 1.0]. Value 0.0 is represented by an array value of 0x0000 and value 1.0 by 0xFFFF. In other words, the values are really unsigned <code>short</code> values even though they are returned in a <code>short</code> array. If the profile has specified the corresponding TRC as linear (gamma = 1.0) or as a simple gamma value, this method throws an exception. In this case, the <a href="../icc_profilergb/#getGamma-int-"><code>getGamma(int)</code></a> method should be used to get the gamma value.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>component</code> - The <code>ICC_ProfileRGB</code> constant that represents the component whose TRC you want to retrieve: <code>REDCOMPONENT</code>, <code>GREENCOMPONENT</code>, or <code>BLUECOMPONENT</code>.</dd> <dt>Returns:</dt> <dd>a short array representing the TRC.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../profiledataexception/">ProfileDataException</a></code> - if the profile does not specify the corresponding TRC as a table.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

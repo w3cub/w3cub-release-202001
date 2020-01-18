@@ -1,0 +1,411 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>CompletableFuture - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A Future that may be explicitly completed (setting its value and status), and may be used as a CompletionStage, supporting dependent functions and &hellip;">
+  <meta name="keywords" content="class, completablefuture, t, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/concurrent/completablefuture/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class CompletableFuture&lt;T&gt;</h1>   <ul class="inheritance"> <li><a href="../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.util.concurrent.CompletableFuture&lt;T&gt;</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../completionstage/">CompletionStage</a>&lt;T&gt;, <a href="../future/">Future</a>&lt;T&gt;</dd> </dl>   <pre data-language="java">public class CompletableFuture&lt;T&gt;
+extends Object
+implements Future&lt;T&gt;, CompletionStage&lt;T&gt;</pre> <div>
+<p>A <a href="../future/"><code>Future</code></a> that may be explicitly completed (setting its value and status), and may be used as a <a href="../completionstage/"><code>CompletionStage</code></a>, supporting dependent functions and actions that trigger upon its completion. </p>
+<p>When two or more threads attempt to <a href="../completablefuture/#complete-T-"><code>complete</code></a>, <a href="../completablefuture/#completeExceptionally-java.lang.Throwable-"><code>completeExceptionally</code></a>, or <a href="../completablefuture/#cancel-boolean-"><code>cancel</code></a> a CompletableFuture, only one of them succeeds. </p>
+<p>In addition to these and related methods for directly manipulating status and results, CompletableFuture implements interface <a href="../completionstage/"><code>CompletionStage</code></a> with the following policies: </p>
+<ul> <li>Actions supplied for dependent completions of <em>non-async</em> methods may be performed by the thread that completes the current CompletableFuture, or by any other caller of a completion method.</li> <li>All <em>async</em> methods without an explicit Executor argument are performed using the <a href="../forkjoinpool/#commonPool--"><code>ForkJoinPool.commonPool()</code></a> (unless it does not support a parallelism level of at least two, in which case, a new Thread is created to run each task). To simplify monitoring, debugging, and tracking, all generated asynchronous tasks are instances of the marker interface <a href="../completablefuture.asynchronouscompletiontask/"><code>CompletableFuture.AsynchronousCompletionTask</code></a>. </li> <li>All CompletionStage methods are implemented independently of other public methods, so the behavior of one method is not impacted by overrides of others in subclasses. </li> </ul> <p>CompletableFuture also implements <a href="../future/"><code>Future</code></a> with the following policies: </p>
+<ul> <li>Since (unlike <a href="../futuretask/"><code>FutureTask</code></a>) this class has no direct control over the computation that causes it to be completed, cancellation is treated as just another form of exceptional completion. Method <a href="../completablefuture/#cancel-boolean-"><code>cancel</code></a> has the same effect as <code>completeExceptionally(new CancellationException())</code>. Method <a href="../completablefuture/#isCompletedExceptionally--"><code>isCompletedExceptionally()</code></a> can be used to determine if a CompletableFuture completed in any exceptional fashion.</li> <li>In case of exceptional completion with a CompletionException, methods <a href="../completablefuture/#get--"><code>get()</code></a> and <a href="../completablefuture/#get-long-java.util.concurrent.TimeUnit-"><code>get(long, TimeUnit)</code></a> throw an <a href="../executionexception/"><code>ExecutionException</code></a> with the same cause as held in the corresponding CompletionException. To simplify usage in most contexts, this class also defines methods <a href="../completablefuture/#join--"><code>join()</code></a> and <a href="../completablefuture/#getNow-T-"><code>getNow(T)</code></a> that instead throw the CompletionException directly in these cases.</li> </ul>
+</div> <dl> <dt>Since:</dt> <dd>1.8</dd> </dl>       <h2 id="nested.class.summary">Nested Classes</h2> <table> <caption>Nested Classes </caption> <tr> <th scope="col">Modifier and Type</th> <th scope="col">Class and Description</th> </tr> <tr> <td><code>static interface </code></td> <td>
+<code><a href="../completablefuture.asynchronouscompletiontask/">CompletableFuture.AsynchronousCompletionTask</a></code> <p>A marker interface identifying asynchronous tasks produced by <code>async</code> methods.</p> </td> </tr> </table>    <h2 id="constructor.detail">Constructors</h2>   <h3 id="CompletableFuture--">CompletableFuture</h3> <pre data-language="java">public CompletableFuture()</pre> <p>Creates a new incomplete CompletableFuture.</p>     <h2 id="method.detail">Methods</h2>   <h3 id="supplyAsync-java.util.function.Supplier-">supplyAsync</h3> <pre data-language="java">public static &lt;U&gt; CompletableFuture&lt;U&gt; supplyAsync(Supplier&lt;U&gt; supplier)</pre> <p>Returns a new CompletableFuture that is asynchronously completed by a task running in the <a href="../forkjoinpool/#commonPool--"><code>ForkJoinPool.commonPool()</code></a> with the value obtained by calling the given Supplier.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>supplier</code> - a function returning the value to be used to complete the returned CompletableFuture</dd> <dt>Returns:</dt> <dd>the new CompletableFuture</dd> </dl>    <h3 id="supplyAsync-java.util.function.Supplier-java.util.concurrent.Executor-">supplyAsync</h3> <pre data-language="java">public static &lt;U&gt; CompletableFuture&lt;U&gt; supplyAsync(Supplier&lt;U&gt; supplier,
+                                                   Executor executor)</pre> <p>Returns a new CompletableFuture that is asynchronously completed by a task running in the given executor with the value obtained by calling the given Supplier.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>supplier</code> - a function returning the value to be used to complete the returned CompletableFuture</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletableFuture</dd> </dl>    <h3 id="runAsync-java.lang.Runnable-">runAsync</h3> <pre data-language="java">public static CompletableFuture&lt;Void&gt; runAsync(Runnable runnable)</pre> <p>Returns a new CompletableFuture that is asynchronously completed by a task running in the <a href="../forkjoinpool/#commonPool--"><code>ForkJoinPool.commonPool()</code></a> after it runs the given action.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>runnable</code> - the action to run before completing the returned CompletableFuture</dd> <dt>Returns:</dt> <dd>the new CompletableFuture</dd> </dl>    <h3 id="runAsync-java.lang.Runnable-java.util.concurrent.Executor-">runAsync</h3> <pre data-language="java">public static CompletableFuture&lt;Void&gt; runAsync(Runnable runnable,
+                                               Executor executor)</pre> <p>Returns a new CompletableFuture that is asynchronously completed by a task running in the given executor after it runs the given action.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>runnable</code> - the action to run before completing the returned CompletableFuture</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletableFuture</dd> </dl>    <h3 id="completedFuture-U-">completedFuture</h3> <pre data-language="java">public static &lt;U&gt; CompletableFuture&lt;U&gt; completedFuture(U value)</pre> <p>Returns a new CompletableFuture that is already completed with the given value.</p> <dl> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the value</dd> <dt>Parameters:</dt> <dd>
+<code>value</code> - the value</dd> <dt>Returns:</dt> <dd>the completed CompletableFuture</dd> </dl>    <h3 id="isDone--">isDone</h3> <pre data-language="java">public boolean isDone()</pre> <p>Returns <code>true</code> if completed in any fashion: normally, exceptionally, or via cancellation.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../future/#isDone--">isDone</a></code> in interface <code><a href="../future/">Future</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if completed</dd> </dl>    <h3 id="get--">get</h3> <pre data-language="java">public T get()
+      throws InterruptedException,
+             ExecutionException</pre> <p>Waits if necessary for this future to complete, and then returns its result.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../future/#get--">get</a></code> in interface <code><a href="../future/">Future</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>the result value</dd> <dt>Throws:</dt> <dd>
+<code><a href="../cancellationexception/">CancellationException</a></code> - if this future was cancelled</dd> <dd>
+<code><a href="../executionexception/">ExecutionException</a></code> - if this future completed exceptionally</dd> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if the current thread was interrupted while waiting</dd> </dl>    <h3 id="get-long-java.util.concurrent.TimeUnit-">get</h3> <pre data-language="java">public T get(long timeout,
+             TimeUnit unit)
+      throws InterruptedException,
+             ExecutionException,
+             TimeoutException</pre> <p>Waits if necessary for at most the given time for this future to complete, and then returns its result, if available.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../future/#get-long-java.util.concurrent.TimeUnit-">get</a></code> in interface <code><a href="../future/">Future</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>timeout</code> - the maximum time to wait</dd> <dd>
+<code>unit</code> - the time unit of the timeout argument</dd> <dt>Returns:</dt> <dd>the result value</dd> <dt>Throws:</dt> <dd>
+<code><a href="../cancellationexception/">CancellationException</a></code> - if this future was cancelled</dd> <dd>
+<code><a href="../executionexception/">ExecutionException</a></code> - if this future completed exceptionally</dd> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if the current thread was interrupted while waiting</dd> <dd>
+<code><a href="../timeoutexception/">TimeoutException</a></code> - if the wait timed out</dd> </dl>    <h3 id="join--">join</h3> <pre data-language="java">public T join()</pre> <p>Returns the result value when complete, or throws an (unchecked) exception if completed exceptionally. To better conform with the use of common functional forms, if a computation involved in the completion of this CompletableFuture threw an exception, this method throws an (unchecked) <a href="../completionexception/"><code>CompletionException</code></a> with the underlying exception as its cause.</p> <dl> <dt>Returns:</dt> <dd>the result value</dd> <dt>Throws:</dt> <dd>
+<code><a href="../cancellationexception/">CancellationException</a></code> - if the computation was cancelled</dd> <dd>
+<code><a href="../completionexception/">CompletionException</a></code> - if this future completed exceptionally or a completion computation threw an exception</dd> </dl>    <h3 id="getNow-T-">getNow</h3> <pre data-language="java">public T getNow(T valueIfAbsent)</pre> <p>Returns the result value (or throws any encountered exception) if completed, else returns the given valueIfAbsent.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>valueIfAbsent</code> - the value to return if not completed</dd> <dt>Returns:</dt> <dd>the result value, if completed, else the given valueIfAbsent</dd> <dt>Throws:</dt> <dd>
+<code><a href="../cancellationexception/">CancellationException</a></code> - if the computation was cancelled</dd> <dd>
+<code><a href="../completionexception/">CompletionException</a></code> - if this future completed exceptionally or a completion computation threw an exception</dd> </dl>    <h3 id="complete-T-">complete</h3> <pre data-language="java">public boolean complete(T value)</pre> <p>If not already completed, sets the value returned by <a href="../completablefuture/#get--"><code>get()</code></a> and related methods to the given value.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>value</code> - the result value</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this invocation caused this CompletableFuture to transition to a completed state, else <code>false</code>
+</dd> </dl>    <h3 id="completeExceptionally-java.lang.Throwable-">completeExceptionally</h3> <pre data-language="java">public boolean completeExceptionally(Throwable ex)</pre> <p>If not already completed, causes invocations of <a href="../completablefuture/#get--"><code>get()</code></a> and related methods to throw the given exception.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>ex</code> - the exception</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this invocation caused this CompletableFuture to transition to a completed state, else <code>false</code>
+</dd> </dl>    <h3 id="thenApply-java.util.function.Function-">thenApply</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; thenApply(Function&lt;? super T,? extends U&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenApply-java.util.function.Function-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, is executed with this stage's result as the argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenApply-java.util.function.Function-">thenApply</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenApplyAsync-java.util.function.Function-">thenApplyAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; thenApplyAsync(Function&lt;? super T,? extends U&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenApplyAsync-java.util.function.Function-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, is executed using this stage's default asynchronous execution facility, with this stage's result as the argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenApplyAsync-java.util.function.Function-">thenApplyAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenApplyAsync-java.util.function.Function-java.util.concurrent.Executor-">thenApplyAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; thenApplyAsync(Function&lt;? super T,? extends U&gt; fn,
+                                               Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenApplyAsync-java.util.function.Function-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, is executed using the supplied Executor, with this stage's result as the argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenApplyAsync-java.util.function.Function-java.util.concurrent.Executor-">thenApplyAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenAccept-java.util.function.Consumer-">thenAccept</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; thenAccept(Consumer&lt;? super T&gt; action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenAccept-java.util.function.Consumer-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, is executed with this stage's result as the argument to the supplied action. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenAccept-java.util.function.Consumer-">thenAccept</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenAcceptAsync-java.util.function.Consumer-">thenAcceptAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; thenAcceptAsync(Consumer&lt;? super T&gt; action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenAcceptAsync-java.util.function.Consumer-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, is executed using this stage's default asynchronous execution facility, with this stage's result as the argument to the supplied action. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenAcceptAsync-java.util.function.Consumer-">thenAcceptAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenAcceptAsync-java.util.function.Consumer-java.util.concurrent.Executor-">thenAcceptAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; thenAcceptAsync(Consumer&lt;? super T&gt; action,
+                                               Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenAcceptAsync-java.util.function.Consumer-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, is executed using the supplied Executor, with this stage's result as the argument to the supplied action. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenAcceptAsync-java.util.function.Consumer-java.util.concurrent.Executor-">thenAcceptAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenRun-java.lang.Runnable-">thenRun</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; thenRun(Runnable action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenRun-java.lang.Runnable-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, executes the given action. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenRun-java.lang.Runnable-">thenRun</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenRunAsync-java.lang.Runnable-">thenRunAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; thenRunAsync(Runnable action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenRunAsync-java.lang.Runnable-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, executes the given action using this stage's default asynchronous execution facility. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenRunAsync-java.lang.Runnable-">thenRunAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenRunAsync-java.lang.Runnable-java.util.concurrent.Executor-">thenRunAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; thenRunAsync(Runnable action,
+                                            Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenRunAsync-java.lang.Runnable-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, executes the given action using the supplied Executor. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenRunAsync-java.lang.Runnable-java.util.concurrent.Executor-">thenRunAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenCombine-java.util.concurrent.CompletionStage-java.util.function.BiFunction-">thenCombine</h3> <pre data-language="java">public &lt;U,V&gt; CompletableFuture&lt;V&gt; thenCombine(CompletionStage&lt;? extends U&gt; other,
+                                              BiFunction&lt;? super T,? super U,? extends V&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenCombine-java.util.concurrent.CompletionStage-java.util.function.BiFunction-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this and the other given stage both complete normally, is executed with the two results as arguments to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenCombine-java.util.concurrent.CompletionStage-java.util.function.BiFunction-">thenCombine</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the other CompletionStage's result</dd> <dd>
+<code>V</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenCombineAsync-java.util.concurrent.CompletionStage-java.util.function.BiFunction-">thenCombineAsync</h3> <pre data-language="java">public &lt;U,V&gt; CompletableFuture&lt;V&gt; thenCombineAsync(CompletionStage&lt;? extends U&gt; other,
+                                                   BiFunction&lt;? super T,? super U,? extends V&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenCombineAsync-java.util.concurrent.CompletionStage-java.util.function.BiFunction-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this and the other given stage complete normally, is executed using this stage's default asynchronous execution facility, with the two results as arguments to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenCombineAsync-java.util.concurrent.CompletionStage-java.util.function.BiFunction-">thenCombineAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the other CompletionStage's result</dd> <dd>
+<code>V</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenCombineAsync-java.util.concurrent.CompletionStage-java.util.function.BiFunction-java.util.concurrent.Executor-">thenCombineAsync</h3> <pre data-language="java">public &lt;U,V&gt; CompletableFuture&lt;V&gt; thenCombineAsync(CompletionStage&lt;? extends U&gt; other,
+                                                   BiFunction&lt;? super T,? super U,? extends V&gt; fn,
+                                                   Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenCombineAsync-java.util.concurrent.CompletionStage-java.util.function.BiFunction-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this and the other given stage complete normally, is executed using the supplied executor, with the two results as arguments to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenCombineAsync-java.util.concurrent.CompletionStage-java.util.function.BiFunction-java.util.concurrent.Executor-">thenCombineAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the other CompletionStage's result</dd> <dd>
+<code>V</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenAcceptBoth-java.util.concurrent.CompletionStage-java.util.function.BiConsumer-">thenAcceptBoth</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;Void&gt; thenAcceptBoth(CompletionStage&lt;? extends U&gt; other,
+                                                  BiConsumer&lt;? super T,? super U&gt; action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenAcceptBoth-java.util.concurrent.CompletionStage-java.util.function.BiConsumer-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this and the other given stage both complete normally, is executed with the two results as arguments to the supplied action. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenAcceptBoth-java.util.concurrent.CompletionStage-java.util.function.BiConsumer-">thenAcceptBoth</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the other CompletionStage's result</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenAcceptBothAsync-java.util.concurrent.CompletionStage-java.util.function.BiConsumer-">thenAcceptBothAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;Void&gt; thenAcceptBothAsync(CompletionStage&lt;? extends U&gt; other,
+                                                       BiConsumer&lt;? super T,? super U&gt; action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenAcceptBothAsync-java.util.concurrent.CompletionStage-java.util.function.BiConsumer-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this and the other given stage complete normally, is executed using this stage's default asynchronous execution facility, with the two results as arguments to the supplied action.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenAcceptBothAsync-java.util.concurrent.CompletionStage-java.util.function.BiConsumer-">thenAcceptBothAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the other CompletionStage's result</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenAcceptBothAsync-java.util.concurrent.CompletionStage-java.util.function.BiConsumer-java.util.concurrent.Executor-">thenAcceptBothAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;Void&gt; thenAcceptBothAsync(CompletionStage&lt;? extends U&gt; other,
+                                                       BiConsumer&lt;? super T,? super U&gt; action,
+                                                       Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenAcceptBothAsync-java.util.concurrent.CompletionStage-java.util.function.BiConsumer-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this and the other given stage complete normally, is executed using the supplied executor, with the two results as arguments to the supplied function.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenAcceptBothAsync-java.util.concurrent.CompletionStage-java.util.function.BiConsumer-java.util.concurrent.Executor-">thenAcceptBothAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the other CompletionStage's result</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="runAfterBoth-java.util.concurrent.CompletionStage-java.lang.Runnable-">runAfterBoth</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; runAfterBoth(CompletionStage&lt;?&gt; other,
+                                            Runnable action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#runAfterBoth-java.util.concurrent.CompletionStage-java.lang.Runnable-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this and the other given stage both complete normally, executes the given action. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#runAfterBoth-java.util.concurrent.CompletionStage-java.lang.Runnable-">runAfterBoth</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="runAfterBothAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-">runAfterBothAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; runAfterBothAsync(CompletionStage&lt;?&gt; other,
+                                                 Runnable action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#runAfterBothAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this and the other given stage complete normally, executes the given action using this stage's default asynchronous execution facility. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#runAfterBothAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-">runAfterBothAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="runAfterBothAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-java.util.concurrent.Executor-">runAfterBothAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; runAfterBothAsync(CompletionStage&lt;?&gt; other,
+                                                 Runnable action,
+                                                 Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#runAfterBothAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this and the other given stage complete normally, executes the given action using the supplied executor. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#runAfterBothAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-java.util.concurrent.Executor-">runAfterBothAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="applyToEither-java.util.concurrent.CompletionStage-java.util.function.Function-">applyToEither</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; applyToEither(CompletionStage&lt;? extends T&gt; other,
+                                              Function&lt;? super T,U&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#applyToEither-java.util.concurrent.CompletionStage-java.util.function.Function-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when either this or the other given stage complete normally, is executed with the corresponding result as argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#applyToEither-java.util.concurrent.CompletionStage-java.util.function.Function-">applyToEither</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="applyToEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Function-">applyToEitherAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; applyToEitherAsync(CompletionStage&lt;? extends T&gt; other,
+                                                   Function&lt;? super T,U&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#applyToEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Function-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when either this or the other given stage complete normally, is executed using this stage's default asynchronous execution facility, with the corresponding result as argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#applyToEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Function-">applyToEitherAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="applyToEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Function-java.util.concurrent.Executor-">applyToEitherAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; applyToEitherAsync(CompletionStage&lt;? extends T&gt; other,
+                                                   Function&lt;? super T,U&gt; fn,
+                                                   Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#applyToEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Function-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when either this or the other given stage complete normally, is executed using the supplied executor, with the corresponding result as argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#applyToEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Function-java.util.concurrent.Executor-">applyToEitherAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="acceptEither-java.util.concurrent.CompletionStage-java.util.function.Consumer-">acceptEither</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; acceptEither(CompletionStage&lt;? extends T&gt; other,
+                                            Consumer&lt;? super T&gt; action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#acceptEither-java.util.concurrent.CompletionStage-java.util.function.Consumer-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when either this or the other given stage complete normally, is executed with the corresponding result as argument to the supplied action. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#acceptEither-java.util.concurrent.CompletionStage-java.util.function.Consumer-">acceptEither</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="acceptEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Consumer-">acceptEitherAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; acceptEitherAsync(CompletionStage&lt;? extends T&gt; other,
+                                                 Consumer&lt;? super T&gt; action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#acceptEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Consumer-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when either this or the other given stage complete normally, is executed using this stage's default asynchronous execution facility, with the corresponding result as argument to the supplied action. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#acceptEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Consumer-">acceptEitherAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="acceptEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Consumer-java.util.concurrent.Executor-">acceptEitherAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; acceptEitherAsync(CompletionStage&lt;? extends T&gt; other,
+                                                 Consumer&lt;? super T&gt; action,
+                                                 Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#acceptEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Consumer-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when either this or the other given stage complete normally, is executed using the supplied executor, with the corresponding result as argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#acceptEitherAsync-java.util.concurrent.CompletionStage-java.util.function.Consumer-java.util.concurrent.Executor-">acceptEitherAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="runAfterEither-java.util.concurrent.CompletionStage-java.lang.Runnable-">runAfterEither</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; runAfterEither(CompletionStage&lt;?&gt; other,
+                                              Runnable action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#runAfterEither-java.util.concurrent.CompletionStage-java.lang.Runnable-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when either this or the other given stage complete normally, executes the given action. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#runAfterEither-java.util.concurrent.CompletionStage-java.lang.Runnable-">runAfterEither</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="runAfterEitherAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-">runAfterEitherAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; runAfterEitherAsync(CompletionStage&lt;?&gt; other,
+                                                   Runnable action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#runAfterEitherAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when either this or the other given stage complete normally, executes the given action using this stage's default asynchronous execution facility. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#runAfterEitherAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-">runAfterEitherAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="runAfterEitherAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-java.util.concurrent.Executor-">runAfterEitherAsync</h3> <pre data-language="java">public CompletableFuture&lt;Void&gt; runAfterEitherAsync(CompletionStage&lt;?&gt; other,
+                                                   Runnable action,
+                                                   Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#runAfterEitherAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when either this or the other given stage complete normally, executes the given action using the supplied executor. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#runAfterEitherAsync-java.util.concurrent.CompletionStage-java.lang.Runnable-java.util.concurrent.Executor-">runAfterEitherAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>other</code> - the other CompletionStage</dd> <dd>
+<code>action</code> - the action to perform before completing the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="thenCompose-java.util.function.Function-">thenCompose</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; thenCompose(Function&lt;? super T,? extends CompletionStage&lt;U&gt;&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenCompose-java.util.function.Function-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, is executed with this stage as the argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenCompose-java.util.function.Function-">thenCompose</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the returned CompletionStage's result</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function returning a new CompletionStage</dd> <dt>Returns:</dt> <dd>the CompletionStage</dd> </dl>    <h3 id="thenComposeAsync-java.util.function.Function-">thenComposeAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; thenComposeAsync(Function&lt;? super T,? extends CompletionStage&lt;U&gt;&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenComposeAsync-java.util.function.Function-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, is executed using this stage's default asynchronous execution facility, with this stage as the argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenComposeAsync-java.util.function.Function-">thenComposeAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the returned CompletionStage's result</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function returning a new CompletionStage</dd> <dt>Returns:</dt> <dd>the CompletionStage</dd> </dl>    <h3 id="thenComposeAsync-java.util.function.Function-java.util.concurrent.Executor-">thenComposeAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; thenComposeAsync(Function&lt;? super T,? extends CompletionStage&lt;U&gt;&gt; fn,
+                                                 Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#thenComposeAsync-java.util.function.Function-java.util.concurrent.Executor-">CompletionStage</a></code></p> <p>Returns a new CompletionStage that, when this stage completes normally, is executed using the supplied Executor, with this stage's result as the argument to the supplied function. See the <a href="../completionstage/"><code>CompletionStage</code></a> documentation for rules covering exceptional completion.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#thenComposeAsync-java.util.function.Function-java.util.concurrent.Executor-">thenComposeAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the type of the returned CompletionStage's result</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function returning a new CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the CompletionStage</dd> </dl>    <h3 id="whenComplete-java.util.function.BiConsumer-">whenComplete</h3> <pre data-language="java">public CompletableFuture&lt;T&gt; whenComplete(BiConsumer&lt;? super T,? super Throwable&gt; action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#whenComplete-java.util.function.BiConsumer-">CompletionStage</a></code></p> <div>
+<p>Returns a new CompletionStage with the same result or exception as this stage, that executes the given action when this stage completes. </p>
+<p>When this stage is complete, the given action is invoked with the result (or <code>null</code> if none) and the exception (or <code>null</code> if none) of this stage as arguments. The returned stage is completed when the action returns. If the supplied action itself encounters an exception, then the returned stage exceptionally completes with this exception unless this stage also completed exceptionally.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#whenComplete-java.util.function.BiConsumer-">whenComplete</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - the action to perform</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="whenCompleteAsync-java.util.function.BiConsumer-">whenCompleteAsync</h3> <pre data-language="java">public CompletableFuture&lt;T&gt; whenCompleteAsync(BiConsumer&lt;? super T,? super Throwable&gt; action)</pre> <p>Description copied from interface: <code><a href="../completionstage/#whenCompleteAsync-java.util.function.BiConsumer-">CompletionStage</a></code></p> <div>
+<p>Returns a new CompletionStage with the same result or exception as this stage, that executes the given action using this stage's default asynchronous execution facility when this stage completes. </p>
+<p>When this stage is complete, the given action is invoked with the result (or <code>null</code> if none) and the exception (or <code>null</code> if none) of this stage as arguments. The returned stage is completed when the action returns. If the supplied action itself encounters an exception, then the returned stage exceptionally completes with this exception unless this stage also completed exceptionally.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#whenCompleteAsync-java.util.function.BiConsumer-">whenCompleteAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - the action to perform</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="whenCompleteAsync-java.util.function.BiConsumer-java.util.concurrent.Executor-">whenCompleteAsync</h3> <pre data-language="java">public CompletableFuture&lt;T&gt; whenCompleteAsync(BiConsumer&lt;? super T,? super Throwable&gt; action,
+                                              Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#whenCompleteAsync-java.util.function.BiConsumer-java.util.concurrent.Executor-">CompletionStage</a></code></p> <div>
+<p>Returns a new CompletionStage with the same result or exception as this stage, that executes the given action using the supplied Executor when this stage completes. </p>
+<p>When this stage is complete, the given action is invoked with the result (or <code>null</code> if none) and the exception (or <code>null</code> if none) of this stage as arguments. The returned stage is completed when the action returns. If the supplied action itself encounters an exception, then the returned stage exceptionally completes with this exception unless this stage also completed exceptionally.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#whenCompleteAsync-java.util.function.BiConsumer-java.util.concurrent.Executor-">whenCompleteAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>action</code> - the action to perform</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="handle-java.util.function.BiFunction-">handle</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; handle(BiFunction&lt;? super T,Throwable,? extends U&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#handle-java.util.function.BiFunction-">CompletionStage</a></code></p> <div>
+<p>Returns a new CompletionStage that, when this stage completes either normally or exceptionally, is executed with this stage's result and exception as arguments to the supplied function. </p>
+<p>When this stage is complete, the given function is invoked with the result (or <code>null</code> if none) and the exception (or <code>null</code> if none) of this stage as arguments, and the function's result is used to complete the returned stage.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#handle-java.util.function.BiFunction-">handle</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="handleAsync-java.util.function.BiFunction-">handleAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; handleAsync(BiFunction&lt;? super T,Throwable,? extends U&gt; fn)</pre> <p>Description copied from interface: <code><a href="../completionstage/#handleAsync-java.util.function.BiFunction-">CompletionStage</a></code></p> <div>
+<p>Returns a new CompletionStage that, when this stage completes either normally or exceptionally, is executed using this stage's default asynchronous execution facility, with this stage's result and exception as arguments to the supplied function. </p>
+<p>When this stage is complete, the given function is invoked with the result (or <code>null</code> if none) and the exception (or <code>null</code> if none) of this stage as arguments, and the function's result is used to complete the returned stage.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#handleAsync-java.util.function.BiFunction-">handleAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="handleAsync-java.util.function.BiFunction-java.util.concurrent.Executor-">handleAsync</h3> <pre data-language="java">public &lt;U&gt; CompletableFuture&lt;U&gt; handleAsync(BiFunction&lt;? super T,Throwable,? extends U&gt; fn,
+                                            Executor executor)</pre> <p>Description copied from interface: <code><a href="../completionstage/#handleAsync-java.util.function.BiFunction-java.util.concurrent.Executor-">CompletionStage</a></code></p> <div>
+<p>Returns a new CompletionStage that, when this stage completes either normally or exceptionally, is executed using the supplied executor, with this stage's result and exception as arguments to the supplied function. </p>
+<p>When this stage is complete, the given function is invoked with the result (or <code>null</code> if none) and the exception (or <code>null</code> if none) of this stage as arguments, and the function's result is used to complete the returned stage.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#handleAsync-java.util.function.BiFunction-java.util.concurrent.Executor-">handleAsync</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Type Parameters:</dt> <dd>
+<code>U</code> - the function's return type</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletionStage</dd> <dd>
+<code>executor</code> - the executor to use for asynchronous execution</dd> <dt>Returns:</dt> <dd>the new CompletionStage</dd> </dl>    <h3 id="toCompletableFuture--">toCompletableFuture</h3> <pre data-language="java">public CompletableFuture&lt;T&gt; toCompletableFuture()</pre> <p>Returns this CompletableFuture.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#toCompletableFuture--">toCompletableFuture</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>this CompletableFuture</dd> </dl>    <h3 id="exceptionally-java.util.function.Function-">exceptionally</h3> <pre data-language="java">public CompletableFuture&lt;T&gt; exceptionally(Function&lt;Throwable,? extends T&gt; fn)</pre> <p>Returns a new CompletableFuture that is completed when this CompletableFuture completes, with the result of the given function of the exception triggering this CompletableFuture's completion when it completes exceptionally; otherwise, if this CompletableFuture completes normally, then the returned CompletableFuture also completes normally with the same value. Note: More flexible versions of this functionality are available using methods <code>whenComplete</code> and <code>handle</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionstage/#exceptionally-java.util.function.Function-">exceptionally</a></code> in interface <code><a href="../completionstage/">CompletionStage</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>fn</code> - the function to use to compute the value of the returned CompletableFuture if this CompletableFuture completed exceptionally</dd> <dt>Returns:</dt> <dd>the new CompletableFuture</dd> </dl>    <h3 id="allOf-java.util.concurrent.CompletableFuture...-">allOf</h3> <pre data-language="java">public static CompletableFuture&lt;Void&gt; allOf(CompletableFuture&lt;?&gt;... cfs)</pre> <div>
+<p>Returns a new CompletableFuture that is completed when all of the given CompletableFutures complete. If any of the given CompletableFutures complete exceptionally, then the returned CompletableFuture also does so, with a CompletionException holding this exception as its cause. Otherwise, the results, if any, of the given CompletableFutures are not reflected in the returned CompletableFuture, but may be obtained by inspecting them individually. If no CompletableFutures are provided, returns a CompletableFuture completed with the value <code>null</code>. </p>
+<p>Among the applications of this method is to await completion of a set of independent CompletableFutures before continuing a program, as in: <code>CompletableFuture.allOf(c1, c2,
+ c3).join();</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>cfs</code> - the CompletableFutures</dd> <dt>Returns:</dt> <dd>a new CompletableFuture that is completed when all of the given CompletableFutures complete</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the array or any of its elements are <code>null</code>
+</dd> </dl>    <h3 id="anyOf-java.util.concurrent.CompletableFuture...-">anyOf</h3> <pre data-language="java">public static CompletableFuture&lt;Object&gt; anyOf(CompletableFuture&lt;?&gt;... cfs)</pre> <p>Returns a new CompletableFuture that is completed when any of the given CompletableFutures complete, with the same result. Otherwise, if it completed exceptionally, the returned CompletableFuture also does so, with a CompletionException holding this exception as its cause. If no CompletableFutures are provided, returns an incomplete CompletableFuture.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>cfs</code> - the CompletableFutures</dd> <dt>Returns:</dt> <dd>a new CompletableFuture that is completed with the result or exception of any of the given CompletableFutures when one completes</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the array or any of its elements are <code>null</code>
+</dd> </dl>    <h3 id="cancel-boolean-">cancel</h3> <pre data-language="java">public boolean cancel(boolean mayInterruptIfRunning)</pre> <p>If not already completed, completes this CompletableFuture with a <a href="../cancellationexception/"><code>CancellationException</code></a>. Dependent CompletableFutures that have not already completed will also complete exceptionally, with a <a href="../completionexception/"><code>CompletionException</code></a> caused by this <code>CancellationException</code>.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../future/#cancel-boolean-">cancel</a></code> in interface <code><a href="../future/">Future</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>mayInterruptIfRunning</code> - this value has no effect in this implementation because interrupts are not used to control processing.</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this task is now cancelled</dd> </dl>    <h3 id="isCancelled--">isCancelled</h3> <pre data-language="java">public boolean isCancelled()</pre> <p>Returns <code>true</code> if this CompletableFuture was cancelled before it completed normally.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../future/#isCancelled--">isCancelled</a></code> in interface <code><a href="../future/">Future</a>&lt;<a href="../completablefuture/">T</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this CompletableFuture was cancelled before it completed normally</dd> </dl>    <h3 id="isCompletedExceptionally--">isCompletedExceptionally</h3> <pre data-language="java">public boolean isCompletedExceptionally()</pre> <p>Returns <code>true</code> if this CompletableFuture completed exceptionally, in any way. Possible causes include cancellation, explicit invocation of <code>completeExceptionally</code>, and abrupt termination of a CompletionStage action.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if this CompletableFuture completed exceptionally</dd> </dl>    <h3 id="obtrudeValue-T-">obtrudeValue</h3> <pre data-language="java">public void obtrudeValue(T value)</pre> <p>Forcibly sets or resets the value subsequently returned by method <a href="../completablefuture/#get--"><code>get()</code></a> and related methods, whether or not already completed. This method is designed for use only in error recovery actions, and even in such situations may result in ongoing dependent completions using established versus overwritten outcomes.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>value</code> - the completion value</dd> </dl>    <h3 id="obtrudeException-java.lang.Throwable-">obtrudeException</h3> <pre data-language="java">public void obtrudeException(Throwable ex)</pre> <p>Forcibly causes subsequent invocations of method <a href="../completablefuture/#get--"><code>get()</code></a> and related methods to throw the given exception, whether or not already completed. This method is designed for use only in error recovery actions, and even in such situations may result in ongoing dependent completions using established versus overwritten outcomes.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>ex</code> - the exception</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if the exception is null</dd> </dl>    <h3 id="getNumberOfDependents--">getNumberOfDependents</h3> <pre data-language="java">public int getNumberOfDependents()</pre> <p>Returns the estimated number of CompletableFutures whose completions are awaiting completion of this CompletableFuture. This method is designed for use in monitoring system state, not for synchronization control.</p> <dl> <dt>Returns:</dt> <dd>the number of dependent CompletableFutures</dd> </dl>    <h3 id="toString--">toString</h3> <pre data-language="java">public String toString()</pre> <p>Returns a string identifying this CompletableFuture, as well as its completion state. The state, in brackets, contains the String <code>"Completed Normally"</code> or the String <code>"Completed Exceptionally"</code>, or the String <code>"Not
+ completed"</code> followed by the number of CompletableFutures dependent upon its completion, if any.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../../lang/object/#toString--">toString</a></code> in class <code><a href="../../../lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a string identifying this CompletableFuture, as well as its state</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

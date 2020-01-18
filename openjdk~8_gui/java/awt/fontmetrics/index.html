@@ -1,0 +1,269 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>FontMetrics - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content=" The FontMetrics class defines a font metrics object, which encapsulates information about the rendering of a particular font on a particular screen. ">
+  <meta name="keywords" content="class, fontmetrics, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/java/awt/fontmetrics/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class FontMetrics</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.awt.FontMetrics</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="..//openjdk~8/java/io/serializable/">Serializable</a></dd> </dl>   <pre data-language="java">public abstract class FontMetrics
+extends Object
+implements Serializable</pre> <div>
+<p>The <code>FontMetrics</code> class defines a font metrics object, which encapsulates information about the rendering of a particular font on a particular screen. </p>
+<p> <b>Note to subclassers</b>: Since many of these methods form closed, mutually recursive loops, you must take care that you implement at least one of the methods in each such loop to prevent infinite recursion when your subclass is used. In particular, the following is the minimal suggested set of methods to override in order to ensure correctness and prevent infinite recursion (though other subsets are equally feasible): </p>
+<ul> <li>
+<a href="../fontmetrics/#getAscent--"><code>getAscent()</code></a> </li>
+<li>
+<a href="../fontmetrics/#getLeading--"><code>getLeading()</code></a> </li>
+<li>
+<a href="../fontmetrics/#getMaxAdvance--"><code>getMaxAdvance()</code></a> </li>
+<li>
+<a href="../fontmetrics/#charWidth-char-"><code>charWidth(char)</code></a> </li>
+<li>
+<a href="../fontmetrics/#charsWidth-char:A-int-int-"><code>charsWidth(char[], int, int)</code></a> </li>
+</ul> <p>  Note that the implementations of these methods are inefficient, so they are usually overridden with more efficient toolkit-specific implementations. </p>
+<p> When an application asks to place a character at the position (<i>x</i>, <i>y</i>), the character is placed so that its reference point (shown as the dot in the accompanying image) is put at that position. The reference point specifies a horizontal line called the <i>baseline</i> of the character. In normal printing, the baselines of characters should align. </p>
+<p> In addition, every character in a font has an <i>ascent</i>, a <i>descent</i>, and an <i>advance width</i>. The ascent is the amount by which the character ascends above the baseline. The descent is the amount by which the character descends below the baseline. The advance width indicates the position at which AWT should place the next character. </p>
+<p> An array of characters or a string can also have an ascent, a descent, and an advance width. The ascent of the array is the maximum ascent of any character in the array. The descent is the maximum descent of any character in the array. The advance width is the sum of the advance widths of each of the characters in the character array. The advance of a <code>String</code> is the distance along the baseline of the <code>String</code>. This distance is the width that should be used for centering or right-aligning the <code>String</code>. </p>
+<p>Note that the advance of a <code>String</code> is not necessarily the sum of the advances of its characters measured in isolation because the width of a character can vary depending on its context. For example, in Arabic text, the shape of a character can change in order to connect to other characters. Also, in some scripts, certain character sequences can be represented by a single shape, called a <em>ligature</em>. Measuring characters individually does not account for these transformations. </p>
+<p>Font metrics are baseline-relative, meaning that they are generally independent of the rotation applied to the font (modulo possible grid hinting effects). See <a href="../font/"><code>Font</code></a>.</p>
+</div> <dl> <dt>Since:</dt> <dd>JDK1.0</dd> <dt>See Also:</dt> <dd>
+<a href="../font/"><code>Font</code></a>, Serialized Form</dd> </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="font">font</h3> <pre data-language="java">protected Font font</pre> <p>The actual <a href="../font/"><code>Font</code></a> from which the font metrics are created. This cannot be null.</p> <dl> <dt>See Also:</dt> <dd><a href="../fontmetrics/#getFont--"><code>getFont()</code></a></dd> </dl>     <h2 id="constructor.detail">Constructors</h2>   <h3 id="FontMetrics-java.awt.Font-">FontMetrics</h3> <pre data-language="java">protected FontMetrics(Font font)</pre> <p>Creates a new <code>FontMetrics</code> object for finding out height and width information about the specified <code>Font</code> and specific character glyphs in that <code>Font</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>font</code> - the <code>Font</code>
+</dd> <dt>See Also:</dt> <dd><a href="../font/"><code>Font</code></a></dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="getFont--">getFont</h3> <pre data-language="java">public Font getFont()</pre> <p>Gets the <code>Font</code> described by this <code>FontMetrics</code> object.</p> <dl> <dt>Returns:</dt> <dd>the <code>Font</code> described by this <code>FontMetrics</code> object.</dd> </dl>    <h3 id="getFontRenderContext--">getFontRenderContext</h3> <pre data-language="java">public FontRenderContext getFontRenderContext()</pre> <div>
+<p>Gets the <code>FontRenderContext</code> used by this <code>FontMetrics</code> object to measure text. </p>
+<p> Note that methods in this class which take a <code>Graphics</code> parameter measure text using the <code>FontRenderContext</code> of that <code>Graphics</code> object, and not this <code>FontRenderContext</code></p>
+</div> <dl> <dt>Returns:</dt> <dd>the <code>FontRenderContext</code> used by this <code>FontMetrics</code> object.</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="getLeading--">getLeading</h3> <pre data-language="java">public int getLeading()</pre> <p>Determines the <em>standard leading</em> of the <code>Font</code> described by this <code>FontMetrics</code> object. The standard leading, or interline spacing, is the logical amount of space to be reserved between the descent of one line of text and the ascent of the next line. The height metric is calculated to include this extra space.</p> <dl> <dt>Returns:</dt> <dd>the standard leading of the <code>Font</code>.</dd> <dt>See Also:</dt> <dd>
+<a href="../fontmetrics/#getHeight--"><code>getHeight()</code></a>, <a href="../fontmetrics/#getAscent--"><code>getAscent()</code></a>, <a href="../fontmetrics/#getDescent--"><code>getDescent()</code></a>
+</dd> </dl>    <h3 id="getAscent--">getAscent</h3> <pre data-language="java">public int getAscent()</pre> <p>Determines the <em>font ascent</em> of the <code>Font</code> described by this <code>FontMetrics</code> object. The font ascent is the distance from the font's baseline to the top of most alphanumeric characters. Some characters in the <code>Font</code> might extend above the font ascent line.</p> <dl> <dt>Returns:</dt> <dd>the font ascent of the <code>Font</code>.</dd> <dt>See Also:</dt> <dd><a href="../fontmetrics/#getMaxAscent--"><code>getMaxAscent()</code></a></dd> </dl>    <h3 id="getDescent--">getDescent</h3> <pre data-language="java">public int getDescent()</pre> <p>Determines the <em>font descent</em> of the <code>Font</code> described by this <code>FontMetrics</code> object. The font descent is the distance from the font's baseline to the bottom of most alphanumeric characters with descenders. Some characters in the <code>Font</code> might extend below the font descent line.</p> <dl> <dt>Returns:</dt> <dd>the font descent of the <code>Font</code>.</dd> <dt>See Also:</dt> <dd><a href="../fontmetrics/#getMaxDescent--"><code>getMaxDescent()</code></a></dd> </dl>    <h3 id="getHeight--">getHeight</h3> <pre data-language="java">public int getHeight()</pre> <p>Gets the standard height of a line of text in this font. This is the distance between the baseline of adjacent lines of text. It is the sum of the leading + ascent + descent. Due to rounding this may not be the same as getAscent() + getDescent() + getLeading(). There is no guarantee that lines of text spaced at this distance are disjoint; such lines may overlap if some characters overshoot either the standard ascent or the standard descent metric.</p> <dl> <dt>Returns:</dt> <dd>the standard height of the font.</dd> <dt>See Also:</dt> <dd>
+<a href="../fontmetrics/#getLeading--"><code>getLeading()</code></a>, <a href="../fontmetrics/#getAscent--"><code>getAscent()</code></a>, <a href="../fontmetrics/#getDescent--"><code>getDescent()</code></a>
+</dd> </dl>    <h3 id="getMaxAscent--">getMaxAscent</h3> <pre data-language="java">public int getMaxAscent()</pre> <p>Determines the maximum ascent of the <code>Font</code> described by this <code>FontMetrics</code> object. No character extends further above the font's baseline than this height.</p> <dl> <dt>Returns:</dt> <dd>the maximum ascent of any character in the <code>Font</code>.</dd> <dt>See Also:</dt> <dd><a href="../fontmetrics/#getAscent--"><code>getAscent()</code></a></dd> </dl>    <h3 id="getMaxDescent--">getMaxDescent</h3> <pre data-language="java">public int getMaxDescent()</pre> <p>Determines the maximum descent of the <code>Font</code> described by this <code>FontMetrics</code> object. No character extends further below the font's baseline than this height.</p> <dl> <dt>Returns:</dt> <dd>the maximum descent of any character in the <code>Font</code>.</dd> <dt>See Also:</dt> <dd><a href="../fontmetrics/#getDescent--"><code>getDescent()</code></a></dd> </dl>    <h3 id="getMaxDecent--">getMaxDecent</h3> <pre data-language="java">@Deprecated
+public int getMaxDecent()</pre> <p><strong>Deprecated.</strong> As of JDK version 1.1.1, replaced by <code>getMaxDescent()</code>.</p> <p>For backward compatibility only.</p> <dl> <dt>Returns:</dt> <dd>the maximum descent of any character in the <code>Font</code>.</dd> <dt>See Also:</dt> <dd><a href="../fontmetrics/#getMaxDescent--"><code>getMaxDescent()</code></a></dd> </dl>    <h3 id="getMaxAdvance--">getMaxAdvance</h3> <pre data-language="java">public int getMaxAdvance()</pre> <p>Gets the maximum advance width of any character in this <code>Font</code>. The advance is the distance from the leftmost point to the rightmost point on the string's baseline. The advance of a <code>String</code> is not necessarily the sum of the advances of its characters.</p> <dl> <dt>Returns:</dt> <dd>the maximum advance width of any character in the <code>Font</code>, or <code>-1</code> if the maximum advance width is not known.</dd> </dl>    <h3 id="charWidth-int-">charWidth</h3> <pre data-language="java">public int charWidth(int codePoint)</pre> <div>
+<p>Returns the advance width of the specified character in this <code>Font</code>. The advance is the distance from the leftmost point to the rightmost point on the character's baseline. Note that the advance of a <code>String</code> is not necessarily the sum of the advances of its characters. </p>
+<p>This method doesn't validate the specified character to be a valid Unicode code point. The caller must validate the character value using <a href="..//openjdk~8/java/lang/character/"><code>Character.isValidCodePoint</code></a> if necessary.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>codePoint</code> - the character (Unicode code point) to be measured</dd> <dt>Returns:</dt> <dd>the advance width of the specified character in the <code>Font</code> described by this <code>FontMetrics</code> object.</dd> <dt>See Also:</dt> <dd>
+<a href="../fontmetrics/#charsWidth-char:A-int-int-"><code>charsWidth(char[], int, int)</code></a>, <a href="../fontmetrics/#stringWidth-java.lang.String-"><code>stringWidth(String)</code></a>
+</dd> </dl>    <h3 id="charWidth-char-">charWidth</h3> <pre data-language="java">public int charWidth(char ch)</pre> <div>
+<p>Returns the advance width of the specified character in this <code>Font</code>. The advance is the distance from the leftmost point to the rightmost point on the character's baseline. Note that the advance of a <code>String</code> is not necessarily the sum of the advances of its characters. </p>
+<p><b>Note:</b> This method cannot handle <a href="..//openjdk~8/java/lang/character/"> supplementary characters</a>. To support all Unicode characters, including supplementary characters, use the <a href="../fontmetrics/#charWidth-int-"><code>charWidth(int)</code></a> method.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>ch</code> - the character to be measured</dd> <dt>Returns:</dt> <dd>the advance width of the specified character in the <code>Font</code> described by this <code>FontMetrics</code> object.</dd> <dt>See Also:</dt> <dd>
+<a href="../fontmetrics/#charsWidth-char:A-int-int-"><code>charsWidth(char[], int, int)</code></a>, <a href="../fontmetrics/#stringWidth-java.lang.String-"><code>stringWidth(String)</code></a>
+</dd> </dl>    <h3 id="stringWidth-java.lang.String-">stringWidth</h3> <pre data-language="java">public int stringWidth(String str)</pre> <div>
+<p>Returns the total advance width for showing the specified <code>String</code> in this <code>Font</code>. The advance is the distance from the leftmost point to the rightmost point on the string's baseline. </p>
+<p> Note that the advance of a <code>String</code> is not necessarily the sum of the advances of its characters.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>str</code> - the <code>String</code> to be measured</dd> <dt>Returns:</dt> <dd>the advance width of the specified <code>String</code> in the <code>Font</code> described by this <code>FontMetrics</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if str is null.</dd> <dt>See Also:</dt> <dd>
+<a href="../fontmetrics/#bytesWidth-byte:A-int-int-"><code>bytesWidth(byte[], int, int)</code></a>, <a href="../fontmetrics/#charsWidth-char:A-int-int-"><code>charsWidth(char[], int, int)</code></a>, <a href="../fontmetrics/#getStringBounds-java.lang.String-java.awt.Graphics-"><code>getStringBounds(String, Graphics)</code></a>
+</dd> </dl>    <h3 id="charsWidth-char:A-int-int-">charsWidth</h3> <pre data-language="java">public int charsWidth(char[] data,
+                      int off,
+                      int len)</pre> <p>Returns the total advance width for showing the specified array of characters in this <code>Font</code>. The advance is the distance from the leftmost point to the rightmost point on the string's baseline. The advance of a <code>String</code> is not necessarily the sum of the advances of its characters. This is equivalent to measuring a <code>String</code> of the characters in the specified range.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>data</code> - the array of characters to be measured</dd> <dd>
+<code>off</code> - the start offset of the characters in the array</dd> <dd>
+<code>len</code> - the number of characters to be measured from the array</dd> <dt>Returns:</dt> <dd>the advance width of the subarray of the specified <code>char</code> array in the font described by this <code>FontMetrics</code> object.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>data</code> is null.</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/indexoutofboundsexception/">IndexOutOfBoundsException</a></code> - if the <code>off</code> and <code>len</code> arguments index characters outside the bounds of the <code>data</code> array.</dd> <dt>See Also:</dt> <dd>
+<a href="../fontmetrics/#charWidth-int-"><code>charWidth(int)</code></a>, <a href="../fontmetrics/#charWidth-char-"><code>charWidth(char)</code></a>, <a href="../fontmetrics/#bytesWidth-byte:A-int-int-"><code>bytesWidth(byte[], int, int)</code></a>, <a href="../fontmetrics/#stringWidth-java.lang.String-"><code>stringWidth(String)</code></a>
+</dd> </dl>    <h3 id="bytesWidth-byte:A-int-int-">bytesWidth</h3> <pre data-language="java">public int bytesWidth(byte[] data,
+                      int off,
+                      int len)</pre> <p>Returns the total advance width for showing the specified array of bytes in this <code>Font</code>. The advance is the distance from the leftmost point to the rightmost point on the string's baseline. The advance of a <code>String</code> is not necessarily the sum of the advances of its characters. This is equivalent to measuring a <code>String</code> of the characters in the specified range.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>data</code> - the array of bytes to be measured</dd> <dd>
+<code>off</code> - the start offset of the bytes in the array</dd> <dd>
+<code>len</code> - the number of bytes to be measured from the array</dd> <dt>Returns:</dt> <dd>the advance width of the subarray of the specified <code>byte</code> array in the <code>Font</code> described by this <code>FontMetrics</code> object.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>data</code> is null.</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/indexoutofboundsexception/">IndexOutOfBoundsException</a></code> - if the <code>off</code> and <code>len</code> arguments index bytes outside the bounds of the <code>data</code> array.</dd> <dt>See Also:</dt> <dd>
+<a href="../fontmetrics/#charsWidth-char:A-int-int-"><code>charsWidth(char[], int, int)</code></a>, <a href="../fontmetrics/#stringWidth-java.lang.String-"><code>stringWidth(String)</code></a>
+</dd> </dl>    <h3 id="getWidths--">getWidths</h3> <pre data-language="java">public int[] getWidths()</pre> <p>Gets the advance widths of the first 256 characters in the <code>Font</code>. The advance is the distance from the leftmost point to the rightmost point on the character's baseline. Note that the advance of a <code>String</code> is not necessarily the sum of the advances of its characters.</p> <dl> <dt>Returns:</dt> <dd>an array storing the advance widths of the characters in the <code>Font</code> described by this <code>FontMetrics</code> object.</dd> </dl>    <h3 id="hasUniformLineMetrics--">hasUniformLineMetrics</h3> <pre data-language="java">public boolean hasUniformLineMetrics()</pre> <p>Checks to see if the <code>Font</code> has uniform line metrics. A composite font may consist of several different fonts to cover various character sets. In such cases, the <code>FontLineMetrics</code> objects are not uniform. Different fonts may have a different ascent, descent, metrics and so on. This information is sometimes necessary for line measuring and line breaking.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if the font has uniform line metrics; <code>false</code> otherwise.</dd> <dt>See Also:</dt> <dd><a href="../font/#hasUniformLineMetrics--"><code>Font.hasUniformLineMetrics()</code></a></dd> </dl>    <h3 id="getLineMetrics-java.lang.String-java.awt.Graphics-">getLineMetrics</h3> <pre data-language="java">public LineMetrics getLineMetrics(String str,
+                                  Graphics context)</pre> <p>Returns the <a href="../font/linemetrics/"><code>LineMetrics</code></a> object for the specified <code>String</code> in the specified <a href="../graphics/"><code>Graphics</code></a> context.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>str</code> - the specified <code>String</code>
+</dd> <dd>
+<code>context</code> - the specified <code>Graphics</code> context</dd> <dt>Returns:</dt> <dd>a <code>LineMetrics</code> object created with the specified <code>String</code> and <code>Graphics</code> context.</dd> <dt>See Also:</dt> <dd><a href="../font/#getLineMetrics-java.lang.String-java.awt.font.FontRenderContext-"><code>Font.getLineMetrics(String, FontRenderContext)</code></a></dd> </dl>    <h3 id="getLineMetrics-java.lang.String-int-int-java.awt.Graphics-">getLineMetrics</h3> <pre data-language="java">public LineMetrics getLineMetrics(String str,
+                                  int beginIndex,
+                                  int limit,
+                                  Graphics context)</pre> <p>Returns the <a href="../font/linemetrics/"><code>LineMetrics</code></a> object for the specified <code>String</code> in the specified <a href="../graphics/"><code>Graphics</code></a> context.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>str</code> - the specified <code>String</code>
+</dd> <dd>
+<code>beginIndex</code> - the initial offset of <code>str</code>
+</dd> <dd>
+<code>limit</code> - the end offset of <code>str</code>
+</dd> <dd>
+<code>context</code> - the specified <code>Graphics</code> context</dd> <dt>Returns:</dt> <dd>a <code>LineMetrics</code> object created with the specified <code>String</code> and <code>Graphics</code> context.</dd> <dt>See Also:</dt> <dd><a href="../font/#getLineMetrics-java.lang.String-int-int-java.awt.font.FontRenderContext-"><code>Font.getLineMetrics(String, int, int, FontRenderContext)</code></a></dd> </dl>    <h3 id="getLineMetrics-char:A-int-int-java.awt.Graphics-">getLineMetrics</h3> <pre data-language="java">public LineMetrics getLineMetrics(char[] chars,
+                                  int beginIndex,
+                                  int limit,
+                                  Graphics context)</pre> <p>Returns the <a href="../font/linemetrics/"><code>LineMetrics</code></a> object for the specified character array in the specified <a href="../graphics/"><code>Graphics</code></a> context.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>chars</code> - the specified character array</dd> <dd>
+<code>beginIndex</code> - the initial offset of <code>chars</code>
+</dd> <dd>
+<code>limit</code> - the end offset of <code>chars</code>
+</dd> <dd>
+<code>context</code> - the specified <code>Graphics</code> context</dd> <dt>Returns:</dt> <dd>a <code>LineMetrics</code> object created with the specified character array and <code>Graphics</code> context.</dd> <dt>See Also:</dt> <dd><a href="../font/#getLineMetrics-char:A-int-int-java.awt.font.FontRenderContext-"><code>Font.getLineMetrics(char[], int, int, FontRenderContext)</code></a></dd> </dl>    <h3 id="getLineMetrics-java.text.CharacterIterator-int-int-java.awt.Graphics-">getLineMetrics</h3> <pre data-language="java">public LineMetrics getLineMetrics(CharacterIterator ci,
+                                  int beginIndex,
+                                  int limit,
+                                  Graphics context)</pre> <p>Returns the <a href="../font/linemetrics/"><code>LineMetrics</code></a> object for the specified <a href="..//openjdk~8/java/text/characteriterator/"><code>CharacterIterator</code></a> in the specified <a href="../graphics/"><code>Graphics</code></a> context.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>ci</code> - the specified <code>CharacterIterator</code>
+</dd> <dd>
+<code>beginIndex</code> - the initial offset in <code>ci</code>
+</dd> <dd>
+<code>limit</code> - the end index of <code>ci</code>
+</dd> <dd>
+<code>context</code> - the specified <code>Graphics</code> context</dd> <dt>Returns:</dt> <dd>a <code>LineMetrics</code> object created with the specified arguments.</dd> <dt>See Also:</dt> <dd><a href="../font/#getLineMetrics-java.text.CharacterIterator-int-int-java.awt.font.FontRenderContext-"><code>Font.getLineMetrics(CharacterIterator, int, int, FontRenderContext)</code></a></dd> </dl>    <h3 id="getStringBounds-java.lang.String-java.awt.Graphics-">getStringBounds</h3> <pre data-language="java">public Rectangle2D getStringBounds(String str,
+                                   Graphics context)</pre> <div>
+<p>Returns the bounds of the specified <code>String</code> in the specified <code>Graphics</code> context. The bounds is used to layout the <code>String</code>. </p>
+<p>Note: The returned bounds is in baseline-relative coordinates (see <a href="../fontmetrics/"><code>class notes</code></a>).</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>str</code> - the specified <code>String</code>
+</dd> <dd>
+<code>context</code> - the specified <code>Graphics</code> context</dd> <dt>Returns:</dt> <dd>a <a href="../geom/rectangle2d/"><code>Rectangle2D</code></a> that is the bounding box of the specified <code>String</code> in the specified <code>Graphics</code> context.</dd> <dt>See Also:</dt> <dd><a href="../font/#getStringBounds-java.lang.String-java.awt.font.FontRenderContext-"><code>Font.getStringBounds(String, FontRenderContext)</code></a></dd> </dl>    <h3 id="getStringBounds-java.lang.String-int-int-java.awt.Graphics-">getStringBounds</h3> <pre data-language="java">public Rectangle2D getStringBounds(String str,
+                                   int beginIndex,
+                                   int limit,
+                                   Graphics context)</pre> <div>
+<p>Returns the bounds of the specified <code>String</code> in the specified <code>Graphics</code> context. The bounds is used to layout the <code>String</code>. </p>
+<p>Note: The returned bounds is in baseline-relative coordinates (see <a href="../fontmetrics/"><code>class notes</code></a>).</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>str</code> - the specified <code>String</code>
+</dd> <dd>
+<code>beginIndex</code> - the offset of the beginning of <code>str</code>
+</dd> <dd>
+<code>limit</code> - the end offset of <code>str</code>
+</dd> <dd>
+<code>context</code> - the specified <code>Graphics</code> context</dd> <dt>Returns:</dt> <dd>a <code>Rectangle2D</code> that is the bounding box of the specified <code>String</code> in the specified <code>Graphics</code> context.</dd> <dt>See Also:</dt> <dd><a href="../font/#getStringBounds-java.lang.String-int-int-java.awt.font.FontRenderContext-"><code>Font.getStringBounds(String, int, int, FontRenderContext)</code></a></dd> </dl>    <h3 id="getStringBounds-char:A-int-int-java.awt.Graphics-">getStringBounds</h3> <pre data-language="java">public Rectangle2D getStringBounds(char[] chars,
+                                   int beginIndex,
+                                   int limit,
+                                   Graphics context)</pre> <div>
+<p>Returns the bounds of the specified array of characters in the specified <code>Graphics</code> context. The bounds is used to layout the <code>String</code> created with the specified array of characters, <code>beginIndex</code> and <code>limit</code>. </p>
+<p>Note: The returned bounds is in baseline-relative coordinates (see <a href="../fontmetrics/"><code>class notes</code></a>).</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>chars</code> - an array of characters</dd> <dd>
+<code>beginIndex</code> - the initial offset of the array of characters</dd> <dd>
+<code>limit</code> - the end offset of the array of characters</dd> <dd>
+<code>context</code> - the specified <code>Graphics</code> context</dd> <dt>Returns:</dt> <dd>a <code>Rectangle2D</code> that is the bounding box of the specified character array in the specified <code>Graphics</code> context.</dd> <dt>See Also:</dt> <dd><a href="../font/#getStringBounds-char:A-int-int-java.awt.font.FontRenderContext-"><code>Font.getStringBounds(char[], int, int, FontRenderContext)</code></a></dd> </dl>    <h3 id="getStringBounds-java.text.CharacterIterator-int-int-java.awt.Graphics-">getStringBounds</h3> <pre data-language="java">public Rectangle2D getStringBounds(CharacterIterator ci,
+                                   int beginIndex,
+                                   int limit,
+                                   Graphics context)</pre> <div>
+<p>Returns the bounds of the characters indexed in the specified <code>CharacterIterator</code> in the specified <code>Graphics</code> context. </p>
+<p>Note: The returned bounds is in baseline-relative coordinates (see <a href="../fontmetrics/"><code>class notes</code></a>).</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>ci</code> - the specified <code>CharacterIterator</code>
+</dd> <dd>
+<code>beginIndex</code> - the initial offset in <code>ci</code>
+</dd> <dd>
+<code>limit</code> - the end index of <code>ci</code>
+</dd> <dd>
+<code>context</code> - the specified <code>Graphics</code> context</dd> <dt>Returns:</dt> <dd>a <code>Rectangle2D</code> that is the bounding box of the characters indexed in the specified <code>CharacterIterator</code> in the specified <code>Graphics</code> context.</dd> <dt>See Also:</dt> <dd><a href="../font/#getStringBounds-java.text.CharacterIterator-int-int-java.awt.font.FontRenderContext-"><code>Font.getStringBounds(CharacterIterator, int, int, FontRenderContext)</code></a></dd> </dl>    <h3 id="getMaxCharBounds-java.awt.Graphics-">getMaxCharBounds</h3> <pre data-language="java">public Rectangle2D getMaxCharBounds(Graphics context)</pre> <p>Returns the bounds for the character with the maximum bounds in the specified <code>Graphics</code> context.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>context</code> - the specified <code>Graphics</code> context</dd> <dt>Returns:</dt> <dd>a <code>Rectangle2D</code> that is the bounding box for the character with the maximum bounds.</dd> <dt>See Also:</dt> <dd><a href="../font/#getMaxCharBounds-java.awt.font.FontRenderContext-"><code>Font.getMaxCharBounds(FontRenderContext)</code></a></dd> </dl>    <h3 id="toString--">toString</h3> <pre data-language="java">public String toString()</pre> <p>Returns a representation of this <code>FontMetrics</code> object's values as a <code>String</code>.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/object/">toString</a></code> in class <code><a href="..//openjdk~8/java/lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a <code>String</code> representation of this <code>FontMetrics</code> object.</dd> <dt>Since:</dt> <dd>JDK1.0.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

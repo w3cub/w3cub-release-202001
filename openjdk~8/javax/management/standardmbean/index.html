@@ -1,0 +1,299 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>StandardMBean - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" An MBean whose management interface is determined by reflection on a Java interface. ">
+  <meta name="keywords" content="class, standardmbean, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/javax/management/standardmbean/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class StandardMBean</h1>   <ul class="inheritance"> <li><a href="../../../java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>javax.management.StandardMBean</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../dynamicmbean/">DynamicMBean</a>, <a href="../mbeanregistration/">MBeanRegistration</a>
+</dd> </dl> <dl> <dt>Direct Known Subclasses:</dt> <dd><a href="../standardemittermbean/">StandardEmitterMBean</a></dd> </dl>   <pre data-language="java">public class StandardMBean
+extends Object
+implements DynamicMBean, MBeanRegistration</pre> <div>
+
+<p>An MBean whose management interface is determined by reflection on a Java interface.</p> <p>This class brings more flexibility to the notion of Management Interface in the use of Standard MBeans. Straightforward use of the patterns for Standard MBeans described in the JMX Specification means that there is a fixed relationship between the implementation class of an MBean and its management interface (i.e., if the implementation class is Thing, the management interface must be ThingMBean). This class makes it possible to keep the convenience of specifying the management interface with a Java interface, without requiring that there be any naming relationship between the implementation and interface classes.</p> <p>By making a DynamicMBean out of an MBean, this class makes it possible to select any interface implemented by the MBean as its management interface, provided that it complies with JMX patterns (i.e., attributes defined by getter/setter etc...).</p> <p> This class also provides hooks that make it possible to supply custom descriptions and names for the <a href="../mbeaninfo/"><code>MBeanInfo</code></a> returned by the DynamicMBean interface.</p> <p>Using this class, an MBean can be created with any implementation class name <i>Impl</i> and with a management interface defined (as for current Standard MBeans) by any interface <i>Intf</i>, in one of two general ways:</p> <ul> <li>Using the public constructor <a href="../standardmbean/#StandardMBean-T-java.lang.Class-boolean-"><code>StandardMBean(impl,interface)</code></a>: <pre data-language="java">MBeanServer mbs;
+     ...
+     Impl impl = new Impl(...);
+     StandardMBean mbean = new StandardMBean(impl, Intf.class, false);
+     mbs.registerMBean(mbean, objectName);</pre>
+</li> <li>Subclassing StandardMBean: <pre data-language="java">public class Impl extends StandardMBean implements Intf {
+        public Impl() {
+          super(Intf.class, false);
+       }
+       // implement methods of Intf
+     }
+
+     [...]
+
+     MBeanServer mbs;
+     ....
+     Impl impl = new Impl();
+     mbs.registerMBean(impl, objectName);</pre>
+</li> </ul> <p>In either case, the class <i>Impl</i> must implement the interface <i>Intf</i>.</p> <p>Standard MBeans based on the naming relationship between implementation and interface classes are of course still available.</p> <p>This class may also be used to construct MXBeans. The usage is exactly the same as for Standard MBeans except that in the examples above, the <code>false</code> parameter to the constructor or <code>super(...)</code> invocation is instead <code>true</code>.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.5</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="StandardMBean-T-java.lang.Class-">StandardMBean</h3> <pre data-language="java">public StandardMBean(T implementation,
+                     Class&lt;T&gt; mbeanInterface)
+              throws NotCompliantMBeanException</pre> <div>
+
+<p>Make a DynamicMBean out of the object <var>implementation</var>, using the specified <var>mbeanInterface</var> class.</p>
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - Allows the compiler to check that <code>implementation</code> does indeed implement the class described by <code>mbeanInterface</code>. The compiler can only check this if <code>mbeanInterface</code> is a class literal such as <code>MyMBean.class</code>.</dd> <dt>Parameters:</dt> <dd>
+<code>implementation</code> - The implementation of this MBean.</dd> <dd>
+<code>mbeanInterface</code> - The Management Interface exported by this MBean's implementation. If <code>null</code>, then this object will use standard JMX design pattern to determine the management interface associated with the given implementation.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the given <var>implementation</var> is null.</dd> <dd>
+<code><a href="../notcompliantmbeanexception/">NotCompliantMBeanException</a></code> - if the <var>mbeanInterface</var> does not follow JMX design patterns for Management Interfaces, or if the given <var>implementation</var> does not implement the specified interface.</dd> </dl>    <h3 id="StandardMBean-java.lang.Class-">StandardMBean</h3> <pre data-language="java">protected StandardMBean(Class&lt;?&gt; mbeanInterface)
+                 throws NotCompliantMBeanException</pre> <div>
+
+<p>Make a DynamicMBean out of <var>this</var>, using the specified <var>mbeanInterface</var> class.</p> <p>Calls <a href="../standardmbean/#StandardMBean-T-java.lang.Class-"><code>this(this,mbeanInterface)</code></a>. This constructor is reserved to subclasses.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>mbeanInterface</code> - The Management Interface exported by this MBean.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../notcompliantmbeanexception/">NotCompliantMBeanException</a></code> - if the <var>mbeanInterface</var> does not follow JMX design patterns for Management Interfaces, or if <var>this</var> does not implement the specified interface.</dd> </dl>    <h3 id="StandardMBean-T-java.lang.Class-boolean-">StandardMBean</h3> <pre data-language="java">public StandardMBean(T implementation,
+                     Class&lt;T&gt; mbeanInterface,
+                     boolean isMXBean)</pre> <div>
+
+<p>Make a DynamicMBean out of the object <var>implementation</var>, using the specified <var>mbeanInterface</var> class, and choosing whether the resultant MBean is an MXBean. This constructor can be used to make either Standard MBeans or MXBeans. Unlike the constructor <a href="../standardmbean/#StandardMBean-T-java.lang.Class-"><code>StandardMBean(Object, Class)</code></a>, it does not throw NotCompliantMBeanException.</p>
+</div> <dl> <dt>Type Parameters:</dt> <dd>
+<code>T</code> - Allows the compiler to check that <code>implementation</code> does indeed implement the class described by <code>mbeanInterface</code>. The compiler can only check this if <code>mbeanInterface</code> is a class literal such as <code>MyMBean.class</code>.</dd> <dt>Parameters:</dt> <dd>
+<code>implementation</code> - The implementation of this MBean.</dd> <dd>
+<code>mbeanInterface</code> - The Management Interface exported by this MBean's implementation. If <code>null</code>, then this object will use standard JMX design pattern to determine the management interface associated with the given implementation.</dd> <dd>
+<code>isMXBean</code> - If true, the <code>mbeanInterface</code> parameter names an MXBean interface and the resultant MBean is an MXBean.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the given <var>implementation</var> is null, or if the <var>mbeanInterface</var> does not follow JMX design patterns for Management Interfaces, or if the given <var>implementation</var> does not implement the specified interface.</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="StandardMBean-java.lang.Class-boolean-">StandardMBean</h3> <pre data-language="java">protected StandardMBean(Class&lt;?&gt; mbeanInterface,
+                        boolean isMXBean)</pre> <div>
+
+<p>Make a DynamicMBean out of <var>this</var>, using the specified <var>mbeanInterface</var> class, and choosing whether the resulting MBean is an MXBean. This constructor can be used to make either Standard MBeans or MXBeans. Unlike the constructor <a href="../standardmbean/#StandardMBean-T-java.lang.Class-"><code>StandardMBean(Object, Class)</code></a>, it does not throw NotCompliantMBeanException.</p> <p>Calls <a href="../standardmbean/#StandardMBean-T-java.lang.Class-boolean-"><code>this(this, mbeanInterface, isMXBean)</code></a>. This constructor is reserved to subclasses.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>mbeanInterface</code> - The Management Interface exported by this MBean.</dd> <dd>
+<code>isMXBean</code> - If true, the <code>mbeanInterface</code> parameter names an MXBean interface and the resultant MBean is an MXBean.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the <var>mbeanInterface</var> does not follow JMX design patterns for Management Interfaces, or if <var>this</var> does not implement the specified interface.</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="setImplementation-java.lang.Object-">setImplementation</h3> <pre data-language="java">public void setImplementation(Object implementation)
+                       throws NotCompliantMBeanException</pre> <div>
+
+<p>Replace the implementation object wrapped in this object.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>implementation</code> - The new implementation of this Standard MBean (or MXBean). The <code>implementation</code> object must implement the Standard MBean (or MXBean) interface that was supplied when this <code>StandardMBean</code> was constructed.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the given <var>implementation</var> is null.</dd> <dd>
+<code><a href="../notcompliantmbeanexception/">NotCompliantMBeanException</a></code> - if the given <var>implementation</var> does not implement the Standard MBean (or MXBean) interface that was supplied at construction.</dd> <dt>See Also:</dt> <dd><a href="../standardmbean/#getImplementation--"><code>getImplementation()</code></a></dd> </dl>    <h3 id="getImplementation--">getImplementation</h3> <pre data-language="java">public Object getImplementation()</pre> <p>Get the implementation of this Standard MBean (or MXBean).</p> <dl> <dt>Returns:</dt> <dd>The implementation of this Standard MBean (or MXBean).</dd> <dt>See Also:</dt> <dd><a href="../standardmbean/#setImplementation-java.lang.Object-"><code>setImplementation(java.lang.Object)</code></a></dd> </dl>    <h3 id="getMBeanInterface--">getMBeanInterface</h3> <pre data-language="java">public final Class&lt;?&gt; getMBeanInterface()</pre> <p>Get the Management Interface of this Standard MBean (or MXBean).</p> <dl> <dt>Returns:</dt> <dd>The management interface of this Standard MBean (or MXBean).</dd> </dl>    <h3 id="getImplementationClass--">getImplementationClass</h3> <pre data-language="java">public Class&lt;?&gt; getImplementationClass()</pre> <p>Get the class of the implementation of this Standard MBean (or MXBean).</p> <dl> <dt>Returns:</dt> <dd>The class of the implementation of this Standard MBean (or MXBean).</dd> </dl>    <h3 id="getAttribute-java.lang.String-">getAttribute</h3> <pre data-language="java">public Object getAttribute(String attribute)
+                    throws AttributeNotFoundException,
+                           MBeanException,
+                           ReflectionException</pre> <p>Description copied from interface: <code><a href="../dynamicmbean/#getAttribute-java.lang.String-">DynamicMBean</a></code></p> <p>Obtain the value of a specific attribute of the Dynamic MBean.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../dynamicmbean/#getAttribute-java.lang.String-">getAttribute</a></code> in interface <code><a href="../dynamicmbean/">DynamicMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>attribute</code> - The name of the attribute to be retrieved</dd> <dt>Returns:</dt> <dd>The value of the attribute retrieved.</dd> <dt>Throws:</dt> <dd><code><a href="../attributenotfoundexception/">AttributeNotFoundException</a></code></dd> <dd>
+<code><a href="../mbeanexception/">MBeanException</a></code> - Wraps a <code>java.lang.Exception</code> thrown by the MBean's getter.</dd> <dd>
+<code><a href="../reflectionexception/">ReflectionException</a></code> - Wraps a <code>java.lang.Exception</code> thrown while trying to invoke the getter.</dd> <dt>See Also:</dt> <dd><a href="../dynamicmbean/#setAttribute-javax.management.Attribute-"><code>DynamicMBean.setAttribute(javax.management.Attribute)</code></a></dd> </dl>    <h3 id="setAttribute-javax.management.Attribute-">setAttribute</h3> <pre data-language="java">public void setAttribute(Attribute attribute)
+                  throws AttributeNotFoundException,
+                         InvalidAttributeValueException,
+                         MBeanException,
+                         ReflectionException</pre> <p>Description copied from interface: <code><a href="../dynamicmbean/#setAttribute-javax.management.Attribute-">DynamicMBean</a></code></p> <p>Set the value of a specific attribute of the Dynamic MBean.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../dynamicmbean/#setAttribute-javax.management.Attribute-">setAttribute</a></code> in interface <code><a href="../dynamicmbean/">DynamicMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>attribute</code> - The identification of the attribute to be set and the value it is to be set to.</dd> <dt>Throws:</dt> <dd><code><a href="../attributenotfoundexception/">AttributeNotFoundException</a></code></dd> <dd><code><a href="../invalidattributevalueexception/">InvalidAttributeValueException</a></code></dd> <dd>
+<code><a href="../mbeanexception/">MBeanException</a></code> - Wraps a <code>java.lang.Exception</code> thrown by the MBean's setter.</dd> <dd>
+<code><a href="../reflectionexception/">ReflectionException</a></code> - Wraps a <code>java.lang.Exception</code> thrown while trying to invoke the MBean's setter.</dd> <dt>See Also:</dt> <dd><a href="../dynamicmbean/#getAttribute-java.lang.String-"><code>DynamicMBean.getAttribute(java.lang.String)</code></a></dd> </dl>    <h3 id="getAttributes-java.lang.String:A-">getAttributes</h3> <pre data-language="java">public AttributeList getAttributes(String[] attributes)</pre> <p>Description copied from interface: <code><a href="../dynamicmbean/#getAttributes-java.lang.String:A-">DynamicMBean</a></code></p> <p>Get the values of several attributes of the Dynamic MBean.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../dynamicmbean/#getAttributes-java.lang.String:A-">getAttributes</a></code> in interface <code><a href="../dynamicmbean/">DynamicMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>attributes</code> - A list of the attributes to be retrieved.</dd> <dt>Returns:</dt> <dd>The list of attributes retrieved.</dd> <dt>See Also:</dt> <dd><a href="../dynamicmbean/#setAttributes-javax.management.AttributeList-"><code>DynamicMBean.setAttributes(javax.management.AttributeList)</code></a></dd> </dl>    <h3 id="setAttributes-javax.management.AttributeList-">setAttributes</h3> <pre data-language="java">public AttributeList setAttributes(AttributeList attributes)</pre> <p>Description copied from interface: <code><a href="../dynamicmbean/#setAttributes-javax.management.AttributeList-">DynamicMBean</a></code></p> <p>Sets the values of several attributes of the Dynamic MBean.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../dynamicmbean/#setAttributes-javax.management.AttributeList-">setAttributes</a></code> in interface <code><a href="../dynamicmbean/">DynamicMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>attributes</code> - A list of attributes: The identification of the attributes to be set and the values they are to be set to.</dd> <dt>Returns:</dt> <dd>The list of attributes that were set, with their new values.</dd> <dt>See Also:</dt> <dd><a href="../dynamicmbean/#getAttributes-java.lang.String:A-"><code>DynamicMBean.getAttributes(java.lang.String[])</code></a></dd> </dl>    <h3 id="invoke-java.lang.String-java.lang.Object:A-java.lang.String:A-">invoke</h3> <pre data-language="java">public Object invoke(String actionName,
+                     Object[] params,
+                     String[] signature)
+              throws MBeanException,
+                     ReflectionException</pre> <p>Description copied from interface: <code><a href="../dynamicmbean/#invoke-java.lang.String-java.lang.Object:A-java.lang.String:A-">DynamicMBean</a></code></p> <p>Allows an action to be invoked on the Dynamic MBean.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../dynamicmbean/#invoke-java.lang.String-java.lang.Object:A-java.lang.String:A-">invoke</a></code> in interface <code><a href="../dynamicmbean/">DynamicMBean</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>actionName</code> - The name of the action to be invoked.</dd> <dd>
+<code>params</code> - An array containing the parameters to be set when the action is invoked.</dd> <dd>
+<code>signature</code> - An array containing the signature of the action. The class objects will be loaded through the same class loader as the one used for loading the MBean on which the action is invoked.</dd> <dt>Returns:</dt> <dd>The object returned by the action, which represents the result of invoking the action on the MBean specified.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../mbeanexception/">MBeanException</a></code> - Wraps a <code>java.lang.Exception</code> thrown by the MBean's invoked method.</dd> <dd>
+<code><a href="../reflectionexception/">ReflectionException</a></code> - Wraps a <code>java.lang.Exception</code> thrown while trying to invoke the method</dd> </dl>    <h3 id="getMBeanInfo--">getMBeanInfo</h3> <pre data-language="java">public MBeanInfo getMBeanInfo()</pre> <div>
+<p>Get the <a href="../mbeaninfo/"><code>MBeanInfo</code></a> for this MBean. </p>
+<p> This method implements <a href="../dynamicmbean/#getMBeanInfo--"><code>DynamicMBean.getMBeanInfo()</code></a>. </p>
+<p> This method first calls <a href="../standardmbean/#getCachedMBeanInfo--"><code>getCachedMBeanInfo()</code></a> in order to retrieve the cached MBeanInfo for this MBean, if any. If the MBeanInfo returned by <a href="../standardmbean/#getCachedMBeanInfo--"><code>getCachedMBeanInfo()</code></a> is not null, then it is returned.<br> Otherwise, this method builds a default MBeanInfo for this MBean, using the Management Interface specified for this MBean. </p>
+<p> While building the MBeanInfo, this method calls the customization hooks that make it possible for subclasses to supply their custom descriptions, parameter names, etc...<br> Finally, it calls <a href="../standardmbean/#cacheMBeanInfo-javax.management.MBeanInfo-"><code>cacheMBeanInfo()</code></a> in order to cache the new MBeanInfo.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../dynamicmbean/#getMBeanInfo--">getMBeanInfo</a></code> in interface <code><a href="../dynamicmbean/">DynamicMBean</a></code>
+</dd> <dt>Returns:</dt> <dd>The cached MBeanInfo for that MBean, if not null, or a newly built MBeanInfo if none was cached.</dd> </dl>    <h3 id="getClassName-javax.management.MBeanInfo-">getClassName</h3> <pre data-language="java">protected String getClassName(MBeanInfo info)</pre> <p>Customization hook: Get the className that will be used in the MBeanInfo returned by this MBean. <br> Subclasses may redefine this method in order to supply their custom class name. The default implementation returns <a href="../mbeaninfo/#getClassName--"><code>info.getClassName()</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - The default MBeanInfo derived by reflection.</dd> <dt>Returns:</dt> <dd>the class name for the new MBeanInfo.</dd> </dl>    <h3 id="getDescription-javax.management.MBeanInfo-">getDescription</h3> <pre data-language="java">protected String getDescription(MBeanInfo info)</pre> <p>Customization hook: Get the description that will be used in the MBeanInfo returned by this MBean. <br> Subclasses may redefine this method in order to supply their custom MBean description. The default implementation returns <a href="../mbeaninfo/#getDescription--"><code>info.getDescription()</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - The default MBeanInfo derived by reflection.</dd> <dt>Returns:</dt> <dd>the description for the new MBeanInfo.</dd> </dl>    <h3 id="getDescription-javax.management.MBeanFeatureInfo-">getDescription</h3> <pre data-language="java">protected String getDescription(MBeanFeatureInfo info)</pre> <div>
+
+<p>Customization hook: Get the description that will be used in the MBeanFeatureInfo returned by this MBean.</p> <p>Subclasses may redefine this method in order to supply their custom description. The default implementation returns <a href="../mbeanfeatureinfo/#getDescription--"><code>info.getDescription()</code></a>.</p> <p>This method is called by <a href="../standardmbean/#getDescription-javax.management.MBeanAttributeInfo-"><code>getDescription(MBeanAttributeInfo)</code></a>, <a href="../standardmbean/#getDescription-javax.management.MBeanOperationInfo-"><code>getDescription(MBeanOperationInfo)</code></a>, <a href="../standardmbean/#getDescription-javax.management.MBeanConstructorInfo-"><code>getDescription(MBeanConstructorInfo)</code></a>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - The default MBeanFeatureInfo derived by reflection.</dd> <dt>Returns:</dt> <dd>the description for the given MBeanFeatureInfo.</dd> </dl>    <h3 id="getDescription-javax.management.MBeanAttributeInfo-">getDescription</h3> <pre data-language="java">protected String getDescription(MBeanAttributeInfo info)</pre> <div>
+<p>Customization hook: Get the description that will be used in the MBeanAttributeInfo returned by this MBean. </p>
+<p>Subclasses may redefine this method in order to supply their custom description. The default implementation returns <a href="../standardmbean/#getDescription-javax.management.MBeanFeatureInfo-"><code>getDescription((MBeanFeatureInfo) info)</code></a>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - The default MBeanAttributeInfo derived by reflection.</dd> <dt>Returns:</dt> <dd>the description for the given MBeanAttributeInfo.</dd> </dl>    <h3 id="getDescription-javax.management.MBeanConstructorInfo-">getDescription</h3> <pre data-language="java">protected String getDescription(MBeanConstructorInfo info)</pre> <p>Customization hook: Get the description that will be used in the MBeanConstructorInfo returned by this MBean. <br> Subclasses may redefine this method in order to supply their custom description. The default implementation returns <a href="../standardmbean/#getDescription-javax.management.MBeanFeatureInfo-"><code>getDescription((MBeanFeatureInfo) info)</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - The default MBeanConstructorInfo derived by reflection.</dd> <dt>Returns:</dt> <dd>the description for the given MBeanConstructorInfo.</dd> </dl>    <h3 id="getDescription-javax.management.MBeanConstructorInfo-javax.management.MBeanParameterInfo-int-">getDescription</h3> <pre data-language="java">protected String getDescription(MBeanConstructorInfo ctor,
+                                MBeanParameterInfo param,
+                                int sequence)</pre> <p>Customization hook: Get the description that will be used for the <var>sequence</var> MBeanParameterInfo of the MBeanConstructorInfo returned by this MBean. <br> Subclasses may redefine this method in order to supply their custom description. The default implementation returns <a href="../mbeanfeatureinfo/#getDescription--"><code>param.getDescription()</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>ctor</code> - The default MBeanConstructorInfo derived by reflection.</dd> <dd>
+<code>param</code> - The default MBeanParameterInfo derived by reflection.</dd> <dd>
+<code>sequence</code> - The sequence number of the parameter considered ("0" for the first parameter, "1" for the second parameter, etc...).</dd> <dt>Returns:</dt> <dd>the description for the given MBeanParameterInfo.</dd> </dl>    <h3 id="getParameterName-javax.management.MBeanConstructorInfo-javax.management.MBeanParameterInfo-int-">getParameterName</h3> <pre data-language="java">protected String getParameterName(MBeanConstructorInfo ctor,
+                                  MBeanParameterInfo param,
+                                  int sequence)</pre> <p>Customization hook: Get the name that will be used for the <var>sequence</var> MBeanParameterInfo of the MBeanConstructorInfo returned by this MBean. <br> Subclasses may redefine this method in order to supply their custom parameter name. The default implementation returns <a href="../mbeanfeatureinfo/#getName--"><code>param.getName()</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>ctor</code> - The default MBeanConstructorInfo derived by reflection.</dd> <dd>
+<code>param</code> - The default MBeanParameterInfo derived by reflection.</dd> <dd>
+<code>sequence</code> - The sequence number of the parameter considered ("0" for the first parameter, "1" for the second parameter, etc...).</dd> <dt>Returns:</dt> <dd>the name for the given MBeanParameterInfo.</dd> </dl>    <h3 id="getDescription-javax.management.MBeanOperationInfo-">getDescription</h3> <pre data-language="java">protected String getDescription(MBeanOperationInfo info)</pre> <p>Customization hook: Get the description that will be used in the MBeanOperationInfo returned by this MBean. <br> Subclasses may redefine this method in order to supply their custom description. The default implementation returns <a href="../standardmbean/#getDescription-javax.management.MBeanFeatureInfo-"><code>getDescription((MBeanFeatureInfo) info)</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - The default MBeanOperationInfo derived by reflection.</dd> <dt>Returns:</dt> <dd>the description for the given MBeanOperationInfo.</dd> </dl>    <h3 id="getImpact-javax.management.MBeanOperationInfo-">getImpact</h3> <pre data-language="java">protected int getImpact(MBeanOperationInfo info)</pre> <p>Customization hook: Get the <var>impact</var> flag of the operation that will be used in the MBeanOperationInfo returned by this MBean. <br> Subclasses may redefine this method in order to supply their custom impact flag. The default implementation returns <a href="../mbeanoperationinfo/#getImpact--"><code>info.getImpact()</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - The default MBeanOperationInfo derived by reflection.</dd> <dt>Returns:</dt> <dd>the impact flag for the given MBeanOperationInfo.</dd> </dl>    <h3 id="getParameterName-javax.management.MBeanOperationInfo-javax.management.MBeanParameterInfo-int-">getParameterName</h3> <pre data-language="java">protected String getParameterName(MBeanOperationInfo op,
+                                  MBeanParameterInfo param,
+                                  int sequence)</pre> <p>Customization hook: Get the name that will be used for the <var>sequence</var> MBeanParameterInfo of the MBeanOperationInfo returned by this MBean. <br> Subclasses may redefine this method in order to supply their custom parameter name. The default implementation returns <a href="../mbeanfeatureinfo/#getName--"><code>param.getName()</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>op</code> - The default MBeanOperationInfo derived by reflection.</dd> <dd>
+<code>param</code> - The default MBeanParameterInfo derived by reflection.</dd> <dd>
+<code>sequence</code> - The sequence number of the parameter considered ("0" for the first parameter, "1" for the second parameter, etc...).</dd> <dt>Returns:</dt> <dd>the name to use for the given MBeanParameterInfo.</dd> </dl>    <h3 id="getDescription-javax.management.MBeanOperationInfo-javax.management.MBeanParameterInfo-int-">getDescription</h3> <pre data-language="java">protected String getDescription(MBeanOperationInfo op,
+                                MBeanParameterInfo param,
+                                int sequence)</pre> <p>Customization hook: Get the description that will be used for the <var>sequence</var> MBeanParameterInfo of the MBeanOperationInfo returned by this MBean. <br> Subclasses may redefine this method in order to supply their custom description. The default implementation returns <a href="../mbeanfeatureinfo/#getDescription--"><code>param.getDescription()</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>op</code> - The default MBeanOperationInfo derived by reflection.</dd> <dd>
+<code>param</code> - The default MBeanParameterInfo derived by reflection.</dd> <dd>
+<code>sequence</code> - The sequence number of the parameter considered ("0" for the first parameter, "1" for the second parameter, etc...).</dd> <dt>Returns:</dt> <dd>the description for the given MBeanParameterInfo.</dd> </dl>    <h3 id="getConstructors-javax.management.MBeanConstructorInfo:A-java.lang.Object-">getConstructors</h3> <pre data-language="java">protected MBeanConstructorInfo[] getConstructors(MBeanConstructorInfo[] ctors,
+                                                 Object impl)</pre> <p>Customization hook: Get the MBeanConstructorInfo[] that will be used in the MBeanInfo returned by this MBean. <br> By default, this method returns <code>null</code> if the wrapped implementation is not <var>this</var>. Indeed, if the wrapped implementation is not this object itself, it will not be possible to recreate a wrapped implementation by calling the implementation constructors through <code>MBeanServer.createMBean(...)</code>.<br> Otherwise, if the wrapped implementation is <var>this</var>, <var>ctors</var> is returned. <br> Subclasses may redefine this method in order to modify this behavior, if needed.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>ctors</code> - The default MBeanConstructorInfo[] derived by reflection.</dd> <dd>
+<code>impl</code> - The wrapped implementation. If <code>null</code> is passed, the wrapped implementation is ignored and <var>ctors</var> is returned.</dd> <dt>Returns:</dt> <dd>the MBeanConstructorInfo[] for the new MBeanInfo.</dd> </dl>    <h3 id="getCachedMBeanInfo--">getCachedMBeanInfo</h3> <pre data-language="java">protected MBeanInfo getCachedMBeanInfo()</pre> <div>
+<p>Customization hook: Return the MBeanInfo cached for this object. </p>
+<p>Subclasses may redefine this method in order to implement their own caching policy. The default implementation stores one <a href="../mbeaninfo/"><code>MBeanInfo</code></a> object per instance.</p>
+</div> <dl> <dt>Returns:</dt> <dd>The cached MBeanInfo, or null if no MBeanInfo is cached.</dd> <dt>See Also:</dt> <dd><a href="../standardmbean/#cacheMBeanInfo-javax.management.MBeanInfo-"><code>cacheMBeanInfo(MBeanInfo)</code></a></dd> </dl>    <h3 id="cacheMBeanInfo-javax.management.MBeanInfo-">cacheMBeanInfo</h3> <pre data-language="java">protected void cacheMBeanInfo(MBeanInfo info)</pre> <div>
+<p>Customization hook: cache the MBeanInfo built for this object. </p>
+<p>Subclasses may redefine this method in order to implement their own caching policy. The default implementation stores <code>info</code> in this instance. A subclass can define other policies, such as not saving <code>info</code> (so it is reconstructed every time <a href="../standardmbean/#getMBeanInfo--"><code>getMBeanInfo()</code></a> is called) or sharing a unique <a href="../mbeaninfo/"><code>MBeanInfo</code></a> object when several <code>StandardMBean</code> instances have equal <a href="../mbeaninfo/"><code>MBeanInfo</code></a> values.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - the new <code>MBeanInfo</code> to cache. Any previously cached value is discarded. This parameter may be null, in which case there is no new cached value.</dd> </dl>    <h3 id="preRegister-javax.management.MBeanServer-javax.management.ObjectName-">preRegister</h3> <pre data-language="java">public ObjectName preRegister(MBeanServer server,
+                              ObjectName name)
+                       throws Exception</pre> <div>
+
+<p>Allows the MBean to perform any operations it needs before being registered in the MBean server. If the name of the MBean is not specified, the MBean can provide a name for its registration. If any exception is raised, the MBean will not be registered in the MBean server.</p> <p>The default implementation of this method returns the <code>name</code> parameter. It does nothing else for Standard MBeans. For MXBeans, it records the <code>MBeanServer</code> and <code>ObjectName</code> parameters so they can be used to translate inter-MXBean references.</p> <p>It is good practice for a subclass that overrides this method to call the overridden method via <code>super.preRegister(...)</code>. This is necessary if this object is an MXBean that is referenced by attributes or operations in other MXBeans.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../mbeanregistration/#preRegister-javax.management.MBeanServer-javax.management.ObjectName-">preRegister</a></code> in interface <code><a href="../mbeanregistration/">MBeanRegistration</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>server</code> - The MBean server in which the MBean will be registered.</dd> <dd>
+<code>name</code> - The object name of the MBean. This name is null if the name parameter to one of the <code>createMBean</code> or <code>registerMBean</code> methods in the <a href="../mbeanserver/"><code>MBeanServer</code></a> interface is null. In that case, this method must return a non-null ObjectName for the new MBean.</dd> <dt>Returns:</dt> <dd>The name under which the MBean is to be registered. This value must not be null. If the <code>name</code> parameter is not null, it will usually but not necessarily be the returned value.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if this is an MXBean and <code>name</code> is null.</dd> <dd>
+<code><a href="../instancealreadyexistsexception/">InstanceAlreadyExistsException</a></code> - if this is an MXBean and it has already been registered under another name (in this MBean Server or another).</dd> <dd>
+<code><a href="../../../java/lang/exception/">Exception</a></code> - no other checked exceptions are thrown by this method but <code>Exception</code> is declared so that subclasses can override the method and throw their own exceptions.</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="postRegister-java.lang.Boolean-">postRegister</h3> <pre data-language="java">public void postRegister(Boolean registrationDone)</pre> <div>
+
+<p>Allows the MBean to perform any operations needed after having been registered in the MBean server or after the registration has failed.</p> <p>The default implementation of this method does nothing for Standard MBeans. For MXBeans, it undoes any work done by <a href="../standardmbean/#preRegister-javax.management.MBeanServer-javax.management.ObjectName-"><code>preRegister</code></a> if registration fails.</p> <p>It is good practice for a subclass that overrides this method to call the overridden method via <code>super.postRegister(...)</code>. This is necessary if this object is an MXBean that is referenced by attributes or operations in other MXBeans.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../mbeanregistration/#postRegister-java.lang.Boolean-">postRegister</a></code> in interface <code><a href="../mbeanregistration/">MBeanRegistration</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>registrationDone</code> - Indicates whether or not the MBean has been successfully registered in the MBean server. The value false means that the registration phase has failed.</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="preDeregister--">preDeregister</h3> <pre data-language="java">public void preDeregister()
+                   throws Exception</pre> <div>
+
+<p>Allows the MBean to perform any operations it needs before being unregistered by the MBean server.</p> <p>The default implementation of this method does nothing.</p> <p>It is good practice for a subclass that overrides this method to call the overridden method via <code>super.preDeregister(...)</code>.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../mbeanregistration/#preDeregister--">preDeregister</a></code> in interface <code><a href="../mbeanregistration/">MBeanRegistration</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../java/lang/exception/">Exception</a></code> - no checked exceptions are throw by this method but <code>Exception</code> is declared so that subclasses can override this method and throw their own exceptions.</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>    <h3 id="postDeregister--">postDeregister</h3> <pre data-language="java">public void postDeregister()</pre> <div>
+
+<p>Allows the MBean to perform any operations needed after having been unregistered in the MBean server.</p> <p>The default implementation of this method does nothing for Standard MBeans. For MXBeans, it removes any information that was recorded by the <a href="../standardmbean/#preRegister-javax.management.MBeanServer-javax.management.ObjectName-"><code>preRegister</code></a> method.</p> <p>It is good practice for a subclass that overrides this method to call the overridden method via <code>super.postRegister(...)</code>. This is necessary if this object is an MXBean that is referenced by attributes or operations in other MXBeans.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../mbeanregistration/#postDeregister--">postDeregister</a></code> in interface <code><a href="../mbeanregistration/">MBeanRegistration</a></code>
+</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

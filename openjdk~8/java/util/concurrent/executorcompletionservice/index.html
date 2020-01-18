@@ -1,0 +1,199 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ExecutorCompletionService - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A CompletionService that uses a supplied Executor to execute tasks. This class arranges that submitted tasks are, upon completion, placed on a queue &hellip;">
+  <meta name="keywords" content="class, executorcompletionservice, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/concurrent/executorcompletionservice/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class ExecutorCompletionService&lt;V&gt;</h1>   <ul class="inheritance"> <li><a href="../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.util.concurrent.ExecutorCompletionService&lt;V&gt;</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../completionservice/">CompletionService</a>&lt;V&gt;</dd> </dl>   <pre data-language="java">public class ExecutorCompletionService&lt;V&gt;
+extends Object
+implements CompletionService&lt;V&gt;</pre> <div>
+<p>A <a href="../completionservice/"><code>CompletionService</code></a> that uses a supplied <a href="../executor/"><code>Executor</code></a> to execute tasks. This class arranges that submitted tasks are, upon completion, placed on a queue accessible using <code>take</code>. The class is lightweight enough to be suitable for transient use when processing groups of tasks. </p>
+<p> <b>Usage Examples.</b> Suppose you have a set of solvers for a certain problem, each returning a value of some type <code>Result</code>, and would like to run them concurrently, processing the results of each of them that return a non-null value, in some method <code>use(Result r)</code>. You could write this as: </p>
+<pre data-language="java">void solve(Executor e,
+            Collection&lt;Callable&lt;Result&gt;&gt; solvers)
+     throws InterruptedException, ExecutionException {
+     CompletionService&lt;Result&gt; ecs
+         = new ExecutorCompletionService&lt;Result&gt;(e);
+     for (Callable&lt;Result&gt; s : solvers)
+         ecs.submit(s);
+     int n = solvers.size();
+     for (int i = 0; i &lt; n; ++i) {
+         Result r = ecs.take().get();
+         if (r != null)
+             use(r);
+     }
+ }</pre> Suppose instead that you would like to use the first non-null result of the set of tasks, ignoring any that encounter exceptions, and cancelling all other tasks when the first one is ready: <pre data-language="java">void solve(Executor e,
+            Collection&lt;Callable&lt;Result&gt;&gt; solvers)
+     throws InterruptedException {
+     CompletionService&lt;Result&gt; ecs
+         = new ExecutorCompletionService&lt;Result&gt;(e);
+     int n = solvers.size();
+     List&lt;Future&lt;Result&gt;&gt; futures
+         = new ArrayList&lt;Future&lt;Result&gt;&gt;(n);
+     Result result = null;
+     try {
+         for (Callable&lt;Result&gt; s : solvers)
+             futures.add(ecs.submit(s));
+         for (int i = 0; i &lt; n; ++i) {
+             try {
+                 Result r = ecs.take().get();
+                 if (r != null) {
+                     result = r;
+                     break;
+                 }
+             } catch (ExecutionException ignore) {}
+         }
+     }
+     finally {
+         for (Future&lt;Result&gt; f : futures)
+             f.cancel(true);
+     }
+
+     if (result != null)
+         use(result);
+ }</pre>
+</div>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="ExecutorCompletionService-java.util.concurrent.Executor-">ExecutorCompletionService</h3> <pre data-language="java">public ExecutorCompletionService(Executor executor)</pre> <p>Creates an ExecutorCompletionService using the supplied executor for base task execution and a <a href="../linkedblockingqueue/"><code>LinkedBlockingQueue</code></a> as a completion queue.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>executor</code> - the executor to use</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if executor is <code>null</code>
+</dd> </dl>    <h3 id="ExecutorCompletionService-java.util.concurrent.Executor-java.util.concurrent.BlockingQueue-">ExecutorCompletionService</h3> <pre data-language="java">public ExecutorCompletionService(Executor executor,
+                                 BlockingQueue&lt;Future&lt;V&gt;&gt; completionQueue)</pre> <p>Creates an ExecutorCompletionService using the supplied executor for base task execution and the supplied queue as its completion queue.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>executor</code> - the executor to use</dd> <dd>
+<code>completionQueue</code> - the queue to use as the completion queue normally one dedicated for use by this service. This queue is treated as unbounded -- failed attempted <code>Queue.add</code> operations for completed tasks cause them not to be retrievable.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if executor or completionQueue are <code>null</code>
+</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="submit-java.util.concurrent.Callable-">submit</h3> <pre data-language="java">public Future&lt;V&gt; submit(Callable&lt;V&gt; task)</pre> <p>Description copied from interface: <code><a href="../completionservice/#submit-java.util.concurrent.Callable-">CompletionService</a></code></p> <p>Submits a value-returning task for execution and returns a Future representing the pending results of the task. Upon completion, this task may be taken or polled.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionservice/#submit-java.util.concurrent.Callable-">submit</a></code> in interface <code><a href="../completionservice/">CompletionService</a>&lt;<a href="../executorcompletionservice/">V</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>task</code> - the task to submit</dd> <dt>Returns:</dt> <dd>a Future representing pending completion of the task</dd> </dl>    <h3 id="submit-java.lang.Runnable-V-">submit</h3> <pre data-language="java">public Future&lt;V&gt; submit(Runnable task,
+                        V result)</pre> <p>Description copied from interface: <code><a href="../completionservice/#submit-java.lang.Runnable-V-">CompletionService</a></code></p> <p>Submits a Runnable task for execution and returns a Future representing that task. Upon completion, this task may be taken or polled.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionservice/#submit-java.lang.Runnable-V-">submit</a></code> in interface <code><a href="../completionservice/">CompletionService</a>&lt;<a href="../executorcompletionservice/">V</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>task</code> - the task to submit</dd> <dd>
+<code>result</code> - the result to return upon successful completion</dd> <dt>Returns:</dt> <dd>a Future representing pending completion of the task, and whose <code>get()</code> method will return the given result value upon completion</dd> </dl>    <h3 id="take--">take</h3> <pre data-language="java">public Future&lt;V&gt; take()
+               throws InterruptedException</pre> <p>Description copied from interface: <code><a href="../completionservice/#take--">CompletionService</a></code></p> <p>Retrieves and removes the Future representing the next completed task, waiting if none are yet present.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionservice/#take--">take</a></code> in interface <code><a href="../completionservice/">CompletionService</a>&lt;<a href="../executorcompletionservice/">V</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>the Future representing the next completed task</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting</dd> </dl>    <h3 id="poll--">poll</h3> <pre data-language="java">public Future&lt;V&gt; poll()</pre> <p>Description copied from interface: <code><a href="../completionservice/#poll--">CompletionService</a></code></p> <p>Retrieves and removes the Future representing the next completed task, or <code>null</code> if none are present.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionservice/#poll--">poll</a></code> in interface <code><a href="../completionservice/">CompletionService</a>&lt;<a href="../executorcompletionservice/">V</a>&gt;</code>
+</dd> <dt>Returns:</dt> <dd>the Future representing the next completed task, or <code>null</code> if none are present</dd> </dl>    <h3 id="poll-long-java.util.concurrent.TimeUnit-">poll</h3> <pre data-language="java">public Future&lt;V&gt; poll(long timeout,
+                      TimeUnit unit)
+               throws InterruptedException</pre> <p>Description copied from interface: <code><a href="../completionservice/#poll-long-java.util.concurrent.TimeUnit-">CompletionService</a></code></p> <p>Retrieves and removes the Future representing the next completed task, waiting if necessary up to the specified wait time if none are yet present.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../completionservice/#poll-long-java.util.concurrent.TimeUnit-">poll</a></code> in interface <code><a href="../completionservice/">CompletionService</a>&lt;<a href="../executorcompletionservice/">V</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>timeout</code> - how long to wait before giving up, in units of <code>unit</code>
+</dd> <dd>
+<code>unit</code> - a <code>TimeUnit</code> determining how to interpret the <code>timeout</code> parameter</dd> <dt>Returns:</dt> <dd>the Future representing the next completed task or <code>null</code> if the specified waiting time elapses before one is present</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../lang/interruptedexception/">InterruptedException</a></code> - if interrupted while waiting</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

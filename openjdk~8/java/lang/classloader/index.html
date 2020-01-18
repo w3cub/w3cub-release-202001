@@ -1,0 +1,346 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ClassLoader - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A class loader is an object that is responsible for loading classes. The class ClassLoader is an abstract class. Given the binary name of a class, a &hellip;">
+  <meta name="keywords" content="class, classloader, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/lang/classloader/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class ClassLoader</h1>   <ul class="inheritance"> <li><a href="../object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.lang.ClassLoader</li> </ul> </li> </ul>   <dl> <dt>Direct Known Subclasses:</dt> <dd><a href="../../security/secureclassloader/">SecureClassLoader</a></dd> </dl>   <pre data-language="java">public abstract class ClassLoader
+extends Object</pre> <div>
+<p>A class loader is an object that is responsible for loading classes. The class <code>ClassLoader</code> is an abstract class. Given the <a href="#name">binary name</a> of a class, a class loader should attempt to locate or generate data that constitutes a definition for the class. A typical strategy is to transform the name into a file name and then read a "class file" of that name from a file system. </p>
+<p> Every <a href="../class/"><code><code>Class</code></code></a> object contains a <a href="../class/#getClassLoader--"><code>reference</code></a> to the <code>ClassLoader</code> that defined it. </p>
+<p> <code>Class</code> objects for array classes are not created by class loaders, but are created automatically as required by the Java runtime. The class loader for an array class, as returned by <a href="../class/#getClassLoader--"><code>Class.getClassLoader()</code></a> is the same as the class loader for its element type; if the element type is a primitive type, then the array class has no class loader. </p>
+<p> Applications implement subclasses of <code>ClassLoader</code> in order to extend the manner in which the Java virtual machine dynamically loads classes. </p>
+<p> Class loaders may typically be used by security managers to indicate security domains. </p>
+<p> The <code>ClassLoader</code> class uses a delegation model to search for classes and resources. Each instance of <code>ClassLoader</code> has an associated parent class loader. When requested to find a class or resource, a <code>ClassLoader</code> instance will delegate the search for the class or resource to its parent class loader before attempting to find the class or resource itself. The virtual machine's built-in class loader, called the "bootstrap class loader", does not itself have a parent but may serve as the parent of a <code>ClassLoader</code> instance. </p>
+<p> Class loaders that support concurrent loading of classes are known as <em>parallel capable</em> class loaders and are required to register themselves at their class initialization time by invoking the <a href="../classloader/#registerAsParallelCapable--"><code><code>ClassLoader.registerAsParallelCapable</code></code></a> method. Note that the <code>ClassLoader</code> class is registered as parallel capable by default. However, its subclasses still need to register themselves if they are parallel capable. <br> In environments in which the delegation model is not strictly hierarchical, class loaders need to be parallel capable, otherwise class loading can lead to deadlocks because the loader lock is held for the duration of the class loading process (see <a href="../classloader/#loadClass-java.lang.String-"><code><code>loadClass</code></code></a> methods). </p>
+<p> Normally, the Java virtual machine loads classes from the local file system in a platform-dependent manner. For example, on UNIX systems, the virtual machine loads classes from the directory defined by the <code>CLASSPATH</code> environment variable. </p>
+<p> However, some classes may not originate from a file; they may originate from other sources, such as the network, or they could be constructed by an application. The method <a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-"><code><code>defineClass</code></code></a> converts an array of bytes into an instance of class <code>Class</code>. Instances of this newly defined class can be created using <a href="../class/#newInstance--"><code><code>Class.newInstance</code></code></a>. </p>
+<p> The methods and constructors of objects created by a class loader may reference other classes. To determine the class(es) referred to, the Java virtual machine invokes the <a href="../classloader/#loadClass-java.lang.String-"><code><code>loadClass</code></code></a> method of the class loader that originally created the class. </p>
+<p> For example, an application could create a network class loader to download class files from a server. Sample code might look like: </p>
+<pre data-language="java">ClassLoader loader = new NetworkClassLoader(host, port);
+Object main = loader.loadClass("Main", true).newInstance();
+     . . .</pre> <p> The network class loader subclass must define the methods <a href="../classloader/#findClass-java.lang.String-"><code><code>findClass</code></code></a> and <code>loadClassData</code> to load a class from the network. Once it has downloaded the bytes that make up the class, it should use the method <a href="../classloader/#defineClass-byte:A-int-int-"><code><code>defineClass</code></code></a> to create a class instance. A sample implementation is: </p>
+<pre data-language="java">class NetworkClassLoader extends ClassLoader {
+    String host;
+    int port;
+
+    public Class findClass(String name) {
+        byte[] b = loadClassData(name);
+        return defineClass(name, b, 0, b.length);
+    }
+
+    private byte[] loadClassData(String name) {
+        // load the class data from the connection
+         . . .
+    }
+}</pre> <h2> <a name="name">Binary names</a> </h2> <p> Any class name provided as a <a href="../string/"><code>String</code></a> parameter to methods in <code>ClassLoader</code> must be a binary name as defined by <cite>The Java™ Language Specification</cite>. </p>
+<p> Examples of valid class names include: </p>
+<pre data-language="java">"java.lang.String"
+"javax.swing.JSpinner$DefaultEditor"
+"java.security.KeyStore$Builder$FileBuilder$1"
+"java.net.URLClassLoader$3$1"</pre>
+</div> <dl> <dt>Since:</dt> <dd>1.0</dd> <dt>See Also:</dt> <dd><a href="../classloader/#resolveClass-java.lang.Class-"><code>resolveClass(Class)</code></a></dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="ClassLoader-java.lang.ClassLoader-">ClassLoader</h3> <pre data-language="java">protected ClassLoader(ClassLoader parent)</pre> <div>
+<p>Creates a new class loader using the specified parent class loader for delegation. </p>
+<p> If there is a security manager, its <a href="../securitymanager/#checkCreateClassLoader--"><code><code>checkCreateClassLoader</code></code></a> method is invoked. This may result in a security exception. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>parent</code> - The parent class loader</dd> <dt>Throws:</dt> <dd>
+<code><a href="../securityexception/">SecurityException</a></code> - If a security manager exists and its <code>checkCreateClassLoader</code> method doesn't allow creation of a new class loader.</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="ClassLoader--">ClassLoader</h3> <pre data-language="java">protected ClassLoader()</pre> <div>
+<p>Creates a new class loader using the <code>ClassLoader</code> returned by the method <a href="../classloader/#getSystemClassLoader--"><code><code>getSystemClassLoader()</code></code></a> as the parent class loader. </p>
+<p> If there is a security manager, its <a href="../securitymanager/#checkCreateClassLoader--"><code><code>checkCreateClassLoader</code></code></a> method is invoked. This may result in a security exception. </p>
+</div> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../securityexception/">SecurityException</a></code> - If a security manager exists and its <code>checkCreateClassLoader</code> method doesn't allow creation of a new class loader.</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="loadClass-java.lang.String-">loadClass</h3> <pre data-language="java">public Class&lt;?&gt; loadClass(String name)
+                   throws ClassNotFoundException</pre> <p>Loads the class with the specified <a href="#name">binary name</a>. This method searches for classes in the same manner as the <a href="../classloader/#loadClass-java.lang.String-boolean-"><code>loadClass(String, boolean)</code></a> method. It is invoked by the Java virtual machine to resolve class references. Invoking this method is equivalent to invoking <a href="../classloader/#loadClass-java.lang.String-boolean-"><code><code>loadClass(name,
+ false)</code></code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The <a href="#name">binary name</a> of the class</dd> <dt>Returns:</dt> <dd>The resulting <code>Class</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../classnotfoundexception/">ClassNotFoundException</a></code> - If the class was not found</dd> </dl>    <h3 id="loadClass-java.lang.String-boolean-">loadClass</h3> <pre data-language="java">protected Class&lt;?&gt; loadClass(String name,
+                             boolean resolve)
+                      throws ClassNotFoundException</pre> <div>
+<p>Loads the class with the specified <a href="#name">binary name</a>. The default implementation of this method searches for classes in the following order: </p>
+<ol> <li><p> Invoke <a href="../classloader/#findLoadedClass-java.lang.String-"><code>findLoadedClass(String)</code></a> to check if the class has already been loaded. </p></li> <li><p> Invoke the <a href="../classloader/#loadClass-java.lang.String-"><code><code>loadClass</code></code></a> method on the parent class loader. If the parent is <code>null</code> the class loader built-in to the virtual machine is used, instead. </p></li> <li><p> Invoke the <a href="../classloader/#findClass-java.lang.String-"><code>findClass(String)</code></a> method to find the class. </p></li> </ol> 
+<p> If the class was found using the above steps, and the <code>resolve</code> flag is true, this method will then invoke the <a href="../classloader/#resolveClass-java.lang.Class-"><code>resolveClass(Class)</code></a> method on the resulting <code>Class</code> object. </p>
+<p> Subclasses of <code>ClassLoader</code> are encouraged to override <a href="../classloader/#findClass-java.lang.String-"><code>findClass(String)</code></a>, rather than this method. </p> <p> Unless overridden, this method synchronizes on the result of <a href="../classloader/#getClassLoadingLock-java.lang.String-"><code><code>getClassLoadingLock</code></code></a> method during the entire class loading process.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The <a href="#name">binary name</a> of the class</dd> <dd>
+<code>resolve</code> - If <code>true</code> then resolve the class</dd> <dt>Returns:</dt> <dd>The resulting <code>Class</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../classnotfoundexception/">ClassNotFoundException</a></code> - If the class could not be found</dd> </dl>    <h3 id="getClassLoadingLock-java.lang.String-">getClassLoadingLock</h3> <pre data-language="java">protected Object getClassLoadingLock(String className)</pre> <p>Returns the lock object for class loading operations. For backward compatibility, the default implementation of this method behaves as follows. If this ClassLoader object is registered as parallel capable, the method returns a dedicated object associated with the specified class name. Otherwise, the method returns this ClassLoader object.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>className</code> - The name of the to-be-loaded class</dd> <dt>Returns:</dt> <dd>the lock for class loading operations</dd> <dt>Throws:</dt> <dd>
+<code><a href="../nullpointerexception/">NullPointerException</a></code> - If registered as parallel capable and <code>className</code> is null</dd> <dt>Since:</dt> <dd>1.7</dd> <dt>See Also:</dt> <dd><a href="../classloader/#loadClass-java.lang.String-boolean-"><code>loadClass(String, boolean)</code></a></dd> </dl>    <h3 id="findClass-java.lang.String-">findClass</h3> <pre data-language="java">protected Class&lt;?&gt; findClass(String name)
+                      throws ClassNotFoundException</pre> <p>Finds the class with the specified <a href="#name">binary name</a>. This method should be overridden by class loader implementations that follow the delegation model for loading classes, and will be invoked by the <a href="../classloader/#loadClass-java.lang.String-"><code><code>loadClass</code></code></a> method after checking the parent class loader for the requested class. The default implementation throws a <code>ClassNotFoundException</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The <a href="#name">binary name</a> of the class</dd> <dt>Returns:</dt> <dd>The resulting <code>Class</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../classnotfoundexception/">ClassNotFoundException</a></code> - If the class could not be found</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="defineClass-byte:A-int-int-">defineClass</h3> <pre data-language="java">@Deprecated
+protected final Class&lt;?&gt; defineClass(byte[] b,
+                                                 int off,
+                                                 int len)
+                                          throws ClassFormatError</pre> <p><strong>Deprecated.</strong> Replaced by <a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-"><code>defineClass(String, byte[], int, int)</code></a></p> <p>Converts an array of bytes into an instance of class <code>Class</code>. Before the <code>Class</code> can be used it must be resolved. This method is deprecated in favor of the version that takes a <a href="#name">binary name</a> as its first argument, and is more secure.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>b</code> - The bytes that make up the class data. The bytes in positions <code>off</code> through <code>off+len-1</code> should have the format of a valid class file as defined by <cite>The Java™ Virtual Machine Specification</cite>.</dd> <dd>
+<code>off</code> - The start offset in <code>b</code> of the class data</dd> <dd>
+<code>len</code> - The length of the class data</dd> <dt>Returns:</dt> <dd>The <code>Class</code> object that was created from the specified class data</dd> <dt>Throws:</dt> <dd>
+<code><a href="../classformaterror/">ClassFormatError</a></code> - If the data did not contain a valid class</dd> <dd>
+<code><a href="../indexoutofboundsexception/">IndexOutOfBoundsException</a></code> - If either <code>off</code> or <code>len</code> is negative, or if <code>off+len</code> is greater than <code>b.length</code>.</dd> <dd>
+<code><a href="../securityexception/">SecurityException</a></code> - If an attempt is made to add this class to a package that contains classes that were signed by a different set of certificates than this class, or if an attempt is made to define a class in a package with a fully-qualified name that starts with "<code>java.</code>".</dd> <dt>See Also:</dt> <dd>
+<a href="../classloader/#loadClass-java.lang.String-boolean-"><code>loadClass(String, boolean)</code></a>, <a href="../classloader/#resolveClass-java.lang.Class-"><code>resolveClass(Class)</code></a>
+</dd> </dl>    <h3 id="defineClass-java.lang.String-byte:A-int-int-">defineClass</h3> <pre data-language="java">protected final Class&lt;?&gt; defineClass(String name,
+                                     byte[] b,
+                                     int off,
+                                     int len)
+                              throws ClassFormatError</pre> <div>
+<p>Converts an array of bytes into an instance of class <code>Class</code>. Before the <code>Class</code> can be used it must be resolved. </p>
+<p> This method assigns a default <a href="../../security/protectiondomain/"><code><code>ProtectionDomain</code></code></a> to the newly defined class. The <code>ProtectionDomain</code> is effectively granted the same set of permissions returned when <a href="../../security/policy/#getPermissions-java.security.CodeSource-"><code><code>Policy.getPolicy().getPermissions(new CodeSource(null, null))</code></code></a> is invoked. The default domain is created on the first invocation of <a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-"><code><code>defineClass</code></code></a>, and re-used on subsequent invocations. </p>
+<p> To assign a specific <code>ProtectionDomain</code> to the class, use the <a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-java.security.ProtectionDomain-"><code><code>defineClass</code></code></a> method that takes a <code>ProtectionDomain</code> as one of its arguments. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The expected <a href="#name">binary name</a> of the class, or <code>null</code> if not known</dd> <dd>
+<code>b</code> - The bytes that make up the class data. The bytes in positions <code>off</code> through <code>off+len-1</code> should have the format of a valid class file as defined by <cite>The Java™ Virtual Machine Specification</cite>.</dd> <dd>
+<code>off</code> - The start offset in <code>b</code> of the class data</dd> <dd>
+<code>len</code> - The length of the class data</dd> <dt>Returns:</dt> <dd>The <code>Class</code> object that was created from the specified class data.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../classformaterror/">ClassFormatError</a></code> - If the data did not contain a valid class</dd> <dd>
+<code><a href="../indexoutofboundsexception/">IndexOutOfBoundsException</a></code> - If either <code>off</code> or <code>len</code> is negative, or if <code>off+len</code> is greater than <code>b.length</code>.</dd> <dd>
+<code><a href="../securityexception/">SecurityException</a></code> - If an attempt is made to add this class to a package that contains classes that were signed by a different set of certificates than this class (which is unsigned), or if <code>name</code> begins with "<code>java.</code>".</dd> <dt>Since:</dt> <dd>1.1</dd> <dt>See Also:</dt> <dd>
+<a href="../classloader/#loadClass-java.lang.String-boolean-"><code>loadClass(String, boolean)</code></a>, <a href="../classloader/#resolveClass-java.lang.Class-"><code>resolveClass(Class)</code></a>, <a href="../../security/codesource/"><code>CodeSource</code></a>, <a href="../../security/secureclassloader/"><code>SecureClassLoader</code></a>
+</dd> </dl>    <h3 id="defineClass-java.lang.String-byte:A-int-int-java.security.ProtectionDomain-">defineClass</h3> <pre data-language="java">protected final Class&lt;?&gt; defineClass(String name,
+                                     byte[] b,
+                                     int off,
+                                     int len,
+                                     ProtectionDomain protectionDomain)
+                              throws ClassFormatError</pre> <div>
+<p>Converts an array of bytes into an instance of class <code>Class</code>, with an optional <code>ProtectionDomain</code>. If the domain is <code>null</code>, then a default domain will be assigned to the class as specified in the documentation for <a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-"><code>defineClass(String, byte[],
+ int, int)</code></a>. Before the class can be used it must be resolved. </p>
+<p> The first class defined in a package determines the exact set of certificates that all subsequent classes defined in that package must contain. The set of certificates for a class is obtained from the <a href="../../security/codesource/"><code><code>CodeSource</code></code></a> within the <code>ProtectionDomain</code> of the class. Any classes added to that package must contain the same set of certificates or a <code>SecurityException</code> will be thrown. Note that if <code>name</code> is <code>null</code>, this check is not performed. You should always pass in the <a href="#name">binary name</a> of the class you are defining as well as the bytes. This ensures that the class you are defining is indeed the class you think it is. </p>
+<p> The specified <code>name</code> cannot begin with "<code>java.</code>", since all classes in the "<code>java.*</code> packages can only be defined by the bootstrap class loader. If <code>name</code> is not <code>null</code>, it must be equal to the <a href="#name">binary name</a> of the class specified by the byte array "<code>b</code>", otherwise a <a href="../noclassdeffounderror/"><code><code>NoClassDefFoundError</code></code></a> will be thrown. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The expected <a href="#name">binary name</a> of the class, or <code>null</code> if not known</dd> <dd>
+<code>b</code> - The bytes that make up the class data. The bytes in positions <code>off</code> through <code>off+len-1</code> should have the format of a valid class file as defined by <cite>The Java™ Virtual Machine Specification</cite>.</dd> <dd>
+<code>off</code> - The start offset in <code>b</code> of the class data</dd> <dd>
+<code>len</code> - The length of the class data</dd> <dd>
+<code>protectionDomain</code> - The ProtectionDomain of the class</dd> <dt>Returns:</dt> <dd>The <code>Class</code> object created from the data, and optional <code>ProtectionDomain</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../classformaterror/">ClassFormatError</a></code> - If the data did not contain a valid class</dd> <dd>
+<code><a href="../noclassdeffounderror/">NoClassDefFoundError</a></code> - If <code>name</code> is not equal to the <a href="#name">binary name</a> of the class specified by <code>b</code>
+</dd> <dd>
+<code><a href="../indexoutofboundsexception/">IndexOutOfBoundsException</a></code> - If either <code>off</code> or <code>len</code> is negative, or if <code>off+len</code> is greater than <code>b.length</code>.</dd> <dd>
+<code><a href="../securityexception/">SecurityException</a></code> - If an attempt is made to add this class to a package that contains classes that were signed by a different set of certificates than this class, or if <code>name</code> begins with "<code>java.</code>".</dd> </dl>    <h3 id="defineClass-java.lang.String-java.nio.ByteBuffer-java.security.ProtectionDomain-">defineClass</h3> <pre data-language="java">protected final Class&lt;?&gt; defineClass(String name,
+                                     ByteBuffer b,
+                                     ProtectionDomain protectionDomain)
+                              throws ClassFormatError</pre> <div>
+<p>Converts a <a href="../../nio/bytebuffer/"><code><code>ByteBuffer</code></code></a> into an instance of class <code>Class</code>, with an optional <code>ProtectionDomain</code>. If the domain is <code>null</code>, then a default domain will be assigned to the class as specified in the documentation for <a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-"><code>defineClass(String, byte[],
+ int, int)</code></a>. Before the class can be used it must be resolved. </p>
+<p>The rules about the first class defined in a package determining the set of certificates for the package, and the restrictions on class names are identical to those specified in the documentation for <a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-java.security.ProtectionDomain-"><code>defineClass(String, byte[], int, int, ProtectionDomain)</code></a>. </p>
+<p> An invocation of this method of the form <i>cl</i><code>.defineClass(</code><i>name</i><code>,</code> <i>bBuffer</i><code>,</code> <i>pd</i><code>)</code> yields exactly the same result as the statements </p>
+<p> <code> ...<br> byte[] temp = new byte[bBuffer.<a href="../../nio/buffer/#remaining--"><code>remaining</code></a>()];<br> bBuffer.<a href="../../nio/bytebuffer/#get-byte:A-"><code>get</code></a>(temp);<br> return <a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-java.security.ProtectionDomain-"><code>cl.defineClass</code></a>(name, temp, 0, temp.length, pd);<br> </code></p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The expected <a href="#name">binary name</a>. of the class, or <code>null</code> if not known</dd> <dd>
+<code>b</code> - The bytes that make up the class data. The bytes from positions <code>b.position()</code> through <code>b.position() + b.limit() -1 </code> should have the format of a valid class file as defined by <cite>The Java™ Virtual Machine Specification</cite>.</dd> <dd>
+<code>protectionDomain</code> - The ProtectionDomain of the class, or <code>null</code>.</dd> <dt>Returns:</dt> <dd>The <code>Class</code> object created from the data, and optional <code>ProtectionDomain</code>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../classformaterror/">ClassFormatError</a></code> - If the data did not contain a valid class.</dd> <dd>
+<code><a href="../noclassdeffounderror/">NoClassDefFoundError</a></code> - If <code>name</code> is not equal to the <a href="#name">binary name</a> of the class specified by <code>b</code>
+</dd> <dd>
+<code><a href="../securityexception/">SecurityException</a></code> - If an attempt is made to add this class to a package that contains classes that were signed by a different set of certificates than this class, or if <code>name</code> begins with "<code>java.</code>".</dd> <dt>Since:</dt> <dd>1.5</dd> <dt>See Also:</dt> <dd><a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-java.security.ProtectionDomain-"><code>defineClass(String, byte[], int, int, ProtectionDomain)</code></a></dd> </dl>    <h3 id="resolveClass-java.lang.Class-">resolveClass</h3> <pre data-language="java">protected final void resolveClass(Class&lt;?&gt; c)</pre> <p>Links the specified class. This (misleadingly named) method may be used by a class loader to link a class. If the class <code>c</code> has already been linked, then this method simply returns. Otherwise, the class is linked as described in the "Execution" chapter of <cite>The Java™ Language Specification</cite>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>c</code> - The class to link</dd> <dt>Throws:</dt> <dd>
+<code><a href="../nullpointerexception/">NullPointerException</a></code> - If <code>c</code> is <code>null</code>.</dd> <dt>See Also:</dt> <dd><a href="../classloader/#defineClass-java.lang.String-byte:A-int-int-"><code>defineClass(String, byte[], int, int)</code></a></dd> </dl>    <h3 id="findSystemClass-java.lang.String-">findSystemClass</h3> <pre data-language="java">protected final Class&lt;?&gt; findSystemClass(String name)
+                                  throws ClassNotFoundException</pre> <div>
+<p>Finds a class with the specified <a href="#name">binary name</a>, loading it if necessary. </p>
+<p> This method loads the class through the system class loader (see <a href="../classloader/#getSystemClassLoader--"><code>getSystemClassLoader()</code></a>). The <code>Class</code> object returned might have more than one <code>ClassLoader</code> associated with it. Subclasses of <code>ClassLoader</code> need not usually invoke this method, because most class loaders need to override just <a href="../classloader/#findClass-java.lang.String-"><code>findClass(String)</code></a>. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The <a href="#name">binary name</a> of the class</dd> <dt>Returns:</dt> <dd>The <code>Class</code> object for the specified <code>name</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../classnotfoundexception/">ClassNotFoundException</a></code> - If the class could not be found</dd> <dt>See Also:</dt> <dd>
+<a href="../classloader/#ClassLoader-java.lang.ClassLoader-"><code>ClassLoader(ClassLoader)</code></a>, <a href="../classloader/#getParent--"><code>getParent()</code></a>
+</dd> </dl>    <h3 id="findLoadedClass-java.lang.String-">findLoadedClass</h3> <pre data-language="java">protected final Class&lt;?&gt; findLoadedClass(String name)</pre> <p>Returns the class with the given <a href="#name">binary name</a> if this loader has been recorded by the Java virtual machine as an initiating loader of a class with that <a href="#name">binary name</a>. Otherwise <code>null</code> is returned.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The <a href="#name">binary name</a> of the class</dd> <dt>Returns:</dt> <dd>The <code>Class</code> object, or <code>null</code> if the class has not been loaded</dd> <dt>Since:</dt> <dd>1.1</dd> </dl>    <h3 id="setSigners-java.lang.Class-java.lang.Object:A-">setSigners</h3> <pre data-language="java">protected final void setSigners(Class&lt;?&gt; c,
+                                Object[] signers)</pre> <p>Sets the signers of a class. This should be invoked after defining a class.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>c</code> - The <code>Class</code> object</dd> <dd>
+<code>signers</code> - The signers for the class</dd> <dt>Since:</dt> <dd>1.1</dd> </dl>    <h3 id="getResource-java.lang.String-">getResource</h3> <pre data-language="java">public URL getResource(String name)</pre> <div>
+<p>Finds the resource with the given name. A resource is some data (images, audio, text, etc) that can be accessed by class code in a way that is independent of the location of the code. </p>
+<p> The name of a resource is a '<code>/</code>'-separated path name that identifies the resource. </p>
+<p> This method will first search the parent class loader for the resource; if the parent is <code>null</code> the path of the class loader built-in to the virtual machine is searched. That failing, this method will invoke <a href="../classloader/#findResource-java.lang.String-"><code>findResource(String)</code></a> to find the resource. </p>
+</div> <dl> <dt>API Note:</dt> <dd>When overriding this method it is recommended that an implementation ensures that any delegation is consistent with the <a href="../classloader/#getResources-java.lang.String-"><code>getResources(String)</code></a> method.</dd> <dt>Parameters:</dt> <dd>
+<code>name</code> - The resource name</dd> <dt>Returns:</dt> <dd>A <code>URL</code> object for reading the resource, or <code>null</code> if the resource could not be found or the invoker doesn't have adequate privileges to get the resource.</dd> <dt>Since:</dt> <dd>1.1</dd> </dl>    <h3 id="getResources-java.lang.String-">getResources</h3> <pre data-language="java">public Enumeration&lt;URL&gt; getResources(String name)
+                              throws IOException</pre> <div>
+<p>Finds all the resources with the given name. A resource is some data (images, audio, text, etc) that can be accessed by class code in a way that is independent of the location of the code. </p>
+<p>The name of a resource is a <code>/</code>-separated path name that identifies the resource. </p>
+<p> The search order is described in the documentation for <a href="../classloader/#getResource-java.lang.String-"><code>getResource(String)</code></a>. </p>
+</div> <dl> <dt>API Note:</dt> <dd>When overriding this method it is recommended that an implementation ensures that any delegation is consistent with the <a href="../classloader/#getResource-java.lang.String-"><code>getResource(String)</code></a> method. This should ensure that the first element returned by the Enumeration's <code>nextElement</code> method is the same resource that the <code>getResource(String)</code> method would return.</dd> <dt>Parameters:</dt> <dd>
+<code>name</code> - The resource name</dd> <dt>Returns:</dt> <dd>An enumeration of <a href="../../net/url/"><code><code>URL</code></code></a> objects for the resource. If no resources could be found, the enumeration will be empty. Resources that the class loader doesn't have access to will not be in the enumeration.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - If I/O errors occur</dd> <dt>Since:</dt> <dd>1.2</dd> <dt>See Also:</dt> <dd><a href="../classloader/#findResources-java.lang.String-"><code>findResources(String)</code></a></dd> </dl>    <h3 id="findResource-java.lang.String-">findResource</h3> <pre data-language="java">protected URL findResource(String name)</pre> <p>Finds the resource with the given name. Class loader implementations should override this method to specify where to find resources.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The resource name</dd> <dt>Returns:</dt> <dd>A <code>URL</code> object for reading the resource, or <code>null</code> if the resource could not be found</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="findResources-java.lang.String-">findResources</h3> <pre data-language="java">protected Enumeration&lt;URL&gt; findResources(String name)
+                                  throws IOException</pre> <p>Returns an enumeration of <a href="../../net/url/"><code><code>URL</code></code></a> objects representing all the resources with the given name. Class loader implementations should override this method to specify where to load resources from.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The resource name</dd> <dt>Returns:</dt> <dd>An enumeration of <a href="../../net/url/"><code><code>URL</code></code></a> objects for the resources</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - If I/O errors occur</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="registerAsParallelCapable--">registerAsParallelCapable</h3> <pre data-language="java">protected static boolean registerAsParallelCapable()</pre> <div>
+<p>Registers the caller as parallel capable. The registration succeeds if and only if all of the following conditions are met: </p>
+<ol> <li> no instance of the caller has been created</li> <li> all of the super classes (except class Object) of the caller are registered as parallel capable</li> </ol> 
+<p>Note that once a class loader is registered as parallel capable, there is no way to change it back.</p>
+</div> <dl> <dt>Returns:</dt> <dd>true if the caller is successfully registered as parallel capable and false if otherwise.</dd> <dt>Since:</dt> <dd>1.7</dd> </dl>    <h3 id="getSystemResource-java.lang.String-">getSystemResource</h3> <pre data-language="java">public static URL getSystemResource(String name)</pre> <p>Find a resource of the specified name from the search path used to load classes. This method locates the resource through the system class loader (see <a href="../classloader/#getSystemClassLoader--"><code>getSystemClassLoader()</code></a>).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The resource name</dd> <dt>Returns:</dt> <dd>A <a href="../../net/url/"><code><code>URL</code></code></a> object for reading the resource, or <code>null</code> if the resource could not be found</dd> <dt>Since:</dt> <dd>1.1</dd> </dl>    <h3 id="getSystemResources-java.lang.String-">getSystemResources</h3> <pre data-language="java">public static Enumeration&lt;URL&gt; getSystemResources(String name)
+                                           throws IOException</pre> <div>
+<p>Finds all resources of the specified name from the search path used to load classes. The resources thus found are returned as an <a href="../../util/enumeration/"><code><code>Enumeration</code></code></a> of <a href="../../net/url/"><code><code>URL</code></code></a> objects. </p>
+<p> The search order is described in the documentation for <a href="../classloader/#getSystemResource-java.lang.String-"><code>getSystemResource(String)</code></a>. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The resource name</dd> <dt>Returns:</dt> <dd>An enumeration of resource <a href="../../net/url/"><code><code>URL</code></code></a> objects</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - If I/O errors occur</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="getResourceAsStream-java.lang.String-">getResourceAsStream</h3> <pre data-language="java">public InputStream getResourceAsStream(String name)</pre> <div>
+<p>Returns an input stream for reading the specified resource. </p>
+<p> The search order is described in the documentation for <a href="../classloader/#getResource-java.lang.String-"><code>getResource(String)</code></a>. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The resource name</dd> <dt>Returns:</dt> <dd>An input stream for reading the resource, or <code>null</code> if the resource could not be found</dd> <dt>Since:</dt> <dd>1.1</dd> </dl>    <h3 id="getSystemResourceAsStream-java.lang.String-">getSystemResourceAsStream</h3> <pre data-language="java">public static InputStream getSystemResourceAsStream(String name)</pre> <p>Open for reading, a resource of the specified name from the search path used to load classes. This method locates the resource through the system class loader (see <a href="../classloader/#getSystemClassLoader--"><code>getSystemClassLoader()</code></a>).</p> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The resource name</dd> <dt>Returns:</dt> <dd>An input stream for reading the resource, or <code>null</code> if the resource could not be found</dd> <dt>Since:</dt> <dd>1.1</dd> </dl>    <h3 id="getParent--">getParent</h3> <pre data-language="java">public final ClassLoader getParent()</pre> <div>
+<p>Returns the parent class loader for delegation. Some implementations may use <code>null</code> to represent the bootstrap class loader. This method will return <code>null</code> in such implementations if this class loader's parent is the bootstrap class loader. </p>
+<p> If a security manager is present, and the invoker's class loader is not <code>null</code> and is not an ancestor of this class loader, then this method invokes the security manager's <a href="../securitymanager/#checkPermission-java.security.Permission-"><code><code>checkPermission</code></code></a> method with a <a href="../runtimepermission/#RuntimePermission-java.lang.String-"><code><code>RuntimePermission("getClassLoader")</code></code></a> permission to verify access to the parent class loader is permitted. If not, a <code>SecurityException</code> will be thrown. </p>
+</div> <dl> <dt>Returns:</dt> <dd>The parent <code>ClassLoader</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../securityexception/">SecurityException</a></code> - If a security manager exists and its <code>checkPermission</code> method doesn't allow access to this class loader's parent class loader.</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="getSystemClassLoader--">getSystemClassLoader</h3> <pre data-language="java">public static ClassLoader getSystemClassLoader()</pre> <div>
+<p>Returns the system class loader for delegation. This is the default delegation parent for new <code>ClassLoader</code> instances, and is typically the class loader used to start the application. </p>
+<p> This method is first invoked early in the runtime's startup sequence, at which point it creates the system class loader and sets it as the context class loader of the invoking <code>Thread</code>. </p>
+<p> The default system class loader is an implementation-dependent instance of this class. </p>
+<p> If the system property "<code>java.system.class.loader</code>" is defined when this method is first invoked then the value of that property is taken to be the name of a class that will be returned as the system class loader. The class is loaded using the default system class loader and must define a public constructor that takes a single parameter of type <code>ClassLoader</code> which is used as the delegation parent. An instance is then created using this constructor with the default system class loader as the parameter. The resulting class loader is defined to be the system class loader. </p>
+<p> If a security manager is present, and the invoker's class loader is not <code>null</code> and the invoker's class loader is not the same as or an ancestor of the system class loader, then this method invokes the security manager's <a href="../securitymanager/#checkPermission-java.security.Permission-"><code><code>checkPermission</code></code></a> method with a <a href="../runtimepermission/#RuntimePermission-java.lang.String-"><code><code>RuntimePermission("getClassLoader")</code></code></a> permission to verify access to the system class loader. If not, a <code>SecurityException</code> will be thrown. </p>
+</div> <dl> <dt>Returns:</dt> <dd>The system <code>ClassLoader</code> for delegation, or <code>null</code> if none</dd> <dt>Throws:</dt> <dd>
+<code><a href="../securityexception/">SecurityException</a></code> - If a security manager exists and its <code>checkPermission</code> method doesn't allow access to the system class loader.</dd> <dd>
+<code><a href="../illegalstateexception/">IllegalStateException</a></code> - If invoked recursively during the construction of the class loader specified by the "<code>java.system.class.loader</code>" property.</dd> <dd>
+<code><a href="../error/">Error</a></code> - If the system property "<code>java.system.class.loader</code>" is defined but the named class could not be loaded, the provider class does not define the required constructor, or an exception is thrown by that constructor when it is invoked. The underlying cause of the error can be retrieved via the <a href="../throwable/#getCause--"><code>Throwable.getCause()</code></a> method.</dd> </dl>    <h3 id="definePackage-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.net.URL-">definePackage</h3> <pre data-language="java">protected Package definePackage(String name,
+                                String specTitle,
+                                String specVersion,
+                                String specVendor,
+                                String implTitle,
+                                String implVersion,
+                                String implVendor,
+                                URL sealBase)
+                         throws IllegalArgumentException</pre> <p>Defines a package by name in this <code>ClassLoader</code>. This allows class loaders to define the packages for their classes. Packages must be created before the class is defined, and package names must be unique within a class loader and cannot be redefined or changed once created.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The package name</dd> <dd>
+<code>specTitle</code> - The specification title</dd> <dd>
+<code>specVersion</code> - The specification version</dd> <dd>
+<code>specVendor</code> - The specification vendor</dd> <dd>
+<code>implTitle</code> - The implementation title</dd> <dd>
+<code>implVersion</code> - The implementation version</dd> <dd>
+<code>implVendor</code> - The implementation vendor</dd> <dd>
+<code>sealBase</code> - If not <code>null</code>, then this package is sealed with respect to the given code source <a href="../../net/url/"><code><code>URL</code></code></a> object. Otherwise, the package is not sealed.</dd> <dt>Returns:</dt> <dd>The newly defined <code>Package</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../illegalargumentexception/">IllegalArgumentException</a></code> - If package name duplicates an existing package either in this class loader or one of its ancestors</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="getPackage-java.lang.String-">getPackage</h3> <pre data-language="java">protected Package getPackage(String name)</pre> <p>Returns a <code>Package</code> that has been defined by this class loader or any of its ancestors.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - The package name</dd> <dt>Returns:</dt> <dd>The <code>Package</code> corresponding to the given name, or <code>null</code> if not found</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="getPackages--">getPackages</h3> <pre data-language="java">protected Package[] getPackages()</pre> <p>Returns all of the <code>Packages</code> defined by this class loader and its ancestors.</p> <dl> <dt>Returns:</dt> <dd>The array of <code>Package</code> objects defined by this <code>ClassLoader</code>
+</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="findLibrary-java.lang.String-">findLibrary</h3> <pre data-language="java">protected String findLibrary(String libname)</pre> <p>Returns the absolute path name of a native library. The VM invokes this method to locate the native libraries that belong to classes loaded with this class loader. If this method returns <code>null</code>, the VM searches the library along the path specified as the "<code>java.library.path</code>" property.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>libname</code> - The library name</dd> <dt>Returns:</dt> <dd>The absolute path of the native library</dd> <dt>Since:</dt> <dd>1.2</dd> <dt>See Also:</dt> <dd>
+<a href="../system/#loadLibrary-java.lang.String-"><code>System.loadLibrary(String)</code></a>, <a href="../system/#mapLibraryName-java.lang.String-"><code>System.mapLibraryName(String)</code></a>
+</dd> </dl>    <h3 id="setDefaultAssertionStatus-boolean-">setDefaultAssertionStatus</h3> <pre data-language="java">public void setDefaultAssertionStatus(boolean enabled)</pre> <p>Sets the default assertion status for this class loader. This setting determines whether classes loaded by this class loader and initialized in the future will have assertions enabled or disabled by default. This setting may be overridden on a per-package or per-class basis by invoking <a href="../classloader/#setPackageAssertionStatus-java.lang.String-boolean-"><code>setPackageAssertionStatus(String, boolean)</code></a> or <a href="../classloader/#setClassAssertionStatus-java.lang.String-boolean-"><code>setClassAssertionStatus(String, boolean)</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>enabled</code> - <code>true</code> if classes loaded by this class loader will henceforth have assertions enabled by default, <code>false</code> if they will have assertions disabled by default.</dd> <dt>Since:</dt> <dd>1.4</dd> </dl>    <h3 id="setPackageAssertionStatus-java.lang.String-boolean-">setPackageAssertionStatus</h3> <pre data-language="java">public void setPackageAssertionStatus(String packageName,
+                                      boolean enabled)</pre> <div>
+<p>Sets the package default assertion status for the named package. The package default assertion status determines the assertion status for classes initialized in the future that belong to the named package or any of its "subpackages". </p>
+<p> A subpackage of a package named p is any package whose name begins with "<code>p.</code>". For example, <code>javax.swing.text</code> is a subpackage of <code>javax.swing</code>, and both <code>java.util</code> and <code>java.lang.reflect</code> are subpackages of <code>java</code>. </p>
+<p> In the event that multiple package defaults apply to a given class, the package default pertaining to the most specific package takes precedence over the others. For example, if <code>javax.lang</code> and <code>javax.lang.reflect</code> both have package defaults associated with them, the latter package default applies to classes in <code>javax.lang.reflect</code>. </p>
+<p> Package defaults take precedence over the class loader's default assertion status, and may be overridden on a per-class basis by invoking <a href="../classloader/#setClassAssertionStatus-java.lang.String-boolean-"><code>setClassAssertionStatus(String, boolean)</code></a>. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>packageName</code> - The name of the package whose package default assertion status is to be set. A <code>null</code> value indicates the unnamed package that is "current" (see section 7.4.2 of <cite>The Java™ Language Specification</cite>.)</dd> <dd>
+<code>enabled</code> - <code>true</code> if classes loaded by this classloader and belonging to the named package or any of its subpackages will have assertions enabled by default, <code>false</code> if they will have assertions disabled by default.</dd> <dt>Since:</dt> <dd>1.4</dd> </dl>    <h3 id="setClassAssertionStatus-java.lang.String-boolean-">setClassAssertionStatus</h3> <pre data-language="java">public void setClassAssertionStatus(String className,
+                                    boolean enabled)</pre> <div>
+<p>Sets the desired assertion status for the named top-level class in this class loader and any nested classes contained therein. This setting takes precedence over the class loader's default assertion status, and over any applicable per-package default. This method has no effect if the named class has already been initialized. (Once a class is initialized, its assertion status cannot change.) </p>
+<p> If the named class is not a top-level class, this invocation will have no effect on the actual assertion status of any class. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>className</code> - The fully qualified class name of the top-level class whose assertion status is to be set.</dd> <dd>
+<code>enabled</code> - <code>true</code> if the named class is to have assertions enabled when (and if) it is initialized, <code>false</code> if the class is to have assertions disabled.</dd> <dt>Since:</dt> <dd>1.4</dd> </dl>    <h3 id="clearAssertionStatus--">clearAssertionStatus</h3> <pre data-language="java">public void clearAssertionStatus()</pre> <p>Sets the default assertion status for this class loader to <code>false</code> and discards any package defaults or class assertion status settings associated with the class loader. This method is provided so that class loaders can be made to ignore any command line or persistent assertion status settings and "start with a clean slate."</p> <dl> <dt>Since:</dt> <dd>1.4</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

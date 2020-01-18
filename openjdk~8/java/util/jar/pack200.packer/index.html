@@ -1,0 +1,240 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Pack200.Packer - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="The packer engine applies various transformations to the input JAR file, making the pack stream highly compressible by a compressor such as gzip or &hellip;">
+  <meta name="keywords" content="interface, pack, packer, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/jar/pack200.packer/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface Pack200.Packer</h1>     <dl> <dt>Enclosing class:</dt> <dd><a href="../pack200/">Pack200</a></dd> </dl>   <pre data-language="java">public static interface Pack200.Packer</pre> <div>
+<p>The packer engine applies various transformations to the input JAR file, making the pack stream highly compressible by a compressor such as gzip or zip. An instance of the engine can be obtained using <a href="../pack200/#newPacker--"><code>Pack200.newPacker()</code></a>. The high degree of compression is achieved by using a number of techniques described in the JSR 200 specification. Some of the techniques are sorting, re-ordering and co-location of the constant pool. </p>
+<p> The pack engine is initialized to an initial state as described by their properties below. The initial state can be manipulated by getting the engine properties (using <a href="../pack200.packer/#properties--"><code>properties()</code></a>) and storing the modified properties on the map. The resource files will be passed through with no changes at all. The class files will not contain identical bytes, since the unpacker is free to change minor class file features such as constant pool order. However, the class files will be semantically identical, as specified in <cite>The Java™ Virtual Machine Specification</cite>. </p>
+<p> By default, the packer does not change the order of JAR elements. Also, the modification time and deflation hint of each JAR element is passed unchanged. (Any other ZIP-archive information, such as extra attributes giving Unix file permissions, are lost.) </p>
+<p> Note that packing and unpacking a JAR will in general alter the bytewise contents of classfiles in the JAR. This means that packing and unpacking will in general invalidate any digital signatures which rely on bytewise images of JAR elements. In order both to sign and to pack a JAR, you must first pack and unpack the JAR to "normalize" it, then compute signatures on the unpacked JAR elements, and finally repack the signed JAR. Both packing steps should use precisely the same options, and the segment limit may also need to be set to "-1", to prevent accidental variation of segment boundaries as class file sizes change slightly. </p>
+<p> (Here's why this works: Any reordering the packer does of any classfile structures is idempotent, so the second packing does not change the orderings produced by the first packing. Also, the unpacker is guaranteed by the JSR 200 specification to produce a specific bytewise image for any given transmission ordering of archive elements.) </p>
+<p> In order to maintain backward compatibility, the pack file's version is set to accommodate the class files present in the input JAR file. In other words, the pack file version will be the latest, if the class files are the latest and conversely the pack file version will be the oldest if the class file versions are also the oldest. For intermediate class file versions the corresponding pack file version will be used. For example: If the input JAR-files are solely comprised of 1.5 (or lesser) class files, a 1.5 compatible pack file is produced. This will also be the case for archives that have no class files. If the input JAR-files contains a 1.6 class file, then the pack file version will be set to 1.6. </p>
+<p> Note: Unless otherwise noted, passing a <code>null</code> argument to a constructor or method in this class will cause a <a href="../../../lang/nullpointerexception/"><code>NullPointerException</code></a> to be thrown. </p>
+
+</div> <dl> <dt>Since:</dt> <dd>1.5</dd> </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="SEGMENT_LIMIT">SEGMENT_LIMIT</h3> <pre data-language="java">static final String SEGMENT_LIMIT</pre> <div>
+<p>This property is a numeral giving the estimated target size N (in bytes) of each archive segment. If a single input file requires more than N bytes, it will be given its own archive segment. </p>
+<p> As a special case, a value of -1 will produce a single large segment with all input files, while a value of 0 will produce one segment for each class. Larger archive segments result in less fragmentation and better compression, but processing them requires more memory. </p>
+<p> The size of each segment is estimated by counting the size of each input file to be transmitted in the segment, along with the size of its name and other transmitted properties. </p>
+<p> The default is -1, which means the packer will always create a single segment output file. In cases where extremely large output files are generated, users are strongly encouraged to use segmenting or break up the input file into smaller JARs. </p>
+<p> A 10Mb JAR packed without this limit will typically pack about 10% smaller, but the packer may require a larger Java heap (about ten times the segment limit).</p>
+</div>     <h3 id="KEEP_FILE_ORDER">KEEP_FILE_ORDER</h3> <pre data-language="java">static final String KEEP_FILE_ORDER</pre> <div>
+<p>If this property is set to <a href="../pack200.packer/#TRUE"><code>TRUE</code></a>, the packer will transmit all elements in their original order within the source archive. </p>
+<p> If it is set to <a href="../pack200.packer/#FALSE"><code>FALSE</code></a>, the packer may reorder elements, and also remove JAR directory entries, which carry no useful information for Java applications. (Typically this enables better compression.) </p>
+<p> The default is <a href="../pack200.packer/#TRUE"><code>TRUE</code></a>, which preserves the input information, but may cause the transmitted archive to be larger than necessary.</p>
+</div>     <h3 id="EFFORT">EFFORT</h3> <pre data-language="java">static final String EFFORT</pre> <div>
+<p>If this property is set to a single decimal digit, the packer will use the indicated amount of effort in compressing the archive. Level 1 may produce somewhat larger size and faster compression speed, while level 9 will take much longer but may produce better compression. </p>
+<p> The special value 0 instructs the packer to copy through the original JAR file directly, with no compression. The JSR 200 standard requires any unpacker to understand this special case as a pass-through of the entire archive. </p>
+<p> The default is 5, investing a modest amount of time to produce reasonable compression.</p>
+</div>     <h3 id="DEFLATE_HINT">DEFLATE_HINT</h3> <pre data-language="java">static final String DEFLATE_HINT</pre> <div>
+<p>If this property is set to <a href="../pack200.packer/#TRUE"><code>TRUE</code></a> or <a href="../pack200.packer/#FALSE"><code>FALSE</code></a>, the packer will set the deflation hint accordingly in the output archive, and will not transmit the individual deflation hints of archive elements. </p>
+<p> If this property is set to the special string <a href="../pack200.packer/#KEEP"><code>KEEP</code></a>, the packer will attempt to determine an independent deflation hint for each available element of the input archive, and transmit this hint separately. </p>
+<p> The default is <a href="../pack200.packer/#KEEP"><code>KEEP</code></a>, which preserves the input information, but may cause the transmitted archive to be larger than necessary. </p>
+<p> It is up to the unpacker implementation to take action upon the hint to suitably compress the elements of the resulting unpacked jar. </p>
+<p> The deflation hint of a ZIP or JAR element indicates whether the element was deflated or stored directly.</p>
+</div>     <h3 id="MODIFICATION_TIME">MODIFICATION_TIME</h3> <pre data-language="java">static final String MODIFICATION_TIME</pre> <div>
+<p>If this property is set to the special string <a href="../pack200.packer/#LATEST"><code>LATEST</code></a>, the packer will attempt to determine the latest modification time, among all the available entries in the original archive or the latest modification time of all the available entries in each segment. This single value will be transmitted as part of the segment and applied to all the entries in each segment, <a href="../pack200.packer/#SEGMENT_LIMIT"><code>SEGMENT_LIMIT</code></a>. </p>
+<p> This can marginally decrease the transmitted size of the archive, at the expense of setting all installed files to a single date. </p>
+<p> If this property is set to the special string <a href="../pack200.packer/#KEEP"><code>KEEP</code></a>, the packer transmits a separate modification time for each input element. </p>
+<p> The default is <a href="../pack200.packer/#KEEP"><code>KEEP</code></a>, which preserves the input information, but may cause the transmitted archive to be larger than necessary. </p>
+<p> It is up to the unpacker implementation to take action to suitably set the modification time of each element of its output file.</p>
+</div> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#SEGMENT_LIMIT"><code>SEGMENT_LIMIT</code></a>, Constant Field Values</dd> </dl>    <h3 id="PASS_FILE_PFX">PASS_FILE_PFX</h3> <pre data-language="java">static final String PASS_FILE_PFX</pre> <div>
+<p>Indicates that a file should be passed through bytewise, with no compression. Multiple files may be specified by specifying additional properties with distinct strings appended, to make a family of properties with the common prefix. </p>
+<p> There is no pathname transformation, except that the system file separator is replaced by the JAR file separator '/'. </p>
+<p> The resulting file names must match exactly as strings with their occurrences in the JAR file. </p>
+<p> If a property value is a directory name, all files under that directory will be passed also. </p>
+<p> Examples: </p>
+<pre data-language="java">Map p = packer.properties();
+     p.put(PASS_FILE_PFX+0, "mutants/Rogue.class");
+     p.put(PASS_FILE_PFX+1, "mutants/Wolverine.class");
+     p.put(PASS_FILE_PFX+2, "mutants/Storm.class");
+     # Pass all files in an entire directory hierarchy:
+     p.put(PASS_FILE_PFX+3, "police/");</pre>
+</div>     <h3 id="UNKNOWN_ATTRIBUTE">UNKNOWN_ATTRIBUTE</h3> <pre data-language="java">static final String UNKNOWN_ATTRIBUTE</pre> <div>
+<p>Indicates the action to take when a class-file containing an unknown attribute is encountered. Possible values are the strings <a href="../pack200.packer/#ERROR"><code>ERROR</code></a>, <a href="../pack200.packer/#STRIP"><code>STRIP</code></a>, and <a href="../pack200.packer/#PASS"><code>PASS</code></a>. </p>
+<p> The string <a href="../pack200.packer/#ERROR"><code>ERROR</code></a> means that the pack operation as a whole will fail, with an exception of type <code>IOException</code>. The string <a href="../pack200.packer/#STRIP"><code>STRIP</code></a> means that the attribute will be dropped. The string <a href="../pack200.packer/#PASS"><code>PASS</code></a> means that the whole class-file will be passed through (as if it were a resource file) without compression, with a suitable warning. This is the default value for this property. </p>
+<p> Examples: </p>
+<pre data-language="java">Map p = pack200.getProperties();
+     p.put(UNKNOWN_ATTRIBUTE, ERROR);
+     p.put(UNKNOWN_ATTRIBUTE, STRIP);
+     p.put(UNKNOWN_ATTRIBUTE, PASS);</pre>
+</div>     <h3 id="CLASS_ATTRIBUTE_PFX">CLASS_ATTRIBUTE_PFX</h3> <pre data-language="java">static final String CLASS_ATTRIBUTE_PFX</pre> <div>
+<p>When concatenated with a class attribute name, indicates the format of that attribute, using the layout language specified in the JSR 200 specification. </p>
+<p> For example, the effect of this option is built in: <code>pack.class.attribute.SourceFile=RUH</code>. </p>
+<p> The special strings <a href="../pack200.packer/#ERROR"><code>ERROR</code></a>, <a href="../pack200.packer/#STRIP"><code>STRIP</code></a>, and <a href="../pack200.packer/#PASS"><code>PASS</code></a> are also allowed, with the same meaning as <a href="../pack200.packer/#UNKNOWN_ATTRIBUTE"><code>UNKNOWN_ATTRIBUTE</code></a>. This provides a way for users to request that specific attributes be refused, stripped, or passed bitwise (with no class compression). </p>
+<p> Code like this might be used to support attributes for JCOV: </p>
+<pre data-language="java">Map p = packer.properties();
+     p.put(CODE_ATTRIBUTE_PFX+"CoverageTable",       "NH[PHHII]");
+     p.put(CODE_ATTRIBUTE_PFX+"CharacterRangeTable", "NH[PHPOHIIH]");
+     p.put(CLASS_ATTRIBUTE_PFX+"SourceID",           "RUH");
+     p.put(CLASS_ATTRIBUTE_PFX+"CompilationID",      "RUH");</pre> <p> Code like this might be used to strip debugging attributes: </p>
+<pre data-language="java">Map p = packer.properties();
+     p.put(CODE_ATTRIBUTE_PFX+"LineNumberTable",    STRIP);
+     p.put(CODE_ATTRIBUTE_PFX+"LocalVariableTable", STRIP);
+     p.put(CLASS_ATTRIBUTE_PFX+"SourceFile",        STRIP);</pre>
+</div>     <h3 id="FIELD_ATTRIBUTE_PFX">FIELD_ATTRIBUTE_PFX</h3> <pre data-language="java">static final String FIELD_ATTRIBUTE_PFX</pre> <p>When concatenated with a field attribute name, indicates the format of that attribute. For example, the effect of this option is built in: <code>pack.field.attribute.Deprecated=</code>. The special strings <a href="../pack200.packer/#ERROR"><code>ERROR</code></a>, <a href="../pack200.packer/#STRIP"><code>STRIP</code></a>, and <a href="../pack200.packer/#PASS"><code>PASS</code></a> are also allowed.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#CLASS_ATTRIBUTE_PFX"><code>CLASS_ATTRIBUTE_PFX</code></a>, Constant Field Values</dd> </dl>    <h3 id="METHOD_ATTRIBUTE_PFX">METHOD_ATTRIBUTE_PFX</h3> <pre data-language="java">static final String METHOD_ATTRIBUTE_PFX</pre> <p>When concatenated with a method attribute name, indicates the format of that attribute. For example, the effect of this option is built in: <code>pack.method.attribute.Exceptions=NH[RCH]</code>. The special strings <a href="../pack200.packer/#ERROR"><code>ERROR</code></a>, <a href="../pack200.packer/#STRIP"><code>STRIP</code></a>, and <a href="../pack200.packer/#PASS"><code>PASS</code></a> are also allowed.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#CLASS_ATTRIBUTE_PFX"><code>CLASS_ATTRIBUTE_PFX</code></a>, Constant Field Values</dd> </dl>    <h3 id="CODE_ATTRIBUTE_PFX">CODE_ATTRIBUTE_PFX</h3> <pre data-language="java">static final String CODE_ATTRIBUTE_PFX</pre> <p>When concatenated with a code attribute name, indicates the format of that attribute. For example, the effect of this option is built in: <code>pack.code.attribute.LocalVariableTable=NH[PHOHRUHRSHH]</code>. The special strings <a href="../pack200.packer/#ERROR"><code>ERROR</code></a>, <a href="../pack200.packer/#STRIP"><code>STRIP</code></a>, and <a href="../pack200.packer/#PASS"><code>PASS</code></a> are also allowed.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#CLASS_ATTRIBUTE_PFX"><code>CLASS_ATTRIBUTE_PFX</code></a>, Constant Field Values</dd> </dl>    <h3 id="PROGRESS">PROGRESS</h3> <pre data-language="java">static final String PROGRESS</pre> <div>
+<p>The unpacker's progress as a percentage, as periodically updated by the unpacker. Values of 0 - 100 are normal, and -1 indicates a stall. Progress can be monitored by polling the value of this property. </p>
+<p> At a minimum, the unpacker must set progress to 0 at the beginning of a packing operation, and to 100 at the end.</p>
+</div>     <h3 id="KEEP">KEEP</h3> <pre data-language="java">static final String KEEP</pre> <p>The string "keep", a possible value for certain properties.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#DEFLATE_HINT"><code>DEFLATE_HINT</code></a>, <a href="../pack200.packer/#MODIFICATION_TIME"><code>MODIFICATION_TIME</code></a>, Constant Field Values</dd> </dl>    <h3 id="PASS">PASS</h3> <pre data-language="java">static final String PASS</pre> <p>The string "pass", a possible value for certain properties.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#UNKNOWN_ATTRIBUTE"><code>UNKNOWN_ATTRIBUTE</code></a>, <a href="../pack200.packer/#CLASS_ATTRIBUTE_PFX"><code>CLASS_ATTRIBUTE_PFX</code></a>, <a href="../pack200.packer/#FIELD_ATTRIBUTE_PFX"><code>FIELD_ATTRIBUTE_PFX</code></a>, <a href="../pack200.packer/#METHOD_ATTRIBUTE_PFX"><code>METHOD_ATTRIBUTE_PFX</code></a>, <a href="../pack200.packer/#CODE_ATTRIBUTE_PFX"><code>CODE_ATTRIBUTE_PFX</code></a>, Constant Field Values</dd> </dl>    <h3 id="STRIP">STRIP</h3> <pre data-language="java">static final String STRIP</pre> <p>The string "strip", a possible value for certain properties.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#UNKNOWN_ATTRIBUTE"><code>UNKNOWN_ATTRIBUTE</code></a>, <a href="../pack200.packer/#CLASS_ATTRIBUTE_PFX"><code>CLASS_ATTRIBUTE_PFX</code></a>, <a href="../pack200.packer/#FIELD_ATTRIBUTE_PFX"><code>FIELD_ATTRIBUTE_PFX</code></a>, <a href="../pack200.packer/#METHOD_ATTRIBUTE_PFX"><code>METHOD_ATTRIBUTE_PFX</code></a>, <a href="../pack200.packer/#CODE_ATTRIBUTE_PFX"><code>CODE_ATTRIBUTE_PFX</code></a>, Constant Field Values</dd> </dl>    <h3 id="ERROR">ERROR</h3> <pre data-language="java">static final String ERROR</pre> <p>The string "error", a possible value for certain properties.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#UNKNOWN_ATTRIBUTE"><code>UNKNOWN_ATTRIBUTE</code></a>, <a href="../pack200.packer/#CLASS_ATTRIBUTE_PFX"><code>CLASS_ATTRIBUTE_PFX</code></a>, <a href="../pack200.packer/#FIELD_ATTRIBUTE_PFX"><code>FIELD_ATTRIBUTE_PFX</code></a>, <a href="../pack200.packer/#METHOD_ATTRIBUTE_PFX"><code>METHOD_ATTRIBUTE_PFX</code></a>, <a href="../pack200.packer/#CODE_ATTRIBUTE_PFX"><code>CODE_ATTRIBUTE_PFX</code></a>, Constant Field Values</dd> </dl>    <h3 id="TRUE">TRUE</h3> <pre data-language="java">static final String TRUE</pre> <p>The string "true", a possible value for certain properties.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#KEEP_FILE_ORDER"><code>KEEP_FILE_ORDER</code></a>, <a href="../pack200.packer/#DEFLATE_HINT"><code>DEFLATE_HINT</code></a>, Constant Field Values</dd> </dl>    <h3 id="FALSE">FALSE</h3> <pre data-language="java">static final String FALSE</pre> <p>The string "false", a possible value for certain properties.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#KEEP_FILE_ORDER"><code>KEEP_FILE_ORDER</code></a>, <a href="../pack200.packer/#DEFLATE_HINT"><code>DEFLATE_HINT</code></a>, Constant Field Values</dd> </dl>    <h3 id="LATEST">LATEST</h3> <pre data-language="java">static final String LATEST</pre> <p>The string "latest", a possible value for certain properties.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#MODIFICATION_TIME"><code>MODIFICATION_TIME</code></a>, Constant Field Values</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="properties--">properties</h3> <pre data-language="java">SortedMap&lt;String,String&gt; properties()</pre> <div>
+<p>Get the set of this engine's properties. This set is a "live view", so that changing its contents immediately affects the Packer engine, and changes from the engine (such as progress indications) are immediately visible in the map. </p>
+<p>The property map may contain pre-defined implementation specific and default properties. Users are encouraged to read the information and fully understand the implications, before modifying pre-existing properties. </p>
+<p> Implementation specific properties are prefixed with a package name associated with the implementor, beginning with <code>com.</code> or a similar prefix. All property names beginning with <code>pack.</code> and <code>unpack.</code> are reserved for use by this API. </p>
+<p> Unknown properties may be ignored or rejected with an unspecified error, and invalid entries may cause an unspecified error to be thrown. </p>
+<p> The returned map implements all optional <a href="../../sortedmap/"><code>SortedMap</code></a> operations</p>
+</div> <dl> <dt>Returns:</dt> <dd>A sorted association of property key strings to property values.</dd> </dl>    <h3 id="pack-java.util.jar.JarFile-java.io.OutputStream-">pack</h3> <pre data-language="java">void pack(JarFile in,
+          OutputStream out)
+   throws IOException</pre> <div>
+<p>Takes a JarFile and converts it into a Pack200 archive. </p>
+<p> Closes its input but not its output. (Pack200 archives are appendable.)</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>in</code> - a JarFile</dd> <dd>
+<code>out</code> - an OutputStream</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - if an error is encountered.</dd> </dl>    <h3 id="pack-java.util.jar.JarInputStream-java.io.OutputStream-">pack</h3> <pre data-language="java">void pack(JarInputStream in,
+          OutputStream out)
+   throws IOException</pre> <div>
+<p>Takes a JarInputStream and converts it into a Pack200 archive. </p>
+<p> Closes its input but not its output. (Pack200 archives are appendable.) </p>
+<p> The modification time and deflation hint attributes are not available, for the JAR manifest file and its containing directory.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>in</code> - a JarInputStream</dd> <dd>
+<code>out</code> - an OutputStream</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - if an error is encountered.</dd> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#MODIFICATION_TIME"><code>MODIFICATION_TIME</code></a>, <a href="../pack200.packer/#DEFLATE_HINT"><code>DEFLATE_HINT</code></a>
+</dd> </dl>    <h3 id="addPropertyChangeListener-java.beans.PropertyChangeListener-">addPropertyChangeListener</h3> <pre data-language="java">@Deprecated
+default void addPropertyChangeListener(PropertyChangeListener listener)</pre> <p><strong>Deprecated.</strong> The dependency on <code>PropertyChangeListener</code> creates a significant impediment to future modularization of the Java platform. This method will be removed in a future release. Applications that need to monitor progress of the packer can poll the value of the <a href="../pack200.packer/#PROGRESS"><code>PROGRESS</code></a> property instead.</p> <div>
+<p>Registers a listener for PropertyChange events on the properties map. This is typically used by applications to update a progress bar. </p>
+<p> The default implementation of this method does nothing and has no side-effects.</p> <p><b>WARNING:</b> This method is omitted from the interface declaration in all subset Profiles of Java SE that do not include the <code>java.beans</code> package. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>listener</code> - An object to be invoked when a property is changed.</dd> <dt>See Also:</dt> <dd>
+<a href="../pack200.packer/#properties--"><code>properties()</code></a>, <a href="../pack200.packer/#PROGRESS"><code>PROGRESS</code></a>
+</dd> </dl>    <h3 id="removePropertyChangeListener-java.beans.PropertyChangeListener-">removePropertyChangeListener</h3> <pre data-language="java">@Deprecated
+default void removePropertyChangeListener(PropertyChangeListener listener)</pre> <p><strong>Deprecated.</strong> The dependency on <code>PropertyChangeListener</code> creates a significant impediment to future modularization of the Java platform. This method will be removed in a future release.</p> <div>
+<p>Remove a listener for PropertyChange events, added by the <a href="../pack200.packer/#addPropertyChangeListener-java.beans.PropertyChangeListener-"><code>addPropertyChangeListener(java.beans.PropertyChangeListener)</code></a>. </p>
+<p> The default implementation of this method does nothing and has no side-effects.</p> <p><b>WARNING:</b> This method is omitted from the interface declaration in all subset Profiles of Java SE that do not include the <code>java.beans</code> package. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>listener</code> - The PropertyChange listener to be removed.</dd> <dt>See Also:</dt> <dd><a href="../pack200.packer/#addPropertyChangeListener-java.beans.PropertyChangeListener-"><code>addPropertyChangeListener(java.beans.PropertyChangeListener)</code></a></dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

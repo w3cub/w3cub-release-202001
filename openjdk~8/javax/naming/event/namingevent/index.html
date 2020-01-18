@@ -1,0 +1,174 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>NamingEvent - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" This class represents an event fired by a naming&#47;directory service. ">
+  <meta name="keywords" content="class, namingevent, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/javax/naming/event/namingevent/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class NamingEvent</h1>   <ul class="inheritance"> <li><a href="../../../../java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../../../../java/util/eventobject/">java.util.EventObject</a></li> <li> <ul class="inheritance"> <li>javax.naming.event.NamingEvent</li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="../../../../java/io/serializable/">Serializable</a></dd> </dl>   <pre data-language="java">public class NamingEvent
+extends EventObject</pre> <div>
+<p>This class represents an event fired by a naming/directory service. </p>
+<p> The <code>NamingEvent</code>'s state consists of </p>
+<ul> <li>The event source: the <code>EventContext</code> which fired this event. </li>
+<li>The event type. </li>
+<li>The new binding: information about the object after the change. </li>
+<li>The old binding: information about the object before the change. </li>
+<li>Change information: information about the change that triggered this event; usually service provider-specific or server-specific information. </li>
+</ul> <p> Note that the event source is always the same <code>EventContext</code> <em>instance</em> that the listener has registered with. Furthermore, the names of the bindings in the <code>NamingEvent</code> are always relative to that instance. For example, suppose a listener makes the following registration: </p>
+<pre data-language="java">NamespaceChangeListener listener = ...;
+src.addNamingListener("x", SUBTREE_SCOPE, listener);</pre> When an object named "x/y" is subsequently deleted, the corresponding <code>NamingEvent</code> (<code>evt</code>) must contain: <pre data-language="java">evt.getEventContext() == src
+evt.getOldBinding().getName().equals("x/y")</pre> Care must be taken when multiple threads are accessing the same <code>EventContext</code> concurrently. See the <a href="../package-summary/#THREADING">package description</a> for more information on threading issues.</div> <dl> <dt>Since:</dt> <dd>1.3</dd> <dt>See Also:</dt> <dd>
+<a href="../naminglistener/"><code>NamingListener</code></a>, <a href="../eventcontext/"><code>EventContext</code></a>, Serialized Form</dd> </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="OBJECT_ADDED">OBJECT_ADDED</h3> <pre data-language="java">public static final int OBJECT_ADDED</pre> <p>Naming event type for indicating that a new object has been added. The value of this constant is <code>0</code>.</p>     <h3 id="OBJECT_REMOVED">OBJECT_REMOVED</h3> <pre data-language="java">public static final int OBJECT_REMOVED</pre> <p>Naming event type for indicating that an object has been removed. The value of this constant is <code>1</code>.</p>     <h3 id="OBJECT_RENAMED">OBJECT_RENAMED</h3> <pre data-language="java">public static final int OBJECT_RENAMED</pre> <div>
+<p>Naming event type for indicating that an object has been renamed. Note that some services might fire multiple events for a single logical rename operation. For example, the rename operation might be implemented by adding a binding with the new name and removing the old binding. </p>
+<p> The old/new binding in <code>NamingEvent</code> may be null if the old name or new name is outside of the scope for which the listener has registered. </p>
+<p> When an interior node in the namespace tree has been renamed, the topmost node which is part of the listener's scope should used to generate a rename event. The extent to which this can be supported is provider-specific. For example, a service might generate rename notifications for all descendants of the changed interior node and the corresponding provider might not be able to prevent those notifications from being propagated to the listeners. </p>
+<p> The value of this constant is <code>2</code>.</p>
+</div>     <h3 id="OBJECT_CHANGED">OBJECT_CHANGED</h3> <pre data-language="java">public static final int OBJECT_CHANGED</pre> <div>
+<p>Naming event type for indicating that an object has been changed. The changes might include the object's attributes, or the object itself. Note that some services might fire multiple events for a single modification. For example, the modification might be implemented by first removing the old binding and adding a new binding containing the same name but a different object. </p>
+<p> The value of this constant is <code>3</code>.</p>
+</div>     <h3 id="changeInfo">changeInfo</h3> <pre data-language="java">protected Object changeInfo</pre> <p>Contains information about the change that generated this event.</p>    <h3 id="type">type</h3> <pre data-language="java">protected int type</pre> <p>Contains the type of this event.</p> <dl> <dt>See Also:</dt> <dd>
+<a href="../namingevent/#OBJECT_ADDED"><code>OBJECT_ADDED</code></a>, <a href="../namingevent/#OBJECT_REMOVED"><code>OBJECT_REMOVED</code></a>, <a href="../namingevent/#OBJECT_RENAMED"><code>OBJECT_RENAMED</code></a>, <a href="../namingevent/#OBJECT_CHANGED"><code>OBJECT_CHANGED</code></a>
+</dd> </dl>    <h3 id="oldBinding">oldBinding</h3> <pre data-language="java">protected Binding oldBinding</pre> <p>Contains information about the object before the change.</p>    <h3 id="newBinding">newBinding</h3> <pre data-language="java">protected Binding newBinding</pre> <p>Contains information about the object after the change.</p>     <h2 id="constructor.detail">Constructors</h2>   <h3 id="NamingEvent-javax.naming.event.EventContext-int-javax.naming.Binding-javax.naming.Binding-java.lang.Object-">NamingEvent</h3> <pre data-language="java">public NamingEvent(EventContext source,
+                   int type,
+                   Binding newBd,
+                   Binding oldBd,
+                   Object changeInfo)</pre> <div>
+<p>Constructs an instance of <code>NamingEvent</code>. </p>
+<p> The names in <code>newBd</code> and <code>oldBd</code> are to be resolved relative to the event source <code>source</code>. For an <code>OBJECT_ADDED</code> event type, <code>newBd</code> must not be null. For an <code>OBJECT_REMOVED</code> event type, <code>oldBd</code> must not be null. For an <code>OBJECT_CHANGED</code> event type, <code>newBd</code> and <code>oldBd</code> must not be null. For an <code>OBJECT_RENAMED</code> event type, one of <code>newBd</code> or <code>oldBd</code> may be null if the new or old binding is outside of the scope for which the listener has registered.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>source</code> - The non-null context that fired this event.</dd> <dd>
+<code>type</code> - The type of the event.</dd> <dd>
+<code>newBd</code> - A possibly null binding before the change. See method description.</dd> <dd>
+<code>oldBd</code> - A possibly null binding after the change. See method description.</dd> <dd>
+<code>changeInfo</code> - A possibly null object containing information about the change.</dd> <dt>See Also:</dt> <dd>
+<a href="../namingevent/#OBJECT_ADDED"><code>OBJECT_ADDED</code></a>, <a href="../namingevent/#OBJECT_REMOVED"><code>OBJECT_REMOVED</code></a>, <a href="../namingevent/#OBJECT_RENAMED"><code>OBJECT_RENAMED</code></a>, <a href="../namingevent/#OBJECT_CHANGED"><code>OBJECT_CHANGED</code></a>
+</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="getType--">getType</h3> <pre data-language="java">public int getType()</pre> <p>Returns the type of this event.</p> <dl> <dt>Returns:</dt> <dd>The type of this event.</dd> <dt>See Also:</dt> <dd>
+<a href="../namingevent/#OBJECT_ADDED"><code>OBJECT_ADDED</code></a>, <a href="../namingevent/#OBJECT_REMOVED"><code>OBJECT_REMOVED</code></a>, <a href="../namingevent/#OBJECT_RENAMED"><code>OBJECT_RENAMED</code></a>, <a href="../namingevent/#OBJECT_CHANGED"><code>OBJECT_CHANGED</code></a>
+</dd> </dl>    <h3 id="getEventContext--">getEventContext</h3> <pre data-language="java">public EventContext getEventContext()</pre> <div>
+<p>Retrieves the event source that fired this event. This returns the same object as <code>EventObject.getSource()</code>. </p>
+<p> If the result of this method is used to access the event source, for example, to look up the object or get its attributes, then it needs to be locked because implementations of <code>Context</code> are not guaranteed to be thread-safe (and <code>EventContext</code> is a subinterface of <code>Context</code>). See the <a href="../package-summary/#THREADING">package description</a> for more information on threading issues.</p>
+</div> <dl> <dt>Returns:</dt> <dd>The non-null context that fired this event.</dd> </dl>    <h3 id="getOldBinding--">getOldBinding</h3> <pre data-language="java">public Binding getOldBinding()</pre> <div>
+<p>Retrieves the binding of the object before the change. </p>
+<p> The binding must be nonnull if the object existed before the change relative to the source context (<code>getEventContext()</code>). That is, it must be nonnull for <code>OBJECT_REMOVED</code> and <code>OBJECT_CHANGED</code>. For <code>OBJECT_RENAMED</code>, it is null if the object before the rename is outside of the scope for which the listener has registered interest; it is nonnull if the object is inside the scope before the rename. </p>
+<p> The name in the binding is to be resolved relative to the event source <code>getEventContext()</code>. The object returned by <code>Binding.getObject()</code> may be null if such information is unavailable.</p>
+</div> <dl> <dt>Returns:</dt> <dd>The possibly null binding of the object before the change.</dd> </dl>    <h3 id="getNewBinding--">getNewBinding</h3> <pre data-language="java">public Binding getNewBinding()</pre> <div>
+<p>Retrieves the binding of the object after the change. </p>
+<p> The binding must be nonnull if the object existed after the change relative to the source context (<code>getEventContext()</code>). That is, it must be nonnull for <code>OBJECT_ADDED</code> and <code>OBJECT_CHANGED</code>. For <code>OBJECT_RENAMED</code>, it is null if the object after the rename is outside the scope for which the listener registered interest; it is nonnull if the object is inside the scope after the rename. </p>
+<p> The name in the binding is to be resolved relative to the event source <code>getEventContext()</code>. The object returned by <code>Binding.getObject()</code> may be null if such information is unavailable.</p>
+</div> <dl> <dt>Returns:</dt> <dd>The possibly null binding of the object after the change.</dd> </dl>    <h3 id="getChangeInfo--">getChangeInfo</h3> <pre data-language="java">public Object getChangeInfo()</pre> <p>Retrieves the change information for this event. The value of the change information is service-specific. For example, it could be an ID that identifies the change in a change log on the server.</p> <dl> <dt>Returns:</dt> <dd>The possibly null change information of this event.</dd> </dl>    <h3 id="dispatch-javax.naming.event.NamingListener-">dispatch</h3> <pre data-language="java">public void dispatch(NamingListener listener)</pre> <div>
+<p>Invokes the appropriate listener method on this event. The default implementation of this method handles the following event types: <code>OBJECT_ADDED</code>, <code>OBJECT_REMOVED</code>, <code>OBJECT_RENAMED</code>, <code>OBJECT_CHANGED</code>. </p>
+<p> The listener method is executed in the same thread as this method. See the <a href="../package-summary/#THREADING">package description</a> for more information on threading issues.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>listener</code> - The nonnull listener.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

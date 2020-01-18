@@ -1,0 +1,292 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>DragSource - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content=" The DragSource is the entity responsible for the initiation of the Drag and Drop operation, and may be used in a number of scenarios&#58; ">
+  <meta name="keywords" content="class, dragsource, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/java/awt/dnd/dragsource/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class DragSource</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.awt.dnd.DragSource</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="..//openjdk~8/java/io/serializable/">Serializable</a></dd> </dl>   <pre data-language="java">public class DragSource
+extends Object
+implements Serializable</pre> <div>
+<p>The <code>DragSource</code> is the entity responsible for the initiation of the Drag and Drop operation, and may be used in a number of scenarios: </p>
+<ul> <li>1 default instance per JVM for the lifetime of that JVM. </li>
+<li>1 instance per class of potential Drag Initiator object (e.g TextField). [implementation dependent] </li>
+<li>1 per instance of a particular <code>Component</code>, or application specific object associated with a <code>Component</code> instance in the GUI. [implementation dependent] </li>
+<li>Some other arbitrary association. [implementation dependent] </li>
+</ul> Once the <code>DragSource</code> is obtained, a <code>DragGestureRecognizer</code> should also be obtained to associate the <code>DragSource</code> with a particular <code>Component</code>. 
+<p> The initial interpretation of the user's gesture, and the subsequent starting of the drag operation are the responsibility of the implementing <code>Component</code>, which is usually implemented by a <code>DragGestureRecognizer</code>. </p>
+<p> When a drag gesture occurs, the <code>DragSource</code>'s startDrag() method shall be invoked in order to cause processing of the user's navigational gestures and delivery of Drag and Drop protocol notifications. A <code>DragSource</code> shall only permit a single Drag and Drop operation to be current at any one time, and shall reject any further startDrag() requests by throwing an <code>IllegalDnDOperationException</code> until such time as the extant operation is complete. </p>
+<p> The startDrag() method invokes the createDragSourceContext() method to instantiate an appropriate <code>DragSourceContext</code> and associate the <code>DragSourceContextPeer</code> with that. </p>
+<p> If the Drag and Drop System is unable to initiate a drag operation for some reason, the startDrag() method throws a <code>java.awt.dnd.InvalidDnDOperationException</code> to signal such a condition. Typically this exception is thrown when the underlying platform system is either not in a state to initiate a drag, or the parameters specified are invalid. </p>
+<p> Note that during the drag, the set of operations exposed by the source at the start of the drag operation may not change until the operation is complete. The operation(s) are constant for the duration of the operation with respect to the <code>DragSource</code>.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.2</dd>   </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="DefaultCopyDrop">DefaultCopyDrop</h3> <pre data-language="java">public static final Cursor DefaultCopyDrop</pre> <p>The default <code>Cursor</code> to use with a copy operation indicating that a drop is currently allowed. <code>null</code> if <code>GraphicsEnvironment.isHeadless()</code> returns <code>true</code>.</p> <dl> <dt>See Also:</dt> <dd><a href="../../graphicsenvironment/#isHeadless--"><code>GraphicsEnvironment.isHeadless()</code></a></dd> </dl>    <h3 id="DefaultMoveDrop">DefaultMoveDrop</h3> <pre data-language="java">public static final Cursor DefaultMoveDrop</pre> <p>The default <code>Cursor</code> to use with a move operation indicating that a drop is currently allowed. <code>null</code> if <code>GraphicsEnvironment.isHeadless()</code> returns <code>true</code>.</p> <dl> <dt>See Also:</dt> <dd><a href="../../graphicsenvironment/#isHeadless--"><code>GraphicsEnvironment.isHeadless()</code></a></dd> </dl>    <h3 id="DefaultLinkDrop">DefaultLinkDrop</h3> <pre data-language="java">public static final Cursor DefaultLinkDrop</pre> <p>The default <code>Cursor</code> to use with a link operation indicating that a drop is currently allowed. <code>null</code> if <code>GraphicsEnvironment.isHeadless()</code> returns <code>true</code>.</p> <dl> <dt>See Also:</dt> <dd><a href="../../graphicsenvironment/#isHeadless--"><code>GraphicsEnvironment.isHeadless()</code></a></dd> </dl>    <h3 id="DefaultCopyNoDrop">DefaultCopyNoDrop</h3> <pre data-language="java">public static final Cursor DefaultCopyNoDrop</pre> <p>The default <code>Cursor</code> to use with a copy operation indicating that a drop is currently not allowed. <code>null</code> if <code>GraphicsEnvironment.isHeadless()</code> returns <code>true</code>.</p> <dl> <dt>See Also:</dt> <dd><a href="../../graphicsenvironment/#isHeadless--"><code>GraphicsEnvironment.isHeadless()</code></a></dd> </dl>    <h3 id="DefaultMoveNoDrop">DefaultMoveNoDrop</h3> <pre data-language="java">public static final Cursor DefaultMoveNoDrop</pre> <p>The default <code>Cursor</code> to use with a move operation indicating that a drop is currently not allowed. <code>null</code> if <code>GraphicsEnvironment.isHeadless()</code> returns <code>true</code>.</p> <dl> <dt>See Also:</dt> <dd><a href="../../graphicsenvironment/#isHeadless--"><code>GraphicsEnvironment.isHeadless()</code></a></dd> </dl>    <h3 id="DefaultLinkNoDrop">DefaultLinkNoDrop</h3> <pre data-language="java">public static final Cursor DefaultLinkNoDrop</pre> <p>The default <code>Cursor</code> to use with a link operation indicating that a drop is currently not allowed. <code>null</code> if <code>GraphicsEnvironment.isHeadless()</code> returns <code>true</code>.</p> <dl> <dt>See Also:</dt> <dd><a href="../../graphicsenvironment/#isHeadless--"><code>GraphicsEnvironment.isHeadless()</code></a></dd> </dl>     <h2 id="constructor.detail">Constructors</h2>   <h3 id="DragSource--">DragSource</h3> <pre data-language="java">public DragSource()
+           throws HeadlessException</pre> <p>Creates a new <code>DragSource</code>.</p> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../../headlessexception/">HeadlessException</a></code> - if GraphicsEnvironment.isHeadless() returns true</dd> <dt>See Also:</dt> <dd><a href="../../graphicsenvironment/#isHeadless--"><code>GraphicsEnvironment.isHeadless()</code></a></dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="getDefaultDragSource--">getDefaultDragSource</h3> <pre data-language="java">public static DragSource getDefaultDragSource()</pre> <p>Gets the <code>DragSource</code> object associated with the underlying platform.</p> <dl> <dt>Returns:</dt> <dd>the platform DragSource</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../headlessexception/">HeadlessException</a></code> - if GraphicsEnvironment.isHeadless() returns true</dd> <dt>See Also:</dt> <dd><a href="../../graphicsenvironment/#isHeadless--"><code>GraphicsEnvironment.isHeadless()</code></a></dd> </dl>    <h3 id="isDragImageSupported--">isDragImageSupported</h3> <pre data-language="java">public static boolean isDragImageSupported()</pre> <div>
+<p>Reports whether or not drag <code>Image</code> support is available on the underlying platform. </p>
+
+</div> <dl> <dt>Returns:</dt> <dd>if the Drag Image support is available on this platform</dd> </dl>    <h3 id="startDrag-java.awt.dnd.DragGestureEvent-java.awt.Cursor-java.awt.Image-java.awt.Point-java.awt.datatransfer.Transferable-java.awt.dnd.DragSourceListener-java.awt.datatransfer.FlavorMap-">startDrag</h3> <pre data-language="java">public void startDrag(DragGestureEvent trigger,
+                      Cursor dragCursor,
+                      Image dragImage,
+                      Point imageOffset,
+                      Transferable transferable,
+                      DragSourceListener dsl,
+                      FlavorMap flavorMap)
+               throws InvalidDnDOperationException</pre> <div>
+<p>Start a drag, given the <code>DragGestureEvent</code> that initiated the drag, the initial <code>Cursor</code> to use, the <code>Image</code> to drag, the offset of the <code>Image</code> origin from the hotspot of the <code>Cursor</code> at the instant of the trigger, the <code>Transferable</code> subject data of the drag, the <code>DragSourceListener</code>, and the <code>FlavorMap</code>. </p>
+
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>trigger</code> - the <code>DragGestureEvent</code> that initiated the drag</dd> <dd>
+<code>dragCursor</code> - the initial <code>Cursor</code> for this drag operation or <code>null</code> for the default cursor handling; see <a href="../dragsourcecontext/#defaultCursor">DragSourceContext</a> for more details on the cursor handling mechanism during drag and drop</dd> <dd>
+<code>dragImage</code> - the image to drag or <code>null</code>
+</dd> <dd>
+<code>imageOffset</code> - the offset of the <code>Image</code> origin from the hotspot of the <code>Cursor</code> at the instant of the trigger</dd> <dd>
+<code>transferable</code> - the subject data of the drag</dd> <dd>
+<code>dsl</code> - the <code>DragSourceListener</code>
+</dd> <dd>
+<code>flavorMap</code> - the <code>FlavorMap</code> to use, or <code>null</code> 
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../invaliddndoperationexception/">InvalidDnDOperationException</a></code> - if the Drag and Drop system is unable to initiate a drag operation, or if the user attempts to start a drag while an existing drag operation is still executing</dd> </dl>    <h3 id="startDrag-java.awt.dnd.DragGestureEvent-java.awt.Cursor-java.awt.datatransfer.Transferable-java.awt.dnd.DragSourceListener-java.awt.datatransfer.FlavorMap-">startDrag</h3> <pre data-language="java">public void startDrag(DragGestureEvent trigger,
+                      Cursor dragCursor,
+                      Transferable transferable,
+                      DragSourceListener dsl,
+                      FlavorMap flavorMap)
+               throws InvalidDnDOperationException</pre> <div>
+<p>Start a drag, given the <code>DragGestureEvent</code> that initiated the drag, the initial <code>Cursor</code> to use, the <code>Transferable</code> subject data of the drag, the <code>DragSourceListener</code>, and the <code>FlavorMap</code>. </p>
+
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>trigger</code> - the <code>DragGestureEvent</code> that initiated the drag</dd> <dd>
+<code>dragCursor</code> - the initial <code>Cursor</code> for this drag operation or <code>null</code> for the default cursor handling; see <a href="../dragsourcecontext/#defaultCursor">DragSourceContext</a> for more details on the cursor handling mechanism during drag and drop</dd> <dd>
+<code>transferable</code> - the subject data of the drag</dd> <dd>
+<code>dsl</code> - the <code>DragSourceListener</code>
+</dd> <dd>
+<code>flavorMap</code> - the <code>FlavorMap</code> to use or <code>null</code> 
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../invaliddndoperationexception/">InvalidDnDOperationException</a></code> - if the Drag and Drop system is unable to initiate a drag operation, or if the user attempts to start a drag while an existing drag operation is still executing</dd> </dl>    <h3 id="startDrag-java.awt.dnd.DragGestureEvent-java.awt.Cursor-java.awt.Image-java.awt.Point-java.awt.datatransfer.Transferable-java.awt.dnd.DragSourceListener-">startDrag</h3> <pre data-language="java">public void startDrag(DragGestureEvent trigger,
+                      Cursor dragCursor,
+                      Image dragImage,
+                      Point dragOffset,
+                      Transferable transferable,
+                      DragSourceListener dsl)
+               throws InvalidDnDOperationException</pre> <div>
+<p>Start a drag, given the <code>DragGestureEvent</code> that initiated the drag, the initial <code>Cursor</code> to use, the <code>Image</code> to drag, the offset of the <code>Image</code> origin from the hotspot of the <code>Cursor</code> at the instant of the trigger, the subject data of the drag, and the <code>DragSourceListener</code>. </p>
+
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>trigger</code> - the <code>DragGestureEvent</code> that initiated the drag</dd> <dd>
+<code>dragCursor</code> - the initial <code>Cursor</code> for this drag operation or <code>null</code> for the default cursor handling; see <a href="../dragsourcecontext/#defaultCursor">DragSourceContext</a> for more details on the cursor handling mechanism during drag and drop</dd> <dd>
+<code>dragImage</code> - the <code>Image</code> to drag or <code>null</code>
+</dd> <dd>
+<code>dragOffset</code> - the offset of the <code>Image</code> origin from the hotspot of the <code>Cursor</code> at the instant of the trigger</dd> <dd>
+<code>transferable</code> - the subject data of the drag</dd> <dd>
+<code>dsl</code> - the <code>DragSourceListener</code> 
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../invaliddndoperationexception/">InvalidDnDOperationException</a></code> - if the Drag and Drop system is unable to initiate a drag operation, or if the user attempts to start a drag while an existing drag operation is still executing</dd> </dl>    <h3 id="startDrag-java.awt.dnd.DragGestureEvent-java.awt.Cursor-java.awt.datatransfer.Transferable-java.awt.dnd.DragSourceListener-">startDrag</h3> <pre data-language="java">public void startDrag(DragGestureEvent trigger,
+                      Cursor dragCursor,
+                      Transferable transferable,
+                      DragSourceListener dsl)
+               throws InvalidDnDOperationException</pre> <div>
+<p>Start a drag, given the <code>DragGestureEvent</code> that initiated the drag, the initial <code>Cursor</code> to use, the <code>Transferable</code> subject data of the drag, and the <code>DragSourceListener</code>. </p>
+
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>trigger</code> - the <code>DragGestureEvent</code> that initiated the drag</dd> <dd>
+<code>dragCursor</code> - the initial <code>Cursor</code> for this drag operation or <code>null</code> for the default cursor handling; see <a href="../dragsourcecontext/#defaultCursor">DragSourceContext</a> class for more details on the cursor handling mechanism during drag and drop</dd> <dd>
+<code>transferable</code> - the subject data of the drag</dd> <dd>
+<code>dsl</code> - the <code>DragSourceListener</code> 
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../invaliddndoperationexception/">InvalidDnDOperationException</a></code> - if the Drag and Drop system is unable to initiate a drag operation, or if the user attempts to start a drag while an existing drag operation is still executing</dd> </dl>    <h3 id="createDragSourceContext-java.awt.dnd.peer.DragSourceContextPeer-java.awt.dnd.DragGestureEvent-java.awt.Cursor-java.awt.Image-java.awt.Point-java.awt.datatransfer.Transferable-java.awt.dnd.DragSourceListener-">createDragSourceContext</h3> <pre data-language="java">protected DragSourceContext createDragSourceContext(java.awt.dnd.peer.DragSourceContextPeer dscp,
+                                                    DragGestureEvent dgl,
+                                                    Cursor dragCursor,
+                                                    Image dragImage,
+                                                    Point imageOffset,
+                                                    Transferable t,
+                                                    DragSourceListener dsl)</pre> <div>
+<p>Creates the <code>DragSourceContext</code> to handle the current drag operation. </p>
+<p> To incorporate a new <code>DragSourceContext</code> subclass, subclass <code>DragSource</code> and override this method. </p>
+<p> If <code>dragImage</code> is <code>null</code>, no image is used to represent the drag over feedback for this drag operation, but <code>NullPointerException</code> is not thrown. </p>
+<p> If <code>dsl</code> is <code>null</code>, no drag source listener is registered with the created <code>DragSourceContext</code>, but <code>NullPointerException</code> is not thrown.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>dscp</code> - The <code>DragSourceContextPeer</code> for this drag</dd> <dd>
+<code>dgl</code> - The <code>DragGestureEvent</code> that triggered the drag</dd> <dd>
+<code>dragCursor</code> - The initial <code>Cursor</code> for this drag operation or <code>null</code> for the default cursor handling; see <a href="../dragsourcecontext/#defaultCursor">DragSourceContext</a> class for more details on the cursor handling mechanism during drag and drop</dd> <dd>
+<code>dragImage</code> - The <code>Image</code> to drag or <code>null</code>
+</dd> <dd>
+<code>imageOffset</code> - The offset of the <code>Image</code> origin from the hotspot of the cursor at the instant of the trigger</dd> <dd>
+<code>t</code> - The subject data of the drag</dd> <dd>
+<code>dsl</code> - The <code>DragSourceListener</code>
+</dd> <dt>Returns:</dt> <dd>the <code>DragSourceContext</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>dscp</code> is <code>null</code>
+</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>dgl</code> is <code>null</code>
+</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>dragImage</code> is not <code>null</code> and <code>imageOffset</code> is <code>null</code>
+</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>t</code> is <code>null</code>
+</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the <code>Component</code> associated with the trigger event is <code>null</code>.</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the <code>DragSource</code> for the trigger event is <code>null</code>.</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the drag action for the trigger event is <code>DnDConstants.ACTION_NONE</code>.</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the source actions for the <code>DragGestureRecognizer</code> associated with the trigger event are equal to <code>DnDConstants.ACTION_NONE</code>.</dd> </dl>    <h3 id="getFlavorMap--">getFlavorMap</h3> <pre data-language="java">public FlavorMap getFlavorMap()</pre> <div>
+<p>This method returns the <code>FlavorMap</code> for this <code>DragSource</code>. </p>
+
+</div> <dl> <dt>Returns:</dt> <dd>the <code>FlavorMap</code> for this <code>DragSource</code>
+</dd> </dl>    <h3 id="createDragGestureRecognizer-java.lang.Class-java.awt.Component-int-java.awt.dnd.DragGestureListener-">createDragGestureRecognizer</h3> <pre data-language="java">public &lt;T extends DragGestureRecognizer&gt; T createDragGestureRecognizer(Class&lt;T&gt; recognizerAbstractClass,
+                                                                       Component c,
+                                                                       int actions,
+                                                                       DragGestureListener dgl)</pre> <div>
+<p>Creates a new <code>DragGestureRecognizer</code> that implements the specified abstract subclass of <code>DragGestureRecognizer</code>, and sets the specified <code>Component</code> and <code>DragGestureListener</code> on the newly created object. </p>
+
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>recognizerAbstractClass</code> - the requested abstract type</dd> <dd>
+<code>actions</code> - the permitted source drag actions</dd> <dd>
+<code>c</code> - the <code>Component</code> target</dd> <dd>
+<code>dgl</code> - the <code>DragGestureListener</code> to notify 
+</dd> <dt>Returns:</dt> <dd>the new <code>DragGestureRecognizer</code> or <code>null</code> if the <code>Toolkit.createDragGestureRecognizer</code> method has no implementation available for the requested <code>DragGestureRecognizer</code> subclass and returns <code>null</code>
+</dd> </dl>    <h3 id="createDefaultDragGestureRecognizer-java.awt.Component-int-java.awt.dnd.DragGestureListener-">createDefaultDragGestureRecognizer</h3> <pre data-language="java">public DragGestureRecognizer createDefaultDragGestureRecognizer(Component c,
+                                                                int actions,
+                                                                DragGestureListener dgl)</pre> <div>
+<p>Creates a new <code>DragGestureRecognizer</code> that implements the default abstract subclass of <code>DragGestureRecognizer</code> for this <code>DragSource</code>, and sets the specified <code>Component</code> and <code>DragGestureListener</code> on the newly created object. For this <code>DragSource</code> the default is <code>MouseDragGestureRecognizer</code>. </p>
+
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>c</code> - the <code>Component</code> target for the recognizer</dd> <dd>
+<code>actions</code> - the permitted source actions</dd> <dd>
+<code>dgl</code> - the <code>DragGestureListener</code> to notify 
+</dd> <dt>Returns:</dt> <dd>the new <code>DragGestureRecognizer</code> or <code>null</code> if the <code>Toolkit.createDragGestureRecognizer</code> method has no implementation available for the requested <code>DragGestureRecognizer</code> subclass and returns <code>null</code>
+</dd> </dl>    <h3 id="addDragSourceListener-java.awt.dnd.DragSourceListener-">addDragSourceListener</h3> <pre data-language="java">public void addDragSourceListener(DragSourceListener dsl)</pre> <p>Adds the specified <code>DragSourceListener</code> to this <code>DragSource</code> to receive drag source events during drag operations intiated with this <code>DragSource</code>. If a <code>null</code> listener is specified, no action is taken and no exception is thrown.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>dsl</code> - the <code>DragSourceListener</code> to add</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../dragsource/#removeDragSourceListener-java.awt.dnd.DragSourceListener-"><code>removeDragSourceListener(java.awt.dnd.DragSourceListener)</code></a>, <a href="../dragsource/#getDragSourceListeners--"><code>getDragSourceListeners()</code></a>
+</dd> </dl>    <h3 id="removeDragSourceListener-java.awt.dnd.DragSourceListener-">removeDragSourceListener</h3> <pre data-language="java">public void removeDragSourceListener(DragSourceListener dsl)</pre> <p>Removes the specified <code>DragSourceListener</code> from this <code>DragSource</code>. If a <code>null</code> listener is specified, no action is taken and no exception is thrown. If the listener specified by the argument was not previously added to this <code>DragSource</code>, no action is taken and no exception is thrown.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>dsl</code> - the <code>DragSourceListener</code> to remove</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../dragsource/#addDragSourceListener-java.awt.dnd.DragSourceListener-"><code>addDragSourceListener(java.awt.dnd.DragSourceListener)</code></a>, <a href="../dragsource/#getDragSourceListeners--"><code>getDragSourceListeners()</code></a>
+</dd> </dl>    <h3 id="getDragSourceListeners--">getDragSourceListeners</h3> <pre data-language="java">public DragSourceListener[] getDragSourceListeners()</pre> <p>Gets all the <code>DragSourceListener</code>s registered with this <code>DragSource</code>.</p> <dl> <dt>Returns:</dt> <dd>all of this <code>DragSource</code>'s <code>DragSourceListener</code>s or an empty array if no such listeners are currently registered</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../dragsource/#addDragSourceListener-java.awt.dnd.DragSourceListener-"><code>addDragSourceListener(java.awt.dnd.DragSourceListener)</code></a>, <a href="../dragsource/#removeDragSourceListener-java.awt.dnd.DragSourceListener-"><code>removeDragSourceListener(java.awt.dnd.DragSourceListener)</code></a>
+</dd> </dl>    <h3 id="addDragSourceMotionListener-java.awt.dnd.DragSourceMotionListener-">addDragSourceMotionListener</h3> <pre data-language="java">public void addDragSourceMotionListener(DragSourceMotionListener dsml)</pre> <p>Adds the specified <code>DragSourceMotionListener</code> to this <code>DragSource</code> to receive drag motion events during drag operations intiated with this <code>DragSource</code>. If a <code>null</code> listener is specified, no action is taken and no exception is thrown.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>dsml</code> - the <code>DragSourceMotionListener</code> to add</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../dragsource/#removeDragSourceMotionListener-java.awt.dnd.DragSourceMotionListener-"><code>removeDragSourceMotionListener(java.awt.dnd.DragSourceMotionListener)</code></a>, <a href="../dragsource/#getDragSourceMotionListeners--"><code>getDragSourceMotionListeners()</code></a>
+</dd> </dl>    <h3 id="removeDragSourceMotionListener-java.awt.dnd.DragSourceMotionListener-">removeDragSourceMotionListener</h3> <pre data-language="java">public void removeDragSourceMotionListener(DragSourceMotionListener dsml)</pre> <p>Removes the specified <code>DragSourceMotionListener</code> from this <code>DragSource</code>. If a <code>null</code> listener is specified, no action is taken and no exception is thrown. If the listener specified by the argument was not previously added to this <code>DragSource</code>, no action is taken and no exception is thrown.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>dsml</code> - the <code>DragSourceMotionListener</code> to remove</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../dragsource/#addDragSourceMotionListener-java.awt.dnd.DragSourceMotionListener-"><code>addDragSourceMotionListener(java.awt.dnd.DragSourceMotionListener)</code></a>, <a href="../dragsource/#getDragSourceMotionListeners--"><code>getDragSourceMotionListeners()</code></a>
+</dd> </dl>    <h3 id="getDragSourceMotionListeners--">getDragSourceMotionListeners</h3> <pre data-language="java">public DragSourceMotionListener[] getDragSourceMotionListeners()</pre> <p>Gets all of the <code>DragSourceMotionListener</code>s registered with this <code>DragSource</code>.</p> <dl> <dt>Returns:</dt> <dd>all of this <code>DragSource</code>'s <code>DragSourceMotionListener</code>s or an empty array if no such listeners are currently registered</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../dragsource/#addDragSourceMotionListener-java.awt.dnd.DragSourceMotionListener-"><code>addDragSourceMotionListener(java.awt.dnd.DragSourceMotionListener)</code></a>, <a href="../dragsource/#removeDragSourceMotionListener-java.awt.dnd.DragSourceMotionListener-"><code>removeDragSourceMotionListener(java.awt.dnd.DragSourceMotionListener)</code></a>
+</dd> </dl>    <h3 id="getListeners-java.lang.Class-">getListeners</h3> <pre data-language="java">public &lt;T extends EventListener&gt; T[] getListeners(Class&lt;T&gt; listenerType)</pre> <p>Gets all the objects currently registered as <code><em>Foo</em>Listener</code>s upon this <code>DragSource</code>. <code><em>Foo</em>Listener</code>s are registered using the <code>add<em>Foo</em>Listener</code> method.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>listenerType</code> - the type of listeners requested; this parameter should specify an interface that descends from <code>java.util.EventListener</code>
+</dd> <dt>Returns:</dt> <dd>an array of all objects registered as <code><em>Foo</em>Listener</code>s on this <code>DragSource</code>, or an empty array if no such listeners have been added</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/classcastexception/">ClassCastException</a></code> - if <code>listenerType</code> doesn't specify a class or interface that implements <code>java.util.EventListener</code>
+</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../dragsource/#getDragSourceListeners--"><code>getDragSourceListeners()</code></a>, <a href="../dragsource/#getDragSourceMotionListeners--"><code>getDragSourceMotionListeners()</code></a>
+</dd> </dl>    <h3 id="getDragThreshold--">getDragThreshold</h3> <pre data-language="java">public static int getDragThreshold()</pre> <div>
+<p>Returns the drag gesture motion threshold. The drag gesture motion threshold defines the recommended behavior for <a href="../mousedraggesturerecognizer/"><code>MouseDragGestureRecognizer</code></a>s. </p>
+<p> If the system property <code>awt.dnd.drag.threshold</code> is set to a positive integer, this method returns the value of the system property; otherwise if a pertinent desktop property is available and supported by the implementation of the Java platform, this method returns the value of that property; otherwise this method returns some default value. The pertinent desktop property can be queried using <code>java.awt.Toolkit.getDesktopProperty("DnD.gestureMotionThreshold")</code>.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the drag gesture motion threshold</dd> <dt>Since:</dt> <dd>1.5</dd> <dt>See Also:</dt> <dd><a href="../mousedraggesturerecognizer/"><code>MouseDragGestureRecognizer</code></a></dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

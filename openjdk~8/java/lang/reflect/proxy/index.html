@@ -1,0 +1,198 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Proxy - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="Proxy provides static methods for creating dynamic proxy classes and instances, and it is also the superclass of all dynamic proxy classes created &hellip;">
+  <meta name="keywords" content="class, proxy, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/lang/reflect/proxy/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class Proxy</h1>   <ul class="inheritance"> <li><a href="../../object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.lang.reflect.Proxy</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="../../../io/serializable/">Serializable</a></dd> </dl>   <pre data-language="java">public class Proxy
+extends Object
+implements Serializable</pre> <div>
+<p><code>Proxy</code> provides static methods for creating dynamic proxy classes and instances, and it is also the superclass of all dynamic proxy classes created by those methods. </p>
+<p>To create a proxy for some interface <code>Foo</code>: </p>
+<pre data-language="java">InvocationHandler handler = new MyInvocationHandler(...);
+     Class&lt;?&gt; proxyClass = Proxy.getProxyClass(Foo.class.getClassLoader(), Foo.class);
+     Foo f = (Foo) proxyClass.getConstructor(InvocationHandler.class).
+                     newInstance(handler);</pre> or more simply: <pre data-language="java">Foo f = (Foo) Proxy.newProxyInstance(Foo.class.getClassLoader(),
+                                          new Class&lt;?&gt;[] { Foo.class },
+                                          handler);</pre> <p>A <i>dynamic proxy class</i> (simply referred to as a <i>proxy class</i> below) is a class that implements a list of interfaces specified at runtime when the class is created, with behavior as described below. A <i>proxy interface</i> is such an interface that is implemented by a proxy class. A <i>proxy instance</i> is an instance of a proxy class. Each proxy instance has an associated <i>invocation handler</i> object, which implements the interface <a href="../invocationhandler/"><code>InvocationHandler</code></a>. A method invocation on a proxy instance through one of its proxy interfaces will be dispatched to the <a href="../invocationhandler/#invoke-java.lang.Object-java.lang.reflect.Method-java.lang.Object:A-"><code>invoke</code></a> method of the instance's invocation handler, passing the proxy instance, a <code>java.lang.reflect.Method</code> object identifying the method that was invoked, and an array of type <code>Object</code> containing the arguments. The invocation handler processes the encoded method invocation as appropriate and the result that it returns will be returned as the result of the method invocation on the proxy instance. </p>
+<p>A proxy class has the following properties: </p>
+<ul> <li>Proxy classes are <em>public, final, and not abstract</em> if all proxy interfaces are public.</li> <li>Proxy classes are <em>non-public, final, and not abstract</em> if any of the proxy interfaces is non-public.</li> <li>The unqualified name of a proxy class is unspecified. The space of class names that begin with the string <code>"$Proxy"</code> should be, however, reserved for proxy classes. </li>
+<li>A proxy class extends <code>java.lang.reflect.Proxy</code>. </li>
+<li>A proxy class implements exactly the interfaces specified at its creation, in the same order. </li>
+<li>If a proxy class implements a non-public interface, then it will be defined in the same package as that interface. Otherwise, the package of a proxy class is also unspecified. Note that package sealing will not prevent a proxy class from being successfully defined in a particular package at runtime, and neither will classes already defined by the same class loader and the same package with particular signers. </li>
+<li>Since a proxy class implements all of the interfaces specified at its creation, invoking <code>getInterfaces</code> on its <code>Class</code> object will return an array containing the same list of interfaces (in the order specified at its creation), invoking <code>getMethods</code> on its <code>Class</code> object will return an array of <code>Method</code> objects that include all of the methods in those interfaces, and invoking <code>getMethod</code> will find methods in the proxy interfaces as would be expected. </li>
+<li>The <a href="../proxy/#isProxyClass-java.lang.Class-"><code>Proxy.isProxyClass</code></a> method will return true if it is passed a proxy class-- a class returned by <code>Proxy.getProxyClass</code> or the class of an object returned by <code>Proxy.newProxyInstance</code>-- and false otherwise. </li>
+<li>The <code>java.security.ProtectionDomain</code> of a proxy class is the same as that of system classes loaded by the bootstrap class loader, such as <code>java.lang.Object</code>, because the code for a proxy class is generated by trusted system code. This protection domain will typically be granted <code>java.security.AllPermission</code>. </li>
+<li>Each proxy class has one public constructor that takes one argument, an implementation of the interface <a href="../invocationhandler/"><code>InvocationHandler</code></a>, to set the invocation handler for a proxy instance. Rather than having to use the reflection API to access the public constructor, a proxy instance can be also be created by calling the <a href="../proxy/#newProxyInstance-java.lang.ClassLoader-java.lang.Class:A-java.lang.reflect.InvocationHandler-"><code>Proxy.newProxyInstance</code></a> method, which combines the actions of calling <a href="../proxy/#getProxyClass-java.lang.ClassLoader-java.lang.Class...-"><code>Proxy.getProxyClass</code></a> with invoking the constructor with an invocation handler. </li>
+</ul> <p>A proxy instance has the following properties: </p>
+<ul> <li>Given a proxy instance <code>proxy</code> and one of the interfaces implemented by its proxy class <code>Foo</code>, the following expression will return true: <pre data-language="java">proxy instanceof Foo</pre> and the following cast operation will succeed (rather than throwing a <code>ClassCastException</code>): <pre data-language="java">(Foo) proxy</pre> </li>
+<li>Each proxy instance has an associated invocation handler, the one that was passed to its constructor. The static <a href="../proxy/#getInvocationHandler-java.lang.Object-"><code>Proxy.getInvocationHandler</code></a> method will return the invocation handler associated with the proxy instance passed as its argument. </li>
+<li>An interface method invocation on a proxy instance will be encoded and dispatched to the invocation handler's <a href="../invocationhandler/#invoke-java.lang.Object-java.lang.reflect.Method-java.lang.Object:A-"><code>invoke</code></a> method as described in the documentation for that method. </li>
+<li>An invocation of the <code>hashCode</code>, <code>equals</code>, or <code>toString</code> methods declared in <code>java.lang.Object</code> on a proxy instance will be encoded and dispatched to the invocation handler's <code>invoke</code> method in the same manner as interface method invocations are encoded and dispatched, as described above. The declaring class of the <code>Method</code> object passed to <code>invoke</code> will be <code>java.lang.Object</code>. Other public methods of a proxy instance inherited from <code>java.lang.Object</code> are not overridden by a proxy class, so invocations of those methods behave like they do for instances of <code>java.lang.Object</code>. </li>
+</ul> <h2>Methods Duplicated in Multiple Proxy Interfaces</h2> <p>When two or more interfaces of a proxy class contain a method with the same name and parameter signature, the order of the proxy class's interfaces becomes significant. When such a <i>duplicate method</i> is invoked on a proxy instance, the <code>Method</code> object passed to the invocation handler will not necessarily be the one whose declaring class is assignable from the reference type of the interface that the proxy's method was invoked through. This limitation exists because the corresponding method implementation in the generated proxy class cannot determine which interface it was invoked through. Therefore, when a duplicate method is invoked on a proxy instance, the <code>Method</code> object for the method in the foremost interface that contains the method (either directly or inherited through a superinterface) in the proxy class's list of interfaces is passed to the invocation handler's <code>invoke</code> method, regardless of the reference type through which the method invocation occurred. </p>
+<p>If a proxy interface contains a method with the same name and parameter signature as the <code>hashCode</code>, <code>equals</code>, or <code>toString</code> methods of <code>java.lang.Object</code>, when such a method is invoked on a proxy instance, the <code>Method</code> object passed to the invocation handler will have <code>java.lang.Object</code> as its declaring class. In other words, the public, non-final methods of <code>java.lang.Object</code> logically precede all of the proxy interfaces for the determination of which <code>Method</code> object to pass to the invocation handler. </p>
+<p>Note also that when a duplicate method is dispatched to an invocation handler, the <code>invoke</code> method may only throw checked exception types that are assignable to one of the exception types in the <code>throws</code> clause of the method in <i>all</i> of the proxy interfaces that it can be invoked through. If the <code>invoke</code> method throws a checked exception that is not assignable to any of the exception types declared by the method in one of the proxy interfaces that it can be invoked through, then an unchecked <code>UndeclaredThrowableException</code> will be thrown by the invocation on the proxy instance. This restriction means that not all of the exception types returned by invoking <code>getExceptionTypes</code> on the <code>Method</code> object passed to the <code>invoke</code> method can necessarily be thrown successfully by the <code>invoke</code> method.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.3</dd> <dt>See Also:</dt> <dd>
+<a href="../invocationhandler/"><code>InvocationHandler</code></a>, Serialized Form</dd> </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="h">h</h3> <pre data-language="java">protected InvocationHandler h</pre> <p>the invocation handler for this proxy instance.</p>     <h2 id="constructor.detail">Constructors</h2>   <h3 id="Proxy-java.lang.reflect.InvocationHandler-">Proxy</h3> <pre data-language="java">protected Proxy(InvocationHandler h)</pre> <p>Constructs a new <code>Proxy</code> instance from a subclass (typically, a dynamic proxy class) with the specified value for its invocation handler.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>h</code> - the invocation handler for this proxy instance</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the given invocation handler, <code>h</code>, is <code>null</code>.</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="getProxyClass-java.lang.ClassLoader-java.lang.Class...-">getProxyClass</h3> <pre data-language="java">public static Class&lt;?&gt; getProxyClass(ClassLoader loader,
+                                     Class&lt;?&gt;... interfaces)
+                              throws IllegalArgumentException</pre> <div>
+<p>Returns the <code>java.lang.Class</code> object for a proxy class given a class loader and an array of interfaces. The proxy class will be defined by the specified class loader and will implement all of the supplied interfaces. If any of the given interfaces is non-public, the proxy class will be non-public. If a proxy class for the same permutation of interfaces has already been defined by the class loader, then the existing proxy class will be returned; otherwise, a proxy class for those interfaces will be generated dynamically and defined by the class loader. </p>
+<p>There are several restrictions on the parameters that may be passed to <code>Proxy.getProxyClass</code>: </p>
+<ul> <li>All of the <code>Class</code> objects in the <code>interfaces</code> array must represent interfaces, not classes or primitive types. </li>
+<li>No two elements in the <code>interfaces</code> array may refer to identical <code>Class</code> objects. </li>
+<li>All of the interface types must be visible by name through the specified class loader. In other words, for class loader <code>cl</code> and every interface <code>i</code>, the following expression must be true: <pre data-language="java">Class.forName(i.getName(), false, cl) == i</pre> </li>
+<li>All non-public interfaces must be in the same package; otherwise, it would not be possible for the proxy class to implement all of the interfaces, regardless of what package it is defined in. </li>
+<li>For any set of member methods of the specified interfaces that have the same signature: <ul> <li>If the return type of any of the methods is a primitive type or void, then all of the methods must have that same return type. </li>
+<li>Otherwise, one of the methods must have a return type that is assignable to all of the return types of the rest of the methods. </li>
+</ul> </li>
+<li>The resulting proxy class must not exceed any limits imposed on classes by the virtual machine. For example, the VM may limit the number of interfaces that a class may implement to 65535; in that case, the size of the <code>interfaces</code> array must not exceed 65535. </li>
+</ul> <p>If any of these restrictions are violated, <code>Proxy.getProxyClass</code> will throw an <code>IllegalArgumentException</code>. If the <code>interfaces</code> array argument or any of its elements are <code>null</code>, a <code>NullPointerException</code> will be thrown. </p>
+<p>Note that the order of the specified proxy interfaces is significant: two requests for a proxy class with the same combination of interfaces but in a different order will result in two distinct proxy classes.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>loader</code> - the class loader to define the proxy class</dd> <dd>
+<code>interfaces</code> - the list of interfaces for the proxy class to implement</dd> <dt>Returns:</dt> <dd>a proxy class that is defined in the specified class loader and that implements the specified interfaces</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../illegalargumentexception/">IllegalArgumentException</a></code> - if any of the restrictions on the parameters that may be passed to <code>getProxyClass</code> are violated</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager, <em>s</em>, is present and any of the following conditions is met: <ul> <li> the given <code>loader</code> is <code>null</code> and the caller's class loader is not <code>null</code> and the invocation of <a href="../../securitymanager/#checkPermission-java.security.Permission-"><code>s.checkPermission</code></a> with <code>RuntimePermission("getClassLoader")</code> permission denies access.</li> <li> for each proxy interface, <code>intf</code>, the caller's class loader is not the same as or an ancestor of the class loader for <code>intf</code> and invocation of <a href="../../securitymanager/#checkPackageAccess-java.lang.String-"><code>s.checkPackageAccess()</code></a> denies access to <code>intf</code>.</li> </ul>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the <code>interfaces</code> array argument or any of its elements are <code>null</code>
+</dd> </dl>    <h3 id="newProxyInstance-java.lang.ClassLoader-java.lang.Class:A-java.lang.reflect.InvocationHandler-">newProxyInstance</h3> <pre data-language="java">public static Object newProxyInstance(ClassLoader loader,
+                                      Class&lt;?&gt;[] interfaces,
+                                      InvocationHandler h)
+                               throws IllegalArgumentException</pre> <div>
+<p>Returns an instance of a proxy class for the specified interfaces that dispatches method invocations to the specified invocation handler. </p>
+<p><code>Proxy.newProxyInstance</code> throws <code>IllegalArgumentException</code> for the same reasons that <code>Proxy.getProxyClass</code> does.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>loader</code> - the class loader to define the proxy class</dd> <dd>
+<code>interfaces</code> - the list of interfaces for the proxy class to implement</dd> <dd>
+<code>h</code> - the invocation handler to dispatch method invocations to</dd> <dt>Returns:</dt> <dd>a proxy instance with the specified invocation handler of a proxy class that is defined by the specified class loader and that implements the specified interfaces</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../illegalargumentexception/">IllegalArgumentException</a></code> - if any of the restrictions on the parameters that may be passed to <code>getProxyClass</code> are violated</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager, <em>s</em>, is present and any of the following conditions is met: <ul> <li> the given <code>loader</code> is <code>null</code> and the caller's class loader is not <code>null</code> and the invocation of <a href="../../securitymanager/#checkPermission-java.security.Permission-"><code>s.checkPermission</code></a> with <code>RuntimePermission("getClassLoader")</code> permission denies access;</li> <li> for each proxy interface, <code>intf</code>, the caller's class loader is not the same as or an ancestor of the class loader for <code>intf</code> and invocation of <a href="../../securitymanager/#checkPackageAccess-java.lang.String-"><code>s.checkPackageAccess()</code></a> denies access to <code>intf</code>;</li> <li> any of the given proxy interfaces is non-public and the caller class is not in the same <a href="../../package/">runtime package</a> as the non-public interface and the invocation of <a href="../../securitymanager/#checkPermission-java.security.Permission-"><code>s.checkPermission</code></a> with <code>ReflectPermission("newProxyInPackage.{package name}")</code> permission denies access.</li> </ul>
+</dd> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if the <code>interfaces</code> array argument or any of its elements are <code>null</code>, or if the invocation handler, <code>h</code>, is <code>null</code>
+</dd> </dl>    <h3 id="isProxyClass-java.lang.Class-">isProxyClass</h3> <pre data-language="java">public static boolean isProxyClass(Class&lt;?&gt; cl)</pre> <div>
+<p>Returns true if and only if the specified class was dynamically generated to be a proxy class using the <code>getProxyClass</code> method or the <code>newProxyInstance</code> method. </p>
+<p>The reliability of this method is important for the ability to use it to make security decisions, so its implementation should not just test if the class in question extends <code>Proxy</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>cl</code> - the class to test</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the class is a proxy class and <code>false</code> otherwise</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../nullpointerexception/">NullPointerException</a></code> - if <code>cl</code> is <code>null</code>
+</dd> </dl>    <h3 id="getInvocationHandler-java.lang.Object-">getInvocationHandler</h3> <pre data-language="java">public static InvocationHandler getInvocationHandler(Object proxy)
+                                              throws IllegalArgumentException</pre> <p>Returns the invocation handler for the specified proxy instance.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>proxy</code> - the proxy instance to return the invocation handler for</dd> <dt>Returns:</dt> <dd>the invocation handler for the proxy instance</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../illegalargumentexception/">IllegalArgumentException</a></code> - if the argument is not a proxy instance</dd> <dd>
+<code><a href="../../securityexception/">SecurityException</a></code> - if a security manager, <em>s</em>, is present and the caller's class loader is not the same as or an ancestor of the class loader for the invocation handler and invocation of <a href="../../securitymanager/#checkPackageAccess-java.lang.String-"><code>s.checkPackageAccess()</code></a> denies access to the invocation handler's class.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,196 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Selector - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" A multiplexor of SelectableChannel objects. ">
+  <meta name="keywords" content="class, selector, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/nio/channels/selector/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class Selector</h1>   <ul class="inheritance"> <li><a href="../../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.nio.channels.Selector</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../../io/closeable/">Closeable</a>, <a href="../../../lang/autocloseable/">AutoCloseable</a>
+</dd> </dl> <dl> <dt>Direct Known Subclasses:</dt> <dd><a href="../spi/abstractselector/">AbstractSelector</a></dd> </dl>   <pre data-language="java">public abstract class Selector
+extends Object
+implements Closeable</pre> <div>
+<p>A multiplexor of <a href="../selectablechannel/"><code>SelectableChannel</code></a> objects. </p>
+<p> A selector may be created by invoking the <a href="../selector/#open--"><code>open</code></a> method of this class, which will use the system's default <a href="../spi/selectorprovider/"><code>selector provider</code></a> to create a new selector. A selector may also be created by invoking the <a href="../spi/selectorprovider/#openSelector--"><code>openSelector</code></a> method of a custom selector provider. A selector remains open until it is closed via its <a href="../selector/#close--"><code>close</code></a> method.  </p>
+<p> A selectable channel's registration with a selector is represented by a <a href="../selectionkey/"><code>SelectionKey</code></a> object. A selector maintains three sets of selection keys: </p>
+<ul> <li><p> The <i>key set</i> contains the keys representing the current channel registrations of this selector. This set is returned by the <a href="../selector/#keys--"><code>keys</code></a> method. </p></li> <li><p> The <i>selected-key set</i> is the set of keys such that each key's channel was detected to be ready for at least one of the operations identified in the key's interest set during a prior selection operation. This set is returned by the <a href="../selector/#selectedKeys--"><code>selectedKeys</code></a> method. The selected-key set is always a subset of the key set. </p></li> <li><p> The <i>cancelled-key</i> set is the set of keys that have been cancelled but whose channels have not yet been deregistered. This set is not directly accessible. The cancelled-key set is always a subset of the key set. </p></li> </ul> <p> All three sets are empty in a newly-created selector. </p>
+<p> A key is added to a selector's key set as a side effect of registering a channel via the channel's <a href="../selectablechannel/#register-java.nio.channels.Selector-int-"><code>register</code></a> method. Cancelled keys are removed from the key set during selection operations. The key set itself is not directly modifiable. </p>
+<p> A key is added to its selector's cancelled-key set when it is cancelled, whether by closing its channel or by invoking its <a href="../selectionkey/#cancel--"><code>cancel</code></a> method. Cancelling a key will cause its channel to be deregistered during the next selection operation, at which time the key will removed from all of the selector's key sets. </p>
+<p> Keys are added to the selected-key set by selection operations. A key may be removed directly from the selected-key set by invoking the set's <a href="../../../util/set/#remove-java.lang.Object-"><code>remove</code></a> method or by invoking the <a href="../../../util/iterator/#remove--"><code>remove</code></a> method of an <a href="../../../util/iterator/"><code>iterator</code></a> obtained from the set. Keys are never removed from the selected-key set in any other way; they are not, in particular, removed as a side effect of selection operations. Keys may not be added directly to the selected-key set. </p>  <h2 id="selop">Selection</h2> <p> During each selection operation, keys may be added to and removed from a selector's selected-key set and may be removed from its key and cancelled-key sets. Selection is performed by the <a href="../selector/#select--"><code>select()</code></a>, <a href="../selector/#select-long-"><code>select(long)</code></a>, and <a href="../selector/#selectNow--"><code>selectNow()</code></a> methods, and involves three steps: </p> <ol> <li><p> Each key in the cancelled-key set is removed from each key set of which it is a member, and its channel is deregistered. This step leaves the cancelled-key set empty. </p></li> <li>
+<p> The underlying operating system is queried for an update as to the readiness of each remaining channel to perform any of the operations identified by its key's interest set as of the moment that the selection operation began. For a channel that is ready for at least one such operation, one of the following two actions is performed: </p> <ol> <li><p> If the channel's key is not already in the selected-key set then it is added to that set and its ready-operation set is modified to identify exactly those operations for which the channel is now reported to be ready. Any readiness information previously recorded in the ready set is discarded. </p></li> <li><p> Otherwise the channel's key is already in the selected-key set, so its ready-operation set is modified to identify any new operations for which the channel is reported to be ready. Any readiness information previously recorded in the ready set is preserved; in other words, the ready set returned by the underlying system is bitwise-disjoined into the key's current ready set. </p></li> </ol> If all of the keys in the key set at the start of this step have empty interest sets then neither the selected-key set nor any of the keys' ready-operation sets will be updated. </li>
+<li><p> If any keys were added to the cancelled-key set while step (2) was in progress then they are processed as in step (1). </p></li> </ol> <p> Whether or not a selection operation blocks to wait for one or more channels to become ready, and if so for how long, is the only essential difference between the three selection methods. </p> <h2>Concurrency</h2> <p> Selectors are themselves safe for use by multiple concurrent threads; their key sets, however, are not. </p>
+<p> The selection operations synchronize on the selector itself, on the key set, and on the selected-key set, in that order. They also synchronize on the cancelled-key set during steps (1) and (3) above. </p>
+<p> Changes made to the interest sets of a selector's keys while a selection operation is in progress have no effect upon that operation; they will be seen by the next selection operation. </p>
+<p> Keys may be cancelled and channels may be closed at any time. Hence the presence of a key in one or more of a selector's key sets does not imply that the key is valid or that its channel is open. Application code should be careful to synchronize and check these conditions as necessary if there is any possibility that another thread will cancel a key or close a channel. </p>
+<p> A thread blocked in one of the <a href="../selector/#select--"><code>select()</code></a> or <a href="../selector/#select-long-"><code>select(long)</code></a> methods may be interrupted by some other thread in one of three ways: </p>
+<ul> <li><p> By invoking the selector's <a href="../selector/#wakeup--"><code>wakeup</code></a> method, </p></li> <li><p> By invoking the selector's <a href="../selector/#close--"><code>close</code></a> method, or </p></li> <li><p> By invoking the blocked thread's <a href="../../../lang/thread/#interrupt--"><code>interrupt</code></a> method, in which case its interrupt status will be set and the selector's <a href="../selector/#wakeup--"><code>wakeup</code></a> method will be invoked. </p></li> </ul> <p> The <a href="../selector/#close--"><code>close</code></a> method synchronizes on the selector and all three key sets in the same order as in a selection operation.  </p>
+<p> A selector's key and selected-key sets are not, in general, safe for use by multiple concurrent threads. If such a thread might modify one of these sets directly then access should be controlled by synchronizing on the set itself. The iterators returned by these sets' <a href="../../../util/set/#iterator--"><code>iterator</code></a> methods are <i>fail-fast:</i> If the set is modified after the iterator is created, in any way except by invoking the iterator's own <a href="../../../util/iterator/#remove--"><code>remove</code></a> method, then a <a href="../../../util/concurrentmodificationexception/"><code>ConcurrentModificationException</code></a> will be thrown. </p>
+</div> <dl> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../selectablechannel/"><code>SelectableChannel</code></a>, <a href="../selectionkey/"><code>SelectionKey</code></a>
+</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="Selector--">Selector</h3> <pre data-language="java">protected Selector()</pre> <p>Initializes a new instance of this class.</p>     <h2 id="method.detail">Methods</h2>   <h3 id="open--">open</h3> <pre data-language="java">public static Selector open()
+                     throws IOException</pre> <div>
+<p>Opens a selector. </p>
+<p> The new selector is created by invoking the <a href="../spi/selectorprovider/#openSelector--"><code>openSelector</code></a> method of the system-wide default <a href="../spi/selectorprovider/"><code>SelectorProvider</code></a> object. </p>
+</div> <dl> <dt>Returns:</dt> <dd>A new selector</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - If an I/O error occurs</dd> </dl>    <h3 id="isOpen--">isOpen</h3> <pre data-language="java">public abstract boolean isOpen()</pre> <p>Tells whether or not this selector is open.</p> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if, and only if, this selector is open</dd> </dl>    <h3 id="provider--">provider</h3> <pre data-language="java">public abstract SelectorProvider provider()</pre> <p>Returns the provider that created this channel.</p> <dl> <dt>Returns:</dt> <dd>The provider that created this channel</dd> </dl>    <h3 id="keys--">keys</h3> <pre data-language="java">public abstract Set&lt;SelectionKey&gt; keys()</pre> <div>
+<p>Returns this selector's key set. </p>
+<p> The key set is not directly modifiable. A key is removed only after it has been cancelled and its channel has been deregistered. Any attempt to modify the key set will cause an <a href="../../../lang/unsupportedoperationexception/"><code>UnsupportedOperationException</code></a> to be thrown. </p>
+<p> The key set is <a href="#ksc">not thread-safe</a>. </p>
+</div> <dl> <dt>Returns:</dt> <dd>This selector's key set</dd> <dt>Throws:</dt> <dd>
+<code><a href="../closedselectorexception/">ClosedSelectorException</a></code> - If this selector is closed</dd> </dl>    <h3 id="selectedKeys--">selectedKeys</h3> <pre data-language="java">public abstract Set&lt;SelectionKey&gt; selectedKeys()</pre> <div>
+<p>Returns this selector's selected-key set. </p>
+<p> Keys may be removed from, but not directly added to, the selected-key set. Any attempt to add an object to the key set will cause an <a href="../../../lang/unsupportedoperationexception/"><code>UnsupportedOperationException</code></a> to be thrown. </p>
+<p> The selected-key set is <a href="#ksc">not thread-safe</a>. </p>
+</div> <dl> <dt>Returns:</dt> <dd>This selector's selected-key set</dd> <dt>Throws:</dt> <dd>
+<code><a href="../closedselectorexception/">ClosedSelectorException</a></code> - If this selector is closed</dd> </dl>    <h3 id="selectNow--">selectNow</h3> <pre data-language="java">public abstract int selectNow()
+                       throws IOException</pre> <div>
+<p>Selects a set of keys whose corresponding channels are ready for I/O operations. </p>
+<p> This method performs a non-blocking <a href="#selop">selection operation</a>. If no channels have become selectable since the previous selection operation then this method immediately returns zero. </p>
+<p> Invoking this method clears the effect of any previous invocations of the <a href="../selector/#wakeup--"><code>wakeup</code></a> method. </p>
+</div> <dl> <dt>Returns:</dt> <dd>The number of keys, possibly zero, whose ready-operation sets were updated by the selection operation</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - If an I/O error occurs</dd> <dd>
+<code><a href="../closedselectorexception/">ClosedSelectorException</a></code> - If this selector is closed</dd> </dl>    <h3 id="select-long-">select</h3> <pre data-language="java">public abstract int select(long timeout)
+                    throws IOException</pre> <div>
+<p>Selects a set of keys whose corresponding channels are ready for I/O operations. </p>
+<p> This method performs a blocking <a href="#selop">selection operation</a>. It returns only after at least one channel is selected, this selector's <a href="../selector/#wakeup--"><code>wakeup</code></a> method is invoked, the current thread is interrupted, or the given timeout period expires, whichever comes first. </p>
+<p> This method does not offer real-time guarantees: It schedules the timeout as if by invoking the <a href="../../../lang/object/#wait-long-"><code>Object.wait(long)</code></a> method. </p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>timeout</code> - If positive, block for up to <code>timeout</code> milliseconds, more or less, while waiting for a channel to become ready; if zero, block indefinitely; must not be negative</dd> <dt>Returns:</dt> <dd>The number of keys, possibly zero, whose ready-operation sets were updated</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - If an I/O error occurs</dd> <dd>
+<code><a href="../closedselectorexception/">ClosedSelectorException</a></code> - If this selector is closed</dd> <dd>
+<code><a href="../../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - If the value of the timeout argument is negative</dd> </dl>    <h3 id="select--">select</h3> <pre data-language="java">public abstract int select()
+                    throws IOException</pre> <div>
+<p>Selects a set of keys whose corresponding channels are ready for I/O operations. </p>
+<p> This method performs a blocking <a href="#selop">selection operation</a>. It returns only after at least one channel is selected, this selector's <a href="../selector/#wakeup--"><code>wakeup</code></a> method is invoked, or the current thread is interrupted, whichever comes first. </p>
+</div> <dl> <dt>Returns:</dt> <dd>The number of keys, possibly zero, whose ready-operation sets were updated</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - If an I/O error occurs</dd> <dd>
+<code><a href="../closedselectorexception/">ClosedSelectorException</a></code> - If this selector is closed</dd> </dl>    <h3 id="wakeup--">wakeup</h3> <pre data-language="java">public abstract Selector wakeup()</pre> <div>
+<p>Causes the first selection operation that has not yet returned to return immediately. </p>
+<p> If another thread is currently blocked in an invocation of the <a href="../selector/#select--"><code>select()</code></a> or <a href="../selector/#select-long-"><code>select(long)</code></a> methods then that invocation will return immediately. If no selection operation is currently in progress then the next invocation of one of these methods will return immediately unless the <a href="../selector/#selectNow--"><code>selectNow()</code></a> method is invoked in the meantime. In any case the value returned by that invocation may be non-zero. Subsequent invocations of the <a href="../selector/#select--"><code>select()</code></a> or <a href="../selector/#select-long-"><code>select(long)</code></a> methods will block as usual unless this method is invoked again in the meantime. </p>
+<p> Invoking this method more than once between two successive selection operations has the same effect as invoking it just once. </p>
+</div> <dl> <dt>Returns:</dt> <dd>This selector</dd> </dl>    <h3 id="close--">close</h3> <pre data-language="java">public abstract void close()
+                    throws IOException</pre> <div>
+<p>Closes this selector. </p>
+<p> If a thread is currently blocked in one of this selector's selection methods then it is interrupted as if by invoking the selector's <a href="../selector/#wakeup--"><code>wakeup</code></a> method. </p>
+<p> Any uncancelled keys still associated with this selector are invalidated, their channels are deregistered, and any other resources associated with this selector are released. </p>
+<p> If this selector is already closed then invoking this method has no effect. </p>
+<p> After a selector is closed, any further attempt to use it, except by invoking this method or the <a href="../selector/#wakeup--"><code>wakeup</code></a> method, will cause a <a href="../closedselectorexception/"><code>ClosedSelectorException</code></a> to be thrown. </p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../../io/closeable/#close--">close</a></code> in interface <code><a href="../../../io/closeable/">Closeable</a></code>
+</dd> <dt>Specified by:</dt> <dd>
+<code><a href="../../../lang/autocloseable/#close--">close</a></code> in interface <code><a href="../../../lang/autocloseable/">AutoCloseable</a></code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../io/ioexception/">IOException</a></code> - If an I/O error occurs</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,228 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ChoiceFormat - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A ChoiceFormat allows you to attach a format to a range of numbers. It is generally used in a MessageFormat for handling plurals. The choice is &hellip;">
+  <meta name="keywords" content="class, choiceformat, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/text/choiceformat/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class ChoiceFormat</h1>   <ul class="inheritance"> <li><a href="../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../format/">java.text.Format</a></li> <li> <ul class="inheritance"> <li><a href="../numberformat/">java.text.NumberFormat</a></li> <li> <ul class="inheritance"> <li>java.text.ChoiceFormat</li> </ul> </li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../io/serializable/">Serializable</a>, <a href="../../lang/cloneable/">Cloneable</a>
+</dd> </dl>   <pre data-language="java">public class ChoiceFormat
+extends NumberFormat</pre> <div>
+<p>A <code>ChoiceFormat</code> allows you to attach a format to a range of numbers. It is generally used in a <code>MessageFormat</code> for handling plurals. The choice is specified with an ascending list of doubles, where each item specifies a half-open interval up to the next item: </p>
+<pre data-language="java">X matches j if and only if limit[j] ≤ X &lt; limit[j+1]</pre> If there is no match, then either the first or last index is used, depending on whether the number (X) is too low or too high. If the limit array is not in ascending order, the results of formatting will be incorrect. ChoiceFormat also accepts <code>\u221E</code> as equivalent to infinity(INF). 
+<p> <strong>Note:</strong> <code>ChoiceFormat</code> differs from the other <code>Format</code> classes in that you create a <code>ChoiceFormat</code> object with a constructor (not with a <code>getInstance</code> style factory method). The factory methods aren't necessary because <code>ChoiceFormat</code> doesn't require any complex setup for a given locale. In fact, <code>ChoiceFormat</code> doesn't implement any locale specific behavior. </p>
+<p> When creating a <code>ChoiceFormat</code>, you must specify an array of formats and an array of limits. The length of these arrays must be the same. For example, </p>
+<ul> <li> <em>limits</em> = {1,2,3,4,5,6,7}<br> <em>formats</em> = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"} </li>
+<li> <em>limits</em> = {0, 1, ChoiceFormat.nextDouble(1)}<br> <em>formats</em> = {"no files", "one file", "many files"}<br> (<code>nextDouble</code> can be used to get the next higher double, to make the half-open interval.) </li>
+</ul> <p> Here is a simple example that shows formatting and parsing: </p>
+<pre data-language="java">double[] limits = {1,2,3,4,5,6,7};
+String[] dayOfWeekNames = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
+ChoiceFormat form = new ChoiceFormat(limits, dayOfWeekNames);
+ParsePosition status = new ParsePosition(0);
+for (double i = 0.0; i &lt;= 8.0; ++i) {
+    status.setIndex(0);
+    System.out.println(i + " -&gt; " + form.format(i) + " -&gt; "
+                             + form.parse(form.format(i),status));
+}</pre> Here is a more complex example, with a pattern format: <pre data-language="java">double[] filelimits = {0,1,2};
+String[] filepart = {"are no files","is one file","are {2} files"};
+ChoiceFormat fileform = new ChoiceFormat(filelimits, filepart);
+Format[] testFormats = {fileform, null, NumberFormat.getInstance()};
+MessageFormat pattform = new MessageFormat("There {0} on {1}");
+pattform.setFormats(testFormats);
+Object[] testArgs = {null, "ADisk", null};
+for (int i = 0; i &lt; 4; ++i) {
+    testArgs[0] = new Integer(i);
+    testArgs[2] = testArgs[0];
+    System.out.println(pattform.format(testArgs));
+}</pre> <p> Specifying a pattern for ChoiceFormat objects is fairly straightforward. For example: </p>
+<pre data-language="java">ChoiceFormat fmt = new ChoiceFormat(
+     "-1#is negative| 0#is zero or fraction | 1#is one |1.0&lt;is 1+ |2#is two |2&lt;is more than 2.");
+System.out.println("Formatter Pattern : " + fmt.toPattern());
+
+System.out.println("Format with -INF : " + fmt.format(Double.NEGATIVE_INFINITY));
+System.out.println("Format with -1.0 : " + fmt.format(-1.0));
+System.out.println("Format with 0 : " + fmt.format(0));
+System.out.println("Format with 0.9 : " + fmt.format(0.9));
+System.out.println("Format with 1.0 : " + fmt.format(1));
+System.out.println("Format with 1.5 : " + fmt.format(1.5));
+System.out.println("Format with 2 : " + fmt.format(2));
+System.out.println("Format with 2.1 : " + fmt.format(2.1));
+System.out.println("Format with NaN : " + fmt.format(Double.NaN));
+System.out.println("Format with +INF : " + fmt.format(Double.POSITIVE_INFINITY));</pre> And the output result would be like the following: <pre data-language="java">Format with -INF : is negative
+Format with -1.0 : is negative
+Format with 0 : is zero or fraction
+Format with 0.9 : is zero or fraction
+Format with 1.0 : is one
+Format with 1.5 : is 1+
+Format with 2 : is two
+Format with 2.1 : is more than 2.
+Format with NaN : is negative
+Format with +INF : is more than 2.</pre> <h2><a name="synchronization">Synchronization</a></h2> <p> Choice formats are not synchronized. It is recommended to create separate format instances for each thread. If multiple threads access a format concurrently, it must be synchronized externally.</p>
+</div> <dl> <dt>See Also:</dt> <dd>
+<a href="../decimalformat/"><code>DecimalFormat</code></a>, <a href="../messageformat/"><code>MessageFormat</code></a>, Serialized Form</dd> </dl>       <h2 id="nested.class.summary">Nested Classes</h2>  <h2 id="nested.classes.inherited.from.class.java.text.NumberFormat">Nested classes/interfaces inherited from class java.text.<a href="../numberformat/">NumberFormat</a>
+</h2> <code><a href="../numberformat.field/">NumberFormat.Field</a></code>    <h2 id="field.summary">Fields</h2>  <h2 id="fields.inherited.from.class.java.text.NumberFormat">Fields inherited from class java.text.<a href="../numberformat/">NumberFormat</a>
+</h2> <code><a href="../numberformat/#FRACTION_FIELD">FRACTION_FIELD</a>, <a href="../numberformat/#INTEGER_FIELD">INTEGER_FIELD</a></code>    <h2 id="constructor.detail">Constructors</h2>   <h3 id="ChoiceFormat-java.lang.String-">ChoiceFormat</h3> <pre data-language="java">public ChoiceFormat(String newPattern)</pre> <p>Constructs with limits and corresponding formats based on the pattern.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>newPattern</code> - the new pattern string</dd> <dt>See Also:</dt> <dd><a href="../choiceformat/#applyPattern-java.lang.String-"><code>applyPattern(java.lang.String)</code></a></dd> </dl>    <h3 id="ChoiceFormat-double:A-java.lang.String:A-">ChoiceFormat</h3> <pre data-language="java">public ChoiceFormat(double[] limits,
+                    String[] formats)</pre> <p>Constructs with the limits and the corresponding formats.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>limits</code> - limits in ascending order</dd> <dd>
+<code>formats</code> - corresponding format strings</dd> <dt>See Also:</dt> <dd><a href="../choiceformat/#setChoices-double:A-java.lang.String:A-"><code>setChoices(double[], java.lang.String[])</code></a></dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="applyPattern-java.lang.String-">applyPattern</h3> <pre data-language="java">public void applyPattern(String newPattern)</pre> <p>Sets the pattern.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>newPattern</code> - See the class description.</dd> </dl>    <h3 id="toPattern--">toPattern</h3> <pre data-language="java">public String toPattern()</pre> <p>Gets the pattern.</p> <dl> <dt>Returns:</dt> <dd>the pattern string</dd> </dl>    <h3 id="setChoices-double:A-java.lang.String:A-">setChoices</h3> <pre data-language="java">public void setChoices(double[] limits,
+                       String[] formats)</pre> <p>Set the choices to be used in formatting.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>limits</code> - contains the top value that you want parsed with that format, and should be in ascending sorted order. When formatting X, the choice will be the i, where limit[i] ≤ X &lt; limit[i+1]. If the limit array is not in ascending order, the results of formatting will be incorrect.</dd> <dd>
+<code>formats</code> - are the formats you want to use for each limit. They can be either Format objects or Strings. When formatting with object Y, if the object is a NumberFormat, then ((NumberFormat) Y).format(X) is called. Otherwise Y.toString() is called.</dd> </dl>    <h3 id="getLimits--">getLimits</h3> <pre data-language="java">public double[] getLimits()</pre> <p>Get the limits passed in the constructor.</p> <dl> <dt>Returns:</dt> <dd>the limits.</dd> </dl>    <h3 id="getFormats--">getFormats</h3> <pre data-language="java">public Object[] getFormats()</pre> <p>Get the formats passed in the constructor.</p> <dl> <dt>Returns:</dt> <dd>the formats.</dd> </dl>    <h3 id="format-long-java.lang.StringBuffer-java.text.FieldPosition-">format</h3> <pre data-language="java">public StringBuffer format(long number,
+                           StringBuffer toAppendTo,
+                           FieldPosition status)</pre> <p>Specialization of format. This method really calls <code>format(double, StringBuffer, FieldPosition)</code> thus the range of longs that are supported is only equal to the range that can be stored by double. This will never be a practical limitation.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../numberformat/#format-long-java.lang.StringBuffer-java.text.FieldPosition-">format</a></code> in class <code><a href="../numberformat/">NumberFormat</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>number</code> - the long number to format</dd> <dd>
+<code>toAppendTo</code> - the StringBuffer to which the formatted text is to be appended</dd> <dd>
+<code>status</code> - the field position</dd> <dt>Returns:</dt> <dd>the formatted StringBuffer</dd> <dt>See Also:</dt> <dd><a href="../format/#format-java.lang.Object-"><code>Format.format(java.lang.Object)</code></a></dd> </dl>    <h3 id="format-double-java.lang.StringBuffer-java.text.FieldPosition-">format</h3> <pre data-language="java">public StringBuffer format(double number,
+                           StringBuffer toAppendTo,
+                           FieldPosition status)</pre> <p>Returns pattern with formatted double.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../numberformat/#format-double-java.lang.StringBuffer-java.text.FieldPosition-">format</a></code> in class <code><a href="../numberformat/">NumberFormat</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>number</code> - number to be formatted and substituted.</dd> <dd>
+<code>toAppendTo</code> - where text is appended.</dd> <dd>
+<code>status</code> - ignore no useful status is returned.</dd> <dt>Returns:</dt> <dd>the formatted StringBuffer</dd> <dt>See Also:</dt> <dd><a href="../format/#format-java.lang.Object-"><code>Format.format(java.lang.Object)</code></a></dd> </dl>    <h3 id="parse-java.lang.String-java.text.ParsePosition-">parse</h3> <pre data-language="java">public Number parse(String text,
+                    ParsePosition status)</pre> <p>Parses a Number from the input text.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../numberformat/#parse-java.lang.String-java.text.ParsePosition-">parse</a></code> in class <code><a href="../numberformat/">NumberFormat</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>text</code> - the source text.</dd> <dd>
+<code>status</code> - an input-output parameter. On input, the status.index field indicates the first character of the source text that should be parsed. On exit, if no error occurred, status.index is set to the first unparsed character in the source text. On exit, if an error did occur, status.index is unchanged and status.errorIndex is set to the first index of the character that caused the parse to fail.</dd> <dt>Returns:</dt> <dd>A Number representing the value of the number parsed.</dd> <dt>See Also:</dt> <dd>
+<a href="../numberformat/#isParseIntegerOnly--"><code>NumberFormat.isParseIntegerOnly()</code></a>, <a href="../format/#parseObject-java.lang.String-java.text.ParsePosition-"><code>Format.parseObject(java.lang.String, java.text.ParsePosition)</code></a>
+</dd> </dl>    <h3 id="nextDouble-double-">nextDouble</h3> <pre data-language="java">public static final double nextDouble(double d)</pre> <div>
+<p>Finds the least double greater than <code>d</code>. If <code>NaN</code>, returns same value. </p>
+<p>Used to make half-open intervals.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>d</code> - the reference value</dd> <dt>Returns:</dt> <dd>the least double value greather than <code>d</code>
+</dd> <dt>See Also:</dt> <dd><a href="../choiceformat/#previousDouble-double-"><code>previousDouble(double)</code></a></dd> </dl>    <h3 id="previousDouble-double-">previousDouble</h3> <pre data-language="java">public static final double previousDouble(double d)</pre> <p>Finds the greatest double less than <code>d</code>. If <code>NaN</code>, returns same value.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>d</code> - the reference value</dd> <dt>Returns:</dt> <dd>the greatest double value less than <code>d</code>
+</dd> <dt>See Also:</dt> <dd><a href="../choiceformat/#nextDouble-double-"><code>nextDouble(double)</code></a></dd> </dl>    <h3 id="clone--">clone</h3> <pre data-language="java">public Object clone()</pre> <p>Overrides Cloneable</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../numberformat/#clone--">clone</a></code> in class <code><a href="../numberformat/">NumberFormat</a></code>
+</dd> <dt>Returns:</dt> <dd>a clone of this instance.</dd> <dt>See Also:</dt> <dd><a href="../../lang/cloneable/"><code>Cloneable</code></a></dd> </dl>    <h3 id="hashCode--">hashCode</h3> <pre data-language="java">public int hashCode()</pre> <p>Generates a hash code for the message format object.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../numberformat/#hashCode--">hashCode</a></code> in class <code><a href="../numberformat/">NumberFormat</a></code>
+</dd> <dt>Returns:</dt> <dd>a hash code value for this object.</dd> <dt>See Also:</dt> <dd>
+<a href="../../lang/object/#equals-java.lang.Object-"><code>Object.equals(java.lang.Object)</code></a>, <a href="../../lang/system/#identityHashCode-java.lang.Object-"><code>System.identityHashCode(java.lang.Object)</code></a>
+</dd> </dl>    <h3 id="equals-java.lang.Object-">equals</h3> <pre data-language="java">public boolean equals(Object obj)</pre> <p>Equality comparision between two</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../numberformat/#equals-java.lang.Object-">equals</a></code> in class <code><a href="../numberformat/">NumberFormat</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>obj</code> - the reference object with which to compare.</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if this object is the same as the obj argument; <code>false</code> otherwise.</dd> <dt>See Also:</dt> <dd>
+<a href="../../lang/object/#hashCode--"><code>Object.hashCode()</code></a>, <a href="../../util/hashmap/"><code>HashMap</code></a>
+</dd> </dl>    <h3 id="nextDouble-double-boolean-">nextDouble</h3> <pre data-language="java">public static double nextDouble(double d,
+                                boolean positive)</pre> <p>Finds the least double greater than <code>d</code> (if <code>positive</code> is <code>true</code>), or the greatest double less than <code>d</code> (if <code>positive</code> is <code>false</code>). If <code>NaN</code>, returns same value. Does not affect floating-point flags, provided these member functions do not: Double.longBitsToDouble(long) Double.doubleToLongBits(double) Double.isNaN(double)</p> <dl> <dt>Parameters:</dt> <dd>
+<code>d</code> - the reference value</dd> <dd>
+<code>positive</code> - <code>true</code> if the least double is desired; <code>false</code> otherwise</dd> <dt>Returns:</dt> <dd>the least or greater double value</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

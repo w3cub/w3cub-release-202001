@@ -1,0 +1,204 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>SecureRandom - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" This class provides a cryptographically strong random number generator (RNG). ">
+  <meta name="keywords" content="class, securerandom, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/security/securerandom/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class SecureRandom</h1>   <ul class="inheritance"> <li><a href="../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../../util/random/">java.util.Random</a></li> <li> <ul class="inheritance"> <li>java.security.SecureRandom</li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="../../io/serializable/">Serializable</a></dd> </dl>   <pre data-language="java">public class SecureRandom
+extends Random</pre> <div>
+<p>This class provides a cryptographically strong random number generator (RNG). </p>
+<p>A cryptographically strong random number minimally complies with the statistical random number generator tests specified in <a href="http://csrc.nist.gov/cryptval/140-2.htm" target="_blank"> <i>FIPS 140-2, Security Requirements for Cryptographic Modules</i></a>, section 4.9.1. Additionally, SecureRandom must produce non-deterministic output. Therefore any seed material passed to a SecureRandom object must be unpredictable, and all SecureRandom output sequences must be cryptographically strong, as described in <a href="http://www.ietf.org/rfc/rfc1750.txt" target="_blank"> <i>RFC 1750: Randomness Recommendations for Security</i></a>. </p>
+<p>A caller obtains a SecureRandom instance via the no-argument constructor or one of the <code>getInstance</code> methods: </p>
+<pre data-language="java">SecureRandom random = new SecureRandom();</pre> <p> Many SecureRandom implementations are in the form of a pseudo-random number generator (PRNG), which means they use a deterministic algorithm to produce a pseudo-random sequence from a true random seed. Other implementations may produce true random numbers, and yet others may use a combination of both techniques. </p>
+<p> Typical callers of SecureRandom invoke the following methods to retrieve random bytes: </p>
+<pre data-language="java">SecureRandom random = new SecureRandom();
+      byte bytes[] = new byte[20];
+      random.nextBytes(bytes);</pre> <p> Callers may also invoke the <code>generateSeed</code> method to generate a given number of seed bytes (to seed other random number generators, for example): </p>
+<pre data-language="java">byte seed[] = random.generateSeed(20);</pre> Note: Depending on the implementation, the <code>generateSeed</code> and <code>nextBytes</code> methods may block as entropy is being gathered, for example, if they need to read from /dev/random on various Unix-like operating systems.</div> <dl> <dt>See Also:</dt> <dd>
+<a href="../securerandomspi/"><code>SecureRandomSpi</code></a>, <a href="../../util/random/"><code>Random</code></a>, Serialized Form</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="SecureRandom--">SecureRandom</h3> <pre data-language="java">public SecureRandom()</pre> <div>
+<p>Constructs a secure random number generator (RNG) implementing the default random number algorithm. </p>
+<p> This constructor traverses the list of registered security Providers, starting with the most preferred Provider. A new SecureRandom object encapsulating the SecureRandomSpi implementation from the first Provider that supports a SecureRandom (RNG) algorithm is returned. If none of the Providers support a RNG algorithm, then an implementation-specific default is returned. </p>
+<p> Note that the list of registered providers may be retrieved via the <a href="../security/#getProviders--"><code>Security.getProviders()</code></a> method. </p>
+<p> See the SecureRandom section in the <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#SecureRandom" target="_blank"> Java Cryptography Architecture Standard Algorithm Name Documentation</a> for information about standard RNG algorithm names. </p>
+<p> The returned SecureRandom object has not been seeded. To seed the returned object, call the <code>setSeed</code> method. If <code>setSeed</code> is not called, the first call to <code>nextBytes</code> will force the SecureRandom object to seed itself. This self-seeding will not occur if <code>setSeed</code> was previously called.</p>
+</div>    <h3 id="SecureRandom-byte:A-">SecureRandom</h3> <pre data-language="java">public SecureRandom(byte[] seed)</pre> <div>
+<p>Constructs a secure random number generator (RNG) implementing the default random number algorithm. The SecureRandom instance is seeded with the specified seed bytes. </p>
+<p> This constructor traverses the list of registered security Providers, starting with the most preferred Provider. A new SecureRandom object encapsulating the SecureRandomSpi implementation from the first Provider that supports a SecureRandom (RNG) algorithm is returned. If none of the Providers support a RNG algorithm, then an implementation-specific default is returned. </p>
+<p> Note that the list of registered providers may be retrieved via the <a href="../security/#getProviders--"><code>Security.getProviders()</code></a> method. </p>
+<p> See the SecureRandom section in the <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#SecureRandom" target="_blank"> Java Cryptography Architecture Standard Algorithm Name Documentation</a> for information about standard RNG algorithm names.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>seed</code> - the seed.</dd> </dl>    <h3 id="SecureRandom-java.security.SecureRandomSpi-java.security.Provider-">SecureRandom</h3> <pre data-language="java">protected SecureRandom(SecureRandomSpi secureRandomSpi,
+                       Provider provider)</pre> <p>Creates a SecureRandom object.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>secureRandomSpi</code> - the SecureRandom implementation.</dd> <dd>
+<code>provider</code> - the provider.</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="getInstance-java.lang.String-">getInstance</h3> <pre data-language="java">public static SecureRandom getInstance(String algorithm)
+                                throws NoSuchAlgorithmException</pre> <div>
+<p>Returns a SecureRandom object that implements the specified Random Number Generator (RNG) algorithm. </p>
+<p> This method traverses the list of registered security Providers, starting with the most preferred Provider. A new SecureRandom object encapsulating the SecureRandomSpi implementation from the first Provider that supports the specified algorithm is returned. </p>
+<p> Note that the list of registered providers may be retrieved via the <a href="../security/#getProviders--"><code>Security.getProviders()</code></a> method. </p>
+<p> The returned SecureRandom object has not been seeded. To seed the returned object, call the <code>setSeed</code> method. If <code>setSeed</code> is not called, the first call to <code>nextBytes</code> will force the SecureRandom object to seed itself. This self-seeding will not occur if <code>setSeed</code> was previously called.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>algorithm</code> - the name of the RNG algorithm. See the SecureRandom section in the <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#SecureRandom" target="_blank"> Java Cryptography Architecture Standard Algorithm Name Documentation</a> for information about standard RNG algorithm names.</dd> <dt>Returns:</dt> <dd>the new SecureRandom object.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../nosuchalgorithmexception/">NoSuchAlgorithmException</a></code> - if no Provider supports a SecureRandomSpi implementation for the specified algorithm.</dd> <dt>Since:</dt> <dd>1.2</dd> <dt>See Also:</dt> <dd><a href="../provider/"><code>Provider</code></a></dd> </dl>    <h3 id="getInstance-java.lang.String-java.lang.String-">getInstance</h3> <pre data-language="java">public static SecureRandom getInstance(String algorithm,
+                                       String provider)
+                                throws NoSuchAlgorithmException,
+                                       NoSuchProviderException</pre> <div>
+<p>Returns a SecureRandom object that implements the specified Random Number Generator (RNG) algorithm. </p>
+<p> A new SecureRandom object encapsulating the SecureRandomSpi implementation from the specified provider is returned. The specified provider must be registered in the security provider list. </p>
+<p> Note that the list of registered providers may be retrieved via the <a href="../security/#getProviders--"><code>Security.getProviders()</code></a> method. </p>
+<p> The returned SecureRandom object has not been seeded. To seed the returned object, call the <code>setSeed</code> method. If <code>setSeed</code> is not called, the first call to <code>nextBytes</code> will force the SecureRandom object to seed itself. This self-seeding will not occur if <code>setSeed</code> was previously called.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>algorithm</code> - the name of the RNG algorithm. See the SecureRandom section in the <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#SecureRandom" target="_blank"> Java Cryptography Architecture Standard Algorithm Name Documentation</a> for information about standard RNG algorithm names.</dd> <dd>
+<code>provider</code> - the name of the provider.</dd> <dt>Returns:</dt> <dd>the new SecureRandom object.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../nosuchalgorithmexception/">NoSuchAlgorithmException</a></code> - if a SecureRandomSpi implementation for the specified algorithm is not available from the specified provider.</dd> <dd>
+<code><a href="../nosuchproviderexception/">NoSuchProviderException</a></code> - if the specified provider is not registered in the security provider list.</dd> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the provider name is null or empty.</dd> <dt>Since:</dt> <dd>1.2</dd> <dt>See Also:</dt> <dd><a href="../provider/"><code>Provider</code></a></dd> </dl>    <h3 id="getInstance-java.lang.String-java.security.Provider-">getInstance</h3> <pre data-language="java">public static SecureRandom getInstance(String algorithm,
+                                       Provider provider)
+                                throws NoSuchAlgorithmException</pre> <div>
+<p>Returns a SecureRandom object that implements the specified Random Number Generator (RNG) algorithm. </p>
+<p> A new SecureRandom object encapsulating the SecureRandomSpi implementation from the specified Provider object is returned. Note that the specified Provider object does not have to be registered in the provider list. </p>
+<p> The returned SecureRandom object has not been seeded. To seed the returned object, call the <code>setSeed</code> method. If <code>setSeed</code> is not called, the first call to <code>nextBytes</code> will force the SecureRandom object to seed itself. This self-seeding will not occur if <code>setSeed</code> was previously called.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>algorithm</code> - the name of the RNG algorithm. See the SecureRandom section in the <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html#SecureRandom" target="_blank"> Java Cryptography Architecture Standard Algorithm Name Documentation</a> for information about standard RNG algorithm names.</dd> <dd>
+<code>provider</code> - the provider.</dd> <dt>Returns:</dt> <dd>the new SecureRandom object.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../nosuchalgorithmexception/">NoSuchAlgorithmException</a></code> - if a SecureRandomSpi implementation for the specified algorithm is not available from the specified Provider object.</dd> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the specified provider is null.</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../provider/"><code>Provider</code></a></dd> </dl>    <h3 id="getProvider--">getProvider</h3> <pre data-language="java">public final Provider getProvider()</pre> <p>Returns the provider of this SecureRandom object.</p> <dl> <dt>Returns:</dt> <dd>the provider of this SecureRandom object.</dd> </dl>    <h3 id="getAlgorithm--">getAlgorithm</h3> <pre data-language="java">public String getAlgorithm()</pre> <p>Returns the name of the algorithm implemented by this SecureRandom object.</p> <dl> <dt>Returns:</dt> <dd>the name of the algorithm or <code>unknown</code> if the algorithm name cannot be determined.</dd> <dt>Since:</dt> <dd>1.5</dd> </dl>    <h3 id="setSeed-byte:A-">setSeed</h3> <pre data-language="java">public void setSeed(byte[] seed)</pre> <p>Reseeds this random object. The given seed supplements, rather than replaces, the existing seed. Thus, repeated calls are guaranteed never to reduce randomness.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>seed</code> - the seed.</dd> <dt>See Also:</dt> <dd><a href="../securerandom/#getSeed-int-"><code>getSeed(int)</code></a></dd> </dl>    <h3 id="setSeed-long-">setSeed</h3> <pre data-language="java">public void setSeed(long seed)</pre> <div>
+<p>Reseeds this random object, using the eight bytes contained in the given <code>long seed</code>. The given seed supplements, rather than replaces, the existing seed. Thus, repeated calls are guaranteed never to reduce randomness. </p>
+<p>This method is defined for compatibility with <code>java.util.Random</code>.</p>
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../util/random/#setSeed-long-">setSeed</a></code> in class <code><a href="../../util/random/">Random</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>seed</code> - the seed.</dd> <dt>See Also:</dt> <dd><a href="../securerandom/#getSeed-int-"><code>getSeed(int)</code></a></dd> </dl>    <h3 id="nextBytes-byte:A-">nextBytes</h3> <pre data-language="java">public void nextBytes(byte[] bytes)</pre> <div>
+<p>Generates a user-specified number of random bytes. </p>
+<p> If a call to <code>setSeed</code> had not occurred previously, the first call to this method forces this SecureRandom object to seed itself. This self-seeding will not occur if <code>setSeed</code> was previously called.</p>
+</div> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../util/random/#nextBytes-byte:A-">nextBytes</a></code> in class <code><a href="../../util/random/">Random</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>bytes</code> - the array to be filled in with random bytes.</dd> </dl>    <h3 id="next-int-">next</h3> <pre data-language="java">protected final int next(int numBits)</pre> <p>Generates an integer containing the user-specified number of pseudo-random bits (right justified, with leading zeros). This method overrides a <code>java.util.Random</code> method, and serves to provide a source of random bits to all of the methods inherited from that class (for example, <code>nextInt</code>, <code>nextLong</code>, and <code>nextFloat</code>).</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="../../util/random/#next-int-">next</a></code> in class <code><a href="../../util/random/">Random</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>numBits</code> - number of pseudo-random bits to be generated, where <code>0 &lt;= numBits &lt;= 32</code>.</dd> <dt>Returns:</dt> <dd>an <code>int</code> containing the user-specified number of pseudo-random bits (right justified, with leading zeros).</dd> </dl>    <h3 id="getSeed-int-">getSeed</h3> <pre data-language="java">public static byte[] getSeed(int numBytes)</pre> <div>
+<p>Returns the given number of seed bytes, computed using the seed generation algorithm that this class uses to seed itself. This call may be used to seed other random number generators. </p>
+<p>This method is only included for backwards compatibility. The caller is encouraged to use one of the alternative <code>getInstance</code> methods to obtain a SecureRandom object, and then call the <code>generateSeed</code> method to obtain seed bytes from that object.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>numBytes</code> - the number of seed bytes to generate.</dd> <dt>Returns:</dt> <dd>the seed bytes.</dd> <dt>See Also:</dt> <dd><a href="../securerandom/#setSeed-byte:A-"><code>setSeed(byte[])</code></a></dd> </dl>    <h3 id="generateSeed-int-">generateSeed</h3> <pre data-language="java">public byte[] generateSeed(int numBytes)</pre> <p>Returns the given number of seed bytes, computed using the seed generation algorithm that this class uses to seed itself. This call may be used to seed other random number generators.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>numBytes</code> - the number of seed bytes to generate.</dd> <dt>Returns:</dt> <dd>the seed bytes.</dd> </dl>    <h3 id="getInstanceStrong--">getInstanceStrong</h3> <pre data-language="java">public static SecureRandom getInstanceStrong()
+                                      throws NoSuchAlgorithmException</pre> <div>
+<p>Returns a <code>SecureRandom</code> object that was selected by using the algorithms/providers specified in the <code>securerandom.strongAlgorithms</code> <a href="../security/"><code>Security</code></a> property. </p>
+<p> Some situations require strong random values, such as when creating high-value/long-lived secrets like RSA public/private keys. To help guide applications in selecting a suitable strong <code>SecureRandom</code> implementation, Java distributions include a list of known strong <code>SecureRandom</code> implementations in the <code>securerandom.strongAlgorithms</code> Security property. </p>
+<p> Every implementation of the Java platform is required to support at least one strong <code>SecureRandom</code> implementation.</p>
+</div> <dl> <dt>Returns:</dt> <dd>a strong <code>SecureRandom</code> implementation as indicated by the <code>securerandom.strongAlgorithms</code> Security property</dd> <dt>Throws:</dt> <dd>
+<code><a href="../nosuchalgorithmexception/">NoSuchAlgorithmException</a></code> - if no algorithm is available</dd> <dt>Since:</dt> <dd>1.8</dd> <dt>See Also:</dt> <dd><a href="../security/#getProperty-java.lang.String-"><code>Security.getProperty(String)</code></a></dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,259 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>MulticastSocket - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="The multicast datagram socket class is useful for sending and receiving IP multicast packets. A MulticastSocket is a (UDP) DatagramSocket, with &hellip;">
+  <meta name="keywords" content="class, multicastsocket, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/net/multicastsocket/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class MulticastSocket</h1>   <ul class="inheritance"> <li><a href="../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../datagramsocket/">java.net.DatagramSocket</a></li> <li> <ul class="inheritance"> <li>java.net.MulticastSocket</li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../io/closeable/">Closeable</a>, <a href="../../lang/autocloseable/">AutoCloseable</a>
+</dd> </dl>   <pre data-language="java">public class MulticastSocket
+extends DatagramSocket</pre> <div>
+<p>The multicast datagram socket class is useful for sending and receiving IP multicast packets. A MulticastSocket is a (UDP) DatagramSocket, with additional capabilities for joining "groups" of other multicast hosts on the internet. </p>
+<p> A multicast group is specified by a class D IP address and by a standard UDP port number. Class D IP addresses are in the range <code>224.0.0.0</code> to <code>239.255.255.255</code>, inclusive. The address 224.0.0.0 is reserved and should not be used. </p>
+<p> One would join a multicast group by first creating a MulticastSocket with the desired port, then invoking the <code>joinGroup(InetAddress groupAddr)</code> method: </p>
+<pre data-language="java">// join a Multicast group and send the group salutations
+ ...
+ String msg = "Hello";
+ InetAddress group = InetAddress.getByName("228.5.6.7");
+ MulticastSocket s = new MulticastSocket(6789);
+ s.joinGroup(group);
+ DatagramPacket hi = new DatagramPacket(msg.getBytes(), msg.length(),
+                             group, 6789);
+ s.send(hi);
+ // get their responses!
+ byte[] buf = new byte[1000];
+ DatagramPacket recv = new DatagramPacket(buf, buf.length);
+ s.receive(recv);
+ ...
+ // OK, I'm done talking - leave the group...
+ s.leaveGroup(group);</pre> When one sends a message to a multicast group, <b>all</b> subscribing recipients to that host and port receive the message (within the time-to-live range of the packet, see below). The socket needn't be a member of the multicast group to send messages to it. <p> When a socket subscribes to a multicast group/port, it receives datagrams sent by other hosts to the group/port, as do all other members of the group and port. A socket relinquishes membership in a group by the leaveGroup(InetAddress addr) method. <b> Multiple MulticastSocket's</b> may subscribe to a multicast group and port concurrently, and they will all receive group datagrams. </p>
+<p> Currently applets are not allowed to use multicast sockets.</p>
+</div> <dl> <dt>Since:</dt> <dd>JDK1.1</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="MulticastSocket--">MulticastSocket</h3> <pre data-language="java">public MulticastSocket()
+                throws IOException</pre> <div>
+<p>Create a multicast socket. </p>
+<p>If there is a security manager, its <code>checkListen</code> method is first called with 0 as its argument to ensure the operation is allowed. This could result in a SecurityException. </p>
+<p> When the socket is created the <a href="../datagramsocket/#setReuseAddress-boolean-"><code>DatagramSocket.setReuseAddress(boolean)</code></a> method is called to enable the SO_REUSEADDR socket option.</p>
+</div> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if an I/O exception occurs while creating the MulticastSocket</dd> <dd>
+<code><a href="../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkListen</code> method doesn't allow the operation.</dd> <dt>See Also:</dt> <dd>
+<a href="../../lang/securitymanager/#checkListen-int-"><code>SecurityManager.checkListen(int)</code></a>, <a href="../datagramsocket/#setReuseAddress-boolean-"><code>DatagramSocket.setReuseAddress(boolean)</code></a>
+</dd> </dl>    <h3 id="MulticastSocket-int-">MulticastSocket</h3> <pre data-language="java">public MulticastSocket(int port)
+                throws IOException</pre> <div>
+<p>Create a multicast socket and bind it to a specific port. </p>
+<p>If there is a security manager, its <code>checkListen</code> method is first called with the <code>port</code> argument as its argument to ensure the operation is allowed. This could result in a SecurityException. </p>
+<p> When the socket is created the <a href="../datagramsocket/#setReuseAddress-boolean-"><code>DatagramSocket.setReuseAddress(boolean)</code></a> method is called to enable the SO_REUSEADDR socket option.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>port</code> - port to use</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if an I/O exception occurs while creating the MulticastSocket</dd> <dd>
+<code><a href="../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkListen</code> method doesn't allow the operation.</dd> <dt>See Also:</dt> <dd>
+<a href="../../lang/securitymanager/#checkListen-int-"><code>SecurityManager.checkListen(int)</code></a>, <a href="../datagramsocket/#setReuseAddress-boolean-"><code>DatagramSocket.setReuseAddress(boolean)</code></a>
+</dd> </dl>    <h3 id="MulticastSocket-java.net.SocketAddress-">MulticastSocket</h3> <pre data-language="java">public MulticastSocket(SocketAddress bindaddr)
+                throws IOException</pre> <div>
+<p>Create a MulticastSocket bound to the specified socket address. </p>
+<p> Or, if the address is <code>null</code>, create an unbound socket. </p>
+<p>If there is a security manager, its <code>checkListen</code> method is first called with the SocketAddress port as its argument to ensure the operation is allowed. This could result in a SecurityException. </p>
+<p> When the socket is created the <a href="../datagramsocket/#setReuseAddress-boolean-"><code>DatagramSocket.setReuseAddress(boolean)</code></a> method is called to enable the SO_REUSEADDR socket option.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>bindaddr</code> - Socket address to bind to, or <code>null</code> for an unbound socket.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if an I/O exception occurs while creating the MulticastSocket</dd> <dd>
+<code><a href="../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkListen</code> method doesn't allow the operation.</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../../lang/securitymanager/#checkListen-int-"><code>SecurityManager.checkListen(int)</code></a>, <a href="../datagramsocket/#setReuseAddress-boolean-"><code>DatagramSocket.setReuseAddress(boolean)</code></a>
+</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="setTTL-byte-">setTTL</h3> <pre data-language="java">@Deprecated
+public void setTTL(byte ttl)
+                        throws IOException</pre> <p><strong>Deprecated.</strong> use the setTimeToLive method instead, which uses <b>int</b> instead of <b>byte</b> as the type for ttl.</p> <div>
+<p>Set the default time-to-live for multicast packets sent out on this <code>MulticastSocket</code> in order to control the scope of the multicasts. </p>
+<p>The ttl is an <b>unsigned</b> 8-bit quantity, and so <b>must</b> be in the range <code>0 &lt;= ttl &lt;= 0xFF </code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>ttl</code> - the time-to-live</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if an I/O exception occurs while setting the default time-to-live value</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#getTTL--"><code>getTTL()</code></a></dd> </dl>    <h3 id="setTimeToLive-int-">setTimeToLive</h3> <pre data-language="java">public void setTimeToLive(int ttl)
+                   throws IOException</pre> <div>
+<p>Set the default time-to-live for multicast packets sent out on this <code>MulticastSocket</code> in order to control the scope of the multicasts. </p>
+<p> The ttl <b>must</b> be in the range <code>0 &lt;= ttl &lt;=
+ 255</code> or an <code>IllegalArgumentException</code> will be thrown. Multicast packets sent with a TTL of <code>0</code> are not transmitted on the network but may be delivered locally.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>ttl</code> - the time-to-live</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if an I/O exception occurs while setting the default time-to-live value</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#getTimeToLive--"><code>getTimeToLive()</code></a></dd> </dl>    <h3 id="getTTL--">getTTL</h3> <pre data-language="java">@Deprecated
+public byte getTTL()
+                        throws IOException</pre> <p><strong>Deprecated.</strong> use the getTimeToLive method instead, which returns an <b>int</b> instead of a <b>byte</b>.</p> <p>Get the default time-to-live for multicast packets sent out on the socket.</p> <dl> <dt>Returns:</dt> <dd>the default time-to-live value</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if an I/O exception occurs while getting the default time-to-live value</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#setTTL-byte-"><code>setTTL(byte)</code></a></dd> </dl>    <h3 id="getTimeToLive--">getTimeToLive</h3> <pre data-language="java">public int getTimeToLive()
+                  throws IOException</pre> <p>Get the default time-to-live for multicast packets sent out on the socket.</p> <dl> <dt>Returns:</dt> <dd>the default time-to-live value</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if an I/O exception occurs while getting the default time-to-live value</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#setTimeToLive-int-"><code>setTimeToLive(int)</code></a></dd> </dl>    <h3 id="joinGroup-java.net.InetAddress-">joinGroup</h3> <pre data-language="java">public void joinGroup(InetAddress mcastaddr)
+               throws IOException</pre> <div>
+<p>Joins a multicast group. Its behavior may be affected by <code>setInterface</code> or <code>setNetworkInterface</code>. </p>
+<p>If there is a security manager, this method first calls its <code>checkMulticast</code> method with the <code>mcastaddr</code> argument as its argument.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>mcastaddr</code> - is the multicast address to join</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if there is an error joining or when the address is not a multicast address.</dd> <dd>
+<code><a href="../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkMulticast</code> method doesn't allow the join.</dd> <dt>See Also:</dt> <dd><a href="../../lang/securitymanager/#checkMulticast-java.net.InetAddress-"><code>SecurityManager.checkMulticast(InetAddress)</code></a></dd> </dl>    <h3 id="leaveGroup-java.net.InetAddress-">leaveGroup</h3> <pre data-language="java">public void leaveGroup(InetAddress mcastaddr)
+                throws IOException</pre> <div>
+<p>Leave a multicast group. Its behavior may be affected by <code>setInterface</code> or <code>setNetworkInterface</code>. </p>
+<p>If there is a security manager, this method first calls its <code>checkMulticast</code> method with the <code>mcastaddr</code> argument as its argument.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>mcastaddr</code> - is the multicast address to leave</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if there is an error leaving or when the address is not a multicast address.</dd> <dd>
+<code><a href="../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkMulticast</code> method doesn't allow the operation.</dd> <dt>See Also:</dt> <dd><a href="../../lang/securitymanager/#checkMulticast-java.net.InetAddress-"><code>SecurityManager.checkMulticast(InetAddress)</code></a></dd> </dl>    <h3 id="joinGroup-java.net.SocketAddress-java.net.NetworkInterface-">joinGroup</h3> <pre data-language="java">public void joinGroup(SocketAddress mcastaddr,
+                      NetworkInterface netIf)
+               throws IOException</pre> <div>
+<p>Joins the specified multicast group at the specified interface. </p>
+<p>If there is a security manager, this method first calls its <code>checkMulticast</code> method with the <code>mcastaddr</code> argument as its argument.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>mcastaddr</code> - is the multicast address to join</dd> <dd>
+<code>netIf</code> - specifies the local interface to receive multicast datagram packets, or <i>null</i> to defer to the interface set by <a href="../multicastsocket/#setInterface-java.net.InetAddress-"><code>setInterface(InetAddress)</code></a> or <a href="../multicastsocket/#setNetworkInterface-java.net.NetworkInterface-"><code>setNetworkInterface(NetworkInterface)</code></a>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if there is an error joining or when the address is not a multicast address.</dd> <dd>
+<code><a href="../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkMulticast</code> method doesn't allow the join.</dd> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if mcastaddr is null or is a SocketAddress subclass not supported by this socket</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../../lang/securitymanager/#checkMulticast-java.net.InetAddress-"><code>SecurityManager.checkMulticast(InetAddress)</code></a></dd> </dl>    <h3 id="leaveGroup-java.net.SocketAddress-java.net.NetworkInterface-">leaveGroup</h3> <pre data-language="java">public void leaveGroup(SocketAddress mcastaddr,
+                       NetworkInterface netIf)
+                throws IOException</pre> <div>
+<p>Leave a multicast group on a specified local interface. </p>
+<p>If there is a security manager, this method first calls its <code>checkMulticast</code> method with the <code>mcastaddr</code> argument as its argument.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>mcastaddr</code> - is the multicast address to leave</dd> <dd>
+<code>netIf</code> - specifies the local interface or <i>null</i> to defer to the interface set by <a href="../multicastsocket/#setInterface-java.net.InetAddress-"><code>setInterface(InetAddress)</code></a> or <a href="../multicastsocket/#setNetworkInterface-java.net.NetworkInterface-"><code>setNetworkInterface(NetworkInterface)</code></a>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - if there is an error leaving or when the address is not a multicast address.</dd> <dd>
+<code><a href="../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkMulticast</code> method doesn't allow the operation.</dd> <dd>
+<code><a href="../../lang/illegalargumentexception/">IllegalArgumentException</a></code> - if mcastaddr is null or is a SocketAddress subclass not supported by this socket</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../../lang/securitymanager/#checkMulticast-java.net.InetAddress-"><code>SecurityManager.checkMulticast(InetAddress)</code></a></dd> </dl>    <h3 id="setInterface-java.net.InetAddress-">setInterface</h3> <pre data-language="java">public void setInterface(InetAddress inf)
+                  throws SocketException</pre> <p>Set the multicast network interface used by methods whose behavior would be affected by the value of the network interface. Useful for multihomed hosts.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>inf</code> - the InetAddress</dd> <dt>Throws:</dt> <dd>
+<code><a href="../socketexception/">SocketException</a></code> - if there is an error in the underlying protocol, such as a TCP error.</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#getInterface--"><code>getInterface()</code></a></dd> </dl>    <h3 id="getInterface--">getInterface</h3> <pre data-language="java">public InetAddress getInterface()
+                         throws SocketException</pre> <p>Retrieve the address of the network interface used for multicast packets.</p> <dl> <dt>Returns:</dt> <dd>An <code>InetAddress</code> representing the address of the network interface used for multicast packets.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../socketexception/">SocketException</a></code> - if there is an error in the underlying protocol, such as a TCP error.</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#setInterface-java.net.InetAddress-"><code>setInterface(java.net.InetAddress)</code></a></dd> </dl>    <h3 id="setNetworkInterface-java.net.NetworkInterface-">setNetworkInterface</h3> <pre data-language="java">public void setNetworkInterface(NetworkInterface netIf)
+                         throws SocketException</pre> <p>Specify the network interface for outgoing multicast datagrams sent on this socket.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>netIf</code> - the interface</dd> <dt>Throws:</dt> <dd>
+<code><a href="../socketexception/">SocketException</a></code> - if there is an error in the underlying protocol, such as a TCP error.</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#getNetworkInterface--"><code>getNetworkInterface()</code></a></dd> </dl>    <h3 id="getNetworkInterface--">getNetworkInterface</h3> <pre data-language="java">public NetworkInterface getNetworkInterface()
+                                     throws SocketException</pre> <p>Get the multicast network interface set.</p> <dl> <dt>Returns:</dt> <dd>the multicast <code>NetworkInterface</code> currently set</dd> <dt>Throws:</dt> <dd>
+<code><a href="../socketexception/">SocketException</a></code> - if there is an error in the underlying protocol, such as a TCP error.</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#setNetworkInterface-java.net.NetworkInterface-"><code>setNetworkInterface(NetworkInterface)</code></a></dd> </dl>    <h3 id="setLoopbackMode-boolean-">setLoopbackMode</h3> <pre data-language="java">public void setLoopbackMode(boolean disable)
+                     throws SocketException</pre> <div>
+<p>Disable/Enable local loopback of multicast datagrams The option is used by the platform's networking code as a hint for setting whether multicast data will be looped back to the local socket. </p>
+<p>Because this option is a hint, applications that want to verify what loopback mode is set to should call <a href="../multicastsocket/#getLoopbackMode--"><code>getLoopbackMode()</code></a></p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>disable</code> - <code>true</code> to disable the LoopbackMode</dd> <dt>Throws:</dt> <dd>
+<code><a href="../socketexception/">SocketException</a></code> - if an error occurs while setting the value</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#getLoopbackMode--"><code>getLoopbackMode()</code></a></dd> </dl>    <h3 id="getLoopbackMode--">getLoopbackMode</h3> <pre data-language="java">public boolean getLoopbackMode()
+                        throws SocketException</pre> <p>Get the setting for local loopback of multicast datagrams.</p> <dl> <dt>Returns:</dt> <dd>true if the LoopbackMode has been disabled</dd> <dt>Throws:</dt> <dd>
+<code><a href="../socketexception/">SocketException</a></code> - if an error occurs while getting the value</dd> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd><a href="../multicastsocket/#setLoopbackMode-boolean-"><code>setLoopbackMode(boolean)</code></a></dd> </dl>    <h3 id="send-java.net.DatagramPacket-byte-">send</h3> <pre data-language="java">@Deprecated
+public void send(DatagramPacket p,
+                             byte ttl)
+                      throws IOException</pre> <p><strong>Deprecated.</strong> Use the following code or its equivalent instead: ...... int ttl = mcastSocket.getTimeToLive(); mcastSocket.setTimeToLive(newttl); mcastSocket.send(p); mcastSocket.setTimeToLive(ttl); ......</p> <div>
+<p>Sends a datagram packet to the destination, with a TTL (time- to-live) other than the default for the socket. This method need only be used in instances where a particular TTL is desired; otherwise it is preferable to set a TTL once on the socket, and use that default TTL for all packets. This method does <b>not </b> alter the default TTL for the socket. Its behavior may be affected by <code>setInterface</code>. </p>
+<p>If there is a security manager, this method first performs some security checks. First, if <code>p.getAddress().isMulticastAddress()</code> is true, this method calls the security manager's <code>checkMulticast</code> method with <code>p.getAddress()</code> and <code>ttl</code> as its arguments. If the evaluation of that expression is false, this method instead calls the security manager's <code>checkConnect</code> method with arguments <code>p.getAddress().getHostAddress()</code> and <code>p.getPort()</code>. Each call to a security manager method could result in a SecurityException if the operation is not allowed.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>p</code> - is the packet to be sent. The packet should contain the destination multicast ip address and the data to be sent. One does not need to be the member of the group to send packets to a destination multicast address.</dd> <dd>
+<code>ttl</code> - optional time to live for multicast packet. default ttl is 1.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../io/ioexception/">IOException</a></code> - is raised if an error occurs i.e error while setting ttl.</dd> <dd>
+<code><a href="../../lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkMulticast</code> or <code>checkConnect</code> method doesn't allow the send.</dd> <dt>See Also:</dt> <dd>
+<a href="../datagramsocket/#send-java.net.DatagramPacket-"><code>DatagramSocket.send(java.net.DatagramPacket)</code></a>, <a href="../datagramsocket/#receive-java.net.DatagramPacket-"><code>DatagramSocket.receive(java.net.DatagramPacket)</code></a>, <a href="../../lang/securitymanager/#checkMulticast-java.net.InetAddress-byte-"><code>SecurityManager.checkMulticast(java.net.InetAddress, byte)</code></a>, <a href="../../lang/securitymanager/#checkConnect-java.lang.String-int-"><code>SecurityManager.checkConnect(java.lang.String, int)</code></a>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

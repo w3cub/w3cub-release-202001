@@ -1,0 +1,171 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Executor - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="An object that executes submitted Runnable tasks. This interface provides a way of decoupling task submission from the mechanics of how each task &hellip;">
+  <meta name="keywords" content="interface, executor, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/util/concurrent/executor/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface Executor</h1>     <dl> <dt>All Known Subinterfaces:</dt> <dd>
+<a href="../executorservice/">ExecutorService</a>, <a href="../scheduledexecutorservice/">ScheduledExecutorService</a>
+</dd> </dl> <dl> <dt>All Known Implementing Classes:</dt> <dd>
+<a href="../abstractexecutorservice/">AbstractExecutorService</a>, <a href="../forkjoinpool/">ForkJoinPool</a>, <a href="../scheduledthreadpoolexecutor/">ScheduledThreadPoolExecutor</a>, <a href="../threadpoolexecutor/">ThreadPoolExecutor</a>
+</dd> </dl>   <pre data-language="java">public interface Executor</pre> <div>
+<p>An object that executes submitted <a href="../../../lang/runnable/"><code>Runnable</code></a> tasks. This interface provides a way of decoupling task submission from the mechanics of how each task will be run, including details of thread use, scheduling, etc. An <code>Executor</code> is normally used instead of explicitly creating threads. For example, rather than invoking <code>new Thread(new(RunnableTask())).start()</code> for each of a set of tasks, you might use: </p>
+<pre data-language="java">Executor executor = anExecutor;
+ executor.execute(new RunnableTask1());
+ executor.execute(new RunnableTask2());
+ ...</pre> However, the <code>Executor</code> interface does not strictly require that execution be asynchronous. In the simplest case, an executor can run the submitted task immediately in the caller's thread: <pre data-language="java">class DirectExecutor implements Executor {
+   public void execute(Runnable r) {
+     r.run();
+   }
+ }</pre> More typically, tasks are executed in some thread other than the caller's thread. The executor below spawns a new thread for each task. <pre data-language="java">class ThreadPerTaskExecutor implements Executor {
+   public void execute(Runnable r) {
+     new Thread(r).start();
+   }
+ }</pre> Many <code>Executor</code> implementations impose some sort of limitation on how and when tasks are scheduled. The executor below serializes the submission of tasks to a second executor, illustrating a composite executor. <pre data-language="java">class SerialExecutor implements Executor {
+   final Queue&lt;Runnable&gt; tasks = new ArrayDeque&lt;Runnable&gt;();
+   final Executor executor;
+   Runnable active;
+
+   SerialExecutor(Executor executor) {
+     this.executor = executor;
+   }
+
+   public synchronized void execute(final Runnable r) {
+     tasks.offer(new Runnable() {
+       public void run() {
+         try {
+           r.run();
+         } finally {
+           scheduleNext();
+         }
+       }
+     });
+     if (active == null) {
+       scheduleNext();
+     }
+   }
+
+   protected synchronized void scheduleNext() {
+     if ((active = tasks.poll()) != null) {
+       executor.execute(active);
+     }
+   }
+ }</pre> The <code>Executor</code> implementations provided in this package implement <a href="../executorservice/"><code>ExecutorService</code></a>, which is a more extensive interface. The <a href="../threadpoolexecutor/"><code>ThreadPoolExecutor</code></a> class provides an extensible thread pool implementation. The <a href="../executors/"><code>Executors</code></a> class provides convenient factory methods for these Executors. 
+<p>Memory consistency effects: Actions in a thread prior to submitting a <code>Runnable</code> object to an <code>Executor</code> <a href="../package-summary/#MemoryVisibility"><i>happen-before</i></a> its execution begins, perhaps in another thread.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.5</dd> </dl>       <h2 id="method.detail">Methods</h2>   <h3 id="execute-java.lang.Runnable-">execute</h3> <pre data-language="java">void execute(Runnable command)</pre> <p>Executes the given command at some time in the future. The command may execute in a new thread, in a pooled thread, or in the calling thread, at the discretion of the <code>Executor</code> implementation.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>command</code> - the runnable task</dd> <dt>Throws:</dt> <dd>
+<code><a href="../rejectedexecutionexception/">RejectedExecutionException</a></code> - if this task cannot be accepted for execution</dd> <dd>
+<code><a href="../../../lang/nullpointerexception/">NullPointerException</a></code> - if command is null</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

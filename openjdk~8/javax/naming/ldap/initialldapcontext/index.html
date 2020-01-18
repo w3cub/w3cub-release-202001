@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>InitialLdapContext - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" This class is the starting context for performing LDAPv3-style extended operations and controls. ">
+  <meta name="keywords" content="class, initialldapcontextrequest, controls, initialldapcontext, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/javax/naming/ldap/initialldapcontext/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class InitialLdapContext</h1>   <ul class="inheritance"> <li><a href="../../../../java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li><a href="../../initialcontext/">javax.naming.InitialContext</a></li> <li> <ul class="inheritance"> <li><a href="../../directory/initialdircontext/">javax.naming.directory.InitialDirContext</a></li> <li> <ul class="inheritance"> <li>javax.naming.ldap.InitialLdapContext</li> </ul> </li> </ul> </li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../context/">Context</a>, <a href="../../directory/dircontext/">DirContext</a>, <a href="../ldapcontext/">LdapContext</a>
+</dd> </dl>   <pre data-language="java">public class InitialLdapContext
+extends InitialDirContext
+implements LdapContext</pre> <div>
+<p>This class is the starting context for performing LDAPv3-style extended operations and controls. </p>
+<p> See <code>javax.naming.InitialContext</code> and <code>javax.naming.InitialDirContext</code> for details on synchronization, and the policy for how an initial context is created. </p>
+<h1>Request Controls</h1> When you create an initial context (<code>InitialLdapContext</code>), you can specify a list of request controls. These controls will be used as the request controls for any implicit LDAP "bind" operation performed by the context or contexts derived from the context. These are called <em>connection request controls</em>. Use <code>getConnectControls()</code> to get a context's connection request controls. <p> The request controls supplied to the initial context constructor are <em>not</em> used as the context request controls for subsequent context operations such as searches and lookups. Context request controls are set and updated by using <code>setRequestControls()</code>. </p>
+<p> As shown, there can be two different sets of request controls associated with a context: connection request controls and context request controls. This is required for those applications needing to send critical controls that might not be applicable to both the context operation and any implicit LDAP "bind" operation. A typical user program would do the following: </p>
+<pre data-language="java">InitialLdapContext lctx = new InitialLdapContext(env, critConnCtls);
+lctx.setRequestControls(critModCtls);
+lctx.modifyAttributes(name, mods);
+Controls[] respCtls =  lctx.getResponseControls();</pre> It specifies first the critical controls for creating the initial context (<code>critConnCtls</code>), and then sets the context's request controls (<code>critModCtls</code>) for the context operation. If for some reason <code>lctx</code> needs to reconnect to the server, it will use <code>critConnCtls</code>. See the <code>LdapContext</code> interface for more discussion about request controls. <p> Service provider implementors should read the "Service Provider" section in the <code>LdapContext</code> class description for implementation details.</p>
+</div> <dl> <dt>Since:</dt> <dd>1.3</dd> <dt>See Also:</dt> <dd>
+<a href="../ldapcontext/"><code>LdapContext</code></a>, <a href="../../initialcontext/"><code>InitialContext</code></a>, <a href="../../directory/initialdircontext/"><code>InitialDirContext</code></a>, <a href="../../spi/namingmanager/#setInitialContextFactoryBuilder-javax.naming.spi.InitialContextFactoryBuilder-"><code>NamingManager.setInitialContextFactoryBuilder(javax.naming.spi.InitialContextFactoryBuilder)</code></a>
+</dd> </dl>       <h2 id="field.summary">Fields</h2>  <h2 id="fields.inherited.from.class.javax.naming.InitialContext">Fields inherited from class javax.naming.<a href="../../initialcontext/">InitialContext</a>
+</h2> <code><a href="../../initialcontext/#defaultInitCtx">defaultInitCtx</a>, <a href="../../initialcontext/#gotDefault">gotDefault</a>, <a href="../../initialcontext/#myProps">myProps</a></code>  <h2 id="fields.inherited.from.class.javax.naming.ldap.LdapContext">Fields inherited from interface javax.naming.ldap.<a href="../ldapcontext/">LdapContext</a>
+</h2> <code><a href="../ldapcontext/#CONTROL_FACTORIES">CONTROL_FACTORIES</a></code>  <h2 id="fields.inherited.from.class.javax.naming.directory.DirContext">Fields inherited from interface javax.naming.directory.<a href="../../directory/dircontext/">DirContext</a>
+</h2> <code><a href="../../directory/dircontext/#ADD_ATTRIBUTE">ADD_ATTRIBUTE</a>, <a href="../../directory/dircontext/#REMOVE_ATTRIBUTE">REMOVE_ATTRIBUTE</a>, <a href="../../directory/dircontext/#REPLACE_ATTRIBUTE">REPLACE_ATTRIBUTE</a></code>  <h2 id="fields.inherited.from.class.javax.naming.Context">Fields inherited from interface javax.naming.<a href="../../context/">Context</a>
+</h2> <code><a href="../../context/#APPLET">APPLET</a>, <a href="../../context/#AUTHORITATIVE">AUTHORITATIVE</a>, <a href="../../context/#BATCHSIZE">BATCHSIZE</a>, <a href="../../context/#DNS_URL">DNS_URL</a>, <a href="../../context/#INITIAL_CONTEXT_FACTORY">INITIAL_CONTEXT_FACTORY</a>, <a href="../../context/#LANGUAGE">LANGUAGE</a>, <a href="../../context/#OBJECT_FACTORIES">OBJECT_FACTORIES</a>, <a href="../../context/#PROVIDER_URL">PROVIDER_URL</a>, <a href="../../context/#REFERRAL">REFERRAL</a>, <a href="../../context/#SECURITY_AUTHENTICATION">SECURITY_AUTHENTICATION</a>, <a href="../../context/#SECURITY_CREDENTIALS">SECURITY_CREDENTIALS</a>, <a href="../../context/#SECURITY_PRINCIPAL">SECURITY_PRINCIPAL</a>, <a href="../../context/#SECURITY_PROTOCOL">SECURITY_PROTOCOL</a>, <a href="../../context/#STATE_FACTORIES">STATE_FACTORIES</a>, <a href="../../context/#URL_PKG_PREFIXES">URL_PKG_PREFIXES</a></code>    <h2 id="constructor.detail">Constructors</h2>   <h3 id="InitialLdapContext--">InitialLdapContext</h3> <pre data-language="java">public InitialLdapContext()
+                   throws NamingException</pre> <p>Constructs an initial context using no environment properties or connection request controls. Equivalent to <code>new InitialLdapContext(null, null)</code>.</p> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../../namingexception/">NamingException</a></code> - if a naming exception is encountered</dd> </dl>    <h3 id="InitialLdapContext-java.util.Hashtable-javax.naming.ldap.Control:A-">InitialLdapContext</h3> <pre data-language="java">public InitialLdapContext(Hashtable&lt;?,?&gt; environment,
+                          Control[] connCtls)
+                   throws NamingException</pre> <div>
+<p>Constructs an initial context using environment properties and connection request controls. See <code>javax.naming.InitialContext</code> for a discussion of environment properties. </p>
+<p> This constructor will not modify its parameters or save references to them, but may save a clone or copy. Caller should not modify mutable keys and values in <code>environment</code> after it has been passed to the constructor. </p>
+<p> <code>connCtls</code> is used as the underlying context instance's connection request controls. See the class description for details.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>environment</code> - environment used to create the initial DirContext. Null indicates an empty environment.</dd> <dd>
+<code>connCtls</code> - connection request controls for the initial context. If null, no connection request controls are used.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../namingexception/">NamingException</a></code> - if a naming exception is encountered</dd> <dt>See Also:</dt> <dd>
+<a href="../initialldapcontext/#reconnect-javax.naming.ldap.Control:A-"><code>reconnect(javax.naming.ldap.Control[])</code></a>, <a href="../ldapcontext/#reconnect-javax.naming.ldap.Control:A-"><code>LdapContext.reconnect(javax.naming.ldap.Control[])</code></a>
+</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="extendedOperation-javax.naming.ldap.ExtendedRequest-">extendedOperation</h3> <pre data-language="java">public ExtendedResponse extendedOperation(ExtendedRequest request)
+                                   throws NamingException</pre> <p>Description copied from interface: <code><a href="../ldapcontext/#extendedOperation-javax.naming.ldap.ExtendedRequest-">LdapContext</a></code></p> <p>Performs an extended operation. This method is used to support LDAPv3 extended operations.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../ldapcontext/#extendedOperation-javax.naming.ldap.ExtendedRequest-">extendedOperation</a></code> in interface <code><a href="../ldapcontext/">LdapContext</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>request</code> - The non-null request to be performed.</dd> <dt>Returns:</dt> <dd>The possibly null response of the operation. null means the operation did not generate any response.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../namingexception/">NamingException</a></code> - If an error occurred while performing the extended operation.</dd> </dl>    <h3 id="newInstance-javax.naming.ldap.Control:A-">newInstance</h3> <pre data-language="java">public LdapContext newInstance(Control[] reqCtls)
+                        throws NamingException</pre> <p>Description copied from interface: <code><a href="../ldapcontext/#newInstance-javax.naming.ldap.Control:A-">LdapContext</a></code></p> <div>
+<p>Creates a new instance of this context initialized using request controls. This method is a convenience method for creating a new instance of this context for the purposes of multithreaded access. For example, if multiple threads want to use different context request controls, each thread may use this method to get its own copy of this context and set/get context request controls without having to synchronize with other threads. </p>
+<p> The new context has the same environment properties and connection request controls as this context. See the class description for details. Implementations might also allow this context and the new context to share the same network connection or other resources if doing so does not impede the independence of either context.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../ldapcontext/#newInstance-javax.naming.ldap.Control:A-">newInstance</a></code> in interface <code><a href="../ldapcontext/">LdapContext</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>reqCtls</code> - The possibly null request controls to use for the new context. If null, the context is initialized with no request controls.</dd> <dt>Returns:</dt> <dd>A non-null <code>LdapContext</code> instance.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../namingexception/">NamingException</a></code> - If an error occurred while creating the new instance.</dd> <dt>See Also:</dt> <dd><a href="../initialldapcontext/"><code>InitialLdapContext</code></a></dd> </dl>    <h3 id="reconnect-javax.naming.ldap.Control:A-">reconnect</h3> <pre data-language="java">public void reconnect(Control[] connCtls)
+               throws NamingException</pre> <p>Description copied from interface: <code><a href="../ldapcontext/#reconnect-javax.naming.ldap.Control:A-">LdapContext</a></code></p> <div>
+<p>Reconnects to the LDAP server using the supplied controls and this context's environment. </p>
+<p> This method is a way to explicitly initiate an LDAP "bind" operation. For example, you can use this method to set request controls for the LDAP "bind" operation, or to explicitly connect to the server to get response controls returned by the LDAP "bind" operation. </p>
+<p> This method sets this context's <code>connCtls</code> to be its new connection request controls. This context's context request controls are not affected. After this method has been invoked, any subsequent implicit reconnections will be done using <code>connCtls</code>. <code>connCtls</code> are also used as connection request controls for new context instances derived from this context. These connection request controls are not affected by <code>setRequestControls()</code>. </p>
+<p> Service provider implementors should read the "Service Provider" section in the class description for implementation details.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../ldapcontext/#reconnect-javax.naming.ldap.Control:A-">reconnect</a></code> in interface <code><a href="../ldapcontext/">LdapContext</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>connCtls</code> - The possibly null controls to use. If null, no controls are used.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../namingexception/">NamingException</a></code> - If an error occurred while reconnecting.</dd> <dt>See Also:</dt> <dd>
+<a href="../ldapcontext/#getConnectControls--"><code>LdapContext.getConnectControls()</code></a>, <a href="../ldapcontext/#newInstance-javax.naming.ldap.Control:A-"><code>LdapContext.newInstance(javax.naming.ldap.Control[])</code></a>
+</dd> </dl>    <h3 id="getConnectControls--">getConnectControls</h3> <pre data-language="java">public Control[] getConnectControls()
+                             throws NamingException</pre> <p>Description copied from interface: <code><a href="../ldapcontext/#getConnectControls--">LdapContext</a></code></p> <p>Retrieves the connection request controls in effect for this context. The controls are owned by the JNDI implementation and are immutable. Neither the array nor the controls may be modified by the caller.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../ldapcontext/#getConnectControls--">getConnectControls</a></code> in interface <code><a href="../ldapcontext/">LdapContext</a></code>
+</dd> <dt>Returns:</dt> <dd>A possibly-null array of controls. null means no connect controls have been set for this context.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../namingexception/">NamingException</a></code> - If an error occurred while getting the request controls.</dd> </dl>    <h3 id="setRequestControls-javax.naming.ldap.Control:A-">setRequestControls</h3> <pre data-language="java">public void setRequestControls(Control[] requestControls)
+                        throws NamingException</pre> <p>Description copied from interface: <code><a href="../ldapcontext/#setRequestControls-javax.naming.ldap.Control:A-">LdapContext</a></code></p> <div>
+<p>Sets the request controls for methods subsequently invoked on this context. The request controls are owned by the JNDI implementation and are immutable. Neither the array nor the controls may be modified by the caller. </p>
+<p> This removes any previous request controls and adds <code>requestControls</code> for use by subsequent methods invoked on this context. This method does not affect this context's connection request controls. </p>
+<p> Note that <code>requestControls</code> will be in effect until the next invocation of <code>setRequestControls()</code>. You need to explicitly invoke <code>setRequestControls()</code> with <code>null</code> or an empty array to clear the controls if you don't want them to affect the context methods any more. To check what request controls are in effect for this context, use <code>getRequestControls()</code>.</p>
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../ldapcontext/#setRequestControls-javax.naming.ldap.Control:A-">setRequestControls</a></code> in interface <code><a href="../ldapcontext/">LdapContext</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>requestControls</code> - The possibly null controls to use. If null, no controls are used.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../namingexception/">NamingException</a></code> - If an error occurred while setting the request controls.</dd> <dt>See Also:</dt> <dd><a href="../ldapcontext/#getRequestControls--"><code>LdapContext.getRequestControls()</code></a></dd> </dl>    <h3 id="getRequestControls--">getRequestControls</h3> <pre data-language="java">public Control[] getRequestControls()
+                             throws NamingException</pre> <p>Description copied from interface: <code><a href="../ldapcontext/#getRequestControls--">LdapContext</a></code></p> <p>Retrieves the request controls in effect for this context. The request controls are owned by the JNDI implementation and are immutable. Neither the array nor the controls may be modified by the caller.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../ldapcontext/#getRequestControls--">getRequestControls</a></code> in interface <code><a href="../ldapcontext/">LdapContext</a></code>
+</dd> <dt>Returns:</dt> <dd>A possibly-null array of controls. null means no request controls have been set for this context.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../namingexception/">NamingException</a></code> - If an error occurred while getting the request controls.</dd> <dt>See Also:</dt> <dd><a href="../ldapcontext/#setRequestControls-javax.naming.ldap.Control:A-"><code>LdapContext.setRequestControls(javax.naming.ldap.Control[])</code></a></dd> </dl>    <h3 id="getResponseControls--">getResponseControls</h3> <pre data-language="java">public Control[] getResponseControls()
+                              throws NamingException</pre> <p>Description copied from interface: <code><a href="../ldapcontext/#getResponseControls--">LdapContext</a></code></p> <div>
+<p>Retrieves the response controls produced as a result of the last method invoked on this context. The response controls are owned by the JNDI implementation and are immutable. Neither the array nor the controls may be modified by the caller. </p>
+<p> These response controls might have been generated by a successful or failed operation. </p>
+<p> When a context method that may return response controls is invoked, response controls from the previous method invocation are cleared. <code>getResponseControls()</code> returns all of the response controls generated by LDAP operations used by the context method in the order received from the LDAP server. Invoking <code>getResponseControls()</code> does not clear the response controls. You can call it many times (and get back the same controls) until the next context method that may return controls is invoked. </p>
+
+</div> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../ldapcontext/#getResponseControls--">getResponseControls</a></code> in interface <code><a href="../ldapcontext/">LdapContext</a></code>
+</dd> <dt>Returns:</dt> <dd>A possibly null array of controls. If null, the previous method invoked on this context did not produce any controls.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../namingexception/">NamingException</a></code> - If an error occurred while getting the response controls.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

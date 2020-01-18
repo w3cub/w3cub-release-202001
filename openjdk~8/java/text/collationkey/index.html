@@ -1,0 +1,155 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>CollationKey - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="A CollationKey represents a String under the rules of a specific Collator object. Comparing two CollationKeys returns the relative order of the &hellip;">
+  <meta name="keywords" content="class, collationkey, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/text/collationkey/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class CollationKey</h1>   <ul class="inheritance"> <li><a href="../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.text.CollationKey</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd>
+<a href="../../lang/comparable/">Comparable</a>&lt;<a href="../collationkey/">CollationKey</a>&gt;</dd> </dl>   <pre data-language="java">public abstract class CollationKey
+extends Object
+implements Comparable&lt;CollationKey&gt;</pre> <div>
+<p>A <code>CollationKey</code> represents a <code>String</code> under the rules of a specific <code>Collator</code> object. Comparing two <code>CollationKey</code>s returns the relative order of the <code>String</code>s they represent. Using <code>CollationKey</code>s to compare <code>String</code>s is generally faster than using <code>Collator.compare</code>. Thus, when the <code>String</code>s must be compared multiple times, for example when sorting a list of <code>String</code>s. It's more efficient to use <code>CollationKey</code>s. </p>
+<p> You can not create <code>CollationKey</code>s directly. Rather, generate them by calling <code>Collator.getCollationKey</code>. You can only compare <code>CollationKey</code>s generated from the same <code>Collator</code> object. </p>
+<p> Generating a <code>CollationKey</code> for a <code>String</code> involves examining the entire <code>String</code> and converting it to series of bits that can be compared bitwise. This allows fast comparisons once the keys are generated. The cost of generating keys is recouped in faster comparisons when <code>String</code>s need to be compared many times. On the other hand, the result of a comparison is often determined by the first couple of characters of each <code>String</code>. <code>Collator.compare</code> examines only as many characters as it needs which allows it to be faster when doing single comparisons. </p>
+<p> The following example shows how <code>CollationKey</code>s might be used to sort a list of <code>String</code>s. </p>
+<pre data-language="java">// Create an array of CollationKeys for the Strings to be sorted.
+Collator myCollator = Collator.getInstance();
+CollationKey[] keys = new CollationKey[3];
+keys[0] = myCollator.getCollationKey("Tom");
+keys[1] = myCollator.getCollationKey("Dick");
+keys[2] = myCollator.getCollationKey("Harry");
+sort(keys);
+
+//...
+
+// Inside body of sort routine, compare keys this way
+if (keys[i].compareTo(keys[j]) &gt; 0)
+   // swap keys[i] and keys[j]
+
+//...
+
+// Finally, when we've returned from sort.
+System.out.println(keys[0].getSourceString());
+System.out.println(keys[1].getSourceString());
+System.out.println(keys[2].getSourceString());</pre>
+</div> <dl> <dt>See Also:</dt> <dd>
+<a href="../collator/"><code>Collator</code></a>, <a href="../rulebasedcollator/"><code>RuleBasedCollator</code></a>
+</dd> </dl>       <h2 id="constructor.detail">Constructors</h2>   <h3 id="CollationKey-java.lang.String-">CollationKey</h3> <pre data-language="java">protected CollationKey(String source)</pre> <p>CollationKey constructor.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>source</code> - the source string</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../lang/nullpointerexception/">NullPointerException</a></code> - if <code>source</code> is null</dd> <dt>Since:</dt> <dd>1.6</dd> </dl>     <h2 id="method.detail">Methods</h2>   <h3 id="compareTo-java.text.CollationKey-">compareTo</h3> <pre data-language="java">public abstract int compareTo(CollationKey target)</pre> <p>Compare this CollationKey to the target CollationKey. The collation rules of the Collator object which created these keys are applied. <strong>Note:</strong> CollationKeys created by different Collators can not be compared.</p> <dl> <dt>Specified by:</dt> <dd>
+<code><a href="../../lang/comparable/#compareTo-T-">compareTo</a></code> in interface <code><a href="../../lang/comparable/">Comparable</a>&lt;<a href="../collationkey/">CollationKey</a>&gt;</code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>target</code> - target CollationKey</dd> <dt>Returns:</dt> <dd>Returns an integer value. Value is less than zero if this is less than target, value is zero if this and target are equal and value is greater than zero if this is greater than target.</dd> <dt>See Also:</dt> <dd><a href="../collator/#compare-java.lang.String-java.lang.String-"><code>Collator.compare(java.lang.String, java.lang.String)</code></a></dd> </dl>    <h3 id="getSourceString--">getSourceString</h3> <pre data-language="java">public String getSourceString()</pre> <p>Returns the String that this CollationKey represents.</p> <dl> <dt>Returns:</dt> <dd>the source string of this CollationKey</dd> </dl>    <h3 id="toByteArray--">toByteArray</h3> <pre data-language="java">public abstract byte[] toByteArray()</pre> <p>Converts the CollationKey to a sequence of bits. If two CollationKeys could be legitimately compared, then one could compare the byte arrays for each of those keys to obtain the same result. Byte arrays are organized most significant byte first.</p> <dl> <dt>Returns:</dt> <dd>a byte array representation of the CollationKey</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

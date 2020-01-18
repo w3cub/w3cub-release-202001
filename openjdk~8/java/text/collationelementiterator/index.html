@@ -1,0 +1,151 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>CollationElementIterator - OpenJDK 8 - W3cubDocs</title>
+  
+  <meta name="description" content="The CollationElementIterator class is used as an iterator to walk through each character of an international string. Use the iterator to return the &hellip;">
+  <meta name="keywords" content="class, collationelementiterator, -, openjdk, openjdk~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8/java/text/collationelementiterator/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class CollationElementIterator</h1>   <ul class="inheritance"> <li><a href="../../lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.text.CollationElementIterator</li> </ul> </li> </ul>     <pre data-language="java">public final class CollationElementIterator
+extends Object</pre> <div>
+<p>The <code>CollationElementIterator</code> class is used as an iterator to walk through each character of an international string. Use the iterator to return the ordering priority of the positioned character. The ordering priority of a character, which we refer to as a key, defines how a character is collated in the given collation object. </p>
+<p> For example, consider the following in Spanish: </p>
+<pre data-language="java">"ca" → the first key is key('c') and second key is key('a').
+"cha" → the first key is key('ch') and second key is key('a').</pre> And in German, <pre data-language="java">"äb" → the first key is key('a'), the second key is key('e'), and
+the third key is key('b').</pre> The key of a character is an integer composed of primary order(short), secondary order(byte), and tertiary order(byte). Java strictly defines the size and signedness of its primitive data types. Therefore, the static functions <code>primaryOrder</code>, <code>secondaryOrder</code>, and <code>tertiaryOrder</code> return <code>int</code>, <code>short</code>, and <code>short</code> respectively to ensure the correctness of the key value. <p> Example of the iterator usage, </p>
+<pre data-language="java">String testString = "This is a test";
+Collator col = Collator.getInstance();
+if (col instanceof RuleBasedCollator) {
+    RuleBasedCollator ruleBasedCollator = (RuleBasedCollator)col;
+    CollationElementIterator collationElementIterator = ruleBasedCollator.getCollationElementIterator(testString);
+    int primaryOrder = CollationElementIterator.primaryOrder(collationElementIterator.next());
+        :
+}</pre> <p> <code>CollationElementIterator.next</code> returns the collation order of the next character. A collation order consists of primary order, secondary order and tertiary order. The data type of the collation order is <strong>int</strong>. The first 16 bits of a collation order is its primary order; the next 8 bits is the secondary order and the last 8 bits is the tertiary order. </p>
+<p><b>Note:</b> <code>CollationElementIterator</code> is a part of <code>RuleBasedCollator</code> implementation. It is only usable with <code>RuleBasedCollator</code> instances.</p>
+</div> <dl> <dt>See Also:</dt> <dd>
+<a href="../collator/"><code>Collator</code></a>, <a href="../rulebasedcollator/"><code>RuleBasedCollator</code></a>
+</dd> </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="NULLORDER">NULLORDER</h3> <pre data-language="java">public static final int NULLORDER</pre> <p>Null order which indicates the end of string is reached by the cursor.</p>      <h2 id="method.detail">Methods</h2>   <h3 id="reset--">reset</h3> <pre data-language="java">public void reset()</pre> <p>Resets the cursor to the beginning of the string. The next call to next() will return the first collation element in the string.</p>    <h3 id="next--">next</h3> <pre data-language="java">public int next()</pre> <div>
+<p>Get the next collation element in the string. </p>
+<p>This iterator iterates over a sequence of collation elements that were built from the string. Because there isn't necessarily a one-to-one mapping from characters to collation elements, this doesn't mean the same thing as "return the collation element [or ordering priority] of the next character in the string".</p> <p>This function returns the collation element that the iterator is currently pointing to and then updates the internal pointer to point to the next element. previous() updates the pointer first and then returns the element. This means that when you change direction while iterating (i.e., call next() and then call previous(), or call previous() and then call next()), you'll get back the same element twice.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the next collation element</dd> </dl>    <h3 id="previous--">previous</h3> <pre data-language="java">public int previous()</pre> <div>
+<p>Get the previous collation element in the string. </p>
+<p>This iterator iterates over a sequence of collation elements that were built from the string. Because there isn't necessarily a one-to-one mapping from characters to collation elements, this doesn't mean the same thing as "return the collation element [or ordering priority] of the previous character in the string".</p> <p>This function updates the iterator's internal pointer to point to the collation element preceding the one it's currently pointing to and then returns that element, while next() returns the current element and then updates the pointer. This means that when you change direction while iterating (i.e., call next() and then call previous(), or call previous() and then call next()), you'll get back the same element twice.</p>
+</div> <dl> <dt>Returns:</dt> <dd>the previous collation element</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="primaryOrder-int-">primaryOrder</h3> <pre data-language="java">public static final int primaryOrder(int order)</pre> <p>Return the primary component of a collation element.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>order</code> - the collation element</dd> <dt>Returns:</dt> <dd>the element's primary component</dd> </dl>    <h3 id="secondaryOrder-int-">secondaryOrder</h3> <pre data-language="java">public static final short secondaryOrder(int order)</pre> <p>Return the secondary component of a collation element.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>order</code> - the collation element</dd> <dt>Returns:</dt> <dd>the element's secondary component</dd> </dl>    <h3 id="tertiaryOrder-int-">tertiaryOrder</h3> <pre data-language="java">public static final short tertiaryOrder(int order)</pre> <p>Return the tertiary component of a collation element.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>order</code> - the collation element</dd> <dt>Returns:</dt> <dd>the element's tertiary component</dd> </dl>    <h3 id="setOffset-int-">setOffset</h3> <pre data-language="java">public void setOffset(int newOffset)</pre> <p>Sets the iterator to point to the collation element corresponding to the specified character (the parameter is a CHARACTER offset in the original string, not an offset into its corresponding sequence of collation elements). The value returned by the next call to next() will be the collation element corresponding to the specified position in the text. If that position is in the middle of a contracting character sequence, the result of the next call to next() is the collation element for that sequence. This means that getOffset() is not guaranteed to return the same value as was passed to a preceding call to setOffset().</p> <dl> <dt>Parameters:</dt> <dd>
+<code>newOffset</code> - The new character offset into the original text.</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="getOffset--">getOffset</h3> <pre data-language="java">public int getOffset()</pre> <p>Returns the character offset in the original text corresponding to the next collation element. (That is, getOffset() returns the position in the text corresponding to the collation element that will be returned by the next call to next().) This value will always be the index of the FIRST character corresponding to the collation element (a contracting character sequence is when two or more characters all correspond to the same collation element). This means if you do setOffset(x) followed immediately by getOffset(), getOffset() won't necessarily return x.</p> <dl> <dt>Returns:</dt> <dd>The character offset in the original text corresponding to the collation element that will be returned by the next call to next().</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="getMaxExpansion-int-">getMaxExpansion</h3> <pre data-language="java">public int getMaxExpansion(int order)</pre> <p>Return the maximum length of any expansion sequences that end with the specified comparison order.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>order</code> - a collation order returned by previous or next.</dd> <dt>Returns:</dt> <dd>the maximum length of any expansion sequences ending with the specified order.</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="setText-java.lang.String-">setText</h3> <pre data-language="java">public void setText(String source)</pre> <p>Set a new string over which to iterate.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>source</code> - the new source text</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>    <h3 id="setText-java.text.CharacterIterator-">setText</h3> <pre data-language="java">public void setText(CharacterIterator source)</pre> <p>Set a new string over which to iterate.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>source</code> - the new source text.</dd> <dt>Since:</dt> <dd>1.2</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,165 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>EventListenerList - OpenJDK 8 GUI - W3cubDocs</title>
+  
+  <meta name="description" content="A class that holds a list of EventListeners. A single instance can be used to hold all listeners (of all types) for the instance using the list. It &hellip;">
+  <meta name="keywords" content="class, eventlistenerlist, -, openjdk, gui, openjdk~8_gui">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_gui/javax/swing/event/eventlistenerlist/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_gui.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_gui/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 GUI</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class EventListenerList</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>javax.swing.event.EventListenerList</li> </ul> </li> </ul>   <dl> <dt>All Implemented Interfaces:</dt> <dd><a href="..//openjdk~8/java/io/serializable/">Serializable</a></dd> </dl>   <pre data-language="java">public class EventListenerList
+extends Object
+implements Serializable</pre> <div>
+<p>A class that holds a list of EventListeners. A single instance can be used to hold all listeners (of all types) for the instance using the list. It is the responsiblity of the class using the EventListenerList to provide type-safe API (preferably conforming to the JavaBeans spec) and methods which dispatch event notification methods to appropriate Event Listeners on the list. The main benefits that this class provides are that it is relatively cheap in the case of no listeners, and it provides serialization for event-listener lists in a single place, as well as a degree of MT safety (when used correctly). Usage example: Say one is defining a class that sends out FooEvents, and one wants to allow users of the class to register FooListeners and receive notification when FooEvents occur. The following should be added to the class definition: </p>
+<pre data-language="java">EventListenerList listenerList = new EventListenerList();
+ FooEvent fooEvent = null;
+
+ public void addFooListener(FooListener l) {
+     listenerList.add(FooListener.class, l);
+ }
+
+ public void removeFooListener(FooListener l) {
+     listenerList.remove(FooListener.class, l);
+ }
+
+
+ // Notify all listeners that have registered interest for
+ // notification on this event type.  The event instance
+ // is lazily created using the parameters passed into
+ // the fire method.
+
+ protected void fireFooXXX() {
+     // Guaranteed to return a non-null array
+     Object[] listeners = listenerList.getListenerList();
+     // Process the listeners last to first, notifying
+     // those that are interested in this event
+     for (int i = listeners.length-2; i&gt;=0; i-=2) {
+         if (listeners[i]==FooListener.class) {
+             // Lazily create the event:
+             if (fooEvent == null)
+                 fooEvent = new FooEvent(this);
+             ((FooListener)listeners[i+1]).fooXXX(fooEvent);
+         }
+     }
+ }</pre> foo should be changed to the appropriate name, and fireFooXxx to the appropriate method name. One fire method should exist for each notification method in the FooListener interface. 
+<p> <strong>Warning:</strong> Serialized objects of this class will not be compatible with future Swing releases. The current serialization support is appropriate for short term storage or RMI between applications running the same version of Swing. As of 1.4, support for long term storage of all JavaBeans™ has been added to the <code>java.beans</code> package. Please see <a href="..//openjdk~8/java/beans/xmlencoder/"><code>XMLEncoder</code></a>.</p>
+</div>       <h2 id="field.detail">Fields</h2>   <h3 id="listenerList">listenerList</h3> <pre data-language="java">protected transient Object[] listenerList</pre>     <h2 id="constructor.detail">Constructors</h2>   <h3 id="EventListenerList--">EventListenerList</h3> <pre data-language="java">public EventListenerList()</pre>     <h2 id="method.detail">Methods</h2>   <h3 id="getListenerList--">getListenerList</h3> <pre data-language="java">public Object[] getListenerList()</pre> <p>Passes back the event listener list as an array of ListenerType-listener pairs. Note that for performance reasons, this implementation passes back the actual data structure in which the listener data is stored internally! This method is guaranteed to pass back a non-null array, so that no null-checking is required in fire methods. A zero-length array of Object should be returned if there are currently no listeners. WARNING!!! Absolutely NO modification of the data contained in this array should be made -- if any such manipulation is necessary, it should be done on a copy of the array returned rather than the array itself.</p>    <h3 id="getListeners-java.lang.Class-">getListeners</h3> <pre data-language="java">public &lt;T extends EventListener&gt; T[] getListeners(Class&lt;T&gt; t)</pre> <p>Return an array of all the listeners of the given type.</p> <dl> <dt>Returns:</dt> <dd>all of the listeners of the specified type.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/classcastexception/">ClassCastException</a></code> - if the supplied class is not assignable to EventListener</dd> <dt>Since:</dt> <dd>1.3</dd> </dl>    <h3 id="getListenerCount--">getListenerCount</h3> <pre data-language="java">public int getListenerCount()</pre> <p>Returns the total number of listeners for this listener list.</p>    <h3 id="getListenerCount-java.lang.Class-">getListenerCount</h3> <pre data-language="java">public int getListenerCount(Class&lt;?&gt; t)</pre> <p>Returns the total number of listeners of the supplied type for this listener list.</p>    <h3 id="add-java.lang.Class-T-">add</h3> <pre data-language="java">public &lt;T extends EventListener&gt; void add(Class&lt;T&gt; t,
+                                          T l)</pre> <p>Adds the listener as a listener of the specified type.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>t</code> - the type of the listener to be added</dd> <dd>
+<code>l</code> - the listener to be added</dd> </dl>    <h3 id="remove-java.lang.Class-T-">remove</h3> <pre data-language="java">public &lt;T extends EventListener&gt; void remove(Class&lt;T&gt; t,
+                                             T l)</pre> <p>Removes the listener as a listener of the specified type.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>t</code> - the type of the listener to be removed</dd> <dd>
+<code>l</code> - the listener to be removed</dd> </dl>    <h3 id="toString--">toString</h3> <pre data-language="java">public String toString()</pre> <p>Returns a string representation of the EventListenerList.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/object/">toString</a></code> in class <code><a href="..//openjdk~8/java/lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a string representation of the object.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
