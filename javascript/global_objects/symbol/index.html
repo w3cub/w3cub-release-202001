@@ -1,0 +1,749 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Symbol - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content="The Symbol() function returns a value of type symbol, has static properties that expose several members of built-in objects, has static methods that &hellip;">
+  <meta name="keywords" content="symbol, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/global_objects/symbol/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Symbol</h1> <p>The <code>Symbol()</code> function returns a value of type <strong>symbol</strong>, has static properties that expose several members of built-in objects, has static methods that expose the global symbol registry, and resembles a built-in object class but is incomplete as a constructor because it does not support the syntax "<code>new Symbol()</code>". </p> <p>Every symbol value returned from <code>Symbol()</code> is unique. A symbol value may be used as an identifier for object properties; this is the data type's only purpose. Some further explanation about purpose and usage can be found in the <a href="https://developer.mozilla.org/en-US/docs/Glossary/Symbol" target="_blank">glossary entry for Symbol</a>.</p> <p>The data type <strong>symbol</strong> is a <a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive" target="_blank">primitive data type</a>.</p> <iframe src="https://interactive-examples.mdn.mozilla.net/pages/js/symbol-constructor.html" frameborder="0" width="100%" class="interactive interactive-js" height="250"></iframe>  <h2 id="Syntax">Syntax</h2> <pre class="syntaxbox">Symbol(<em>[description]</em>)</pre> <h3 id="Parameters">Parameters</h3> <dl> <dt>
+<code>description</code> <span class="inlineIndicator optional optionalInline">Optional</span>
+</dt> <dd>Optional, string. A description of the symbol which can be used for debugging but not to access the symbol itself.</dd> </dl> <h2 id="Description">Description</h2> <p>To create a new primitive symbol, you write <code>Symbol()</code> with an optional string as its description:</p> <pre data-language="js">var sym1 = Symbol();
+var sym2 = Symbol('foo');
+var sym3 = Symbol('foo');
+</pre> <p>The above code creates three new symbols. Note that <code>Symbol("foo")</code> does not coerce the string "foo" into a symbol. It creates a new symbol each time:</p> <pre data-language="js">Symbol('foo') === Symbol('foo'); // false</pre> <p>The following syntax with the <a href="../../operators/new/"><code>new</code></a> operator will throw a <a href="../typeerror/"><code>TypeError</code></a>:</p> <pre data-language="js">var sym = new Symbol(); // TypeError</pre> <p>This prevents authors from creating an explicit <code>Symbol</code> wrapper object instead of a new symbol value and might be surprising as creating explicit wrapper objects around primitive data types is generally possible (for example, <code>new Boolean</code>, <code>new String</code> and <code>new Number</code>).</p> <p>If you really want to create a <code>Symbol</code> wrapper object, you can use the <code>Object()</code> function:</p> <pre data-language="js">var sym = Symbol('foo');
+typeof sym;     // "symbol" 
+var symObj = Object(sym);
+typeof symObj;  // "object"
+</pre> <h3 id="Shared_symbols_in_the_global_symbol_registry">Shared symbols in the global symbol registry</h3> <p>The above syntax using the <code>Symbol()</code> function will not create a global symbol that is available in your whole codebase. To create symbols available across files and even across realms (each of which has its own global scope), use the methods <a href="../symbol/for/"><code>Symbol.for()</code></a> and <a href="../symbol/keyfor/"><code>Symbol.keyFor()</code></a> to set and retrieve symbols from the global symbol registry.</p> <h3 id="Finding_symbol_properties_on_objects">Finding symbol properties on objects</h3> <p>The method <a href="../object/getownpropertysymbols/"><code>Object.getOwnPropertySymbols()</code></a> returns an array of symbols and lets you find symbol properties on a given object. Note that every object is initialized with no own symbol properties, so that this array will be empty unless you've set symbol properties on the object.</p> <h2 id="Properties">Properties</h2> <dl> <dt><code>Symbol.length</code></dt> <dd>Length property whose value is 0.</dd> <dt><a href="../symbol/prototype/"><code>Symbol.prototype</code></a></dt> <dd>Represents the prototype for the <code>Symbol</code> constructor.</dd> </dl> <h3 id="Well-known_symbols">Well-known symbols</h3> <p>In addition to your own symbols, JavaScript has some built-in symbols which represent internal language behaviors which were not exposed to developers in ECMAScript 5 and before. These symbols can be accessed using the following properties:</p> <h4 id="Iteration_symbols">Iteration symbols</h4> <dl> <dt><a href="../symbol/iterator/"><code>Symbol.iterator</code></a></dt> <dd>A method returning the default iterator for an object. Used by <a href="../../statements/for...of/"><code>for...of</code></a>.</dd> <dt>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator" target="_blank"><code>Symbol.asyncIterator</code></a> 
+</dt> <dd>A method that returns the default AsyncIterator for an object. Used by <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await-of" target="_blank"><code>for await of</code></a>.</dd> </dl> <h4 id="Regular_expression_symbols">Regular expression symbols</h4> <dl> <dt><a href="../symbol/match/"><code>Symbol.match</code></a></dt> <dd>A method that matches against a string, also used to determine if an object may be used as a regular expression. Used by <a href="../string/match/"><code>String.prototype.match()</code></a>.</dd> <dt><a href="../symbol/replace/"><code>Symbol.replace</code></a></dt> <dd>A method that replaces matched substrings of a string. Used by <a href="../string/replace/"><code>String.prototype.replace()</code></a>.</dd> <dt><a href="../symbol/search/"><code>Symbol.search</code></a></dt> <dd>A method that returns the index within a string that matches the regular expression. Used by <a href="../string/search/"><code>String.prototype.search()</code></a>.</dd> <dt><a href="../symbol/split/"><code>Symbol.split</code></a></dt> <dd>A method that splits a string at the indices that match a regular expression. Used by <a href="../string/split/"><code>String.prototype.split()</code></a>.</dd> </dl> <h4 id="Other_symbols">Other symbols</h4> <dl> <dt><a href="../symbol/hasinstance/"><code>Symbol.hasInstance</code></a></dt> <dd>A method determining if a constructor object recognizes an object as its instance. Used by <a href="../../operators/instanceof/"><code>instanceof</code></a>.</dd> <dt><a href="../symbol/isconcatspreadable/"><code>Symbol.isConcatSpreadable</code></a></dt> <dd>A Boolean value indicating if an object should be flattened to its array elements. Used by <a href="../array/concat/"><code>Array.prototype.concat()</code></a>.</dd> <dt><a href="../symbol/unscopables/"><code>Symbol.unscopables</code></a></dt> <dd>An object value of whose own and inherited property names are excluded from the <code><a href="../../statements/with/">with</a></code> environment bindings of the associated object.</dd> <dt><a href="../symbol/species/"><code>Symbol.species</code></a></dt> <dd>A constructor function that is used to create derived objects.</dd> <dt><a href="../symbol/toprimitive/"><code>Symbol.toPrimitive</code></a></dt> <dd>A method converting an object to a primitive value.</dd> <dt><a href="../symbol/tostringtag/"><code>Symbol.toStringTag</code></a></dt> <dd>A string value used for the default description of an object. Used by <a href="../object/tostring/"><code>Object.prototype.toString()</code></a>.</dd> </dl> <h2 id="Methods">Methods</h2> <dl> <dt><a href="../symbol/for/"><code>Symbol.for(key)</code></a></dt> <dd>Searches for existing symbols with the given key and returns it if found. Otherwise a new symbol gets created in the global symbol registry with this key.</dd> <dt><a href="../symbol/keyfor/"><code>Symbol.keyFor(sym)</code></a></dt> <dd>Retrieves a shared symbol key from the global symbol registry for the given symbol.</dd> </dl> <h2 id="Symbol_prototype">
+<code>Symbol</code> prototype</h2> <p>All Symbols inherit from <a href="../symbol/prototype/"><code>Symbol.prototype</code></a>.</p> <h3 id="Properties_2">Properties</h3> <dl> <dt><code>Symbol.prototype.constructor</code></dt> <dd>Returns the function that created an instance's prototype. This is the <a href="../symbol/"><code>Symbol</code></a> function by default.</dd> <dt><a href="../symbol/description/"><code>Symbol.prototype.description</code></a></dt> <dd>A read-only string containing the description of the symbol.</dd> </dl> <h3 id="Methods_2">Methods</h3> <dl> <dt>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toSource" target="_blank"><code>Symbol.prototype.toSource()</code></a> 
+</dt> <dd>Returns a string containing the source of the <a href="../symbol/"><code>Symbol</code></a> object. Overrides the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toSource" target="_blank"><code>Object.prototype.toSource()</code></a> method.</dd> <dt><a href="../symbol/tostring/"><code>Symbol.prototype.toString()</code></a></dt> <dd>Returns a string containing the description of the Symbol. Overrides the <a href="../object/tostring/"><code>Object.prototype.toString()</code></a> method.</dd> <dt><a href="../symbol/valueof/"><code>Symbol.prototype.valueOf()</code></a></dt> <dd>Returns the primitive value of the <a href="../symbol/"><code>Symbol</code></a> object. Overrides the <a href="../object/valueof/"><code>Object.prototype.valueOf()</code></a> method.</dd> <dt><a href="../symbol/@@toprimitive/"><code>Symbol.prototype[@@toPrimitive]</code></a></dt> <dd>Returns the primitive value of the <a href="../symbol/"><code>Symbol</code></a> object.</dd> </dl> <h2 id="Examples">Examples</h2> <h3 id="Using_the_typeof_operator_with_symbols">Using the <code>typeof</code> operator with symbols</h3> <p>The <a href="../../operators/typeof/"><code>typeof</code></a> operator can help you to identify symbols.</p> <pre data-language="js">typeof Symbol() === 'symbol'
+typeof Symbol('foo') === 'symbol'
+typeof Symbol.iterator === 'symbol'
+</pre> <h3 id="Symbol_type_conversions">Symbol type conversions</h3> <p>Some things to note when working with type conversion of symbols.</p> <ul> <li>When trying to convert a symbol to a number, a <a href="../typeerror/"><code>TypeError</code></a> will be thrown<br> (e.g. <code>+sym</code> or <code>sym | 0</code>).</li> <li>When using loose equality, <code>Object(sym) == sym</code> returns <code>true.</code>
+</li> <li>
+<code>Symbol("foo") + "bar" </code>throws a <a href="../typeerror/"><code>TypeError</code></a> (can't convert symbol to string). This prevents you from silently creating a new string property name from a symbol, for example.</li> <li>The <a href="../string/#String_conversion">"safer" <code>String(sym)</code> conversion</a> works like a call to <a href="../symbol/tostring/"><code>Symbol.prototype.toString()</code></a> with symbols, but note that <code>new String(sym)</code> will throw.</li> </ul> <h3 id="Symbols_and_for...in_iteration">Symbols and <code>for...in</code> iteration</h3> <p>Symbols are not enumerable in <a href="../../statements/for...in/"><code>for...in</code></a> iterations. In addition, <a href="../object/getownpropertynames/"><code>Object.getOwnPropertyNames()</code></a> will not return symbol object properties, however, you can use <a href="../object/getownpropertysymbols/"><code>Object.getOwnPropertySymbols()</code></a> to get these.</p> <pre data-language="js">var obj = {};
+
+obj[Symbol('a')] = 'a';
+obj[Symbol.for('b')] = 'b';
+obj['c'] = 'c';
+obj.d = 'd';
+
+for (var i in obj) {
+   console.log(i); // logs "c" and "d"
+}</pre> <h3 id="Symbols_and_JSON.stringify()">Symbols and <code>JSON.stringify()</code>
+</h3> <p>Symbol-keyed properties will be completely ignored when using <code>JSON.stringify()</code>:</p> <pre data-language="js">JSON.stringify({[Symbol('foo')]: 'foo'});                 
+// '{}'</pre> <p>For more details, see <a href="../json/stringify/"><code>JSON.stringify()</code></a>.</p> <h3 id="Symbol_wrapper_objects_as_property_keys">Symbol wrapper objects as property keys</h3> <p>When a Symbol wrapper object is used as a property key, this object will be coerced to its wrapped symbol:</p> <pre data-language="js">var sym = Symbol('foo');
+var obj = {[sym]: 1};
+obj[sym];            // 1
+obj[Object(sym)];    // still 1
+</pre> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-symbol-objects" hreflang="en" target="_blank">ECMAScript 2015 (6th Edition, ECMA-262)<br><small>The definition of 'Symbol' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td>Initial definition</td> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-symbol-objects" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)<br><small>The definition of 'Symbol' in that specification.</small></a></td> <td><span class="spec-Draft">Draft</span></td> <td> </td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>  <div class="_table">
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes bc-has-history"> 12
+<section class="bc-history" id="sect1"><dl>
+<dt class="bc-supports-yes bc-supports"> 12
+</dt>
+<dd> Edge 12 included Symbol properties in <code>JSON.stringify()</code> output.</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row">
+<code>asyncIterator</code> 
+</th>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no bc-has-history"> No
+<section class="bc-history" id="sect2"><dl>
+<dt class="bc-supports-no bc-supports"> No
+</dt>
+<dd> Available in Firefox Nightly.</dd>
+</dl></section>
+</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/description" target="_blank"><code>description</code></a></th>
+<td class="bc-supports-yes"> 70</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 63</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 57</td>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/for" target="_blank"><code>for</code></a></th>
+<td class="bc-supports-yes"> 40</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/hasInstance" target="_blank"><code>hasInstance</code></a></th>
+<td class="bc-supports-yes"> 51</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 50</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/isConcatSpreadable" target="_blank"><code>isConcatSpreadable</code></a></th>
+<td class="bc-supports-yes"> 48</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 48</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator" target="_blank"><code>iterator</code></a></th>
+<td class="bc-supports-yes"> 43</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 30</td>
+<td class="bc-supports-yes"> 10</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/keyFor" target="_blank"><code>keyFor</code></a></th>
+<td class="bc-supports-yes"> 40</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/match" target="_blank"><code>match</code></a></th>
+<td class="bc-supports-yes"> 50</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 40</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/prototype" target="_blank"><code>prototype</code></a></th>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/replace" target="_blank"><code>replace</code></a></th>
+<td class="bc-supports-yes"> 50</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/search" target="_blank"><code>search</code></a></th>
+<td class="bc-supports-yes"> 50</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/species" target="_blank"><code>species</code></a></th>
+<td class="bc-supports-yes"> 51</td>
+<td class="bc-supports-yes"> 14</td>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> 10</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/split" target="_blank"><code>split</code></a></th>
+<td class="bc-supports-yes"> 50</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive" target="_blank"><code>toPrimitive</code></a></th>
+<td class="bc-supports-yes"> 48</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 44</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toSource" target="_blank"><code>toSource</code></a> 
+</th>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toString" target="_blank"><code>toString</code></a></th>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag" target="_blank"><code>toStringTag</code></a></th>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 51</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/unscopables" target="_blank"><code>unscopables</code></a></th>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 48</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/valueOf" target="_blank"><code>valueOf</code></a></th>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/@@toPrimitive" target="_blank"><code>@@toPrimitive</code></a></th>
+<td> ? </td>
+<td> ? </td>
+<td class="bc-supports-yes"> 44</td>
+<td class="bc-supports-no"> No</td>
+<td> ? </td>
+<td> ? </td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">
+<code>asyncIterator</code> 
+</th>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/description" target="_blank"><code>description</code></a></th>
+<td class="bc-supports-yes"> 70</td>
+<td class="bc-supports-yes"> 70</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 63</td>
+<td class="bc-supports-yes"> 57</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/for" target="_blank"><code>for</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/hasInstance" target="_blank"><code>hasInstance</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 50</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/isConcatSpreadable" target="_blank"><code>isConcatSpreadable</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 48</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator" target="_blank"><code>iterator</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/keyFor" target="_blank"><code>keyFor</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/match" target="_blank"><code>match</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 40</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/prototype" target="_blank"><code>prototype</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/replace" target="_blank"><code>replace</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/search" target="_blank"><code>search</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/species" target="_blank"><code>species</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 14</td>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/split" target="_blank"><code>split</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive" target="_blank"><code>toPrimitive</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 44</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toSource" target="_blank"><code>toSource</code></a> 
+</th>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toString" target="_blank"><code>toString</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag" target="_blank"><code>toStringTag</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 51</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/unscopables" target="_blank"><code>unscopables</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 48</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/valueOf" target="_blank"><code>valueOf</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 38</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 36</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/@@toPrimitive" target="_blank"><code>@@toPrimitive</code></a></th>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+<td class="bc-supports-yes"> 44</td>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="1">Server</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Node.js</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">
+<code>asyncIterator</code> 
+</th>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/description" target="_blank"><code>description</code></a></th>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/for" target="_blank"><code>for</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/hasInstance" target="_blank"><code>hasInstance</code></a></th>
+<td class="bc-supports-yes bc-has-history"> 6.5.0
+<section class="bc-history" id="sect3"><dl>
+<dt class="bc-supports-yes bc-supports"> 6.5.0
+</dt>
+
+<dt class="bc-supports-yes bc-supports"> 6.0.0<div class="bc-icons">Disabled </div>
+</dt>
+<dd>Disabled From version 6.0.0: this feature is behind the <code>--harmony</code> runtime flag.</dd>
+</dl></section>
+</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/isConcatSpreadable" target="_blank"><code>isConcatSpreadable</code></a></th>
+<td class="bc-supports-yes"> 6.0.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator" target="_blank"><code>iterator</code></a></th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/keyFor" target="_blank"><code>keyFor</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/match" target="_blank"><code>match</code></a></th>
+<td class="bc-supports-yes"> 6.0.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/prototype" target="_blank"><code>prototype</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/replace" target="_blank"><code>replace</code></a></th>
+<td class="bc-supports-yes"> 6.0.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/search" target="_blank"><code>search</code></a></th>
+<td class="bc-supports-yes"> 6.0.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/species" target="_blank"><code>species</code></a></th>
+<td class="bc-supports-yes bc-has-history"> 6.5.0
+<section class="bc-history" id="sect4"><dl>
+<dt class="bc-supports-yes bc-supports"> 6.5.0
+</dt>
+
+<dt class="bc-supports-yes bc-supports"> 6.0.0<div class="bc-icons">Disabled </div>
+</dt>
+<dd>Disabled From version 6.0.0: this feature is behind the <code>--harmony</code> runtime flag.</dd>
+</dl></section>
+</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/split" target="_blank"><code>split</code></a></th>
+<td class="bc-supports-yes"> 6.0.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive" target="_blank"><code>toPrimitive</code></a></th>
+<td class="bc-supports-yes"> 6.0.0</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toSource" target="_blank"><code>toSource</code></a> 
+</th>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toString" target="_blank"><code>toString</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag" target="_blank"><code>toStringTag</code></a></th>
+<td class="bc-supports-yes bc-has-history"> 6.0.0
+<section class="bc-history" id="sect5"><dl>
+<dt class="bc-supports-yes bc-supports"> 6.0.0
+</dt>
+
+<dt class="bc-supports-yes bc-supports"> 4.0.0<div class="bc-icons">Disabled </div>
+</dt>
+<dd>Disabled From version 4.0.0: this feature is behind the <code>--harmony</code> runtime flag.</dd>
+</dl></section>
+</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/unscopables" target="_blank"><code>unscopables</code></a></th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/valueOf" target="_blank"><code>valueOf</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol/@@toPrimitive" target="_blank"><code>@@toPrimitive</code></a></th>
+<td> ? </td>
+</tr>
+</tbody>
+</table>
+</div> <h2 id="See_also">See also</h2> <ul> <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Symbol" target="_blank">Glossary: Symbol data type</a></li> <li><a href="../../operators/typeof/"><code>typeof</code></a></li> <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures" target="_blank">Data types and data structures</a></li> <li><a href="https://hacks.mozilla.org/2015/06/es6-in-depth-symbols/" target="_blank">"ES6 In Depth: Symbols" on hacks.mozilla.org</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

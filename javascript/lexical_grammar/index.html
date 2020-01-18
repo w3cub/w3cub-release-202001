@@ -1,0 +1,625 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Lexical Grammar - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content="This page describes JavaScript&#39;s lexical grammar. The source text of ECMAScript scripts gets scanned from left to right and is converted into a &hellip;">
+  <meta name="keywords" content="lexical, grammar, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/lexical_grammar/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Lexical grammar</h1> <p>This page describes JavaScript's lexical grammar. The source text of ECMAScript scripts gets scanned from left to right and is converted into a sequence of input elements which are tokens, control characters, line terminators, comments or white space. ECMAScript also defines certain keywords and literals and has rules for automatic insertion of semicolons to end statements.</p> <h2 id="Control_characters">Control characters</h2> <p>Control characters have no visual representation but are used to control the interpretation of the text.</p> <div class="_table"><table class="standard-table"> <caption>Unicode format-control characters</caption> <tbody> <tr> <th>Code point</th> <th>Name</th> <th>Abbreviation</th> <th>Description</th> </tr> <tr> <td><code>U+200C</code></td> <td>Zero width non-joiner</td> <td>&lt;ZWNJ&gt;</td> <td>Placed between characters to prevent being connected into ligatures in certain languages (<a href="http://en.wikipedia.org/wiki/Zero-width_non-joiner" target="_blank">Wikipedia</a>).</td> </tr> <tr> <td><code>U+200D</code></td> <td>Zero width joiner</td> <td>&lt;ZWJ&gt;</td> <td>Placed between characters that would not normally be connected in order to cause the characters to be rendered using their connected form in certain languages (<a href="http://en.wikipedia.org/wiki/Zero-width_joiner" target="_blank">Wikipedia</a>).</td> </tr> <tr> <td><code>U+FEFF</code></td> <td>Byte order mark</td> <td>&lt;BOM&gt;</td> <td>Used at the start of the script to mark it as Unicode and the text's byte order (<a href="http://en.wikipedia.org/wiki/Byte_order_mark" target="_blank">Wikipedia</a>).</td> </tr> </tbody> </table></div> <h2 id="White_space">White space</h2> <p>White space characters improve the readability of source text and separate tokens from each other. These characters are usually unnecessary for the functionality of the code. <a href="http://en.wikipedia.org/wiki/Minification_%28programming%29" target="_blank">Minification tools</a> are often used to remove whitespace in order to reduce the amount of data that needs to be transferred.</p> <div class="_table"><table class="standard-table"> <caption>White space characters</caption> <tbody> <tr> <th>Code point</th> <th>Name</th> <th>Abbreviation</th> <th>Description</th> <th>Escape sequence</th> </tr> <tr> <td>U+0009</td> <td>Character tabulation</td> <td>&lt;HT&gt;</td> <td>Horizontal tabulation</td> <td>\t</td> </tr> <tr> <td>U+000B</td> <td>Line tabulation</td> <td>&lt;VT&gt;</td> <td>Vertical tabulation</td> <td>\v</td> </tr> <tr> <td>U+000C</td> <td>Form feed</td> <td>&lt;FF&gt;</td> <td>Page breaking control character (<a href="http://en.wikipedia.org/wiki/Page_break#Form_feed" target="_blank">Wikipedia</a>).</td> <td>\f</td> </tr> <tr> <td>U+0020</td> <td>Space</td> <td>&lt;SP&gt;</td> <td>Normal space</td> <td> </td> </tr> <tr> <td>U+00A0</td> <td>No-break space</td> <td>&lt;NBSP&gt;</td> <td>Normal space, but no point at which a line may break</td> <td> </td> </tr> <tr> <td>Others</td> <td>Other Unicode space characters</td> <td>&lt;USP&gt;</td> <td><a href="http://en.wikipedia.org/wiki/Space_%28punctuation%29#Spaces_in_Unicode" target="_blank">Spaces in Unicode on Wikipedia</a></td> <td> </td> </tr> </tbody> </table></div> <h2 id="Line_terminators">Line terminators</h2> <p>In addition to white space characters, line terminator characters are used to improve the readability of the source text. However, in some cases, line terminators can influence the execution of JavaScript code as there are a few places where they are forbidden. Line terminators also affect the process of <a href="#Automatic_semicolon_insertion">automatic semicolon insertion</a>. Line terminators are matched by the <strong>\s</strong> class in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank">regular expressions</a>.</p> <p>Only the following Unicode code points are treated as line terminators in ECMAScript, other line breaking characters are treated as white space (for example, Next Line, NEL, U+0085 is considered as white space).</p> <div class="_table"><table class="standard-table"> <caption>Line terminator characters</caption> <tbody> <tr> <th>Code point</th> <th>Name</th> <th>Abbreviation</th> <th>Description</th> <th>Escape sequence</th> </tr> <tr> <td>U+000A</td> <td>Line Feed</td> <td>&lt;LF&gt;</td> <td>New line character in UNIX systems.</td> <td>\n</td> </tr> <tr> <td>U+000D</td> <td>Carriage Return</td> <td>&lt;CR&gt;</td> <td>New line character in Commodore and early Mac systems.</td> <td>\r</td> </tr> <tr> <td>U+2028</td> <td>Line Separator</td> <td>&lt;LS&gt;</td> <td><a href="http://en.wikipedia.org/wiki/Newline" target="_blank">Wikipedia</a></td> <td> </td> </tr> <tr> <td>U+2029</td> <td>Paragraph Separator</td> <td>&lt;PS&gt;</td> <td><a href="http://en.wikipedia.org/wiki/Newline" target="_blank">Wikipedia</a></td> <td> </td> </tr> </tbody> </table></div> <h2 id="Comments">Comments</h2> <p>Comments are used to add hints, notes, suggestions, or warnings to JavaScript code. This can make it easier to read and understand. They can also be used to disable code to prevent it from being executed; this can be a valuable debugging tool.</p> <p>JavaScript has two ways of assigning comments in its code.</p> <p>The first way is the <code>//</code> comment; this makes all text following it on the same line into a comment. For example:</p> <pre data-language="js">function comment() {
+  // This is a one line JavaScript comment
+  console.log('Hello world!');
+}
+comment();
+</pre> <p>The second way is the <code>/* */</code> style, which is much more flexible.</p> <p>For example, you can use it on a single line:</p> <pre data-language="js">function comment() {
+  /* This is a one line JavaScript comment */
+  console.log('Hello world!');
+}
+comment();</pre> <p>You can also make multiple-line comments, like this:</p> <pre data-language="js">function comment() {
+  /* This comment spans multiple lines. Notice
+     that we don't need to end the comment until we're done. */
+  console.log('Hello world!');
+}
+comment();</pre> <p>You can also use it in the middle of a line, if you wish, although this can make your code harder to read so it should be used with caution:</p> <pre data-language="js">function comment(x) {
+  console.log('Hello ' + x /* insert the value of x */ + ' !');
+}
+comment('world');</pre> <p>In addition, you can use it to disable code to prevent it from running, by wrapping code in a comment, like this:</p> <pre data-language="js">function comment() {
+  /* console.log('Hello world!'); */
+}
+comment();</pre> <p>In this case, the <code>console.log()</code> call is never issued, since it's inside a comment. Any number of lines of code can be disabled this way.</p> <h2 id="Keywords">Keywords</h2> <h3 id="Reserved_keywords_as_of_ECMAScript_2015">Reserved keywords as of ECMAScript 2015</h3> <ul class="threecolumns"> <li><a href="../statements/break/"><code>break</code></a></li> <li><a href="../statements/switch/"><code>case</code></a></li> <li><a href="../statements/try...catch/"><code>catch</code></a></li> <li><a href="../statements/class/"><code>class</code></a></li> <li><a href="../statements/const/"><code>const</code></a></li> <li><a href="../statements/continue/"><code>continue</code></a></li> <li><a href="../statements/debugger/"><code>debugger</code></a></li> <li><a href="../statements/default/"><code>default</code></a></li> <li><a href="../operators/delete/"><code>delete</code></a></li> <li><a href="../statements/do...while/"><code>do</code></a></li> <li><a href="../statements/if...else/"><code>else</code></a></li> <li><a href="../statements/export/"><code>export</code></a></li> <li><a href="../statements/class/"><code>extends</code></a></li> <li><a href="../statements/try...catch/"><code>finally</code></a></li> <li><a href="../statements/for/"><code>for</code></a></li> <li><a href="../statements/function/"><code>function</code></a></li> <li><a href="../statements/if...else/"><code>if</code></a></li> <li><a href="../statements/import/"><code>import</code></a></li> <li><a href="../operators/in/"><code>in</code></a></li> <li><a href="../operators/instanceof/"><code>instanceof</code></a></li> <li><a href="../operators/new/"><code>new</code></a></li> <li><a href="../statements/return/"><code>return</code></a></li> <li><a href="../operators/super/"><code>super</code></a></li> <li><a href="../statements/switch/"><code>switch</code></a></li> <li><a href="../operators/this/"><code>this</code></a></li> <li><a href="../statements/throw/"><code>throw</code></a></li> <li><a href="../statements/try...catch/"><code>try</code></a></li> <li><a href="../operators/typeof/"><code>typeof</code></a></li> <li><a href="../statements/var/"><code>var</code></a></li> <li><a href="../operators/void/"><code>void</code></a></li> <li><a href="../statements/while/"><code>while</code></a></li> <li><a href="../statements/with/"><code>with</code></a></li> <li><a href="../operators/yield/"><code>yield</code></a></li> </ul> <h3 id="Future_reserved_keywords">Future reserved keywords</h3> <p>The following are reserved as future keywords by the ECMAScript specification. They have no special functionality at present, but they might at some future time, so they cannot be used as identifiers.</p> <p>These are always reserved:</p> <ul> <li><code>enum</code></li> </ul> <p>The following are only reserved when they are found in strict mode code:</p> <ul class="threecolumns"> <li><code>implements</code></li> <li><code>interface</code></li> <li><a href="../statements/let/"><code>let</code></a></li> <li><code>package</code></li> <li><code>private</code></li> <li><code>protected</code></li> <li><code>public</code></li> <li><code>static</code></li> </ul> <p>The following are only reserved when they are found in module code:</p> <ul> <li><code>await</code></li> </ul> <h4 id="Future_reserved_keywords_in_older_standards">Future reserved keywords in older standards</h4> <p>The following are reserved as future keywords by older ECMAScript specifications (ECMAScript 1 till 3).</p> <ul class="threecolumns"> <li><code>abstract</code></li> <li><code>boolean</code></li> <li><code>byte</code></li> <li><code>char</code></li> <li><code>double</code></li> <li><code>final</code></li> <li><code>float</code></li> <li><code>goto</code></li> <li><code>int</code></li> <li><code>long</code></li> <li><code>native</code></li> <li><code>short</code></li> <li><code>synchronized</code></li> <li><code>throws</code></li> <li><code>transient</code></li> <li><code>volatile</code></li> </ul> <p>Additionally, the literals <code>null</code>, <code>true</code>, and <code>false</code> cannot be used as identifiers in ECMAScript.</p> <h3 id="Reserved_word_usage">Reserved word usage</h3> <p>Reserved words actually only apply to Identifiers (vs. <code>IdentifierNames</code>) . As described in <a href="http://es5.github.com/#A.1" target="_blank">es5.github.com/#A.1</a>, these are all <code>IdentifierNames</code> which do not exclude <code>ReservedWords</code>.</p> <pre data-language="js">a.import
+a['import']
+a = { import: 'test' }.
+</pre> <p>On the other hand the following is illegal because it's an Identifier, which is an <code>IdentifierName</code> without the reserved words. Identifiers are used for <code>FunctionDeclaration, FunctionExpression, VariableDeclaration</code> and so on. <code>IdentifierNames </code>are used for<code> MemberExpression, CallExpression</code> and so on.</p> <pre data-language="js">function import() {} // Illegal.</pre> <h2 id="Literals">Literals</h2> <h3 id="Null_literal">Null literal</h3> <p>See also <a href="../global_objects/null/"><code>null</code></a> for more information.</p> <pre data-language="js">null</pre> <h3 id="Boolean_literal">Boolean literal</h3> <p>See also <a href="../global_objects/boolean/"><code>Boolean</code></a> for more information.</p> <pre data-language="js">true
+false</pre> <h3 id="Numeric_literals">Numeric literals</h3> <h4 id="Decimal">Decimal</h4> <pre data-language="js">1234567890
+42
+
+// Caution when using with a leading zero:
+0888 // 888 parsed as decimal
+0777 // parsed as octal, 511 in decimal
+</pre> <p>Note that decimal literals can start with a zero (<code>0</code>) followed by another decimal digit, but If all digits after the leading <code>0</code> are smaller than 8, the number is interpreted as an octal number. This won't throw in JavaScript, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=957513" target="_blank">bug 957513</a>. See also the page about <a href="../global_objects/parseint/#Octal_interpretations_with_no_radix"><code>parseInt()</code></a>.</p> <h4 id="Binary">Binary</h4> <p>Binary number syntax uses a leading zero followed by a lowercase or uppercase Latin letter "B" (<code>0b</code> or <code>0B</code>). Because this syntax is new in ECMAScript 2015, see the browser compatibility table, below. If the digits after the <code>0b</code> are not 0 or 1, the following <code><a href="../global_objects/syntaxerror/">SyntaxError</a></code> is thrown: "Missing binary digits after 0b".</p> <pre data-language="js">var FLT_SIGNBIT  = 0b10000000000000000000000000000000; // 2147483648
+var FLT_EXPONENT = 0b01111111100000000000000000000000; // 2139095040
+var FLT_MANTISSA = 0B00000000011111111111111111111111; // 8388607</pre> <h4 id="Octal">Octal</h4> <p>Octal number syntax uses a leading zero followed by a lowercase or uppercase Latin letter "O" (<code>0o</code> or <code>0O)</code>. Because this syntax is new in ECMAScript 2015, see the browser compatibility table, below. If the digits after the <code>0o</code> are outside the range (01234567), the following <code><a href="../global_objects/syntaxerror/">SyntaxError</a></code> is thrown: "Missing octal digits after 0o".</p> <pre data-language="js">var n = 0O755; // 493
+var m = 0o644; // 420
+
+// Also possible with just a leading zero (see note about decimals above)
+0755
+0644
+</pre> <h4 id="Hexadecimal">Hexadecimal</h4> <p>Hexadecimal number syntax uses a leading zero followed by a lowercase or uppercase Latin letter "X" (<code>0x</code> or <code>0X)</code>. If the digits after 0x are outside the range (0123456789ABCDEF), the following <code><a href="../global_objects/syntaxerror/">SyntaxError</a></code> is thrown: "Identifier starts immediately after numeric literal".</p> <pre data-language="js">0xFFFFFFFFFFFFFFFFF // 295147905179352830000
+0x123456789ABCDEF   // 81985529216486900
+0XA                 // 10
+</pre> <h3 id="Object_literals">Object literals</h3> <p>See also <a href="../global_objects/object/"><code>Object</code></a> and <a href="../operators/object_initializer/">Object initializer</a> for more information.</p> <pre data-language="js">var o = { a: 'foo', b: 'bar', c: 42 };
+
+// shorthand notation. New in ES2015
+var a = 'foo', b = 'bar', c = 42;
+var o = {a, b, c};
+
+// instead of
+var o = { a: a, b: b, c: c };
+</pre> <h3 id="Array_literals">Array literals</h3> <p>See also <a href="../global_objects/array/"><code>Array</code></a> for more information.</p> <pre data-language="js">[1954, 1974, 1990, 2014]</pre> <h3 id="String_literals">String literals</h3> <p>A string literal is zero or more Unicode code points enclosed in single or double quotes. Unicode code points may also be represented by an escape sequence. All code points may appear literally in a string literal except for these closing quote code points:</p> <ul> <li>U+005C (backslash),</li> <li>U+000D &lt;CR&gt;,</li> <li>and U+000A &lt;LF&gt;.</li> </ul> <p>Prior to the <a href="https://github.com/tc39/proposal-json-superset" target="_blank">proposal to make all JSON text valid ECMA-262</a>, U+2028 &lt;LS&gt; and U+2029 &lt;PS&gt;, were also disallowed from appearing unescaped in string literals.</p> <p>Any code points may appear in the form of an escape sequence. String literals evaluate to ECMAScript String values. When generating these String values Unicode code points are UTF-16 encoded.</p> <pre data-language="js">'foo'
+"bar"</pre> <h4 id="Hexadecimal_escape_sequences">Hexadecimal escape sequences</h4> <p>Hexadecimal escape sequences consist of <code>\x</code> followed by exactly two hexadecimal digits representing a code unit or code point in the range 0x0000 to 0x00FF.</p> <pre data-language="js">'\xA9' // "©"
+</pre> <h4 id="Unicode_escape_sequences">Unicode escape sequences</h4> <p>A Unicode escape sequence consists of exactly four hexadecimal digits following <code>\u</code>. It represents a code unit in the UTF-16 encoding. For code points U+0000 to U+FFFF, the code unit is equal to the code point. Code points U+10000 to U+10FFFF require two escape sequences representing the two code units (a surrogate pair) used to encode the character; the surrogate pair is distinct from the code point.</p> <p>See also <a href="../global_objects/string/fromcharcode/"><code>String.fromCharCode()</code></a> and <a href="../global_objects/string/charcodeat/"><code>String.prototype.charCodeAt()</code></a>.</p> <pre data-language="js">'\u00A9' // "©" (U+A9)</pre> <h4 id="Unicode_code_point_escapes">Unicode code point escapes</h4> <p>A Unicode code point escape consists of <code>\u{</code>, followed by a code point in hexadecimal base, followed by <code>}</code>. The value of the hexadecimal digits must be in the range 0 and 0x10FFFF inclusive. Code points in the range U+10000 to U+10FFFF do not need to be represented as a surrogate pair. Code point escapes were added to JavaScript in ECMAScript 2015 (ES6).</p> <p>See also <a href="../global_objects/string/fromcodepoint/"><code>String.fromCodePoint()</code></a> and <a href="../global_objects/string/codepointat/"><code>String.prototype.codePointAt()</code></a>.</p> <pre data-language="js">'\u{2F804}' // CJK COMPATIBILITY IDEOGRAPH-2F804 (U+2F804)
+
+// the same character represented as a surrogate pair
+'\uD87E\uDC04'</pre> <h3 id="Regular_expression_literals">Regular expression literals</h3> <p>See also <a href="../global_objects/regexp/"><code>RegExp</code></a> for more information.</p> <pre data-language="js">/ab+c/g
+
+// An "empty" regular expression literal
+// The empty non-capturing group is necessary 
+// to avoid ambiguity with single-line comments.
+/(?:)/</pre> <h3 id="Template_literals">Template literals</h3> <p>See also <a href="../template_literals/">template strings</a> for more information.</p> <pre data-language="js">`string text`
+
+`string text line 1
+ string text line 2`
+
+`string text ${expression} string text`
+
+tag `string text ${expression} string text`</pre> <h2 id="Automatic_semicolon_insertion">Automatic semicolon insertion</h2> <p>Some <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements" target="_blank">JavaScript statements</a> must be terminated with semicolons and are therefore affected by automatic semicolon insertion (ASI):</p> <ul> <li>Empty statement</li> <li>
+<code>let</code>, <code>const</code>, variable statement</li> <li>
+<code>import</code>, <code>export</code>, module declaration</li> <li>Expression statement</li> <li><code>debugger</code></li> <li>
+<code>continue</code>, <code>break</code>, <code>throw</code>
+</li> <li><code>return</code></li> </ul> <p>The ECMAScript specification mentions<a href="https://tc39.github.io/ecma262/#sec-rules-of-automatic-semicolon-insertion" target="_blank"> three rules of semicolon insertion</a>.</p> <p>1. A semicolon is inserted before, when a <a href="#Line_terminators">Line terminator</a> or "}" is encountered that is not allowed by the grammar.</p> <pre data-language="js">{ 1 2 } 3 
+
+// is transformed by ASI into 
+
+{ 1 2 ;} 3;</pre> <p>2. A semicolon is inserted at the end, when the end of the input stream of tokens is detected and the parser is unable to parse the single input stream as a complete program.</p> <p>Here <code>++</code> is not treated as a <a href="../operators/arithmetic_operators/#Increment">postfix operator</a> applying to variable <code>b</code>, because a line terminator occurs between <code>b</code> and <code>++</code>.</p> <pre data-language="js">a = b
+++c
+
+// is transformend by ASI into
+
+a = b;
+++c;
+</pre> <p>3. A semicolon is inserted at the end, when a statement with restricted productions in the grammar is followed by a line terminator. These statements with "no LineTerminator here" rules are:</p> <ul> <li>PostfixExpressions (<code>++</code> and <code>--</code>)</li> <li><code>continue</code></li> <li><code>break</code></li> <li><code>return</code></li> <li>
+<code>yield</code>, <code>yield*</code>
+</li> <li><code>module</code></li> </ul> <pre data-language="js">return
+a + b
+
+// is transformed by ASI into
+
+return;
+a + b;
+</pre> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> <tr> <td><a href="https://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%201st%20edition,%20June%201997.pdf" hreflang="en" target="_blank">ECMAScript 1st Edition (ECMA-262)</a></td> <td><span class="spec-Standard">Standard</span></td> <td>Initial definition.</td> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/5.1/#sec-7" hreflang="en" target="_blank">ECMAScript 5.1 (ECMA-262)<br><small>The definition of 'Lexical Conventions' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td> </td> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-ecmascript-language-lexical-grammar" hreflang="en" target="_blank">ECMAScript 2015 (6th Edition, ECMA-262)<br><small>The definition of 'Lexical Grammar' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td>Added: Binary and Octal Numeric literals, Unicode code point escapes, Templates</td> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-ecmascript-language-lexical-grammar" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)<br><small>The definition of 'Lexical Grammar' in that specification.</small></a></td> <td><span class="spec-Draft">Draft</span></td> <td> </td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>  <div class="_table">
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Array_literals" target="_blank">Array literals (<code>[1, 2, 3]</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Binary" target="_blank">Binary numeric literals (<code>0b</code>)</a></th>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 28</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Boolean_literal" target="_blank">Boolean literals (<code>true</code>/<code>false</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Decimal" target="_blank">Decimal numeric literals (<code>1234567890</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Hexadecimal_escape_sequences" target="_blank">Hexadecimal escape sequences (<code>'\0xA9'</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Hexadecimal" target="_blank">Hexadecimal numeric literals (<code>0xAF</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Null_literal" target="_blank">Null literal (<code>null</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Octal" target="_blank">Octal numeric literals (<code>0o</code>)</a></th>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 28</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Regular_expression_literals" target="_blank">Regular expression literals (<code>/ab+c/g</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#String_literals" target="_blank">String literals (<code>'Hello world'</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Unicode_escape_sequences" target="_blank">Unicode escape sequences (<code>'\u00A9'</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Unicode_code_point_escapes" target="_blank">Unicode point escapes (<code>\u{}</code>)</a></th>
+<td class="bc-supports-yes"> 44</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 40</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 31</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row">Shorthand notation for object literals</th>
+<td class="bc-supports-yes"> 43</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 33</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 30</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals" target="_blank">Template literals</a></th>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 34</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 28</td>
+<td class="bc-supports-yes"> 9</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Trailing_commas" target="_blank">Trailing commas</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Array_literals" target="_blank">Array literals (<code>[1, 2, 3]</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Binary" target="_blank">Binary numeric literals (<code>0b</code>)</a></th>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 28</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Boolean_literal" target="_blank">Boolean literals (<code>true</code>/<code>false</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Decimal" target="_blank">Decimal numeric literals (<code>1234567890</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Hexadecimal_escape_sequences" target="_blank">Hexadecimal escape sequences (<code>'\0xA9'</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Hexadecimal" target="_blank">Hexadecimal numeric literals (<code>0xAF</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Null_literal" target="_blank">Null literal (<code>null</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Octal" target="_blank">Octal numeric literals (<code>0o</code>)</a></th>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 25</td>
+<td class="bc-supports-yes"> 28</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Regular_expression_literals" target="_blank">Regular expression literals (<code>/ab+c/g</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#String_literals" target="_blank">String literals (<code>'Hello world'</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Unicode_escape_sequences" target="_blank">Unicode escape sequences (<code>'\u00A9'</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Unicode_code_point_escapes" target="_blank">Unicode point escapes (<code>\u{}</code>)</a></th>
+<td class="bc-supports-yes"> 44</td>
+<td class="bc-supports-yes"> 44</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 40</td>
+<td class="bc-supports-yes"> 31</td>
+<td> ? </td>
+<td class="bc-supports-yes"> 4.0</td>
+</tr>
+<tr>
+<th scope="row">Shorthand notation for object literals</th>
+<td class="bc-supports-yes"> 43</td>
+<td class="bc-supports-yes"> 43</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 33</td>
+<td class="bc-supports-yes"> 30</td>
+<td> ? </td>
+<td class="bc-supports-yes"> 4.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals" target="_blank">Template literals</a></th>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 41</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 34</td>
+<td class="bc-supports-yes"> 28</td>
+<td> ? </td>
+<td class="bc-supports-yes"> 4.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Trailing_commas" target="_blank">Trailing commas</a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="1">Server</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Node.js</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Array_literals" target="_blank">Array literals (<code>[1, 2, 3]</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Binary" target="_blank">Binary numeric literals (<code>0b</code>)</a></th>
+<td class="bc-supports-yes bc-has-history"> 4.0.0
+<section class="bc-history" id="sect1"><dl>
+<dt class="bc-supports-yes bc-supports"> 4.0.0
+</dt>
+
+<dt class="bc-supports-yes bc-supports"> 0.12<div class="bc-icons">Disabled </div>
+</dt>
+<dd>Disabled From version 0.12: this feature is behind the <code>--harmony</code> runtime flag.</dd>
+</dl></section>
+</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Boolean_literal" target="_blank">Boolean literals (<code>true</code>/<code>false</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Decimal" target="_blank">Decimal numeric literals (<code>1234567890</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Hexadecimal_escape_sequences" target="_blank">Hexadecimal escape sequences (<code>'\0xA9'</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Hexadecimal" target="_blank">Hexadecimal numeric literals (<code>0xAF</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Null_literal" target="_blank">Null literal (<code>null</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Octal" target="_blank">Octal numeric literals (<code>0o</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Regular_expression_literals" target="_blank">Regular expression literals (<code>/ab+c/g</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#String_literals" target="_blank">String literals (<code>'Hello world'</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Unicode_escape_sequences" target="_blank">Unicode escape sequences (<code>'\u00A9'</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#Unicode_code_point_escapes" target="_blank">Unicode point escapes (<code>\u{}</code>)</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">Shorthand notation for object literals</th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals" target="_blank">Template literals</a></th>
+<td class="bc-supports-yes"> 4.0.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Trailing_commas" target="_blank">Trailing commas</a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+</tbody>
+</table>
+</div> <h2 id="See_also">See also</h2> <ul> <li><a href="http://whereswalden.com/2013/08/12/micro-feature-from-es6-now-in-firefox-aurora-and-nightly-binary-and-octal-numbers/" target="_blank">Jeff Walden: Binary and octal numbers</a></li> <li><a href="http://mathiasbynens.be/notes/javascript-escapes" target="_blank">Mathias Bynens: JavaScript character escape sequences</a></li> <li><a href="../global_objects/boolean/"><code>Boolean</code></a></li> <li><a href="../global_objects/number/"><code>Number</code></a></li> <li><a href="../global_objects/regexp/"><code>RegExp</code></a></li> <li><a href="../global_objects/string/"><code>String</code></a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

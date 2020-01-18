@@ -1,0 +1,261 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Instanceof - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content=" The instanceof tests whether the prototype property of a constructor appears anywhere in the prototype chain of an object. ">
+  <meta name="keywords" content="instanceof, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/operators/instanceof/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>instanceof</h1> <p>The <code>instanceof</code> tests whether the <code>prototype</code> property of a constructor appears anywhere in the prototype chain of an object.</p> <iframe src="https://interactive-examples.mdn.mozilla.net/pages/js/expressions-instanceof.html" frameborder="0" width="100%" class="interactive interactive-js" height="250"></iframe>  <h2 id="Syntax">Syntax</h2> <pre class="syntaxbox"><em>object</em> instanceof <em>constructor</em></pre> <h3 id="Parameters">Parameters</h3> <dl> <dt><code>object</code></dt> <dd>The object to test.</dd> </dl> <dl> <dt><code>constructor</code></dt> <dd>Function to test against</dd> </dl> <h2 id="Description">Description</h2> <p>The <code>instanceof</code> operator tests the presence of <code>constructor.prototype</code> in <code>object</code>'s prototype chain.</p> <pre data-language="js">// defining constructors
+function C() {}
+function D() {}
+
+var o = new C();
+
+// true, because: Object.getPrototypeOf(o) === C.prototype
+o instanceof C;
+
+// false, because D.prototype is nowhere in o's prototype chain
+o instanceof D;
+
+o instanceof Object; // true, because:
+C.prototype instanceof Object // true
+
+C.prototype = {};
+var o2 = new C();
+
+o2 instanceof C; // true
+
+// false, because C.prototype is nowhere in
+// o's prototype chain anymore
+o instanceof C; 
+
+D.prototype = new C(); // add C to [[Prototype]] linkage of D
+var o3 = new D();
+o3 instanceof D; // true
+o3 instanceof C; // true since C.prototype is now in o3's prototype chain
+</pre> <p>Note that the value of an <code>instanceof</code> test can change based on changes to the <code>prototype</code> property of constructors, and it can also be changed by changing an object prototype using <code>Object.setPrototypeOf</code>. It is also possible using the non-standard <code>__proto__</code> pseudo-property.</p> <h3 id="instanceof_and_multiple_context_(e.g._frames_or_windows)">
+<code>instanceof</code> and multiple context (e.g. frames or windows)</h3> <p>Different scopes have different execution environments. This means that they have different built-ins (different global object, different constructors, etc.). This may result in unexpected results. For instance, <code>[] instanceof window.frames[0].Array</code> will return <code>false</code>, because <code>Array.prototype !== </code><code>window.frames[0].Array</code> and arrays inherit from the former.</p> <p>This may not make sense at first but when you start dealing with multiple frames or windows in your script and pass objects from one context to another via functions, this will be a valid and strong issue. For instance, you can securely check if a given object is, in fact, an Array using <code>Array.isArray(myObj)</code></p> <p>For example checking if a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node" target="_blank">Nodes</a> is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/SVGElement" target="_blank">SVGElement</a> in a different context you can use <code>myNode instanceof myNode.ownerDocument.defaultView.SVGElement</code></p> <div class="note">
+<strong>Note for Mozilla developers:</strong><br> In code using XPCOM <code>instanceof</code> has special effect: <code>obj instanceof </code><em><code>xpcomInterface</code></em> (e.g. <code>Components.interfaces.nsIFile</code>) calls <code>obj.QueryInterface(<em>xpcomInterface</em>)</code> and returns <code>true</code> if QueryInterface succeeded. A side effect of such call is that you can use <em><code>xpcomInterface</code></em>'s properties on <code>obj</code> after a successful <code>instanceof</code> test. Unlike standard JavaScript globals, the test <code>obj instanceof xpcomInterface</code> works as expected even if <code>obj</code> is from a different scope.</div> <h2 id="Examples">Examples</h2> <h3 id="Demonstrating_that_String_and_Date_are_of_type_Object_and_exceptional_cases">Demonstrating that <code>String</code> and <code>Date</code> are of type <code>Object</code> and exceptional cases</h3> <p>The following code uses <code>instanceof</code> to demonstrate that <code>String</code> and <code>Date</code> objects are also of type <code>Object</code> (they are derived from <code>Object</code>).</p> <p>However, objects created with the object literal notation are an exception here: Although the prototype is undefined, <code>instanceof Object</code> returns <code>true</code>.</p> <pre data-language="js">var simpleStr = 'This is a simple string'; 
+var myString  = new String();
+var newStr    = new String('String created with constructor');
+var myDate    = new Date();
+var myObj     = {};
+var myNonObj  = Object.create(null);
+
+simpleStr instanceof String; // returns false, checks the prototype chain, finds undefined
+myString  instanceof String; // returns true
+newStr    instanceof String; // returns true
+myString  instanceof Object; // returns true
+
+myObj    instanceof Object;    // returns true, despite an undefined prototype
+({})     instanceof Object;    // returns true, same case as above
+myNonObj instanceof Object;    // returns false, a way to create an object that is not an instance of Object
+
+myString instanceof Date;   // returns false
+
+myDate instanceof Date;     // returns true
+myDate instanceof Object;   // returns true
+myDate instanceof String;   // returns false
+</pre> <h3 id="Demonstrating_that_mycar_is_of_type_Car_and_type_Object">Demonstrating that <code>mycar</code> is of type <code>Car</code> and type <code>Object</code>
+</h3> <p>The following code creates an object type <code>Car</code> and an instance of that object type, <code>mycar</code>. The <code>instanceof</code> operator demonstrates that the <code>mycar</code> object is of type <code>Car</code> and of type <code>Object</code>.</p> <pre data-language="js">function Car(make, model, year) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+}
+var mycar = new Car('Honda', 'Accord', 1998);
+var a = mycar instanceof Car;    // returns true
+var b = mycar instanceof Object; // returns true
+</pre> <h3 id="Not_an_instanceof">Not an instanceof</h3> <p>To test if an object is not an instanceof a specific Constructor, you can do</p> <pre data-language="js">if (!(mycar instanceof Car)) {
+  // Do something, like mycar = new Car(mycar)
+}
+</pre> <p>This is really different from</p> <pre data-language="js">if (!mycar instanceof Car)</pre> <p>that will always be false (<code>!mycar</code> will be treated before <code>instanceof</code>, so you always try to know if a boolean is an instance of <code>Car</code>).</p> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-relational-operators" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)<br><small>The definition of 'Relational Operators' in that specification.</small></a></td> <td><span class="spec-Draft">Draft</span></td> <td> </td> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-relational-operators" hreflang="en" target="_blank">ECMAScript 2015 (6th Edition, ECMA-262)<br><small>The definition of 'Relational Operators' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td> </td> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/5.1/#sec-11.8.6" hreflang="en" target="_blank">ECMAScript 5.1 (ECMA-262)<br><small>The definition of 'The instanceof operator' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td> </td> </tr> <tr> <td><a href="https://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%203rd%20edition,%20December%201999.pdf#sec-11.8.6" hreflang="en" target="_blank">ECMAScript 3rd Edition (ECMA-262)<br><small>The definition of 'The instanceof operator' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td>Initial definition. Implemented in JavaScript 1.4.</td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>  <div class="_table">
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 1</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr></tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr></tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="1">Server</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Node.js</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+</tr></tbody>
+</table>
+</div> <h2 id="See_also">See also</h2> <ul> <li><code><a href="../typeof/">typeof</a></code></li> <li><a href="../../global_objects/symbol/hasinstance/"><code>Symbol.hasInstance</code></a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

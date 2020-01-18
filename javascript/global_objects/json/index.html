@@ -1,0 +1,326 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>JSON - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content="The JSON object contains methods for parsing JavaScript Object Notation (JSON) and converting values to JSON. It can&#39;t be called or constructed &hellip;">
+  <meta name="keywords" content="json, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/global_objects/json/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>JSON</h1> <p>The <code>JSON</code> object contains methods for parsing <a href="https://json.org/" target="_blank">JavaScript Object Notation</a> (<a href="https://developer.mozilla.org/en-US/docs/Glossary/JSON" target="_blank">JSON</a>) and converting values to JSON. It can't be called or constructed, and aside from its two method properties, it has no interesting functionality of its own.</p> <h2 id="JavaScript_and_JSON_differences">JavaScript and JSON differences</h2> <p>JSON is a syntax for serializing objects, arrays, numbers, strings, booleans, and <a href="../null/"><code>null</code></a>. It is based upon JavaScript syntax but is distinct from it: some JavaScript is not JSON.</p> <p><strong>Objects and Arrays</strong>: Property names must be double-quoted strings; trailing commas are forbidden.</p> <p><strong>Numbers</strong>: Leading zeros are prohibited (in <a href="../json/stringify/"><code>JSON.stringify</code></a> zeros will be ignored, but in <a href="../json/parse/"><code>JSON.parse</code></a> it will throw SyntaxError); a decimal point must be followed by at least one digit.</p> <p><strong>Any JSON text is a valid JavaScript expression</strong> – but only in JavaScript engines that have implemented the <a href="https://github.com/tc39/proposal-json-superset" target="_blank">proposal to make all JSON text valid ECMA-262</a>. In engines that haven't implemented the proposal, U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR are allowed in string literals and property keys in JSON; but their use in these features in JavaScript literals is a <a href="../syntaxerror/"><code>SyntaxError</code></a>.</p> <p>Consider this example where <a href="../json/parse/"><code>JSON.parse()</code></a> parses the string as JSON and <code><a href="../eval/">eval</a></code> executes the string as JavaScript:</p> <pre data-language="js">var code = '"\u2028\u2029"';
+JSON.parse(code); // evaluates to "\u2028\u2029" in all engines
+eval(code); // throws a SyntaxError in old engines
+</pre> <h2 id="Full_JSON_syntax">Full JSON syntax</h2> <p>The full JSON syntax is as follows:</p> <pre><var>JSON</var> = <strong>null</strong>
+    <em>or</em> <strong>true</strong> <em>or</em> <strong>false</strong>
+    <em>or</em> <var>JSONNumber</var>
+    <em>or</em> <var>JSONString</var>
+    <em>or</em> <var>JSONObject</var>
+    <em>or</em> <var>JSONArray</var>
+
+<var>JSONNumber</var> = <strong>-</strong> <var>PositiveNumber</var>
+          <em>or</em> <var>PositiveNumber</var>
+<var>PositiveNumber</var> = DecimalNumber
+              <em>or</em> <var>DecimalNumber</var> <strong>.</strong> <var>Digits</var>
+              <em>or</em> <var>DecimalNumber</var> <strong>.</strong> <var>Digits</var> <var>ExponentPart</var>
+              <em>or</em> <var>DecimalNumber</var> <var>ExponentPart</var>
+<var>DecimalNumber</var> = <strong>0</strong>
+             <em>or</em> <var>OneToNine</var> <var>Digits</var>
+<var>ExponentPart</var> = <strong>e</strong> <var>Exponent</var>
+            <em>or</em> <strong>E</strong> <var>Exponent</var>
+<var>Exponent</var> = <var>Digits</var>
+        <em>or</em> <strong>+</strong> <var>Digits</var>
+        <em>or</em> <strong>-</strong> <var>Digits</var>
+<var>Digits</var> = <var>Digit</var>
+      <em>or</em> <var>Digits</var> <var>Digit</var>
+<var>Digit</var> = <strong>0</strong> through <strong>9</strong>
+<var>OneToNine</var> = <strong>1</strong> through <strong>9</strong>
+
+<var>JSONString</var> = <strong>""</strong>
+          <em>or</em> <strong>"</strong> <var>StringCharacters</var> <strong>"</strong>
+<var>StringCharacters</var> = <var>StringCharacter</var>
+                <em>or</em> <var>StringCharacters</var> <var>StringCharacter</var>
+<var>StringCharacter</var> = any character
+                  <em>except</em> <strong>"</strong> <em>or</em> <strong>\</strong> <em>or</em> U+0000 through U+001F
+               <em>or</em> <var>EscapeSequence</var>
+<var>EscapeSequence</var> = <strong>\"</strong> <em>or</em> <strong>\/</strong> <em>or</em> <strong>\\</strong> <em>or</em> <strong>\b</strong> <em>or</em> <strong>\f</strong> <em>or</em> <strong>\n</strong> <em>or</em> <strong>\r</strong> <em>or</em> <strong>\t</strong>
+              <em>or</em> <strong>\u</strong> <var>HexDigit</var> <var>HexDigit</var> <var>HexDigit</var> <var>HexDigit</var>
+<var>HexDigit</var> = <strong>0</strong> through <strong>9</strong>
+        <em>or</em> <strong>A</strong> through <strong>F</strong>
+        <em>or</em> <strong>a</strong> through <strong>f</strong>
+
+<var>JSONObject</var> = <strong>{</strong> <strong>}</strong>
+          <em>or</em> <strong>{</strong> <var>Members</var> <strong>}</strong>
+<var>Members</var> = <var>JSONString</var> <strong>:</strong> <var>JSON</var>
+       <em>or</em> <var>Members</var> <strong>,</strong> <var>JSONString</var> <strong>:</strong> <var>JSON</var>
+
+<var>JSONArray</var> = <strong>[</strong> <strong>]</strong>
+         <em>or</em> <strong>[</strong> <var>ArrayElements</var> <strong>]</strong>
+<var>ArrayElements</var> = <var>JSON</var>
+             <em>or</em> <var>ArrayElements</var> <strong>,</strong> <var>JSON</var>
+</pre> <p>Insignificant whitespace may be present anywhere except within a <code><var>JSONNumber</var></code> (numbers must contain no whitespace) or <code><var>JSONString</var></code> (where it is interpreted as the corresponding character in the string, or would cause an error). The tab character (<a href="http://unicode-table.com/en/0009/" target="_blank">U+0009</a>), carriage return (<a href="http://unicode-table.com/en/000D/" target="_blank">U+000D</a>), line feed (<a href="http://unicode-table.com/en/000A/" target="_blank">U+000A</a>), and space (<a href="http://unicode-table.com/en/0020/" target="_blank">U+0020</a>) characters are the only valid whitespace characters.</p> <h2 id="Methods">Methods</h2> <dl> <dt><a href="../json/parse/"><code>JSON.parse()</code></a></dt> <dd>Parse a string as JSON, optionally transform the produced value and its properties, and return the value.</dd> <dt><a href="../json/stringify/"><code>JSON.stringify()</code></a></dt> <dd>Return a JSON string corresponding to the specified value, optionally including only certain properties or replacing property values in a user-defined manner.</dd> </dl> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/5.1/#sec-15.12" hreflang="en" target="_blank">ECMAScript 5.1 (ECMA-262)<br><small>The definition of 'JSON' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td>Initial definition.</td> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-json-object" hreflang="en" target="_blank">ECMAScript 2015 (6th Edition, ECMA-262)<br><small>The definition of 'JSON' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td> </td> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-json-object" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)<br><small>The definition of 'JSON' in that specification.</small></a></td> <td><span class="spec-Draft">Draft</span></td> <td> </td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>    <div class="_table">
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 3.5</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> 10.5</td>
+<td class="bc-supports-yes"> 4</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" target="_blank"><code>parse</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 3.5</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> 10.5</td>
+<td class="bc-supports-yes"> 4</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank"><code>stringify</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 3.5</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> 10.5</td>
+<td class="bc-supports-yes"> 4</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON#JavaScript_and_JSON_differences" target="_blank">JavaScript is a superset of JSON</a></th>
+<td class="bc-supports-yes"> 66</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 62</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 53</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" target="_blank"><code>parse</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank"><code>stringify</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON#JavaScript_and_JSON_differences" target="_blank">JavaScript is a superset of JSON</a></th>
+<td class="bc-supports-yes"> 66</td>
+<td class="bc-supports-yes"> 66</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 62</td>
+<td class="bc-supports-yes"> 53</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-no"> No</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="1">Server</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Node.js</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" target="_blank"><code>parse</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank"><code>stringify</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON#JavaScript_and_JSON_differences" target="_blank">JavaScript is a superset of JSON</a></th>
+<td class="bc-supports-yes"> 10.0.0</td>
+</tr>
+</tbody>
+</table>
+</div>   <h2 id="See_also">See also</h2> <ul> <li><a href="../date/tojson/"><code>Date.prototype.toJSON()</code></a></li> </ul>  <h2 id="Tools">Tools</h2> <ul> <li>
+<a href="http://jsoncompare.org/" target="_blank">JSON Diff</a> checker. </li> <li>
+<a href="http://jsonbeautifier.org/" target="_blank">JSON Beautifier/editor</a>.</li> <li><a href="http://jsonparser.org/" target="_blank">JSON Parser</a></li> <li>
+<a href="https://tools.learningcontainer.com/json-validator/" target="_blank">JSON Validator</a>.</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

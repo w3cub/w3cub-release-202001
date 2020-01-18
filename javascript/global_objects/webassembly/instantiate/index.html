@@ -1,0 +1,259 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>WebAssembly.instantiate - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content=" The WebAssembly.instantiate() function allows you to compile and instantiate WebAssembly code. This function has two overloads&#58; ">
+  <meta name="keywords" content="webassembly, instantiate, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/global_objects/webassembly/instantiate/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>WebAssembly.instantiate</h1> <p>The <code>WebAssembly.instantiate()</code> function allows you to compile and instantiate WebAssembly code. This function has two overloads:</p> <ul> <li>The primary overload takes the WebAssembly binary code, in the form of a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays" target="_blank">typed array</a> or <a href="../../arraybuffer/">ArrayBuffer</a>, and performs both compilation and instantiation in one step. The returned <code>Promise</code> resolves to both a compiled <a href="../module/"><code>WebAssembly.Module</code></a> and its first <a href="../instance/"><code>WebAssembly.Instance</code></a>.</li> <li>The secondary overload takes an already-compiled <a href="../module/"><code>WebAssembly.Module</code></a> and returns a <code>Promise</code> that resolves to an <code>Instance</code> of that <code>Module</code>. This overload is useful if the <code>Module</code> has already been compiled.</li> </ul> <div class="warning"> <p><strong>Important</strong>: This method is not the most efficient way of fetching and instantiating wasm modules. If at all possible, you should use the newer <a href="../instantiatestreaming/"><code>WebAssembly.instantiateStreaming()</code></a> method instead, which fetches, compiles, and instantiates a module all in one step, directly from the raw bytecode, so doesn't require conversion to an <a href="https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer" target="_blank"><code>ArrayBuffer</code></a>.</p> </div> <h2 id="Syntax">Syntax</h2> <h3 id="Primary_overload_—_taking_wasm_binary_code">Primary overload — taking wasm binary code</h3> <pre class="syntaxbox">Promise&lt;ResultObject&gt; WebAssembly.instantiate(bufferSource, importObject);
+</pre> <h4 id="Parameters">Parameters</h4> <dl> <dt><em>bufferSource</em></dt> <dd>A <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays" target="_blank">typed array</a> or <a href="../../arraybuffer/">ArrayBuffer</a> containing the binary code of the .wasm module you want to compile.</dd> <dt>
+<em>importObject</em> <span class="inlineIndicator optional optionalInline">Optional</span>
+</dt> <dd>An object containing the values to be imported into the newly-created <code>Instance</code>, such as functions or <a href="../memory/"><code>WebAssembly.Memory</code></a> objects. There must be one matching property for each declared import of the compiled module or else a <a href="../linkerror/">WebAssembly.LinkError</a> is thrown.</dd> </dl> <h4 id="Return_value">Return value</h4> <p>A <code>Promise</code> that resolves to a <code>ResultObject</code> which contains two fields:</p> <ul> <li>
+<code>module</code>: A <a href="../module/"><code>WebAssembly.Module</code></a> object representing the compiled WebAssembly module. This <code>Module</code> can be instantiated again, shared via <a href="https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage" target="_blank">postMessage()</a> or <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Caching_modules" target="_blank">cached in IndexedDB</a>.</li> <li>
+<code>instance</code>: A <a href="../instance/"><code>WebAssembly.Instance</code></a> object that contains all the <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions" target="_blank">Exported WebAssembly functions</a>.</li> </ul> <h4 id="Exceptions">Exceptions</h4> <ul> <li>If either of the parameters are not of the correct type or structure, a <a href="../../typeerror/"><code>TypeError</code></a> is thrown.</li> <li>If the operation fails, the promise rejects with a <a href="../compileerror/"><code>WebAssembly.CompileError</code></a>, <a href="../linkerror/"><code>WebAssembly.LinkError</code></a>, or <a href="../runtimeerror/"><code>WebAssembly.RuntimeError</code></a>, depending on the cause of the failure.</li> </ul> <h3 id="Secondary_overload_—_taking_a_module_object_instance">Secondary overload — taking a module object instance</h3> <pre class="syntaxbox">Promise&lt;WebAssembly.Instance&gt; WebAssembly.instantiate(module, importObject);
+</pre> <h4 id="Parameters_2">Parameters</h4> <dl> <dt><em>module</em></dt> <dd>The <a href="../module/"><code>WebAssembly.Module</code></a> object to be instantiated.</dd> <dt>
+<em>importObject</em> <span class="inlineIndicator optional optionalInline">Optional</span>
+</dt> <dd>An object containing the values to be imported into the newly-created <code>Instance</code>, such as functions or <a href="../memory/"><code>WebAssembly.Memory</code></a> objects. There must be one matching property for each declared import of <code>module</code> or else a <a href="../linkerror/">WebAssembly.LinkError</a> is thrown.</dd> </dl> <h4 id="Return_value_2">Return value</h4> <p>A <code>Promise</code> that resolves to an <a href="../instance/"><code>WebAssembly.Instance</code></a> object.</p> <h4 id="Exceptions_2">Exceptions</h4> <ul> <li>If either of the parameters are not of the correct type or structure, a <a href="../../typeerror/"><code>TypeError</code></a> is thrown.</li> <li>If the operation fails, the promise rejects with a <a href="../compileerror/"><code>WebAssembly.CompileError</code></a>, <a href="../linkerror/"><code>WebAssembly.LinkError</code></a>, or <a href="../runtimeerror/"><code>WebAssembly.RuntimeError</code></a>, depending on the cause of the failure.</li> </ul> <h2 id="Examples">Examples</h2> <p><strong>Note</strong>: You'll probably want to use <a href="../instantiatestreaming/"><code>WebAssembly.instantiateStreaming()</code></a> in most cases, as it is more efficient than <code>instantiate()</code>.</p> <h3 id="First_overload_example">First overload example</h3> <p>After fetching some WebAssembly bytecode using fetch, we compile and instantiate the module using the <a href="../instantiate/"><code>WebAssembly.instantiate()</code></a> function, importing a JavaScript function into the WebAssembly Module in the process. We then call an <a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Exported_functions" target="_blank">Exported WebAssembly function</a> that is exported by the <code>Instance</code>.</p> <pre data-language="js">var importObject = {
+  imports: {
+    imported_func: function(arg) {
+      console.log(arg);
+    }
+  }
+};
+
+fetch('simple.wasm').then(response =&gt;
+  response.arrayBuffer()
+).then(bytes =&gt;
+  WebAssembly.instantiate(bytes, importObject)
+).then(result =&gt;
+  result.instance.exports.exported_func()
+);</pre> <div class="note"> <p><strong>Note</strong>: You can also find this example at <a href="https://github.com/mdn/webassembly-examples/blob/master/js-api-examples/index.html" target="_blank">index.html</a> on GitHub (<a href="https://mdn.github.io/webassembly-examples/js-api-examples/" target="_blank">view it live also</a>).</p> </div> <h3 id="Second_overload_example">Second overload example</h3> <p>The following example (see our <a href="https://github.com/mdn/webassembly-examples/blob/master/js-api-examples/index-compile.html" target="_blank">index-compile.html</a> demo on GitHub, and <a href="https://mdn.github.io/webassembly-examples/js-api-examples/index-compile.html" target="_blank">view it live</a> also) compiles the loaded simple.wasm byte code using the <a href="../compilestreaming/"><code>WebAssembly.compileStreaming()</code></a> method and then sends it to a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API" target="_blank">worker</a> using <a href="https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage" target="_blank">postMessage()</a>.</p> <pre data-language="js">var worker = new Worker("wasm_worker.js");
+
+WebAssembly.compileStreaming(fetch('simple.wasm'))
+.then(mod =&gt;
+  worker.postMessage(mod)
+);</pre> <p>In the worker (see <code><a href="https://github.com/mdn/webassembly-examples/blob/master/js-api-examples/wasm_worker.js" target="_blank">wasm_worker.js</a></code>) we define an import object for the module to use, then set up an event handler to receive the module from the main thread. When the module is received, we create an instance from it using the <a href="../instantiate/"><code>WebAssembly.instantiate()</code></a> method and invoke an exported function from inside it.</p> <pre data-language="js">var importObject = {
+  imports: {
+    imported_func: function(arg) {
+      console.log(arg);
+    }
+  }
+};
+
+onmessage = function(e) {
+  console.log('module received from main thread');
+  var mod = e.data;
+
+  WebAssembly.instantiate(mod, importObject).then(function(instance) {
+    instance.exports.exported_func();
+  });
+};</pre> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <thead> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> </thead> <tbody> <tr> <td><a href="https://webassembly.github.io/spec/js-api/#webassemblyinstantiate" hreflang="en" target="_blank">WebAssembly JavaScript Interface<br><small>The definition of 'instantiate()' in that specification.</small></a></td> <td><span class="spec-WD">Working Draft</span></td> <td>Initial draft definition.</td> </tr> </tbody> </table></div> <h2 name="Browser_compatibility" id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>   <div class="_table">
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 57</td>
+<td class="bc-supports-yes"> 16</td>
+<td class="bc-supports-yes bc-has-history"> 52
+<section class="bc-history" id="sect1"><dl>
+<dt class="bc-supports-yes bc-supports"> 52
+</dt>
+<dd> Disabled in the Firefox 52 Extended Support Release (ESR).</dd>
+</dl></section>
+</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 44</td>
+<td class="bc-supports-yes"> 11</td>
+</tr></tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 57</td>
+<td class="bc-supports-yes"> 57</td>
+<td class="bc-supports-yes bc-has-history"> Yes<div class="bc-icons">Disabled </div>
+<section class="bc-history" id="sect2"><dl>
+<dt class="bc-supports-yes bc-supports"> Yes<div class="bc-icons">Disabled </div>
+</dt>
+<dd>Disabled This feature is behind the <code>Experimental JavaScript Features</code> preference.</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes bc-has-history"> 52
+<section class="bc-history" id="sect3"><dl>
+<dt class="bc-supports-yes bc-supports"> 52
+</dt>
+<dd> Disabled in the Firefox 52 Extended Support Release (ESR).</dd>
+</dl></section>
+</td>
+<td> ? </td>
+<td class="bc-supports-yes"> 11</td>
+<td class="bc-supports-yes"> 7.0</td>
+</tr></tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="1">Server</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Node.js</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 8.0.0</td>
+</tr></tbody>
+</table>
+</div>  <h2 id="See_also">See also</h2> <ul> <li>
+<a href="https://developer.mozilla.org/en-US/docs/WebAssembly" target="_blank">WebAssembly</a> overview page</li> <li><a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Concepts" target="_blank">WebAssembly concepts</a></li> <li><a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Using_the_JavaScript_API" target="_blank">Using the WebAssembly JavaScript API</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiate</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

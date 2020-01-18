@@ -1,0 +1,295 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Iteration Protocols - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content="A couple of additions to ECMAScript 2015 aren&#39;t new built-ins or syntax, but protocols. These protocols can be implemented by any object &hellip;">
+  <meta name="keywords" content="iteration, protocols, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/iteration_protocols/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Iteration protocols</h1> <p>A couple of additions to ECMAScript 2015 aren't new built-ins or syntax, but protocols. These protocols can be implemented by any object respecting some conventions.</p> <p>There are two protocols: The <a href="#The_iterable_protocol">iterable protocol</a> and the <a href="#The_iterator_protocol">iterator protocol</a>.</p> <h2 id="The_iterable_protocol">The iterable protocol</h2> <p>The <strong>iterable</strong> protocol allows JavaScript objects to define or customize their iteration behavior, such as what values are looped over in a <a href="../statements/for...of/"><code>for..of</code></a> construct. Some built-in types are <a href="#Built-in_iterables">built-in iterables</a> with a default iteration behavior, such as <a href="../global_objects/array/"><code>Array</code></a> or <a href="../global_objects/map/"><code>Map</code></a>, while other types (such as <a href="../global_objects/object/"><code>Object</code></a>) are not.</p> <p>In order to be <strong>iterable</strong>, an object must implement the <strong>@@iterator</strong> method, meaning that the object (or one of the objects up its <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain" target="_blank">prototype chain</a>) must have a property with a <strong>@@iterator </strong>key which is available via constant <code><a href="../global_objects/symbol/iterator/"><code>Symbol.iterator</code></a></code>:</p> <div class="_table"><table class="standard-table"> <thead> <tr> <th scope="col">Property</th> <th scope="col">Value</th> </tr> </thead> <tbody> <tr> <td><code>[Symbol.iterator]</code></td> <td>A zero arguments function that returns an object, conforming to the <a href="#The_iterator_protocol">iterator protocol</a>.</td> </tr> </tbody> </table></div> <p>Whenever an object needs to be iterated (such as at the beginning of a <code>for..of</code> loop), its <code>@@iterator</code> method is called with no arguments, and the returned <strong>iterator</strong> is used to obtain the values to be iterated.</p> <h2 id="The_iterator_protocol">The iterator protocol</h2> <p>The <strong>iterator</strong> protocol defines a standard way to produce a sequence of values (either finite or infinite), and potentially a return value when all values have been generated.</p> <p>An object is an iterator when it implements a <code><strong>next()</strong></code> method with the following semantics:</p> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Property</th> <th scope="col">Value</th> </tr> <tr> <td><code>next</code></td> <td> <p>A zero arguments function that returns an object with at least the following two properties:</p> <ul> <li>
+<code>done</code> (boolean) <ul> <li>Has the value <code>true</code> if the iterator is past the end of the iterated sequence. In this case <code>value</code> optionally specifies the return value of the iterator.</li> <li>Has the value <code>false</code> if the iterator was able to produce the next value in the sequence. This is equivalent of not specifying the <code>done</code> property altogether.</li> </ul> </li> <li>
+<code>value</code> - any JavaScript value returned by the iterator. Can be omitted when <code>done</code> is <code>true</code>.</li> </ul> <p>The <code>next</code> method always has to return an object with appropriate properties including <code>done</code> and <code>value</code>. If a non-object value gets returned (such as <code>false</code> or <code>undefined</code>), a <a href="../global_objects/typeerror/"><code>TypeError</code></a> ("iterator.next() returned a non-object value") will be thrown.</p> </td> </tr> </tbody> </table></div> <div class="note"> <p>It is not possible to know reflectively whether a particular object implements the iterator protocol, however it is easy to create an object that satisfies both the iterator and iterable protocols (as shown in the example below). Doing so allows an iterator to be consumed by the various syntaxes expecting iterables. Thus it is rarely desireable to implement the iterator protocol without also implementing iterable. </p> <pre data-language="js">var myIterator = {
+    next: function() {
+        // ...
+    },
+    [Symbol.iterator]: function() { return this }
+};
+</pre> </div> <h2 id="Examples_using_the_iteration_protocols">Examples using the iteration protocols</h2> <p>A <a href="../global_objects/string/"><code>String</code></a> is an example of a built-in iterable object:</p> <pre data-language="js">var someString = 'hi';
+typeof someString[Symbol.iterator];          // "function"
+</pre> <p><code>String</code>'s <a href="../global_objects/string/@@iterator/">default iterator</a> returns the string's code points one by one:</p> <pre data-language="js">var iterator = someString[Symbol.iterator]();
+iterator + '';                               // "[object String Iterator]"
+ 
+iterator.next();                             // { value: "h", done: false }
+iterator.next();                             // { value: "i", done: false }
+iterator.next();                             // { value: undefined, done: true }</pre> <p>Some built-in constructs, such as the <a href="../operators/spread_syntax/">spread syntax</a>, use the same iteration protocol under the hood:</p> <pre data-language="js">[...someString]                              // ["h", "i"]</pre> <p>We can redefine the iteration behavior by supplying our own <code>@@iterator</code>:</p> <pre data-language="js">var someString = new String('hi');           // need to construct a String object explicitly to avoid auto-boxing
+
+someString[Symbol.iterator] = function() {
+  return { // this is the iterator object, returning a single element, the string "bye"
+    next: function() {
+      if (this._first) {
+        this._first = false;
+        return { value: 'bye', done: false };
+      } else {
+        return { done: true };
+      }
+    },
+    _first: true
+  };
+};
+</pre> <p>Notice how redefining <code>@@iterator</code> affects the behavior of built-in constructs that use the iteration protocol:</p> <pre data-language="js">[...someString];                             // ["bye"]
+someString + '';                             // "hi"
+</pre> <h2 id="Iterable_examples">Iterable examples</h2> <h3 id="Built-in_iterables">Built-in iterables</h3> <p><a href="../global_objects/string/"><code>String</code></a>, <a href="../global_objects/array/"><code>Array</code></a>, <a href="../global_objects/typedarray/"><code>TypedArray</code></a>, <a href="../global_objects/map/"><code>Map</code></a> and <a href="../global_objects/set/"><code>Set</code></a> are all built-in iterables, because each of their prototype objects implements an <code>@@iterator</code> method.</p> <h3 id="User-defined_iterables">User-defined iterables</h3> <p>We can make our own iterables like this:</p> <pre data-language="js">var myIterable = {};
+myIterable[Symbol.iterator] = function* () {
+    yield 1;
+    yield 2;
+    yield 3;
+};
+[...myIterable]; // [1, 2, 3]
+</pre> <h3 id="Built-in_APIs_accepting_iterables">Built-in APIs accepting iterables</h3> <p>There are many APIs that accept iterables, for example: <a href="../global_objects/map/"><code>Map([iterable])</code></a>, <a href="../global_objects/weakmap/"><code>WeakMap([iterable])</code></a>, <a href="../global_objects/set/"><code>Set([iterable])</code></a> and <a href="../global_objects/weakset/"><code>WeakSet([iterable])</code></a>:</p> <pre data-language="js">var myObj = {};
+new Map([[1, 'a'], [2, 'b'], [3, 'c']]).get(2);               // "b"
+new WeakMap([[{}, 'a'], [myObj, 'b'], [{}, 'c']]).get(myObj); // "b"
+new Set([1, 2, 3]).has(3);                               // true
+new Set('123').has('2');                                 // true
+new WeakSet(function* () {
+    yield {};
+    yield myObj;
+    yield {};
+}()).has(myObj);                                         // true
+</pre> <p>Also see <a href="../global_objects/promise/all/"><code>Promise.all(iterable)</code></a>, <a href="../global_objects/promise/race/"><code>Promise.race(iterable)</code></a>, and <a href="../global_objects/array/from/"><code>Array.from()</code></a>.</p> <h3 id="Syntaxes_expecting_iterables">Syntaxes expecting iterables</h3> <p>Some statements and expressions expect iterables, for example the <code><a href="../statements/for...of/">for-of</a></code> loops, <a href="../operators/spread_syntax/">spread syntax</a>, <code><a href="../operators/yield*/">yield*</a></code>, and <a href="../operators/destructuring_assignment/">destructuring assignment</a>:</p> <pre data-language="js">for(let value of ['a', 'b', 'c']){
+    console.log(value);
+}
+// "a"
+// "b"
+// "c"
+
+[...'abc']; // ["a", "b", "c"]
+
+function* gen() {
+  yield* ['a', 'b', 'c'];
+}
+
+gen().next(); // { value:"a", done:false }
+
+[a, b, c] = new Set(['a', 'b', 'c']);
+a // "a"
+
+</pre> <h3 id="Non-well-formed_iterables">Non-well-formed iterables</h3> <p>If an iterable's <code>@@iterator</code> method doesn't return an iterator object, then it's a non-well-formed iterable. Using it as such is likely to result in runtime exceptions or buggy behavior:</p> <pre data-language="js">var nonWellFormedIterable = {}
+nonWellFormedIterable[Symbol.iterator] = () =&gt; 1
+[...nonWellFormedIterable] // TypeError: [] is not a function
+</pre> <h2 id="Iterator_examples">Iterator examples</h2> <h3 id="Simple_iterator">Simple iterator</h3> <pre data-language="js">function makeIterator(array) {
+    var nextIndex = 0;
+    
+    return {
+       next: function() {
+           return nextIndex &lt; array.length ?
+               {value: array[nextIndex++], done: false} :
+               {done: true};
+       }
+    };
+}
+
+var it = makeIterator(['yo', 'ya']);
+
+console.log(it.next().value); // 'yo'
+console.log(it.next().value); // 'ya'
+console.log(it.next().done);  // true
+</pre> <h3 id="Infinite_iterator">Infinite iterator</h3> <pre data-language="js">function idMaker() {
+    var index = 0;
+    
+    return {
+       next: function(){
+           return {value: index++, done: false};
+       }
+    };
+}
+
+var it = idMaker();
+
+console.log(it.next().value); // '0'
+console.log(it.next().value); // '1'
+console.log(it.next().value); // '2'
+// ...
+</pre> <h3 id="With_a_generator">With a generator</h3> <pre data-language="js">function* makeSimpleGenerator(array) {
+    var nextIndex = 0;
+    
+    while (nextIndex &lt; array.length) {
+        yield array[nextIndex++];
+    }
+}
+
+var gen = makeSimpleGenerator(['yo', 'ya']);
+
+console.log(gen.next().value); // 'yo'
+console.log(gen.next().value); // 'ya'
+console.log(gen.next().done);  // true
+
+
+
+function* idMaker() {
+    var index = 0;
+    while (true)
+        yield index++;
+}
+
+var gen = idMaker();
+
+console.log(gen.next().value); // '0'
+console.log(gen.next().value); // '1'
+console.log(gen.next().value); // '2'
+// ...
+</pre> <h3 id="With_ES2015_class">With ES2015 class</h3> <pre data-language="js">class SimpleClass {
+  constructor(data) {
+    this.index = 0;
+    this.data = data;
+  }
+
+  [Symbol.iterator]() {
+    return {
+      next: () =&gt; {
+        if (this.index &lt; this.data.length) {
+          return {value: this.data[this.index++], done: false};
+        } else {
+          this.index = 0; //If we would like to iterate over this again without forcing manual update of the index
+          return {done: true};
+        }
+      }
+    };
+  }
+}
+
+const simple = new SimpleClass([1,2,3,4,5]);
+
+for (const val of simple) {
+  console.log(val);  //'0' '1' '2' '3' '4' '5' 
+}
+</pre> <h2 id="Is_a_generator_object_an_iterator_or_an_iterable">Is a generator object an iterator or an iterable?</h2> <p>A <a href="../global_objects/generator/">generator object</a> is both, iterator and iterable:</p> <pre data-language="js">var aGeneratorObject = function* () {
+    yield 1;
+    yield 2;
+    yield 3;
+}();
+typeof aGeneratorObject.next;
+// "function", because it has a next method, so it's an iterator
+typeof aGeneratorObject[Symbol.iterator];
+// "function", because it has an @@iterator method, so it's an iterable
+aGeneratorObject[Symbol.iterator]() === aGeneratorObject;
+// true, because its @@iterator method returns itself (an iterator), so it's an well-formed iterable
+[...aGeneratorObject];
+// [1, 2, 3]
+</pre> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-iteration" hreflang="en" target="_blank">ECMAScript 2015 (6th Edition, ECMA-262)<br><small>The definition of 'Iteration' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td>Initial definition.</td> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-iteration" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)<br><small>The definition of 'Iteration' in that specification.</small></a></td> <td><span class="spec-Draft">Draft</span></td> <td> </td> </tr> </tbody> </table></div> <h2 id="See_also">See also</h2> <ul> <li>For more information on ES2015 generators, see <a href="../statements/function*/">the function* documentation</a>.</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,517 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Promise - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content=" The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value. ">
+  <meta name="keywords" content="promise, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/global_objects/promise/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Promise</h1> <p>The <code>Promise</code> object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.</p> <div class="note"> <p><strong>Note:</strong> This article describes the <code>Promise</code> constructor and the methods and properties of such objects. To learn about the way promises work and how you can use them, we advise you to read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises" target="_blank">Using promises</a> first. The constructor is primarily used to wrap functions that do not already support promises.</p> </div> <iframe src="https://interactive-examples.mdn.mozilla.net/pages/js/promise-constructor.html" frameborder="0" width="100%" class="interactive interactive-js" height="250"></iframe>  <h2 id="Syntax">Syntax</h2> <pre data-language="js">new Promise( /* executor */ function(resolve, reject) { ... } );</pre> <h3 id="Parameters">Parameters</h3> <dl> <dt>executor</dt> <dd>A function that is passed with the arguments <code>resolve</code> and <code>reject</code>. The <code>executor</code> function is executed immediately by the Promise implementation, passing <code>resolve</code> and <code>reject</code> functions (the executor is called before the <code>Promise</code> constructor even returns the created object). The <code>resolve</code> and <code>reject</code> functions, when called, resolve or reject the promise, respectively. The executor normally initiates some asynchronous work, and then, once that completes, either calls the <code>resolve</code> function to resolve the promise or else rejects it if an error occurred. If an error is thrown in the executor function, the promise is rejected. The return value of the executor is ignored.</dd> </dl> <h2 id="Description">Description</h2> <p>A <code><strong>Promise</strong></code> is a proxy for a value not necessarily known when the promise is created. It allows you to associate handlers with an asynchronous action's eventual success value or failure reason. This lets asynchronous methods return values like synchronous methods: instead of immediately returning the final value, the asynchronous method returns a <em>promise</em> to supply the value at some point in the future.</p> <p>A <code>Promise</code> is in one of these states:</p> <ul> <li>
+<em>pending</em>: initial state, neither fulfilled nor rejected.</li> <li>
+<em>fulfilled</em>: meaning that the operation completed successfully.</li> <li>
+<em>rejected</em>: meaning that the operation failed.</li> </ul> <p>A pending promise can either be <em>fulfilled</em> with a value, or <em>rejected</em> with a reason (error). When either of these options happens, the associated handlers queued up by a promise's <code>then</code> method are called. (If the promise has already been fulfilled or rejected when a corresponding handler is attached, the handler will be called, so there is no race condition between an asynchronous operation completing and its handlers being attached.)</p> <p>As the <code><a href="../promise/then/"><code>Promise.prototype.then()</code></a></code> and <code><a href="../promise/catch/"><code>Promise.prototype.catch()</code></a></code> methods return promises, they can be chained.</p> <p><img src="data:image/png;base64,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" alt="" style="height: 297px; width: 801px;"></p> <div class="note"> <p><strong>Not to be confused with:</strong> Several other languages have mechanisms for lazy evaluation and deferring a computation, which they also call "promises", e.g. Scheme. Promises in JavaScript represent processes which are already happening, which can be chained with callback functions. If you are looking to lazily evaluate an expression, consider the <a href="../../functions/arrow_functions/">arrow function</a> with no arguments: <code>f = () =&gt; <em>expression</em></code> to create the lazily-evaluated expression, and <code>f()</code> to evaluate.</p> </div> <div class="note"> <p><strong>Note</strong>: A promise is said to be <em>settled</em> if it is either fulfilled or rejected, but not pending. You will also hear the term <em>resolved</em> used with promises — this means that the promise is settled or “locked in” to match the state of another promise. <a href="https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md" target="_blank">States and fates</a> contains more details about promise terminology.</p> </div> <h2 id="Properties">Properties</h2> <dl> <dt><code>Promise.length</code></dt> <dd>Length property whose value is always 1 (number of constructor arguments).</dd> <dt><a href="../promise/prototype/"><code>Promise.prototype</code></a></dt> <dd>Represents the prototype for the <code>Promise</code> constructor.</dd> </dl> <h2 id="Methods">Methods</h2> <dl> <dt><a href="../promise/all/"><code>Promise.all(iterable)</code></a></dt> <dd>Returns a promise that either fulfills when all of the promises in the iterable argument have fulfilled or rejects as soon as one of the promises in the iterable argument rejects. If the returned promise fulfills, it is fulfilled with an array of the values from the fulfilled promises in the same order as defined in the iterable. If the returned promise rejects, it is rejected with the reason from the first promise in the iterable that rejected. This method can be useful for aggregating results of multiple promises.</dd> <dt><a href="../promise/race/"><code>Promise.race(iterable)</code></a></dt> <dd>Returns a promise that fulfills or rejects as soon as one of the promises in the iterable fulfills or rejects, with the value or reason from that promise.</dd> <dt><a href="../promise/reject/"><code>Promise.reject(reason)</code></a></dt> <dd>Returns a <code>Promise</code> object that is rejected with the given reason.</dd> <dt><a href="../promise/resolve/"><code>Promise.resolve(value)</code></a></dt> <dd>Returns a <code>Promise</code> object that is resolved with the given value. If the value is a thenable (i.e. has a <code>then</code> method), the returned promise will "follow" that thenable, adopting its eventual state; otherwise the returned promise will be fulfilled with the value. Generally, if you don't know if a value is a promise or not, <a href="../promise/resolve/"><code>Promise.resolve(value)</code></a> it instead and work with the return value as a promise.</dd> </dl> <h2 id="Promise_prototype">Promise prototype</h2> <h3 id="Properties_2">Properties</h3> <dl> <dt><code>Promise.prototype.constructor</code></dt> <dd>Returns the function that created an instance's prototype. This is the <a href="../promise/"><code>Promise</code></a> function by default.</dd> </dl> <h3 id="Methods_2">Methods</h3> <dl> <dt><a href="../promise/catch/"><code>Promise.prototype.catch(onRejected)</code></a></dt> <dd>Appends a rejection handler callback to the promise, and returns a new promise resolving to the return value of the callback if it is called, or to its original fulfillment value if the promise is instead fulfilled.</dd> <dt><a href="../promise/then/"><code>Promise.prototype.then(onFulfilled, onRejected)</code></a></dt> <dd>Appends fulfillment and rejection handlers to the promise, and returns a new promise resolving to the return value of the called handler, or to its original settled value if the promise was not handled (i.e. if the relevant handler <code>onFulfilled</code> or <code>onRejected</code> is not a function).</dd> <dt><a href="../promise/finally/"><code>Promise.prototype.finally(onFinally)</code></a></dt> <dd>Appends a handler to the promise, and returns a new promise which is resolved when the original promise is resolved. The handler is called when the promise is settled, whether fulfilled or rejected.</dd> </dl> <h2 id="Creating_a_Promise">Creating a Promise</h2> <p>A <code>Promise</code> object is created using the <code>new </code>keyword and its constructor. This constructor takes as its argument a function, called the "executor function". This function should take two functions as parameters. The first of these functions (<code>resolve</code>) is called when the asynchronous task completes successfully and returns the results of the task as a value. The second (<code>reject</code>) is called when the task fails, and returns the reason for failure, which is typically an error object.</p> <pre data-language="js">const myFirstPromise = new Promise((resolve, reject) =&gt; {
+  // do something asynchronous which eventually calls either:
+  //
+  //   resolve(someValue); // fulfilled
+  // or
+  //   reject("failure reason"); // rejected
+});
+</pre> <p>To provide a function with promise functionality, simply have it return a promise:</p> <pre data-language="js">function myAsyncFunction(url) {
+  return new Promise((resolve, reject) =&gt; {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.onload = () =&gt; resolve(xhr.responseText);
+    xhr.onerror = () =&gt; reject(xhr.statusText);
+    xhr.send();
+  });
+}</pre> <h2 id="Examples">Examples</h2> <h3 id="Basic_Example">Basic Example</h3> <pre data-language="js">let myFirstPromise = new Promise((resolve, reject) =&gt; {
+  // We call resolve(...) when what we were doing asynchronously was successful, and reject(...) when it failed.
+  // In this example, we use setTimeout(...) to simulate async code. 
+  // In reality, you will probably be using something like XHR or an HTML5 API.
+  setTimeout(function(){
+    resolve("Success!"); // Yay! Everything went well!
+  }, 250);
+});
+
+myFirstPromise.then((successMessage) =&gt; {
+  // successMessage is whatever we passed in the resolve(...) function above.
+  // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+  console.log("Yay! " + successMessage);
+});
+</pre> <h3 id="Advanced_Example">Advanced Example</h3>  <p>This small example shows the mechanism of a <code>Promise</code>. The <code>testPromise()</code> method is called each time the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button" target="_blank"><code>&lt;button&gt;</code></a> is clicked. It creates a promise that will be fulfilled, using <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout" target="_blank"><code>window.setTimeout()</code></a>, to the promise count (number starting from 1) every 1-3 seconds, at random. The <code>Promise()</code> constructor is used to create the promise.</p> <p>The fulfillment of the promise is simply logged, via a fulfill callback set using <a href="../promise/then/"><code>p1.then()</code></a>. A few logs show how the synchronous part of the method is decoupled from the asynchronous completion of the promise.</p> <pre data-language="js">'use strict';
+var promiseCount = 0;
+
+function testPromise() {
+    let thisPromiseCount = ++promiseCount;
+
+    let log = document.getElementById('log');
+    log.insertAdjacentHTML('beforeend', thisPromiseCount +
+        ') Started (&lt;small&gt;Sync code started&lt;/small&gt;)&lt;br/&gt;');
+
+    // We make a new promise: we promise a numeric count of this promise, starting from 1 (after waiting 3s)
+    let p1 = new Promise(
+        // The executor function is called with the ability to resolve or
+        // reject the promise
+       (resolve, reject) =&gt; {
+            log.insertAdjacentHTML('beforeend', thisPromiseCount +
+                ') Promise started (&lt;small&gt;Async code started&lt;/small&gt;)&lt;br/&gt;');
+            // This is only an example to create asynchronism
+            window.setTimeout(
+                function() {
+                    // We fulfill the promise !
+                    resolve(thisPromiseCount);
+                }, Math.random() * 2000 + 1000);
+        }
+    );
+
+    // We define what to do when the promise is resolved with the then() call,
+    // and what to do when the promise is rejected with the catch() call
+    p1.then(
+        // Log the fulfillment value
+        function(val) {
+            log.insertAdjacentHTML('beforeend', val +
+                ') Promise fulfilled (&lt;small&gt;Async code terminated&lt;/small&gt;)&lt;br/&gt;');
+        }).catch(
+        // Log the rejection reason
+       (reason) =&gt; {
+            console.log('Handle rejected promise ('+reason+') here.');
+        });
+
+    log.insertAdjacentHTML('beforeend', thisPromiseCount +
+        ') Promise made (&lt;small&gt;Sync code terminated&lt;/small&gt;)&lt;br/&gt;');
+}</pre>  <p>This example is started by clicking the button. You need a browser that supports <code>Promise</code>. By clicking the button several times in a short amount of time, you'll even see the different promises being fulfilled one after another.</p> <p><iframe src="https://mdn.mozillademos.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise%24samples/Advanced_Example?revision=1435646" height="200" id="frame_Advanced_Example" width="500" frameborder="0" class="live-sample-frame sample-code-frame"></iframe></p> <h2 id="Loading_an_image_with_XHR">Loading an image with XHR</h2> <p>Another simple example using <code>Promise</code> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest" target="_blank"><code>XMLHttpRequest</code></a> to load an image is available at the MDN GitHub <a href="https://github.com/mdn/js-examples/tree/master/promises-test" target="_blank">js-examples</a> repository. You can also <a href="https://mdn.github.io/js-examples/promises-test/" target="_blank">see it in action</a>. Each step is commented and allows you to follow the Promise and XHR architecture closely.</p> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-promise-objects" hreflang="en" target="_blank">ECMAScript 2015 (6th Edition, ECMA-262)<br><small>The definition of 'Promise' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td>Initial definition in an ECMA standard.</td> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-promise-objects" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)<br><small>The definition of 'Promise' in that specification.</small></a></td> <td><span class="spec-Draft">Draft</span></td> <td> </td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>  <div class="_table">
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 19</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+<tr>
+<th scope="row">
+<code>Promise()</code> constructor</th>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> 29
+<section class="bc-history" id="sect1"><dl>
+<dt class="bc-supports-yes bc-supports"> 29
+</dt>
+<dd> Constructor requires a new operator since version 37.</dd>
+</dl></section>
+</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 19</td>
+<td class="bc-supports-yes bc-has-history"> 8
+<section class="bc-history" id="sect2"><dl>
+<dt class="bc-supports-yes bc-supports"> 8
+</dt>
+<dd> Constructor requires a new operator since version 10.</dd>
+</dl></section>
+</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/all" target="_blank"><code>all</code></a></th>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 19</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/prototype" target="_blank"><code>prototype</code></a></th>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 19</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch" target="_blank"><code>catch</code></a></th>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 19</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally" target="_blank"><code>finally</code></a></th>
+<td class="bc-supports-yes"> 63</td>
+<td class="bc-supports-yes"> 18</td>
+<td class="bc-supports-yes"> 58</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 50</td>
+<td class="bc-supports-yes"> 11.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/then" target="_blank"><code>then</code></a></th>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 19</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/race" target="_blank"><code>race</code></a></th>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 19</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject" target="_blank"><code>reject</code></a></th>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 19</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve" target="_blank"><code>resolve</code></a></th>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 19</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 4.4.3</td>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">
+<code>Promise()</code> constructor</th>
+<td class="bc-supports-yes"> 4.4.3</td>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> 29
+<section class="bc-history" id="sect3"><dl>
+<dt class="bc-supports-yes bc-supports"> 29
+</dt>
+<dd> Constructor requires a new operator since version 37.</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes bc-has-history"> 8
+<section class="bc-history" id="sect4"><dl>
+<dt class="bc-supports-yes bc-supports"> 8
+</dt>
+<dd> Constructor requires a new operator since version 10.</dd>
+</dl></section>
+</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/all" target="_blank"><code>all</code></a></th>
+<td class="bc-supports-yes"> 4.4.3</td>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/prototype" target="_blank"><code>prototype</code></a></th>
+<td class="bc-supports-yes"> 4.4.3</td>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch" target="_blank"><code>catch</code></a></th>
+<td class="bc-supports-yes"> 4.4.3</td>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally" target="_blank"><code>finally</code></a></th>
+<td class="bc-supports-yes"> 63</td>
+<td class="bc-supports-yes"> 63</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 58</td>
+<td class="bc-supports-yes"> 50</td>
+<td class="bc-supports-yes"> 11.1</td>
+<td class="bc-supports-no"> No</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/then" target="_blank"><code>then</code></a></th>
+<td class="bc-supports-yes"> 4.4.3</td>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/race" target="_blank"><code>race</code></a></th>
+<td class="bc-supports-yes"> 4.4.3</td>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject" target="_blank"><code>reject</code></a></th>
+<td class="bc-supports-yes"> 4.4.3</td>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve" target="_blank"><code>resolve</code></a></th>
+<td class="bc-supports-yes"> 4.4.3</td>
+<td class="bc-supports-yes"> 32</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 29</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="1">Server</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Node.js</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row">
+<code>Promise()</code> constructor</th>
+<td class="bc-supports-yes bc-has-history"> 0.12
+<section class="bc-history" id="sect5"><dl>
+<dt class="bc-supports-yes bc-supports"> 0.12
+</dt>
+<dd> Constructor requires a new operator since version 4.</dd>
+</dl></section>
+</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/all" target="_blank"><code>all</code></a></th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/prototype" target="_blank"><code>prototype</code></a></th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch" target="_blank"><code>catch</code></a></th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally" target="_blank"><code>finally</code></a></th>
+<td class="bc-supports-yes"> 10.0.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/then" target="_blank"><code>then</code></a></th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/race" target="_blank"><code>race</code></a></th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject" target="_blank"><code>reject</code></a></th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve" target="_blank"><code>resolve</code></a></th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+</tbody>
+</table>
+</div> <h2 id="See_also">See also</h2> <ul> <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises" target="_blank">Using promises</a></li> <li><a href="http://promisesaplus.com/" target="_blank">Promises/A+ specification</a></li> <li><a href="https://medium.com/@ramsunvtech/promises-of-promise-part-1-53f769245a53" target="_blank">Venkatraman.R - JS Promise (Part 1, Basics)</a></li> <li><a href="https://medium.com/@ramsunvtech/js-promise-part-2-q-js-when-js-and-rsvp-js-af596232525c#.dzlqh6ski" target="_blank">Venkatraman.R - JS Promise (Part 2 - Using Q.js, When.js and RSVP.js)</a></li> <li><a href="https://tech.io/playgrounds/11107/tools-for-promises-unittesting/introduction" target="_blank">Venkatraman.R - Tools for Promises Unit Testing</a></li> <li><a href="http://www.html5rocks.com/en/tutorials/es6/promises/" target="_blank">Jake Archibald: JavaScript Promises: There and Back Again</a></li> <li><a href="http://de.slideshare.net/domenicdenicola/callbacks-promises-and-coroutines-oh-my-the-evolution-of-asynchronicity-in-javascript" target="_blank">Domenic Denicola: Callbacks, Promises, and Coroutines – Asynchronous Programming Patterns in JavaScript</a></li> <li><a href="http://www.mattgreer.org/articles/promises-in-wicked-detail/" target="_blank">Matt Greer: JavaScript Promises ... In Wicked Detail</a></li> <li><a href="https://www.promisejs.org/" target="_blank">Forbes Lindesay: promisejs.org</a></li> <li><a href="https://github.com/jakearchibald/es6-promise/" target="_blank">Promise polyfill</a></li> <li><a href="https://www.udacity.com/course/javascript-promises--ud898" target="_blank">Udacity: JavaScript Promises</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

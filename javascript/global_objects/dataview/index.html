@@ -1,0 +1,756 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>DataView - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content="The DataView view provides a low-level interface for reading and writing multiple number types in a binary ArrayBuffer, without having to care about &hellip;">
+  <meta name="keywords" content="dataview, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/global_objects/dataview/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>DataView</h1> <p>The <code>DataView</code> view provides a low-level interface for reading and writing multiple number types in a binary <a href="../arraybuffer/"><code>ArrayBuffer</code></a>, without having to care about the platform's <a href="https://developer.mozilla.org/en-US/docs/Glossary/Endianness" target="_blank">endianness</a>.</p> <iframe src="https://interactive-examples.mdn.mozilla.net/pages/js/dataview-constructor.html" frameborder="0" width="100%" class="interactive interactive-js" height="250"></iframe>  <h2 id="Syntax">Syntax</h2> <pre class="syntaxbox">new DataView(buffer [, byteOffset [, byteLength]])</pre> <h3 id="Parameters">Parameters</h3> <dl> <dt><code>buffer</code></dt> <dd>An existing <a href="../arraybuffer/"><code>ArrayBuffer</code></a> or <a href="../sharedarraybuffer/"><code>SharedArrayBuffer</code></a>  to use as the storage backing the new <code>DataView</code> object.</dd> <dt>
+<code>byteOffset</code> <span class="inlineIndicator optional optionalInline">Optional</span>
+</dt> <dd>The offset, in bytes, to the first byte in the above buffer for the new view to reference. If unspecified, the buffer view starts with the first byte.</dd> <dt>
+<code>byteLength</code> <span class="inlineIndicator optional optionalInline">Optional</span>
+</dt> <dd>The number of elements in the byte array. If unspecified, the view's length will match the buffer's length.</dd> </dl> <h3 id="Return_value">Return value</h3> <p>A new <code>DataView</code> object representing the specified data buffer. (That probably wasn't a very helpful description.)</p> <p>You can think of the returned object as an "interpreter" of the array buffer of bytes — it knows how to convert numbers to fit within the buffer correctly, both when reading and writing to it. This means handling integer and float conversion, endianness, and other details of representing numbers in binary form.</p> <h3 id="Exceptions">Exceptions</h3> <dl> <dt><code><a href="../rangeerror/"><code>RangeError</code></a></code></dt> <dd> <p>Thrown if the <code>byteOffset</code> or <code>byteLength</code> parameter values result in the view extending past the end of the buffer.</p> <p>For example, if the buffer is 16 bytes long, the <code>byteOffset</code> is 8, and the <code>byteLength</code> is 10, this error is thrown because the resulting view tries to extend 2 bytes past the total length of the buffer.</p> </dd> </dl> <h2 id="Description">Description</h2> <h3 id="Endianness">Endianness</h3> <p>Multi-byte number formats are represented in memory differently depending on machine architecture — see <a href="https://developer.mozilla.org/en-US/docs/Glossary/Endianness" target="_blank">Endianness</a> for an explanation. <code>DataView</code> accessors provide explicit control of how data is accessed, regardless of the executing computer's endianness.</p> <pre data-language="js">var littleEndian = (function() {
+  var buffer = new ArrayBuffer(2);
+  new DataView(buffer).setInt16(0, 256, true /* littleEndian */);
+  // Int16Array uses the platform's endianness.
+  return new Int16Array(buffer)[0] === 256;
+})();
+console.log(littleEndian); // true or false
+</pre> <h3 id="64-bit_Integer_Values">64-bit Integer Values</h3> <p>Because JavaScript does not currently include standard support for 64-bit integer values, <code>DataView</code> does not offer native 64-bit operations. As a workaround, you could implement your own getUint64() method to obtain a value with precision up to <a href="../number/max_safe_integer/"><code>Number.MAX_SAFE_INTEGER</code></a>, which could suffice for certain cases.</p> <pre data-language="js">DataView.prototype.getUint64 = function(byteOffset, littleEndian) {
+  // split 64-bit number into two 32-bit (4-byte) parts
+  const left =  this.getUint32(byteOffset, littleEndian);
+  const right = this.getUint32(byteOffset+4, littleEndian);
+
+  // combine the two 32-bit values
+  const combined = littleEndian? left + 2**32*right : 2**32*left + right;
+
+  if (!Number.isSafeInteger(combined))
+    console.warn(combined, 'exceeds MAX_SAFE_INTEGER. Precision may be lost');
+
+  return combined;
+}
+</pre>  <h2 id="Properties">Properties</h2> <p>All <code>DataView</code> instances inherit from <a href="../dataview/prototype/"><code>DataView.prototype</code></a> and allows the addition of properties to all DataView objects.</p> <dl> <dt><code>DataView.prototype.constructor</code></dt> <dd>Specifies the function that creates an object's prototype. The initial value is the standard built-in <code>DataView</code> constructor.</dd> <dt>
+<a href="../dataview/buffer/"><code>DataView.prototype.buffer</code></a> <span class="inlineIndicator readOnly readOnlyInline">Read only </span>
+</dt> <dd>The <a href="../arraybuffer/"><code>ArrayBuffer</code></a> referenced by this view. Fixed at construction time and thus <strong>read only.</strong>
+</dd> <dt>
+<a href="../dataview/bytelength/"><code>DataView.prototype.byteLength</code></a> <span class="inlineIndicator readOnly readOnlyInline">Read only </span>
+</dt> <dd>The length (in bytes) of this view from the start of its <a href="../arraybuffer/"><code>ArrayBuffer</code></a>. Fixed at construction time and thus <strong>read only.</strong>
+</dd> <dt>
+<a href="../dataview/byteoffset/"><code>DataView.prototype.byteOffset</code></a> <span class="inlineIndicator readOnly readOnlyInline">Read only </span>
+</dt> <dd>The offset (in bytes) of this view from the start of its <a href="../arraybuffer/"><code>ArrayBuffer</code></a>. Fixed at construction time and thus <strong>read only.</strong>
+</dd> </dl> <h2 id="Methods">Methods</h2> <h3 id="Read">Read</h3> <dl> <dt><a href="../dataview/getint8/"><code>DataView.prototype.getInt8()</code></a></dt> <dd>Gets a signed 8-bit integer (byte) at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/getuint8/"><code>DataView.prototype.getUint8()</code></a></dt> <dd>Gets an unsigned 8-bit integer (unsigned byte) at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/getint16/"><code>DataView.prototype.getInt16()</code></a></dt> <dd>Gets a signed 16-bit integer (short) at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/getuint16/"><code>DataView.prototype.getUint16()</code></a></dt> <dd>Gets an unsigned 16-bit integer (unsigned short) at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/getint32/"><code>DataView.prototype.getInt32()</code></a></dt> <dd>Gets a signed 32-bit integer (long) at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/getuint32/"><code>DataView.prototype.getUint32()</code></a></dt> <dd>Gets an unsigned 32-bit integer (unsigned long) at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/getfloat32/"><code>DataView.prototype.getFloat32()</code></a></dt> <dd>Gets a signed 32-bit float (float) at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/getfloat64/"><code>DataView.prototype.getFloat64()</code></a></dt> <dd>Gets a signed 64-bit float (double) at the specified byte offset from the start of the view.</dd> </dl> <h3 id="Write">Write</h3> <dl> <dt><a href="../dataview/setint8/"><code>DataView.prototype.setInt8()</code></a></dt> <dd>Stores a signed 8-bit integer (byte) value at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/setuint8/"><code>DataView.prototype.setUint8()</code></a></dt> <dd>Stores an unsigned 8-bit integer (unsigned byte) value at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/setint16/"><code>DataView.prototype.setInt16()</code></a></dt> <dd>Stores a signed 16-bit integer (short) value at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/setuint16/"><code>DataView.prototype.setUint16()</code></a></dt> <dd>Stores an unsigned 16-bit integer (unsigned short) value at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/setint32/"><code>DataView.prototype.setInt32()</code></a></dt> <dd>Stores a signed 32-bit integer (long) value at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/setuint32/"><code>DataView.prototype.setUint32()</code></a></dt> <dd>Stores an unsigned 32-bit integer (unsigned long) value at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/setfloat32/"><code>DataView.prototype.setFloat32()</code></a></dt> <dd>Stores a signed 32-bit float (float) value at the specified byte offset from the start of the view.</dd> <dt><a href="../dataview/setfloat64/"><code>DataView.prototype.setFloat64()</code></a></dt> <dd>Stores a signed 64-bit float (double) value at the specified byte offset from the start of the view.</dd> </dl> <h2 id="Example">Example</h2> <pre data-language="js">var buffer = new ArrayBuffer(16);
+var view = new DataView(buffer, 0);
+
+view.setInt16(1, 42);
+view.getInt16(1); // 42
+</pre> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <tbody> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> <tr> <td><a href="https://www.khronos.org/registry/typedarray/specs/latest/" hreflang="en" target="_blank">Typed Array Specification</a></td> <td><span class="spec-Obsolete">Obsolete</span></td> <td>Superseded by ECMAScript 6</td> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-dataview-constructor" hreflang="en" target="_blank">ECMAScript 2015 (6th Edition, ECMA-262)<br><small>The definition of 'DataView' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td>Initial definition in an ECMA standard</td> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-dataview-constructor" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)<br><small>The definition of 'DataView' in that specification.</small></a></td> <td><span class="spec-Draft">Draft</span></td> <td> </td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>  <div class="_table">
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row">
+<code>DataView()</code> without <code>new</code> throws</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 40</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> Yes</td>
+<td> ? </td>
+</tr>
+<tr>
+<th scope="row">
+<code>SharedArrayBuffer</code> accepted as buffer</th>
+<td class="bc-supports-yes"> 60</td>
+<td> ? </td>
+<td class="bc-supports-yes"> 55</td>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/buffer" target="_blank"><code>buffer</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/byteLength" target="_blank"><code>byteLength</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/byteOffset" target="_blank"><code>byteOffset</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getFloat32" target="_blank"><code>getFloat32</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getFloat64" target="_blank"><code>getFloat64</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getInt16" target="_blank"><code>getInt16</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getInt32" target="_blank"><code>getInt32</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getInt8" target="_blank"><code>getInt8</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint16" target="_blank"><code>getUint16</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint32" target="_blank"><code>getUint32</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint8" target="_blank"><code>getUint8</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setFloat32" target="_blank"><code>setFloat32</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setFloat64" target="_blank"><code>setFloat64</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setInt16" target="_blank"><code>setInt16</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setInt32" target="_blank"><code>setInt32</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setInt8" target="_blank"><code>setInt8</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setUint16" target="_blank"><code>setUint16</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setUint32" target="_blank"><code>setUint32</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setUint8" target="_blank"><code>setUint8</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/prototype" target="_blank"><code>prototype</code></a></th>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 10</td>
+<td class="bc-supports-yes"> 12.1</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">
+<code>DataView()</code> without <code>new</code> throws</th>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+<td class="bc-supports-yes"> 40</td>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+</tr>
+<tr>
+<th scope="row">
+<code>SharedArrayBuffer</code> accepted as buffer</th>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+<td class="bc-supports-yes"> 55</td>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/buffer" target="_blank"><code>buffer</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/byteLength" target="_blank"><code>byteLength</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/byteOffset" target="_blank"><code>byteOffset</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getFloat32" target="_blank"><code>getFloat32</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getFloat64" target="_blank"><code>getFloat64</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getInt16" target="_blank"><code>getInt16</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getInt32" target="_blank"><code>getInt32</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getInt8" target="_blank"><code>getInt8</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint16" target="_blank"><code>getUint16</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint32" target="_blank"><code>getUint32</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint8" target="_blank"><code>getUint8</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setFloat32" target="_blank"><code>setFloat32</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setFloat64" target="_blank"><code>setFloat64</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setInt16" target="_blank"><code>setInt16</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setInt32" target="_blank"><code>setInt32</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setInt8" target="_blank"><code>setInt8</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setUint16" target="_blank"><code>setUint16</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setUint32" target="_blank"><code>setUint32</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setUint8" target="_blank"><code>setUint8</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/prototype" target="_blank"><code>prototype</code></a></th>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 15</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 4.2</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="1">Server</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Node.js</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">
+<code>DataView()</code> without <code>new</code> throws</th>
+<td class="bc-supports-yes"> 0.12</td>
+</tr>
+<tr>
+<th scope="row">
+<code>SharedArrayBuffer</code> accepted as buffer</th>
+<td> ? </td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/buffer" target="_blank"><code>buffer</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/byteLength" target="_blank"><code>byteLength</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/byteOffset" target="_blank"><code>byteOffset</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getFloat32" target="_blank"><code>getFloat32</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getFloat64" target="_blank"><code>getFloat64</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getInt16" target="_blank"><code>getInt16</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getInt32" target="_blank"><code>getInt32</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getInt8" target="_blank"><code>getInt8</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint16" target="_blank"><code>getUint16</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint32" target="_blank"><code>getUint32</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint8" target="_blank"><code>getUint8</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setFloat32" target="_blank"><code>setFloat32</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setFloat64" target="_blank"><code>setFloat64</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setInt16" target="_blank"><code>setInt16</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setInt32" target="_blank"><code>setInt32</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setInt8" target="_blank"><code>setInt8</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setUint16" target="_blank"><code>setUint16</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setUint32" target="_blank"><code>setUint32</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/setUint8" target="_blank"><code>setUint8</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DataView/prototype" target="_blank"><code>prototype</code></a></th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+</tbody>
+</table>
+</div> <h2 id="Compatibility_notes">Compatibility notes</h2> <p>Starting with Firefox 40, <code>DataView</code> must be constructed with the <a href="../../operators/new/"><code>new</code></a> operator. Calling <code>DataView()</code> as a function without <code>new</code> will throw a <a href="../typeerror/"><code>TypeError</code></a>.</p> <pre data-language="js">var view = DataView(buffer, 0); 
+// TypeError: calling a builtin DataView constructor without new is forbidden</pre> <pre data-language="js">var view = new DataView(buffer, 0);</pre> <h2 id="See_also">See also</h2> <ul> <li>
+<a href="https://github.com/jDataView/jDataView" class="link-https" target="_blank">jDataView</a>: JavaScript library that polyfills and extends the <code>DataView</code> API to all browsers and Node.js.</li> <li><a href="../arraybuffer/"><code>ArrayBuffer</code></a></li> <li><a href="../sharedarraybuffer/"><code>SharedArrayBuffer</code></a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,385 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Spread Syntax - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content="Spread syntax allows an iterable such as an array expression or string to be expanded in places where zero or more arguments (for function calls) or &hellip;">
+  <meta name="keywords" content="spread, syntax, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/operators/spread_syntax/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Spread syntax</h1> <p><strong>Spread syntax</strong> allows an iterable such as an array expression or string to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected, or an object expression to be expanded in places where zero or more key-value pairs (for object literals) are expected.</p> <iframe src="https://interactive-examples.mdn.mozilla.net/pages/js/expressions-spreadsyntax.html" frameborder="0" width="100%" class="interactive interactive-js" height="250"></iframe>  <h2 id="Syntax">Syntax</h2> <p>For function calls:</p> <pre class="syntaxbox">myFunction(...iterableObj);
+</pre> <p>For array literals or strings:</p> <pre class="syntaxbox">[...iterableObj, '4', 'five', 6];</pre> <p>For object literals (new in ECMAScript 2018):</p> <pre class="syntaxbox">let objClone = { ...obj };</pre> <h2 id="Examples">Examples</h2> <h3 id="Spread_in_function_calls">Spread in function calls</h3> <h4 id="Replace_apply">Replace apply</h4> <p>It is common to use <a href="../../global_objects/function/apply/"><code>Function.prototype.apply</code></a> in cases where you want to use the elements of an array as arguments to a function.</p> <pre data-language="js">function myFunction(x, y, z) { }
+var args = [0, 1, 2];
+myFunction.apply(null, args);</pre> <p>With spread syntax the above can be written as:</p> <pre data-language="js">function myFunction(x, y, z) { }
+var args = [0, 1, 2];
+myFunction(...args);</pre> <p>Any argument in the argument list can use spread syntax and it can be used multiple times.</p> <pre data-language="js">function myFunction(v, w, x, y, z) { }
+var args = [0, 1];
+myFunction(-1, ...args, 2, ...[3]);</pre> <h4 id="Apply_for_new">Apply for new</h4> <p>When calling a constructor with <code>new</code>, it's not possible to <strong>directly</strong> use an array and <code>apply</code> (<code>apply</code> does a <code>[[Call]]</code> and not a <code>[[Construct]]</code>). However, an array can be easily used with <code>new</code> thanks to spread syntax:</p> <pre data-language="js">var dateFields = [1970, 0, 1];  // 1 Jan 1970
+var d = new Date(...dateFields);
+</pre> <p>To use new with an array of parameters without spread syntax, you would have to do it <strong>indirectly</strong> through partial application:</p> <pre data-language="js">function applyAndNew(constructor, args) {
+   function partial () {
+      return constructor.apply(this, args);
+   };
+   if (typeof constructor.prototype === "object") {
+      partial.prototype = Object.create(constructor.prototype);
+   }
+   return partial;
+}
+
+
+function myConstructor () {
+   console.log("arguments.length: " + arguments.length);
+   console.log(arguments);
+   this.prop1="val1";
+   this.prop2="val2";
+};
+
+var myArguments = ["hi", "how", "are", "you", "mr", null];
+var myConstructorWithArguments = applyAndNew(myConstructor, myArguments);
+
+console.log(new myConstructorWithArguments);
+// (internal log of myConstructor):           arguments.length: 6
+// (internal log of myConstructor):           ["hi", "how", "are", "you", "mr", null]
+// (log of "new myConstructorWithArguments"): {prop1: "val1", prop2: "val2"}</pre> <h3 id="Spread_in_array_literals">Spread in array literals</h3> <h4 id="A_more_powerful_array_literal">A more powerful array literal</h4> <p>Without spread syntax, to create a new array using an existing array as one part of it, the array literal syntax is no longer sufficient and imperative code must be used instead using a combination of <code>push</code>, <code>splice</code>, <code>concat</code>, etc. With spread syntax this becomes much more succinct:</p> <pre data-language="js">var parts = ['shoulders', 'knees']; 
+var lyrics = ['head', ...parts, 'and', 'toes']; 
+// ["head", "shoulders", "knees", "and", "toes"]
+</pre> <p>Just like spread for argument lists, <code>...</code> can be used anywhere in the array literal and it can be used multiple times.</p> <h4 id="Copy_an_array">Copy an array</h4> <pre data-language="js">var arr = [1, 2, 3];
+var arr2 = [...arr]; // like arr.slice()
+arr2.push(4); 
+
+// arr2 becomes [1, 2, 3, 4]
+// arr remains unaffected
+</pre> <p><strong>Note:</strong> Spread syntax effectively goes one level deep while copying an array. Therefore, it may be unsuitable for copying multidimensional arrays as the following example shows (it's the same with <a href="../../global_objects/object/assign/"><code>Object.assign()</code></a> and spread syntax).</p> <pre data-language="js">var a = [[1], [2], [3]];
+var b = [...a];
+b.shift().shift(); // 1
+// Now array a is affected as well: [[], [2], [3]]
+</pre> <h4 id="A_better_way_to_concatenate_arrays">A better way to concatenate arrays</h4> <p><a href="../../global_objects/array/concat/"><code>Array.concat</code></a> is often used to concatenate an array to the end of an existing array. Without spread syntax this is done as:</p> <pre data-language="js">var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+// Append all items from arr2 onto arr1
+arr1 = arr1.concat(arr2);</pre> <p>With spread syntax this becomes:</p> <pre data-language="js">var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+arr1 = [...arr1, ...arr2];
+</pre> <p><a href="../../global_objects/array/unshift/"><code>Array.unshift</code></a> is often used to insert an array of values at the start of an existing array. Without spread syntax this is done as:</p> <pre data-language="js">var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+// Prepend all items from arr2 onto arr1
+Array.prototype.unshift.apply(arr1, arr2) // arr1 is now [3, 4, 5, 0, 1, 2]</pre> <p>With spread syntax this becomes [Note, however, that this creates a new <code>arr1</code> array. Unlike <a href="../../global_objects/array/unshift/"><code>Array.unshift</code></a>, it does not modify the original <code>arr1</code> array in-place]:</p> <pre data-language="js">var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+arr1 = [...arr2, ...arr1]; // arr1 is now [3, 4, 5, 0, 1, 2]
+</pre> <h3 id="Spread_in_object_literals">Spread in object literals</h3> <p>The <a href="https://github.com/tc39/proposal-object-rest-spread" target="_blank">Rest/Spread Properties for ECMAScript</a> proposal (stage 4) adds spread properties to <a href="../object_initializer/">object literals</a>. It copies own enumerable properties from a provided object onto a new object.</p> <p>Shallow-cloning (excluding prototype) or merging of objects is now possible using a shorter syntax than <a href="../../global_objects/object/assign/"><code>Object.assign()</code></a>.</p> <pre data-language="js">var obj1 = { foo: 'bar', x: 42 };
+var obj2 = { foo: 'baz', y: 13 };
+
+var clonedObj = { ...obj1 };
+// Object { foo: "bar", x: 42 }
+
+var mergedObj = { ...obj1, ...obj2 };
+// Object { foo: "baz", x: 42, y: 13 }</pre> <p>Note that <a href="../../global_objects/object/assign/"><code>Object.assign()</code></a> triggers <a href="../../functions/set/">setters</a> whereas spread syntax doesn't.</p> <p>Note that you cannot replace nor mimic the <a href="../../global_objects/object/assign/"><code>Object.assign()</code></a> function:</p> <pre data-language="js">var obj1 = { foo: 'bar', x: 42 };
+var obj2 = { foo: 'baz', y: 13 };
+const merge = ( ...objects ) =&gt; ( { ...objects } );
+
+var mergedObj = merge ( obj1, obj2);
+// Object { 0: { foo: 'bar', x: 42 }, 1: { foo: 'baz', y: 13 } }
+
+var mergedObj = merge ( {}, obj1, obj2);
+// Object { 0: {}, 1: { foo: 'bar', x: 42 }, 2: { foo: 'baz', y: 13 } }</pre> <p>In the above example, the spread syntax does not work as one might expect: it spreads an <em>array</em> of arguments into the object literal, due to the rest parameter.</p> <h3 id="Only_for_iterables">Only for iterables</h3> <p>Spread syntax (other than in the case of spread properties) can be applied only to <a href="../../global_objects/symbol/iterator/">iterable</a> objects:</p> <pre data-language="js">var obj = {'key1': 'value1'};
+var array = [...obj]; // TypeError: obj is not iterable
+</pre> <h3 id="Spread_with_many_values">Spread with many values</h3> <p>When using spread syntax for function calls, be aware of the possibility of exceeding the JavaScript engine's argument length limit. See <a href="../../global_objects/function/apply/"><code>apply()</code></a> for more details.</p> <h2 id="Rest_syntax_(parameters)">Rest syntax (parameters)</h2> <p>Rest syntax looks exactly like spread syntax, but is used for destructuring arrays and objects. In a way, rest syntax is the opposite of spread syntax: spread 'expands' an array into its elements, while rest collects multiple elements and 'condenses' them into a single element. See <a href="../../functions/rest_parameters/">rest parameters.</a></p> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <thead> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> </thead> <tbody> <tr> <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-array-initializer" hreflang="en" target="_blank">ECMAScript 2015 (6th Edition, ECMA-262)</a></td> <td><span class="spec-Standard">Standard</span></td> <td>Defined in several sections of the specification: <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-array-initializer" target="_blank">Array Initializer</a>, <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-argument-lists" target="_blank">Argument Lists</a>
+</td> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/9.0/#sec-object-initializer" hreflang="en" target="_blank">ECMAScript 2018 (ECMA-262)</a></td> <td><span class="spec-Standard">Standard</span></td> <td>Defined in <a href="http://www.ecma-international.org/ecma-262/9.0/#sec-object-initializer" target="_blank">Object Initializer</a>
+</td> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-array-initializer" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)</a></td> <td><span class="spec-Draft">Draft</span></td> <td>No changes.</td> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-object-initializer" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)</a></td> <td><span class="spec-Draft">Draft</span></td> <td>No changes.</td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>  <div class="_table">
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_array_literals" target="_blank">Spread in array literals</a></th>
+<td class="bc-supports-yes"> 46</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 16</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 37</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_function_calls" target="_blank">Spread in function calls</a></th>
+<td class="bc-supports-yes"> 46</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 27</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 37</td>
+<td class="bc-supports-yes"> 8</td>
+</tr>
+<tr>
+<th scope="row">Spread in destructuring</th>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 34</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 37</td>
+<td> ? </td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_object_literals" target="_blank">Spread in object literals</a> 
+</th>
+<td class="bc-supports-yes"> 60</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 55</td>
+<td class="bc-supports-no"> No</td>
+<td> ? </td>
+<td class="bc-supports-no"> No</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_array_literals" target="_blank">Spread in array literals</a></th>
+<td class="bc-supports-yes"> 46</td>
+<td class="bc-supports-yes"> 46</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 16</td>
+<td class="bc-supports-yes"> 37</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> 5.0</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_function_calls" target="_blank">Spread in function calls</a></th>
+<td class="bc-supports-yes"> 46</td>
+<td class="bc-supports-yes"> 46</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 27</td>
+<td class="bc-supports-yes"> 37</td>
+<td class="bc-supports-yes"> 8</td>
+<td class="bc-supports-yes"> 5.0</td>
+</tr>
+<tr>
+<th scope="row">Spread in destructuring</th>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-yes"> 49</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 34</td>
+<td class="bc-supports-yes"> 37</td>
+<td> ? </td>
+<td class="bc-supports-yes"> 5.0</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_object_literals" target="_blank">Spread in object literals</a> 
+</th>
+<td class="bc-supports-yes"> 60</td>
+<td class="bc-supports-yes"> 60</td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-yes"> 55</td>
+<td> ? </td>
+<td class="bc-supports-no"> No</td>
+<td class="bc-supports-no"> No</td>
+</tr>
+</tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="1">Server</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Node.js</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_array_literals" target="_blank">Spread in array literals</a></th>
+<td class="bc-supports-yes bc-has-history"> 5.0.0
+<section class="bc-history" id="sect1"><dl>
+<dt class="bc-supports-yes bc-supports"> 5.0.0
+</dt>
+
+<dt class="bc-supports-yes bc-supports"> 4.0.0<div class="bc-icons">Disabled </div>
+</dt>
+<dd>Disabled From version 4.0.0: this feature is behind the <code>--harmony</code> runtime flag.</dd>
+</dl></section>
+</td>
+</tr>
+<tr>
+<th scope="row"><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_function_calls" target="_blank">Spread in function calls</a></th>
+<td class="bc-supports-yes bc-has-history"> 5.0.0
+<section class="bc-history" id="sect2"><dl>
+<dt class="bc-supports-yes bc-supports"> 5.0.0
+</dt>
+
+<dt class="bc-supports-yes bc-supports"> 4.0.0<div class="bc-icons">Disabled </div>
+</dt>
+<dd>Disabled From version 4.0.0: this feature is behind the <code>--harmony</code> runtime flag.</dd>
+</dl></section>
+</td>
+</tr>
+<tr>
+<th scope="row">Spread in destructuring</th>
+<td class="bc-supports-yes"> Yes</td>
+</tr>
+<tr>
+<th scope="row">
+<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_object_literals" target="_blank">Spread in object literals</a> 
+</th>
+<td class="bc-supports-yes bc-has-history"> 8.3.0
+<section class="bc-history" id="sect3"><dl>
+<dt class="bc-supports-yes bc-supports"> 8.3.0
+</dt>
+
+<dt class="bc-supports-yes bc-supports"> 8.0.0<div class="bc-icons">Disabled </div>
+</dt>
+<dd>Disabled From version 8.0.0: this feature is behind the <code>--harmony</code> runtime flag.</dd>
+</dl></section>
+</td>
+</tr>
+</tbody>
+</table>
+</div> <h2 id="See_also">See also</h2> <ul> <li>
+<a href="../../functions/rest_parameters/">Rest parameters</a> (also ‘<code>...</code>’)</li> <li>
+<a href="../../global_objects/function/apply/">fn.apply</a> (also ‘<code>...</code>’)</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

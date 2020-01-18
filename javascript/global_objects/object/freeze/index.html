@@ -1,0 +1,324 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Object.freeze - JavaScript - W3cubDocs</title>
+  
+  <meta name="description" content="The Object.freeze() method freezes an object. A frozen object can no longer be changed; freezing an object prevents new properties from being added &hellip;">
+  <meta name="keywords" content="object, freeze, -, javascript">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/javascript/global_objects/object/freeze/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/javascript.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/javascript/" class="_nav-link" title="" style="margin-left:0;">JavaScript</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Object.freeze</h1> <p>The <code><strong>Object.freeze()</strong></code> method <strong>freezes</strong> an object. A frozen object can no longer be changed; freezing an object prevents new properties from being added to it, existing properties from being removed, prevents changing the enumerability, configurability, or writability of existing properties, and prevents the values of existing properties from being changed. In addition, freezing an object also prevents its prototype from being changed. <code>freeze()</code> returns the same object that was passed in.</p> <iframe src="https://interactive-examples.mdn.mozilla.net/pages/js/object-freeze.html" frameborder="0" width="100%" class="interactive interactive-js" height="250"></iframe>  <h2 id="Syntax">Syntax</h2> <pre class="syntaxbox">Object.freeze(<var>obj</var>)</pre> <h3 id="Parameters">Parameters</h3> <dl> <dt><code>obj</code></dt> <dd>The object to freeze.</dd> </dl> <h3 id="Return_value">Return value</h3> <p>The object that was passed to the function.</p> <h2 id="Description">Description</h2> <p>Nothing can be added to or removed from the properties set of a frozen object. Any attempt to do so will fail, either silently or by throwing a <a href="../../typeerror/"><code>TypeError</code></a> exception (most commonly, but not exclusively, when in <a href="../../../strict_mode/">strict mode</a>).</p> <p>For data properties of a frozen object, values cannot be changed, the writable and configurable attributes are set to false. Accessor properties (getters and setters) work the same (and still give the illusion that you are changing the value). Note that values that are objects can still be modified, unless they are also frozen. As an object, an array can be frozen; after doing so, its elements cannot be altered and no elements can be added to or removed from the array.</p> <p><code>freeze()</code> returns the same object that was passed into the function. It <em>does not</em> create a frozen copy.</p> <h2 id="Examples">Examples</h2> <h3 id="Freezing_objects">Freezing objects</h3> <pre data-language="js">var obj = {
+  prop: function() {},
+  foo: 'bar'
+};
+
+// New properties may be added, existing properties may be
+// changed or removed
+obj.foo = 'baz';
+obj.lumpy = 'woof';
+delete obj.prop;
+
+// Both the object being passed as well as the returned
+// object will be frozen. It is unnecessary to save the
+// returned object in order to freeze the original.
+var o = Object.freeze(obj);
+
+o === obj; // true
+Object.isFrozen(obj); // === true
+
+// Now any changes will fail
+obj.foo = 'quux'; // silently does nothing
+// silently doesn't add the property
+obj.quaxxor = 'the friendly duck';
+
+// In strict mode such attempts will throw TypeErrors
+function fail(){
+  'use strict';
+  obj.foo = 'sparky'; // throws a TypeError
+  delete obj.foo; // throws a TypeError
+  delete obj.quaxxor; // returns true since attribute 'quaxxor' was never added
+  obj.sparky = 'arf'; // throws a TypeError
+}
+
+fail();
+
+// Attempted changes through Object.defineProperty; 
+// both statements below throw a TypeError.
+Object.defineProperty(obj, 'ohai', { value: 17 });
+Object.defineProperty(obj, 'foo', { value: 'eit' });
+
+// It's also impossible to change the prototype
+// both statements below will throw a TypeError.
+Object.setPrototypeOf(obj, { x: 20 })
+obj.__proto__ = { x: 20 }
+</pre> <h3 id="Freezing_arrays">Freezing arrays</h3> <pre data-language="js">let a = [0];
+Object.freeze(a); // The array cannot be modified now.
+
+a[0]=1; // fails silently
+a.push(2); // fails silently
+
+// In strict mode such attempts will throw TypeErrors
+function fail() {
+  "use strict"
+  a[0] = 1;
+  a.push(2);
+}
+
+fail();</pre> <p>The object being frozen is <em>immutable</em>. However, it is not necessarily <em>constant</em>. The following example shows that a frozen object is not constant (freeze is shallow).</p> <pre data-language="js">obj1 = {
+  internal: {}
+};
+
+Object.freeze(obj1);
+obj1.internal.a = 'aValue';
+
+obj1.internal.a // 'aValue'</pre> <p>To be a constant object, the entire reference graph (direct and indirect references to other objects) must reference only immutable frozen objects. The object being frozen is said to be immutable because the entire object <em>state</em> (values and references to other objects) within the whole object is fixed. Note that strings, numbers, and booleans are always immutable and that Functions and Arrays are objects.</p> <h4 id="What_is_shallow_freeze">What is "shallow freeze"?</h4> <p>The result of calling <code>Object.freeze(<var>object</var>)</code> only applies to the immediate properties of <code>object</code> itself and will prevent future property addition, removal or value re-assignment operations <em>only</em> on <code>object</code>. If the value of those properties are objects themselves, those objects are not frozen and may be the target of property addition, removal or value re-assignment operations.</p> <pre data-language="js">var employee = {
+  name: "Mayank",
+  designation: "Developer",
+  address: {
+    street: "Rohini",
+    city: "Delhi"
+  }
+};
+
+Object.freeze(employee);
+
+employee.name = "Dummy"; // fails silently in non-strict mode
+employee.address.city = "Noida"; // attributes of child object can be modified
+
+console.log(employee.address.city) // Output: "Noida"
+</pre> <p>To make an object immutable, recursively freeze each property which is of type object (deep freeze). Use the pattern on a case-by-case basis based on your design when you know the object contains no <em>Unknown prefix: Cycle_(graph_theory).</em> in the reference graph, otherwise an endless loop will be triggered. An enhancement to <code>deepFreeze()</code> would be to have an internal function that receives a path (e.g. an Array) argument so you can suppress calling <code>deepFreeze()</code> recursively when an object is in the process of being made immutable. You still run a risk of freezing an object that shouldn't be frozen, such as [window].</p> <pre data-language="js">function deepFreeze(object) {
+
+  // Retrieve the property names defined on object
+  var propNames = Object.getOwnPropertyNames(object);
+
+  // Freeze properties before freezing self
+  
+  for (let name of propNames) {
+    let value = object[name];
+
+    object[name] = value &amp;&amp; typeof value === "object" ? 
+      deepFreeze(value) : value;
+  }
+
+  return Object.freeze(object);
+}
+
+var obj2 = {
+  internal: {
+    a: null
+  }
+};
+
+deepFreeze(obj2);
+
+obj2.internal.a = 'anotherValue'; // fails silently in non-strict mode
+obj2.internal.a; // null
+</pre> <h2 id="Usage_notes">Usage notes</h2> <p>In ES5, if the argument to this method is not an object (a primitive), then it will cause a <a href="../../typeerror/"><code>TypeError</code></a>. In ES2015, a non-object argument will be treated as if it were a frozen ordinary object, and be simply returned.</p> <pre data-language="js">&gt; Object.freeze(1)
+TypeError: 1 is not an object // ES5 code
+
+&gt; Object.freeze(1)
+1                             // ES2015 code
+</pre> <p>An <a href="https://developer.mozilla.org/en-US/docs/Web/API/ArrayBufferView" target="_blank"><code>ArrayBufferView</code></a> with elements will cause a <a href="../../typeerror/"><code>TypeError</code></a>, as they are views over memory and will definitely cause other possible issues:</p> <pre data-language="js">&gt; Object.freeze(new Uint8Array(0)) // No elements
+Uint8Array []
+
+&gt; Object.freeze(new Uint8Array(1)) // Has elements
+TypeError: Cannot freeze array buffer views with elements
+
+&gt; Object.freeze(new DataView(new ArrayBuffer(32))) // No elements
+DataView {}
+
+&gt; Object.freeze(new Float64Array(new ArrayBuffer(64), 63, 0)) // No elements
+Float64Array []
+
+&gt; Object.freeze(new Float64Array(new ArrayBuffer(64), 32, 2)) // Has elements
+TypeError: Cannot freeze array buffer views with elements
+</pre> <p>Note that; as the standard three properties (<code>buf.byteLength</code>, <code>buf.byteOffset</code> and <code>buf.buffer</code>) are read-only (as are those of an <a href="../../arraybuffer/"><code>ArrayBuffer</code></a> or <a href="../../sharedarraybuffer/"><code>SharedArrayBuffer</code></a>), there is no reason for attempting to freeze these properties.</p> <h3 id="Comparison_to_Object.seal()">Comparison to <code>Object.seal()</code>
+</h3> <p>Objects sealed with <a href="../seal/"><code>Object.seal()</code></a> can have their existing properties changed. Existing properties in objects frozen with <code>Object.freeze()</code> are made immutable.</p> <h2 id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <thead> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> </thead> <tbody> <tr> <td><a href="https://www.ecma-international.org/ecma-262/5.1/#sec-15.2.3.9" hreflang="en" target="_blank">ECMAScript 5.1 (ECMA-262)<br><small>The definition of 'Object.freeze' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td>Initial definition. Implemented in JavaScript 1.8.5.</td> </tr> <tr> <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-object.freeze" hreflang="en" target="_blank">ECMAScript 2015 (6th Edition, ECMA-262)<br><small>The definition of 'Object.freeze' in that specification.</small></a></td> <td><span class="spec-Standard">Standard</span></td> <td> </td> </tr> <tr> <td><a href="https://tc39.github.io/ecma262/#sec-object.freeze" hreflang="en" target="_blank">ECMAScript Latest Draft (ECMA-262)<br><small>The definition of 'Object.freeze' in that specification.</small></a></td> <td><span class="spec-Draft">Draft</span></td> <td> </td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>  <div class="_table">
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> 6</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> 9</td>
+<td class="bc-supports-yes"> 12</td>
+<td class="bc-supports-yes"> 5.1</td>
+</tr></tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> 4</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+<td class="bc-supports-yes"> Yes</td>
+</tr></tbody>
+</table>
+<table class="bc-table bc-table-js">
+<thead>
+<tr class="bc-platforms">
+<th></th>
+<th colspan="1">Server</th>
+</tr>
+<tr class="bc-browsers">
+<th></th>
+<th>Node.js</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support</th>
+<td class="bc-supports-yes"> Yes</td>
+</tr></tbody>
+</table>
+</div> <h2 id="See_also">See also</h2> <ul> <li><a href="../isfrozen/"><code>Object.isFrozen()</code></a></li> <li><a href="../preventextensions/"><code>Object.preventExtensions()</code></a></li> <li><a href="../isextensible/"><code>Object.isExtensible()</code></a></li> <li><a href="../seal/"><code>Object.seal()</code></a></li> <li><a href="../issealed/"><code>Object.isSealed()</code></a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
