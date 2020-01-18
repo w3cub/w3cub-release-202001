@@ -1,0 +1,126 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Adding OpenSSL Support for Android - Qt 5.13 - W3cubDocs</title>
+  
+  <meta name="description" content="The Qt installation package comes with OpenSSL support but the OpenSSL libraries are not part of the package due to legal restrictions in some &hellip;">
+  <meta name="keywords" content="adding, openssl, support, for, android, -, qt, qt~5.13">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.13/android-openssl-support/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/qt~5.13.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.13/" class="_nav-link" title="" style="margin-left:0;">Qt 5.13</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _qt">
+				
+				
+<h1 class="title">Adding OpenSSL Support for Android</h1>     <p>The Qt installation package comes with OpenSSL support but the OpenSSL libraries are not part of the package due to legal restrictions in some countries. If your application depends on OpenSSL, consider packaging the SSL libraries with your Application Package (APK) as the target device may or may not have them. You can use the <a href="../qsslsocket/#supportsSsl">QSslSocket::supportsSsl</a>() static function to check for SSL support on the target.</p> <p>The following instructions guide you to build and add the OpenSSL libraries to the APK:</p> <ol class="1" type="1">
+<li>Download the latest OpenSSL 1.1.x sources from <a href="http://www.openssl.org/source" target="_blank">http://www.openssl.org/source</a>.</li> <li>Extract the sources to a folder and navigate to that folder using the CLI.<p><b>Note: </b>If your development platform is Windows, you need <code>msys</code> with <code>perl</code> v5.14 or later to build OpenSSL.</p>
+</li> <li>Add android llvm toolchain to your path:<pre data-language="cpp">export PATH="&lt;android_ndk_path&gt;/toolchains/llvm/prebuilt/&lt;host&gt;/bin":$PATH</pre> </li> <li>Configure the OpenSSL sources to build for Android using the following command:<pre data-language="cpp">./Configure shared android-&lt;arch&gt; -D__ANDROID_API__=21</pre> <p><b>Note: </b>You must consider enabling/disabling the SSL features based on the legal restrictions in the region where your application is available. See the <a href="#">SSL configure options</a> for details about the configurable features.</p>
+</li> <li>Run <code>make CALC_VERSIONS="SHLIB_COMPAT=; SHLIB_SOVER=" build_libs</code> to build the <code>libcrypto</code> and <code>libssl</code> shared libraries that are not versioned.<p><b>Note: </b>Android does not load versioned libraries.</p>
+</li> <li>Open your Qt project using Qt Creator and update the "Build Android APK" settings to add <i>libcrypto</i> and <i>libssl</i> as additional libraries for your project.</li> <li>Run your application to see it running on the device.</li> </ol> <p><b>Note: </b>here <a href="https://github.com/KDAB/android_openssl" target="_blank">https://github.com/KDAB/android_openssl</a> you can find a script which can be used to compile openssl for all android abis and also latest prebuilt libs.</p>
+<p>Qt Creator builds your application and creates an application package (APK) with the OpenSSL libraries bundled in it. Once the APK is ready, it uses <code>adb</code> to deploy the APK on the target you chose and launch the application.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5.13/android-openssl-support.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5.13/android-openssl-support.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

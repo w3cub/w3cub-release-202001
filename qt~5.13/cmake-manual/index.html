@@ -1,0 +1,222 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Building With CMake - Qt 5.13 - W3cubDocs</title>
+  
+  <meta name="description" content="CMake is a tool that helps simplify the build process for development projects across different platforms. CMake automates the generation of &hellip;">
+  <meta name="keywords" content="building, with, cmake, -, qt, qt~5.13">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.13/cmake-manual/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/qt~5.13.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.13/" class="_nav-link" title="" style="margin-left:0;">Qt 5.13</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _qt">
+				
+				
+<h1 class="title">Building with CMake</h1>     <p><code>CMake</code> is a tool that helps simplify the build process for development projects across different platforms. <code>CMake</code> automates the generation of buildsystems such as Makefiles and Visual Studio project files.</p> <p><code>CMake</code> is a 3rd party tool with its own <a href="http://www.cmake.org/cmake/help/documentation.html#" target="_blank">documentation</a>. The rest of this topic details the specifics of how to use Qt 5 with <code>CMake</code>. The minimum version required to use Qt5 is <code>CMake</code> 3.1.0.</p>  <h2 id="getting-started">Getting Started
+</h2> <p>The first requirement when using <code>CMake</code> is to use <code>find_package</code> to locate the libraries and header files shipped with Qt. These libraries and header files can then be used to build libraries and applications based on Qt.</p> <p>The recommended way to use Qt libraries and headers with <code>CMake</code> is to use the <code>target_link_libraries</code> command. This command automatically adds appropriate include directories, compile definitions, the position-independent-code flag, and links to the qtmain.lib library on Windows.</p> <p>To build a helloworld GUI executable, typical usage would be:</p> <pre data-language="cpp">cmake_minimum_required(VERSION 3.1.0)
+
+project(helloworld)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+if(CMAKE_VERSION VERSION_LESS "3.7.0")
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+
+add_executable(helloworld
+    mainwindow.ui
+    mainwindow.cpp
+    main.cpp
+    resources.qrc
+)
+
+target_link_libraries(helloworld Qt5::Widgets)</pre> <p>In order for <code>find_package</code> to be successful, Qt 5 must be found below the CMAKE_PREFIX_PATH, or the <code>Qt5_DIR</code> must be set in the <code>CMake</code> cache to the location of the <code>Qt5Config.cmake</code> file. The easiest way to use <code>CMake</code> is to set the CMAKE_PREFIX_PATH environment variable to the install prefix of Qt 5.</p> <p>The CMAKE_AUTOMOC setting runs moc automatically when required. For more on this feature see the <a href="#">CMake AUTOMOC documentation</a></p>  <h3 id="imported-targets">Imported targets
+</h3> <p>Imported targets are created for each Qt module. Imported target names should be preferred instead of using a variable like Qt5&lt;Module&gt;<a href="../windows-requirements/#libraries">_LIBRARIES</a> in CMake commands such as <code>target_link_libraries</code>. The actual path to the library can be obtained using the <a href="https://cmake.org/cmake/help/latest/prop_tgt/LOCATION.html#" target="_blank">LOCATION property</a>:</p> <pre data-language="cpp">find_package(Qt5 COMPONENTS Core REQUIRED)
+
+get_target_property(QtCore_location Qt5::Core LOCATION)</pre> <p>Note however that it is rare to require the full location to the library in <code>CMake</code> code. Most <code>CMake</code> APIs are aware of imported targets and can automatically use them instead of the full path.</p> <p>Each module in Qt 5 has a library target with the naming convention Qt5::&lt;Module&gt; which can be used for this purpose.</p> <p>Imported targets are created with the configurations Qt was configured with. That is, if Qt was configured with the -debug switch, an imported target with the configuration DEBUG will be created. If Qt was configured with the -release switch an imported target with the configuration RELEASE will be created. If Qt was configured with the -debug-and-release switch (the default on windows), then imported targets will be created with both RELEASE and DEBUG configurations.</p> <p>If your project has custom CMake build configurations, it may be necessary to set a mapping from your custom configuration to either the debug or release Qt configuration.</p> <pre data-language="cpp">find_package(Qt5 COMPONENTS Core REQUIRED)
+
+set(CMAKE_CXX_FLAGS_COVERAGE "${CMAKE_CXX_FLAGS_RELEASE} -fprofile-arcs -ftest-coverage")
+
+# set up a mapping so that the Release configuration for the Qt imported target is
+# used in the COVERAGE CMake configuration.
+set_target_properties(Qt5::Core PROPERTIES MAP_IMPORTED_CONFIG_COVERAGE "RELEASE")</pre> <p>Plugins are also available as <code>IMPORTED</code> targets in CMake. The <a href="../qtnetwork-index/">Qt Network</a>, <a href="../qtsql-index/">Qt SQL</a>, <a href="../qtgui-index/">Qt GUI</a>, and <a href="../qtwidgets-index/">Qt Widgets</a> modules have plugins associated. They provide a list of plugins in the <code>Qt5</code><i>&lt;Module&gt;</i><code>_PLUGINS</code> variable.</p> <pre data-language="cpp">foreach(plugin ${Qt5Network_PLUGINS})
+  get_target_property(_loc ${plugin} LOCATION)
+  message("Plugin ${plugin} is at location ${_loc}")
+endforeach()</pre>  <h2 id="variable-reference">Variable Reference
+</h2>  <h3 id="module-variables">Module variables
+</h3> <p>The result of a <code>find_package</code> call is that imported targets will be created for use with <code>target_link_libraries</code>, some variables will be populated with information required to configure the build, and macros will be made available for use. The name of the imported target for each module matches the name of the module with a prefix of 'Qt5::', for example Qt5::Widgets. All of the package-specific variables have a consistent name with a prefix of the name of the package. For example, <code>find_package(Qt5 COMPONENTS Widgets)</code> will make the following variables available if successfully found:</p> <ul> <li>Qt5Widgets_VERSION String describing the version of the module.</li> <li>Qt5Widgets_LIBRARIES List of libraries for use with the target_link_libraries command.</li> <li>Qt5Widgets_INCLUDE_DIRS List of directories for use with the include_directories command.</li> <li>Qt5Widgets_DEFINITIONS List of definitions for use with add_definitions.</li> <li>Qt5Widgets_COMPILE_DEFINITIONS List of definitions for use with the COMPILE_DEFINITIONS target property.</li> <li>Qt5Widgets_FOUND Boolean describing whether the module was found successfully.</li> <li>Qt5Widgets_EXECUTABLE_COMPILE_FLAGS String of flags to be used when building executables.</li> </ul> <p>Equivalents of those variables will be available for all packages found with a <code>find_package</code> call. Note that the variables are case-sensitive.</p>  <h3 id="installation-variables">Installation variables
+</h3> <p>Additionally, several other variables are available which do not relate to a particular package, but to the Qt installation itself.</p> <ul> <li>QT_VISIBILITY_AVAILABLE Boolean describing whether Qt was built with hidden visibility.</li> <li>QT_LIBINFIX String containing the infix used in library names.</li> </ul>  <h2 id="macro-reference">Macro Reference
+</h2>  <h3 id="qt5core-macros">Qt5Core macros
+</h3> <p>Macros available when Qt5Core is found.</p> <table class="generic"> <thead><tr class="qt-style">
+<th>Macro</th>
+<th>Description</th>
+</tr></thead> <tr class="odd" valign="top">
+<td>
+<a href="../qtcore-cmake-qt5-wrap-cpp/">qt5_wrap_cpp</a>(outfiles inputfile ... OPTIONS ...)</td>
+<td>Create moc code from a list of files containing Qt class with the <a href="../qobject/#Q_OBJECT">Q_OBJECT</a> declaration. Per-directory preprocessor definitions are also added. Options may be given to moc, such as those found when executing "moc -help".</td>
+</tr> <tr class="even" valign="top">
+<td>
+<a href="../qtcore-cmake-qt5-add-resources/">qt5_add_resources</a>(outfiles inputfile ... OPTIONS ...)</td>
+<td>Create code from a list of Qt resource files. Options may be given to rcc, such as those found when executing "rcc -help".</td>
+</tr> <tr class="odd" valign="top">
+<td>
+<a href="../qtcore-cmake-qt5-add-binary-resources/">qt5_add_binary_resources</a>(target inputfile ... OPTIONS ... DESTINATION ...)</td>
+<td>Create an RCC file from a list of Qt resource files. Options may be given to rcc, such as those found when executing "rcc -help". A destination may be given to use a different filename or path for the RCC file.</td>
+</tr> <tr class="even" valign="top">
+<td>
+<a href="../qtcore-cmake-qt5-generate-moc/">qt5_generate_moc</a>(inputfile outputfile )</td>
+<td>Creates a rule to run moc on infile and create outfile. Use this if for some reason QT5_WRAP_CPP() isn't appropriate, e.g. because you need a custom filename for the moc file or something similar.</td>
+</tr> <tr class="odd" valign="top">
+<td>qt5_use_modules(target [LINK_PUBLIC|LINK_PRIVATE] module ... )</td>
+<td>Indicates that the target uses the named Qt 5 modules. The target will be linked to the specified modules, use the include directories installed by those modules, use the COMPILE_DEFINITIONS set by those modules, and use the COMPILE_FLAGS set by the modules. The LINK_PRIVATE or LINK_PUBLIC specifiers can optionally be specified. If LINK_PRIVATE is specified then the modules are not made part of the link interface of the target. See the documentation for <a href="https://cmake.org/cmake/help/latest/command/target_link_libraries.html#" target="_blank">target_link_libraries</a> for more information.<p>Note that this macro is only available if using <code>CMake</code> 2.8.9 or later. This macro is obsolete. Use target_link_libraries with IMPORTED targets instead.</p> </td>
+</tr> </table>  <h3 id="qt5widgets-macros">Qt5Widgets macros
+</h3> <p>Macros available when Qt5Widgets is found.</p> <table class="generic"> <thead><tr class="qt-style">
+<th>Macro</th>
+<th>Description</th>
+</tr></thead> <tr class="odd" valign="top">
+<td>
+<a href="../qtwidgets-cmake-qt5-wrap-ui/">qt5_wrap_ui</a>(outfiles inputfile ... OPTIONS ...)</td>
+<td>Create code from a list of Qt designer ui files. Options may be given to uic, such as those found when executing "uic -help"</td>
+</tr> </table>  <h3 id="qt5dbus-macros">Qt5DBus macros
+</h3> <p>Macros available when Qt5DBus is found.</p> <table class="generic"> <thead><tr class="qt-style">
+<th>Macro</th>
+<th>Description</th>
+</tr></thead> <tr class="odd" valign="top">
+<td>
+<a href="../qtdbus-cmake-qt5-add-dbus-interface/">qt5_add_dbus_interface</a>(outfiles interface basename)</td>
+<td>Create the interface header and implementation files with the given basename from the given interface xml file and add it to the list of sources</td>
+</tr> <tr class="even" valign="top">
+<td>
+<a href="../qtdbus-cmake-qt5-add-dbus-interfaces/">qt5_add_dbus_interfaces</a>(outfiles inputfile ... )</td>
+<td>Create the interface header and implementation files for all listed interface xml files the name will be automatically determined from the name of the xml file</td>
+</tr> <tr class="odd" valign="top">
+<td>
+<a href="../qtdbus-cmake-qt5-add-dbus-adaptor/">qt5_add_dbus_adaptor</a>(outfiles xmlfile parentheader parentclassname [basename] [classname])</td>
+<td>Create a dbus adaptor (header and implementation file) from the xml file describing the interface, and add it to the list of sources. The adaptor forwards the calls to a parent class, defined in parentheader and named parentclassname. The name of the generated files will be &lt;basename&gt;adaptor.{cpp,h} where basename defaults to the basename of the xml file. If &lt;classname&gt; is provided, then it will be used as the classname of the adaptor itself.</td>
+</tr> <tr class="even" valign="top">
+<td>
+<a href="../qtdbus-cmake-qt5-generate-dbus-interface/">qt5_generate_dbus_interface</a>( header [interfacename] OPTIONS ...)</td>
+<td>Generate the xml interface file from the given header. If the optional argument interfacename is omitted, the name of the interface file is constructed from the basename of the header with the suffix .xml appended. Options may be given to qdbuscpp2xml, such as those found when executing "qdbuscpp2xml --help"</td>
+</tr> </table>  <h3 id="qt5linguisttools-macros">Qt5LinguistTools macros
+</h3> <p>Macros available when Qt5LinguistTools is found.</p> <table class="generic"> <thead><tr class="qt-style">
+<th>Macro</th>
+<th>Description</th>
+</tr></thead> <tr class="odd" valign="top">
+<td>
+<a href="https://doc.qt.io/qt-5.13/qtlinguist-cmake-qt5-create-translation.html" target="_blank">qt5_create_translation</a>( qm_files directories ... sources ... ts_files ... OPTIONS ...)</td>
+<td>Out: qm_files In: Directories sources ts_files Options: flags to pass to lupdate, such as -extensions to specify Extensions for a directory scan. Generates commands to create .ts (via lupdate) and .qm (via lrelease) - files from directories and/or sources. The ts files are created and/or updated in the source tree (unless given with full paths). The qm files are generated in the build tree. Updating the translations can be done by adding the qm_files to the source list of your library/executable, so they are always updated, or by adding a custom target to control when they get updated/generated.</td>
+</tr> <tr class="even" valign="top">
+<td>
+<a href="https://doc.qt.io/qt-5.13/qtlinguist-cmake-qt5-add-translation.html" target="_blank">qt5_add_translation</a>( qm_files ts_files ... )</td>
+<td>Out: qm_files In: ts_files Generates commands to create .qm from .ts - files. The generated filenames can be found in qm_files. The ts_files must exist and are not updated in any way.</td>
+</tr> </table>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5.13/cmake-manual.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5.13/cmake-manual.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

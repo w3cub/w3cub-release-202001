@@ -1,0 +1,128 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Qt Remote Objects Source - Qt 5.13 - W3cubDocs</title>
+  
+  <meta name="description" content=" A Remote Object Source is the QObject that is responsible for the implementation of the exposed API. ">
+  <meta name="keywords" content="qt, remote, objects, source, -, qt~5.13">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/qt~5.13/qtremoteobjects-source/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/qt~5.13.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/qt~5.13/" class="_nav-link" title="" style="margin-left:0;">Qt 5.13</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _qt">
+				
+				
+<h1 class="title">Qt Remote Objects Source</h1>      <h2 id="source-objects">Source Objects
+</h2> <p>A Remote Object Source is the <a href="../qobject/">QObject</a> that is responsible for the implementation of the exposed API.</p> <p>At a high level, you have a choice of using a <a href="../qobject/">QObject</a> type directly as a source or defining the desired API in a .rep template for use with the <a href="../qtremoteobjects-repc/#">repc</a> compiler.</p> <p>If you already have a fully defined <a href="../qobject/">QObject</a>, it can become a Source simply by passing it to <a href="../qremoteobjecthostbase/#enableRemoting">QRemoteObjectHostBase::enableRemoting</a>(). This lets other processes/devices create a <a href="../qtremoteobjects-replica/#replica">Replica</a> of the object to interact with (see <a href="https://doc.qt.io/qt-5.13/qtremoteobjects-interaction.html#remote-object-interaction" target="_blank">Remote Object Interaction</a>). You can then instantiate <a href="../qremoteobjectdynamicreplica/">QRemoteObjectDynamicReplica</a>s of your object.</p> <p>Letting <a href="../qtremoteobjects-repc/#">repc</a> generate a <a href="#source">Source</a> header file for your project (using the <a href="../qtremoteobjects-repc/#repc-source">REPC_SOURCE</a> variable) provides three options for implementing the desired API. If your class name was Foo, the options would be the following (see <a href="../qtremoteobjects-repc/#the-rep-file-format">The rep file format</a> for help in creating a rep file)</p> <ul> <li>
+<a href="#typesimplesource">FooSimpleSource</a> inheritance</li> <li>
+<a href="#typesource">FooSource</a> inheritance</li> <li>
+<a href="#typeapi">FooSourceAPI</a> usage with your own <a href="../qobject/">QObject</a>
+</li> </ul> <p>There is a &lt;Type&gt;SimpleSource class defined in the header, which provides basic getter/setter methods for each property and implements data members of the correct property type in the header. Here "&lt;Type&gt;" represents the class name from the .rep file, so if your class is of type "MyType" in the .rep file, there will be a MyTypeSimpleSource class declared in the generated header file. This is a fast way to get started using the API. To use this class, you need to inherit from this class and implement any defined slots (which are pure virtual in the generated header file). Whatever logic is needed to manage the exposed properties and emit signals would be added to the inheriting class as well.</p> <p>If you need to hide the implementation details, you can use the &lt;Type&gt;Source class instead, which is the 2nd class declared in the header file. This class definition does not provide data members, and makes the getter/setter functions pure virtual as well. You have more flexibility in how you implement the class, although you need to write more code.</p> <p>Finally, there is the &lt;Type&gt;SourceAPI class generated in the header. This is a templated class, for use specifically by the templated version of <a href="../qremoteobjecthostbase/#enableRemoting">QRemoteObjectHostBase::enableRemoting</a>(), which allows you to use any <a href="../qobject/">QObject</a> that supports the desired API as the source. You will get compile-time warnings if the class does not provide the correct API, and using this class allows you to hide or convert properties or signal/slot parameters.</p> <p><b>Note: </b>The <a href="../qobject/">QObject</a> API is <b>never</b> exposed. For instance, while a <a href="../qtremoteobjects-replica/#replica">Replica</a> will have a destroyed signal, the destroyed signal of the source is not propagated. The <a href="#source">Source</a> and each <a href="../qtremoteobjects-replica/#replica">Replica</a> are unique QObjects with their own connections. The API that is exposed is defined by the .rep template used by <a href="../qtremoteobjects-repc/#">repc</a>, or in the case of raw QObjects, all API elements defined in the inheritance chain from a specific ancestor. Unless you define <a href="../qobject/#Q_CLASSINFO">Q_CLASSINFO</a>("RemoteObject Type") in an ancestor, the <a href="../qobject/">QObject</a>'s parent is used. If <a href="../qobject/#Q_CLASSINFO">Q_CLASSINFO</a>("RemoteObject Type") is used, that class's API is the lowest level of API used.</p>
+ <h2 id="identifying-sources">Identifying Sources
+</h2> <p>Since more than one <a href="#source">Source</a> can be shared by a host node, each <a href="#source">Source</a> requires a name. All <a href="../qtremoteobjects-repc/#">repc</a> generated headers include a way for the node to determine the class name (<a href="../qobject/#Q_CLASSINFO">Q_CLASSINFO</a> for replica/simplesource/source types, or a static name() function for the SourceAPI type). If you pass your own <a href="../qobject/">QObject</a> type to <a href="../qremoteobjecthostbase/#enableRemoting">QRemoteObjectHostBase::enableRemoting</a>(), the name will be determined using the following logic:</p> <ul> <li>A name can optionally be passed to <a href="../qremoteobjecthostbase/#enableRemoting">QRemoteObjectHostBase::enableRemoting</a>(). If provided, that name will be used.</li> <li>If the object or any of its ancestors has <a href="../qobject/#Q_CLASSINFO">Q_CLASSINFO</a> of type "RemoteObject Type" defined, the defined type name will be used.</li> <li>Otherwise, the <a href="../qobject/">QObject</a>'s objectName (if set) will be used.</li> <li>If none of the above are available, the call to <a href="../qremoteobjecthostbase/#enableRemoting">QRemoteObjectHostBase::enableRemoting</a>() will fail, returning false.</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The Qt Company Ltd<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://doc.qt.io/qt-5.13/qtremoteobjects-source.html" class="_attribution-link" target="_blank">https://doc.qt.io/qt-5.13/qtremoteobjects-source.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
