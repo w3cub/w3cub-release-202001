@@ -1,0 +1,141 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>tensorflow&#58;&#58;ops&#58;&#58;ScatterNdNonAliasingAdd - TensorFlow C++ - W3cubDocs</title>
+  
+  <meta name="description" content=" #include &#60;array_ops.h&#62; ">
+  <meta name="keywords" content="tensorflow, ops, scatterndnonaliasingadd, -, c++, tensorflow~cpp">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/tensorflow~cpp/class/tensorflow/ops/scatter-nd-non-aliasing-add/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/tensorflow~cpp.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~cpp/" class="_nav-link" title="" style="margin-left:0;">TensorFlow C++</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _tensorflow">
+				
+				
+<h1>tensorflow::ops::ScatterNdNonAliasingAdd</h1> <p><code>#include &lt;array_ops.h&gt;</code></p> <p>Applies sparse addition to <code>input</code> using individual values or slices. </p> <h2>Summary</h2> <p>from <code>updates</code> according to indices <code>indices</code>. The updates are non-aliasing: <code>input</code> is only modified in-place if no other operations will use it. Otherwise, a copy of <code>input</code> is made. This operation has a gradient with respect to both <code>input</code> and <code>updates</code>.</p> <p><code>input</code> is a <code><a href="../../tensor/#classtensorflow_1_1_tensor">Tensor</a></code> with rank <code>P</code> and <code>indices</code> is a <code><a href="../../tensor/#classtensorflow_1_1_tensor">Tensor</a></code> of rank <code>Q</code>.</p> <p><code>indices</code> must be integer tensor, containing indices into <code>input</code>. It must be shape <code>[d_0, ..., d_{Q-2}, K]</code> where <code>0 &lt; K &lt;= P</code>.</p> <p>The innermost dimension of <code>indices</code> (with length <code>K</code>) corresponds to indices into elements (if <code>K = P</code>) or <code>(P-K)</code>-dimensional slices (if <code>K &lt; P</code>) along the <code>K</code>th dimension of <code>input</code>.</p> <p><code>updates</code> is <code><a href="../../tensor/#classtensorflow_1_1_tensor">Tensor</a></code> of rank <code>Q-1+P-K</code> with shape:</p> 
+<pre class="prettyprint" data-language="cpp">
+[d_0, ..., d_{Q-2}, input.shape[K], ..., input.shape[P-1]].
+</pre> <p>For example, say we want to add 4 scattered elements to a rank-1 tensor to 8 elements. In Python, that addition would look like this: </p>
+<pre class="prettyprint" data-language="cpp">input = tf.constant([1, 2, 3, 4, 5, 6, 7, 8])
+indices = tf.constant([[4], [3], [1], [7]])
+updates = tf.constant([9, 10, 11, 12])
+output = tf.scatter_nd_non_aliasing_add(input, indices, updates)
+with tf.Session() as sess:
+  print(sess.run(output))
+</pre> <p>The resulting value <code>output</code> would look like this: </p>
+<pre class="prettyprint" data-language="cpp">[1, 13, 3, 14, 14, 6, 7, 20]
+</pre> <p>See <code>tf.scatter_nd</code> for more details about how to make updates to slices.</p> <p>Arguments:</p>
+<ul> <li>scope: A <a href="../../scope/#classtensorflow_1_1_scope">Scope</a> object</li> <li>input: A <a href="../../tensor/#classtensorflow_1_1_tensor">Tensor</a>.</li> <li>indices: A <a href="../../tensor/#classtensorflow_1_1_tensor">Tensor</a>. Must be one of the following types: <code>int32</code>, <code>int64</code>. A tensor of indices into <code>input</code>.</li> <li>updates: A <a href="../../tensor/#classtensorflow_1_1_tensor">Tensor</a>. Must have the same type as ref. A tensor of updated values to add to <code>input</code>.</li> </ul> <p>Returns:</p>
+<ul> <li>
+<code><a href="../../output/#classtensorflow_1_1_output">Output</a></code>: A <code><a href="../../tensor/#classtensorflow_1_1_tensor">Tensor</a></code> with the same shape as <code>input</code>, containing values of <code>input</code> updated with <code>updates</code>. </li> </ul> <table class="constructors responsive"> <tr> <th colspan="2"> Constructors and Destructors </th> </tr> <tr> <td colspan="2"> <code><a href="#classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1a57cc850c2a18f67326496896cc838fe6">ScatterNdNonAliasingAdd</a>(const ::<a href="../../scope/#classtensorflow_1_1_scope">tensorflow::Scope</a> &amp; scope, ::<a href="../../input/#classtensorflow_1_1_input">tensorflow::Input</a> input, ::<a href="../../input/#classtensorflow_1_1_input">tensorflow::Input</a> indices, ::<a href="../../input/#classtensorflow_1_1_input">tensorflow::Input</a> updates)</code> <br> </td> </tr> </table> <table class="properties responsive"> <tr> <th colspan="2"> Public attributes </th> </tr> <tr> <td> <code><a href="#classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1ac0e95025b577dd9aa2b363abf1edb5ef">output</a></code> </td> <td> <div> <code>::<a href="../../output/#classtensorflow_1_1_output">tensorflow::Output</a></code> </div> </td> </tr> </table> <table class="methods responsive"> <tr> <th colspan="2"> Public functions </th> </tr> <tr> <td> <code><a href="#classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1ad6cbc286e76b135123023316803cc476">node</a>() const </code> </td> <td> <div> <code>::tensorflow::Node *</code> </div> </td> </tr> <tr> <td> <code><a href="#classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1a1e996262b5aff0c7deec837f56e58865">operator::tensorflow::Input</a>() const </code> </td> <td>  </td> </tr> <tr> <td> <code><a href="#classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1aa4c452e4d5f1dce175ad8c43e285eff8">operator::tensorflow::Output</a>() const </code> </td> <td>  </td> </tr> </table> <h2>Public attributes</h2> <div id="classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1ac0e95025b577dd9aa2b363abf1edb5ef"> <h3>output</h3> <pre class="prettyprint" data-language="cpp">::tensorflow::Output output</pre>  </div> <h2>Public functions</h2> <div id="classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1a57cc850c2a18f67326496896cc838fe6"> <h3>ScatterNdNonAliasingAdd</h3> <pre class="prettyprint" data-language="cpp"> ScatterNdNonAliasingAdd(
+  const ::tensorflow::Scope &amp; scope,
+  ::tensorflow::Input input,
+  ::tensorflow::Input indices,
+  ::tensorflow::Input updates
+)</pre>  </div> <div id="classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1ad6cbc286e76b135123023316803cc476"> <h3>node</h3> <pre class="prettyprint" data-language="cpp">::tensorflow::Node * node() const </pre>  </div> <div id="classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1a1e996262b5aff0c7deec837f56e58865"> <h3>operator::tensorflow::Input</h3> <pre class="prettyprint" data-language="cpp">operator::tensorflow::Input() const </pre>  </div> <div id="classtensorflow_1_1ops_1_1_scatter_nd_non_aliasing_add_1aa4c452e4d5f1dce175ad8c43e285eff8"> <h3>operator::tensorflow::Output</h3> <pre class="prettyprint" data-language="cpp">operator::tensorflow::Output() const </pre>  </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 The TensorFlow Authors. All rights reserved.<br>Licensed under the Creative Commons Attribution License 3.0.<br>Code samples licensed under the Apache 2.0 License.<br>
+    <a href="https://www.tensorflow.org/api_docs/cc/class/tensorflow/ops/scatter-nd-non-aliasing-add.html" class="_attribution-link" target="_blank">https://www.tensorflow.org/api_docs/cc/class/tensorflow/ops/scatter-nd-non-aliasing-add.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

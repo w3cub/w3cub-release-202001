@@ -1,0 +1,699 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>tensorflow&#58;&#58;ops&#58;&#58;QuantizedReshape - TensorFlow C++ - W3cubDocs</title>
+  
+  <meta name="description" content=" #include &#60;array_ops.h&#62; ">
+  <meta name="keywords" content="tensorflow, ops, quantizedreshape&#39;x&#39;, is, &#39;y&#39;, &#39;z&#39;, &#39;t&#39;, &#39;paddings&#39;, rank, &#39;constant, values&#39;, &#39;x&#39;, quantizedreshape, -, c++, tensorflow~cpp">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/tensorflow~cpp/class/tensorflow/ops/quantized-reshape/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/tensorflow~cpp.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/tensorflow~cpp/" class="_nav-link" title="" style="margin-left:0;">TensorFlow C++</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _tensorflow">
+				
+				
+<h1>tensorflow::ops::QuantizedReshape</h1> <p><code>#include &lt;array_ops.h&gt;</code></p> <p>Packs a list of <code>N</code> rank-<code>R</code> tensors into one rank-<code>(R+1)</code> tensor. </p> <h2>Summary</h2> <p>Packs the <code>N</code> tensors in <code>values</code> into a tensor with rank one higher than each tensor in <code>values</code>, by packing them along the <code>axis</code> dimension. Given a list of tensors of shape <code>(A, B, C)</code>;</p> <p>if <code>axis == 0</code> then the <code>output</code> tensor will have the shape <code>(N, A, B, C)</code>. if <code>axis == 1</code> then the <code>output</code> tensor will have the shape <code>(A, N, B, C)</code>. Etc.</p> <p>For example:</p> 
+<h1>'x' is [1, 4]</h1> 
+<h1>'y' is [2, 5]</h1> 
+<h1>'z' is [3, 6]</h1> <p>pack([x, y, z]) =&gt; [[1, 4], [2, 5], [3, 6]] # Pack along first dim. pack([x, y, z], axis=1) =&gt; [[1, 2, 3], [4, 5, 6]] </p>
+ 
+<pre class="prettyprint" data-language="cpp">This is the opposite of `unpack`.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object
+* values: Must be of same shape and type.</pre> 
+<pre class="prettyprint" data-language="cpp">Optional attributes (see `Attrs`):
+* axis: Dimension along which to pack.  Negative values wrap around, so the
+valid range is `[-(R+1), R+1)`.</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output`: The packed tensor. */
+class Stack {
+ public:
+  /// Optional attribute setters for Stack
+  struct Attrs {
+    /** Dimension along which to pack.  Negative values wrap around, so the
+        valid range is `[-(R+1), R+1)`.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to 0 */
+TF_MUST_USE_RESULT Attrs Axis(int64 x) {
+  Attrs ret = *this;
+  ret.axis_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">  int64 axis_ = 0;
+};
+Stack(const ::tensorflow::Scope&amp; scope, ::tensorflow::InputList values);
+Stack(const tensorflow::Scope&amp; scope, tensorflow::InputList values, const
+    Stack::Attrs&amp; attrs);
+operator ::tensorflow::Output() const { return output; }
+operator ::tensorflow::Input() const { return output; }
+::tensorflow::Node* node() const { return output.node(); }</pre> 
+<pre class="prettyprint" data-language="cpp">static Attrs Axis(int64 x) {
+  return Attrs().Axis(x);
+}</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** Pads a tensor with zeros.</pre> 
+<pre class="prettyprint" data-language="cpp">This operation pads a `input` with zeros according to the `paddings` you
+specify. `paddings` is an integer tensor with shape `[Dn, 2]`, where n is the
+rank of `input`. For each dimension D of `input`, `paddings[D, 0]` indicates
+how many zeros to add before the contents of `input` in that dimension, and
+`paddings[D, 1]` indicates how many zeros to add after the contents of `input`
+in that dimension.</pre> 
+<pre class="prettyprint" data-language="cpp">The padded size of each dimension D of the output is:</pre> 
+<pre class="prettyprint" data-language="cpp">`paddings(D, 0) + input.dim_size(D) + paddings(D, 1)`</pre> 
+<pre class="prettyprint" data-language="cpp">For example:</pre> 
+ <h1>'t' is [[1, 1], [2, 2]]</h1> 
+<h1>'paddings' is [[1, 1], [2, 2]]</h1> 
+<h1>rank of 't' is 2</h1> <p>pad(t, paddings) ==&gt; [[0, 0, 0, 0, 0, 0] [0, 0, 1, 1, 0, 0] [0, 0, 2, 2, 0, 0] [0, 0, 0, 0, 0, 0]] </p>
+ 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output`: The output tensor. */
+class Pad {
+ public:
+  Pad(const tensorflow::Scope&amp; scope, tensorflow::Input input,
+    tensorflow::Input paddings);
+  operator ::tensorflow::Output() const { return output; }
+  operator ::tensorflow::Input() const { return output; }
+  ::tensorflow::Node* node() const { return output.node(); }</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** Pads a tensor.</pre> 
+<pre class="prettyprint" data-language="cpp">This operation pads `input` according to the `paddings` and `constant_values`
+you specify. `paddings` is an integer tensor with shape `[Dn, 2]`, where n is
+the rank of `input`. For each dimension D of `input`, `paddings[D, 0]` indicates
+how many padding values to add before the contents of `input` in that dimension,
+and `paddings[D, 1]` indicates how many padding values to add after the contents
+of `input` in that dimension. `constant_values` is a scalar tensor of the same
+type as `input` that indicates the value to use for padding `input`.</pre> 
+<pre class="prettyprint" data-language="cpp">The padded size of each dimension D of the output is:</pre> 
+<pre class="prettyprint" data-language="cpp">`paddings(D, 0) + input.dim_size(D) + paddings(D, 1)`</pre> 
+<pre class="prettyprint" data-language="cpp">For example:</pre> 
+ <h1>'t' is [[1, 1], [2, 2]]</h1> 
+<h1>'paddings' is [[1, 1], [2, 2]]</h1> 
+<h1>'constant_values' is 0</h1> 
+<h1>rank of 't' is 2</h1> <p>pad(t, paddings) ==&gt; [[0, 0, 0, 0, 0, 0] [0, 0, 1, 1, 0, 0] [0, 0, 2, 2, 0, 0] [0, 0, 0, 0, 0, 0]] </p>
+ 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output`: The output tensor. */
+class PadV2 {
+ public:
+  PadV2(const tensorflow::Scope&amp; scope, tensorflow::Input input,
+      tensorflow::Input paddings, tensorflow::Input constant_values);
+  operator ::tensorflow::Output() const { return output; }
+  operator ::tensorflow::Input() const { return output; }
+  ::tensorflow::Node* node() const { return output.node(); }</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** Concatenates a list of `N` tensors along the first dimension.</pre> 
+<pre class="prettyprint" data-language="cpp">The input tensors are all required to have size 1 in the first dimension.</pre> 
+<pre class="prettyprint" data-language="cpp">For example:</pre> 
+ <h1>'x' is [[1, 4]]</h1> 
+<h1>'y' is [[2, 5]]</h1> 
+<h1>'z' is [[3, 6]]</h1> <p>parallel_concat([x, y, z]) =&gt; [[1, 4], [2, 5], [3, 6]] # Pack along first dim. </p>
+ 
+<pre class="prettyprint" data-language="cpp">The difference between concat and parallel_concat is that concat requires all
+of the inputs be computed before the operation will begin but doesn't require
+that the input shapes be known during graph construction.  Parallel concat
+will copy pieces of the input into the output as they become available, in
+some situations this can provide a performance benefit.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object
+* values: Tensors to be concatenated. All must have size 1 in the first dimension
+and same shape.
+* shape: the final shape of the result; should be equal to the shapes of any input
+but with the number of input values in the first dimension.</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output`: The concatenated tensor. */
+class ParallelConcat {
+ public:
+  ParallelConcat(const tensorflow::Scope&amp; scope, tensorflow::InputList
+               values, PartialTensorShape shape);
+  operator ::tensorflow::Output() const { return output; }
+  operator ::tensorflow::Input() const { return output; }
+  ::tensorflow::Node* node() const { return output.node(); }</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** A placeholder op for a value that will be fed into the computation.</pre> 
+<pre class="prettyprint" data-language="cpp">N.B. This operation will fail with an error if it is executed. It is
+intended as a way to represent a value that will always be fed, and to
+provide attrs that enable the fed value to be checked at runtime.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object
+* dtype: The type of elements in the tensor.</pre> 
+<pre class="prettyprint" data-language="cpp">Optional attributes (see `Attrs`):
+* shape: (Optional) The shape of the tensor. If the shape has 0 dimensions, the
+shape is unconstrained.</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output`: A placeholder tensor that must be replaced using the feed mechanism. */
+class Placeholder {
+ public:
+  /// Optional attribute setters for Placeholder
+  struct Attrs {
+    /** (Optional) The shape of the tensor. If the shape has 0 dimensions, the
+        shape is unconstrained.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to  */
+TF_MUST_USE_RESULT Attrs Shape(PartialTensorShape x) {
+  Attrs ret = *this;
+  ret.shape_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">  PartialTensorShape shape_ = ::tensorflow::PartialTensorShape() /* unknown */;
+};
+Placeholder(const ::tensorflow::Scope&amp; scope, DataType dtype);
+Placeholder(const tensorflow::Scope&amp; scope, DataType dtype, const
+          Placeholder::Attrs&amp; attrs);
+operator ::tensorflow::Output() const { return output; }
+operator ::tensorflow::Input() const { return output; }
+::tensorflow::Node* node() const { return output.node(); }</pre> 
+<pre class="prettyprint" data-language="cpp">static Attrs Shape(PartialTensorShape x) {
+  return Attrs().Shape(x);
+}</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** A placeholder op that passes through `input` when its output is not fed.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object
+* input: The default value to produce when `output` is not fed.
+* shape: The (possibly partial) shape of the tensor.</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output`: A placeholder tensor that defaults to `input` if it is not fed. */
+class PlaceholderWithDefault {
+ public:
+  PlaceholderWithDefault(const tensorflow::Scope&amp; scope, tensorflow::Input
+                       input, PartialTensorShape shape);
+  operator ::tensorflow::Output() const { return output; }
+  operator ::tensorflow::Input() const { return output; }
+  ::tensorflow::Node* node() const { return output.node(); }</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** An identity op that triggers an error if a gradient is requested.</pre> 
+<pre class="prettyprint" data-language="cpp">When executed in a graph, this op outputs its input tensor as-is.</pre> 
+<pre class="prettyprint" data-language="cpp">When building ops to compute gradients, the TensorFlow gradient system
+will return an error when trying to lookup the gradient of this op,
+because no gradient must ever be registered for this function.  This
+op exists to prevent subtle bugs from silently returning unimplemented
+gradients in some corner cases.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object
+* input: any tensor.</pre> 
+<pre class="prettyprint" data-language="cpp">Optional attributes (see `Attrs`):
+* message: Will be printed in the error when anyone tries to differentiate
+this operation.</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output`: the same input tensor. */
+class PreventGradient {
+ public:
+  /// Optional attribute setters for PreventGradient
+  struct Attrs {
+    /** Will be printed in the error when anyone tries to differentiate
+        this operation.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to "" */
+TF_MUST_USE_RESULT Attrs Message(StringPiece x) {
+  Attrs ret = *this;
+  ret.message_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">  StringPiece message_ = "";
+};
+PreventGradient(const ::tensorflow::Scope&amp; scope, ::tensorflow::Input input);
+PreventGradient(const tensorflow::Scope&amp; scope, tensorflow::Input input,
+              const PreventGradient::Attrs&amp; attrs);
+operator ::tensorflow::Output() const { return output; }
+operator ::tensorflow::Input() const { return output; }
+::tensorflow::Node* node() const { return output.node(); }</pre> 
+<pre class="prettyprint" data-language="cpp">static Attrs Message(StringPiece x) {
+  return Attrs().Message(x);
+}</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** Quantizes then dequantizes a tensor.</pre> 
+<pre class="prettyprint" data-language="cpp">This op simulates the precision loss from the quantized forward pass by:
+1. Quantizing the tensor to fixed point numbers, which should match the target
+   quantization method when it is used in inference.
+2. Dequantizing it back to floating point numbers for the following ops, most
+   likely matmul.</pre> 
+<pre class="prettyprint" data-language="cpp">There are different ways to quantize. This version does not use the full range
+of the output type, choosing to elide the lowest possible value for symmetry
+(e.g., output range is -127 to 127, not -128 to 127 for signed 8 bit
+quantization), so that 0.0 maps to 0.</pre> 
+<pre class="prettyprint" data-language="cpp">To perform this op, we first find the range of values in our tensor. The range
+we use is always centered on 0, so we find m such that</pre> 
+<pre class="prettyprint" data-language="cpp">1. m = max(abs(input_min), abs(input_max)) if range_given is true,
+2. m = max(abs(min_elem(input)), abs(max_elem(input))) otherwise.</pre> 
+<pre class="prettyprint" data-language="cpp">Our input tensor range is then [-m, m].</pre> 
+<pre class="prettyprint" data-language="cpp">Next, we choose our fixed-point quantization buckets, [min_fixed, max_fixed].
+If signed_input is true, this is</pre> 
+<pre class="prettyprint" data-language="cpp">[min_fixed, max_fixed ] =
+    [-(1 &lt;&lt; (num_bits - 1) - 1), (1 &lt;&lt; (num_bits - 1)) - 1].</pre> 
+<pre class="prettyprint" data-language="cpp">Otherwise, if signed_input is false, the fixed-point range is</pre> 
+<pre class="prettyprint" data-language="cpp">[min_fixed, max_fixed] = [0, (1 &lt;&lt; num_bits) - 1].</pre> 
+<pre class="prettyprint" data-language="cpp">From this we compute our scaling factor, s:</pre> 
+<pre class="prettyprint" data-language="cpp">s = (max_fixed - min_fixed) / (2 * m).</pre> 
+<pre class="prettyprint" data-language="cpp">Now we can quantize and dequantize the elements of our tensor.  An element e
+is transformed into e':</pre> 
+<pre class="prettyprint" data-language="cpp">e' = (e * s).round_to_nearest() / s.</pre> 
+<pre class="prettyprint" data-language="cpp">Note that we have a different number of buckets in the signed vs. unsigned
+cases.  For example, if num_bits == 8, we get 254 buckets in the signed case
+vs. 255 in the unsigned case.</pre> 
+<pre class="prettyprint" data-language="cpp">For example, suppose num_bits = 8 and m = 1.  Then</pre> 
+<pre class="prettyprint" data-language="cpp">[min_fixed, max_fixed] = [-127, 127], and
+s = (127 + 127) / 2 = 127.</pre> 
+<pre class="prettyprint" data-language="cpp">Given the vector {-1, -0.5, 0, 0.3}, this is quantized to
+{-127, -63, 0, 38}, and dequantized to {-1, -63.0/127, 0, 38.0/127}.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object
+* input: Tensor to quantize and then dequantize.
+* input_min: If range_given, this is the min of the range, otherwise this input
+will be ignored.
+* input_max: If range_given, this is the max of the range, otherwise this input
+will be ignored.</pre> 
+<pre class="prettyprint" data-language="cpp">Optional attributes (see `Attrs`):
+* signed_input: If the quantization is signed or unsigned.
+* num_bits: The bitwidth of the quantization.
+* range_given: If the range is given or should be computed from the tensor.</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output`: The output tensor. */
+class QuantizeAndDequantizeV2 {
+ public:
+  /// Optional attribute setters for QuantizeAndDequantizeV2
+  struct Attrs {
+    /** If the quantization is signed or unsigned.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to true */
+TF_MUST_USE_RESULT Attrs SignedInput(bool x) {
+  Attrs ret = *this;
+  ret.signed_input_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">/** The bitwidth of the quantization.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to 8 */
+TF_MUST_USE_RESULT Attrs NumBits(int64 x) {
+  Attrs ret = *this;
+  ret.num_bits_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">/** If the range is given or should be computed from the tensor.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to false */
+TF_MUST_USE_RESULT Attrs RangeGiven(bool x) {
+  Attrs ret = *this;
+  ret.range_given_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">  bool signed_input_ = true;
+  int64 num_bits_ = 8;
+  bool range_given_ = false;
+};
+QuantizeAndDequantizeV2(const tensorflow::Scope&amp; scope, tensorflow::Input
+                      input, tensorflow::Input input_min,
+                      tensorflow::Input input_max);
+QuantizeAndDequantizeV2(const tensorflow::Scope&amp; scope, tensorflow::Input
+                      input, tensorflow::Input input_min,
+                      tensorflow::Input input_max, const
+                      QuantizeAndDequantizeV2::Attrs&amp; attrs);
+operator ::tensorflow::Output() const { return output; }
+operator ::tensorflow::Input() const { return output; }
+::tensorflow::Node* node() const { return output.node(); }</pre> 
+<pre class="prettyprint" data-language="cpp">static Attrs SignedInput(bool x) {
+  return Attrs().SignedInput(x);
+}
+static Attrs NumBits(int64 x) {
+  return Attrs().NumBits(x);
+}
+static Attrs RangeGiven(bool x) {
+  return Attrs().RangeGiven(x);
+}</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** Quantizes then dequantizes a tensor.</pre> 
+<pre class="prettyprint" data-language="cpp">This is almost identical to QuantizeAndDequantizeV2, except that num_bits is a
+tensor, so its value can change during training.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output`: The output tensor. */
+class QuantizeAndDequantizeV3 {
+ public:
+  /// Optional attribute setters for QuantizeAndDequantizeV3
+  struct Attrs {
+    /// Defaults to true
+    TF_MUST_USE_RESULT Attrs SignedInput(bool x) {
+      Attrs ret = *this;
+      ret.signed_input_ = x;
+      return ret;
+    }</pre> 
+<pre class="prettyprint" data-language="cpp">/// Defaults to true
+TF_MUST_USE_RESULT Attrs RangeGiven(bool x) {
+  Attrs ret = *this;
+  ret.range_given_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">  bool signed_input_ = true;
+  bool range_given_ = true;
+};
+QuantizeAndDequantizeV3(const tensorflow::Scope&amp; scope, tensorflow::Input
+                      input, tensorflow::Input input_min,
+                      tensorflow::Input input_max, tensorflow::Input
+                      num_bits);
+QuantizeAndDequantizeV3(const tensorflow::Scope&amp; scope, tensorflow::Input
+                      input, tensorflow::Input input_min,
+                      tensorflow::Input input_max, tensorflow::Input
+                      num_bits, const QuantizeAndDequantizeV3::Attrs&amp; attrs);
+operator ::tensorflow::Output() const { return output; }
+operator ::tensorflow::Input() const { return output; }
+::tensorflow::Node* node() const { return output.node(); }</pre> 
+<pre class="prettyprint" data-language="cpp">static Attrs SignedInput(bool x) {
+  return Attrs().SignedInput(x);
+}
+static Attrs RangeGiven(bool x) {
+  return Attrs().RangeGiven(x);
+}</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** Quantize the 'input' tensor of type float to 'output' tensor of type 'T'.</pre> 
+<pre class="prettyprint" data-language="cpp">[min_range, max_range] are scalar floats that specify the range for
+the 'input' data. The 'mode' attribute controls exactly which calculations are
+used to convert the float values to their quantized equivalents.  The
+'round_mode' attribute controls which rounding tie-breaking algorithm is used
+when rounding float values to their quantized equivalents.</pre> 
+<pre class="prettyprint" data-language="cpp">In 'MIN_COMBINED' mode, each value of the tensor will undergo the following:</pre> 
+ out[i] = (in[i] - min_range) * range(T) / (max_range - min_range) if T == qint8, out[i] -= (range(T) + 1) / 2.0 <pre class="prettyprint" data-language="cpp">
+here `range(T) = numeric_limits::max() - numeric_limits::min()`</pre> 
+<pre class="prettyprint" data-language="cpp">*MIN_COMBINED Mode Example*</pre> 
+<pre class="prettyprint" data-language="cpp">Assume the input is type float and has a possible range of [0.0, 6.0] and the
+output type is quint8 ([0, 255]). The min_range and max_range values should be
+specified as 0.0 and 6.0. Quantizing from float to quint8 will multiply each
+value of the input by 255/6 and cast to quint8.</pre> 
+<pre class="prettyprint" data-language="cpp">If the output type was qint8 ([-128, 127]), the operation will additionally
+subtract each value by 128 prior to casting, so that the range of values aligns
+with the range of qint8.</pre> 
+<pre class="prettyprint" data-language="cpp">If the mode is 'MIN_FIRST', then this approach is used:</pre> 
+ num_discrete_values = 1 &lt;&lt; (# of bits in T) range_adjust = num_discrete_values / (num_discrete_values - 1) range = (range_max - range_min) * range_adjust range_scale = num_discrete_values / range quantized = round(input * range_scale) - round(range_min * range_scale) + numeric_limits<t>::min() quantized = max(quantized, numeric_limits<t>::min()) quantized = min(quantized, numeric_limits<t>::max())  
+<pre class="prettyprint" data-language="cpp">The biggest difference between this and MIN_COMBINED is that the minimum range
+is rounded first, before it's subtracted from the rounded value. With
+MIN_COMBINED, a small bias is introduced where repeated iterations of quantizing
+and dequantizing will introduce a larger and larger error.</pre> 
+<pre class="prettyprint" data-language="cpp">*SCALED mode Example*</pre> 
+<pre class="prettyprint" data-language="cpp">`SCALED` mode matches the quantization approach used in
+`QuantizeAndDequantize{V2|V3}`.</pre> 
+<pre class="prettyprint" data-language="cpp">If the mode is `SCALED`, we do not use the full range of the output type,
+choosing to elide the lowest possible value for symmetry (e.g., output range is
+-127 to 127, not -128 to 127 for signed 8 bit quantization), so that 0.0 maps to
+0.</pre> 
+<pre class="prettyprint" data-language="cpp">We first find the range of values in our tensor. The
+range we use is always centered on 0, so we find m such that
+</pre>c++ m = max(abs(input_min), abs(input_max))  
+<pre class="prettyprint" data-language="cpp">Our input tensor range is then `[-m, m]`.</pre> 
+<pre class="prettyprint" data-language="cpp">Next, we choose our fixed-point quantization buckets, `[min_fixed, max_fixed]`.
+If T is signed, this is
+</pre> num_bits = sizeof(T) * 8 [min_fixed, max_fixed] = [-(1 &lt;&lt; (num_bits - 1) - 1), (1 &lt;&lt; (num_bits - 1)) - 1]  
+<pre class="prettyprint" data-language="cpp">Otherwise, if T is unsigned, the fixed-point range is
+</pre> [min_fixed, max_fixed] = [0, (1 &lt;&lt; num_bits) - 1]  
+<pre class="prettyprint" data-language="cpp">From this we compute our scaling factor, s:
+</pre>c++ s = (max_fixed - min_fixed) / (2 * m)  
+<pre class="prettyprint" data-language="cpp">Now we can quantize the elements of our tensor:
+</pre>c++ result = round(input * s)  
+<pre class="prettyprint" data-language="cpp">One thing to watch out for is that the operator may choose to adjust the
+requested minimum and maximum values slightly during the quantization process,
+so you should always use the output ports as the range for further calculations.
+For example, if the requested minimum and maximum values are close to equal,
+they will be separated by a small epsilon value to prevent ill-formed quantized
+buffers from being created. Otherwise, you can end up with buffers where all the
+quantized values map to the same float value, which causes problems for
+operations that have to perform further calculations on them.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object
+* min_range: The minimum scalar value possibly produced for the input.
+* max_range: The maximum scalar value possibly produced for the input.</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output` output: The quantized data produced from the float input.
+    * `Output` output_min: The actual minimum scalar value used for the output.
+    * `Output` output_max: The actual maximum scalar value used for the output. */
+class QuantizeV2 {
+ public:
+  /// Optional attribute setters for QuantizeV2
+  struct Attrs {
+    /// Defaults to "MIN_COMBINED"
+    TF_MUST_USE_RESULT Attrs Mode(StringPiece x) {
+      Attrs ret = *this;
+      ret.mode_ = x;
+      return ret;
+    }</pre> 
+<pre class="prettyprint" data-language="cpp">/// Defaults to "HALF_AWAY_FROM_ZERO"
+TF_MUST_USE_RESULT Attrs RoundMode(StringPiece x) {
+  Attrs ret = *this;
+  ret.round_mode_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">  StringPiece mode_ = "MIN_COMBINED";
+  StringPiece round_mode_ = "HALF_AWAY_FROM_ZERO";
+};
+QuantizeV2(const tensorflow::Scope&amp; scope, tensorflow::Input input,
+         tensorflow::Input min_range, tensorflow::Input max_range,
+         DataType T);
+QuantizeV2(const tensorflow::Scope&amp; scope, tensorflow::Input input,
+         tensorflow::Input min_range, tensorflow::Input max_range,
+         DataType T, const QuantizeV2::Attrs&amp; attrs);</pre> 
+<pre class="prettyprint" data-language="cpp">static Attrs Mode(StringPiece x) {
+  return Attrs().Mode(x);
+}
+static Attrs RoundMode(StringPiece x) {
+  return Attrs().RoundMode(x);
+}</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+  tensorflow::Output output_min;
+  tensorflow::Output output_max;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** Concatenates quantized tensors along one dimension.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object
+* concat_dim: 0-D.  The dimension along which to concatenate.  Must be in the
+range [0, rank(values)).
+* values: The `N` Tensors to concatenate. Their ranks and types must match,
+and their sizes must match in all dimensions except `concat_dim`.
+* input_mins: The minimum scalar values for each of the input tensors.
+* input_maxes: The maximum scalar values for each of the input tensors.</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output` output: A `Tensor` with the concatenation of values stacked along the
+    `concat_dim` dimension.  This tensor's shape matches that of `values` except
+    in `concat_dim` where it has the sum of the sizes.
+    * `Output` output_min: The float value that the minimum quantized output value represents.
+    * `Output` output_max: The float value that the maximum quantized output value represents. */
+class QuantizedConcat {
+ public:
+  QuantizedConcat(const tensorflow::Scope&amp; scope, tensorflow::Input
+                concat_dim, tensorflow::InputList values,
+                tensorflow::InputList input_mins, tensorflow::InputList
+                input_maxes);</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output output;
+  tensorflow::Output output_min;
+  tensorflow::Output output_max;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** Quantized Instance normalization.</pre> 
+<pre class="prettyprint" data-language="cpp">Arguments:
+* scope: A Scope object
+* x: A 4D input Tensor.
+* x_min: The value represented by the lowest quantized input.
+* x_max: The value represented by the highest quantized input.</pre> 
+<pre class="prettyprint" data-language="cpp">Optional attributes (see `Attrs`):
+* output_range_given: If True, `given_y_min` and `given_y_min`
+and `given_y_max` are used as the output range. Otherwise,
+the implementation computes the output range.
+* given_y_min: Output in `y_min` if `output_range_given` is True.
+* given_y_max: Output in `y_max` if `output_range_given` is True.
+* variance_epsilon: A small float number to avoid dividing by 0.
+* min_separation: Minimum value of `y_max - y_min`</pre> 
+<pre class="prettyprint" data-language="cpp">    Returns:
+    * `Output` y: A 4D Tensor.
+    * `Output` y_min: The value represented by the lowest quantized output.
+    * `Output` y_max: The value represented by the highest quantized output. */
+class QuantizedInstanceNorm {
+ public:
+  /// Optional attribute setters for QuantizedInstanceNorm
+  struct Attrs {
+    /** If True, `given_y_min` and `given_y_min`
+        and `given_y_max` are used as the output range. Otherwise,
+        the implementation computes the output range.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to false */
+TF_MUST_USE_RESULT Attrs OutputRangeGiven(bool x) {
+  Attrs ret = *this;
+  ret.output_range_given_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">/** Output in `y_min` if `output_range_given` is True.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to 0 */
+TF_MUST_USE_RESULT Attrs GivenYMin(float x) {
+  Attrs ret = *this;
+  ret.given_y_min_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">/** Output in `y_max` if `output_range_given` is True.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to 0 */
+TF_MUST_USE_RESULT Attrs GivenYMax(float x) {
+  Attrs ret = *this;
+  ret.given_y_max_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">/** A small float number to avoid dividing by 0.</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to 1e-05 */
+TF_MUST_USE_RESULT Attrs VarianceEpsilon(float x) {
+  Attrs ret = *this;
+  ret.variance_epsilon_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">/** Minimum value of `y_max - y_min`</pre> 
+<pre class="prettyprint" data-language="cpp">    Defaults to 0.001 */
+TF_MUST_USE_RESULT Attrs MinSeparation(float x) {
+  Attrs ret = *this;
+  ret.min_separation_ = x;
+  return ret;
+}</pre> 
+<pre class="prettyprint" data-language="cpp">  bool output_range_given_ = false;
+  float given_y_min_ = 0.0f;
+  float given_y_max_ = 0.0f;
+  float variance_epsilon_ = 1e-05f;
+  float min_separation_ = 0.001f;
+};
+QuantizedInstanceNorm(const tensorflow::Scope&amp; scope, tensorflow::Input x,
+                    tensorflow::Input x_min, tensorflow::Input x_max);
+QuantizedInstanceNorm(const tensorflow::Scope&amp; scope, tensorflow::Input x,
+                    tensorflow::Input x_min, tensorflow::Input x_max,
+                    const QuantizedInstanceNorm::Attrs&amp; attrs);</pre> 
+<pre class="prettyprint" data-language="cpp">static Attrs OutputRangeGiven(bool x) {
+  return Attrs().OutputRangeGiven(x);
+}
+static Attrs GivenYMin(float x) {
+  return Attrs().GivenYMin(x);
+}
+static Attrs GivenYMax(float x) {
+  return Attrs().GivenYMax(x);
+}
+static Attrs VarianceEpsilon(float x) {
+  return Attrs().VarianceEpsilon(x);
+}
+static Attrs MinSeparation(float x) {
+  return Attrs().MinSeparation(x);
+}</pre> 
+<pre class="prettyprint" data-language="cpp">tensorflow::Output y;
+  tensorflow::Output y_min;
+  tensorflow::Output y_max;
+};</pre> 
+<pre class="prettyprint" data-language="cpp">/** Reshapes a quantized tensor as per the Reshape op.</pre> 
+ <p>Arguments:</p>
+<ul> <li>scope: A <a href="../../scope/#classtensorflow_1_1_scope">Scope</a> object</li> <li>shape: Defines the shape of the output tensor.</li> <li>input_min: The minimum value of the input.</li> <li>input_max: The maximum value of the input.</li> </ul> <p>Returns:</p>
+<ul> <li>
+<code><a href="../../output/#classtensorflow_1_1_output">Output</a></code> output</li> <li>
+<code><a href="../../output/#classtensorflow_1_1_output">Output</a></code> output_min: This value is copied from input_min.</li> <li>
+<code><a href="../../output/#classtensorflow_1_1_output">Output</a></code> output_max: This value is copied from input_max. </li> </ul> <table class="constructors responsive"> <tr> <th colspan="2"> Constructors and Destructors </th> </tr> <tr> <td colspan="2"> <code><a href="#classtensorflow_1_1ops_1_1_quantized_reshape_1a1586a9fd66e72c76f752e7641f6a191f">QuantizedReshape</a>(const ::<a href="../../scope/#classtensorflow_1_1_scope">tensorflow::Scope</a> &amp; scope, ::<a href="../../input/#classtensorflow_1_1_input">tensorflow::Input</a> tensor, ::<a href="../../input/#classtensorflow_1_1_input">tensorflow::Input</a> shape, ::<a href="../../input/#classtensorflow_1_1_input">tensorflow::Input</a> input_min, ::<a href="../../input/#classtensorflow_1_1_input">tensorflow::Input</a> input_max)</code> <br> </td> </tr> </table> <table class="properties responsive"> <tr> <th colspan="2"> Public attributes </th> </tr> <tr> <td> <code><a href="#classtensorflow_1_1ops_1_1_quantized_reshape_1a83f4f02b01effc15393ce0cd24cfee85">output</a></code> </td> <td> <div> <code>::<a href="../../output/#classtensorflow_1_1_output">tensorflow::Output</a></code> </div> </td> </tr> <tr> <td> <code><a href="#classtensorflow_1_1ops_1_1_quantized_reshape_1ac5caddbc5b5bc5a524ff95ff71db1842">output_max</a></code> </td> <td> <div> <code>::<a href="../../output/#classtensorflow_1_1_output">tensorflow::Output</a></code> </div> </td> </tr> <tr> <td> <code><a href="#classtensorflow_1_1ops_1_1_quantized_reshape_1aa5ba6ab97eb0e9e29852f08f1c63e136">output_min</a></code> </td> <td> <div> <code>::<a href="../../output/#classtensorflow_1_1_output">tensorflow::Output</a></code> </div> </td> </tr> </table> <h2>Public attributes</h2> <div id="classtensorflow_1_1ops_1_1_quantized_reshape_1a83f4f02b01effc15393ce0cd24cfee85"> <h3>output</h3> <pre class="prettyprint" data-language="cpp">::tensorflow::Output output</pre>  </div> <div id="classtensorflow_1_1ops_1_1_quantized_reshape_1ac5caddbc5b5bc5a524ff95ff71db1842"> <h3>output_max</h3> <pre class="prettyprint" data-language="cpp">::tensorflow::Output output_max</pre>  </div> <div id="classtensorflow_1_1ops_1_1_quantized_reshape_1aa5ba6ab97eb0e9e29852f08f1c63e136"> <h3>output_min</h3> <pre class="prettyprint" data-language="cpp">::tensorflow::Output output_min</pre>  </div> <h2>Public functions</h2> <div id="classtensorflow_1_1ops_1_1_quantized_reshape_1a1586a9fd66e72c76f752e7641f6a191f"> <h3>QuantizedReshape</h3> <pre class="prettyprint" data-language="cpp"> QuantizedReshape(
+  const ::tensorflow::Scope &amp; scope,
+  ::tensorflow::Input tensor,
+  ::tensorflow::Input shape,
+  ::tensorflow::Input input_min,
+  ::tensorflow::Input input_max
+)</pre>  </div> </t></t></t><div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 The TensorFlow Authors. All rights reserved.<br>Licensed under the Creative Commons Attribution License 3.0.<br>Code samples licensed under the Apache 2.0 License.<br>
+    <a href="https://www.tensorflow.org/api_docs/cc/class/tensorflow/ops/quantized-reshape.html" class="_attribution-link" target="_blank">https://www.tensorflow.org/api_docs/cc/class/tensorflow/ops/quantized-reshape.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
