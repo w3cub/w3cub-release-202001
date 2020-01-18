@@ -1,0 +1,248 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Debugging - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="Currently the Kotlin&#47;Native compiler produces debug info compatible with the DWARF 2 specification, so modern debugger tools can perform the &hellip;">
+  <meta name="keywords" content="debugging, -, kotlin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/native/debugging/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h2 id="debugging">Debugging</h2> <p>Currently the Kotlin/Native compiler produces debug info compatible with the DWARF 2 specification, so modern debugger tools can perform the following operations:</p> <ul> <li>breakpoints</li> <li>stepping</li> <li>inspection of type information</li> <li>variable inspection</li> </ul> <h3 id="producing-binaries-with-debug-info-with-kotlinnative-compiler">Producing binaries with debug info with Kotlin/Native compiler</h3> <p>To produce binaries with the Kotlin/Native compiler it's sufficient to use the <code>-g</code> option on the command line.<br> <em>Example:</em></p> <div class="sample" mode="shell" theme="idea"> <pre>0:b-debugger-fixes:minamoto@unit-703(0)# cat - &gt; hello.kt
+fun main(args: Array&lt;String&gt;) {
+  println("Hello world")
+  println("I need your clothes, your boots and your motocycle")
+}
+0:b-debugger-fixes:minamoto@unit-703(0)# dist/bin/konanc -g hello.kt -o terminator
+KtFile: hello.kt
+0:b-debugger-fixes:minamoto@unit-703(0)# lldb terminator.kexe
+(lldb) target create "terminator.kexe"
+Current executable set to 'terminator.kexe' (x86_64).
+(lldb) b kfun:main(kotlin.Array&lt;kotlin.String&gt;)
+Breakpoint 1: where = terminator.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) + 4 at hello.kt:2, address = 0x00000001000012e4
+(lldb) r
+Process 28473 launched: '/Users/minamoto/ws/.git-trees/debugger-fixes/terminator.kexe' (x86_64)
+Process 28473 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1
+    frame #0: 0x00000001000012e4 terminator.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) at hello.kt:2
+   1    fun main(args: Array&lt;String&gt;) {
+-&gt; 2      println("Hello world")
+   3      println("I need your clothes, your boots and your motocycle")
+   4    }
+(lldb) n
+Hello world
+Process 28473 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = step over
+    frame #0: 0x00000001000012f0 terminator.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) at hello.kt:3
+   1    fun main(args: Array&lt;String&gt;) {
+   2      println("Hello world")
+-&gt; 3      println("I need your clothes, your boots and your motocycle")
+   4    }
+(lldb)
+</pre> </div> <h3 id="breakpoints">Breakpoints</h3> <p>Modern debuggers provide several ways to set a breakpoint, see below for a tool-by-tool breakdown:</p> <h4 id="lldb">lldb</h4> <ul> <li>by name</li> </ul> <div class="sample" mode="shell" theme="idea"> <pre>(lldb) b -n kfun:main(kotlin.Array&lt;kotlin.String&gt;)
+Breakpoint 4: where = terminator.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) + 4 at hello.kt:2, address = 0x00000001000012e4
+</pre> </div> <p><em><code>-n</code> is optional, this flag is applied by default</em></p> <ul> <li>by location (filename, line number)</li> </ul> <div class="sample" mode="shell" theme="idea"> <pre>(lldb) b -f hello.kt -l 1
+Breakpoint 1: where = terminator.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) + 4 at hello.kt:2, address = 0x00000001000012e4
+</pre> </div> <ul> <li>by address</li> </ul> <div class="sample" mode="shell" theme="idea"> <pre>(lldb) b -a 0x00000001000012e4
+Breakpoint 2: address = 0x00000001000012e4
+</pre> </div> <ul> <li>by regex, you might find it useful for debugging generated artifacts, like lambda etc. (where used <code>#</code> symbol in name).</li> </ul> <div class="sample" mode="shell" theme="idea"> <pre>3: regex = 'main\(', locations = 1
+  3.1: where = terminator.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) + 4 at hello.kt:2, address = terminator.kexe[0x00000001000012e4], unresolved, hit count = 0
+</pre> </div> <h4 id="gdb">gdb</h4> <ul> <li>by regex</li> </ul> <div class="sample" mode="shell" theme="idea"> <pre>(gdb) rbreak main(
+Breakpoint 1 at 0x1000109b4
+struct ktype:kotlin.Unit &amp;kfun:main(kotlin.Array&lt;kotlin.String&gt;);
+</pre> </div> <ul> <li>by name <strong>unusable</strong>, because <code>:</code> is a separator for the breakpoint by location</li> </ul> <div class="sample" mode="shell" theme="idea"> <pre>(gdb) b kfun:main(kotlin.Array&lt;kotlin.String&gt;)
+No source file named kfun.
+Make breakpoint pending on future shared library load? (y or [n]) y
+Breakpoint 1 (kfun:main(kotlin.Array&lt;kotlin.String&gt;)) pending
+</pre> </div> <ul> <li>by location</li> </ul> <div class="sample" mode="shell" theme="idea"> <pre>(gdb) b hello.kt:1
+Breakpoint 2 at 0x100001704: file /Users/minamoto/ws/.git-trees/hello.kt, line 1.
+</pre> </div> <ul> <li>by address</li> </ul> <div class="sample" mode="shell" theme="idea"> <pre>(gdb) b *0x100001704
+Note: breakpoint 2 also set at pc 0x100001704.
+Breakpoint 3 at 0x100001704: file /Users/minamoto/ws/.git-trees/hello.kt, line 2.
+</pre> </div> <h3 id="stepping">Stepping</h3> <p>Stepping functions works mostly the same way as for C/C++ programs</p> <h3 id="variable-inspection">Variable inspection</h3> <p>Variable inspections for var variables works out of the box for primitive types. For non-primitive types there are custom pretty printers for lldb in <code>konan_lldb.py</code>:</p> <div class="sample" mode="shell" theme="idea"> <pre>λ cat main.kt | nl
+     1  fun main(args: Array&lt;String&gt;) {
+     2      var x = 1
+     3      var y = 2
+     4      var p = Point(x, y)
+     5      println("p = $p")
+     6  }
+       
+     7  data class Point(val x: Int, val y: Int)
+
+λ lldb ./program.kexe -o 'b main.kt:5' -o
+(lldb) target create "./program.kexe"
+Current executable set to './program.kexe' (x86_64).
+(lldb) b main.kt:5
+Breakpoint 1: where = program.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) + 289 at main.kt:5, address = 0x000000000040af11
+(lldb) r
+Process 4985 stopped
+* thread #1, name = 'program.kexe', stop reason = breakpoint 1.1
+    frame #0: program.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) at main.kt:5
+   2        var x = 1
+   3        var y = 2
+   4        var p = Point(x, y)
+-&gt; 5        println("p = $p")
+   6    }
+   7   
+   8    data class Point(val x: Int, val y: Int)
+
+Process 4985 launched: './program.kexe' (x86_64)
+(lldb) fr var
+(int) x = 1
+(int) y = 2
+(ObjHeader *) p = 0x00000000007643d8
+(lldb) command script import dist/tools/konan_lldb.py
+(lldb) fr var
+(int) x = 1
+(int) y = 2
+(ObjHeader *) p = Point(x=1, y=2)
+(lldb) p p
+(ObjHeader *) $2 = Point(x=1, y=2)
+(lldb) 
+</pre> </div> <p>Getting representation of the object variable (var) could also be done using the built-in runtime function <code>Konan_DebugPrint</code> (this approach also works for gdb, using a module of command syntax):</p> <div class="sample" mode="shell" theme="idea"> <pre>0:b-debugger-fixes:minamoto@unit-703(0)# cat ../debugger-plugin/1.kt | nl -p
+     1  fun foo(a:String, b:Int) = a + b
+     2  fun one() = 1
+     3  fun main(arg:Array&lt;String&gt;) {
+     4    var a_variable = foo("(a_variable) one is ", 1)
+     5    var b_variable = foo("(b_variable) two is ", 2)
+     6    var c_variable = foo("(c_variable) two is ", 3)
+     7    var d_variable = foo("(d_variable) two is ", 4)
+     8    println(a_variable)
+     9    println(b_variable)
+    10    println(c_variable)
+    11    println(d_variable)
+    12  }
+0:b-debugger-fixes:minamoto@unit-703(0)# lldb ./program.kexe -o 'b -f 1.kt -l 9' -o r
+(lldb) target create "./program.kexe"
+Current executable set to './program.kexe' (x86_64).
+(lldb) b -f 1.kt -l 9
+Breakpoint 1: where = program.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) + 463 at 1.kt:9, address = 0x0000000100000dbf
+(lldb) r
+(a_variable) one is 1
+Process 80496 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1
+    frame #0: 0x0000000100000dbf program.kexe`kfun:main(kotlin.Array&lt;kotlin.String&gt;) at 1.kt:9
+   6      var c_variable = foo("(c_variable) two is ", 3)
+   7      var d_variable = foo("(d_variable) two is ", 4)
+   8      println(a_variable)
+-&gt; 9      println(b_variable)
+   10     println(c_variable)
+   11     println(d_variable)
+   12   }
+
+Process 80496 launched: './program.kexe' (x86_64)
+(lldb) expression -- Konan_DebugPrint(a_variable)
+(a_variable) one is 1(KInt) $0 = 0
+(lldb)
+
+</pre> </div> <h3 id="known-issues">Known issues</h3> <ul> <li>performance of Python bindings.</li> </ul> <p><em>Note:</em> Supporting the DWARF 2 specification means that the debugger tool recognizes Kotlin as C89, because before the DWARF 5 specification, there is no identifier for the Kotlin language type in specification.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/native/debugging.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/native/debugging.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,149 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>CocoaPods Integration - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="Starting with 1.3.30, an experimental integration with CocoaPods is added to Kotlin&#47;Native. This feature allows you to represent a Kotlin&#47; &hellip;">
+  <meta name="keywords" content="cocoapods, integration, -, kotlin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/native/cocoapods/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h1 id="cocoapods-integration">CocoaPods integration</h1> <p>Starting with 1.3.30, an experimental integration with <a href="https://cocoapods.org/" target="_blank">CocoaPods</a> is added to Kotlin/Native. This feature allows you to represent a Kotlin/Native Gradle-project as a CocoaPods dependency. Such a representation provides the following advantages:</p> <ul> <li> <p>Such a dependency can be included in a Podfile of an Xcode project and automatically built (and rebuilt) along with this project. As a result, importing to Xcode is simplified since there is no need to write corresponding Gradle tasks and Xcode build steps manually.</p> </li> <li> <p>When building from Xcode, you can use CocoaPods libraries without writing .def files manually and setting cinterop tool parameters. In this case, all required parameters can be obtained from the Xcode project configured by CocoaPods.</p> </li> </ul> <p>For an example of CocoaPods integration, refer to the <a href="https://github.com/JetBrains/kotlin-native/tree/master/samples/cocoapods" target="_blank"><code>cocoapods</code></a> sample.</p> <h2 id="cocoapods-gradle-plugin">CocoaPods Gradle plugin</h2> <p>The CocoaPods support is implemented in a separate Gradle plugin: <code>org.jetbrains.kotlin.native.cocoapods</code>.</p> <blockquote> <p><strong>Note:</strong> The plugin is based on the multiplatform project model and requires applying the <code>org.jetbrains.kotlin.multiplatform</code> plugin. See details about the multiplatform plugin at the <a href="../../building-mpp-with-gradle/">corresponding page</a>.</p> </blockquote> <p>When applied, the CocoaPods plugin does the following:</p> <ol> <li>Adds both <code>debug</code> and <code>release</code> frameworks as output binaries for all iOS and macOS targets.</li> <li>Creates a <code>podspec</code> task which generates a <a href="https://guides.cocoapods.org/syntax/podspec.html" target="_blank">podspec</a> file for the given project.</li> </ol> <p>The podspec generated includes a path to an output framework and script phases which automate building this framework during a build process of an Xcode project. Some fields of the podspec file can be configured using the <code>kotlin.cocoapods { ... }</code> code block.</p> <div class="sample" mode="kotlin" theme="idea"> <pre>// Apply plugins.
+plugins {
+    id("org.jetbrains.kotlin.multiplatform") version "1.3.30"
+    id("org.jetbrains.kotlin.native.cocoapods") version "1.3.30"
+}
+
+// CocoaPods requires the podspec to have a version.
+version = "1.0"
+
+kotlin {
+    cocoapods {
+        // Configure fields required by CocoaPods.
+        summary = "Some description for a Kotlin/Native module"
+        homepage = "Link to a Kotlin/Native module homepage"
+    }
+}
+</pre> </div> <p>The following podspec fields are required by CocoaPods:</p> <ul> <li><code>version</code></li> <li><code>summary</code></li> <li><code>homepage</code></li> </ul> <p>A version of the Gradle project is used as a value for the <code>version</code> field. Fields<code>summary</code> and <code>homepage</code> can be configured using the <code>cocoapods</code> code block.</p> <p>This podspec file can be referenced from a <a href="https://guides.cocoapods.org/using/the-podfile.html" target="_blank">Podfile</a> of an Xcode project. After that the framework built from the Kotlin/Native module can be used from this Xcode project. If necessary, this framework is automatically rebuilt during Xcode build process.</p> <h2 id="workflow">Workflow</h2> <p>To import a Kotlin/Native module in an existing Xcode project:</p> <ol> <li> <p>Make sure that you have CocoaPods <a href="https://guides.cocoapods.org/using/getting-started.html#installation" target="_blank">installed</a>. We recommend using CocoaPods 1.6.1 or later.</p> </li> <li> <p>Configure a Gradle project: apply the <code>org.jetbrains.kotlin.native.cocoapods</code> plugin, add and configure the targets, and specify the required podspec fields.</p> </li> <li> <p>Run the <code>podspec</code> task. The podspec file described above will be generated.</p> <blockquote> <p>In order to avoid compatibility issues during an Xcode build, the plugin requires using a <a href="https://docs.gradle.org/current/userguide/gradle_wrapper.html" target="_blank">Gradle wrapper</a>. To generate the wrapper automatically during execution of the <code>podspec</code> task, run it with the parameter <code>-Pkotlin.native.cocoapods.generate.wrapper=true</code>.</p> </blockquote> </li> <li> <p>Add a reference to the generated podspec in a Podfile of the Xcode project.</p> <div class="sample" mode="ruby" theme="idea"> <pre> target 'my-ios-app' do
+     pod 'my_kotlin_library', :path =&gt; 'path/to/my-kotlin-library'
+ end
+</pre> </div> </li> <li> <p>Run <code>pod install</code> for the Xcode project.</p> </li> </ol> <p>After completing these steps, you can open the generated workspace (see <a href="https://guides.cocoapods.org/using/using-cocoapods.html#installation" target="_blank">CocoaPods documentation</a>) and run an Xcode build.</p> <h2 id="interoperability">Interoperability</h2> <p>The CocoaPods plugin also allows using CocoaPods libraries without manual configuring cinterop parameters (see the <a href="../../building-mpp-with-gradle/#cinterop-support">corresponding section</a> of the multiplatform plugin documentation). The <code>cocoapods { ... }</code> code block allows you to add dependencies on CocoaPods libraries.</p> <div class="sample" mode="kotlin" theme="idea"> <pre>kotlin {
+    cocoapods {
+        // Configure a dependency on AFNetworking.
+        // The CocoaPods version notation is supported.
+        // The dependency will be added to all macOS and iOS targets.
+        pod("AFNetworking", "~&gt; 3.2.0")
+    }
+}
+</pre> </div> <p>To use these dependencies from a Kotlin code, import a package <code>cocoapods.&lt;library-name&gt;</code>. In the example above, it's <code>cocoapods.AFNetworking</code>.</p> <p>The dependencies declared in this way are added in the podspec file and downloaded during the execution of <code>pod install</code>.</p> <blockquote> <p><strong>Important:</strong> To correctly import the dependencies into the Kotlin/Native module, the Podfile must contain either <a href="https://guides.cocoapods.org/syntax/podfile.html#use_modular_headers_bang" target="_blank"><code>use_modular_headers!</code></a> or <a href="https://guides.cocoapods.org/syntax/podfile.html#use_frameworks_bang" target="_blank"><code>use_frameworks!</code></a> directive.</p> </blockquote> <p>Search paths for libraries added in the Kotlin/Native module in this way are obtained from properties of the Xcode projects configured by CocoaPods. Thus if the module uses CocoaPods libraries, it can be build <strong>only</strong> <strong>from</strong> <strong>Xcode</strong>.</p> <h2 id="current-limitations">Current Limitations</h2> <ul> <li>If a Kotlin/Native module uses a CocoaPods library, you can build this module only from an Xcode project. Otherwise the CocoaPods library cannot be resolved by the Kotlin/Native infrastructure.</li> <li>
+<a href="https://guides.cocoapods.org/syntax/podspec.html#group_subspecs" target="_blank">Subspecs</a> are not supported.</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/native/cocoapods.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/native/cocoapods.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

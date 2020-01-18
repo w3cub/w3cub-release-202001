@@ -1,0 +1,291 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Using Gradle - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="In order to build a Kotlin project with Gradle, you should set up the kotlin-gradle plugin, apply it to your project and add kotlin-stdlib &hellip;">
+  <meta name="keywords" content="using, gradle, -, kotlin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/using-gradle/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h1 id="using-gradle">Using Gradle</h1> <p>In order to build a Kotlin project with Gradle, you should <a href="#plugin-and-versions">set up the <em>kotlin-gradle</em> plugin</a>, <a href="#targeting-the-jvm">apply it</a> to your project and <a href="#configuring-dependencies">add <em>kotlin-stdlib</em> dependencies</a>. Those actions may also be performed automatically in IntelliJ IDEA by invoking <strong>Tools | Kotlin | Configure Kotlin</strong> in <strong>Project</strong> action.</p> <h2 id="plugin-and-versions">Plugin and Versions</h2> <p>Apply the Kotlin Gradle plugin by using <a href="https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block" target="_blank">the Gradle plugins DSL</a>. The Kotlin Gradle plugin 1.3.41 works with Gradle 4.1 and later.</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" mode="groovy" theme="idea"> <pre>plugins {
+    id 'org.jetbrains.kotlin.&lt;...&gt;' version '1.3.41'
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" mode="kotlin" theme="idea"> <pre>plugins {
+    kotlin("&lt;...&gt;") version "1.3.41"
+}
+</pre> </div> </div> <p>The placeholder <code>&lt;...&gt;</code> should be replaced with one of the plugin names that can be found in further sections.</p> <p>Alternatively, apply plugin by adding the <code>kotlin-gradle-plugin</code> dependency to the build script classpath:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" mode="groovy" theme="idea"> <pre>buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.41"
+    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.&lt;...&gt;" version "1.3.41"
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>buildscript {
+    repositories {
+            mavenCentral()
+    }
+        
+    dependencies {
+        classpath(kotlin("gradle-plugin", version = "1.3.41"))
+    }
+}
+plugins {
+    kotlin("&lt;...&gt;")
+}
+</pre> </div> </div> <p>This is not required when using Kotlin Gradle plugin 1.1.1 and above with the <a href="https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block" target="_blank">Gradle plugins DSL</a>, and with <a href="https://github.com/gradle/kotlin-dsl" target="_blank">Gradle Kotlin DSL</a>.</p> <h2 id="building-kotlin-multiplatform-projects">Building Kotlin Multiplatform Projects</h2> <p>Using the <code>kotlin-multiplatform</code> plugin for building <a href="../multiplatform/">multiplatform projects</a> is described in <a href="../building-mpp-with-gradle/">Building Multiplatform Projects with Gradle</a>.</p> <h2 id="targeting-the-jvm">Targeting the JVM</h2> <p>To target the JVM, apply the Kotlin JVM plugin. Starting with Kotlin 1.1.1, the plugin can be applied using the <a href="https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block" target="_blank">Gradle plugins DSL</a>:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-highlight-only="" mode="groovy" theme="idea"> <pre>plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.3.41"
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>plugins {
+    kotlin("jvm") version "1.3.41"
+}
+</pre> </div> </div> <p>The <code>version</code> should be literal in this block, and it cannot be applied from another build script.</p> <p>Alternatively, you can use the older <code>apply plugin</code> approach:</p> <div class="sample" mode="groovy" theme="idea"> <pre>apply plugin: 'kotlin'
+</pre> </div> <p>It's not recommended to apply Kotlin plugins with <code>apply</code> in Gradle Kotlin DSL. The details are provided <a href="#using-gradle-kotlin-dsl">below</a>.</p> <p>Kotlin sources can be mixed with Java sources in the same folder, or in different folders. The default convention is using different folders:</p> <div auto-indent="false" class="sample" mode="groovy" theme="idea"> <pre>project
+    - src
+        - main (root)
+            - kotlin
+            - java
+</pre> </div> <p>The corresponding <em>sourceSets</em> property should be updated if not using the default convention:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>sourceSets {
+    main.kotlin.srcDirs += 'src/main/myKotlin'
+    main.java.srcDirs += 'src/main/myJava'
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>sourceSets["main"].java.srcDir("src/main/myJava")
+sourceSets["main"].withConvention(KotlinSourceSet::class) {    
+    kotlin.srcDir("src/main/myKotlin") 
+}
+</pre> </div> </div> <p>With Gradle Kotlin DSL, configure source sets with <code>java.sourceSets { ... }</code> instead.</p> <h2 id="targeting-javascript">Targeting JavaScript</h2> <p>When targeting JavaScript, a different plugin should be applied:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-highlight-only="" mode="groovy" theme="idea"> <pre>plugins {
+    id 'kotlin2js' version '1.3.41'
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>plugins {
+    id("kotlin2js") version "1.3.41"
+}
+</pre> </div> </div> <p>Note that this way of applying the Kotlin/JS plugin requires adding the following code to Gradle settings file (<code>settings.gradle</code>):</p> <div auto-indent="false" class="sample" mode="groovy" theme="idea"> <pre>pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "kotlin2js") {
+                useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
+            }
+        }
+    }
+}
+</pre> </div> <p>This plugin only works for Kotlin files so it is recommended to keep Kotlin and Java files separate (in case if the same project contains Java files). As with targeting the JVM, if not using the default convention, you should specify the source folder using <em>sourceSets</em>:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>sourceSets {
+    main.kotlin.srcDirs += 'src/main/myKotlin'
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>sourceSets["main"].withConvention(KotlinSourceSet::class) {    
+    kotlin.srcDir("src/main/myKotlin") 
+}
+</pre> </div> </div> <p>In addition to the output JavaScript file, the plugin by default creates an additional JS file with binary descriptors. This file is required if you're building a reusable library that other Kotlin modules can depend on, and should be distributed together with the result of translation. The generation is controlled by the <code>kotlinOptions.metaInfo</code> option:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>compileKotlin2Js {
+    kotlinOptions.metaInfo = true
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>tasks {
+    "compileKotlin2Js"(Kotlin2JsCompile::class)  {
+        kotlinOptions.metaInfo = true
+    }
+}
+</pre> </div> </div> <h2 id="targeting-android">Targeting Android</h2> <p>Android's Gradle model is a little different from ordinary Gradle, so if we want to build an Android project written in Kotlin, we need <em>kotlin-android</em> plugin instead of <em>kotlin</em>:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>buildscript {
+    ext.kotlin_version = '1.3.41'
+
+    ...
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>buildscript {
+    dependencies {
+        classpath("com.android.tools.build:gradle:3.2.1")
+        classpath(kotlin("gradle-plugin", version = "1.3.41"))
+    }
+}
+plugins {
+    id("com.android.application")
+    id("kotlin-android")
+}
+</pre> </div> </div> <p>Kotlin Gradle plugin 1.3.41 works with Android Gradle Plugin 3.0 and later.</p> <p>Don't forget to configure the <a href="#configuring-dependencies">standard library dependency</a>.</p> <h3 id="android-studio">Android Studio</h3> <p>If using Android Studio, the following needs to be added under android:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>android {
+  ...
+
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+  }
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>android {
+  ...
+  
+    sourceSets["main"].java.srcDir("src/main/kotlin")
+}
+</pre> </div> </div> <p>This lets Android Studio know that the kotlin directory is a source root, so when the project model is loaded into the IDE it will be properly recognized. Alternatively, you can put Kotlin classes in the Java source directory, typically located in <code>src/main/java</code>.</p> <h2 id="configuring-dependencies">Configuring Dependencies</h2> <p>In addition to the <code>kotlin-gradle-plugin</code> dependency shown above, you need to add a dependency on the Kotlin standard library:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(kotlin("stdlib"))
+}
+</pre> </div> </div> <p>The Kotlin standard library <code>kotlin-stdlib</code> targets Java 6 and above. There are extended versions of the standard library that add support for some of the features of JDK 7 and JDK 8. To use these versions, add one of the following dependencies instead of <code>kotlin-stdlib</code>:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7"
+implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>implementation(kotlin("stdlib-jdk7"))
+implementation(kotlin("stdlib-jdk8"))
+</pre> </div> </div> <p>In Kotlin 1.1.x, use <code>kotlin-stdlib-jre7</code> and <code>kotlin-stdlib-jre8</code> instead.</p> <p>If you target JavaScript, use the <code>stdlib-js</code> dependency.</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>implementation(kotlin("stdlib-js"))
+</pre> </div> </div> <p>If your project uses <a href="../../../api/latest/jvm/stdlib/kotlin.reflect.full/">Kotlin reflection</a> or testing facilities, you need to add the corresponding dependencies as well:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>implementation "org.jetbrains.kotlin:kotlin-reflect"
+testImplementation "org.jetbrains.kotlin:kotlin-test"
+testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>implementation(kotlin("reflect"))
+testImplementation(kotlin("test"))
+testImplementation(kotlin("test-junit"))
+</pre> </div> </div> <p>Starting with Kotlin 1.1.2, the dependencies with group <code>org.jetbrains.kotlin</code> are by default resolved with the version taken from the applied plugin. You can provide the version manually using the full dependency notation:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre> implementation(kotlin("stdlib", kotlinVersion))
+</pre> </div> </div> <h2 id="annotation-processing">Annotation Processing</h2> <p>Kotlin supports annonation processing via the <em>Kotlin annotation processing tool</em>(<code>kapt</code>). Usage of kapt with Gradle is described on the <a href="../kapt/">kapt page</a>.</p> <h2 id="incremental-compilation">Incremental Compilation</h2> <p>The Kotlin Gradle plugin supports incremental compilation. Incremental compilation tracks changes of source files between builds so only files affected by these changes would be compiled.</p> <p>Incremental compilation is supported for Kotlin/JVM and Kotlin/JS projects. It's enabled by default since Kotlin 1.1.1 for Kotlin/JVM and 1.3.20 for Kotlin/JS.</p> <p>There are several ways to override the default setting:</p> <ul> <li> <p>In Gradle configuration files: add the line <code>kotlin.incremental=&lt;value&gt;</code> for Kotlin/JVM or <code>kotlin.incremental.js=&lt;value&gt;</code> for Kotlin/JS projects either to <code>gradle.properties</code> or to <code>local.properties</code> file. <code>&lt;value&gt;</code> is a boolean value reflecting the usage of incremental compilation.</p> </li> <li> <p>In Gradle command line parameters: add the parameter <code>-Pkotlin.incremental</code> or <code>-Pkotlin.incremental.js</code> with the boolean value reflecting the usage of incremental compilation. Note that in this case the parameter should be added to each subsequent build, and any build with disabled incremental compilation invalidates incremental caches.</p> </li> </ul> <p>Note that the first build isn't incremental in any case.</p> <h2 id="gradle-build-cache-support-since-1220">Gradle Build Cache Support (since 1.2.20)</h2> <p>The Kotlin plugin supports <a href="https://guides.gradle.org/using-build-cache/" target="_blank">Gradle Build Cache</a> (Gradle version 4.3 and above is required; caching is disabled with lower versions).</p> <p>To disable the caching for all Kotlin tasks, set the system property flag <code>kotlin.caching.enabled</code> to <code>false</code> (run the build with the argument <code>-Dkotlin.caching.enabled=false</code>).</p> <p>If you use <a href="../kapt/">kapt</a>, note that the kapt annotation processing tasks are not cached by default. However, you can enable caching for them manually. See the <a href="../kapt/#gradle-build-cache-support-since-1220">kapt page</a> for details.</p> <h2 id="compiler-options">Compiler Options</h2> <p>To specify additional compilation options, use the <code>kotlinOptions</code> property of a Kotlin compilation task.</p> <p>When targeting the JVM, the tasks are called <code>compileKotlin</code> for production code and <code>compileTestKotlin</code> for test code. The tasks for custom source sets are called accordingly to the <code>compile&lt;Name&gt;Kotlin</code> pattern.</p> <p>The names of the tasks in Android Projects contain the <a href="https://developer.android.com/studio/build/build-variants.html" target="_blank">build variant</a> names and follow the pattern <code>compile&lt;BuildVariant&gt;Kotlin</code>, for example, <code>compileDebugKotlin</code>, <code>compileReleaseUnitTestKotlin</code>.</p> <p>When targeting JavaScript, the tasks are called <code>compileKotlin2Js</code> and <code>compileTestKotlin2Js</code> respectively, and <code>compile&lt;Name&gt;Kotlin2Js</code> for custom source sets.</p> <p>To configure a single task, use its name. Examples:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>compileKotlin {
+    kotlinOptions.suppressWarnings = true
+}
+
+//or
+
+compileKotlin {
+    kotlinOptions {
+        suppressWarnings = true
+    }
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+// ...
+
+val compileKotlin: KotlinCompile by tasks
+
+compileKotlin.kotlinOptions.suppressWarnings = true
+</pre> </div> </div> <p>Note that with Gradle Kotlin DSL, you should get the task from the project's <code>tasks</code> first.</p> <p>Use the types <code>Kotlin2JsCompile</code> and <code>KotlinCompileCommon</code> for the JS and Common targets, accordingly.</p> <p>It is also possible to configure all Kotlin compilation tasks in the project:</p> <div class="multi-language-sample" data-lang="groovy"> <div class="sample" data-lang="groovy" mode="groovy" theme="idea"> <pre>tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions { ... }
+}
+</pre> </div> </div> <div class="multi-language-sample" data-lang="kotlin"> <div class="sample" data-highlight-only="" data-lang="kotlin" mode="kotlin" theme="idea"> <pre>import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+tasks.withType&lt;KotlinCompile&gt; {
+    kotlinOptions.suppressWarnings = true
+}
+</pre> </div> </div> <p>The complete list of options for the Gradle tasks is the following:</p> <h3 id="attributes-common-for-jvm-js-and-js-dce">Attributes Common for JVM, JS, and JS DCE</h3> <table> <thead> <tr> <th>Name</th> <th>Description</th> <th>Possible values</th> <th>Default value</th> </tr> </thead> <tbody> <tr> <td><code>allWarningsAsErrors</code></td> <td>Report an error if there are any warnings</td> <td> </td> <td>false</td> </tr> <tr> <td><code>suppressWarnings</code></td> <td>Generate no warnings</td> <td> </td> <td>false</td> </tr> <tr> <td><code>verbose</code></td> <td>Enable verbose logging output</td> <td> </td> <td>false</td> </tr> <tr> <td><code>freeCompilerArgs</code></td> <td>A list of additional compiler arguments</td> <td> </td> <td>[]</td> </tr> </tbody> </table> <h3 id="attributes-common-for-jvm-and-js">Attributes Common for JVM and JS</h3> <table> <thead> <tr> <th>Name</th> <th>Description</th> <th>Possible values</th> <th>Default value</th> </tr> </thead> <tbody> <tr> <td><code>apiVersion</code></td> <td>Allow to use declarations only from the specified version of bundled libraries</td> <td>"1.0", "1.1", "1.2", "1.3", "1.4 (EXPERIMENTAL)"</td> <td> </td> </tr> <tr> <td><code>languageVersion</code></td> <td>Provide source compatibility with specified language version</td> <td>"1.0", "1.1", "1.2", "1.3", "1.4 (EXPERIMENTAL)"</td> <td> </td> </tr> </tbody> </table> <h3 id="attributes-specific-for-jvm">Attributes Specific for JVM</h3> <table> <thead> <tr> <th>Name</th> <th>Description</th> <th>Possible values</th> <th>Default value</th> </tr> </thead> <tbody> <tr> <td><code>javaParameters</code></td> <td>Generate metadata for Java 1.8 reflection on method parameters</td> <td> </td> <td>false</td> </tr> <tr> <td><code>jdkHome</code></td> <td>Path to JDK home directory to include into classpath, if differs from default JAVA_HOME</td> <td> </td> <td> </td> </tr> <tr> <td><code>jvmTarget</code></td> <td>Target version of the generated JVM bytecode (1.6, 1.8, 9, 10, 11 or 12), default is 1.6</td> <td>"1.6", "1.8", "9", "10", "11", "12"</td> <td>"1.6"</td> </tr> <tr> <td><code>noJdk</code></td> <td>Don't include Java runtime into classpath</td> <td> </td> <td>false</td> </tr> <tr> <td><code>noReflect</code></td> <td>Don't include Kotlin reflection implementation into classpath</td> <td> </td> <td>true</td> </tr> <tr> <td><code>noStdlib</code></td> <td>Don't include Kotlin runtime into classpath</td> <td> </td> <td>true</td> </tr> </tbody> </table> <h3 id="attributes-specific-for-js">Attributes Specific for JS</h3> <table> <thead> <tr> <th>Name</th> <th>Description</th> <th>Possible values</th> <th>Default value</th> </tr> </thead> <tbody> <tr> <td><code>friendModulesDisabled</code></td> <td>Disable internal declaration export</td> <td> </td> <td>false</td> </tr> <tr> <td><code>main</code></td> <td>Whether a main function should be called</td> <td>"call", "noCall"</td> <td>"call"</td> </tr> <tr> <td><code>metaInfo</code></td> <td>Generate .meta.js and .kjsm files with metadata. Use to create a library</td> <td> </td> <td>true</td> </tr> <tr> <td><code>moduleKind</code></td> <td>Kind of a module generated by compiler</td> <td>"plain", "amd", "commonjs", "umd"</td> <td>"plain"</td> </tr> <tr> <td><code>noStdlib</code></td> <td>Don't use bundled Kotlin stdlib</td> <td> </td> <td>true</td> </tr> <tr> <td><code>outputFile</code></td> <td>Output file path</td> <td> </td> <td> </td> </tr> <tr> <td><code>sourceMap</code></td> <td>Generate source map</td> <td> </td> <td>false</td> </tr> <tr> <td><code>sourceMapEmbedSources</code></td> <td>Embed source files into source map</td> <td>"never", "always", "inlining"</td> <td> </td> </tr> <tr> <td><code>sourceMapPrefix</code></td> <td>Prefix for paths in a source map</td> <td> </td> <td> </td> </tr> <tr> <td><code>target</code></td> <td>Generate JS files for specific ECMA version</td> <td>"v5"</td> <td>"v5"</td> </tr> <tr> <td><code>typedArrays</code></td> <td>Translate primitive arrays to JS typed arrays</td> <td> </td> <td>true</td> </tr> </tbody> </table> <h2 id="generating-documentation">Generating Documentation</h2> <p>To generate documentation for Kotlin projects, use <a href="https://github.com/Kotlin/dokka" target="_blank">Dokka</a>; please refer to the <a href="https://github.com/Kotlin/dokka/blob/master/README.md#using-the-gradle-plugin" target="_blank">Dokka README</a> for configuration instructions. Dokka supports mixed-language projects and can generate output in multiple formats, including standard JavaDoc.</p> <h2 id="osgi">OSGi</h2> <p>For OSGi support see the <a href="../kotlin-osgi/">Kotlin OSGi page</a>.</p> <h2 id="using-gradle-kotlin-dsl">Using Gradle Kotlin DSL</h2> <p>When using <a href="https://github.com/gradle/kotlin-dsl" target="_blank">Gradle Kotlin DSL</a>, apply the Kotlin plugins using the <code>plugins { ... }</code> block. If you apply them with <code>apply { plugin(...) }</code> instead, you may encounter unresolved references to the extensions generated by Gradle Kotlin DSL. To resolve that, you can comment out the erroneous usages, run the Gradle task <code>kotlinDslAccessorsSnapshot</code>, then uncomment the usages back and rerun the build or reimport the project into the IDE.</p> <h2 id="examples">Examples</h2> <p>The following examples show different possibilities of configuring the Gradle plugin:</p> <ul> <li><a href="https://github.com/JetBrains/kotlin-examples/tree/master/gradle/hello-world" target="_blank">Kotlin</a></li> <li><a href="https://github.com/JetBrains/kotlin-examples/tree/master/gradle/mixed-java-kotlin-hello-world" target="_blank">Mixed Java and Kotlin</a></li> <li><a href="https://github.com/JetBrains/kotlin-examples/tree/master/gradle/android-mixed-java-kotlin-project" target="_blank">Android</a></li> <li><a href="https://github.com/JetBrains/kotlin/tree/master/libraries/tools/kotlin-gradle-plugin-integration-tests/src/test/resources/testProject/kotlin2JsProject" target="_blank">JavaScript</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/using-gradle.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/using-gradle.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

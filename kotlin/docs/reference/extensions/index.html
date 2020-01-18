@@ -1,0 +1,248 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Extensions - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="Kotlin, similar to C# and Gosu, provides the ability to extend a class with new functionality without having to inherit from the class or use any &hellip;">
+  <meta name="keywords" content="extensions, -, kotlin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/extensions/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h1 id="extensions">Extensions</h1> <p>Kotlin, similar to C# and Gosu, provides the ability to extend a class with new functionality without having to inherit from the class or use any type of design pattern such as Decorator. This is done via special declarations called <em>extensions</em>. Kotlin supports <em>extension functions</em> and <em>extension properties</em>.</p> <h2 id="extension-functions">Extension Functions</h2> <p>To declare an extension function, we need to prefix its name with a <em>receiver type</em>, i.e. the type being extended. The following adds a <code>swap</code> function to <code>MutableList&lt;Int&gt;</code>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun MutableList&lt;Int&gt;.swap(index1: Int, index2: Int) {
+    val tmp = this[index1] // 'this' corresponds to the list
+    this[index1] = this[index2]
+    this[index2] = tmp
+}
+</pre> </div> <p>The <em class="keyword">this</em> keyword inside an extension function corresponds to the receiver object (the one that is passed before the dot). Now, we can call such a function on any <code>MutableList&lt;Int&gt;</code>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val list = mutableListOf(1, 2, 3)
+list.swap(0, 2) // 'this' inside 'swap()' will hold the value of 'list'
+</pre> </div> <p>Of course, this function makes sense for any <code>MutableList&lt;T&gt;</code>, and we can make it generic:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun &lt;T&gt; MutableList&lt;T&gt;.swap(index1: Int, index2: Int) {
+    val tmp = this[index1] // 'this' corresponds to the list
+    this[index1] = this[index2]
+    this[index2] = tmp
+}
+</pre> </div> <p>We declare the generic type parameter before the function name for it to be available in the receiver type expression. See <a href="../generics/">Generic functions</a>.</p> <h2 id="extensions-are-resolved-statically">Extensions are resolved <strong>statically</strong>
+</h2> <p>Extensions do not actually modify classes they extend. By defining an extension, you do not insert new members into a class, but merely make new functions callable with the dot-notation on variables of this type.</p> <p>We would like to emphasize that extension functions are dispatched <strong>statically</strong>, i.e. they are not virtual by receiver type. This means that the extension function being called is determined by the type of the expression on which the function is invoked, not by the type of the result of evaluating that expression at runtime. For example:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>open class C
+
+class D: C()
+
+fun C.foo() = "c"
+
+fun D.foo() = "d"
+
+fun printFoo(c: C) {
+    println(c.foo())
+}
+
+printFoo(D())
+</pre> </div> <p>This example will print "c", because the extension function being called depends only on the declared type of the parameter <code>c</code>, which is the <code>C</code> class.</p> <p>If a class has a member function, and an extension function is defined which has the same receiver type, the same name is applicable to given arguments, the <strong>member always wins</strong>. For example:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class C {
+    fun foo() { println("member") }
+}
+
+fun C.foo() { println("extension") }
+</pre> </div> <p>If we call <code>c.foo()</code> of any <code>c</code> of type <code>C</code>, it will print "member", not "extension".</p> <p>However, it's perfectly OK for extension functions to overload member functions which have the same name but a different signature:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class C {
+    fun foo() { println("member") }
+}
+
+fun C.foo(i: Int) { println("extension") }
+</pre> </div> <p>The call to <code>C().foo(1)</code> will print "extension".</p> <h2 id="nullable-receiver">Nullable Receiver</h2> <p>Note that extensions can be defined with a nullable receiver type. Such extensions can be called on an object variable even if its value is null, and can check for <code>this == null</code> inside the body. This is what allows you to call toString() in Kotlin without checking for null: the check happens inside the extension function.</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun Any?.toString(): String {
+    if (this == null) return "null"
+    // after the null check, 'this' is autocast to a non-null type, so the toString() below
+    // resolves to the member function of the Any class
+    return toString()
+}
+</pre> </div> <h2 id="extension-properties">Extension Properties</h2> <p>Similarly to functions, Kotlin supports extension properties:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val &lt;T&gt; List&lt;T&gt;.lastIndex: Int
+    get() = size - 1
+</pre> </div> <p>Note that, since extensions do not actually insert members into classes, there's no efficient way for an extension property to have a <a href="../properties/#backing-fields">backing field</a>. This is why <strong>initializers are not allowed for extension properties</strong>. Their behavior can only be defined by explicitly providing getters/setters.</p> <p>Example:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val Foo.bar = 1 // error: initializers are not allowed for extension properties
+</pre> </div> <h2 id="companion-object-extensions">Companion Object Extensions</h2> <p>If a class has a <a href="../object-declarations/#companion-objects">companion object</a> defined, you can also define extension functions and properties for the companion object:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class MyClass {
+    companion object { }  // will be called "Companion"
+}
+
+fun MyClass.Companion.foo() { ... }
+</pre> </div> <p>Just like regular members of the companion object, they can be called using only the class name as the qualifier:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>MyClass.foo()
+</pre> </div> <h2 id="scope-of-extensions">Scope of Extensions</h2> <p>Most of the time we define extensions on the top level, i.e. directly under packages:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>package foo.bar
+ 
+fun Baz.goo() { ... } 
+</pre> </div> <p>To use such an extension outside its declaring package, we need to import it at the call site:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>package com.example.usage
+
+import foo.bar.goo // importing all extensions by name "goo"
+                   // or
+import foo.bar.*   // importing everything from "foo.bar"
+
+fun usage(baz: Baz) {
+    baz.goo()
+}
+
+</pre> </div> <p>See <a href="../packages/#imports">Imports</a> for more information.</p> <h2 id="declaring-extensions-as-members">Declaring Extensions as Members</h2> <p>Inside a class, you can declare extensions for another class. Inside such an extension, there are multiple <em>implicit receivers</em> - objects members of which can be accessed without a qualifier. The instance of the class in which the extension is declared is called <em>dispatch receiver</em>, and the instance of the receiver type of the extension method is called <em>extension receiver</em>.</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class D {
+    fun bar() { ... }
+}
+
+class C {
+    fun baz() { ... }
+
+    fun D.foo() {
+        bar()   // calls D.bar
+        baz()   // calls C.baz
+    }
+
+    fun caller(d: D) {
+        d.foo()   // call the extension function
+    }
+}
+</pre> </div> <p>In case of a name conflict between the members of the dispatch receiver and the extension receiver, the extension receiver takes precedence. To refer to the member of the dispatch receiver you can use the <a href="../this-expressions/#qualified">qualified <code>this</code> syntax</a>.</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class C {
+    fun D.foo() {
+        toString()         // calls D.toString()
+        this@C.toString()  // calls C.toString()
+    }
+}
+</pre> </div> <p>Extensions declared as members can be declared as <code>open</code> and overridden in subclasses. This means that the dispatch of such functions is virtual with regard to the dispatch receiver type, but static with regard to the extension receiver type.</p> <div class="sample" theme="idea"> <pre>open class D { }
+
+class D1 : D() { }
+
+open class C {
+    open fun D.foo() {
+        println("D.foo in C")
+    }
+
+    open fun D1.foo() {
+        println("D1.foo in C")
+    }
+
+    fun caller(d: D) {
+        d.foo()   // call the extension function
+    }
+}
+
+class C1 : C() {
+    override fun D.foo() {
+        println("D.foo in C1")
+    }
+
+    override fun D1.foo() {
+        println("D1.foo in C1")
+    }
+}
+
+fun main() {
+    C().caller(D())   // prints "D.foo in C"
+    C1().caller(D())  // prints "D.foo in C1" - dispatch receiver is resolved virtually
+    C().caller(D1())  // prints "D.foo in C" - extension receiver is resolved statically
+}
+</pre> </div> <h2 id="note-on-visibility">Note on visibility</h2> <p>Extensions utilize the same <a href="../visibility-modifiers/">visibility of other entities</a> as regular functions declared in the same scope would. For example:</p> <ul> <li>An extension declared on top level of a file has access to the other <code>private</code> top-level declarations in the same file;</li> <li>If an extension is declared outside its receiver type, such an extension cannot access the receiver's <code>private</code> members.</li> </ul> <h2 id="motivation">Motivation</h2> <p>In Java, we are used to classes named "*Utils": <code>FileUtils</code>, <code>StringUtils</code> and so on. The famous <code>java.util.Collections</code> belongs to the same breed. And the unpleasant part about these Utils-classes is that the code that uses them looks like this:</p> <div auto-indent="false" class="sample" mode="java" theme="idea"> <pre>// Java
+Collections.swap(list, Collections.binarySearch(list,
+    Collections.max(otherList)),
+    Collections.max(list));
+</pre> </div> <p>Those class names are always getting in the way. We can use static imports and get this:</p> <div class="sample" mode="java" theme="idea"> <pre>// Java
+swap(list, binarySearch(list, max(otherList)), max(list));
+</pre> </div> <p>This is a little better, but we have no or little help from the powerful code completion of the IDE. It would be so much better if we could say:</p> <div class="sample" mode="java" theme="idea"> <pre>// Java
+list.swap(list.binarySearch(otherList.max()), list.max());
+</pre> </div> <p>But we don't want to implement all the possible methods inside the class <code>List</code>, right? This is where extensions help us.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/extensions.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/extensions.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

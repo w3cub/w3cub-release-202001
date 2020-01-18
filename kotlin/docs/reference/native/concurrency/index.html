@@ -1,0 +1,148 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Concurrency in Kotlin&#47;Native - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="Kotlin&#47;Native runtime doesn&#39;t encourage a classical thread-oriented concurrency model with mutually exclusive code blocks and conditional &hellip;">
+  <meta name="keywords" content="concurrency, kotlin, native, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/native/concurrency/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h2 id="concurrency-in-kotlinnative">Concurrency in Kotlin/Native</h2> <p>Kotlin/Native runtime doesn't encourage a classical thread-oriented concurrency model with mutually exclusive code blocks and conditional variables, as this model is known to be error-prone and unreliable. Instead, we suggest a collection of alternative approaches, allowing you to use hardware concurrency and implement blocking IO. Those approaches are as follows, and they will be elaborated on in further sections:</p> <ul> <li>Workers with message passing</li> <li>Object subgraph ownership transfer</li> <li>Object subgraph freezing</li> <li>Object subgraph detachment</li> <li>Raw shared memory using C globals</li> <li>Coroutines for blocking operations (not covered in this document)</li> </ul> <h3 id="workers">Workers</h3> <p>Instead of threads Kotlin/Native runtime offers the concept of workers: concurrently executed control flow streams with an associated request queue. Workers are very similar to the actors in the Actor Model. A worker can exchange Kotlin objects with another worker, so that at any moment each mutable object is owned by a single worker, but ownership can be transferred. See section <a href="#transfer">Object transfer and freezing</a>.</p> <p>Once a worker is started with the <code>Worker.start</code> function call, it can be addressed with its own unique integer worker id. Other workers, or non-worker concurrency primitives, such as OS threads, can send a message to the worker with the <code>execute</code> call.</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val future = execute(TransferMode.SAFE, { SomeDataForWorker() }) {
+   // data returned by the second function argument comes to the
+   // worker routine as 'input' parameter.
+   input -&gt;
+   // Here we create an instance to be returned when someone consumes result future.
+   WorkerResult(input.stringParam + " result")
+}
+
+future.consume {
+  // Here we see result returned from routine above. Note that future object or
+  // id could be transferred to another worker, so we don't have to consume future
+  // in same execution context it was obtained.
+  result -&gt; println("result is $result")
+}
+</pre> </div> <p>The call to <code>execute</code> uses a function passed as its second parameter to produce an object subgraph (i.e. set of mutually referring objects) which is then passed as a whole to that worker, it is then no longer available to the thread that initiated the request. This property is checked if the first parameter is <code>TransferMode.SAFE</code> by graph traversal and is just assumed to be true, if it is <code>TransferMode.UNSAFE</code>. The last parameter to <code>execute</code> is a special Kotlin lambda, which is not allowed to capture any state, and is actually invoked in the target worker's context. Once processed, the result is transferred to whatever consumes it in the future, and it is attached to the object graph of that worker/thread.</p> <p>If an object is transferred in <code>UNSAFE</code> mode and is still accessible from multiple concurrent executors, program will likely crash unexpectedly, so consider that last resort in optimizing, not a general purpose mechanism.</p> <p>For a more complete example please refer to the <a href="https://github.com/JetBrains/kotlin-native/tree/master/samples/workers" target="_blank">workers example</a> in the Kotlin/Native repository.</p>  <h3 id="object-transfer-and-freezing">Object transfer and freezing</h3> <p>An important invariant that Kotlin/Native runtime maintains is that the object is either owned by a single thread/worker, or it is immutable (<em>shared XOR mutable</em>). This ensures that the same data has a single mutator, and so there is no need for locking to exist. To achieve such an invariant, we use the concept of not externally referred object subgraphs. This is a subgraph which has no external references from outside of the subgraph, which could be checked algorithmically with O(N) complexity (in ARC systems), where N is the number of elements in such a subgraph. Such subgraphs are usually produced as a result of a lambda expression, for example some builder, and may not contain objects, referred to externally.</p> <p>Freezing is a runtime operation making a given object subgraph immutable, by modifying the object header so that future mutation attempts throw an <code>InvalidMutabilityException</code>. It is deep, so if an object has a pointer to other objects - transitive closure of such objects will be frozen. Freezing is a one way transformation, frozen objects cannot be unfrozen. Frozen objects have a nice property that due to their immutability, they can be freely shared between multiple workers/threads without breaking the "mutable XOR shared" invariant.</p> <p>If an object is frozen it can be checked with an extension property <code>isFrozen</code>, and if it is, object sharing is allowed. Currently, Kotlin/Native runtime only freezes the enum objects after creation, although additional autofreezing of certain provably immutable objects could be implemented in the future.</p>  <h3 id="object-subgraph-detachment">Object subgraph detachment</h3> <p>An object subgraph without external references can be disconnected using <code>DetachedObjectGraph&lt;T&gt;</code> to a <code>COpaquePointer</code> value, which could be stored in <code>void*</code> data, so the disconnected object subgraphs can be stored in a C data structure, and later attached back with <code>DetachedObjectGraph&lt;T&gt;.attach()</code> in an arbitrary thread or a worker. Combining it with <a href="#shared">raw memory sharing</a> it allows side channel object transfer between concurrent threads, if the worker mechanisms are insufficient for a particular task.</p>  <h3 id="raw-shared-memory">Raw shared memory</h3> <p>Considering the strong ties between Kotlin/Native and C via interoperability, in conjunction with the other mechanisms mentioned above it is possible to build popular data structures, like concurrent hashmap or shared cache with Kotlin/Native. It is possible to rely upon shared C data, and store in it references to detached object subgraphs. Consider the following .def file:</p> <div class="sample" mode="c" theme="idea"> <pre>package = global
+
+---
+typedef struct {
+  int version;
+  void* kotlinObject;
+} SharedData;
+
+SharedData sharedData;
+</pre> </div> <p>After running the cinterop tool it can share Kotlin data in a versionized global structure, and interact with it from Kotlin transparently via autogenerated Kotlin like this:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class SharedData(rawPtr: NativePtr) : CStructVar(rawPtr) {
+    var version: Int
+    var kotlinObject: COpaquePointer?
+}
+</pre> </div> <p>So in combination with the top level variable declared above, it can allow looking at the same memory from different threads and building traditional concurrent structures with platform-specific synchronization primitives.</p>  <h3 id="global-variables-and-singletons">Global variables and singletons</h3> <p>Frequently, global variables are a source of unintended concurrency issues, so <em>Kotlin/Native</em> implements the following mechanisms to prevent the unintended sharing of state via global objects:</p> <ul> <li>global variables, unless specially marked, can be only accessed from the main thread (that is, the thread <em>Kotlin/Native</em> runtime was first initialized), if other thread access such a global, <code>IncorrectDereferenceException</code> is thrown</li> <li>for global variables marked with the <code>@kotlin.native.ThreadLocal</code> annotation each threads keeps thread-local copy, so changes are not visible between threads</li> <li>for global variables marked with the <code>@kotlin.native.SharedImmutable</code> annotation value is shared, but frozen before publishing, so each threads sees the same value</li> <li>singleton objects unless marked with <code>@kotlin.native.ThreadLocal</code> are frozen and shared, lazy values allowed, unless cyclic frozen structures were attempted to be created</li> <li>enums are always frozen</li> </ul> <p>Combined, these mechanisms allow natural race-freeze programming with code reuse across platforms in MPP projects.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/native/concurrency.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/native/concurrency.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

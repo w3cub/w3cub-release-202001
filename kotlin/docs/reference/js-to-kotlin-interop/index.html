@@ -1,0 +1,161 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Calling Kotlin From JavaScript - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="Kotlin compiler generates normal JavaScript classes, functions and properties you can freely use from JavaScript code. Nevertheless, there are some &hellip;">
+  <meta name="keywords" content="calling, kotlin, from, javascript, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/js-to-kotlin-interop/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h1 id="calling-kotlin-from-javascript">Calling Kotlin from JavaScript</h1> <p>Kotlin compiler generates normal JavaScript classes, functions and properties you can freely use from JavaScript code. Nevertheless, there are some subtle things you should remember.</p> <h2 id="isolating-declarations-in-a-separate-javascript-object">Isolating declarations in a separate JavaScript object</h2> <p>To prevent spoiling the global object, Kotlin creates an object that contains all Kotlin declarations from the current module. So if you name your module as <code>myModule</code>, all declarations are available to JavaScript via <code>myModule</code> object. For example:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun foo() = "Hello"
+</pre> </div> <p>Can be called from JavaScript like this:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>alert(myModule.foo());
+</pre> </div> <p>This is not applicable when you compile your Kotlin module to JavaScript module (see <a href="../js-modules/">JavaScript Modules</a> for more information on this). In this case there won't be a wrapper object, instead, declarations will be exposed as a JavaScript module of a corresponding kind. For example, in case of CommonJS you should write:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>alert(require('myModule').foo());
+</pre> </div> <h2 id="package-structure">Package structure</h2> <p>Kotlin exposes its package structure to JavaScript, so unless you define your declarations in the root package, you have to use fully-qualified names in JavaScript. For example:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>package my.qualified.packagename
+
+fun foo() = "Hello"
+</pre> </div> <p>Can be called from JavaScript like this:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>alert(myModule.my.qualified.packagename.foo());
+</pre> </div> <h3 id="jsname-annotation">
+<code>@JsName</code> annotation</h3> <p>In some cases (for example, to support overloads), Kotlin compiler mangles names of generated functions and attributes in JavaScript code. To control the generated names, you can use the <code>@JsName</code> annotation:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>// Module 'kjs'
+class Person(val name: String) {
+    fun hello() {
+        println("Hello $name!")
+    }
+
+    @JsName("helloWithGreeting")
+    fun hello(greeting: String) {
+        println("$greeting $name!")
+    }
+}
+</pre> </div> <p>Now you can use this class from JavaScript in the following way:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>var person = new kjs.Person("Dmitry");   // refers to module 'kjs'
+person.hello();                          // prints "Hello Dmitry!"
+person.helloWithGreeting("Servus");      // prints "Servus Dmitry!"
+</pre> </div> <p>If we didn't specify the <code>@JsName</code> annotation, the name of the corresponding function would contain a suffix calculated from the function signature, for example <code>hello_61zpoe$</code>.</p> <p>Note that Kotlin compiler does not apply such mangling to <code>external</code> declarations, so you don't have to use <code>@JsName</code> on them. Another case worth noticing is inheriting non-external classes from external classes. In this case any overridden functions won't be mangled as well.</p> <p>The parameter of <code>@JsName</code> is required to be a constant string literal which is a valid identifier. The compiler will report an error on any attempt to pass non-identifier string to <code>@JsName</code>. The following example produces a compile-time error:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>@JsName("new C()")   // error here
+external fun newC()
+</pre> </div> <h2 id="representing-kotlin-types-in-javascript">Representing Kotlin types in JavaScript</h2> <ul> <li>Kotlin numeric types, except for <code>kotlin.Long</code> are mapped to JavaScript Number.</li> <li>
+<code>kotlin.Char</code> is mapped to JavaScript Number representing character code.</li> <li>Kotlin can't distinguish between numeric types at run time (except for <code>kotlin.Long</code>), i.e. the following code works: <div class="sample" data-highlight-only="" theme="idea"> <pre>fun f() {
+    val x: Int = 23
+    val y: Any = x
+    println(y as Float)
+}
+</pre> </div> </li> <li>Kotlin preserves overflow semantics for <code>kotlin.Int</code>, <code>kotlin.Byte</code>, <code>kotlin.Short</code>, <code>kotlin.Char</code> and <code>kotlin.Long</code>.</li> <li>There's no 64 bit integer number in JavaScript, so <code>kotlin.Long</code> is not mapped to any JavaScript object, it's emulated by a Kotlin class.</li> <li>
+<code>kotlin.String</code> is mapped to JavaScript String.</li> <li>
+<code>kotlin.Any</code> is mapped to JavaScript Object (i.e. <code>new Object()</code>, <code>{}</code>, etc).</li> <li>
+<code>kotlin.Array</code> is mapped to JavaScript Array.</li> <li>Kotlin collections (i.e. <code>List</code>, <code>Set</code>, <code>Map</code>, etc) are not mapped to any specific JavaScript type.</li> <li>
+<code>kotlin.Throwable</code> is mapped to JavaScript Error.</li> <li>Kotlin preserves lazy object initialization in JavaScript.</li> <li>Kotlin does not implement lazy initialization of top-level properties in JavaScript.</li> </ul> <p>Starting with version 1.1.50 primitive array translation utilizes JavaScript TypedArray:</p> <ul> <li>
+<code>kotlin.ByteArray</code>, <code>-.ShortArray</code>, <code>-.IntArray</code>, <code>-.FloatArray</code>, and <code>-.DoubleArray</code> are mapped to JavaScript Int8Array, Int16Array, Int32Array, Float32Array, and Float64Array correspondingly.</li> <li>
+<code>kotlin.BooleanArray</code> is mapped to JavaScript Int8Array with a property <code>$type$ == "BooleanArray"</code>
+</li> <li>
+<code>kotlin.CharArray</code> is mapped to JavaScript UInt16Array with a property <code>$type$ == "CharArray"</code>
+</li> <li>
+<code>kotlin.LongArray</code> is mapped to JavaScript Array of <code>kotlin.Long</code> with a property <code>$type$ == "LongArray"</code>.</li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/js-to-kotlin-interop.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/js-to-kotlin-interop.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

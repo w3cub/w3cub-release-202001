@@ -1,0 +1,225 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Kotlin Android Extensions - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="In this tutorial we&#39;ll walk through the steps required to use the Kotlin Android Extensions plugin, enhancing the experience of Android &hellip;">
+  <meta name="keywords" content="kotlin, android, extensions, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/tutorials/android-plugin/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h1> Kotlin Android Extensions </h1> <table> <tr> <td> <strong>Author</strong> </td> <td> Yan Zhulanow </td> </tr> </table> This tutorial describes how to use Kotlin Android Extensions to improve support for Android development. <br> <br> <p>In this tutorial we'll walk through the steps required to use the Kotlin Android Extensions plugin, enhancing the experience of Android development.</p> <h2 id="view-binding">View binding</h2> <h3 id="background">Background</h3> <p>Every Android developer knows well the <code>findViewById()</code> function. It is, without a doubt, a source of potential bugs and nasty code which is hard to read and support. While there are several libraries available that provide solutions to this problem, those libraries require annotating fields for each exposed <code>View</code>.</p> <p>The Kotlin Android Extensions plugin allows us to obtain the same experience we have with some of these libraries, without having to add any extra code.</p> <p>In essence, this allows for the following code:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>// Using R.layout.activity_main from the 'main' source set
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MyActivity : Activity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        // Instead of findViewById&lt;TextView&gt;(R.id.textView)
+        textView.setText("Hello, world!")
+    }
+}
+</pre> </div> <p><code>textView</code> is an extension property for <code>Activity</code>, and it has the same type as declared in <code>activity_main.xml</code> (so it is a <code>TextView</code>).</p> <h2 id="using-kotlin-android-extensions">Using Kotlin Android Extensions</h2> <h3 id="configuring-the-dependency">Configuring the dependency</h3> <p>In this tutorial, we're going to be using Gradle but the same can be accomplished using either IntelliJ IDEA project structure or Maven. For details on setting up Gradle to work with Kotlin, see <a href="../../reference/using-gradle/">Using Gradle</a>.</p> <p>Android Extensions is a part of the Kotlin plugin for IntelliJ IDEA and Android Studio. You do not need to install additional plugins.</p> <p>All you need is to enable the Android Extensions Gradle plugin in your module's <code>build.gradle</code> file:</p> <div class="sample" mode="groovy" theme="idea"> <pre>apply plugin: 'kotlin-android-extensions'
+</pre> </div> <h3 id="enabling-experimental-features">Enabling experimental features</h3> <p>Android Extensions plugin includes several experimental features:</p> <ul> <li><a href="#layoutcontainer-support"><code>LayoutContainer</code> support</a></li> <li><a href="#flavor-support">Flavor support</a></li> <li><a href="#parcelable-implementations-generator"><code>Parcelable</code> implementation generator</a></li> </ul> <p>These features are not considered production ready yet, so you need to turn on the <em>experimental mode</em> in <code>build.gradle</code> in order to use them:</p> <div class="sample" mode="groovy" theme="idea"> <pre>androidExtensions {
+    experimental = true
+}
+</pre> </div> <h3 id="importing-synthetic-properties">Importing synthetic properties</h3> <p>It is convenient to import all widget properties for a specific layout in one go:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>import kotlinx.android.synthetic.main.&lt;layout&gt;.*
+</pre> </div> <p>Thus, if the layout filename is <code>activity_main.xml</code>, we'd import <code>kotlinx.android.synthetic.main.activity_main.*</code>.</p> <p>If we want to call the synthetic properties on <code>View</code>, we should also import <code>kotlinx.android.synthetic.main.activity_main.view.*</code>.</p> <p>Once we do that, we can then invoke the corresponding extensions, which are properties named after the views in the XML file. For example, for this view:</p> <div class="sample" mode="xml" theme="idea"> <pre>&lt;TextView
+    android:id="@+id/hello"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"/&gt;
+</pre> </div> <p>There will be a property named <code>hello</code>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>activity.hello.text = "Hello World!"
+</pre> </div> <h3 id="layoutcontainer-support">
+<code>LayoutContainer</code> support</h3> <p>Android Extensions plugin supports different kinds of containers. The most basic ones are <a href="https://developer.android.com/reference/android/app/Activity.html" target="_blank"><code>Activity</code></a>, <a href="https://developer.android.com/reference/android/support/v4/app/Fragment.html" target="_blank"><code>Fragment</code></a> and <a href="https://developer.android.com/reference/android/view/View.html" target="_blank"><code>View</code></a>, but you can turn (virtually) any class to an Android Extensions container by implementing the <code>LayoutContainer</code> interface, e.g.:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>import android.support.v7.widget.RecyclerView
+import kotlinx.android.extensions.LayoutContainer
+
+class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    fun setup(title: String) {
+        itemTitle.text = "Hello World!"
+    }
+}
+</pre> </div> <p>Note that you need to turn on the <a href="#enabling-experimental-features">experimental flag</a> to use <code>LayoutContainer</code>.</p> <h3 id="flavor-support">Flavor support</h3> <p>Android Extensions plugin supports Android flavors. Suppose you have a flavor named <code>free</code> in your <code>build.gradle</code> file:</p> <div class="sample" mode="groovy" theme="idea"> <pre>android {
+    productFlavors {
+        free {
+            versionName "1.0-free"
+        }
+    }
+}
+</pre> </div> <p>So you can import all synthetic properties for the <code>free/res/layout/activity_free.xml</code> layout by adding this import:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>import kotlinx.android.synthetic.free.activity_free.*
+</pre> </div> <p>In the <a href="#enabling-experimental-features">experimental mode</a>, you can specify any variant name (not only flavor), e.g. <code>freeDebug</code> or <code>freeRelease</code> will work as well.</p> <h3 id="view-caching">View caching</h3> <p>Invoking <code>findViewById()</code> can be slow, especially in case of huge view hierarchies, so Android Extensions tries to minimize <code>findViewById()</code> calls by caching views in containers.</p> <p>By default, Android Extensions adds a hidden cache function and a storage field to each container (<a href="https://developer.android.com/reference/android/app/Activity.html" target="_blank"><code>Activity</code></a>, <a href="https://developer.android.com/reference/android/support/v4/app/Fragment.html" target="_blank"><code>Fragment</code></a>, <a href="https://developer.android.com/reference/android/view/View.html" target="_blank"><code>View</code></a> or a <code>LayoutContainer</code> implementation) written in Kotlin. The method is pretty small so it does not increase the size of APK much.</p> <p>In the following example, <code>findViewById()</code> is only invoked once:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class MyActivity : Activity()
+
+fun MyActivity.a() { 
+    textView.text = "Hidden view"
+    textView.visibility = View.INVISIBLE
+}
+</pre> </div> <p>However in the following case:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun Activity.b() { 
+    textView.text = "Hidden view"
+    textView.visibility = View.INVISIBLE
+}
+</pre> </div> <p>We wouldn't know if this function would be invoked on only activities from our sources or on plain Java activities also. Because of this, we don’t use caching there, even if <code>MyActivity</code> instance from the previous example is passed as a receiver.</p> <h4 id="changing-view-caching-strategy">Changing view caching strategy</h4> <p>You can change the caching strategy globally or per container. This also requires switching on the <a href="#enabling-experimental-features">experimental mode</a>.</p> <p>Project-global caching strategy is set in the <code>build.gradle</code> file:</p> <div class="sample" mode="groovy" theme="idea"> <pre>androidExtensions {
+    defaultCacheImplementation = "HASH_MAP" // also SPARSE_ARRAY, NONE
+}
+</pre> </div> <p>By default, Android Extensions plugin uses <code>HashMap</code> as a backing storage, but you can switch to the <code>SparseArray</code> implementation, or just switch off caching. The latter is especially useful when you use only the <a href="#parcelable-implementations-generator">Parcelable</a> part of Android Extensions.</p> <p>Also, you can annotate a container with <code>@ContainerOptions</code> to change its caching strategy:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>import kotlinx.android.extensions.ContainerOptions
+
+@ContainerOptions(cache = CacheImplementation.NO_CACHE)
+class MyActivity : Activity()
+
+fun MyActivity.a() { 
+    // findViewById() will be called twice
+    textView.text = "Hidden view"
+    textView.visibility = View.INVISIBLE
+}
+</pre> </div> <h3 id="parcelable-implementations-generator">
+<code>Parcelable</code> implementations generator</h3> <p>Android Extensions plugin provides <a href="https://developer.android.com/reference/android/os/Parcelable" target="_blank"><code>Parcelable</code></a> implementation generator as an experimental feature. To be able to use it, <a href="#enabling-experimental-features">turn on</a> the experimental flag.</p> <h4 id="how-to-use">How to use</h4> <p>Annotate the class with <code>@Parcelize</code>, and a <code>Parcelable</code> implementation will be generated automatically.</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+class User(val firstName: String, val lastName: String, val age: Int): Parcelable
+</pre> </div> <p><code>@Parcelize</code> requires all serialized properties to be declared in the primary constructor. Android Extensions will issue a warning on each property with a backing field declared in the class body. Also, <code>@Parcelize</code> can't be applied if some of the primary constructor parameters are not properties.</p> <p>If your class requires more advanced serialization logic, you can write it inside a companion class:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>@Parcelize
+data class User(val firstName: String, val lastName: String, val age: Int) : Parcelable {
+    private companion object : Parceler&lt;User&gt; {
+        override fun User.write(parcel: Parcel, flags: Int) {
+            // Custom write implementation
+        }
+
+        override fun create(parcel: Parcel): User {
+            // Custom read implementation
+        }
+    }
+}
+</pre> </div> <h4 id="supported-types">Supported types</h4> <p><code>@Parcelize</code> supports a wide range of types:</p> <ul> <li>primitive types (and their boxed versions);</li> <li>objects and enums;</li> <li>
+<code>String</code>, <code>CharSequence</code>;</li> <li>
+<code>Exception</code>;</li> <li>
+<code>Size</code>, <code>SizeF</code>, <code>Bundle</code>, <code>IBinder</code>, <code>IInterface</code>, <code>FileDescriptor</code>;</li> <li>
+<code>SparseArray</code>, <code>SparseIntArray</code>, <code>SparseLongArray</code>, <code>SparseBooleanArray</code>;</li> <li>all <code>Serializable</code> (yes, <code>Date</code> is supported too) and <code>Parcelable</code> implementations;</li> <li>collections of all supported types: <code>List</code> (mapped to <code>ArrayList</code>), <code>Set</code> (mapped to <code>LinkedHashSet</code>), <code>Map</code> (mapped to <code>LinkedHashMap</code>); <ul> <li>Also a number of concrete implementations: <code>ArrayList</code>, <code>LinkedList</code>, <code>SortedSet</code>, <code>NavigableSet</code>, <code>HashSet</code>, <code>LinkedHashSet</code>, <code>TreeSet</code>, <code>SortedMap</code>, <code>NavigableMap</code>, <code>HashMap</code>, <code>LinkedHashMap</code>, <code>TreeMap</code>, <code>ConcurrentHashMap</code>;</li> </ul> </li> <li>arrays of all supported types;</li> <li>nullable versions of all supported types.</li> </ul> <h4 id="custom-parcelers">Custom <code>Parceler</code>s</h4> <p>Even if your type is not supported directly, you can write a <code>Parceler</code> mapping object for it.</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class ExternalClass(val value: Int)
+
+object ExternalClassParceler : Parceler&lt;ExternalClass&gt; {
+    override fun create(parcel: Parcel) = ExternalClass(parcel.readInt())
+
+    override fun ExternalClass.write(parcel: Parcel, flags: Int) {
+        parcel.writeInt(value)
+    }
+}
+</pre> </div> <p>External parcelers can be applied using <code>@TypeParceler</code> or <code>@WriteWith</code> annotations:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>// Class-local parceler
+@Parcelize
+@TypeParceler&lt;ExternalClass, ExternalClassParceler&gt;()
+class MyClass(val external: ExternalClass)
+
+// Property-local parceler
+@Parcelize
+class MyClass(@TypeParceler&lt;ExternalClass, ExternalClassParceler&gt;() val external: ExternalClass)
+
+// Type-local parceler
+@Parcelize
+class MyClass(val external: @WriteWith&lt;ExternalClassParceler&gt;() ExternalClass)
+</pre> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/tutorials/android-plugin.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/tutorials/android-plugin.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

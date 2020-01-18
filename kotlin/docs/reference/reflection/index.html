@@ -1,0 +1,240 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Reflection - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="Reflection is a set of language and library features that allows for introspecting the structure of your own program at runtime. Kotlin makes &hellip;">
+  <meta name="keywords" content="reflection, -, kotlin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/reflection/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h1 id="reflection">Reflection</h1> <p>Reflection is a set of language and library features that allows for introspecting the structure of your own program at runtime. Kotlin makes functions and properties first-class citizens in the language, and introspecting them (i.e. learning a name or a type of a property or function at runtime) is closely intertwined with simply using a functional or reactive style.</p> <blockquote class="note"> <p>On the Java platform, the runtime component required for using the reflection features is distributed as a separate JAR file (<code>kotlin-reflect.jar</code>). This is done to reduce the required size of the runtime library for applications that do not use reflection features. If you do use reflection, please make sure that the .jar file is added to the classpath of your project.</p> </blockquote> <h2 id="class-references">Class References</h2> <p>The most basic reflection feature is getting the runtime reference to a Kotlin class. To obtain the reference to a statically known Kotlin class, you can use the <em>class literal</em> syntax:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val c = MyClass::class
+</pre> </div> <p>The reference is a value of type <a href="../../../api/latest/jvm/stdlib/kotlin.reflect/-k-class/">KClass</a>.</p> <p>Note that a Kotlin class reference is not the same as a Java class reference. To obtain a Java class reference, use the <code>.java</code> property on a <code>KClass</code> instance.</p> <h2 id="bound-class-references-since-11">Bound Class References (since 1.1)</h2> <p>You can get the reference to a class of a specific object with the same <code>::class</code> syntax by using the object as a receiver:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val widget: Widget = ...
+assert(widget is GoodWidget) { "Bad widget: ${widget::class.qualifiedName}" }
+</pre> </div> <p>You obtain the reference to an exact class of an object, for instance <code>GoodWidget</code> or <code>BadWidget</code>, despite the type of the receiver expression (<code>Widget</code>).</p> <h2 id="callable-references">Callable references</h2> <p>References to functions, properties, and constructors, apart from introspecting the program structure, can also be called or used as instances of <a href="../lambdas/#function-types">function types</a>.</p> <p>The common supertype for all callable references is <a href="../../../api/latest/jvm/stdlib/kotlin.reflect/-k-callable/"><code>KCallable&lt;out R&gt;</code></a>, where <code>R</code> is the return value type, which is the property type for properties, and the constructed type for constructors.</p> <h3 id="function-references">Function References</h3> <p>When we have a named function declared like this:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun isOdd(x: Int) = x % 2 != 0
+</pre> </div> <p>We can easily call it directly (<code>isOdd(5)</code>), but we can also use it as a function type value, e.g. pass it to another function. To do this, we use the <code>::</code> operator:</p> <div class="sample" theme="idea"> <pre>fun isOdd(x: Int) = x % 2 != 0
+
+fun main() {
+//sampleStart
+    val numbers = listOf(1, 2, 3)
+    println(numbers.filter(::isOdd))
+//sampleEnd
+}
+</pre> </div> <p>Here <code>::isOdd</code> is a value of function type <code>(Int) -&gt; Boolean</code>.</p> <p>Function references belong to one of the <a href="../../../api/latest/jvm/stdlib/kotlin.reflect/-k-function/"><code>KFunction&lt;out R&gt;</code></a> subtypes, depending on the parameter count, e.g. <code>KFunction3&lt;T1, T2, T3, R&gt;</code>.</p> <p><code>::</code> can be used with overloaded functions when the expected type is known from the context. For example:</p> <div class="sample" theme="idea"> <pre>fun main() {
+//sampleStart
+    fun isOdd(x: Int) = x % 2 != 0
+    fun isOdd(s: String) = s == "brillig" || s == "slithy" || s == "tove"
+    
+    val numbers = listOf(1, 2, 3)
+    println(numbers.filter(::isOdd)) // refers to isOdd(x: Int)
+//sampleEnd
+}
+</pre> </div> <p>Alternatively, you can provide the necessary context by storing the method reference in a variable with an explicitly specified type:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val predicate: (String) -&gt; Boolean = ::isOdd   // refers to isOdd(x: String)
+</pre> </div> <p>If we need to use a member of a class, or an extension function, it needs to be qualified, e.g. <code>String::toCharArray</code>.</p> <p>Note that even if you initialize a variable with a reference to an extension function, the inferred function type will have no receiver (it will have an additional parameter accepting a receiver object). To have a function type with receiver instead, specify the type explicitly:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val isEmptyStringList: List&lt;String&gt;.() -&gt; Boolean = List&lt;String&gt;::isEmpty 
+</pre> </div> <h3 id="example-function-composition">Example: Function Composition</h3> <p>Consider the following function:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun &lt;A, B, C&gt; compose(f: (B) -&gt; C, g: (A) -&gt; B): (A) -&gt; C {
+    return { x -&gt; f(g(x)) }
+}
+</pre> </div> <p>It returns a composition of two functions passed to it: <code>compose(f, g) = f(g(*))</code>. Now, you can apply it to callable references:</p> <div class="sample" theme="idea"> <pre>fun &lt;A, B, C&gt; compose(f: (B) -&gt; C, g: (A) -&gt; B): (A) -&gt; C {
+    return { x -&gt; f(g(x)) }
+}
+
+fun isOdd(x: Int) = x % 2 != 0
+
+fun main() {
+//sampleStart
+    fun length(s: String) = s.length
+    
+    val oddLength = compose(::isOdd, ::length)
+    val strings = listOf("a", "ab", "abc")
+    
+    println(strings.filter(oddLength))
+//sampleEnd
+}
+</pre> </div> <h3 id="property-references">Property References</h3> <p>To access properties as first-class objects in Kotlin, we can also use the <code>::</code> operator:</p> <div class="sample" theme="idea"> <pre>val x = 1
+
+fun main() {
+    println(::x.get())
+    println(::x.name) 
+}
+</pre> </div> <p>The expression <code>::x</code> evaluates to a property object of type <code>KProperty&lt;Int&gt;</code>, which allows us to read its value using <code>get()</code> or retrieve the property name using the <code>name</code> property. For more information, please refer to the <a href="../../../api/latest/jvm/stdlib/kotlin.reflect/-k-property/">docs on the <code>KProperty</code> class</a>.</p> <p>For a mutable property, e.g. <code>var y = 1</code>, <code>::y</code> returns a value of type <a href="../../../api/latest/jvm/stdlib/kotlin.reflect/-k-mutable-property/"><code>KMutableProperty&lt;Int&gt;</code></a>, which has a <code>set()</code> method:</p> <div class="sample" theme="idea"> <pre>var y = 1
+
+fun main() {
+    ::y.set(2)
+    println(y)
+}
+</pre> </div> <p>A property reference can be used where a function with one parameter is expected:</p> <div class="sample" theme="idea"> <pre>fun main() {
+//sampleStart
+    val strs = listOf("a", "bc", "def")
+    println(strs.map(String::length))
+//sampleEnd
+}
+</pre> </div> <p>To access a property that is a member of a class, we qualify it:</p> <div class="sample" theme="idea"> <pre>fun main() {
+//sampleStart
+    class A(val p: Int)
+    val prop = A::p
+    println(prop.get(A(1)))
+//sampleEnd
+}
+</pre> </div> <p>For an extension property:</p> <div auto-indent="false" class="sample" theme="idea"> <pre>val String.lastChar: Char
+    get() = this[length - 1]
+
+fun main() {
+    println(String::lastChar.get("abc"))
+}
+</pre> </div> <h3 id="interoperability-with-java-reflection">Interoperability With Java Reflection</h3> <p>On the Java platform, standard library contains extensions for reflection classes that provide a mapping to and from Java reflection objects (see package <code>kotlin.reflect.jvm</code>). For example, to find a backing field or a Java method that serves as a getter for a Kotlin property, you can say something like this:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>import kotlin.reflect.jvm.*
+ 
+class A(val p: Int)
+ 
+fun main() {
+    println(A::p.javaGetter) // prints "public final int A.getP()"
+    println(A::p.javaField)  // prints "private final int A.p"
+}
+</pre> </div> <p>To get the Kotlin class corresponding to a Java class, use the <code>.kotlin</code> extension property:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun getKClass(o: Any): KClass&lt;Any&gt; = o.javaClass.kotlin
+</pre> </div> <h3 id="constructor-references">Constructor References</h3> <p>Constructors can be referenced just like methods and properties. They can be used wherever an object of function type is expected that takes the same parameters as the constructor and returns an object of the appropriate type. Constructors are referenced by using the <code>::</code> operator and adding the class name. Consider the following function that expects a function parameter with no parameters and return type <code>Foo</code>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Foo
+
+fun function(factory: () -&gt; Foo) {
+    val x: Foo = factory()
+}
+</pre> </div> <p>Using <code>::Foo</code>, the zero-argument constructor of the class Foo, we can simply call it like this:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>function(::Foo)
+</pre> </div> <p>Callable references to constructors are typed as one of the <a href="../../../api/latest/jvm/stdlib/kotlin.reflect/-k-function/"><code>KFunction&lt;out R&gt;</code></a> subtypes , depending on the parameter count.</p> <h2 id="bound-function-and-property-references-since-11">Bound Function and Property References (since 1.1)</h2> <p>You can refer to an instance method of a particular object:</p> <div class="sample" theme="idea"> <pre>fun main() {
+//sampleStart
+    val numberRegex = "\\d+".toRegex()
+    println(numberRegex.matches("29"))
+     
+    val isNumber = numberRegex::matches
+    println(isNumber("29"))
+//sampleEnd
+}
+</pre> </div> <p>Instead of calling the method <code>matches</code> directly we are storing a reference to it. Such reference is bound to its receiver. It can be called directly (like in the example above) or used whenever an expression of function type is expected:</p> <div class="sample" theme="idea"> <pre>fun main() {
+//sampleStart
+    val numberRegex = "\\d+".toRegex()
+    val strings = listOf("abc", "124", "a70")
+    println(strings.filter(numberRegex::matches))
+//sampleEnd
+}
+</pre> </div> <p>Compare the types of bound and the corresponding unbound references. Bound callable reference has its receiver "attached" to it, so the type of the receiver is no longer a parameter:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val isNumber: (CharSequence) -&gt; Boolean = numberRegex::matches
+
+val matches: (Regex, CharSequence) -&gt; Boolean = Regex::matches
+</pre> </div> <p>Property reference can be bound as well:</p> <div class="sample" theme="idea"> <pre>fun main() {
+//sampleStart
+    val prop = "abc"::length
+    println(prop.get())
+//sampleEnd
+}
+</pre> </div> <p>Since Kotlin 1.2, explicitly specifying <code>this</code> as the receiver is not necessary: <code>this::foo</code> and <code>::foo</code> are equivalent.</p> <h3 id="bound-constructor-references">Bound constructor references</h3> <p>A bound callable reference to a constructor of an <a href="../nested-classes/#inner-classes"><em class="keyword">inner</em> class</a> can be obtained by providing an instance of the outer class:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Outer {
+    inner class Inner
+}
+
+val o = Outer()
+val boundInnerCtor = o::Inner
+</pre> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/reflection.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/reflection.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,289 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Classes and Inheritance - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content=" Classes in Kotlin are declared using the keyword class&#58; ">
+  <meta name="keywords" content="classes, and, inheritance, -, kotlin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/classes/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h1 id="classes-and-inheritance">Classes and Inheritance</h1> <h2 id="classes">Classes</h2> <p>Classes in Kotlin are declared using the keyword <em class="keyword">class</em>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Invoice { ... }
+</pre> </div> <p>The class declaration consists of the class name, the class header (specifying its type parameters, the primary constructor etc.) and the class body, surrounded by curly braces. Both the header and the body are optional; if the class has no body, curly braces can be omitted.</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Empty
+</pre> </div> <h3 id="constructors">Constructors</h3> <p>A class in Kotlin can have a <strong>primary constructor</strong> and one or more <strong>secondary constructors</strong>. The primary constructor is part of the class header: it goes after the class name (and optional type parameters).</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Person constructor(firstName: String) { ... }
+</pre> </div> <p>If the primary constructor does not have any annotations or visibility modifiers, the <em class="keyword">constructor</em> keyword can be omitted:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Person(firstName: String) { ... }
+</pre> </div> <p>The primary constructor cannot contain any code. Initialization code can be placed in <strong>initializer blocks</strong>, which are prefixed with the <em class="keyword">init</em> keyword.</p> <p>During an instance initialization, the initializer blocks are executed in the same order as they appear in the class body, interleaved with the property initializers:</p> <div class="sample" theme="idea"> <pre>//sampleStart
+class InitOrderDemo(name: String) {
+    val firstProperty = "First property: $name".also(::println)
+    
+    init {
+        println("First initializer block that prints ${name}")
+    }
+    
+    val secondProperty = "Second property: ${name.length}".also(::println)
+    
+    init {
+        println("Second initializer block that prints ${name.length}")
+    }
+}
+//sampleEnd
+
+fun main() {
+    InitOrderDemo("hello")
+}
+</pre> </div> <p>Note that parameters of the primary constructor can be used in the initializer blocks. They can also be used in property initializers declared in the class body:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Customer(name: String) {
+    val customerKey = name.toUpperCase()
+}
+</pre> </div> <p>In fact, for declaring properties and initializing them from the primary constructor, Kotlin has a concise syntax:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Person(val firstName: String, val lastName: String, var age: Int) { ... }
+</pre> </div> <p>Much the same way as regular properties, the properties declared in the primary constructor can be mutable (<em class="keyword">var</em>) or read-only (<em class="keyword">val</em>).</p> <p>If the constructor has annotations or visibility modifiers, the <em class="keyword">constructor</em> keyword is required, and the modifiers go before it:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Customer public @Inject constructor(name: String) { ... }
+</pre> </div> <p>For more details, see <a href="../visibility-modifiers/#constructors">Visibility Modifiers</a>.</p> <h4 id="secondary-constructors">Secondary Constructors</h4> <p>The class can also declare <strong>secondary constructors</strong>, which are prefixed with <em class="keyword">constructor</em>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Person {
+    var children: MutableList&lt;Person&gt; = mutableListOf&lt;Person&gt;();
+    constructor(parent: Person) {
+        parent.children.add(this)
+    }
+}
+</pre> </div> <p>If the class has a primary constructor, each secondary constructor needs to delegate to the primary constructor, either directly or indirectly through another secondary constructor(s). Delegation to another constructor of the same class is done using the <em class="keyword">this</em> keyword:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Person(val name: String) {
+    var children: MutableList&lt;Person&gt; = mutableListOf&lt;Person&gt;();
+    constructor(name: String, parent: Person) : this(name) {
+        parent.children.add(this)
+    }
+}
+</pre> </div> <p>Note that code in initializer blocks effectively becomes part of the primary constructor. Delegation to the primary constructor happens as the first statement of a secondary constructor, so the code in all initializer blocks is executed before the secondary constructor body. Even if the class has no primary constructor, the delegation still happens implicitly, and the initializer blocks are still executed:</p> <div class="sample" theme="idea"> <pre>//sampleStart
+class Constructors {
+    init {
+        println("Init block")
+    }
+
+    constructor(i: Int) {
+        println("Constructor")
+    }
+}
+//sampleEnd
+
+fun main() {
+    Constructors(1)
+}
+</pre> </div> <p>If a non-abstract class does not declare any constructors (primary or secondary), it will have a generated primary constructor with no arguments. The visibility of the constructor will be public. If you do not want your class to have a public constructor, you need to declare an empty primary constructor with non-default visibility:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class DontCreateMe private constructor () { ... }
+</pre> </div> <blockquote> <p><strong>NOTE</strong>: On the JVM, if all of the parameters of the primary constructor have default values, the compiler will generate an additional parameterless constructor which will use the default values. This makes it easier to use Kotlin with libraries such as Jackson or JPA that create class instances through parameterless constructors.</p> </blockquote> <blockquote> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Customer(val customerName: String = "")
+</pre> </div> </blockquote> <h3 class="info" id="creating-instances-of-classes">Creating instances of classes</h3> <p>To create an instance of a class, we call the constructor as if it were a regular function:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>val invoice = Invoice()
+
+val customer = Customer("Joe Smith")
+</pre> </div> <p>Note that Kotlin does not have a <em class="keyword">new</em> keyword.</p> <p>Creating instances of nested, inner and anonymous inner classes is described in <a href="../nested-classes/">Nested classes</a>.</p> <h3 id="class-members">Class Members</h3> <p>Classes can contain:</p> <ul> <li><a href="../classes/#constructors">Constructors and initializer blocks</a></li> <li><a href="../functions/">Functions</a></li> <li><a href="../properties/">Properties</a></li> <li><a href="../nested-classes/">Nested and Inner Classes</a></li> <li><a href="../object-declarations/">Object Declarations</a></li> </ul> <h2 id="inheritance">Inheritance</h2> <p>All classes in Kotlin have a common superclass <code>Any</code>, that is the default superclass for a class with no supertypes declared:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Example // Implicitly inherits from Any
+</pre> </div> <blockquote> <p>Note: <code>Any</code> is not <code>java.lang.Object</code>; in particular, it does not have any members other than <code>equals()</code>, <code>hashCode()</code> and <code>toString()</code>. Please consult the <a href="../java-interop/#object-methods">Java interoperability</a> section for more details.</p> </blockquote> <p>To declare an explicit supertype, we place the type after a colon in the class header:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>open class Base(p: Int)
+
+class Derived(p: Int) : Base(p)
+</pre> </div> <p>If the derived class has a primary constructor, the base class can (and must) be initialized right there, using the parameters of the primary constructor.</p> <p>If the derived class has no primary constructor, then each secondary constructor has to initialize the base type using the <em class="keyword">super</em> keyword, or to delegate to another constructor which does that. Note that in this case different secondary constructors can call different constructors of the base type:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class MyView : View {
+    constructor(ctx: Context) : super(ctx)
+
+    constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
+}
+</pre> </div> <h3 id="overriding-methods">Overriding Methods</h3> <p>As we mentioned before, we stick to making things explicit in Kotlin. And unlike Java, Kotlin requires explicit modifiers for overridable members (we call them <em>open</em>) and for overrides:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>open class Base {
+    open fun v() { ... }
+    fun nv() { ... }
+}
+class Derived() : Base() {
+    override fun v() { ... }
+}
+</pre> </div> <p>The <em class="keyword">override</em> modifier is required for <code>Derived.v()</code>. If it were missing, the compiler would complain. If there is no <em class="keyword">open</em> modifier on a function, like <code>Base.nv()</code>, declaring a method with the same signature in a subclass is illegal, either with <em class="keyword">override</em> or without it. The <em class="keyword">open</em> modifier has no effect when added on members of a final class (i.e.. a class with no <em class="keyword">open</em> modifier).</p> <p>A member marked <em class="keyword">override</em> is itself open, i.e. it may be overridden in subclasses. If you want to prohibit re-overriding, use <em class="keyword">final</em>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>open class AnotherDerived() : Base() {
+    final override fun v() { ... }
+}
+</pre> </div> <h3 id="overriding-properties">Overriding Properties</h3> <p>Overriding properties works in a similar way to overriding methods; properties declared on a superclass that are then redeclared on a derived class must be prefaced with <em class="keyword">override</em>, and they must have a compatible type. Each declared property can be overridden by a property with an initializer or by a property with a getter method.</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>open class Foo {
+    open val x: Int get() { ... }
+}
+
+class Bar1 : Foo() {
+    override val x: Int = ...
+}
+</pre> </div> <p>You can also override a <code>val</code> property with a <code>var</code> property, but not vice versa. This is allowed because a <code>val</code> property essentially declares a getter method, and overriding it as a <code>var</code> additionally declares a setter method in the derived class.</p> <p>Note that you can use the <em class="keyword">override</em> keyword as part of the property declaration in a primary constructor.</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>interface Foo {
+    val count: Int
+}
+
+class Bar1(override val count: Int) : Foo
+
+class Bar2 : Foo {
+    override var count: Int = 0
+}
+</pre> </div> <h3 id="derived-class-initialization-order">Derived class initialization order</h3> <p>During construction of a new instance of a derived class, the base class initialization is done as the first step (preceded only by evaluation of the arguments for the base class constructor) and thus happens before the initialization logic of the derived class is run.</p> <div class="sample" theme="idea"> <pre>//sampleStart
+open class Base(val name: String) {
+
+    init { println("Initializing Base") }
+
+    open val size: Int = 
+        name.length.also { println("Initializing size in Base: $it") }
+}
+
+class Derived(
+    name: String,
+    val lastName: String
+) : Base(name.capitalize().also { println("Argument for Base: $it") }) {
+
+    init { println("Initializing Derived") }
+
+    override val size: Int =
+        (super.size + lastName.length).also { println("Initializing size in Derived: $it") }
+}
+//sampleEnd
+
+fun main() {
+    println("Constructing Derived(\"hello\", \"world\")")
+    val d = Derived("hello", "world")
+}
+</pre> </div> <p>It means that, by the time of the base class constructor execution, the properties declared or overridden in the derived class are not yet initialized. If any of those properties are used in the base class initialization logic (either directly or indirectly, through another overridden <em class="keyword">open</em> member implementation), it may lead to incorrect behavior or a runtime failure. When designing a base class, you should therefore avoid using <em class="keyword">open</em> members in the constructors, property initializers, and <em class="keyword">init</em> blocks.</p> <h3 id="calling-the-superclass-implementation">Calling the superclass implementation</h3> <p>Code in a derived class can call its superclass functions and property accessors implementations using the <em class="keyword">super</em> keyword:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>open class Foo {
+    open fun f() { println("Foo.f()") }
+    open val x: Int get() = 1
+}
+
+class Bar : Foo() {
+    override fun f() { 
+        super.f()
+        println("Bar.f()") 
+    }
+    
+    override val x: Int get() = super.x + 1
+}
+</pre> </div> <p>Inside an inner class, accessing the superclass of the outer class is done with the <em class="keyword">super</em> keyword qualified with the outer class name: <code>super@Outer</code>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class Bar : Foo() {
+    override fun f() { /* ... */ }
+    override val x: Int get() = 0
+    
+    inner class Baz {
+        fun g() {
+            super@Bar.f() // Calls Foo's implementation of f()
+            println(super@Bar.x) // Uses Foo's implementation of x's getter
+        }
+    }
+}
+</pre> </div> <h3 id="overriding-rules">Overriding Rules</h3> <p>In Kotlin, implementation inheritance is regulated by the following rule: if a class inherits many implementations of the same member from its immediate superclasses, it must override this member and provide its own implementation (perhaps, using one of the inherited ones). To denote the supertype from which the inherited implementation is taken, we use <em class="keyword">super</em> qualified by the supertype name in angle brackets, e.g. <code>super&lt;Base&gt;</code>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>open class A {
+    open fun f() { print("A") }
+    fun a() { print("a") }
+}
+
+interface B {
+    fun f() { print("B") } // interface members are 'open' by default
+    fun b() { print("b") }
+}
+
+class C() : A(), B {
+    // The compiler requires f() to be overridden:
+    override fun f() {
+        super&lt;A&gt;.f() // call to A.f()
+        super&lt;B&gt;.f() // call to B.f()
+    }
+}
+</pre> </div> <p>It's fine to inherit from both <code>A</code> and <code>B</code>, and we have no problems with <code>a()</code> and <code>b()</code> since <code>C</code> inherits only one implementation of each of these functions. But for <code>f()</code> we have two implementations inherited by <code>C</code>, and thus we have to override <code>f()</code> in <code>C</code> and provide our own implementation that eliminates the ambiguity.</p> <h2 id="abstract-classes">Abstract Classes</h2> <p>A class and some of its members may be declared <em class="keyword">abstract</em>. An abstract member does not have an implementation in its class. Note that we do not need to annotate an abstract class or function with open – it goes without saying.</p> <p>We can override a non-abstract open member with an abstract one</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>open class Base {
+    open fun f() {}
+}
+
+abstract class Derived : Base() {
+    override abstract fun f()
+}
+</pre> </div> <h2 id="companion-objects">Companion Objects</h2> <p>In Kotlin, unlike Java or C#, classes do not have static methods. In most cases, it's recommended to simply use package-level functions instead.</p> <p>If you need to write a function that can be called without having a class instance but needs access to the internals of a class (for example, a factory method), you can write it as a member of an <a href="../object-declarations/">object declaration</a> inside that class.</p> <p>Even more specifically, if you declare a <a href="../object-declarations/#companion-objects">companion object</a> inside your class, you'll be able to call its members with the same syntax as calling static methods in Java/C#, using only the class name as a qualifier.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/classes.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/classes.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

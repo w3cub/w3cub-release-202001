@@ -1,0 +1,133 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Visibility Modifiers - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="This material was written by Aasmund Eldhuset; it is owned by Khan Academy and is licensed for use under CC BY-NC-SA 3.0 US. Please note that this &hellip;">
+  <meta name="keywords" content="visibility, modifiers, -, kotlin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/tutorials/kotlin-for-py/visibility-modifiers/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h1> Visibility modifiers </h1>  <p><em>This material was written by <a href="https://eldhuset.net/" target="_blank">Aasmund Eldhuset</a>; it is owned by <a href="https://www.khanacademy.org/" target="_blank">Khan Academy</a> and is licensed for use under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/" target="_blank">CC BY-NC-SA 3.0 US</a>. Please note that this is not a part of Khan Academy's official product offering.</em></p> <hr> <p>Kotlin allows you to enforce symbol visibility (which Python only does via underscore conventions) via <em>visibility modifiers</em>, which can be placed on symbol declarations. If you don't supply a visibility modifier, you get the default visibility level, which is <em>public</em>.</p> <p>The meaning of a visibility modifier depends on whether it's applied to a top-level declaration or to a declaration inside a class. For top-level declarations:</p> <ul> <li>
+<code>public</code> (or omitted): this symbol is visible throughout the entire codebase</li> <li>
+<code>internal</code>: this symbol is only visible inside files that belong to the same <em>module</em> (a source code grouping which is defined by your IDE or build tool) as the file where this symbol is declared</li> <li>
+<code>private</code>: this symbol is only visible inside the file where this symbol is declared</li> </ul> <p>For example, <code>private</code> could be used to define a property or helper function that is needed by several functions in one file, or a complex type returned by one of your private functions, without leaking them to the rest of the codebase:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>private class ReturnType(val a: Int, val b: Double, val c: String)
+
+private fun secretHelper(x: Int) = x * x
+
+private const val secretValue = 3.14
+</pre> </div> <p>For a symbol that is declared inside a class:</p> <ul> <li>
+<code>public</code> (or omitted): this symbol is visible to any code that can see the containing class</li> <li>
+<code>internal</code>: this symbol is only visible to code that exists inside a file that belongs to the same module as the file where this symbol is declared, and that can also see the containing class</li> <li>
+<code>protected</code>: this symbol is only visible inside the containing class and all of its subclasses, no matter where they are declared (so if your class is public and <a href="../inheritance/#subclassing">open</a>, anyone can subclass it and thus get to see and use the protected members). If you have used Java: this does <em>not</em> also grant access from the rest of the package.</li> <li>
+<code>private</code>: this symbol is only visible inside the containing class</li> </ul> <p>A constructor can also have a visibility modifier. If you want to place one on the primary constructor (which you might want to do if you have a number of secondary constructors which all invoke a complicated primary constructor that you don't want to expose), you need to include the <code>constructor</code> keyword: <code>class Person private constructor(val name: String)</code>.</p> <p>Visibility modifiers can't be placed on local variables, since their visibility is always limited to the containing block.</p> <p>The type of a property, and the types that are used for the parameters and the return type of a function, must be "at least as visible" as the property/function itself. For example, a public function can't take a private type as a parameter.</p> <p>The visibility level only affects the <em>lexical visibility</em> of the <em>symbol</em> - i.e., where the compiler allows you to type out the symbol. It does not affect where <em>instances</em> are used: for example, a public top-level function may well return an instance of a private class, as long as the return type doesn't mention the private class name but is instead a public base class of the private class (possibly <code>Any</code>) or a public interface that the private class implements. When you <a href="../inheritance/#subclassing">subclass</a> a class, its private members are also inherited by the subclass, but are not directly accessible there - however, if you call an inherited public function that happens to access a private member, that's fine.</p> <hr> <table> <tbody> <tr> <td><a href="../packages-and-imports/">← Previous: Packages and imports</a></td> <td><a href="../inheritance/">Next: Inheritance →</a></td> </tr> </tbody> </table>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/tutorials/kotlin-for-py/visibility-modifiers.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/tutorials/kotlin-for-py/visibility-modifiers.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

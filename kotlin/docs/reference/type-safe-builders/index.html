@@ -1,0 +1,318 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Type-Safe Builders - Kotlin - W3cubDocs</title>
+  
+  <meta name="description" content="By using well-named functions as builders in combination with function literals with receiver it is possible to create type-safe, statically-typed &hellip;">
+  <meta name="keywords" content="type-safe, builders, -, kotlin">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/kotlin/docs/reference/type-safe-builders/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/kotlin.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/kotlin/" class="_nav-link" title="" style="margin-left:0;">Kotlin</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _kotlin">
+				
+				
+<h1 id="type-safe-builders">Type-Safe Builders</h1> <p>By using well-named functions as builders in combination with <a href="../lambdas/#function-literals-with-receiver">function literals with receiver</a> it is possible to create type-safe, statically-typed builders in Kotlin.</p> <p>Type-safe builders allow creating Kotlin-based domain-specific languages (DSLs) suitable for building complex hierarchical data structures in a semi-declarative way. Some of the example use cases for the builders are:</p> <ul> <li>Generating markup with Kotlin code, such as <a href="https://github.com/Kotlin/kotlinx.html" target="_blank">HTML</a> or XML;</li> <li>Programmatically laying out UI components: <a href="https://github.com/Kotlin/anko/wiki/Anko-Layouts" target="_blank">Anko</a>
+</li> <li>Configuring routes for a web server: <a href="http://ktor.io/features/routing.html#routing-tree" target="_blank">Ktor</a>.</li> </ul> <h2 id="a-type-safe-builder-example">A type-safe builder example</h2> <p>Consider the following code:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>import com.example.html.* // see declarations below
+
+fun result() =
+    html {
+        head {
+            title {+"XML encoding with Kotlin"}
+        }
+        body {
+            h1 {+"XML encoding with Kotlin"}
+            p  {+"this format can be used as an alternative markup to XML"}
+
+            // an element with attributes and text content
+            a(href = "http://kotlinlang.org") {+"Kotlin"}
+
+            // mixed content
+            p {
+                +"This is some"
+                b {+"mixed"}
+                +"text. For more see the"
+                a(href = "http://kotlinlang.org") {+"Kotlin"}
+                +"project"
+            }
+            p {+"some text"}
+
+            // content generated by
+            p {
+                for (arg in args)
+                    +arg
+            }
+        }
+    }
+</pre> </div> <p>This is completely legitimate Kotlin code. You can play with this code online (modify it and run in the browser) <a href="https://play.kotlinlang.org/byExample/09_Kotlin_JS/06_HtmlBuilder" target="_blank">here</a>.</p> <h2 id="how-it-works">How it works</h2> <p>Let's walk through the mechanisms of implementing type-safe builders in Kotlin. First of all, we need to define the model we want to build, in this case we need to model HTML tags. It is easily done with a bunch of classes. For example, <code>HTML</code> is a class that describes the <code>&lt;html&gt;</code> tag, i.e. it defines children like <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code>. (See its declaration <a href="#full-definition-of-the-comexamplehtml-package">below</a>.)</p> <p>Now, let's recall why we can say something like this in the code:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>html {
+ // ...
+}
+</pre> </div> <p><code>html</code> is actually a function call that takes a <a href="../lambdas/">lambda expression</a> as an argument. This function is defined as follows:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun html(init: HTML.() -&gt; Unit): HTML {
+    val html = HTML()
+    html.init()
+    return html
+}
+</pre> </div> <p>This function takes one parameter named <code>init</code>, which is itself a function. The type of the function is <code>HTML.() -&gt; Unit</code>, which is a <em>function type with receiver</em>. This means that we need to pass an instance of type <code>HTML</code> (a <em>receiver</em>) to the function, and we can call members of that instance inside the function. The receiver can be accessed through the <em class="keyword">this</em> keyword:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>html {
+    this.head { ... }
+    this.body { ... }
+}
+</pre> </div> <p>(<code>head</code> and <code>body</code> are member functions of <code>HTML</code>.)</p> <p>Now, <em class="keyword">this</em> can be omitted, as usual, and we get something that looks very much like a builder already:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>html {
+    head { ... }
+    body { ... }
+}
+</pre> </div> <p>So, what does this call do? Let's look at the body of <code>html</code> function as defined above. It creates a new instance of <code>HTML</code>, then it initializes it by calling the function that is passed as an argument (in our example this boils down to calling <code>head</code> and <code>body</code> on the <code>HTML</code> instance), and then it returns this instance. This is exactly what a builder should do.</p> <p>The <code>head</code> and <code>body</code> functions in the <code>HTML</code> class are defined similarly to <code>html</code>. The only difference is that they add the built instances to the <code>children</code> collection of the enclosing <code>HTML</code> instance:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun head(init: Head.() -&gt; Unit) : Head {
+    val head = Head()
+    head.init()
+    children.add(head)
+    return head
+}
+
+fun body(init: Body.() -&gt; Unit) : Body {
+    val body = Body()
+    body.init()
+    children.add(body)
+    return body
+}
+</pre> </div> <p>Actually these two functions do just the same thing, so we can have a generic version, <code>initTag</code>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>protected fun &lt;T : Element&gt; initTag(tag: T, init: T.() -&gt; Unit): T {
+    tag.init()
+    children.add(tag)
+    return tag
+}
+</pre> </div> <p>So, now our functions are very simple:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>fun head(init: Head.() -&gt; Unit) = initTag(Head(), init)
+
+fun body(init: Body.() -&gt; Unit) = initTag(Body(), init)
+</pre> </div> <p>And we can use them to build <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> tags.</p> <p>One other thing to be discussed here is how we add text to tag bodies. In the example above we say something like:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>html {
+    head {
+        title {+"XML encoding with Kotlin"}
+    }
+    // ...
+}
+</pre> </div> <p>So basically, we just put a string inside a tag body, but there is this little <code>+</code> in front of it, so it is a function call that invokes a prefix <code>unaryPlus()</code> operation. That operation is actually defined by an extension function <code>unaryPlus()</code> that is a member of the <code>TagWithText</code> abstract class (a parent of <code>Title</code>):</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>operator fun String.unaryPlus() {
+    children.add(TextElement(this))
+}
+</pre> </div> <p>So, what the prefix <code>+</code> does here is wrapping a string into an instance of <code>TextElement</code> and adding it to the <code>children</code> collection, so that it becomes a proper part of the tag tree.</p> <p>All this is defined in a package <code>com.example.html</code> that is imported at the top of the builder example above. In the last section you can read through the full definition of this package.</p> <h2 id="scope-control-dslmarker-since-11">Scope control: @DslMarker (since 1.1)</h2> <p>When using DSLs, one might have come across the problem that too many functions can be called in the context. We can call methods of every available implicit receiver inside a lambda and therefore get an inconsistent result, like the tag <code>head</code> inside another <code>head</code>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>html {
+    head {
+        head {} // should be forbidden
+    }
+    // ...
+}
+</pre> </div> <p>In this example only members of the nearest implicit receiver <code>this@head</code> must be available; <code>head()</code> is a member of the outer receiver <code>this@html</code>, so it must be illegal to call it.</p> <p>To address this problem, in Kotlin 1.1 a special mechanism to control receiver scope was introduced.</p> <p>To make the compiler start controlling scopes we only have to annotate the types of all receivers used in the DSL with the same marker annotation. For instance, for HTML Builders we declare an annotation <code>@HTMLTagMarker</code>:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>@DslMarker
+annotation class HtmlTagMarker
+</pre> </div> <p>An annotation class is called a DSL marker if it is annotated with the <code>@DslMarker</code> annotation.</p> <p>In our DSL all the tag classes extend the same superclass <code>Tag</code>. It's enough to annotate only the superclass with <code>@HtmlTagMarker</code> and after that the Kotlin compiler will treat all the inherited classes as annotated:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>@HtmlTagMarker
+abstract class Tag(val name: String) { ... }
+</pre> </div> <p>We don't have to annotate the <code>HTML</code> or <code>Head</code> classes with <code>@HtmlTagMarker</code> because their superclass is already annotated:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>class HTML() : Tag("html") { ... }
+class Head() : Tag("head") { ... }
+</pre> </div> <p>After we've added this annotation, the Kotlin compiler knows which implicit receivers are part of the same DSL and allows to call members of the nearest receivers only:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>html {
+    head {
+        head { } // error: a member of outer receiver
+    }
+    // ...
+}
+</pre> </div> <p>Note that it's still possible to call the members of the outer receiver, but to do that you have to specify this receiver explicitly:</p> <div class="sample" data-highlight-only="" theme="idea"> <pre>html {
+    head {
+        this@html.head { } // possible
+    }
+    // ...
+}
+</pre> </div> <h2 id="full-definition-of-the-comexamplehtml-package">Full definition of the <code>com.example.html</code> package</h2> <p>This is how the package <code>com.example.html</code> is defined (only the elements used in the example above). It builds an HTML tree. It makes heavy use of <a href="../extensions/">extension functions</a> and <a href="../lambdas/#function-literals-with-receiver">lambdas with receiver</a>.</p> <p>Note that the <code>@DslMarker</code> annotation is available only since Kotlin 1.1.</p>  <div class="sample" data-highlight-only="" theme="idea"> <pre>package com.example.html
+
+interface Element {
+    fun render(builder: StringBuilder, indent: String)
+}
+
+class TextElement(val text: String) : Element {
+    override fun render(builder: StringBuilder, indent: String) {
+        builder.append("$indent$text\n")
+    }
+}
+
+@DslMarker
+annotation class HtmlTagMarker
+
+@HtmlTagMarker
+abstract class Tag(val name: String) : Element {
+    val children = arrayListOf&lt;Element&gt;()
+    val attributes = hashMapOf&lt;String, String&gt;()
+
+    protected fun &lt;T : Element&gt; initTag(tag: T, init: T.() -&gt; Unit): T {
+        tag.init()
+        children.add(tag)
+        return tag
+    }
+
+    override fun render(builder: StringBuilder, indent: String) {
+        builder.append("$indent&lt;$name${renderAttributes()}&gt;\n")
+        for (c in children) {
+            c.render(builder, indent + "  ")
+        }
+        builder.append("$indent&lt;/$name&gt;\n")
+    }
+
+    private fun renderAttributes(): String {
+        val builder = StringBuilder()
+        for ((attr, value) in attributes) {
+            builder.append(" $attr=\"$value\"")
+        }
+        return builder.toString()
+    }
+
+    override fun toString(): String {
+        val builder = StringBuilder()
+        render(builder, "")
+        return builder.toString()
+    }
+}
+
+abstract class TagWithText(name: String) : Tag(name) {
+    operator fun String.unaryPlus() {
+        children.add(TextElement(this))
+    }
+}
+
+class HTML : TagWithText("html") {
+    fun head(init: Head.() -&gt; Unit) = initTag(Head(), init)
+
+    fun body(init: Body.() -&gt; Unit) = initTag(Body(), init)
+}
+
+class Head : TagWithText("head") {
+    fun title(init: Title.() -&gt; Unit) = initTag(Title(), init)
+}
+
+class Title : TagWithText("title")
+
+abstract class BodyTag(name: String) : TagWithText(name) {
+    fun b(init: B.() -&gt; Unit) = initTag(B(), init)
+    fun p(init: P.() -&gt; Unit) = initTag(P(), init)
+    fun h1(init: H1.() -&gt; Unit) = initTag(H1(), init)
+    fun a(href: String, init: A.() -&gt; Unit) {
+        val a = initTag(A(), init)
+        a.href = href
+    }
+}
+
+class Body : BodyTag("body")
+class B : BodyTag("b")
+class P : BodyTag("p")
+class H1 : BodyTag("h1")
+
+class A : BodyTag("a") {
+    var href: String
+        get() = attributes["href"]!!
+        set(value) {
+            attributes["href"] = value
+        }
+}
+
+fun html(init: HTML.() -&gt; Unit): HTML {
+    val html = HTML()
+    html.init()
+    return html
+}
+</pre> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 JetBrains s.r.o.<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://kotlinlang.org/docs/reference/type-safe-builders.html" class="_attribution-link" target="_blank">https://kotlinlang.org/docs/reference/type-safe-builders.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
