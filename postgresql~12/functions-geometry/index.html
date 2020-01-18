@@ -1,0 +1,129 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Geometric Functions and Operators - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content="The geometric types point, box, lseg, line, path, polygon, and circle have a large set of native support functions and operators, shown in Table 9. &hellip;">
+  <meta name="keywords" content="geometric, functions, and, operators, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/functions-geometry/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>9.11. Geometric Functions and Operators</h1>    <p>The geometric types <code class="type">point</code>, <code class="type">box</code>, <code class="type">lseg</code>, <code class="type">line</code>, <code class="type">path</code>, <code class="type">polygon</code>, and <code class="type">circle</code> have a large set of native support functions and operators, shown in <a class="xref" href="../functions-geometry/#FUNCTIONS-GEOMETRY-OP-TABLE" title="Table 9.34. Geometric Operators">Table 9.34</a>, <a class="xref" href="../functions-geometry/#FUNCTIONS-GEOMETRY-FUNC-TABLE" title="Table 9.35. Geometric Functions">Table 9.35</a>, and <a class="xref" href="../functions-geometry/#FUNCTIONS-GEOMETRY-CONV-TABLE" title="Table 9.36. Geometric Type Conversion Functions">Table 9.36</a>.</p> <blockquote class="caution"> <h3 class="title">Caution</h3> <p>Note that the <span class="quote">“<span class="quote">same as</span>”</span> operator, <code class="literal">~=</code>, represents the usual notion of equality for the <code class="type">point</code>, <code class="type">box</code>, <code class="type">polygon</code>, and <code class="type">circle</code> types. Some of these types also have an <code class="literal">=</code> operator, but <code class="literal">=</code> compares for equal <span class="emphasis"><em>areas</em></span> only. The other scalar comparison operators (<code class="literal">&lt;=</code> and so on) likewise compare areas for these types.</p> </blockquote> <div class="table" id="FUNCTIONS-GEOMETRY-OP-TABLE"> <p class="title"><strong>Table 9.34. Geometric Operators</strong></p> <div class="table-contents"> <table class="table" summary="Geometric Operators"> <colgroup> <col> <col> <col> </colgroup> <thead> <tr> <th>Operator</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td><code class="literal" id="43">+</code></td> <td>Translation</td> <td><code class="literal">box '((0,0),(1,1))' + point '(2.0,0)'</code></td> </tr> <tr> <td><code class="literal" id="">-</code></td> <td>Translation</td> <td><code class="literal">box '((0,0),(1,1))' - point '(2.0,0)'</code></td> </tr> <tr> <td><code class="literal" id="42">*</code></td> <td>Scaling/rotation</td> <td><code class="literal">box '((0,0),(1,1))' * point '(2.0,0)'</code></td> </tr> <tr> <td><code class="literal" id="47">/</code></td> <td>Scaling/rotation</td> <td><code class="literal">box '((0,0),(2,2))' / point '(2.0,0)'</code></td> </tr> <tr> <td><code class="literal" id="35">#</code></td> <td>Point or box of intersection</td> <td><code class="literal">box '((1,-1),(-1,1))' # box '((1,1),(-2,-2))'</code></td> </tr> <tr> <td><code class="literal">#</code></td> <td>Number of points in path or polygon</td> <td><code class="literal"># path '((1,0),(0,1),(-1,0))'</code></td> </tr> <tr> <td><code class="literal" id="64-64">@-@</code></td> <td>Length or circumference</td> <td><code class="literal">@-@ path '((0,0),(1,0))'</code></td> </tr> <tr> <td><code class="literal" id="6464">@@</code></td> <td>Center</td> <td><code class="literal">@@ circle '((0,0),10)'</code></td> </tr> <tr> <td><code class="literal" id="3535">##</code></td> <td>Closest point to first operand on second operand</td> <td><code class="literal">point '(0,0)' ## lseg '((2,0),(0,2))'</code></td> </tr> <tr> <td><code class="literal" id="60-62">&lt;-&gt;</code></td> <td>Distance between</td> <td><code class="literal">circle '((0,0),1)' &lt;-&gt; circle '((5,0),1)'</code></td> </tr> <tr> <td><code class="literal" id="3838">&amp;&amp;</code></td> <td>Overlaps? (One point in common makes this true.)</td> <td><code class="literal">box '((0,0),(1,1))' &amp;&amp; box '((0,0),(2,2))'</code></td> </tr> <tr> <td><code class="literal" id="6060">&lt;&lt;</code></td> <td>Is strictly left of?</td> <td><code class="literal">circle '((0,0),1)' &lt;&lt; circle '((5,0),1)'</code></td> </tr> <tr> <td><code class="literal" id="6262">&gt;&gt;</code></td> <td>Is strictly right of?</td> <td><code class="literal">circle '((5,0),1)' &gt;&gt; circle '((0,0),1)'</code></td> </tr> <tr> <td><code class="literal" id="3860">&amp;&lt;</code></td> <td>Does not extend to the right of?</td> <td><code class="literal">box '((0,0),(1,1))' &amp;&lt; box '((0,0),(2,2))'</code></td> </tr> <tr> <td><code class="literal" id="3862">&amp;&gt;</code></td> <td>Does not extend to the left of?</td> <td><code class="literal">box '((0,0),(3,3))' &amp;&gt; box '((0,0),(2,2))'</code></td> </tr> <tr> <td><code class="literal" id="6060124">&lt;&lt;|</code></td> <td>Is strictly below?</td> <td><code class="literal">box '((0,0),(3,3))' &lt;&lt;| box '((3,4),(5,5))'</code></td> </tr> <tr> <td><code class="literal" id="1246262">|&gt;&gt;</code></td> <td>Is strictly above?</td> <td><code class="literal">box '((3,4),(5,5))' |&gt;&gt; box '((0,0),(3,3))'</code></td> </tr> <tr> <td><code class="literal" id="3860124">&amp;&lt;|</code></td> <td>Does not extend above?</td> <td><code class="literal">box '((0,0),(1,1))' &amp;&lt;| box '((0,0),(2,2))'</code></td> </tr> <tr> <td><code class="literal" id="1243862">|&amp;&gt;</code></td> <td>Does not extend below?</td> <td><code class="literal">box '((0,0),(3,3))' |&amp;&gt; box '((0,0),(2,2))'</code></td> </tr> <tr> <td><code class="literal" id="6094">&lt;^</code></td> <td>Is below (allows touching)?</td> <td><code class="literal">circle '((0,0),1)' &lt;^ circle '((0,5),1)'</code></td> </tr> <tr> <td><code class="literal" id="6294">&gt;^</code></td> <td>Is above (allows touching)?</td> <td><code class="literal">circle '((0,5),1)' &gt;^ circle '((0,0),1)'</code></td> </tr> <tr> <td><code class="literal" id="6335">?#</code></td> <td>Intersects?</td> <td><code class="literal">lseg '((-1,0),(1,0))' ?# box '((-2,-2),(2,2))'</code></td> </tr> <tr> <td><code class="literal" id="63">?-</code></td> <td>Is horizontal?</td> <td><code class="literal">?- lseg '((-1,0),(1,0))'</code></td> </tr> <tr> <td><code class="literal">?-</code></td> <td>Are horizontally aligned?</td> <td><code class="literal">point '(1,0)' ?- point '(0,0)'</code></td> </tr> <tr> <td><code class="literal" id="63124">?|</code></td> <td>Is vertical?</td> <td><code class="literal">?| lseg '((-1,0),(1,0))'</code></td> </tr> <tr> <td><code class="literal">?|</code></td> <td>Are vertically aligned?</td> <td><code class="literal">point '(0,1)' ?| point '(0,0)'</code></td> </tr> <tr> <td><code class="literal" id="63-124">?-|</code></td> <td>Is perpendicular?</td> <td><code class="literal">lseg '((0,0),(0,1))' ?-| lseg '((0,0),(1,0))'</code></td> </tr> <tr> <td><code class="literal" id="63124124">?||</code></td> <td>Are parallel?</td> <td><code class="literal">lseg '((-1,0),(1,0))' ?|| lseg '((-1,2),(1,2))'</code></td> </tr> <tr> <td><code class="literal" id="6462">@&gt;</code></td> <td>Contains?</td> <td><code class="literal">circle '((0,0),2)' @&gt; point '(1,1)'</code></td> </tr> <tr> <td><code class="literal" id="6064">&lt;@</code></td> <td>Contained in or on?</td> <td><code class="literal">point '(1,1)' &lt;@ circle '((0,0),2)'</code></td> </tr> <tr> <td><code class="literal" id="12661">~=</code></td> <td>Same as?</td> <td><code class="literal">polygon '((0,0),(1,1))' ~= polygon '((1,1),(0,0))'</code></td> </tr> </tbody> </table> </div> </div> <blockquote class="note"> <h3 class="title">Note</h3> <p>Before PostgreSQL 8.2, the containment operators <code class="literal">@&gt;</code> and <code class="literal">&lt;@</code> were respectively called <code class="literal">~</code> and <code class="literal">@</code>. These names are still available, but are deprecated and will eventually be removed.</p> </blockquote> <div class="table" id="FUNCTIONS-GEOMETRY-FUNC-TABLE"> <p class="title"><strong>Table 9.35. Geometric Functions</strong></p> <div class="table-contents"> <table class="table" summary="Geometric Functions"> <colgroup> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td><code class="literal" id="area">area(object)</code></td> <td><code class="type">double precision</code></td> <td>area</td> <td><code class="literal">area(box '((0,0),(1,1))')</code></td> </tr> <tr> <td><code class="literal" id="center">center(object)</code></td> <td><code class="type">point</code></td> <td>center</td> <td><code class="literal">center(box '((0,0),(1,2))')</code></td> </tr> <tr> <td><code class="literal" id="diameter">diameter(circle)</code></td> <td><code class="type">double precision</code></td> <td>diameter of circle</td> <td><code class="literal">diameter(circle '((0,0),2.0)')</code></td> </tr> <tr> <td><code class="literal" id="height">height(box)</code></td> <td><code class="type">double precision</code></td> <td>vertical size of box</td> <td><code class="literal">height(box '((0,0),(1,1))')</code></td> </tr> <tr> <td><code class="literal" id="isclosed">isclosed(path)</code></td> <td><code class="type">boolean</code></td> <td>a closed path?</td> <td><code class="literal">isclosed(path '((0,0),(1,1),(2,0))')</code></td> </tr> <tr> <td><code class="literal" id="isopen">isopen(path)</code></td> <td><code class="type">boolean</code></td> <td>an open path?</td> <td><code class="literal">isopen(path '[(0,0),(1,1),(2,0)]')</code></td> </tr> <tr> <td><code class="literal" id="length">length(object)</code></td> <td><code class="type">double precision</code></td> <td>length</td> <td><code class="literal">length(path '((-1,0),(1,0))')</code></td> </tr> <tr> <td><code class="literal" id="npoints">npoints(path)</code></td> <td><code class="type">int</code></td> <td>number of points</td> <td><code class="literal">npoints(path '[(0,0),(1,1),(2,0)]')</code></td> </tr> <tr> <td><code class="literal">npoints(polygon)</code></td> <td><code class="type">int</code></td> <td>number of points</td> <td><code class="literal">npoints(polygon '((1,1),(0,0))')</code></td> </tr> <tr> <td><code class="literal" id="pclose">pclose(path)</code></td> <td><code class="type">path</code></td> <td>convert path to closed</td> <td><code class="literal">pclose(path '[(0,0),(1,1),(2,0)]')</code></td> </tr> <tr> <td><code class="literal" id="popen">popen(path)</code></td> <td><code class="type">path</code></td> <td>convert path to open</td> <td><code class="literal">popen(path '((0,0),(1,1),(2,0))')</code></td> </tr> <tr> <td><code class="literal" id="radius">radius(circle)</code></td> <td><code class="type">double precision</code></td> <td>radius of circle</td> <td><code class="literal">radius(circle '((0,0),2.0)')</code></td> </tr> <tr> <td><code class="literal" id="width">width(box)</code></td> <td><code class="type">double precision</code></td> <td>horizontal size of box</td> <td><code class="literal">width(box '((0,0),(1,1))')</code></td> </tr> </tbody> </table> </div> </div> <div class="table" id="FUNCTIONS-GEOMETRY-CONV-TABLE"> <p class="title"><strong>Table 9.36. Geometric Type Conversion Functions</strong></p> <div class="table-contents"> <table class="table" summary="Geometric Type Conversion Functions"> <colgroup> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td id="id-1.5.8.16.19.2.2.1.1.1"> <code class="literal" id="box">box(circle)</code>
+</td> <td><code class="type">box</code></td> <td>circle to box</td> <td><code class="literal">box(circle '((0,0),2.0)')</code></td> </tr> <tr> <td><code class="literal">box(point)</code></td> <td><code class="type">box</code></td> <td>point to empty box</td> <td><code class="literal">box(point '(0,0)')</code></td> </tr> <tr> <td><code class="literal">box(point, point)</code></td> <td><code class="type">box</code></td> <td>points to box</td> <td><code class="literal">box(point '(0,0)', point '(1,1)')</code></td> </tr> <tr> <td><code class="literal">box(polygon)</code></td> <td><code class="type">box</code></td> <td>polygon to box</td> <td><code class="literal">box(polygon '((0,0),(1,1),(2,0))')</code></td> </tr> <tr> <td><code class="literal" id="bound_box">bound_box(box, box)</code></td> <td><code class="type">box</code></td> <td>boxes to bounding box</td> <td><code class="literal">bound_box(box '((0,0),(1,1))', box '((3,3),(4,4))')</code></td> </tr> <tr> <td id="id-1.5.8.16.19.2.2.6.1.1"> <code class="literal" id="circle">circle(box)</code>
+</td> <td><code class="type">circle</code></td> <td>box to circle</td> <td><code class="literal">circle(box '((0,0),(1,1))')</code></td> </tr> <tr> <td><code class="literal">circle(point, double precision)</code></td> <td><code class="type">circle</code></td> <td>center and radius to circle</td> <td><code class="literal">circle(point '(0,0)', 2.0)</code></td> </tr> <tr> <td><code class="literal">circle(polygon)</code></td> <td><code class="type">circle</code></td> <td>polygon to circle</td> <td><code class="literal">circle(polygon '((0,0),(1,1),(2,0))')</code></td> </tr> <tr> <td><code class="literal" id="line">line(point, point)</code></td> <td><code class="type">line</code></td> <td>points to line</td> <td><code class="literal">line(point '(-1,0)', point '(1,0)')</code></td> </tr> <tr> <td id="id-1.5.8.16.19.2.2.10.1.1"> <code class="literal" id="lseg">lseg(box)</code>
+</td> <td><code class="type">lseg</code></td> <td>box diagonal to line segment</td> <td><code class="literal">lseg(box '((-1,0),(1,0))')</code></td> </tr> <tr> <td><code class="literal">lseg(point, point)</code></td> <td><code class="type">lseg</code></td> <td>points to line segment</td> <td><code class="literal">lseg(point '(-1,0)', point '(1,0)')</code></td> </tr> <tr> <td id="id-1.5.8.16.19.2.2.12.1.1"> <code class="literal" id="path">path(polygon)</code>
+</td> <td><code class="type">path</code></td> <td>polygon to path</td> <td><code class="literal">path(polygon '((0,0),(1,1),(2,0))')</code></td> </tr> <tr> <td id="id-1.5.8.16.19.2.2.13.1.1"> <code class="literal" id="point">point(double precision, double precision)</code>
+</td> <td><code class="type">point</code></td> <td>construct point</td> <td><code class="literal">point(23.4, -44.5)</code></td> </tr> <tr> <td><code class="literal">point(box)</code></td> <td><code class="type">point</code></td> <td>center of box</td> <td><code class="literal">point(box '((-1,0),(1,0))')</code></td> </tr> <tr> <td><code class="literal">point(circle)</code></td> <td><code class="type">point</code></td> <td>center of circle</td> <td><code class="literal">point(circle '((0,0),2.0)')</code></td> </tr> <tr> <td><code class="literal">point(lseg)</code></td> <td><code class="type">point</code></td> <td>center of line segment</td> <td><code class="literal">point(lseg '((-1,0),(1,0))')</code></td> </tr> <tr> <td><code class="literal">point(polygon)</code></td> <td><code class="type">point</code></td> <td>center of polygon</td> <td><code class="literal">point(polygon '((0,0),(1,1),(2,0))')</code></td> </tr> <tr> <td id="id-1.5.8.16.19.2.2.18.1.1"> <code class="literal" id="polygon">polygon(box)</code>
+</td> <td><code class="type">polygon</code></td> <td>box to 4-point polygon</td> <td><code class="literal">polygon(box '((0,0),(1,1))')</code></td> </tr> <tr> <td><code class="literal">polygon(circle)</code></td> <td><code class="type">polygon</code></td> <td>circle to 12-point polygon</td> <td><code class="literal">polygon(circle '((0,0),2.0)')</code></td> </tr> <tr> <td><code class="literal">polygon(npts, circle)</code></td> <td><code class="type">polygon</code></td> <td>circle to <code>npts</code>-point polygon</td> <td><code class="literal">polygon(12, circle '((0,0),2.0)')</code></td> </tr> <tr> <td><code class="literal">polygon(path)</code></td> <td><code class="type">polygon</code></td> <td>path to polygon</td> <td><code class="literal">polygon(path '((0,0),(1,1),(2,0))')</code></td> </tr> </tbody> </table> </div> </div> <p>It is possible to access the two component numbers of a <code class="type">point</code> as though the point were an array with indexes 0 and 1. For example, if <code class="literal">t.p</code> is a <code class="type">point</code> column then <code class="literal">SELECT p[0] FROM t</code> retrieves the X coordinate and <code class="literal">UPDATE t SET p[1] = ...</code> changes the Y coordinate. In the same way, a value of type <code class="type">box</code> or <code class="type">lseg</code> can be treated as an array of two <code class="type">point</code> values.</p> <p>The <code class="function">area</code> function works for the types <code class="type">box</code>, <code class="type">circle</code>, and <code class="type">path</code>. The <code class="function">area</code> function only works on the <code class="type">path</code> data type if the points in the <code class="type">path</code> are non-intersecting. For example, the <code class="type">path</code> <code class="literal">'((0,0),(0,1),(2,1),(2,2),(1,2),(1,0),(0,0))'::PATH</code> will not work; however, the following visually identical <code class="type">path</code> <code class="literal">'((0,0),(0,1),(1,1),(1,2),(2,2),(2,1),(1,1),(1,0),(0,0))'::PATH</code> will work. If the concept of an intersecting versus non-intersecting <code class="type">path</code> is confusing, draw both of the above <code class="type">path</code>s side by side on a piece of graph paper.</p>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../functions-enum/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/functions.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../functions-net/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">9.10. Enum Support Functions </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 9.12. Network Address Functions and Operators</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/functions-geometry.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/functions-geometry.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,173 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Text Search Functions and Operators - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content="Table 9.41, Table 9.42 and Table 9.43 summarize the functions and operators that are provided for full text searching. See Chapter 12 for a detailed &hellip;">
+  <meta name="keywords" content="text, search, functions, and, operators, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/functions-textsearch/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>9.13. Text Search Functions and Operators</h1>    <p><a class="xref" href="../functions-textsearch/#TEXTSEARCH-OPERATORS-TABLE" title="Table 9.41. Text Search Operators">Table 9.41</a>, <a class="xref" href="../functions-textsearch/#TEXTSEARCH-FUNCTIONS-TABLE" title="Table 9.42. Text Search Functions">Table 9.42</a> and <a class="xref" href="../functions-textsearch/#TEXTSEARCH-FUNCTIONS-DEBUG-TABLE" title="Table 9.43. Text Search Debugging Functions">Table 9.43</a> summarize the functions and operators that are provided for full text searching. See <a class="xref" href="https://www.postgresql.org/docs/12/textsearch.html" title="Chapter 12. Full Text Search" target="_blank">Chapter 12</a> for a detailed explanation of PostgreSQL's text search facility.</p> <div class="table" id="TEXTSEARCH-OPERATORS-TABLE"> <p class="title"><strong>Table 9.41. Text Search Operators</strong></p> <div class="table-contents"> <table class="table" summary="Text Search Operators"> <colgroup> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Operator</th> <th>Return Type</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td><code class="literal" id="6464">@@</code></td> <td><code class="type">boolean</code></td> <td>
+<code class="type">tsvector</code> matches <code class="type">tsquery</code> ?</td> <td><code class="literal">to_tsvector('fat cats ate rats') @@ to_tsquery('cat &amp; rat')</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="646464">@@@</code></td> <td><code class="type">boolean</code></td> <td>deprecated synonym for <code class="literal">@@</code>
+</td> <td><code class="literal">to_tsvector('fat cats ate rats') @@@ to_tsquery('cat &amp; rat')</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="124124">||</code></td> <td><code class="type">tsvector</code></td> <td>concatenate <code class="type">tsvector</code>s</td> <td><code class="literal">'a:1 b:2'::tsvector || 'c:1 d:2 b:3'::tsvector</code></td> <td><code class="literal">'a':1 'b':2,5 'c':3 'd':4</code></td> </tr> <tr> <td><code class="literal" id="3838">&amp;&amp;</code></td> <td><code class="type">tsquery</code></td> <td>AND <code class="type">tsquery</code>s together</td> <td><code class="literal">'fat | rat'::tsquery &amp;&amp; 'cat'::tsquery</code></td> <td><code class="literal">( 'fat' | 'rat' ) &amp; 'cat'</code></td> </tr> <tr> <td><code class="literal">||</code></td> <td><code class="type">tsquery</code></td> <td>OR <code class="type">tsquery</code>s together</td> <td><code class="literal">'fat | rat'::tsquery || 'cat'::tsquery</code></td> <td><code class="literal">( 'fat' | 'rat' ) | 'cat'</code></td> </tr> <tr> <td><code class="literal" id="3333">!!</code></td> <td><code class="type">tsquery</code></td> <td>negate a <code class="type">tsquery</code>
+</td> <td><code class="literal">!! 'cat'::tsquery</code></td> <td><code class="literal">!'cat'</code></td> </tr> <tr> <td><code class="literal" id="60-62">&lt;-&gt;</code></td> <td><code class="type">tsquery</code></td> <td>
+<code class="type">tsquery</code> followed by <code class="type">tsquery</code>
+</td> <td><code class="literal">to_tsquery('fat') &lt;-&gt; to_tsquery('rat')</code></td> <td><code class="literal">'fat' &lt;-&gt; 'rat'</code></td> </tr> <tr> <td><code class="literal" id="6462">@&gt;</code></td> <td><code class="type">boolean</code></td> <td>
+<code class="type">tsquery</code> contains another ?</td> <td><code class="literal">'cat'::tsquery @&gt; 'cat &amp; rat'::tsquery</code></td> <td><code class="literal">f</code></td> </tr> <tr> <td><code class="literal" id="6064">&lt;@</code></td> <td><code class="type">boolean</code></td> <td>
+<code class="type">tsquery</code> is contained in ?</td> <td><code class="literal">'cat'::tsquery &lt;@ 'cat &amp; rat'::tsquery</code></td> <td><code class="literal">t</code></td> </tr> </tbody> </table> </div> </div> <blockquote class="note"> <h3 class="title">Note</h3> <p>The <code class="type">tsquery</code> containment operators consider only the lexemes listed in the two queries, ignoring the combining operators.</p> </blockquote> <p>In addition to the operators shown in the table, the ordinary B-tree comparison operators (<code class="literal">=</code>, <code class="literal">&lt;</code>, etc) are defined for types <code class="type">tsvector</code> and <code class="type">tsquery</code>. These are not very useful for text searching but allow, for example, unique indexes to be built on columns of these types.</p> <div class="table" id="TEXTSEARCH-FUNCTIONS-TABLE"> <p class="title"><strong>Table 9.42. Text Search Functions</strong></p> <div class="table-contents"> <table class="table" summary="Text Search Functions"> <colgroup> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td id="id-1.5.8.18.8.2.2.1.1.1"> <code class="literal" id="array_to_tsvector">array_to_tsvector(text[])</code>
+</td> <td><code class="type">tsvector</code></td> <td>convert array of lexemes to <code class="type">tsvector</code>
+</td> <td><code class="literal">array_to_tsvector('{fat,cat,rat}'::text[])</code></td> <td><code class="literal">'cat' 'fat' 'rat'</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.2.1.1"> <code class="literal" id="get_current_ts_config">get_current_ts_config()</code>
+</td> <td><code class="type">regconfig</code></td> <td>get default text search configuration</td> <td><code class="literal">get_current_ts_config()</code></td> <td><code class="literal">english</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.3.1.1"> <code class="literal" id="length">length(tsvector)</code>
+</td> <td><code class="type">integer</code></td> <td>number of lexemes in <code class="type">tsvector</code>
+</td> <td><code class="literal">length('fat:2,4 cat:3 rat:5A'::tsvector)</code></td> <td><code class="literal">3</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.4.1.1"> <code class="literal" id="numnode">numnode(tsquery)</code>
+</td> <td><code class="type">integer</code></td> <td>number of lexemes plus operators in <code class="type">tsquery</code>
+</td> <td><code class="literal">numnode('(fat &amp; rat) | cat'::tsquery)</code></td> <td><code class="literal">5</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.5.1.1"> <code class="literal" id="plainto_tsquery">plainto_tsquery([ config regconfig , ] query text)</code>
+</td> <td><code class="type">tsquery</code></td> <td>produce <code class="type">tsquery</code> ignoring punctuation</td> <td><code class="literal">plainto_tsquery('english', 'The Fat Rats')</code></td> <td><code class="literal">'fat' &amp; 'rat'</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.6.1.1"> <code class="literal" id="phraseto_tsquery">phraseto_tsquery([ config regconfig , ] query text)</code>
+</td> <td><code class="type">tsquery</code></td> <td>produce <code class="type">tsquery</code> that searches for a phrase, ignoring punctuation</td> <td><code class="literal">phraseto_tsquery('english', 'The Fat Rats')</code></td> <td><code class="literal">'fat' &lt;-&gt; 'rat'</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.7.1.1"> <code class="literal" id="websearch_to_tsquery">websearch_to_tsquery([ config regconfig , ] query text)</code>
+</td> <td><code class="type">tsquery</code></td> <td>produce <code class="type">tsquery</code> from a web search style query</td> <td><code class="literal">websearch_to_tsquery('english', '"fat rat" or rat')</code></td> <td><code class="literal">'fat' &lt;-&gt; 'rat' | 'rat'</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.8.1.1"> <code class="literal" id="querytree">querytree(query tsquery)</code>
+</td> <td><code class="type">text</code></td> <td>get indexable part of a <code class="type">tsquery</code>
+</td> <td><code class="literal">querytree('foo &amp; ! bar'::tsquery)</code></td> <td><code class="literal">'foo'</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.9.1.1"> <code class="literal" id="setweight">setweight(vector tsvector, weight "char")</code>
+</td> <td><code class="type">tsvector</code></td> <td>assign <code>weight</code> to each element of <code>vector</code>
+</td> <td><code class="literal">setweight('fat:2,4 cat:3 rat:5B'::tsvector, 'A')</code></td> <td><code class="literal">'cat':3A 'fat':2A,4A 'rat':5A</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.10.1.1"> <code class="literal">setweight(vector tsvector, weight "char", lexemes text[])</code>
+</td> <td><code class="type">tsvector</code></td> <td>assign <code>weight</code> to elements of <code>vector</code> that are listed in <code>lexemes</code>
+</td> <td><code class="literal">setweight('fat:2,4 cat:3 rat:5B'::tsvector, 'A', '{cat,rat}')</code></td> <td><code class="literal">'cat':3A 'fat':2,4 'rat':5A</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.11.1.1"> <code class="literal" id="strip">strip(tsvector)</code>
+</td> <td><code class="type">tsvector</code></td> <td>remove positions and weights from <code class="type">tsvector</code>
+</td> <td><code class="literal">strip('fat:2,4 cat:3 rat:5A'::tsvector)</code></td> <td><code class="literal">'cat' 'fat' 'rat'</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.12.1.1"> <code class="literal" id="to_tsquery">to_tsquery([ config regconfig , ] query text)</code>
+</td> <td><code class="type">tsquery</code></td> <td>normalize words and convert to <code class="type">tsquery</code>
+</td> <td><code class="literal">to_tsquery('english', 'The &amp; Fat &amp; Rats')</code></td> <td><code class="literal">'fat' &amp; 'rat'</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.13.1.1"> <code class="literal" id="to_tsvector">to_tsvector([ config regconfig , ] document text)</code>
+</td> <td><code class="type">tsvector</code></td> <td>reduce document text to <code class="type">tsvector</code>
+</td> <td><code class="literal">to_tsvector('english', 'The Fat Rats')</code></td> <td><code class="literal">'fat':2 'rat':3</code></td> </tr> <tr> <td><code class="literal" id="to_tsvector41">to_tsvector([ config regconfig , ] document json(b))</code></td> <td><code class="type">tsvector</code></td> <td>reduce each string value in the document to a <code class="type">tsvector</code>, and then concatenate those in document order to produce a single <code class="type">tsvector</code>
+</td> <td><code class="literal">to_tsvector('english', '{"a": "The Fat Rats"}'::json)</code></td> <td><code class="literal">'fat':2 'rat':3</code></td> </tr> <tr> <td><code class="literal" id="json_to_tsvector4432filter32json41">json(b)_to_tsvector([ config regconfig, ] document json(b), filter json(b))</code></td> <td><code class="type">tsvector</code></td> <td>reduce each value in the document, specified by <code>filter</code> to a <code class="type">tsvector</code>, and then concatenate those in document order to produce a single <code class="type">tsvector</code>. <code>filter</code> is a <code class="type">jsonb</code> array, that enumerates what kind of elements need to be included into the resulting <code class="type">tsvector</code>. Possible values for <code>filter</code> are <code class="literal">"string"</code> (to include all string values), <code class="literal">"numeric"</code> (to include all numeric values in the string format), <code class="literal">"boolean"</code> (to include all Boolean values in the string format <code class="literal">"true"</code>/<code class="literal">"false"</code>), <code class="literal">"key"</code> (to include all keys) or <code class="literal">"all"</code> (to include all above). These values can be combined together to include, e.g. all string and numeric values.</td> <td><code class="literal">json_to_tsvector('english', '{"a": "The Fat Rats", "b": 123}'::json, '["string", "numeric"]')</code></td> <td><code class="literal">'123':5 'fat':2 'rat':3</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.16.1.1"> <code class="literal" id="ts_delete">ts_delete(vector tsvector, lexeme text)</code>
+</td> <td><code class="type">tsvector</code></td> <td>remove given <code>lexeme</code> from <code>vector</code>
+</td> <td><code class="literal">ts_delete('fat:2,4 cat:3 rat:5A'::tsvector, 'fat')</code></td> <td><code class="literal">'cat':3 'rat':5A</code></td> </tr> <tr> <td><code class="literal">ts_delete(vector tsvector, lexemes text[])</code></td> <td><code class="type">tsvector</code></td> <td>remove any occurrence of lexemes in <code>lexemes</code> from <code>vector</code>
+</td> <td><code class="literal">ts_delete('fat:2,4 cat:3 rat:5A'::tsvector, ARRAY['fat','rat'])</code></td> <td><code class="literal">'cat':3</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.18.1.1"> <code class="literal" id="ts_filter">ts_filter(vector tsvector, weights "char"[])</code>
+</td> <td><code class="type">tsvector</code></td> <td>select only elements with given <code>weights</code> from <code>vector</code>
+</td> <td><code class="literal">ts_filter('fat:2,4 cat:3b rat:5A'::tsvector, '{a,b}')</code></td> <td><code class="literal">'cat':3B 'rat':5A</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.19.1.1"> <code class="literal" id="ts_headline">ts_headline([ config regconfig, ] document text, query tsquery [, options text ])</code>
+</td> <td><code class="type">text</code></td> <td>display a query match</td> <td><code class="literal">ts_headline('x y z', 'z'::tsquery)</code></td> <td><code class="literal">x y &lt;b&gt;z&lt;/b&gt;</code></td> </tr> <tr> <td><code class="literal" id="ts_headline4432query32tsquery3241">ts_headline([ config regconfig, ] document json(b), query tsquery [, options text ])</code></td> <td><code class="type">text</code></td> <td>display a query match</td> <td><code class="literal">ts_headline('{"a":"x y z"}'::json, 'z'::tsquery)</code></td> <td><code class="literal">{"a":"x y &lt;b&gt;z&lt;/b&gt;"}</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.21.1.1"> <code class="literal" id="ts_rank">ts_rank([ weights float4[], ] vector tsvector, query tsquery [, normalization integer ])</code>
+</td> <td><code class="type">float4</code></td> <td>rank document for query</td> <td><code class="literal">ts_rank(textsearch, query)</code></td> <td><code class="literal">0.818</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.22.1.1"> <code class="literal" id="ts_rank_cd">ts_rank_cd([ weights float4[], ] vector tsvector, query tsquery [, normalization integer ])</code>
+</td> <td><code class="type">float4</code></td> <td>rank document for query using cover density</td> <td><code class="literal">ts_rank_cd('{0.1, 0.2, 0.4, 1.0}', textsearch, query)</code></td> <td><code class="literal">2.01317</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.23.1.1"> <code class="literal" id="ts_rewrite">ts_rewrite(query tsquery, target tsquery, substitute tsquery)</code>
+</td> <td><code class="type">tsquery</code></td> <td>replace <code>target</code> with <code>substitute</code> within query</td> <td><code class="literal">ts_rewrite('a &amp; b'::tsquery, 'a'::tsquery, 'foo|bar'::tsquery)</code></td> <td><code class="literal">'b' &amp; ( 'foo' | 'bar' )</code></td> </tr> <tr> <td><code class="literal">ts_rewrite(query tsquery, select text)</code></td> <td><code class="type">tsquery</code></td> <td>replace using targets and substitutes from a <code class="command">SELECT</code> command</td> <td><code class="literal">SELECT ts_rewrite('a &amp; b'::tsquery, 'SELECT t,s FROM aliases')</code></td> <td><code class="literal">'b' &amp; ( 'foo' | 'bar' )</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.25.1.1"> <code class="literal" id="tsquery_phrase">tsquery_phrase(query1 tsquery, query2 tsquery)</code>
+</td> <td><code class="type">tsquery</code></td> <td>make query that searches for <code>query1</code> followed by <code>query2</code> (same as <code class="literal">&lt;-&gt;</code> operator)</td> <td><code class="literal">tsquery_phrase(to_tsquery('fat'), to_tsquery('cat'))</code></td> <td><code class="literal">'fat' &lt;-&gt; 'cat'</code></td> </tr> <tr> <td><code class="literal">tsquery_phrase(query1 tsquery, query2 tsquery, distance integer)</code></td> <td><code class="type">tsquery</code></td> <td>make query that searches for <code>query1</code> followed by <code>query2</code> at distance <code>distance</code>
+</td> <td><code class="literal">tsquery_phrase(to_tsquery('fat'), to_tsquery('cat'), 10)</code></td> <td><code class="literal">'fat' &lt;10&gt; 'cat'</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.27.1.1"> <code class="literal" id="tsvector_to_array">tsvector_to_array(tsvector)</code>
+</td> <td><code class="type">text[]</code></td> <td>convert <code class="type">tsvector</code> to array of lexemes</td> <td><code class="literal">tsvector_to_array('fat:2,4 cat:3 rat:5A'::tsvector)</code></td> <td><code class="literal">{cat,fat,rat}</code></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.28.1.1"> <code class="literal" id="tsvector_update_trigger">tsvector_update_trigger()</code>
+</td> <td><code class="type">trigger</code></td> <td>trigger function for automatic <code class="type">tsvector</code> column update</td> <td><code class="literal">CREATE TRIGGER ... tsvector_update_trigger(tsvcol, 'pg_catalog.swedish', title, body)</code></td> <td></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.29.1.1"> <code class="literal" id="tsvector_update_trigger_column">tsvector_update_trigger_column()</code>
+</td> <td><code class="type">trigger</code></td> <td>trigger function for automatic <code class="type">tsvector</code> column update</td> <td><code class="literal">CREATE TRIGGER ... tsvector_update_trigger_column(tsvcol, configcol, title, body)</code></td> <td></td> </tr> <tr> <td id="id-1.5.8.18.8.2.2.30.1.1"> <code class="literal" id="unnest">unnest(tsvector, OUT lexeme text, OUT positions smallint[], OUT weights text)</code>
+</td> <td><code class="type">setof record</code></td> <td>expand a <code class="type">tsvector</code> to a set of rows</td> <td><code class="literal">unnest('fat:2,4 cat:3 rat:5A'::tsvector)</code></td> <td><code class="literal">(cat,{3},{D}) ...</code></td> </tr> </tbody> </table> </div> </div> <blockquote class="note"> <h3 class="title">Note</h3> <p>All the text search functions that accept an optional <code class="type">regconfig</code> argument will use the configuration specified by <a class="xref" href="../runtime-config-client/#GUC-DEFAULT-TEXT-SEARCH-CONFIG">default_text_search_config</a> when that argument is omitted.</p> </blockquote> <p>The functions in <a class="xref" href="../functions-textsearch/#TEXTSEARCH-FUNCTIONS-DEBUG-TABLE" title="Table 9.43. Text Search Debugging Functions">Table 9.43</a> are listed separately because they are not usually used in everyday text searching operations. They are helpful for development and debugging of new text search configurations.</p> <div class="table" id="TEXTSEARCH-FUNCTIONS-DEBUG-TABLE"> <p class="title"><strong>Table 9.43. Text Search Debugging Functions</strong></p> <div class="table-contents"> <table class="table" summary="Text Search Debugging Functions"> <colgroup> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td id="id-1.5.8.18.11.2.2.1.1.1"> <code class="literal" id="ts_debug">ts_debug([ config regconfig, ] document text, OUT alias text, OUT description text, OUT token text, OUT dictionaries regdictionary[], OUT dictionary regdictionary, OUT lexemes text[])</code>
+</td> <td><code class="type">setof record</code></td> <td>test a configuration</td> <td><code class="literal">ts_debug('english', 'The Brightest supernovaes')</code></td> <td><code class="literal">(asciiword,"Word, all ASCII",The,{english_stem},english_stem,{}) ...</code></td> </tr> <tr> <td id="id-1.5.8.18.11.2.2.2.1.1"> <code class="literal" id="ts_lexize">ts_lexize(dict regdictionary, token text)</code>
+</td> <td><code class="type">text[]</code></td> <td>test a dictionary</td> <td><code class="literal">ts_lexize('english_stem', 'stars')</code></td> <td><code class="literal">{star}</code></td> </tr> <tr> <td id="id-1.5.8.18.11.2.2.3.1.1"> <code class="literal" id="ts_parse">ts_parse(parser_name text, document text, OUT tokid integer, OUT token text)</code>
+</td> <td><code class="type">setof record</code></td> <td>test a parser</td> <td><code class="literal">ts_parse('default', 'foo - bar')</code></td> <td><code class="literal">(1,foo) ...</code></td> </tr> <tr> <td><code class="literal">ts_parse(parser_oid oid, document text, OUT tokid integer, OUT token text)</code></td> <td><code class="type">setof record</code></td> <td>test a parser</td> <td><code class="literal">ts_parse(3722, 'foo - bar')</code></td> <td><code class="literal">(1,foo) ...</code></td> </tr> <tr> <td id="id-1.5.8.18.11.2.2.5.1.1"> <code class="literal" id="ts_token_type">ts_token_type(parser_name text, OUT tokid integer, OUT alias text, OUT description text)</code>
+</td> <td><code class="type">setof record</code></td> <td>get token types defined by parser</td> <td><code class="literal">ts_token_type('default')</code></td> <td><code class="literal">(1,asciiword,"Word, all ASCII") ...</code></td> </tr> <tr> <td><code class="literal">ts_token_type(parser_oid oid, OUT tokid integer, OUT alias text, OUT description text)</code></td> <td><code class="type">setof record</code></td> <td>get token types defined by parser</td> <td><code class="literal">ts_token_type(3722)</code></td> <td><code class="literal">(1,asciiword,"Word, all ASCII") ...</code></td> </tr> <tr> <td id="id-1.5.8.18.11.2.2.7.1.1"> <code class="literal" id="ts_stat">ts_stat(sqlquery text, [ weights text, ] OUT word text, OUT ndoc integer, OUT nentry integer)</code>
+</td> <td><code class="type">setof record</code></td> <td>get statistics of a <code class="type">tsvector</code> column</td> <td><code class="literal">ts_stat('SELECT vector from apod')</code></td> <td><code class="literal">(foo,10,15) ...</code></td> </tr> </tbody> </table> </div> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../functions-net/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/functions.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../functions-xml/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">9.12. Network Address Functions and Operators </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 9.14. XML Functions</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/functions-textsearch.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/functions-textsearch.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

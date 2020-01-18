@@ -1,0 +1,125 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Internals&#58; BRIN Indexes - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content="BRIN stands for Block Range Index. BRIN is designed for handling very large tables in which certain columns have some natural correlation with their &hellip;">
+  <meta name="keywords" content="introduction, internals, brin, indexes, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/brin-intro/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>67.1. Introduction</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../brin-intro/#BRIN-OPERATION">67.1.1. Index Maintenance</a></dt> </dl> </div> <p>BRIN stands for Block Range Index. BRIN is designed for handling very large tables in which certain columns have some natural correlation with their physical location within the table. A <em class="firstterm">block range</em> is a group of pages that are physically adjacent in the table; for each block range, some summary info is stored by the index. For example, a table storing a store's sale orders might have a date column on which each order was placed, and most of the time the entries for earlier orders will appear earlier in the table as well; a table storing a ZIP code column might have all codes for a city grouped together naturally.</p> <p>BRIN indexes can satisfy queries via regular bitmap index scans, and will return all tuples in all pages within each range if the summary info stored by the index is <em class="firstterm">consistent</em> with the query conditions. The query executor is in charge of rechecking these tuples and discarding those that do not match the query conditions — in other words, these indexes are lossy. Because a BRIN index is very small, scanning the index adds little overhead compared to a sequential scan, but may avoid scanning large parts of the table that are known not to contain matching tuples.</p> <p>The specific data that a BRIN index will store, as well as the specific queries that the index will be able to satisfy, depend on the operator class selected for each column of the index. Data types having a linear sort order can have operator classes that store the minimum and maximum value within each block range, for instance; geometrical types might store the bounding box for all the objects in the block range.</p> <p>The size of the block range is determined at index creation time by the <code class="literal">pages_per_range</code> storage parameter. The number of index entries will be equal to the size of the relation in pages divided by the selected value for <code class="literal">pages_per_range</code>. Therefore, the smaller the number, the larger the index becomes (because of the need to store more index entries), but at the same time the summary data stored can be more precise and more data blocks can be skipped during an index scan.</p> <div class="sect2" id="BRIN-OPERATION">    <h2 class="title">67.1.1. Index Maintenance</h2>    <p>At the time of creation, all existing heap pages are scanned and a summary index tuple is created for each range, including the possibly-incomplete range at the end. As new pages are filled with data, page ranges that are already summarized will cause the summary information to be updated with data from the new tuples. When a new page is created that does not fall within the last summarized range, that range does not automatically acquire a summary tuple; those tuples remain unsummarized until a summarization run is invoked later, creating initial summaries. This process can be invoked manually using the <code class="function">brin_summarize_range(regclass, bigint)</code> or <code class="function">brin_summarize_new_values(regclass)</code> functions; automatically when <code class="command">VACUUM</code> processes the table; or by automatic summarization executed by autovacuum, as insertions occur. (This last trigger is disabled by default and can be enabled with the <code class="literal">autosummarize</code> parameter.) Conversely, a range can be de-summarized using the <code class="function">brin_desummarize_range(regclass, bigint)</code> function, which is useful when the index tuple is no longer a very good representation because the existing values have changed.</p> <p>When autosummarization is enabled, each time a page range is filled a request is sent to autovacuum for it to execute a targeted summarization for that range, to be fulfilled at the end of the next worker run on the same database. If the request queue is full, the request is not recorded and a message is sent to the server log:</p> <pre>
+LOG:  request for BRIN range summarization for index "brin_wi_idx" page 128 was not recorded
+</pre> <p>When this happens, the range will be summarized normally during the next regular vacuum of the table.</p> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="https://www.postgresql.org/docs/12/brin.html" target="_blank">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/brin.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../brin-builtin-opclasses/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">Chapter 67. BRIN Indexes </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 67.2. Built-in Operator Classes</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/brin-intro.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/brin-intro.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

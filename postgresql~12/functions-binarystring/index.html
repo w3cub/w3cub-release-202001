@@ -1,0 +1,143 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Binary String Functions and Operators - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content=" This section describes functions and operators for examining and manipulating values of type bytea. ">
+  <meta name="keywords" content="binary, string, functions, and, operators, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/functions-binarystring/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>9.5. Binary String Functions and Operators</h1>    <p>This section describes functions and operators for examining and manipulating values of type <code class="type">bytea</code>.</p> <p>SQL defines some string functions that use key words, rather than commas, to separate arguments. Details are in <a class="xref" href="../functions-binarystring/#FUNCTIONS-BINARYSTRING-SQL" title="Table 9.12. SQL Binary String Functions and Operators">Table 9.12</a>. PostgreSQL also provides versions of these functions that use the regular function invocation syntax (see <a class="xref" href="../functions-binarystring/#FUNCTIONS-BINARYSTRING-OTHER" title="Table 9.13. Other Binary String Functions">Table 9.13</a>).</p> <blockquote class="note"> <h3 class="title">Note</h3> <p>The sample results shown on this page assume that the server parameter <a class="link" href="../runtime-config-client/#GUC-BYTEA-OUTPUT"><code class="varname">bytea_output</code></a> is set to <code class="literal">escape</code> (the traditional PostgreSQL format).</p> </blockquote> <div class="table" id="FUNCTIONS-BINARYSTRING-SQL"> <p class="title"><strong>Table 9.12. SQL Binary String Functions and Operators</strong></p> <div class="table-contents"> <table class="table" summary="SQL Binary String Functions and Operators"> <colgroup> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td><code class="literal" id="124124"><em class="parameter">string</em> || <em class="parameter">string</em></code></td> <td><code class="type">bytea</code></td> <td id="id-1.5.8.10.6.2.2.1.3.1">String concatenation </td> <td><code class="literal">'\\Post'::bytea || '\047gres\000'::bytea</code></td> <td><code class="literal">\\Post'gres\000</code></td> </tr> <tr> <td id="id-1.5.8.10.6.2.2.2.1.1"> <code class="literal" id="octet_length">octet_length(<em class="parameter">string</em>)</code>
+</td> <td><code class="type">int</code></td> <td>Number of bytes in binary string</td> <td><code class="literal">octet_length('jo\000se'::bytea)</code></td> <td><code class="literal">5</code></td> </tr> <tr> <td id="id-1.5.8.10.6.2.2.3.1.1"> <code class="literal" id="overlay">overlay(<em class="parameter">string</em> placing <em class="parameter">string</em> from int [for int])</code>
+</td> <td><code class="type">bytea</code></td> <td>Replace substring</td> <td><code class="literal">overlay('Th\000omas'::bytea placing '\002\003'::bytea from 2 for 3)</code></td> <td><code class="literal">T\\002\\003mas</code></td> </tr> <tr> <td id="id-1.5.8.10.6.2.2.4.1.1"> <code class="literal" id="position">position(<em class="parameter">substring</em> in <em class="parameter">string</em>)</code>
+</td> <td><code class="type">int</code></td> <td>Location of specified substring</td> <td><code class="literal">position('\000om'::bytea in 'Th\000omas'::bytea)</code></td> <td><code class="literal">3</code></td> </tr> <tr> <td id="id-1.5.8.10.6.2.2.5.1.1"> <code class="literal" id="substring">substring(<em class="parameter">string</em> [from int] [for int])</code>
+</td> <td><code class="type">bytea</code></td> <td>Extract substring</td> <td><code class="literal">substring('Th\000omas'::bytea from 2 for 3)</code></td> <td><code class="literal">h\000o</code></td> </tr> <tr> <td id="id-1.5.8.10.6.2.2.6.1.1"> <code class="literal" id="trim">trim([both] <em class="parameter">bytes</em> from <em class="parameter">string</em>)</code>
+</td> <td><code class="type">bytea</code></td> <td>Remove the longest string containing only bytes appearing in <em class="parameter"><code>bytes</code></em> from the start and end of <em class="parameter"><code>string</code></em>
+</td> <td><code class="literal">trim('\000\001'::bytea from '\000Tom\001'::bytea)</code></td> <td><code class="literal">Tom</code></td> </tr> </tbody> </table> </div> </div> <p>Additional binary string manipulation functions are available and are listed in <a class="xref" href="../functions-binarystring/#FUNCTIONS-BINARYSTRING-OTHER" title="Table 9.13. Other Binary String Functions">Table 9.13</a>. Some of them are used internally to implement the SQL-standard string functions listed in <a class="xref" href="../functions-binarystring/#FUNCTIONS-BINARYSTRING-SQL" title="Table 9.12. SQL Binary String Functions and Operators">Table 9.12</a>.</p> <div class="table" id="FUNCTIONS-BINARYSTRING-OTHER"> <p class="title"><strong>Table 9.13. Other Binary String Functions</strong></p> <div class="table-contents"> <table class="table" summary="Other Binary String Functions"> <colgroup> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td id="id-1.5.8.10.8.2.2.1.1.1"> <code class="literal" id="btrim">btrim(<em class="parameter">string</em> bytea, <em class="parameter">bytes</em> bytea)</code>
+</td> <td><code class="type">bytea</code></td> <td>Remove the longest string containing only bytes appearing in <em class="parameter"><code>bytes</code></em> from the start and end of <em class="parameter"><code>string</code></em>
+</td> <td><code class="literal">btrim('\000trim\001'::bytea, '\000\001'::bytea)</code></td> <td><code class="literal">trim</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.2.1.1"> <code class="literal" id="decode">decode(<em class="parameter">string</em> text, <em class="parameter">format</em> text)</code>
+</td> <td><code class="type">bytea</code></td> <td>Decode binary data from textual representation in <em class="parameter"><code>string</code></em>. Options for <em class="parameter"><code>format</code></em> are same as in <code class="function">encode</code>.</td> <td><code class="literal">decode('123\000456', 'escape')</code></td> <td><code class="literal">123\000456</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.3.1.1"> <code class="literal" id="encode">encode(<em class="parameter">data</em> bytea, <em class="parameter">format</em> text)</code>
+</td> <td><code class="type">text</code></td> <td>Encode binary data into a textual representation. Supported formats are: <code class="literal">base64</code>, <code class="literal">hex</code>, <code class="literal">escape</code>. <code class="literal">escape</code> converts zero bytes and high-bit-set bytes to octal sequences (<code class="literal">\</code><code>nnn</code>) and doubles backslashes.</td> <td><code class="literal">encode('123\000456'::bytea, 'escape')</code></td> <td><code class="literal">123\000456</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.4.1.1"> <code class="literal" id="get_bit">get_bit(<em class="parameter">string</em>, <em class="parameter">offset</em>)</code>
+</td> <td><code class="type">int</code></td> <td>Extract bit from string</td> <td><code class="literal">get_bit('Th\000omas'::bytea, 45)</code></td> <td><code class="literal">1</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.5.1.1"> <code class="literal" id="get_byte">get_byte(<em class="parameter">string</em>, <em class="parameter">offset</em>)</code>
+</td> <td><code class="type">int</code></td> <td>Extract byte from string</td> <td><code class="literal">get_byte('Th\000omas'::bytea, 4)</code></td> <td><code class="literal">109</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.6.1.1"> <code class="literal" id="length">length(<em class="parameter">string</em>)</code>
+</td> <td><code class="type">int</code></td> <td id="id-1.5.8.10.8.2.2.6.3.2">Length of binary string  </td> <td><code class="literal">length('jo\000se'::bytea)</code></td> <td><code class="literal">5</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.7.1.1"> <code class="literal" id="md5">md5(<em class="parameter">string</em>)</code>
+</td> <td><code class="type">text</code></td> <td>Calculates the MD5 hash of <em class="parameter"><code>string</code></em>, returning the result in hexadecimal</td> <td><code class="literal">md5('Th\000omas'::bytea)</code></td> <td><code class="literal">8ab2d3c9689aaf18​b4958c334c82d8b1</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.8.1.1"> <code class="literal" id="set_bit">set_bit(<em class="parameter">string</em>, <em class="parameter">offset</em>, <em class="parameter">newvalue</em>)</code>
+</td> <td><code class="type">bytea</code></td> <td>Set bit in string</td> <td><code class="literal">set_bit('Th\000omas'::bytea, 45, 0)</code></td> <td><code class="literal">Th\000omAs</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.9.1.1"> <code class="literal" id="set_byte">set_byte(<em class="parameter">string</em>, <em class="parameter">offset</em>, <em class="parameter">newvalue</em>)</code>
+</td> <td><code class="type">bytea</code></td> <td>Set byte in string</td> <td><code class="literal">set_byte('Th\000omas'::bytea, 4, 64)</code></td> <td><code class="literal">Th\000o@as</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.10.1.1"> <code class="literal" id="sha224">sha224(bytea)</code>
+</td> <td><code class="type">bytea</code></td> <td>SHA-224 hash</td> <td><code class="literal">sha224('abc')</code></td> <td><code class="literal">\x23097d223405d8228642a477bda2​55b32aadbce4bda0b3f7e36c9da7</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.11.1.1"> <code class="literal" id="sha256">sha256(bytea)</code>
+</td> <td><code class="type">bytea</code></td> <td>SHA-256 hash</td> <td><code class="literal">sha256('abc')</code></td> <td><code class="literal">\xba7816bf8f01cfea414140de5dae2223​b00361a396177a9cb410ff61f20015ad</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.12.1.1"> <code class="literal" id="sha384">sha384(bytea)</code>
+</td> <td><code class="type">bytea</code></td> <td>SHA-384 hash</td> <td><code class="literal">sha384('abc')</code></td> <td><code class="literal">\xcb00753f45a35e8bb5a03d699ac65007​272c32ab0eded1631a8b605a43ff5bed​8086072ba1e7cc2358baeca134c825a7</code></td> </tr> <tr> <td id="id-1.5.8.10.8.2.2.13.1.1"> <code class="literal" id="sha512">sha512(bytea)</code>
+</td> <td><code class="type">bytea</code></td> <td>SHA-512 hash</td> <td><code class="literal">sha512('abc')</code></td> <td><code class="literal">\xddaf35a193617abacc417349ae204131​12e6fa4e89a97ea20a9eeee64b55d39a​2192992a274fc1a836ba3c23a3feebbd​454d4423643ce80e2a9ac94fa54ca49f</code></td> </tr> </tbody> </table> </div> </div> <p><code class="function">get_byte</code> and <code class="function">set_byte</code> number the first byte of a binary string as byte 0. <code class="function">get_bit</code> and <code class="function">set_bit</code> number bits from the right within each byte; for example bit 0 is the least significant bit of the first byte, and bit 15 is the most significant bit of the second byte.</p> <p>Note that for historic reasons, the function <code class="function">md5</code> returns a hex-encoded value of type <code class="type">text</code> whereas the SHA-2 functions return type <code class="type">bytea</code>. Use the functions <code class="function">encode</code> and <code class="function">decode</code> to convert between the two, for example <code class="literal">encode(sha256('abc'), 'hex')</code> to get a hex-encoded text representation.</p> <p>See also the aggregate function <code class="function">string_agg</code> in <a class="xref" href="../functions-aggregate/" title="9.20. Aggregate Functions">Section 9.20</a> and the large object functions in <a class="xref" href="https://www.postgresql.org/docs/12/lo-funcs.html" title="34.4. Server-Side Functions" target="_blank">Section 34.4</a>.</p>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../functions-string/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/functions.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../functions-bitstring/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">9.4. String Functions and Operators </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 9.6. Bit String Functions and Operators</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/functions-binarystring.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/functions-binarystring.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

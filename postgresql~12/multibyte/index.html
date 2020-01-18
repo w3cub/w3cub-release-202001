@@ -1,0 +1,228 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Character Set Support - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content="The character set support in PostgreSQL allows you to store text in a variety of character sets (also called encodings), including single-byte &hellip;">
+  <meta name="keywords" content="character, set, support, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/multibyte/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>23.3. Character Set Support</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../multibyte/#MULTIBYTE-CHARSET-SUPPORTED">23.3.1. Supported Character Sets</a></dt> <dt><a href="../multibyte/#id-1.6.10.5.6">23.3.2. Setting the Character Set</a></dt> <dt><a href="../multibyte/#id-1.6.10.5.7">23.3.3. Automatic Character Set Conversion Between Server and Client</a></dt> <dt><a href="../multibyte/#id-1.6.10.5.8">23.3.4. Further Reading</a></dt> </dl> </div> <p>The character set support in PostgreSQL allows you to store text in a variety of character sets (also called encodings), including single-byte character sets such as the ISO 8859 series and multiple-byte character sets such as EUC (Extended Unix Code), UTF-8, and Mule internal code. All supported character sets can be used transparently by clients, but a few are not supported for use within the server (that is, as a server-side encoding). The default character set is selected while initializing your PostgreSQL database cluster using <code class="command">initdb</code>. It can be overridden when you create a database, so you can have multiple databases each with a different character set.</p> <p>An important restriction, however, is that each database's character set must be compatible with the database's <code class="envar">LC_CTYPE</code> (character classification) and <code class="envar">LC_COLLATE</code> (string sort order) locale settings. For <code class="literal">C</code> or <code class="literal">POSIX</code> locale, any character set is allowed, but for other libc-provided locales there is only one character set that will work correctly. (On Windows, however, UTF-8 encoding can be used with any locale.) If you have ICU support configured, ICU-provided locales can be used with most but not all server-side encodings.</p> <div class="sect2" id="MULTIBYTE-CHARSET-SUPPORTED">    <h2 class="title">23.3.1. Supported Character Sets</h2>    <p><a class="xref" href="../multibyte/#CHARSET-TABLE" title="Table 23.1. PostgreSQL Character Sets">Table 23.1</a> shows the character sets available for use in PostgreSQL.</p> <div class="table" id="CHARSET-TABLE"> <p class="title"><strong>Table 23.1. PostgreSQL Character Sets</strong></p> <div class="table-contents"> <table class="table" summary="PostgreSQL Character Sets"> <colgroup> <col> <col> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Name</th> <th>Description</th> <th>Language</th> <th>Server?</th> <th>ICU?</th> <th>Bytes/Char</th> <th>Aliases</th> </tr> </thead> <tbody> <tr> <td><code class="literal">BIG5</code></td> <td>Big Five</td> <td>Traditional Chinese</td> <td>No</td> <td>No</td> <td>1-2</td> <td>
+<code class="literal">WIN950</code>, <code class="literal">Windows950</code>
+</td> </tr> <tr> <td><code class="literal">EUC_CN</code></td> <td>Extended UNIX Code-CN</td> <td>Simplified Chinese</td> <td>Yes</td> <td>Yes</td> <td>1-3</td> <td> </td> </tr> <tr> <td><code class="literal">EUC_JP</code></td> <td>Extended UNIX Code-JP</td> <td>Japanese</td> <td>Yes</td> <td>Yes</td> <td>1-3</td> <td> </td> </tr> <tr> <td><code class="literal">EUC_JIS_2004</code></td> <td>Extended UNIX Code-JP, JIS X 0213</td> <td>Japanese</td> <td>Yes</td> <td>No</td> <td>1-3</td> <td> </td> </tr> <tr> <td><code class="literal">EUC_KR</code></td> <td>Extended UNIX Code-KR</td> <td>Korean</td> <td>Yes</td> <td>Yes</td> <td>1-3</td> <td> </td> </tr> <tr> <td><code class="literal">EUC_TW</code></td> <td>Extended UNIX Code-TW</td> <td>Traditional Chinese, Taiwanese</td> <td>Yes</td> <td>Yes</td> <td>1-3</td> <td> </td> </tr> <tr> <td><code class="literal">GB18030</code></td> <td>National Standard</td> <td>Chinese</td> <td>No</td> <td>No</td> <td>1-4</td> <td> </td> </tr> <tr> <td><code class="literal">GBK</code></td> <td>Extended National Standard</td> <td>Simplified Chinese</td> <td>No</td> <td>No</td> <td>1-2</td> <td>
+<code class="literal">WIN936</code>, <code class="literal">Windows936</code>
+</td> </tr> <tr> <td><code class="literal">ISO_8859_5</code></td> <td>ISO 8859-5, ECMA 113</td> <td>Latin/Cyrillic</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">ISO_8859_6</code></td> <td>ISO 8859-6, ECMA 114</td> <td>Latin/Arabic</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">ISO_8859_7</code></td> <td>ISO 8859-7, ECMA 118</td> <td>Latin/Greek</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">ISO_8859_8</code></td> <td>ISO 8859-8, ECMA 121</td> <td>Latin/Hebrew</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">JOHAB</code></td> <td>JOHAB</td> <td>Korean (Hangul)</td> <td>No</td> <td>No</td> <td>1-3</td> <td> </td> </tr> <tr> <td><code class="literal">KOI8R</code></td> <td>KOI8-R</td> <td>Cyrillic (Russian)</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">KOI8</code></td> </tr> <tr> <td><code class="literal">KOI8U</code></td> <td>KOI8-U</td> <td>Cyrillic (Ukrainian)</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">LATIN1</code></td> <td>ISO 8859-1, ECMA 94</td> <td>Western European</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ISO88591</code></td> </tr> <tr> <td><code class="literal">LATIN2</code></td> <td>ISO 8859-2, ECMA 94</td> <td>Central European</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ISO88592</code></td> </tr> <tr> <td><code class="literal">LATIN3</code></td> <td>ISO 8859-3, ECMA 94</td> <td>South European</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ISO88593</code></td> </tr> <tr> <td><code class="literal">LATIN4</code></td> <td>ISO 8859-4, ECMA 94</td> <td>North European</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ISO88594</code></td> </tr> <tr> <td><code class="literal">LATIN5</code></td> <td>ISO 8859-9, ECMA 128</td> <td>Turkish</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ISO88599</code></td> </tr> <tr> <td><code class="literal">LATIN6</code></td> <td>ISO 8859-10, ECMA 144</td> <td>Nordic</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ISO885910</code></td> </tr> <tr> <td><code class="literal">LATIN7</code></td> <td>ISO 8859-13</td> <td>Baltic</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ISO885913</code></td> </tr> <tr> <td><code class="literal">LATIN8</code></td> <td>ISO 8859-14</td> <td>Celtic</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ISO885914</code></td> </tr> <tr> <td><code class="literal">LATIN9</code></td> <td>ISO 8859-15</td> <td>LATIN1 with Euro and accents</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ISO885915</code></td> </tr> <tr> <td><code class="literal">LATIN10</code></td> <td>ISO 8859-16, ASRO SR 14111</td> <td>Romanian</td> <td>Yes</td> <td>No</td> <td>1</td> <td><code class="literal">ISO885916</code></td> </tr> <tr> <td><code class="literal">MULE_INTERNAL</code></td> <td>Mule internal code</td> <td>Multilingual Emacs</td> <td>Yes</td> <td>No</td> <td>1-4</td> <td> </td> </tr> <tr> <td><code class="literal">SJIS</code></td> <td>Shift JIS</td> <td>Japanese</td> <td>No</td> <td>No</td> <td>1-2</td> <td>
+<code class="literal">Mskanji</code>, <code class="literal">ShiftJIS</code>, <code class="literal">WIN932</code>, <code class="literal">Windows932</code>
+</td> </tr> <tr> <td><code class="literal">SHIFT_JIS_2004</code></td> <td>Shift JIS, JIS X 0213</td> <td>Japanese</td> <td>No</td> <td>No</td> <td>1-2</td> <td> </td> </tr> <tr> <td><code class="literal">SQL_ASCII</code></td> <td>unspecified (see text)</td> <td><span class="emphasis"><em>any</em></span></td> <td>Yes</td> <td>No</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">UHC</code></td> <td>Unified Hangul Code</td> <td>Korean</td> <td>No</td> <td>No</td> <td>1-2</td> <td>
+<code class="literal">WIN949</code>, <code class="literal">Windows949</code>
+</td> </tr> <tr> <td><code class="literal">UTF8</code></td> <td>Unicode, 8-bit</td> <td><span class="emphasis"><em>all</em></span></td> <td>Yes</td> <td>Yes</td> <td>1-4</td> <td><code class="literal">Unicode</code></td> </tr> <tr> <td><code class="literal">WIN866</code></td> <td>Windows CP866</td> <td>Cyrillic</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">ALT</code></td> </tr> <tr> <td><code class="literal">WIN874</code></td> <td>Windows CP874</td> <td>Thai</td> <td>Yes</td> <td>No</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">WIN1250</code></td> <td>Windows CP1250</td> <td>Central European</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">WIN1251</code></td> <td>Windows CP1251</td> <td>Cyrillic</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td><code class="literal">WIN</code></td> </tr> <tr> <td><code class="literal">WIN1252</code></td> <td>Windows CP1252</td> <td>Western European</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">WIN1253</code></td> <td>Windows CP1253</td> <td>Greek</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">WIN1254</code></td> <td>Windows CP1254</td> <td>Turkish</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">WIN1255</code></td> <td>Windows CP1255</td> <td>Hebrew</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">WIN1256</code></td> <td>Windows CP1256</td> <td>Arabic</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">WIN1257</code></td> <td>Windows CP1257</td> <td>Baltic</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td> </td> </tr> <tr> <td><code class="literal">WIN1258</code></td> <td>Windows CP1258</td> <td>Vietnamese</td> <td>Yes</td> <td>Yes</td> <td>1</td> <td>
+<code class="literal">ABC</code>, <code class="literal">TCVN</code>, <code class="literal">TCVN5712</code>, <code class="literal">VSCII</code>
+</td> </tr> </tbody> </table> </div> </div> <p>Not all client APIs support all the listed character sets. For example, the PostgreSQL JDBC driver does not support <code class="literal">MULE_INTERNAL</code>, <code class="literal">LATIN6</code>, <code class="literal">LATIN8</code>, and <code class="literal">LATIN10</code>.</p> <p>The <code class="literal">SQL_ASCII</code> setting behaves considerably differently from the other settings. When the server character set is <code class="literal">SQL_ASCII</code>, the server interprets byte values 0-127 according to the ASCII standard, while byte values 128-255 are taken as uninterpreted characters. No encoding conversion will be done when the setting is <code class="literal">SQL_ASCII</code>. Thus, this setting is not so much a declaration that a specific encoding is in use, as a declaration of ignorance about the encoding. In most cases, if you are working with any non-ASCII data, it is unwise to use the <code class="literal">SQL_ASCII</code> setting because PostgreSQL will be unable to help you by converting or validating non-ASCII characters.</p> </div> <div class="sect2" id="id-1.6.10.5.6">    <h2 class="title">23.3.2. Setting the Character Set</h2>    <p><code class="command">initdb</code> defines the default character set (encoding) for a PostgreSQL cluster. For example,</p> <pre>
+initdb -E EUC_JP
+</pre> <p>sets the default character set to <code class="literal">EUC_JP</code> (Extended Unix Code for Japanese). You can use <code class="option">--encoding</code> instead of <code class="option">-E</code> if you prefer longer option strings. If no <code class="option">-E</code> or <code class="option">--encoding</code> option is given, <code class="command">initdb</code> attempts to determine the appropriate encoding to use based on the specified or default locale.</p> <p>You can specify a non-default encoding at database creation time, provided that the encoding is compatible with the selected locale:</p> <pre>
+createdb -E EUC_KR -T template0 --lc-collate=ko_KR.euckr --lc-ctype=ko_KR.euckr korean
+</pre> <p>This will create a database named <code class="literal">korean</code> that uses the character set <code class="literal">EUC_KR</code>, and locale <code class="literal">ko_KR</code>. Another way to accomplish this is to use this SQL command:</p> <pre data-language="sql">
+CREATE DATABASE korean WITH ENCODING 'EUC_KR' LC_COLLATE='ko_KR.euckr' LC_CTYPE='ko_KR.euckr' TEMPLATE=template0;
+</pre> <p>Notice that the above commands specify copying the <code class="literal">template0</code> database. When copying any other database, the encoding and locale settings cannot be changed from those of the source database, because that might result in corrupt data. For more information see <a class="xref" href="../manage-ag-templatedbs/" title="22.3. Template Databases">Section 22.3</a>.</p> <p>The encoding for a database is stored in the system catalog <code class="literal">pg_database</code>. You can see it by using the <code class="command">psql</code> <code class="option">-l</code> option or the <code class="command">\l</code> command.</p> <pre>
+$ <strong class="userinput">psql -l</strong>
+                                         List of databases
+   Name    |  Owner   | Encoding  |  Collation  |    Ctype    |          Access Privileges          
+-----------+----------+-----------+-------------+-------------+-------------------------------------
+ clocaledb | hlinnaka | SQL_ASCII | C           | C           | 
+ englishdb | hlinnaka | UTF8      | en_GB.UTF8  | en_GB.UTF8  | 
+ japanese  | hlinnaka | UTF8      | ja_JP.UTF8  | ja_JP.UTF8  | 
+ korean    | hlinnaka | EUC_KR    | ko_KR.euckr | ko_KR.euckr | 
+ postgres  | hlinnaka | UTF8      | fi_FI.UTF8  | fi_FI.UTF8  | 
+ template0 | hlinnaka | UTF8      | fi_FI.UTF8  | fi_FI.UTF8  | {=c/hlinnaka,hlinnaka=CTc/hlinnaka}
+ template1 | hlinnaka | UTF8      | fi_FI.UTF8  | fi_FI.UTF8  | {=c/hlinnaka,hlinnaka=CTc/hlinnaka}
+(7 rows)
+</pre> <blockquote class="important"> <h3 class="title">Important</h3> <p>On most modern operating systems, PostgreSQL can determine which character set is implied by the <code class="envar">LC_CTYPE</code> setting, and it will enforce that only the matching database encoding is used. On older systems it is your responsibility to ensure that you use the encoding expected by the locale you have selected. A mistake in this area is likely to lead to strange behavior of locale-dependent operations such as sorting.</p> <p>PostgreSQL will allow superusers to create databases with <code class="literal">SQL_ASCII</code> encoding even when <code class="envar">LC_CTYPE</code> is not <code class="literal">C</code> or <code class="literal">POSIX</code>. As noted above, <code class="literal">SQL_ASCII</code> does not enforce that the data stored in the database has any particular encoding, and so this choice poses risks of locale-dependent misbehavior. Using this combination of settings is deprecated and may someday be forbidden altogether.</p> </blockquote> </div> <div class="sect2" id="id-1.6.10.5.7">    <h2 class="title">23.3.3. Automatic Character Set Conversion Between Server and Client</h2>    <p>PostgreSQL supports automatic character set conversion between server and client for certain character set combinations. The conversion information is stored in the <code class="literal">pg_conversion</code> system catalog. PostgreSQL comes with some predefined conversions, as shown in <a class="xref" href="../multibyte/#MULTIBYTE-TRANSLATION-TABLE" title="Table 23.2. Client/Server Character Set Conversions">Table 23.2</a>. You can create a new conversion using the SQL command <code class="command">CREATE CONVERSION</code>.</p> <div class="table" id="MULTIBYTE-TRANSLATION-TABLE"> <p class="title"><strong>Table 23.2. Client/Server Character Set Conversions</strong></p> <div class="table-contents"> <table class="table" summary="Client/Server Character Set Conversions"> <colgroup> <col> <col> </colgroup> <thead> <tr> <th>Server Character Set</th> <th>Available Client Character Sets</th> </tr> </thead> <tbody> <tr> <td><code class="literal">BIG5</code></td> <td><span class="emphasis"><em>not supported as a server encoding</em></span></td> </tr> <tr> <td><code class="literal">EUC_CN</code></td> <td>
+<span class="emphasis"><em>EUC_CN</em></span>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">EUC_JP</code></td> <td>
+<span class="emphasis"><em>EUC_JP</em></span>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">SJIS</code>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">EUC_JIS_2004</code></td> <td>
+<span class="emphasis"><em>EUC_JIS_2004</em></span>, <code class="literal">SHIFT_JIS_2004</code>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">EUC_KR</code></td> <td>
+<span class="emphasis"><em>EUC_KR</em></span>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">EUC_TW</code></td> <td>
+<span class="emphasis"><em>EUC_TW</em></span>, <code class="literal">BIG5</code>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">GB18030</code></td> <td><span class="emphasis"><em>not supported as a server encoding</em></span></td> </tr> <tr> <td><code class="literal">GBK</code></td> <td><span class="emphasis"><em>not supported as a server encoding</em></span></td> </tr> <tr> <td><code class="literal">ISO_8859_5</code></td> <td>
+<span class="emphasis"><em>ISO_8859_5</em></span>, <code class="literal">KOI8R</code>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>, <code class="literal">WIN866</code>, <code class="literal">WIN1251</code>
+</td> </tr> <tr> <td><code class="literal">ISO_8859_6</code></td> <td>
+<span class="emphasis"><em>ISO_8859_6</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">ISO_8859_7</code></td> <td>
+<span class="emphasis"><em>ISO_8859_7</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">ISO_8859_8</code></td> <td>
+<span class="emphasis"><em>ISO_8859_8</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">JOHAB</code></td> <td><span class="emphasis"><em>not supported as a server encoding</em></span></td> </tr> <tr> <td><code class="literal">KOI8R</code></td> <td>
+<span class="emphasis"><em>KOI8R</em></span>, <code class="literal">ISO_8859_5</code>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>, <code class="literal">WIN866</code>, <code class="literal">WIN1251</code>
+</td> </tr> <tr> <td><code class="literal">KOI8U</code></td> <td>
+<span class="emphasis"><em>KOI8U</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">LATIN1</code></td> <td>
+<span class="emphasis"><em>LATIN1</em></span>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">LATIN2</code></td> <td>
+<span class="emphasis"><em>LATIN2</em></span>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>, <code class="literal">WIN1250</code>
+</td> </tr> <tr> <td><code class="literal">LATIN3</code></td> <td>
+<span class="emphasis"><em>LATIN3</em></span>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">LATIN4</code></td> <td>
+<span class="emphasis"><em>LATIN4</em></span>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">LATIN5</code></td> <td>
+<span class="emphasis"><em>LATIN5</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">LATIN6</code></td> <td>
+<span class="emphasis"><em>LATIN6</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">LATIN7</code></td> <td>
+<span class="emphasis"><em>LATIN7</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">LATIN8</code></td> <td>
+<span class="emphasis"><em>LATIN8</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">LATIN9</code></td> <td>
+<span class="emphasis"><em>LATIN9</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">LATIN10</code></td> <td>
+<span class="emphasis"><em>LATIN10</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">MULE_INTERNAL</code></td> <td>
+<span class="emphasis"><em>MULE_INTERNAL</em></span>, <code class="literal">BIG5</code>, <code class="literal">EUC_CN</code>, <code class="literal">EUC_JP</code>, <code class="literal">EUC_KR</code>, <code class="literal">EUC_TW</code>, <code class="literal">ISO_8859_5</code>, <code class="literal">KOI8R</code>, <code class="literal">LATIN1</code> to <code class="literal">LATIN4</code>, <code class="literal">SJIS</code>, <code class="literal">WIN866</code>, <code class="literal">WIN1250</code>, <code class="literal">WIN1251</code>
+</td> </tr> <tr> <td><code class="literal">SJIS</code></td> <td><span class="emphasis"><em>not supported as a server encoding</em></span></td> </tr> <tr> <td><code class="literal">SHIFT_JIS_2004</code></td> <td><span class="emphasis"><em>not supported as a server encoding</em></span></td> </tr> <tr> <td><code class="literal">SQL_ASCII</code></td> <td><span class="emphasis"><em>any (no conversion will be performed)</em></span></td> </tr> <tr> <td><code class="literal">UHC</code></td> <td><span class="emphasis"><em>not supported as a server encoding</em></span></td> </tr> <tr> <td><code class="literal">UTF8</code></td> <td><span class="emphasis"><em>all supported encodings</em></span></td> </tr> <tr> <td><code class="literal">WIN866</code></td> <td>
+<span class="emphasis"><em>WIN866</em></span>, <code class="literal">ISO_8859_5</code>, <code class="literal">KOI8R</code>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>, <code class="literal">WIN1251</code>
+</td> </tr> <tr> <td><code class="literal">WIN874</code></td> <td>
+<span class="emphasis"><em>WIN874</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">WIN1250</code></td> <td>
+<span class="emphasis"><em>WIN1250</em></span>, <code class="literal">LATIN2</code>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">WIN1251</code></td> <td>
+<span class="emphasis"><em>WIN1251</em></span>, <code class="literal">ISO_8859_5</code>, <code class="literal">KOI8R</code>, <code class="literal">MULE_INTERNAL</code>, <code class="literal">UTF8</code>, <code class="literal">WIN866</code>
+</td> </tr> <tr> <td><code class="literal">WIN1252</code></td> <td>
+<span class="emphasis"><em>WIN1252</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">WIN1253</code></td> <td>
+<span class="emphasis"><em>WIN1253</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">WIN1254</code></td> <td>
+<span class="emphasis"><em>WIN1254</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">WIN1255</code></td> <td>
+<span class="emphasis"><em>WIN1255</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">WIN1256</code></td> <td>
+<span class="emphasis"><em>WIN1256</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">WIN1257</code></td> <td>
+<span class="emphasis"><em>WIN1257</em></span>, <code class="literal">UTF8</code>
+</td> </tr> <tr> <td><code class="literal">WIN1258</code></td> <td>
+<span class="emphasis"><em>WIN1258</em></span>, <code class="literal">UTF8</code>
+</td> </tr> </tbody> </table> </div> </div> <p>To enable automatic character set conversion, you have to tell PostgreSQL the character set (encoding) you would like to use in the client. There are several ways to accomplish this:</p>  <ul> <li> <p>Using the <code class="command">\encoding</code> command in psql. <code class="command">\encoding</code> allows you to change client encoding on the fly. For example, to change the encoding to <code class="literal">SJIS</code>, type:</p> <pre data-language="sql">
+\encoding SJIS
+</pre> </li> <li> <p>libpq (<a class="xref" href="https://www.postgresql.org/docs/12/libpq-control.html" title="33.10. Control Functions" target="_blank">Section 33.10</a>) has functions to control the client encoding.</p> </li> <li> <p>Using <code class="command">SET client_encoding TO</code>. Setting the client encoding can be done with this SQL command:</p> <pre data-language="sql">
+SET CLIENT_ENCODING TO 'value';
+</pre> <p>Also you can use the standard SQL syntax <code class="literal">SET NAMES</code> for this purpose:</p> <pre data-language="sql">
+SET NAMES 'value';
+</pre> <p>To query the current client encoding:</p> <pre data-language="sql">
+SHOW client_encoding;
+</pre> <p>To return to the default encoding:</p> <pre data-language="sql">
+RESET client_encoding;
+</pre> </li> <li> <p>Using <code class="envar">PGCLIENTENCODING</code>. If the environment variable <code class="envar">PGCLIENTENCODING</code> is defined in the client's environment, that client encoding is automatically selected when a connection to the server is made. (This can subsequently be overridden using any of the other methods mentioned above.)</p> </li> <li> <p>Using the configuration variable <a class="xref" href="../runtime-config-client/#GUC-CLIENT-ENCODING">client_encoding</a>. If the <code class="varname">client_encoding</code> variable is set, that client encoding is automatically selected when a connection to the server is made. (This can subsequently be overridden using any of the other methods mentioned above.)</p> </li> </ul>  <p>If the conversion of a particular character is not possible — suppose you chose <code class="literal">EUC_JP</code> for the server and <code class="literal">LATIN1</code> for the client, and some Japanese characters are returned that do not have a representation in <code class="literal">LATIN1</code> — an error is reported.</p> <p>If the client character set is defined as <code class="literal">SQL_ASCII</code>, encoding conversion is disabled, regardless of the server's character set. Just as for the server, use of <code class="literal">SQL_ASCII</code> is unwise unless you are working with all-ASCII data.</p> </div> <div class="sect2" id="id-1.6.10.5.8">    <h2 class="title">23.3.4. Further Reading</h2>    <p>These are good sources to start learning about various kinds of encoding systems.</p> <div class="variablelist"> <dl class="variablelist"> <dt><em class="citetitle">CJKV Information Processing: Chinese, Japanese, Korean &amp; Vietnamese Computing</em></dt> <dd> <p>Contains detailed explanations of <code class="literal">EUC_JP</code>, <code class="literal">EUC_CN</code>, <code class="literal">EUC_KR</code>, <code class="literal">EUC_TW</code>.</p> </dd> <dt><a class="ulink" href="http://www.unicode.org/" target="_blank">http://www.unicode.org/</a></dt> <dd> <p>The web site of the Unicode Consortium.</p> </dd> <dt>RFC 3629</dt> <dd> <p>UTF-8 (8-bit UCS/Unicode Transformation Format) is defined here.</p> </dd> </dl> </div> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../collation/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/charset.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="https://www.postgresql.org/docs/12/maintenance.html" target="_blank">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">23.2. Collation Support </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> Chapter 24. Routine Database Maintenance Tasks</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/multibyte.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/multibyte.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

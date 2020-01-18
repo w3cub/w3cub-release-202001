@@ -1,0 +1,127 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Array Functions and Operators - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content=" Table 9.51 shows the operators available for array types. ">
+  <meta name="keywords" content="array, functions, and, operators, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/functions-array/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>9.18. Array Functions and Operators</h1>    <p><a class="xref" href="../functions-array/#ARRAY-OPERATORS-TABLE" title="Table 9.51. Array Operators">Table 9.51</a> shows the operators available for array types.</p> <div class="table" id="ARRAY-OPERATORS-TABLE"> <p class="title"><strong>Table 9.51. Array Operators</strong></p> <div class="table-contents"> <table class="table" summary="Array Operators"> <colgroup> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Operator</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td><code class="literal" id="61">=</code></td> <td>equal</td> <td><code class="literal">ARRAY[1.1,2.1,3.1]::int[] = ARRAY[1,2,3]</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="6062">&lt;&gt;</code></td> <td>not equal</td> <td><code class="literal">ARRAY[1,2,3] &lt;&gt; ARRAY[1,2,4]</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="60">&lt;</code></td> <td>less than</td> <td><code class="literal">ARRAY[1,2,3] &lt; ARRAY[1,2,4]</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="62">&gt;</code></td> <td>greater than</td> <td><code class="literal">ARRAY[1,4,3] &gt; ARRAY[1,2,4]</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="6061">&lt;=</code></td> <td>less than or equal</td> <td><code class="literal">ARRAY[1,2,3] &lt;= ARRAY[1,2,3]</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="6261">&gt;=</code></td> <td>greater than or equal</td> <td><code class="literal">ARRAY[1,4,3] &gt;= ARRAY[1,4,3]</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="6462">@&gt;</code></td> <td>contains</td> <td><code class="literal">ARRAY[1,4,3] @&gt; ARRAY[3,1,3]</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="6064">&lt;@</code></td> <td>is contained by</td> <td><code class="literal">ARRAY[2,2,7] &lt;@ ARRAY[1,7,4,2,6]</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="3838">&amp;&amp;</code></td> <td>overlap (have elements in common)</td> <td><code class="literal">ARRAY[1,4,3] &amp;&amp; ARRAY[2,1]</code></td> <td><code class="literal">t</code></td> </tr> <tr> <td><code class="literal" id="124124">||</code></td> <td>array-to-array concatenation</td> <td><code class="literal">ARRAY[1,2,3] || ARRAY[4,5,6]</code></td> <td><code class="literal">{1,2,3,4,5,6}</code></td> </tr> <tr> <td><code class="literal">||</code></td> <td>array-to-array concatenation</td> <td><code class="literal">ARRAY[1,2,3] || ARRAY[[4,5,6],[7,8,9]]</code></td> <td><code class="literal">{{1,2,3},{4,5,6},{7,8,9}}</code></td> </tr> <tr> <td><code class="literal">||</code></td> <td>element-to-array concatenation</td> <td><code class="literal">3 || ARRAY[4,5,6]</code></td> <td><code class="literal">{3,4,5,6}</code></td> </tr> <tr> <td><code class="literal">||</code></td> <td>array-to-element concatenation</td> <td><code class="literal">ARRAY[4,5,6] || 7</code></td> <td><code class="literal">{4,5,6,7}</code></td> </tr> </tbody> </table> </div> </div> <p>The array ordering operators (<code class="literal">&lt;</code>, <code class="literal">&gt;=</code>, etc) compare the array contents element-by-element, using the default B-tree comparison function for the element data type, and sort based on the first difference. In multidimensional arrays the elements are visited in row-major order (last subscript varies most rapidly). If the contents of two arrays are equal but the dimensionality is different, the first difference in the dimensionality information determines the sort order. (This is a change from versions of PostgreSQL prior to 8.2: older versions would claim that two arrays with the same contents were equal, even if the number of dimensions or subscript ranges were different.)</p> <p>The array containment operators (<code class="literal">&lt;@</code> and <code class="literal">@&gt;</code>) consider one array to be contained in another one if each of its elements appears in the other one. Duplicates are not treated specially, thus <code class="literal">ARRAY[1]</code> and <code class="literal">ARRAY[1,1]</code> are each considered to contain the other.</p> <p>See <a class="xref" href="../arrays/" title="8.15. Arrays">Section 8.15</a> for more details about array operator behavior. See <a class="xref" href="../indexes-types/" title="11.2. Index Types">Section 11.2</a> for more details about which operators support indexed operations.</p> <p><a class="xref" href="../functions-array/#ARRAY-FUNCTIONS-TABLE" title="Table 9.52. Array Functions">Table 9.52</a> shows the functions available for use with array types. See <a class="xref" href="../arrays/" title="8.15. Arrays">Section 8.15</a> for more information and examples of the use of these functions.</p> <div class="table" id="ARRAY-FUNCTIONS-TABLE"> <p class="title"><strong>Table 9.52. Array Functions</strong></p> <div class="table-contents"> <table class="table" summary="Array Functions"> <colgroup> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td><code class="literal" id="array_append">array_append(anyarray, anyelement)</code></td> <td><code class="type">anyarray</code></td> <td>append an element to the end of an array</td> <td><code class="literal">array_append(ARRAY[1,2], 3)</code></td> <td><code class="literal">{1,2,3}</code></td> </tr> <tr> <td><code class="literal" id="array_cat">array_cat(anyarray, anyarray)</code></td> <td><code class="type">anyarray</code></td> <td>concatenate two arrays</td> <td><code class="literal">array_cat(ARRAY[1,2,3], ARRAY[4,5])</code></td> <td><code class="literal">{1,2,3,4,5}</code></td> </tr> <tr> <td><code class="literal" id="array_ndims">array_ndims(anyarray)</code></td> <td><code class="type">int</code></td> <td>returns the number of dimensions of the array</td> <td><code class="literal">array_ndims(ARRAY[[1,2,3], [4,5,6]])</code></td> <td><code class="literal">2</code></td> </tr> <tr> <td><code class="literal" id="array_dims">array_dims(anyarray)</code></td> <td><code class="type">text</code></td> <td>returns a text representation of array's dimensions</td> <td><code class="literal">array_dims(ARRAY[[1,2,3], [4,5,6]])</code></td> <td><code class="literal">[1:2][1:3]</code></td> </tr> <tr> <td><code class="literal" id="array_fill">array_fill(anyelement, int[] [, int[]])</code></td> <td><code class="type">anyarray</code></td> <td>returns an array initialized with supplied value and dimensions, optionally with lower bounds other than 1</td> <td><code class="literal">array_fill(7, ARRAY[3], ARRAY[2])</code></td> <td><code class="literal">[2:4]={7,7,7}</code></td> </tr> <tr> <td><code class="literal" id="array_length">array_length(anyarray, int)</code></td> <td><code class="type">int</code></td> <td>returns the length of the requested array dimension</td> <td><code class="literal">array_length(array[1,2,3], 1)</code></td> <td><code class="literal">3</code></td> </tr> <tr> <td><code class="literal" id="array_lower">array_lower(anyarray, int)</code></td> <td><code class="type">int</code></td> <td>returns lower bound of the requested array dimension</td> <td><code class="literal">array_lower('[0:2]={1,2,3}'::int[], 1)</code></td> <td><code class="literal">0</code></td> </tr> <tr> <td><code class="literal" id="array_position">array_position(anyarray, anyelement [, int])</code></td> <td><code class="type">int</code></td> <td>returns the subscript of the first occurrence of the second argument in the array, starting at the element indicated by the third argument or at the first element (array must be one-dimensional)</td> <td><code class="literal">array_position(ARRAY['sun','mon','tue','wed','thu','fri','sat'], 'mon')</code></td> <td><code class="literal">2</code></td> </tr> <tr> <td><code class="literal" id="array_positions">array_positions(anyarray, anyelement)</code></td> <td><code class="type">int[]</code></td> <td>returns an array of subscripts of all occurrences of the second argument in the array given as first argument (array must be one-dimensional)</td> <td><code class="literal">array_positions(ARRAY['A','A','B','A'], 'A')</code></td> <td><code class="literal">{1,2,4}</code></td> </tr> <tr> <td><code class="literal" id="array_prepend">array_prepend(anyelement, anyarray)</code></td> <td><code class="type">anyarray</code></td> <td>append an element to the beginning of an array</td> <td><code class="literal">array_prepend(1, ARRAY[2,3])</code></td> <td><code class="literal">{1,2,3}</code></td> </tr> <tr> <td><code class="literal" id="array_remove">array_remove(anyarray, anyelement)</code></td> <td><code class="type">anyarray</code></td> <td>remove all elements equal to the given value from the array (array must be one-dimensional)</td> <td><code class="literal">array_remove(ARRAY[1,2,3,2], 2)</code></td> <td><code class="literal">{1,3}</code></td> </tr> <tr> <td><code class="literal" id="array_replace">array_replace(anyarray, anyelement, anyelement)</code></td> <td><code class="type">anyarray</code></td> <td>replace each array element equal to the given value with a new value</td> <td><code class="literal">array_replace(ARRAY[1,2,5,4], 5, 3)</code></td> <td><code class="literal">{1,2,3,4}</code></td> </tr> <tr> <td><code class="literal" id="array_to_string">array_to_string(anyarray, text [, text])</code></td> <td><code class="type">text</code></td> <td>concatenates array elements using supplied delimiter and optional null string</td> <td><code class="literal">array_to_string(ARRAY[1, 2, 3, NULL, 5], ',', '*')</code></td> <td><code class="literal">1,2,3,*,5</code></td> </tr> <tr> <td><code class="literal" id="array_upper">array_upper(anyarray, int)</code></td> <td><code class="type">int</code></td> <td>returns upper bound of the requested array dimension</td> <td><code class="literal">array_upper(ARRAY[1,8,3,7], 1)</code></td> <td><code class="literal">4</code></td> </tr> <tr> <td><code class="literal" id="cardinality">cardinality(anyarray)</code></td> <td><code class="type">int</code></td> <td>returns the total number of elements in the array, or 0 if the array is empty</td> <td><code class="literal">cardinality(ARRAY[[1,2],[3,4]])</code></td> <td><code class="literal">4</code></td> </tr> <tr> <td><code class="literal" id="string_to_array">string_to_array(text, text [, text])</code></td> <td><code class="type">text[]</code></td> <td>splits string into array elements using supplied delimiter and optional null string</td> <td><code class="literal">string_to_array('xx~^~yy~^~zz', '~^~', 'yy')</code></td> <td><code class="literal">{xx,NULL,zz}</code></td> </tr> <tr> <td><code class="literal" id="unnest">unnest(anyarray)</code></td> <td><code class="type">setof anyelement</code></td> <td>expand an array to a set of rows</td> <td><code class="literal">unnest(ARRAY[1,2])</code></td> <td> <pre>1
+2</pre>(2 rows) </td> </tr> <tr> <td><code class="literal">unnest(anyarray, anyarray [, ...])</code></td> <td><code class="type">setof anyelement, anyelement [, ...]</code></td> <td>expand multiple arrays (possibly of different types) to a set of rows. This is only allowed in the FROM clause; see <a class="xref" href="../queries-table-expressions/#QUERIES-TABLEFUNCTIONS" title="7.2.1.4. Table Functions">Section 7.2.1.4</a>
+</td> <td><code class="literal">unnest(ARRAY[1,2],ARRAY['foo','bar','baz'])</code></td> <td> <pre>1    foo
+2    bar
+NULL baz</pre>(3 rows) </td> </tr> </tbody> </table> </div> </div> <p>In <code class="function">array_position</code> and <code class="function">array_positions</code>, each array element is compared to the searched value using <code class="literal">IS NOT DISTINCT FROM</code> semantics.</p> <p>In <code class="function">array_position</code>, <code class="literal">NULL</code> is returned if the value is not found.</p> <p>In <code class="function">array_positions</code>, <code class="literal">NULL</code> is returned only if the array is <code class="literal">NULL</code>; if the value is not found in the array, an empty array is returned instead.</p> <p>In <code class="function">string_to_array</code>, if the delimiter parameter is NULL, each character in the input string will become a separate element in the resulting array. If the delimiter is an empty string, then the entire input string is returned as a one-element array. Otherwise the input string is split at each occurrence of the delimiter string.</p> <p>In <code class="function">string_to_array</code>, if the null-string parameter is omitted or NULL, none of the substrings of the input will be replaced by NULL. In <code class="function">array_to_string</code>, if the null-string parameter is omitted or NULL, any null elements in the array are simply skipped and not represented in the output string.</p> <blockquote class="note"> <h3 class="title">Note</h3> <p>There are two differences in the behavior of <code class="function">string_to_array</code> from pre-9.1 versions of PostgreSQL. First, it will return an empty (zero-element) array rather than NULL when the input string is of zero length. Second, if the delimiter string is NULL, the function splits the input into individual characters, rather than returning NULL as before.</p> </blockquote> <p>See also <a class="xref" href="../functions-aggregate/" title="9.20. Aggregate Functions">Section 9.20</a> about the aggregate function <code class="function">array_agg</code> for use with arrays.</p>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../functions-conditional/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/functions.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../functions-range/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">9.17. Conditional Expressions </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 9.19. Range Functions and Operators</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/functions-array.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/functions-array.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

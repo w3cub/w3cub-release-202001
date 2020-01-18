@@ -1,0 +1,132 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Type Conversion&#58; Value Storage - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content=" Values to be inserted into a table are converted to the destination column&#39;s data type according to the following steps. ">
+  <meta name="keywords" content="value, storage, type, conversion, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/typeconv-query/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>10.4. Value Storage</h1>    <p>Values to be inserted into a table are converted to the destination column's data type according to the following steps.</p> <div class="procedure" id="id-1.5.9.9.3"> <p class="title"><strong>Value Storage Type Conversion</strong></p> <ol class="procedure" type="1"> <li> <p>Check for an exact match with the target.</p> </li> <li> <p>Otherwise, try to convert the expression to the target type. This is possible if an <em class="firstterm">assignment cast</em> between the two types is registered in the <code class="structname">pg_cast</code> catalog (see <a class="xref" href="../sql-createcast/" title="CREATE CAST">CREATE CAST</a>). Alternatively, if the expression is an unknown-type literal, the contents of the literal string will be fed to the input conversion routine for the target type.</p> </li> <li> <p>Check to see if there is a sizing cast for the target type. A sizing cast is a cast from that type to itself. If one is found in the <code class="structname">pg_cast</code> catalog, apply it to the expression before storing into the destination column. The implementation function for such a cast always takes an extra parameter of type <code class="type">integer</code>, which receives the destination column's <code class="structfield">atttypmod</code> value (typically its declared length, although the interpretation of <code class="structfield">atttypmod</code> varies for different data types), and it may take a third <code class="type">boolean</code> parameter that says whether the cast is explicit or implicit. The cast function is responsible for applying any length-dependent semantics such as size checking or truncation.</p> </li> </ol> </div> <div class="example" id="id-1.5.9.9.4"> <p class="title"><strong>Example 10.9. <code class="type">character</code> Storage Type Conversion</strong></p> <div class="example-contents"> <p>For a target column declared as <code class="type">character(20)</code> the following statement shows that the stored value is sized correctly:</p> <pre>
+CREATE TABLE vv (v character(20));
+INSERT INTO vv SELECT 'abc' || 'def';
+SELECT v, octet_length(v) FROM vv;
+
+          v           | octet_length
+----------------------+--------------
+ abcdef               |           20
+(1 row)
+</pre> <p>What has really happened here is that the two unknown literals are resolved to <code class="type">text</code> by default, allowing the <code class="literal">||</code> operator to be resolved as <code class="type">text</code> concatenation. Then the <code class="type">text</code> result of the operator is converted to <code class="type">bpchar</code> (<span class="quote">“<span class="quote">blank-padded char</span>”</span>, the internal name of the <code class="type">character</code> data type) to match the target column type. (Since the conversion from <code class="type">text</code> to <code class="type">bpchar</code> is binary-coercible, this conversion does not insert any real function call.) Finally, the sizing function <code class="literal">bpchar(bpchar, integer, boolean)</code> is found in the system catalog and applied to the operator's result and the stored column length. This type-specific function performs the required length check and addition of padding spaces.</p> </div> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../typeconv-func/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/typeconv.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../typeconv-union-case/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">10.3. Functions </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 10.5. <code class="literal">UNION</code>, <code class="literal">CASE</code>, and Related Constructs</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/typeconv-query.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/typeconv-query.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

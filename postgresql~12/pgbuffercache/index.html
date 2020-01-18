@@ -1,0 +1,148 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Pg_buffercache - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content=" The pg_buffercache module provides a means for examining what&#39;s happening in the shared buffer cache in real time. ">
+  <meta name="keywords" content="f, pg, buffercache, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/pgbuffercache/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>F.24. pg_buffercache</h1>    <div class="toc"> <dl class="toc"> <dt><a href="../pgbuffercache/#id-1.11.7.33.7">F.24.1. The <code class="structname">pg_buffercache</code> View</a></dt> <dt><a href="../pgbuffercache/#id-1.11.7.33.8">F.24.2. Sample Output</a></dt> <dt><a href="../pgbuffercache/#id-1.11.7.33.9">F.24.3. Authors</a></dt> </dl> </div> <p>The <code class="filename">pg_buffercache</code> module provides a means for examining what's happening in the shared buffer cache in real time.</p> <p>The module provides a C function <code class="function">pg_buffercache_pages</code> that returns a set of records, plus a view <code class="structname">pg_buffercache</code> that wraps the function for convenient use.</p> <p>By default use is restricted to superusers and members of the <code class="literal">pg_read_all_stats</code> role. Access may be granted to others using <code class="command">GRANT</code>.</p> <div class="sect2" id="id-1.11.7.33.7">    <h2 class="title">F.24.1. The <code class="structname">pg_buffercache</code> View</h2>    <p>The definitions of the columns exposed by the view are shown in <a class="xref" href="../pgbuffercache/#PGBUFFERCACHE-COLUMNS" title="Table F.15. pg_buffercache Columns">Table F.15</a>.</p> <div class="table" id="PGBUFFERCACHE-COLUMNS"> <p class="title"><strong>Table F.15. <code class="structname">pg_buffercache</code> Columns</strong></p> <div class="table-contents"> <table class="table" summary="pg_buffercache Columns"> <colgroup> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Name</th> <th>Type</th> <th>References</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code class="structfield">bufferid</code></td> <td><code class="type">integer</code></td> <td> </td> <td>ID, in the range 1..<code class="varname">shared_buffers</code>
+</td> </tr> <tr> <td><code class="structfield">relfilenode</code></td> <td><code class="type">oid</code></td> <td><code class="literal">pg_class.relfilenode</code></td> <td>Filenode number of the relation</td> </tr> <tr> <td><code class="structfield">reltablespace</code></td> <td><code class="type">oid</code></td> <td><code class="literal">pg_tablespace.oid</code></td> <td>Tablespace OID of the relation</td> </tr> <tr> <td><code class="structfield">reldatabase</code></td> <td><code class="type">oid</code></td> <td><code class="literal">pg_database.oid</code></td> <td>Database OID of the relation</td> </tr> <tr> <td><code class="structfield">relforknumber</code></td> <td><code class="type">smallint</code></td> <td> </td> <td>Fork number within the relation; see <code class="filename">include/common/relpath.h</code>
+</td> </tr> <tr> <td><code class="structfield">relblocknumber</code></td> <td><code class="type">bigint</code></td> <td> </td> <td>Page number within the relation</td> </tr> <tr> <td><code class="structfield">isdirty</code></td> <td><code class="type">boolean</code></td> <td> </td> <td>Is the page dirty?</td> </tr> <tr> <td><code class="structfield">usagecount</code></td> <td><code class="type">smallint</code></td> <td> </td> <td>Clock-sweep access count</td> </tr> <tr> <td><code class="structfield">pinning_backends</code></td> <td><code class="type">integer</code></td> <td> </td> <td>Number of backends pinning this buffer</td> </tr> </tbody> </table> </div> </div> <p>There is one row for each buffer in the shared cache. Unused buffers are shown with all fields null except <code class="structfield">bufferid</code>. Shared system catalogs are shown as belonging to database zero.</p> <p>Because the cache is shared by all the databases, there will normally be pages from relations not belonging to the current database. This means that there may not be matching join rows in <code class="structname">pg_class</code> for some rows, or that there could even be incorrect joins. If you are trying to join against <code class="structname">pg_class</code>, it's a good idea to restrict the join to rows having <code class="structfield">reldatabase</code> equal to the current database's OID or zero.</p> <p>When the <code class="structname">pg_buffercache</code> view is accessed, internal buffer manager locks are taken for long enough to copy all the buffer state data that the view will display. This ensures that the view produces a consistent set of results, while not blocking normal buffer activity longer than necessary. Nonetheless there could be some impact on database performance if this view is read often.</p> </div> <div class="sect2" id="id-1.11.7.33.8">    <h2 class="title">F.24.2. Sample Output</h2>    <pre>
+regression=# SELECT c.relname, count(*) AS buffers
+             FROM pg_buffercache b INNER JOIN pg_class c
+             ON b.relfilenode = pg_relation_filenode(c.oid) AND
+                b.reldatabase IN (0, (SELECT oid FROM pg_database
+                                      WHERE datname = current_database()))
+             GROUP BY c.relname
+             ORDER BY 2 DESC
+             LIMIT 10;
+
+             relname             | buffers
+---------------------------------+---------
+ tenk2                           |     345
+ tenk1                           |     141
+ pg_proc                         |      46
+ pg_class                        |      45
+ pg_attribute                    |      43
+ pg_class_relname_nsp_index      |      30
+ pg_proc_proname_args_nsp_index  |      28
+ pg_attribute_relid_attnam_index |      26
+ pg_depend                       |      22
+ pg_depend_reference_index       |      20
+(10 rows)
+</pre> </div> <div class="sect2" id="id-1.11.7.33.9">    <h2 class="title">F.24.3. Authors</h2>    <p>Mark Kirkwood <code class="email">&lt;<a class="email" href="../mailto:markir@paradise.net.nz/">markir@paradise.net.nz</a>&gt;</code></p> <p>Design suggestions: Neil Conway <code class="email">&lt;<a class="email" href="../mailto:neilc@samurai.com/">neilc@samurai.com</a>&gt;</code></p> <p>Debugging advice: Tom Lane <code class="email">&lt;<a class="email" href="../mailto:tgl@sss.pgh.pa.us/">tgl@sss.pgh.pa.us</a>&gt;</code></p> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../passwordcheck/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/contrib.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../pgcrypto/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">F.23. passwordcheck </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> F.25. pgcrypto</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/pgbuffercache.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/pgbuffercache.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

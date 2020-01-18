@@ -1,0 +1,135 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>DO - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content=" DO — execute an anonymous code block ">
+  <meta name="keywords" content="do, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/sql-do/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>DO</h1> <p>DO — execute an anonymous code block</p>   <h2>Synopsis</h2> <pre data-language="sql">
+DO [ LANGUAGE lang_name ] code
+</pre>  <div class="refsect1" id="id-1.9.3.102.6"> <h2>Description</h2> <p><code class="command">DO</code> executes an anonymous code block, or in other words a transient anonymous function in a procedural language.</p> <p>The code block is treated as though it were the body of a function with no parameters, returning <code class="type">void</code>. It is parsed and executed a single time.</p> <p>The optional <code class="literal">LANGUAGE</code> clause can be written either before or after the code block.</p> </div> <div class="refsect1" id="id-1.9.3.102.7"> <h2>Parameters</h2> <div class="variablelist"> <dl class="variablelist"> <dt><code>code</code></dt> <dd> <p>The procedural language code to be executed. This must be specified as a string literal, just as in <code class="command">CREATE FUNCTION</code>. Use of a dollar-quoted literal is recommended.</p> </dd> <dt><code>lang_name</code></dt> <dd> <p>The name of the procedural language the code is written in. If omitted, the default is <code class="literal">plpgsql</code>.</p> </dd> </dl> </div> </div> <div class="refsect1" id="id-1.9.3.102.8"> <h2>Notes</h2> <p>The procedural language to be used must already have been installed into the current database by means of <code class="command">CREATE EXTENSION</code>. <code class="literal">plpgsql</code> is installed by default, but other languages are not.</p> <p>The user must have <code class="literal">USAGE</code> privilege for the procedural language, or must be a superuser if the language is untrusted. This is the same privilege requirement as for creating a function in the language.</p> <p>If <code class="command">DO</code> is executed in a transaction block, then the procedure code cannot execute transaction control statements. Transaction control statements are only allowed if <code class="command">DO</code> is executed in its own transaction.</p> </div> <div class="refsect1" id="SQL-DO-EXAMPLES"> <h2>Examples</h2> <p>Grant all privileges on all views in schema <code class="literal">public</code> to role <code class="literal">webuser</code>:</p> <pre data-language="sql">
+DO $$DECLARE r record;
+BEGIN
+    FOR r IN SELECT table_schema, table_name FROM information_schema.tables
+             WHERE table_type = 'VIEW' AND table_schema = 'public'
+    LOOP
+        EXECUTE 'GRANT ALL ON ' || quote_ident(r.table_schema) || '.' || quote_ident(r.table_name) || ' TO webuser';
+    END LOOP;
+END$$;
+</pre> </div> <div class="refsect1" id="id-1.9.3.102.10"> <h2>Compatibility</h2> <p>There is no <code class="command">DO</code> statement in the SQL standard.</p> </div> <div class="refsect1" id="id-1.9.3.102.11"> <h2>See Also</h2>
+<span class="simplelist"><a class="xref" href="../sql-createlanguage/" title="CREATE LANGUAGE">CREATE LANGUAGE</a></span> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../sql-discard/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/sql-commands.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../sql-drop-access-method/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">DISCARD </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> DROP ACCESS METHOD</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/sql-do.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/sql-do.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

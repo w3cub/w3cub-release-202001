@@ -1,0 +1,126 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>B-Tree Support Functions - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content=" As shown in Table 37.8, btree defines one required and two optional support functions. ">
+  <meta name="keywords" content="b-tree, support, functions, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/btree-support-funcs/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>63.3. B-Tree Support Functions</h1>    <p>As shown in <a class="xref" href="https://www.postgresql.org/docs/12/xindex.html#XINDEX-BTREE-SUPPORT-TABLE" title="Table 37.8. B-Tree Support Functions" target="_blank">Table 37.8</a>, btree defines one required and two optional support functions.</p> <p>For each combination of data types that a btree operator family provides comparison operators for, it must provide a comparison support function, registered in <code class="structname">pg_amproc</code> with support function number 1 and <code class="structfield">amproclefttype</code>/<code class="structfield">amprocrighttype</code> equal to the left and right data types for the comparison (i.e., the same data types that the matching operators are registered with in <code class="structname">pg_amop</code>). The comparison function must take two non-null values <code>A</code> and <code>B</code> and return an <code class="type">int32</code> value that is <code class="literal">&lt;</code> <code class="literal">0</code>, <code class="literal">0</code>, or <code class="literal">&gt;</code> <code class="literal">0</code> when <code>A</code> <code class="literal">&lt;</code> <code>B</code>, <code>A</code> <code class="literal">=</code> <code>B</code>, or <code>A</code> <code class="literal">&gt;</code> <code>B</code>, respectively. A null result is disallowed: all values of the data type must be comparable. See <code class="filename">src/backend/access/nbtree/nbtcompare.c</code> for examples.</p> <p>If the compared values are of a collatable data type, the appropriate collation OID will be passed to the comparison support function, using the standard <code class="function">PG_GET_COLLATION()</code> mechanism.</p> <p>Optionally, a btree operator family may provide <em class="firstterm">sort support</em> function(s), registered under support function number 2. These functions allow implementing comparisons for sorting purposes in a more efficient way than naively calling the comparison support function. The APIs involved in this are defined in <code class="filename">src/include/utils/sortsupport.h</code>.</p> <p>Optionally, a btree operator family may provide <em class="firstterm">in_range</em> support function(s), registered under support function number 3. These are not used during btree index operations; rather, they extend the semantics of the operator family so that it can support window clauses containing the <code class="literal">RANGE</code> <code>offset</code> <code class="literal">PRECEDING</code> and <code class="literal">RANGE</code> <code>offset</code> <code class="literal">FOLLOWING</code> frame bound types (see <a class="xref" href="../sql-expressions/#SYNTAX-WINDOW-FUNCTIONS" title="4.2.8. Window Function Calls">Section 4.2.8</a>). Fundamentally, the extra information provided is how to add or subtract an <code>offset</code> value in a way that is compatible with the family's data ordering.</p> <p>An <code class="function">in_range</code> function must have the signature</p> <pre data-language="sql">
+in_range(val type1, base type1, offset type2, sub bool, less bool)
+returns bool
+</pre> <p><code>val</code> and <code>base</code> must be of the same type, which is one of the types supported by the operator family (i.e., a type for which it provides an ordering). However, <code>offset</code> could be of a different type, which might be one otherwise unsupported by the family. An example is that the built-in <code class="literal">time_ops</code> family provides an <code class="function">in_range</code> function that has <code>offset</code> of type <code class="type">interval</code>. A family can provide <code class="function">in_range</code> functions for any of its supported types and one or more <code>offset</code> types. Each <code class="function">in_range</code> function should be entered in <code class="structname">pg_amproc</code> with <code class="structfield">amproclefttype</code> equal to <code class="type">type1</code> and <code class="structfield">amprocrighttype</code> equal to <code class="type">type2</code>.</p> <p>The essential semantics of an <code class="function">in_range</code> function depend on the two Boolean flag parameters. It should add or subtract <code>base</code> and <code>offset</code>, then compare <code>val</code> to the result, as follows:</p>  <ul> <li> <p>if <code class="literal">!</code><code>sub</code> and <code class="literal">!</code><code>less</code>, return <code>val</code> <code class="literal">&gt;=</code> (<code>base</code> <code class="literal">+</code> <code>offset</code>)</p> </li> <li> <p>if <code class="literal">!</code><code>sub</code> and <code>less</code>, return <code>val</code> <code class="literal">&lt;=</code> (<code>base</code> <code class="literal">+</code> <code>offset</code>)</p> </li> <li> <p>if <code>sub</code> and <code class="literal">!</code><code>less</code>, return <code>val</code> <code class="literal">&gt;=</code> (<code>base</code> <code class="literal">-</code> <code>offset</code>)</p> </li> <li> <p>if <code>sub</code> and <code>less</code>, return <code>val</code> <code class="literal">&lt;=</code> (<code>base</code> <code class="literal">-</code> <code>offset</code>)</p> </li> </ul>  <p>Before doing so, the function should check the sign of <code>offset</code>: if it is less than zero, raise error <code class="literal">ERRCODE_INVALID_PRECEDING_OR_FOLLOWING_SIZE</code> (22013) with error text like <span class="quote">“<span class="quote">invalid preceding or following size in window function</span>”</span>. (This is required by the SQL standard, although nonstandard operator families might perhaps choose to ignore this restriction, since there seems to be little semantic necessity for it.) This requirement is delegated to the <code class="function">in_range</code> function so that the core code needn't understand what <span class="quote">“<span class="quote">less than zero</span>”</span> means for a particular data type.</p> <p>An additional expectation is that <code class="function">in_range</code> functions should, if practical, avoid throwing an error if <code>base</code> <code class="literal">+</code> <code>offset</code> or <code>base</code> <code class="literal">-</code> <code>offset</code> would overflow. The correct comparison result can be determined even if that value would be out of the data type's range. Note that if the data type includes concepts such as <span class="quote">“<span class="quote">infinity</span>”</span> or <span class="quote">“<span class="quote">NaN</span>”</span>, extra care may be needed to ensure that <code class="function">in_range</code>'s results agree with the normal sort order of the operator family.</p> <p>The results of the <code class="function">in_range</code> function must be consistent with the sort ordering imposed by the operator family. To be precise, given any fixed values of <code>offset</code> and <code>sub</code>, then:</p>  <ul> <li> <p>If <code class="function">in_range</code> with <code>less</code> = true is true for some <code>val1</code> and <code>base</code>, it must be true for every <code>val2</code> <code class="literal">&lt;=</code> <code>val1</code> with the same <code>base</code>.</p> </li> <li> <p>If <code class="function">in_range</code> with <code>less</code> = true is false for some <code>val1</code> and <code>base</code>, it must be false for every <code>val2</code> <code class="literal">&gt;=</code> <code>val1</code> with the same <code>base</code>.</p> </li> <li> <p>If <code class="function">in_range</code> with <code>less</code> = true is true for some <code>val</code> and <code>base1</code>, it must be true for every <code>base2</code> <code class="literal">&gt;=</code> <code>base1</code> with the same <code>val</code>.</p> </li> <li> <p>If <code class="function">in_range</code> with <code>less</code> = true is false for some <code>val</code> and <code>base1</code>, it must be false for every <code>base2</code> <code class="literal">&lt;=</code> <code>base1</code> with the same <code>val</code>.</p> </li> </ul>  <p>Analogous statements with inverted conditions hold when <code>less</code> = false.</p> <p>If the type being ordered (<code class="type">type1</code>) is collatable, the appropriate collation OID will be passed to the <code class="function">in_range</code> function, using the standard PG_GET_COLLATION() mechanism.</p> <p><code class="function">in_range</code> functions need not handle NULL inputs, and typically will be marked strict.</p>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../btree-behavior/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/btree.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../btree-implementation/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">63.2. Behavior of B-Tree Operator Classes </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 63.4. Implementation</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/btree-support-funcs.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/btree-support-funcs.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

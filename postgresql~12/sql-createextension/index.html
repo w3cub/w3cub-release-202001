@@ -1,0 +1,134 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>CREATE EXTENSION - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content=" CREATE EXTENSION — install an extension ">
+  <meta name="keywords" content="create, extension, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/sql-createextension/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>CREATE EXTENSION</h1> <p>CREATE EXTENSION — install an extension</p>   <h2>Synopsis</h2> <pre data-language="sql">
+CREATE EXTENSION [ IF NOT EXISTS ] extension_name
+    [ WITH ] [ SCHEMA schema_name ]
+             [ VERSION version ]
+             [ FROM old_version ]
+             [ CASCADE ]
+</pre>  <div class="refsect1" id="id-1.9.3.64.5"> <h2>Description</h2> <p><code class="command">CREATE EXTENSION</code> loads a new extension into the current database. There must not be an extension of the same name already loaded.</p> <p>Loading an extension essentially amounts to running the extension's script file. The script will typically create new SQL objects such as functions, data types, operators and index support methods. <code class="command">CREATE EXTENSION</code> additionally records the identities of all the created objects, so that they can be dropped again if <code class="command">DROP EXTENSION</code> is issued.</p> <p>Loading an extension requires the same privileges that would be required to create its component objects. For most extensions this means superuser or database owner privileges are needed. The user who runs <code class="command">CREATE EXTENSION</code> becomes the owner of the extension for purposes of later privilege checks, as well as the owner of any objects created by the extension's script.</p> </div> <div class="refsect1" id="id-1.9.3.64.6"> <h2>Parameters</h2> <div class="variablelist"> <dl class="variablelist"> <dt><code class="literal">IF NOT EXISTS</code></dt> <dd> <p>Do not throw an error if an extension with the same name already exists. A notice is issued in this case. Note that there is no guarantee that the existing extension is anything like the one that would have been created from the currently-available script file.</p> </dd> <dt><code>extension_name</code></dt> <dd> <p>The name of the extension to be installed. PostgreSQL will create the extension using details from the file <code class="literal">SHAREDIR/extension/</code><code>extension_name</code><code class="literal">.control</code>.</p> </dd> <dt><code>schema_name</code></dt> <dd> <p>The name of the schema in which to install the extension's objects, given that the extension allows its contents to be relocated. The named schema must already exist. If not specified, and the extension's control file does not specify a schema either, the current default object creation schema is used.</p> <p>If the extension specifies a <code class="literal">schema</code> parameter in its control file, then that schema cannot be overridden with a <code class="literal">SCHEMA</code> clause. Normally, an error will be raised if a <code class="literal">SCHEMA</code> clause is given and it conflicts with the extension's <code class="literal">schema</code> parameter. However, if the <code class="literal">CASCADE</code> clause is also given, then <code>schema_name</code> is ignored when it conflicts. The given <code>schema_name</code> will be used for installation of any needed extensions that do not specify <code class="literal">schema</code> in their control files.</p> <p>Remember that the extension itself is not considered to be within any schema: extensions have unqualified names that must be unique database-wide. But objects belonging to the extension can be within schemas.</p> </dd> <dt><code>version</code></dt> <dd> <p>The version of the extension to install. This can be written as either an identifier or a string literal. The default version is whatever is specified in the extension's control file.</p> </dd> <dt><code>old_version</code></dt> <dd> <p><code class="literal">FROM</code> <code>old_version</code> must be specified when, and only when, you are attempting to install an extension that replaces an <span class="quote">“<span class="quote">old style</span>”</span> module that is just a collection of objects not packaged into an extension. This option causes <code class="command">CREATE EXTENSION</code> to run an alternative installation script that absorbs the existing objects into the extension, instead of creating new objects. Be careful that <code class="literal">SCHEMA</code> specifies the schema containing these pre-existing objects.</p> <p>The value to use for <code>old_version</code> is determined by the extension's author, and might vary if there is more than one version of the old-style module that can be upgraded into an extension. For the standard additional modules supplied with pre-9.1 PostgreSQL, use <code class="literal">unpackaged</code> for <code>old_version</code> when updating a module to extension style.</p> </dd> <dt><code class="literal">CASCADE</code></dt> <dd> <p>Automatically install any extensions that this extension depends on that are not already installed. Their dependencies are likewise automatically installed, recursively. The <code class="literal">SCHEMA</code> clause, if given, applies to all extensions that get installed this way. Other options of the statement are not applied to automatically-installed extensions; in particular, their default versions are always selected.</p> </dd> </dl> </div> </div> <div class="refsect1" id="id-1.9.3.64.7"> <h2>Notes</h2> <p>Before you can use <code class="command">CREATE EXTENSION</code> to load an extension into a database, the extension's supporting files must be installed. Information about installing the extensions supplied with PostgreSQL can be found in <a class="link" href="https://www.postgresql.org/docs/12/contrib.html" title="Appendix F. Additional Supplied Modules" target="_blank">Additional Supplied Modules</a>.</p> <p>The extensions currently available for loading can be identified from the <a class="link" href="../view-pg-available-extensions/" title="51.66. pg_available_extensions"><code class="structname">pg_available_extensions</code></a> or <a class="link" href="../view-pg-available-extension-versions/" title="51.67. pg_available_extension_versions"><code class="structname">pg_available_extension_versions</code></a> system views.</p> <p>For information about writing new extensions, see <a class="xref" href="https://www.postgresql.org/docs/12/extend-extensions.html" title="37.17. Packaging Related Objects into an Extension" target="_blank">Section 37.17</a>.</p> </div> <div class="refsect1" id="id-1.9.3.64.8"> <h2>Examples</h2> <p>Install the <a class="link" href="../hstore/" title="F.16. hstore">hstore</a> extension into the current database:</p> <pre data-language="sql">
+CREATE EXTENSION hstore;
+</pre> <p>Update a pre-9.1 installation of <code class="literal">hstore</code> into extension style:</p> <pre data-language="sql">
+CREATE EXTENSION hstore SCHEMA public FROM unpackaged;
+</pre> <p>Be careful to specify the schema in which you installed the existing <code class="literal">hstore</code> objects.</p> </div> <div class="refsect1" id="id-1.9.3.64.9"> <h2>Compatibility</h2> <p><code class="command">CREATE EXTENSION</code> is a PostgreSQL extension.</p> </div> <div class="refsect1" id="id-1.9.3.64.10"> <h2>See Also</h2>
+<span class="simplelist"><a class="xref" href="../sql-alterextension/" title="ALTER EXTENSION">ALTER EXTENSION</a>, <a class="xref" href="../sql-dropextension/" title="DROP EXTENSION">DROP EXTENSION</a></span> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../sql-createeventtrigger/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/sql-commands.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../sql-createforeigndatawrapper/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">CREATE EVENT TRIGGER </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> CREATE FOREIGN DATA WRAPPER</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/sql-createextension.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/sql-createextension.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,138 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Network Address Functions and Operators - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content="Table 9.37 shows the operators available for the cidr and inet types. The operators &#60;&#60;, &#60;&#60;&#61;, &#62;&#62;, &#62;&#62;&#61;, and &# &hellip;">
+  <meta name="keywords" content="network, address, functions, and, operators, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/functions-net/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>9.12. Network Address Functions and Operators</h1>    <p><a class="xref" href="../functions-net/#CIDR-INET-OPERATORS-TABLE" title="Table 9.37. cidr and inet Operators">Table 9.37</a> shows the operators available for the <code class="type">cidr</code> and <code class="type">inet</code> types. The operators <code class="literal">&lt;&lt;</code>, <code class="literal">&lt;&lt;=</code>, <code class="literal">&gt;&gt;</code>, <code class="literal">&gt;&gt;=</code>, and <code class="literal">&amp;&amp;</code> test for subnet inclusion. They consider only the network parts of the two addresses (ignoring any host part) and determine whether one network is identical to or a subnet of the other.</p> <div class="table" id="CIDR-INET-OPERATORS-TABLE"> <p class="title"><strong>Table 9.37. <code class="type">cidr</code> and <code class="type">inet</code> Operators</strong></p> <div class="table-contents"> <table class="table" summary="cidr and inet Operators"> <colgroup> <col> <col> <col> </colgroup> <thead> <tr> <th>Operator</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td><code class="literal" id="60">&lt;</code></td> <td>is less than</td> <td><code class="literal">inet '192.168.1.5' &lt; inet '192.168.1.6'</code></td> </tr> <tr> <td><code class="literal" id="6061">&lt;=</code></td> <td>is less than or equal</td> <td><code class="literal">inet '192.168.1.5' &lt;= inet '192.168.1.5'</code></td> </tr> <tr> <td><code class="literal" id="61">=</code></td> <td>equals</td> <td><code class="literal">inet '192.168.1.5' = inet '192.168.1.5'</code></td> </tr> <tr> <td><code class="literal" id="6261">&gt;=</code></td> <td>is greater or equal</td> <td><code class="literal">inet '192.168.1.5' &gt;= inet '192.168.1.5'</code></td> </tr> <tr> <td><code class="literal" id="62">&gt;</code></td> <td>is greater than</td> <td><code class="literal">inet '192.168.1.5' &gt; inet '192.168.1.4'</code></td> </tr> <tr> <td><code class="literal" id="6062">&lt;&gt;</code></td> <td>is not equal</td> <td><code class="literal">inet '192.168.1.5' &lt;&gt; inet '192.168.1.4'</code></td> </tr> <tr> <td><code class="literal" id="6060">&lt;&lt;</code></td> <td>is contained by</td> <td><code class="literal">inet '192.168.1.5' &lt;&lt; inet '192.168.1/24'</code></td> </tr> <tr> <td><code class="literal" id="606061">&lt;&lt;=</code></td> <td>is contained by or equals</td> <td><code class="literal">inet '192.168.1/24' &lt;&lt;= inet '192.168.1/24'</code></td> </tr> <tr> <td><code class="literal" id="6262">&gt;&gt;</code></td> <td>contains</td> <td><code class="literal">inet '192.168.1/24' &gt;&gt; inet '192.168.1.5'</code></td> </tr> <tr> <td><code class="literal" id="626261">&gt;&gt;=</code></td> <td>contains or equals</td> <td><code class="literal">inet '192.168.1/24' &gt;&gt;= inet '192.168.1/24'</code></td> </tr> <tr> <td><code class="literal" id="3838">&amp;&amp;</code></td> <td>contains or is contained by</td> <td><code class="literal">inet '192.168.1/24' &amp;&amp; inet '192.168.1.80/28'</code></td> </tr> <tr> <td><code class="literal" id="126">~</code></td> <td>bitwise NOT</td> <td><code class="literal">~ inet '192.168.1.6'</code></td> </tr> <tr> <td><code class="literal" id="38">&amp;</code></td> <td>bitwise AND</td> <td><code class="literal">inet '192.168.1.6' &amp; inet '0.0.0.255'</code></td> </tr> <tr> <td><code class="literal" id="124">|</code></td> <td>bitwise OR</td> <td><code class="literal">inet '192.168.1.6' | inet '0.0.0.255'</code></td> </tr> <tr> <td><code class="literal" id="43">+</code></td> <td>addition</td> <td><code class="literal">inet '192.168.1.6' + 25</code></td> </tr> <tr> <td><code class="literal" id="">-</code></td> <td>subtraction</td> <td><code class="literal">inet '192.168.1.43' - 36</code></td> </tr> <tr> <td><code class="literal">-</code></td> <td>subtraction</td> <td><code class="literal">inet '192.168.1.43' - inet '192.168.1.19'</code></td> </tr> </tbody> </table> </div> </div> <p><a class="xref" href="../functions-net/#CIDR-INET-FUNCTIONS-TABLE" title="Table 9.38. cidr and inet Functions">Table 9.38</a> shows the functions available for use with the <code class="type">cidr</code> and <code class="type">inet</code> types. The <code class="function">abbrev</code>, <code class="function">host</code>, and <code class="function">text</code> functions are primarily intended to offer alternative display formats.</p> <div class="table" id="CIDR-INET-FUNCTIONS-TABLE"> <p class="title"><strong>Table 9.38. <code class="type">cidr</code> and <code class="type">inet</code> Functions</strong></p> <div class="table-contents"> <table class="table" summary="cidr and inet Functions"> <colgroup> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td id="id-1.5.8.17.5.2.2.1.1.1"> <code class="literal" id="abbrev">abbrev(inet)</code>
+</td> <td><code class="type">text</code></td> <td>abbreviated display format as text</td> <td><code class="literal">abbrev(inet '10.1.0.0/16')</code></td> <td><code class="literal">10.1.0.0/16</code></td> </tr> <tr> <td><code class="literal">abbrev(cidr)</code></td> <td><code class="type">text</code></td> <td>abbreviated display format as text</td> <td><code class="literal">abbrev(cidr '10.1.0.0/16')</code></td> <td><code class="literal">10.1/16</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.3.1.1"> <code class="literal" id="broadcast">broadcast(inet)</code>
+</td> <td><code class="type">inet</code></td> <td>broadcast address for network</td> <td><code class="literal">broadcast('192.168.1.5/24')</code></td> <td><code class="literal">192.168.1.255/24</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.4.1.1"> <code class="literal" id="family">family(inet)</code>
+</td> <td><code class="type">int</code></td> <td>extract family of address; <code class="literal">4</code> for IPv4, <code class="literal">6</code> for IPv6</td> <td><code class="literal">family('::1')</code></td> <td><code class="literal">6</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.5.1.1"> <code class="literal" id="host">host(inet)</code>
+</td> <td><code class="type">text</code></td> <td>extract IP address as text</td> <td><code class="literal">host('192.168.1.5/24')</code></td> <td><code class="literal">192.168.1.5</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.6.1.1"> <code class="literal" id="hostmask">hostmask(inet)</code>
+</td> <td><code class="type">inet</code></td> <td>construct host mask for network</td> <td><code class="literal">hostmask('192.168.23.20/30')</code></td> <td><code class="literal">0.0.0.3</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.7.1.1"> <code class="literal" id="masklen">masklen(inet)</code>
+</td> <td><code class="type">int</code></td> <td>extract netmask length</td> <td><code class="literal">masklen('192.168.1.5/24')</code></td> <td><code class="literal">24</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.8.1.1"> <code class="literal" id="netmask">netmask(inet)</code>
+</td> <td><code class="type">inet</code></td> <td>construct netmask for network</td> <td><code class="literal">netmask('192.168.1.5/24')</code></td> <td><code class="literal">255.255.255.0</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.9.1.1"> <code class="literal" id="network">network(inet)</code>
+</td> <td><code class="type">cidr</code></td> <td>extract network part of address</td> <td><code class="literal">network('192.168.1.5/24')</code></td> <td><code class="literal">192.168.1.0/24</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.10.1.1"> <code class="literal" id="set_masklen">set_masklen(inet, int)</code>
+</td> <td><code class="type">inet</code></td> <td>set netmask length for <code class="type">inet</code> value</td> <td><code class="literal">set_masklen('192.168.1.5/24', 16)</code></td> <td><code class="literal">192.168.1.5/16</code></td> </tr> <tr> <td><code class="literal">set_masklen(cidr, int)</code></td> <td><code class="type">cidr</code></td> <td>set netmask length for <code class="type">cidr</code> value</td> <td><code class="literal">set_masklen('192.168.1.0/24'::cidr, 16)</code></td> <td><code class="literal">192.168.0.0/16</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.12.1.1"> <code class="literal" id="text">text(inet)</code>
+</td> <td><code class="type">text</code></td> <td>extract IP address and netmask length as text</td> <td><code class="literal">text(inet '192.168.1.5')</code></td> <td><code class="literal">192.168.1.5/32</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.13.1.1"> <code class="literal" id="inet_same_family">inet_same_family(inet, inet)</code>
+</td> <td><code class="type">boolean</code></td> <td>are the addresses from the same family?</td> <td><code class="literal">inet_same_family('192.168.1.5/24', '::1')</code></td> <td><code class="literal">false</code></td> </tr> <tr> <td id="id-1.5.8.17.5.2.2.14.1.1"> <code class="literal" id="inet_merge">inet_merge(inet, inet)</code>
+</td> <td><code class="type">cidr</code></td> <td>the smallest network which includes both of the given networks</td> <td><code class="literal">inet_merge('192.168.1.5/24', '192.168.2.5/24')</code></td> <td><code class="literal">192.168.0.0/22</code></td> </tr> </tbody> </table> </div> </div> <p>Any <code class="type">cidr</code> value can be cast to <code class="type">inet</code> implicitly or explicitly; therefore, the functions shown above as operating on <code class="type">inet</code> also work on <code class="type">cidr</code> values. (Where there are separate functions for <code class="type">inet</code> and <code class="type">cidr</code>, it is because the behavior should be different for the two cases.) Also, it is permitted to cast an <code class="type">inet</code> value to <code class="type">cidr</code>. When this is done, any bits to the right of the netmask are silently zeroed to create a valid <code class="type">cidr</code> value. In addition, you can cast a text value to <code class="type">inet</code> or <code class="type">cidr</code> using normal casting syntax: for example, <code class="literal">inet(expression)</code> or <code class="literal">colname::cidr</code>.</p> <p><a class="xref" href="../functions-net/#MACADDR-FUNCTIONS-TABLE" title="Table 9.39. macaddr Functions">Table 9.39</a> shows the functions available for use with the <code class="type">macaddr</code> type. The function <code class="literal">trunc(macaddr)</code> returns a MAC address with the last 3 bytes set to zero. This can be used to associate the remaining prefix with a manufacturer.</p> <div class="table" id="MACADDR-FUNCTIONS-TABLE"> <p class="title"><strong>Table 9.39. <code class="type">macaddr</code> Functions</strong></p> <div class="table-contents"> <table class="table" summary="macaddr Functions"> <colgroup> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td id="id-1.5.8.17.8.2.2.1.1.1"> <code class="literal" id="trunc">trunc(macaddr)</code>
+</td> <td><code class="type">macaddr</code></td> <td>set last 3 bytes to zero</td> <td><code class="literal">trunc(macaddr '12:34:56:78:90:ab')</code></td> <td><code class="literal">12:34:56:00:00:00</code></td> </tr> </tbody> </table> </div> </div> <p>The <code class="type">macaddr</code> type also supports the standard relational operators (<code class="literal">&gt;</code>, <code class="literal">&lt;=</code>, etc.) for lexicographical ordering, and the bitwise arithmetic operators (<code class="literal">~</code>, <code class="literal">&amp;</code> and <code class="literal">|</code>) for NOT, AND and OR.</p> <p><a class="xref" href="../functions-net/#MACADDR8-FUNCTIONS-TABLE" title="Table 9.40. macaddr8 Functions">Table 9.40</a> shows the functions available for use with the <code class="type">macaddr8</code> type. The function <code class="literal">trunc(macaddr8)</code> returns a MAC address with the last 5 bytes set to zero. This can be used to associate the remaining prefix with a manufacturer.</p> <div class="table" id="MACADDR8-FUNCTIONS-TABLE"> <p class="title"><strong>Table 9.40. <code class="type">macaddr8</code> Functions</strong></p> <div class="table-contents"> <table class="table" summary="macaddr8 Functions"> <colgroup> <col> <col> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> <th>Example</th> <th>Result</th> </tr> </thead> <tbody> <tr> <td id="id-1.5.8.17.11.2.2.1.1.1"> <code class="literal">trunc(macaddr8)</code>
+</td> <td><code class="type">macaddr8</code></td> <td>set last 5 bytes to zero</td> <td><code class="literal">trunc(macaddr8 '12:34:56:78:90:ab:cd:ef')</code></td> <td><code class="literal">12:34:56:00:00:00:00:00</code></td> </tr> <tr> <td id="id-1.5.8.17.11.2.2.2.1.1"> <code class="literal" id="macaddr8_set7bit">macaddr8_set7bit(macaddr8)</code>
+</td> <td><code class="type">macaddr8</code></td> <td>set 7th bit to one, also known as modified EUI-64, for inclusion in an IPv6 address</td> <td><code class="literal">macaddr8_set7bit(macaddr8 '00:34:56:ab:cd:ef')</code></td> <td><code class="literal">02:34:56:ff:fe:ab:cd:ef</code></td> </tr> </tbody> </table> </div> </div> <p>The <code class="type">macaddr8</code> type also supports the standard relational operators (<code class="literal">&gt;</code>, <code class="literal">&lt;=</code>, etc.) for ordering, and the bitwise arithmetic operators (<code class="literal">~</code>, <code class="literal">&amp;</code> and <code class="literal">|</code>) for NOT, AND and OR.</p>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../functions-geometry/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/functions.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../functions-textsearch/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">9.11. Geometric Functions and Operators </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 9.13. Text Search Functions and Operators</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/functions-net.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/functions-net.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

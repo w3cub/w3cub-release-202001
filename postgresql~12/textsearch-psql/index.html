@@ -1,0 +1,249 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Full Text Search&#58; Psql Support - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content=" Information about text search configuration objects can be obtained in psql using a set of commands&#58; ">
+  <meta name="keywords" content="psql, support, full, text, search, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/textsearch-psql/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>12.10. psql Support</h1>    <p>Information about text search configuration objects can be obtained in psql using a set of commands:</p> <pre data-language="sql">
+\dF{d,p,t}[+] [PATTERN]
+</pre> <p>An optional <code class="literal">+</code> produces more details.</p> <p>The optional parameter <code>PATTERN</code> can be the name of a text search object, optionally schema-qualified. If <code>PATTERN</code> is omitted then information about all visible objects will be displayed. <code>PATTERN</code> can be a regular expression and can provide <span class="emphasis"><em>separate</em></span> patterns for the schema and object names. The following examples illustrate this:</p> <pre>
+=&gt; \dF *fulltext*
+       List of text search configurations
+ Schema |  Name        | Description
+--------+--------------+-------------
+ public | fulltext_cfg |
+</pre> <pre>
+=&gt; \dF *.fulltext*
+       List of text search configurations
+ Schema   |  Name        | Description
+----------+----------------------------
+ fulltext | fulltext_cfg |
+ public   | fulltext_cfg |
+</pre> <p>The available commands are:</p> <div class="variablelist"> <dl class="variablelist"> <dt><code class="literal">\dF[+] [PATTERN]</code></dt> <dd> <p>List text search configurations (add <code class="literal">+</code> for more detail).</p> <pre>
+=&gt; \dF russian
+            List of text search configurations
+   Schema   |  Name   |            Description             
+------------+---------+------------------------------------
+ pg_catalog | russian | configuration for russian language
+
+=&gt; \dF+ russian
+Text search configuration "pg_catalog.russian"
+Parser: "pg_catalog.default"
+      Token      | Dictionaries 
+-----------------+--------------
+ asciihword      | english_stem
+ asciiword       | english_stem
+ email           | simple
+ file            | simple
+ float           | simple
+ host            | simple
+ hword           | russian_stem
+ hword_asciipart | english_stem
+ hword_numpart   | simple
+ hword_part      | russian_stem
+ int             | simple
+ numhword        | simple
+ numword         | simple
+ sfloat          | simple
+ uint            | simple
+ url             | simple
+ url_path        | simple
+ version         | simple
+ word            | russian_stem
+</pre> </dd> <dt><code class="literal">\dFd[+] [PATTERN]</code></dt> <dd> <p>List text search dictionaries (add <code class="literal">+</code> for more detail).</p> <pre>
+=&gt; \dFd
+                             List of text search dictionaries
+   Schema   |      Name       |                        Description
+------------+-----------------+-----------------------------------------------------------
+ pg_catalog | arabic_stem     | snowball stemmer for arabic language
+ pg_catalog | danish_stem     | snowball stemmer for danish language
+ pg_catalog | dutch_stem      | snowball stemmer for dutch language
+ pg_catalog | english_stem    | snowball stemmer for english language
+ pg_catalog | finnish_stem    | snowball stemmer for finnish language
+ pg_catalog | french_stem     | snowball stemmer for french language
+ pg_catalog | german_stem     | snowball stemmer for german language
+ pg_catalog | hungarian_stem  | snowball stemmer for hungarian language
+ pg_catalog | indonesian_stem | snowball stemmer for indonesian language
+ pg_catalog | irish_stem      | snowball stemmer for irish language
+ pg_catalog | italian_stem    | snowball stemmer for italian language
+ pg_catalog | lithuanian_stem | snowball stemmer for lithuanian language
+ pg_catalog | nepali_stem     | snowball stemmer for nepali language
+ pg_catalog | norwegian_stem  | snowball stemmer for norwegian language
+ pg_catalog | portuguese_stem | snowball stemmer for portuguese language
+ pg_catalog | romanian_stem   | snowball stemmer for romanian language
+ pg_catalog | russian_stem    | snowball stemmer for russian language
+ pg_catalog | simple          | simple dictionary: just lower case and check for stopword
+ pg_catalog | spanish_stem    | snowball stemmer for spanish language
+ pg_catalog | swedish_stem    | snowball stemmer for swedish language
+ pg_catalog | tamil_stem      | snowball stemmer for tamil language
+ pg_catalog | turkish_stem    | snowball stemmer for turkish language
+</pre> </dd> <dt><code class="literal">\dFp[+] [PATTERN]</code></dt> <dd> <p>List text search parsers (add <code class="literal">+</code> for more detail).</p> <pre>
+=&gt; \dFp
+        List of text search parsers
+   Schema   |  Name   |     Description     
+------------+---------+---------------------
+ pg_catalog | default | default word parser
+=&gt; \dFp+
+    Text search parser "pg_catalog.default"
+     Method      |    Function    | Description 
+-----------------+----------------+-------------
+ Start parse     | prsd_start     | 
+ Get next token  | prsd_nexttoken | 
+ End parse       | prsd_end       | 
+ Get headline    | prsd_headline  | 
+ Get token types | prsd_lextype   | 
+
+        Token types for parser "pg_catalog.default"
+   Token name    |               Description                
+-----------------+------------------------------------------
+ asciihword      | Hyphenated word, all ASCII
+ asciiword       | Word, all ASCII
+ blank           | Space symbols
+ email           | Email address
+ entity          | XML entity
+ file            | File or path name
+ float           | Decimal notation
+ host            | Host
+ hword           | Hyphenated word, all letters
+ hword_asciipart | Hyphenated word part, all ASCII
+ hword_numpart   | Hyphenated word part, letters and digits
+ hword_part      | Hyphenated word part, all letters
+ int             | Signed integer
+ numhword        | Hyphenated word, letters and digits
+ numword         | Word, letters and digits
+ protocol        | Protocol head
+ sfloat          | Scientific notation
+ tag             | XML tag
+ uint            | Unsigned integer
+ url             | URL
+ url_path        | URL path
+ version         | Version number
+ word            | Word, all letters
+(23 rows)
+</pre> </dd> <dt><code class="literal">\dFt[+] [PATTERN]</code></dt> <dd> <p>List text search templates (add <code class="literal">+</code> for more detail).</p> <pre>
+=&gt; \dFt
+                           List of text search templates
+   Schema   |   Name    |                        Description                        
+------------+-----------+-----------------------------------------------------------
+ pg_catalog | ispell    | ispell dictionary
+ pg_catalog | simple    | simple dictionary: just lower case and check for stopword
+ pg_catalog | snowball  | snowball stemmer
+ pg_catalog | synonym   | synonym dictionary: replace word by its synonym
+ pg_catalog | thesaurus | thesaurus dictionary: phrase by phrase substitution
+</pre> </dd> </dl> </div>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../textsearch-indexes/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/textsearch.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../textsearch-limitations/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">12.9. GIN and GiST Index Types </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 12.11. Limitations</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/textsearch-psql.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/textsearch-psql.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,134 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Window Functions - PostgreSQL 12 - W3cubDocs</title>
+  
+  <meta name="description" content="Window functions provide the ability to perform calculations across sets of rows that are related to the current query row. See Section 3.5 for an &hellip;">
+  <meta name="keywords" content="window, functions, -, postgresql, postgresql~12">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/postgresql~12/functions-window/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/postgresql~12.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/postgresql~12/" class="_nav-link" title="" style="margin-left:0;">PostgreSQL 12</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _postgres">
+				
+				
+<h1>9.21. Window Functions</h1>    <p><em class="firstterm">Window functions</em> provide the ability to perform calculations across sets of rows that are related to the current query row. See <a class="xref" href="../tutorial-window/" title="3.5. Window Functions">Section 3.5</a> for an introduction to this feature, and <a class="xref" href="../sql-expressions/#SYNTAX-WINDOW-FUNCTIONS" title="4.2.8. Window Function Calls">Section 4.2.8</a> for syntax details.</p> <p>The built-in window functions are listed in <a class="xref" href="../functions-window/#FUNCTIONS-WINDOW-TABLE" title="Table 9.60. General-Purpose Window Functions">Table 9.60</a>. Note that these functions <span class="emphasis"><em>must</em></span> be invoked using window function syntax, i.e., an <code class="literal">OVER</code> clause is required.</p> <p>In addition to these functions, any built-in or user-defined general-purpose or statistical aggregate (i.e., not ordered-set or hypothetical-set aggregates) can be used as a window function; see <a class="xref" href="../functions-aggregate/" title="9.20. Aggregate Functions">Section 9.20</a> for a list of the built-in aggregates. Aggregate functions act as window functions only when an <code class="literal">OVER</code> clause follows the call; otherwise they act as non-window aggregates and return a single row for the entire set.</p> <div class="table" id="FUNCTIONS-WINDOW-TABLE"> <p class="title"><strong>Table 9.60. General-Purpose Window Functions</strong></p> <div class="table-contents"> <table class="table" summary="General-Purpose Window Functions"> <colgroup> <col> <col> <col> </colgroup> <thead> <tr> <th>Function</th> <th>Return Type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td id="id-1.5.8.26.6.2.2.1.1.1"> <code class="function" id="row_number">row_number()</code>
+</td> <td><code class="type">bigint</code></td> <td>number of the current row within its partition, counting from 1</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.2.1.1"> <code class="function" id="rank">rank()</code>
+</td> <td><code class="type">bigint</code></td> <td>rank of the current row with gaps; same as <code class="function">row_number</code> of its first peer</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.3.1.1"> <code class="function" id="dense_rank">dense_rank()</code>
+</td> <td><code class="type">bigint</code></td> <td>rank of the current row without gaps; this function counts peer groups</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.4.1.1"> <code class="function" id="percent_rank">percent_rank()</code>
+</td> <td><code class="type">double precision</code></td> <td>relative rank of the current row: (<code class="function">rank</code> - 1) / (total partition rows - 1)</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.5.1.1"> <code class="function" id="cume_dist">cume_dist()</code>
+</td> <td><code class="type">double precision</code></td> <td>cumulative distribution: (number of partition rows preceding or peer with current row) / total partition rows</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.6.1.1"> <code class="function" id="ntile">ntile(num_buckets integer)</code>
+</td> <td><code class="type">integer</code></td> <td>integer ranging from 1 to the argument value, dividing the partition as equally as possible</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.7.1.1"> <code class="function" id="lag">lag(value anyelement [, offset integer [, default anyelement ]])</code>
+</td> <td><code class="type">same type as value</code></td> <td>returns <code>value</code> evaluated at the row that is <code>offset</code> rows before the current row within the partition; if there is no such row, instead return <code>default</code> (which must be of the same type as <code>value</code>). Both <code>offset</code> and <code>default</code> are evaluated with respect to the current row. If omitted, <code>offset</code> defaults to 1 and <code>default</code> to null</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.8.1.1"> <code class="function" id="lead">lead(value anyelement [, offset integer [, default anyelement ]])</code>
+</td> <td><code class="type">same type as value</code></td> <td>returns <code>value</code> evaluated at the row that is <code>offset</code> rows after the current row within the partition; if there is no such row, instead return <code>default</code> (which must be of the same type as <code>value</code>). Both <code>offset</code> and <code>default</code> are evaluated with respect to the current row. If omitted, <code>offset</code> defaults to 1 and <code>default</code> to null</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.9.1.1"> <code class="function" id="first_value">first_value(value any)</code>
+</td> <td><code class="type">same type as value</code></td> <td>returns <code>value</code> evaluated at the row that is the first row of the window frame</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.10.1.1"> <code class="function" id="last_value">last_value(value any)</code>
+</td> <td><code class="type">same type as value</code></td> <td>returns <code>value</code> evaluated at the row that is the last row of the window frame</td> </tr> <tr> <td id="id-1.5.8.26.6.2.2.11.1.1"> <code class="function" id="nth_value">nth_value(value any, nth integer)</code>
+</td> <td><code class="type">same type as value</code></td> <td>returns <code>value</code> evaluated at the row that is the <code>nth</code> row of the window frame (counting from 1); null if no such row</td> </tr> </tbody> </table> </div> </div> <p>All of the functions listed in <a class="xref" href="../functions-window/#FUNCTIONS-WINDOW-TABLE" title="Table 9.60. General-Purpose Window Functions">Table 9.60</a> depend on the sort ordering specified by the <code class="literal">ORDER BY</code> clause of the associated window definition. Rows that are not distinct when considering only the <code class="literal">ORDER BY</code> columns are said to be <em class="firstterm">peers</em>. The four ranking functions (including <code class="function">cume_dist</code>) are defined so that they give the same answer for all peer rows.</p> <p>Note that <code class="function">first_value</code>, <code class="function">last_value</code>, and <code class="function">nth_value</code> consider only the rows within the <span class="quote">“<span class="quote">window frame</span>”</span>, which by default contains the rows from the start of the partition through the last peer of the current row. This is likely to give unhelpful results for <code class="function">last_value</code> and sometimes also <code class="function">nth_value</code>. You can redefine the frame by adding a suitable frame specification (<code class="literal">RANGE</code>, <code class="literal">ROWS</code> or <code class="literal">GROUPS</code>) to the <code class="literal">OVER</code> clause. See <a class="xref" href="../sql-expressions/#SYNTAX-WINDOW-FUNCTIONS" title="4.2.8. Window Function Calls">Section 4.2.8</a> for more information about frame specifications.</p> <p>When an aggregate function is used as a window function, it aggregates over the rows within the current row's window frame. An aggregate used with <code class="literal">ORDER BY</code> and the default window frame definition produces a <span class="quote">“<span class="quote">running sum</span>”</span> type of behavior, which may or may not be what's wanted. To obtain aggregation over the whole partition, omit <code class="literal">ORDER BY</code> or use <code class="literal">ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code>. Other frame specifications can be used to obtain other effects.</p> <blockquote class="note"> <h3 class="title">Note</h3> <p>The SQL standard defines a <code class="literal">RESPECT NULLS</code> or <code class="literal">IGNORE NULLS</code> option for <code class="function">lead</code>, <code class="function">lag</code>, <code class="function">first_value</code>, <code class="function">last_value</code>, and <code class="function">nth_value</code>. This is not implemented in PostgreSQL: the behavior is always the same as the standard's default, namely <code class="literal">RESPECT NULLS</code>. Likewise, the standard's <code class="literal">FROM FIRST</code> or <code class="literal">FROM LAST</code> option for <code class="function">nth_value</code> is not implemented: only the default <code class="literal">FROM FIRST</code> behavior is supported. (You can achieve the result of <code class="literal">FROM LAST</code> by reversing the <code class="literal">ORDER BY</code> ordering.)</p> </blockquote> <p><code class="function">cume_dist</code> computes the fraction of partition rows that are less than or equal to the current row and its peers, while <code class="function">percent_rank</code> computes the fraction of partition rows that are less than the current row, assuming the current row does not exist in the partition.</p>  <div class="navfooter">  <table summary="Navigation footer"> <tr> <td width="40%" align="left">
+<a accesskey="p" href="../functions-aggregate/">Prev</a> </td> <td width="20%" align="center"><a accesskey="u" href="https://www.postgresql.org/docs/12/functions.html" target="_blank">Up</a></td> <td width="40%" align="right"> <a accesskey="n" href="../functions-subquery/">Next</a>
+</td> </tr> <tr> <td width="40%" align="left">9.20. Aggregate Functions </td> <td width="20%" align="center"><a accesskey="h" href="https://www.postgresql.org/docs/12/index.html" target="_blank">Home</a></td> <td width="40%" align="right"> 9.22. Subquery Expressions</td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1996–2019 The PostgreSQL Global Development Group<br>Licensed under the PostgreSQL License.<br>
+    <a href="https://www.postgresql.org/docs/12/functions-window.html" class="_attribution-link" target="_blank">https://www.postgresql.org/docs/12/functions-window.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
