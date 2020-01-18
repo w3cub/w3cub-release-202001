@@ -1,0 +1,192 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Layout With Flexbox - ReactNative - W3cubDocs</title>
+  
+  <meta name="description" content="A component can specify the layout of its children using the flexbox algorithm. Flexbox is designed to provide a consistent layout on different &hellip;">
+  <meta name="keywords" content="layout, with, flexbox, -, reactnative, react_native">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/react_native/flexbox/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/react_native.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/react_native/" class="_nav-link" title="" style="margin-left:0;">ReactNative</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _react_native">
+				
+				
+<h1 class="postHeaderTitle">Layout with Flexbox</h1>
+<p>A component can specify the layout of its children using the flexbox algorithm. Flexbox is designed to provide a consistent layout on different screen sizes.</p> <p>You will normally use a combination of <code>flexDirection</code>, <code>alignItems</code>, and <code>justifyContent</code> to achieve the right layout.</p> <blockquote> <p>Flexbox works the same way in React Native as it does in CSS on the web, with a few exceptions. The defaults are different, with <code>flexDirection</code> defaulting to <code>column</code> instead of <code>row</code>, and the <code>flex</code> parameter only supporting a single number.</p> </blockquote> <h4 id="flex-direction">
+Flex Direction</h4> <p>Adding <code>flexDirection</code> to a component's <code>style</code> determines the <strong>primary axis</strong> of its layout. Should the children be organized horizontally (<code>row</code>) or vertically (<code>column</code>)? The default is <code>column</code>.</p> <pre data-language="jsx"><span class="hljs-keyword">import</span> React, { Component } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> { AppRegistry, View } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-native'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FlexDirectionBasics</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="hljs-comment">// Try setting `flexDirection` to `column`.</span>
+      &lt;View style={{<span class="hljs-attr">flex</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">flexDirection</span>: <span class="hljs-string">'row'</span>}}&gt;
+        &lt;View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} /&gt;
+        &lt;View style={{width: 50, height: 50, backgroundColor: 'skyblue'}} /&gt;
+        &lt;View style={{width: 50, height: 50, backgroundColor: 'steelblue'}} /&gt;
+      &lt;/View&gt;
+    );
+  }
+};
+
+// skip this line if using Create React Native App
+AppRegistry.registerComponent('AwesomeProject', () =&gt; FlexDirectionBasics);
+</pre> <h4 id="justify-content">
+Justify Content</h4> <p>Adding <code>justifyContent</code> to a component's style determines the <strong>distribution</strong> of children along the <strong>primary axis</strong>. Should children be distributed at the start, the center, the end, or spaced evenly? Available options are <code>flex-start</code>, <code>center</code>, <code>flex-end</code>, <code>space-around</code>, <code>space-between</code> and <code>space-evenly</code>.</p> <pre data-language="jsx"><span class="hljs-keyword">import</span> React, { Component } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> { AppRegistry, View } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-native'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JustifyContentBasics</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="hljs-comment">// Try setting `justifyContent` to `center`.</span>
+      <span class="hljs-comment">// Try setting `flexDirection` to `row`.</span>
+      &lt;View style={{
+        <span class="hljs-attr">flex</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">flexDirection</span>: <span class="hljs-string">'column'</span>,
+        <span class="hljs-attr">justifyContent</span>: <span class="hljs-string">'space-between'</span>,
+      }}&gt;
+        &lt;View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} /&gt;
+        &lt;View style={{width: 50, height: 50, backgroundColor: 'skyblue'}} /&gt;
+        &lt;View style={{width: 50, height: 50, backgroundColor: 'steelblue'}} /&gt;
+      &lt;/View&gt;
+    );
+  }
+};
+
+// skip this line if using Create React Native App
+AppRegistry.registerComponent('AwesomeProject', () =&gt; JustifyContentBasics);
+</pre> <h4 id="align-items">
+Align Items</h4> <p>Adding <code>alignItems</code> to a component's style determines the <strong>alignment</strong> of children along the <strong>secondary axis</strong> (if the primary axis is <code>row</code>, then the secondary is <code>column</code>, and vice versa). Should children be aligned at the start, the center, the end, or stretched to fill? Available options are <code>flex-start</code>, <code>center</code>, <code>flex-end</code>, and <code>stretch</code>.</p> <blockquote> <p>For <code>stretch</code> to have an effect, children must not have a fixed dimension along the secondary axis. In the following example, setting <code>alignItems: stretch</code> does nothing until the <code>width: 50</code> is removed from the children.</p> </blockquote> <pre data-language="jsx"><span class="hljs-keyword">import</span> React, { Component } <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> { AppRegistry, View } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-native'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AlignItemsBasics</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="hljs-comment">// Try setting `alignItems` to 'flex-start'</span>
+      <span class="hljs-comment">// Try setting `justifyContent` to `flex-end`.</span>
+      <span class="hljs-comment">// Try setting `flexDirection` to `row`.</span>
+      &lt;View style={{
+        <span class="hljs-attr">flex</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">flexDirection</span>: <span class="hljs-string">'column'</span>,
+        <span class="hljs-attr">justifyContent</span>: <span class="hljs-string">'center'</span>,
+        <span class="hljs-attr">alignItems</span>: <span class="hljs-string">'center'</span>,
+      }}&gt;
+        &lt;View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} /&gt;
+        &lt;View style={{width: 50, height: 50, backgroundColor: 'skyblue'}} /&gt;
+        &lt;View style={{width: 50, height: 50, backgroundColor: 'steelblue'}} /&gt;
+      &lt;/View&gt;
+    );
+  }
+};
+
+// skip this line if using Create React Native App
+AppRegistry.registerComponent('AwesomeProject', () =&gt; AlignItemsBasics);
+</pre> <h4 id="going-deeper">
+Going Deeper</h4> <p>We've covered the basics, but there are many other styles you may need for layouts. The full list of props that control layout is documented <a href="../layout-props/">here</a>.</p> <p>We're getting close to being able to build a real application. One thing we are still missing is a way to take user input, so let's move on to <a href="../handling-text-input/">learn how to handle text input with the TextInput component</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2015–2018 Facebook Inc.<br>Licensed under the Creative Commons Attribution 4.0 International Public License.<br>
+    <a href="https://facebook.github.io/react-native/docs/flexbox" class="_attribution-link" target="_blank">https://facebook.github.io/react-native/docs/flexbox</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
