@@ -1,0 +1,264 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Acceptance Testing - CodeceptJS - W3cubDocs</title>
+  
+  <meta name="description" content="How does your client, manager, or tester, or any other non-technical person, know your web application is working? By opening the browser, accessing &hellip;">
+  <meta name="keywords" content="acceptance, testing, -, codeceptjs">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/codeceptjs/acceptance/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/codeceptjs.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeceptjs/" class="_nav-link" title="" style="margin-left:0;">CodeceptJS</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="acceptance-testing">Acceptance Testing</h1> <p>How does your client, manager, or tester, or any other non-technical person, know your web application is working? By opening the browser, accessing a site, clicking on links, filling in the forms, and actually seeing the content on a web page.</p> <p>Acceptance (also called End to End) tests can cover standard but complex scenarios from a user's perspective. With acceptance tests you can be confident that users, following all defined scenarios, won't get errors. We check <strong>not just functionality of application but a user interface</strong> (UI) as well.</p> <p>By default CodeceptJS uses <a href="https://codecept.io/helpers/WebDriverIO/" target="_blank">WebDriverIO</a> helper and <strong>Selenium</strong> to automate browser. Within web page you can locate elements, interact with them, and check that expected elements are present on a page. However, you can also choose <a href="https://codecept.io/helpers/Nightmare" target="_blank">Nightmare</a> or <a href="https://codecept.io/helpers/Protractor" target="_blank">Protractor</a> helpers, driven by corresponding libraries. No matter of helper and library you use for acceptance testing, CodeceptJS should execute same actions in similar manner.</p> <p>In case of CodeceptJS you can be sure that in code it will be as easy as it sounds. You just describe a test scenario with JavaScript DSL and allow the framework to handle the rest.</p> <p>Within web page you can locate elements, interact with them, and check that expected elements are present on a page. That is what a test look like. That is what a test look like.</p> <pre data-language="js">I.amOnPage('/login');
+I.fillField('Username', 'john');
+I.fillField('Password', '123456');
+I.click('Login');
+I.see('Welcome, John');
+</pre> <p>This is how we can check that login form of a simple web application works. At first we opened <code>/login</code> page, then filled forms and in the end we saw the greetings text.</p> <h2 id="locating-element">Locating Element</h2> <p>Element can be found by CSS or XPath locators. Practically every steps in WebDriverIO helper accept them both.</p> <pre data-language="js">I.seeElement('.user'); // element with CSS class user
+I.seeElement('//button[contains(., "press me")]'); // button
+</pre> <p>By default CodeceptJS tries to guess the locator type. In order to specify exact locator type you can pass a hash called <strong>strict locator</strong>.</p> <pre data-language="js">I.seeElement({css: 'div.user'});
+I.seeElement({xpath: '//div[@class=user]'});
+</pre> <p>Strict locators allow to specify additional locator types:</p> <pre data-language="js">// locate form element by name
+I.seeElement({name: 'password'});
+// locate element by id
+I.seeElement({id: 'users'});
+</pre> <p>In <a href="https://codecept.io/mobile/#locating-elements" target="_blank">mobile testing</a> you can use <code>~</code> to specify accessibility id to locate an element. In web application you can locate element by their <code>aria-label</code> value.</p> <pre data-language="js">// locate element by [aria-label] attribute in web
+// or by accessibility id in mobile
+I.seeElement('~username');
+</pre> <h2 id="clicking">Clicking</h2> <p>CodeceptJS provides a flexible syntax to specify an element to click.</p> <p>By default CodeceptJS tries to find button or link with exact text on it</p> <pre data-language="js">// search for link or button
+I.click('Login');
+</pre> <p>If none found, CodeceptJS tries to find link or button containing that text. In case an image is clickable its <code>alt</code> attribute will be checked for text inclusion. Form buttons will also be searched by name.</p> <p>To narrow down the results you can specify a context in second parameter.</p> <pre data-language="js">I.click('Login', '.nav'); // search only in .nav
+I.click('Login', {css: 'footer'}); // search only in footer
+</pre> <p>To skip the global search pass exact strict locator (or start locator with <code>//</code> or <code>.</code> or <code>#</code>). In this case you are not limited to buttons and links. Any element found by that locator is clicked.</p> <pre data-language="js">// click element by CSS
+I.click('#signup');
+// click element located by name inside a form
+I.click({name: 'submit'}, '#user&gt;form');
+</pre> <h2 id="filling-fields">Filling Fields</h2> <p>Clicking the links is not what takes the most time during testing a web site. If your site consists only of links you can skip test automation. The most routine waste of time goes into the testing of forms. CodeceptJS provides several ways of doing that.</p> <p>Let's submit this sample form for a test:</p> <pre data-language="html">&lt;form method="post" action="/update" id="update_form"&gt;
+     &lt;label for="user_name"&gt;Name&lt;/label&gt;
+     &lt;input type="text" name="user[name]" id="user_name" /&gt;
+     &lt;label for="user_email"&gt;Email&lt;/label&gt;
+     &lt;input type="text" name="user[email]" id="user_email" /&gt;
+     &lt;label for="user_gender"&gt;Gender&lt;/label&gt;
+     &lt;select id="user_gender" name="user[gender]"&gt;
+          &lt;option value="m"&gt;Male&lt;/option&gt;
+          &lt;option value="f"&gt;Female&lt;/option&gt;
+     &lt;/select&gt;
+     &lt;input type="submit" name="submitButton" value="Update" /&gt;
+&lt;/form&gt;
+</pre> <p>We need to fill in all those fields and click "Update" button. CodeceptJS matches form elements by their label, name, or by CSS or XPath locators.</p> <pre data-language="js">// we are using label to match user_name field
+I.fillField('Name', 'Miles');
+// we can use input name
+I.fillField('user[email]','miles@davis.com');
+// select element by label, choose option by text
+I.selectOption('Gender','Male');
+// click 'Update' button, found by text
+I.click('Update');
+</pre> <p>Alternative scenario:</p> <pre data-language="js">// we are using CSS
+I.fillField('#user_name', 'Miles');
+I.fillField('#user_email','miles@davis.com');
+// select element by label, option by value
+I.selectOption('#user_gender','m');
+// click 'Update' button, found by name
+I.click('submitButton', '#update_form');
+</pre> <h2 id="assertions">Assertions</h2> <p>In order to verify the expected behavior of a web application, web page connects should be checked. CodeceptJS provides built-in assertions for that. They start with <code>see</code> (or <code>dontSee</code>) prefix, as they describe user's current vision.</p> <p>The most general and common assertion is <code>see</code>:</p> <pre data-language="js">// Just a visible text on a page
+I.see('Hello');
+// text inside .msg element
+I.see('Hello', '.msg');
+// opposite
+I.dontSee('Bye');
+</pre> <p>You should provide a text as first argument, and optionally a locator to narrow the search context.</p> <p>You can check that specific element exists (or not) on a page, as it was described in <a href="#locating-element">Locating Element</a> section.</p> <pre data-language="js">I.seeElement('.notice');
+I.dontSeeElement('.error');
+</pre> <p>Additional assertions:</p> <pre data-language="js">I.seeInCurrentUrl('/user/miles');
+I.seeInField('user[name]', 'Miles');
+I.seeInTitle('My Website');
+</pre> <p>To see all possible assertions see the helper's reference.</p> <h2 id="grabbing">Grabbing</h2> <p>Sometimes you need to retrieve a data from a page to use it in next steps of a scenario. Imagine, application generates a password and you want to ensure that user can login using this password.</p> <pre data-language="js">Scenario('login with generated password', async (I) =&gt; {
+  I.fillField('email', 'miles@davis.com');
+  I.click('Generate Password');
+  const password = await I.grabTextFrom('#password');
+  I.click('Login');
+  I.fillField('email', 'miles@davis.com');
+  I.fillField('password', password);
+  I.click('Log in!');
+  I.see('Hello, Miles');
+});
+</pre> <p><code>grabTextFrom</code> action is used here to retrieve text from an element. All actions starting with <code>grab</code> prefix are expected to return data. In order to synchronize this step with a scenario you should pause test execution with <code>await</code> keyword of ES6. To make it work your test should be written inside a async function (notice <code>async</code> in its definition).</p> <pre data-language="js">Scenario('use page title', async (I) =&gt; {
+  // ...
+  const password = await I.grabTextFrom('#password');
+  I.fillField('password', password);
+});
+</pre> <h2 id="waiting">Waiting</h2> <p>In modern web applications rendering is happen on client side. Sometimes that may cause delays. A test may fail while trying to click an element which has not appeared on a page yet. To handle this cases <code>wait*</code> methods introduced.</p> <pre data-language="js">I.waitForElement('#agree_button', 30); // secs
+// clicks a button only when it is visible
+I.click('#agree_button');
+</pre> <p>More wait actions can be found in helper's reference.</p> <h2 id="smartwait">SmartWait</h2> <p>It is possible to wait for elements pragmatically. If a test uses element which is not on a page yet, CodeceptJS will wait for few extra seconds before failing. This feature is based on <a href="http://www.seleniumhq.org/docs/04_webdriver_advanced.jsp#implicit-waits" target="_blank">Implicit Wait</a> of Selenium. CodeceptJS enables implicit wait only when searching for a specific element and disables in all other cases. Thus, the performance of a test is not affected.</p> <p>SmartWait can be enabled by setting wait option in WebDriverIO config. Add <code>"smartWait": 5000</code> to wait for additional 5s.</p> <p>SmartWait works with a CSS/XPath locators in <code>click</code>, <code>seeElement</code> and other methods. See where it is enabled and where is not:</p> <pre data-language="js">I.click('Login'); // DISABLED, not a locator
+I.fillField('user', 'davert'); // DISABLED, not a specific locator
+I.fillField({name: 'password'}, '123456'); // ENABLED, strict locator
+I.click('#login'); // ENABLED, locator is CSS ID
+I.see('Hello, Davert'); // DISABLED, Not a locator
+I.seeElement('#userbar'); // ENABLED
+I.dontSeeElement('#login'); // DISABLED, can't wait for element to hide
+I.seeNumberOfElements('button.link', 5); // DISABLED, can wait only for one element
+
+</pre> <p>SmartWait doesn't check element for visibility, so tests may fail even element is on a page.</p> <p>Usage example:</p> <pre data-language="js">// we use smartWait: 5000 instead of
+// I.waitForElement('#click-me', 5);
+// to wait for element on page
+I.click('#click-me');
+</pre> <p>If it's hard to define what to wait, it is recommended to use <a href="https://codecept.io/basics/#retries" target="_blank">retries</a> to rerun flaky steps.</p> <h2 id="iframes">IFrames</h2> <p><a href="https://codecept.io/basics/#within" target="_blank">within</a> operator can be used to work inside IFrames. Special <code>frame</code> locator is required to locate the iframe and get into its context.</p> <p>See example:</p> <pre data-language="js">within({frame: "#editor"}, () =&gt; {
+  I.see('Page');
+});
+</pre> <p>Nested IFrames can be set by passing array <em>(WebDriverIO, Nightmare &amp; Puppeteer only)</em>:</p> <pre data-language="js">within({frame: [".content", "#editor"]}, () =&gt; {
+  I.see('Page');
+});
+</pre> <h2 id="multiple-sessions">Multiple Sessions</h2> <p>CodeceptJS allows to run several browser sessions inside a test. This can be useful for testing communication between users inside a system, for instance in chats. To open another browser use <code>session()</code> function as shown in example:</p> <pre data-language="js">Scenario('test app', (I) =&gt; {
+  I.amOnPage('/chat');
+  I.fillField('name', 'davert');
+  I.click('Sign In');
+  I.see('Hello, davert');
+  session('john', () =&gt; {
+    // another session started
+    I.amOnPage('/chat');
+    I.fillField('name', 'john');
+    I.click('Sign In');
+    I.see('Hello, john');
+  });
+  // switching back to default session
+  I.fillField('message', 'Hi, john');
+  // there is a message from current user
+  I.see('me: Hi, john', '.messages');
+  session('john', () =&gt; {
+    // let's check if john received it
+    I.see('davert: Hi, john', '.messages');
+  });
+});
+</pre> <p><code>session</code> function expects a first parameter to be a name of a session. You can switch back to session by using the same name.</p> <p>You can override config for session by passing second parameter:</p> <pre data-language="js">session('john', { browser: 'firefox' } , () =&gt; {
+  // run this steps in firefox
+  I.amOnPage('/');
+});
+</pre> <p>or just start session without switching to it. Call <code>session</code> passing only its name:</p> <pre data-language="js">Scenario('test', (I) =&gt; {
+  // opens 3 additional browsers
+  session('john');
+  session('mary');
+  session('jane');
+
+  I.amOnPage('/');
+
+  // switch to session by its name
+  session('mary', () =&gt; {
+    I.amOnPage('/login');
+  });
+}
+</pre> <p><code>session</code> can return value which can be used in scenario:</p> <pre data-language="js">// inside async function
+const val = await session('john', () =&gt; {
+  I.amOnPage('/info');
+  return I.grabTextFrom({ css: 'h1' });
+});
+I.fillField('Description', val);
+</pre> <p>Function passed into session can use <code>I</code>, page objects, and any objects declared for the scenario. This function can also be declared as async (but doesn't work as generator).</p> <p>Also, you can use <code>within</code> inside a session but you can't call session from inside <code>within</code>.</p>  <h3 id="done">done()</h3> <p>CodeceptJS through helpers provides user friendly API to interact with a webpage. In this section we described using WebDriverIO helper which allows to control browser through Selenium WebDriver.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>Licensed under the MIT License.<br>
+    <a href="https://codecept.io/acceptance/" class="_attribution-link" target="_blank">https://codecept.io/acceptance/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

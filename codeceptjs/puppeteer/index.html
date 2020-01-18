@@ -1,0 +1,194 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Robust Chrome Testing With Puppeteer - CodeceptJS - W3cubDocs</title>
+  
+  <meta name="description" content="Among all Selenium alternatives the most interesting emerging ones are tools developed around Google Chrome DevTools Protocol. And the most &hellip;">
+  <meta name="keywords" content="robust, chrome, testing, with, puppeteer, -, codeceptjs">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/codeceptjs/puppeteer/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/codeceptjs.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeceptjs/" class="_nav-link" title="" style="margin-left:0;">CodeceptJS</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="robust-chrome-testing-with-puppeteer">Robust Chrome Testing with Puppeteer</h1> <p>Among all Selenium alternatives the most interesting emerging ones are tools developed around Google Chrome <a href="https://chromedevtools.github.io/devtools-protocol/" target="_blank">DevTools Protocol</a>. And the most prominent one is <a href="https://github.com/GoogleChrome/puppeteer" target="_blank">Puppeteer</a>. It operates over Google Chrome directly without requireing additional tools like ChromeDriver. So tests setup with Puppeteer can be started with npm install only. If you want get faster and simpler to setup tests, Puppeteer would be your choice.</p> <p>CodeceptJS uses Puppeteer to improve end to end testing experience. No need to learn the syntax of a new tool, all drivers in CodeceptJS share the same API.</p> <p>Take a look at a sample test:</p> <pre data-language="js">I.amOnPage('https://github.com');
+I.click('Sign in', '//html/body/div[1]/header');
+I.see('Sign in to GitHub', 'h1');
+I.fillField('Username or email address', 'something@totest.com');
+I.fillField('Password', '123456');
+I.click('Sign in');
+I.see('Incorrect username or password.', '.flash-error');
+</pre> <p>It's readable and simple and works using Puppeteer API!</p> <h2 id="setup">Setup</h2> <p>To start you need CodeceptJS with Puppeteer packages installed</p> <pre data-language="bash">npm install -g codeceptjs puppeteer
+</pre> <p>Or see <a href="https://codecept.io/installation/" target="_blank">alternative installation options</a> If you already have CodeceptJS project, just install <code>puppeteer</code> package and enable it in config.</p> <p>And a basic project initialized</p> <pre data-language="sh">codeceptjs init
+</pre> <p>You will be asked for a Helper to use, you should select Puppeteer and provide url of a website you are testing.</p> <h2 id="configuring">Configuring</h2> <p>Make sure <code>Puppeteer</code> helper is enabled in <code>codecept.json</code> config:</p> <pre data-language="js">{ // ..
+  "helpers": {
+    "Puppeteer": {
+      "url": "http://localhost",
+      "show": false
+    }
+  }
+  // ..
+}
+</pre> <p>Turn on the <code>show</code> option if you want to follow test progress in a window. This is very useful for debugging.</p> <p>Puppeteer uses different strategies to detect if a page is loaded. In configuration use <code>waitForNavigation</code> option for that:</p> <p>By default it is set to <code>domcontentloaded</code> which waits for <code>DOMContentLoaded</code> event being fired. However, for Single Page Applications it's more useful to set this value to <code>networkidle0</code> which waits for all network connections to be finished.</p> <pre data-language="js">  "helpers": {
+    "Puppeteer": {
+      "url": "http://localhost",
+      "waitForNavigation": "networkidle0"
+    }
+  }
+</pre> <p>When a test runs faster than application it is recommended to increase <code>waitForAction</code> config value. It will wait for a small amount of time (100ms) by default after each user action is taken.</p> <p><em>More options are listed in <a href="https://codecept.io/helpers/Puppeteer/" target="_blank">helper reference</a>.</em></p> <h2 id="writing-tests">Writing Tests</h2> <p>CodeceptJS test should be created with <code>gt</code> command:</p> <pre data-language="sh">codeceptjs gt
+</pre> <p>As an example we will use <code>ToDoMvc</code> app for testing.</p> <h3 id="actions">Actions</h3> <p>Tests consist with a scenario of user's action taken on a page. The most widely used ones are:</p> <ul> <li>
+<code>amOnPage</code> - to open a webpage (accepts relative or absolute url)</li> <li>
+<code>click</code> - to locate a button or link and click on it</li> <li>
+<code>fillField</code> - to enter a text inside a field</li> <li>
+<code>selectOption</code>, <code>checkOption</code> - to interact with a form</li> <li>
+<code>wait*</code> to wait for some parts of page to be fully rendered (important for testing SPA)</li> <li>
+<code>grab*</code> to get values from page sources</li> <li>
+<code>see</code>, <code>dontSee</code> - to check for a text on a page</li> <li>
+<code>seeElement</code>, <code>dontSeeElement</code> - to check for elements on a page</li> </ul> <p><em>All actions are listed in <a href="https://codecept.io/helpers/Puppeteer/" target="_blank">helper reference</a>.</em></p> <p>All actions whicn interact with elements <strong>support CSS and XPath locators</strong>. Actions like <code>click</code> or <code>fillField</code> by locate elements by their name or value on a page:</p> <pre data-language="js">
+// search for link or button
+I.click('Login');
+// locate field by its label
+I.fillField('Name', 'Miles');
+// we can use input name
+I.fillField('user[email]','miles@davis.com');
+</pre> <p>You can also specify the exact locator type with strict locators:</p> <pre data-language="js">I.click({css: 'button.red'});
+I.fillField({name: 'user[email]'},'miles@davis.com');
+I.seeElement({xpath: '//body/header'});
+</pre> <p>A complete ToDo-MVC test may look like:</p> <pre data-language="js">Feature('ToDo');
+
+Scenario('create todo item', (I) =&gt; {
+  I.amOnPage('http://todomvc.com/examples/react/');
+  I.dontSeeElement('.todo-count');
+  I.fillField('What needs to be done?', 'Write a guide');
+  I.pressKey('Enter');
+  I.see('Write a guide', '.todo-list');
+  I.see('1 item left', '.todo-count');
+});
+</pre> <h3 id="grabbers">Grabbers</h3> <p>If you need to get element's value inside a test you can use <code>grab*</code> methods. They should be used with <code>await</code> operator inside <code>async</code> function:</p> <pre data-language="js">const assert = require('assert');
+Scenario('get value of current tasks', async (I) =&gt; {
+  I.createTodo('do 1');
+  I.createTodo('do 2');
+  let numTodos = await I.grabTextFrom('.todo-count strong');
+  assert.equal(2, numTodos);
+});
+</pre> <h3 id="within">Within</h3> <p>In case some actions should be taken inside one element (a container or modal window) you can use <code>within</code> block to narrow the scope. Please take a note that you can't use within inside another within in Puppeteer helper:</p> <pre data-language="js">within('.todoapp', () =&gt; {
+  I.createTodo('my new item');
+  I.see('1 item left', '.todo-count');
+  I.click('.todo-list input.toggle');
+});
+I.see('0 items left', '.todo-count');
+</pre> <p>CodeceptJS allows you to implement custom actions like <code>I.createTodo</code> or use <strong>PageObjects</strong>. Learn how to improve your tests in <a href="https://codecept.io/pageobjects/" target="_blank">PageObjects</a> guide.</p> <p><code>within</code> can also work with <a href="https://codecept.io/acceptance/#iframes" target="_blank">iframes</a></p> <p>When running steps inside a within block will be shown with a shift:</p> <p><img alt="within" src="data:image/png;base64,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"></p> <h2 id="extending">Extending</h2> <p>Puppeteer has a very <a href="https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md" target="_blank">rich and flexible API</a>. Sure, you can extend your test suites to use the methods listed there. CodeceptJS already prepares some objects for you and you can use them from your you helpers.</p> <p>Start with creating an <code>MyPuppeteer</code> helper using <code>generate:helper</code> or <code>gh</code> command:</p> <pre data-language="sh">codeceptjs gh
+</pre> <p>Then inside a Helper you can access <code>Puppeteer</code> helper of CodeceptJS. Let's say you want to create <code>I.renderPageToPdf</code> action. In this case you need to call <code>pdf</code> method of <code>page</code> object</p> <pre data-language="js">// inside a MyPuppeteer helper
+async renderPageToPdf() {
+  const page = this.helpers['Puppeteer'].page;
+  await page.emulateMedia('screen');
+  return page.pdf({path: 'page.pdf'});
+}
+</pre> <p>The same way you can also access <code>browser</code> object to implement more actions or handle events. <a href="https://codecept.io/helpers/" target="_blank">Learn more about Helpers</a> in the corresponding guide.</p> <h2 id="done">done()</h2> <p>Yes, also the <a href="https://github.com/DavertMik/codeceptjs-todomvc-puppeteer" target="_blank">demo project is available on GitHub</a></p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>Licensed under the MIT License.<br>
+    <a href="https://codecept.io/puppeteer/" class="_attribution-link" target="_blank">https://codecept.io/puppeteer/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

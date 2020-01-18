@@ -1,0 +1,210 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>AMQP - Codeception - W3cubDocs</title>
+  
+  <meta name="description" content="This module interacts with message broker software that implements the Advanced Message Queuing Protocol (AMQP) standard. For example, RabbitMQ ( &hellip;">
+  <meta name="keywords" content="amqp, -, codeception">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/codeception/modules/amqp/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/codeception.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeception/" class="_nav-link" title="" style="margin-left:0;">Codeception</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _codeception">
+				
+				
+<h1 id="amqp">AMQP</h1> <p>This module interacts with message broker software that implements the Advanced Message Queuing Protocol (AMQP) standard. For example, RabbitMQ (tested).</p> <div class="alert alert-info"> To use this module with Composer you need <em>"php-amqplib/php-amqplib": "~2.4"</em> package. </div> <h2 id="config">Config</h2> <ul> <li>host: localhost - host to connect</li> <li>username: guest - username to connect</li> <li>password: guest - password to connect</li> <li>vhost: ‘/’ - vhost to connect</li> <li>cleanup: true - defined queues will be purged before running every test.</li> <li>queues: [mail, twitter] - queues to cleanup</li> <li>single_channel - create and use only one channel during test execution</li> </ul> <h3 id="example">Example</h3> <div class="highlighter-rouge"><code>modules:
+    enabled:
+        - AMQP:
+            host: 'localhost'
+            port: '5672'
+            username: 'guest'
+            password: 'guest'
+            vhost: '/'
+            queues: [queue1, queue2]
+            single_channel: false
+</code></div> <h2 id="public-properties">Public Properties</h2> <ul> <li>connection - AMQPStreamConnection - current connection</li> </ul> <h2 id="actions">Actions</h2> <h3 id="bindqueuetoexchange">bindQueueToExchange</h3> <p>Binds a queue to an exchange</p> <p>This is an alias of method <code class="highlighter-rouge">queue_bind</code> of <code class="highlighter-rouge">PhpAmqpLib\Channel\AMQPChannel</code>.</p> <pre data-language="php">&lt;?php
+$I-&gt;bindQueueToExchange(
+    'nameOfMyQueueToBind', // name of the queue
+    'transactionTracking.transaction', // exchange name to bind to
+    'your.routing.key' // Optionally, provide a binding key
+)</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queue</li> <li>
+<code class="highlighter-rouge">param string</code> $exchange</li> <li>
+<code class="highlighter-rouge">param string</code> $routing_key</li> <li>
+<code class="highlighter-rouge">param bool</code> $nowait</li> <li>
+<code class="highlighter-rouge">param array</code> $arguments</li> <li>
+<code class="highlighter-rouge">param int</code> $ticket</li> <li> <table> <tbody> <tr> <td>
+<code class="highlighter-rouge">return</code> mixed</td> <td>null</td> </tr> </tbody> </table> </li> </ul> <h3 id="declareexchange">declareExchange</h3> <p>Declares an exchange</p> <p>This is an alias of method <code class="highlighter-rouge">exchange_declare</code> of <code class="highlighter-rouge">PhpAmqpLib\Channel\AMQPChannel</code>.</p> <pre data-language="php">&lt;?php
+$I-&gt;declareExchange(
+    'nameOfMyExchange', // exchange name
+    'topic' // exchange type
+)</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $exchange</li> <li>
+<code class="highlighter-rouge">param string</code> $type</li> <li>
+<code class="highlighter-rouge">param bool</code> $passive</li> <li>
+<code class="highlighter-rouge">param bool</code> $durable</li> <li>
+<code class="highlighter-rouge">param bool</code> $auto_delete</li> <li>
+<code class="highlighter-rouge">param bool</code> $internal</li> <li>
+<code class="highlighter-rouge">param bool</code> $nowait</li> <li>
+<code class="highlighter-rouge">param array</code> $arguments</li> <li>
+<code class="highlighter-rouge">param int</code> $ticket</li> <li> <table> <tbody> <tr> <td>
+<code class="highlighter-rouge">return</code> mixed</td> <td>null</td> </tr> </tbody> </table> </li> </ul> <h3 id="declarequeue">declareQueue</h3> <p>Declares queue, creates if needed</p> <p>This is an alias of method <code class="highlighter-rouge">queue_declare</code> of <code class="highlighter-rouge">PhpAmqpLib\Channel\AMQPChannel</code>.</p> <pre data-language="php">&lt;?php
+$I-&gt;declareQueue(
+    'nameOfMyQueue', // exchange name
+)</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queue</li> <li>
+<code class="highlighter-rouge">param bool</code> $passive</li> <li>
+<code class="highlighter-rouge">param bool</code> $durable</li> <li>
+<code class="highlighter-rouge">param bool</code> $exclusive</li> <li>
+<code class="highlighter-rouge">param bool</code> $auto_delete</li> <li>
+<code class="highlighter-rouge">param bool</code> $nowait</li> <li>
+<code class="highlighter-rouge">param array</code> $arguments</li> <li>
+<code class="highlighter-rouge">param int</code> $ticket</li> <li> <table> <tbody> <tr> <td>
+<code class="highlighter-rouge">return</code> mixed</td> <td>null</td> </tr> </tbody> </table> </li> </ul> <h3 id="dontseequeueisempty">dontSeeQueueIsEmpty</h3> <p>Checks if queue is not empty.</p> <pre data-language="php">&lt;?php
+$I-&gt;pushToQueue('queue.emails', 'Hello, davert');
+$I-&gt;dontSeeQueueIsEmpty('queue.emails');
+?&gt;</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queue</li> </ul> <h3 id="grabmessagefromqueue">grabMessageFromQueue</h3> <p>Takes last message from queue.</p> <pre data-language="php">&lt;?php
+$message = $I-&gt;grabMessageFromQueue('queue.emails');
+?&gt;</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queue</li> <li>
+<code class="highlighter-rouge">return</code> \PhpAmqpLib\Message\AMQPMessage</li> </ul> <h3 id="purgeallqueues">purgeAllQueues</h3> <p>Purge all queues defined in config.</p> <pre data-language="php">&lt;?php
+$I-&gt;purgeAllQueues();
+?&gt;</pre> <h3 id="purgequeue">purgeQueue</h3> <p>Purge a specific queue defined in config.</p> <pre data-language="php">&lt;?php
+$I-&gt;purgeQueue('queue.emails');
+?&gt;</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queueName</li> </ul> <h3 id="pushtoexchange">pushToExchange</h3> <p>Sends message to exchange by sending exchange name, message and (optionally) a routing key</p> <pre data-language="php">&lt;?php
+$I-&gt;pushToExchange('exchange.emails', 'thanks');
+$I-&gt;pushToExchange('exchange.emails', new AMQPMessage('Thanks!'));
+$I-&gt;pushToExchange('exchange.emails', new AMQPMessage('Thanks!'), 'severity');
+?&gt;</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $exchange</li> <li>
+<code class="highlighter-rouge">param string|\PhpAmqpLib\Message\AMQPMessage</code> $message</li> <li>
+<code class="highlighter-rouge">param string</code> $routing_key</li> </ul> <h3 id="pushtoqueue">pushToQueue</h3> <p>Sends message to queue</p> <pre data-language="php">&lt;?php
+$I-&gt;pushToQueue('queue.jobs', 'create user');
+$I-&gt;pushToQueue('queue.jobs', new AMQPMessage('create'));
+?&gt;</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queue</li> <li>
+<code class="highlighter-rouge">param string|\PhpAmqpLib\Message\AMQPMessage</code> $message</li> </ul> <h3 id="schedulequeuecleanup">scheduleQueueCleanup</h3> <p>Add a queue to purge list</p> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queue</li> </ul> <h3 id="seemessageinqueuecontainstext">seeMessageInQueueContainsText</h3> <p>Checks if message containing text received.</p> <p><strong>This method drops message from queue</strong> <strong>This method will wait for message. If none is sent the script will stuck</strong>.</p> <pre data-language="php">&lt;?php
+$I-&gt;pushToQueue('queue.emails', 'Hello, davert');
+$I-&gt;seeMessageInQueueContainsText('queue.emails','davert');
+?&gt;</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queue</li> <li>
+<code class="highlighter-rouge">param string</code> $text</li> </ul> <h3 id="seenumberofmessagesinqueue">seeNumberOfMessagesInQueue</h3> <p>Checks that queue have expected number of message</p> <pre data-language="php">&lt;?php
+$I-&gt;pushToQueue('queue.emails', 'Hello, davert');
+$I-&gt;seeNumberOfMessagesInQueue('queue.emails',1);
+?&gt;</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queue</li> <li>
+<code class="highlighter-rouge">param int</code> $expected</li> </ul> <h3 id="seequeueisempty">seeQueueIsEmpty</h3> <p>Checks that queue is empty</p> <pre data-language="php">&lt;?php
+$I-&gt;pushToQueue('queue.emails', 'Hello, davert');
+$I-&gt;purgeQueue('queue.emails');
+$I-&gt;seeQueueIsEmpty('queue.emails');
+?&gt;</pre> <ul> <li>
+<code class="highlighter-rouge">param string</code> $queue</li> <li>
+<code class="highlighter-rouge">param int</code> $expected</li> </ul> <div class="_attribution">
+  <p class="_attribution-p">
+    © 2011 Michael Bodnarchuk and contributors<br>Licensed under the MIT License.<br>
+    <a href="https://codeception.com/docs/modules/AMQP" class="_attribution-link" target="_blank">https://codeception.com/docs/modules/AMQP</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

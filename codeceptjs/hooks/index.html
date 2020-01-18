@@ -1,0 +1,394 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Hooks - CodeceptJS - W3cubDocs</title>
+  
+  <meta name="description" content=" CodeceptJS provides API to run custom code before and after the test and inject custom listeners into the event system. ">
+  <meta name="keywords" content="hooks, -, codeceptjs">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/codeceptjs/hooks/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/codeceptjs.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeceptjs/" class="_nav-link" title="" style="margin-left:0;">CodeceptJS</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="hooks">Hooks</h1> <p>CodeceptJS provides API to run custom code before and after the test and inject custom listeners into the event system.</p> <h2 id="bootstrap-teardown">Bootstrap &amp; Teardown</h2> <p>In case you need to execute arbitrary code before or after the tests, you can use <code>bootstrap</code> and <code>teardown</code> config. Use it to start and stop webserver, Selenium, etc.</p> <p>When using the <a href="https://codecept.io/advanced/#multiple-execution" target="_blank">Multiple Execution</a> mode , there are two additional hooks available; <code>bootstrapAll</code> and <code>teardownAll</code>. These hooks are only called once each; before all of the test suites are run (<code>bootstrapAll</code>) and after all of the test suites have finished (<code>teardownAll</code>).</p> <p>There are different ways to define bootstrap and teardown functions:</p> <ul> <li>JS file executed as is (synchronously).</li> <li>JS file exporting function with optional callback for async execution.</li> <li>JS file exporting an object with <code>bootstrap</code> and <code>teardown</code> methods.</li> <li>Inside JS config file</li> </ul> <p>Corresponding examples provided in next sections.</p> <h3 id="example-async-bootstrap-in-a-function">Example: Async Bootstrap in a Function</h3> <p>Add to <code>codecept.json</code>:</p> <pre data-language="json">"bootstrap": "./run_server.js"
+</pre> <p>Export a function in your bootstrap file:</p> <pre data-language="js">// bootstrap.js
+var server = require('./app_server');
+module.exports = function(done) {
+  // on error call done('error description') to stop
+  if (!server.validateConfig()) {
+    done("Can't execute server with invalid config, tests stopped");
+  }
+  // call done() to continue execution
+  server.run(done);
+}
+</pre> <h3 id="example-async-teardown-in-a-function">Example: Async Teardown in a Function</h3> <p>Stopping a server from a previous example can be done in a similar manner. Create a teardown file and add it to <code>codecept.json</code>:</p> <pre data-language="json">"teardown": "./stop_server.js"
+</pre> <p>Inside <code>stop_server.js</code>:</p> <pre data-language="js">var server = require('./app_server');
+module.exports = function(done) {
+  server.stop(done);
+}
+</pre> <h3 id="example-bootstrap-teardown-inside-an-object">Example: Bootstrap &amp; Teardown Inside an Object</h3> <p>Examples above can be combined into one file.</p> <p>Add to config (<code>codecept.json</code>):</p> <pre data-language="js">  "bootstrap": "./server.js"
+  "teardown": "./server.js"
+</pre> <p><code>server.js</code> should export object with <code>bootstrap</code> and <code>teardown</code> functions:</p> <pre data-language="js">// bootstrap.js
+var server = require('./app_server');
+module.exports = {
+  bootstrap: function(done) {
+    server.start(done);
+  },
+  teardown: function(done) {
+    server.stop(done);
+  }
+}
+</pre> <h3 id="example-bootstrap-teardown-inside-config">Example: Bootstrap &amp; Teardown Inside Config</h3> <p>If you are using JavaScript-style config <code>codecept.conf.js</code>, bootstrap and teardown functions can be placed inside of it:</p> <pre data-language="js">var server = require('./app_server');
+
+exports.config = {
+  tests: "./*_test.js",
+  helpers: {},
+
+  // adding bootstrap/teardown
+  bootstrap: function(done) {
+    server.launch(done);
+  },
+  teardown: function(done) {
+    server.stop(done);
+  }
+  // ...
+  // other config options
+}
+
+</pre> <h3 id="example-bootstrapall-teardownall-inside-config">Example: BootstrapAll &amp; TeardownAll Inside Config</h3> <p>Using JavaScript-style config <code>codecept.conf.js</code>, bootstrapAll and teardownAll functions can be placed inside of it:</p> <pre data-language="js">const fs = require('fs');
+const tempFolder = process.cwd() + '/tmpFolder';
+
+exports.config = {
+  tests: "./*_test.js",
+  helpers: {},
+
+  multiple: {
+    suite1: {
+      grep: '@suite1',
+      browsers: [ 'chrome', 'firefox' ],
+    },
+    suite2: {
+      grep: '@suite2',
+      browsers: [ 'chrome' ],
+    },
+  },
+
+  // adding bootstrapAll/teardownAll
+  bootstrapAll: function(done) {
+    fs.mkdir(tempFolder, (err) =&gt; {
+      console.log('Create a temp folder before all test suites start', err);
+      done();
+    });
+  },
+
+  bootstrap: function(done) {
+    console.log('Do some pretty suite setup stuff');
+    done(); // Don't forget to call done()
+  },
+
+  teardown: function(done) {
+    console.log('Cool, one of the test suites have finished');
+    done();
+  },
+
+  teardownAll: function(done) {
+    console.log('All suites are now done so we should clean up the temp folder');
+
+    fs.rmdir(tempFolder, (err) =&gt; {
+      console.log('Ok, now I am done', err);
+      done();
+    });
+  },
+
+  // ...
+  // other config options
+}
+</pre> <p><strong>Note</strong>: The <code>bootstrapAll</code> and <code>teardownAll</code> hooks are only called when using <a href="https://codecept.io/advanced/#multiple-execution" target="_blank">Multiple Execution</a>.</p> <h2 id="api">API</h2> <p><strong>Use local CodeceptJS installation to get access to <code>codeceptjs</code> module</strong></p> <p>CodeceptJS provides an API which can be loaded via <code>require('codeceptjs')</code> when CodeceptJS is installed locally. These internal objects are available:</p> <ul> <li>
+<a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/codecept.js" target="_blank"><code>codecept</code></a>: test runner class</li> <li>
+<a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/config.js" target="_blank"><code>config</code></a>: current codecept config</li> <li>
+<a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/event.js" target="_blank"><code>event</code></a>: event listener</li> <li>
+<a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/recorder.js" target="_blank"><code>recorder</code></a>: global promise chain</li> <li>
+<a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/output.js" target="_blank"><code>output</code></a>: internal printer</li> <li>
+<a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/container.js" target="_blank"><code>container</code></a>: dependency injection container for tests, includes current helpers and support objects</li> <li>
+<a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/helper.js" target="_blank"><code>helper</code></a>: basic helper class</li> <li>
+<a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/actor.js" target="_blank"><code>actor</code></a>: basic actor (I) class</li> </ul> <p><a href="https://github.com/Codeception/CodeceptJS/tree/master/docs/api" target="_blank">API reference</a> is available on GitHub. Also please check the source code of corresponding modules.</p> <h3 id="event-listeners">Event Listeners</h3> <p>CodeceptJS provides a module with <a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/event.js" target="_blank">event dispatcher and set of predefined events</a>.</p> <p>It can be required from codeceptjs package if it is installed locally.</p> <pre data-language="js">const event = require('codeceptjs').event;
+
+module.exports = function() {
+
+  event.dispatcher.on(event.test.before, function (test) {
+
+    console.log('--- I am before test --');
+
+  });
+}
+</pre> <p>Available events:</p> <ul> <li>
+<code>event.test.before(test)</code> - <em>async</em> when <code>Before</code> hooks from helpers and from test is executed</li> <li>
+<code>event.test.after(test)</code> - <em>async</em> after each test</li> <li>
+<code>event.test.started(test)</code> - <em>sync</em> at the very beginning of a test. Passes a current test object.</li> <li>
+<code>event.test.passed(test)</code> - <em>sync</em> when test passed</li> <li>
+<code>event.test.failed(test, error)</code> - <em>sync</em> when test failed</li> <li>
+<code>event.test.finished(test)</code> - <em>sync</em> when test finished</li> <li>
+<code>event.suite.before(suite)</code> - <em>async</em> before a suite</li> <li>
+<code>event.suite.after(suite)</code> - <em>async</em> after a suite</li> <li>
+<code>event.step.before(step)</code> - <em>async</em> when the step is scheduled for execution</li> <li>
+<code>event.step.after(step)</code>- <em>async</em> after a step</li> <li>
+<code>event.step.started(step)</code> - <em>sync</em> when step starts.</li> <li>
+<code>event.step.passed(step)</code> - <em>sync</em> when step passed.</li> <li>
+<code>event.step.failed(step, err)</code> - <em>sync</em> when step failed.</li> <li>
+<code>event.step.finished(step)</code> - <em>sync</em> when step finishes.</li> <li>
+<code>event.all.before</code> - before running tests</li> <li>
+<code>event.all.after</code> - after running tests</li> <li> <p><code>event.all.result</code> - when results are printed</p> </li> <li> <p><em>sync</em> - means that event is fired in the moment of action happens.</p> </li> <li>
+<em>async</em> - means that event is fired when an actions is scheduled. Use <code>recorder</code> to schedule your actions.</li> </ul> <p>For further reference look for <a href="https://github.com/Codeception/CodeceptJS/tree/master/lib/listener" target="_blank">currently available listeners</a> using event system.</p> <h4 id="test-object">Test Object</h4> <p>Test events provide a test object with following fields:</p> <ul> <li>
+<code>title</code> title of a test</li> <li>
+<code>body</code> test function as a string</li> <li>
+<code>opts</code> additional test options like retries, and others</li> <li>
+<code>pending</code> true if test is scheduled for execution and false if a test has finished</li> <li>
+<code>tags</code> array of tags for this test</li> <li>
+<code>file</code> path to a file with a test.</li> <li>
+<code>steps</code> array of executed steps (available only in <code>test.passed</code>, <code>test.failed</code>, <code>test.finished</code> event)</li> </ul> <p>and others</p> <h4 id="step-object">Step Object</h4> <p>Step events provide step objects with following fields:</p> <ul> <li>
+<code>name</code> name of a step, like 'see', 'click', and others</li> <li>
+<code>actor</code> current actor, in most cases it <code>I</code>
+</li> <li>
+<code>helper</code> current helper instance used to execute this step</li> <li>
+<code>helperMethod</code> corresponding helper method, in most cases is the same as <code>name</code>
+</li> <li>
+<code>status</code> status of a step (passed or failed)</li> <li>
+<code>prefix</code> if a step is executed inside <code>within</code> block contain within text, like: 'Within .js-signup-form'.</li> <li>
+<code>args</code> passed arguments</li> </ul> <h3 id="recorder">Recorder</h3> <p>To inject asynchronous functions in a test or before/after a test you can subscribe to corresponding event and register a function inside a recorder object. <a href="https://github.com/Codeception/CodeceptJS/blob/master/lib/recorder.js" target="_blank">Recorder</a> represents a global promises chain.</p> <p>Provide a function description as a first parameter, function should return a promise:</p> <pre data-language="js">const event = require('codeceptjs').event;
+const recorder = require('codeceptjs').recorder;
+module.exports = function() {
+
+  event.dispatcher.on(event.test.before, function (test) {
+
+    const request = require('request');
+
+    recorder.add('create fixture data via API', function() {
+      return new Promise((doneFn, errFn) =&gt; {
+        request({
+          baseUrl: 'http://api.site.com/',
+          method: 'POST',
+          url: '/users',
+          json: { name: 'john', email: 'john@john.com' }
+        }), (err, httpResponse, body) =&gt; {
+          if (err) return errFn(err);
+          doneFn();
+        }
+      });
+    }
+  });
+}
+
+</pre> <p>Whenever you execute tests with <code>--verbose</code> option you will see registered events and promises executed by a recorder.</p> <h3 id="output">Output</h3> <p>Output module provides 4 verbosity levels. Depending on the mode you can have different information printed using corresponding functions.</p> <ul> <li>
+<code>default</code>: prints basic information using <code>output.print</code>
+</li> <li>
+<code>steps</code>: toggled by <code>--steps</code> option, prints step execution</li> <li>
+<code>debug</code>: toggled by <code>--debug</code> option, prints steps, and debug information with <code>output.debug</code>
+</li> <li>
+<code>verbose</code>: toggled by <code>--verbose</code> prints debug information and internal logs with <code>output.log</code>
+</li> </ul> <p>It is recommended to avoid <code>console.log</code> and use output.* methods for printing.</p> <pre data-language="js">const output = require('codeceptjs').output;
+
+output.print('This is basic information');
+output.debug('This is debug information');
+output.log('This is verbose logging information');
+</pre> <h3 id="container">Container</h3> <p>CodeceptJS has a dependency injection container with Helpers and Support objects. They can be retrieved from the container:</p> <pre data-language="js">let container = require('codeceptjs').container;
+
+// get object with all helpers
+let helpers = container.helpers();
+
+// get helper by name
+let WebDriverIO = container.helpers('WebDriverIO');
+
+// get support objects
+let support = container.support();
+
+// get support object by name
+let UserPage = container.support('UserPage');
+
+// get all registered plugins
+let plugins = container.plugins();
+</pre> <p>New objects can also be added to container in runtime:</p> <pre data-language="js">let container = require('codeceptjs').container;
+
+container.append({
+  helpers: { // add helper
+    MyHelper: new MyHelper({ config1: 'val1' });
+  },
+  support: { // add page object
+    UserPage: require('./pages/user');
+  }
+})
+</pre> <p>Container also contains current Mocha instance:</p> <pre data-language="js">let mocha = container.mocha();
+</pre> <h3 id="config">Config</h3> <p>CodeceptJS config can be accessed from <code>require('codeceptjs').config.get()</code>:</p> <pre data-language="js">
+let config = require('codeceptjs').config.get();
+
+if (config.myKey == 'value') {
+  // run hook
+}
+</pre> <h2 id="plugins">Plugins</h2> <p>Plugins allow to use CodeceptJS internal API to extend functionality. Use internal event dispatcher, container, output, promise recorder, to create your own reporters, test listeners, etc.</p> <p>CodeceptJS includes <a href="https://codecept.io/plugins/" target="_blank">built-in plugins</a> which extend basic functionality and can be turned on and off on purpose. Taking them as <a href="https://github.com/Codeception/CodeceptJS/tree/master/lib/plugin" target="_blank">examples</a> you can develop your custom plugins.</p> <p>A plugin is a basic JS module returning a function. Plugins can have individual configs which are passed into this function:</p> <pre data-language="js">const defaultConfig = {
+  someDefaultOption: true
+}
+
+module.exports = function(config) {
+  config = Object.assign(defaultConfig, config);
+  // do stuff
+}
+</pre> <p>Plugin can register event listeners or hook into promise chain with recorder. See <a href="https://github.com/Codeception/CodeceptJS/tree/master/lib/helper" target="_blank">API reference</a>.</p> <p>To enable your custom plugin in config add it to <code>plugins</code> section. Specify path to node module using <code>require</code>.</p> <pre data-language="js">"plugins": {
+  "myPlugin": {
+    "require": "./path/to/my/module",
+    "enabled": true
+  }
+}
+</pre> <ul> <li>
+<code>require</code> - specifies relative path to a plugin file. Path is relative to config file.</li> <li>
+<code>enabled</code> - to enable this plugin.</li> </ul> <p>If a plugin is disabled (<code>enabled</code> is not set or false) this plugin can be enabled from command line:</p> <pre>./node_modules/.bin/codeceptjs run --plugin myPlugin
+</pre> <p>Several plugins can be enabled as well:</p> <pre>./node_modules/.bin/codeceptjs run --plugin myPlugin,allure
+</pre> <h3 id="example-execute-code-for-a-specific-group-of-tests">Example: Execute code for a specific group of tests</h3> <p>If you need to execute some code before a group of tests, you can <a href="https://codecept.io/advanced/#tags" target="_blank">mark these tests with a same tag</a>. Then to listen for tests where this tag is included (see <a href="#test-object">test object api</a>).</p> <p>Let's say we need to populate database for a group of tests.</p> <pre data-language="js">// populate database for slow tests
+const event = require('codeceptjs').event;
+
+module.exports = function() {
+
+  event.dispatcher.on(event.test.before, function (test) {
+
+    if (test.tags.indexOf('@populate') &gt;= 0) {
+      recorder.add('populate database', async () =&gt; {
+        // populate database for this test
+      })
+    }
+  });
+}
+</pre> <h2 id="custom-hooks">Custom Hooks</h2> <p><em>(deprecated, use <a href="#plugins">plugins</a>)</em></p> <p>Hooks are JavaScript files same as for bootstrap and teardown, which can be registered inside <code>hooks</code> section of config. Unlike <code>bootstrap</code> you can have multiple hooks registered:</p> <pre data-language="json">"hooks": [
+  "./server.js",
+  "./data_builder.js",
+  "./report_notification.js"
+]
+</pre> <p>Inside those JS files you can use CodeceptJS API (see below) to access its internals.</p> <h2 id="custom-runner">Custom Runner</h2> <p>CodeceptJS can be imported and used in custom runners. To initialize Codecept you need to create Config and Container objects.</p> <pre data-language="js">let Container = require('codeceptjs').container;
+let Codecept = require('codeceptjs').codecept;
+
+let config = { helpers: { WebDriverIO: { browser: 'chrome', url: 'http://localhost' } } };
+let opts = { steps: true };
+
+// create runner
+let codecept = new Codecept(config, opts);
+
+// initialize codeceptjs in current dir
+codecept.initGlobals(__dirname);
+
+// create helpers, support files, mocha
+Container.create(config, opts);
+
+// initialize listeners
+codecept.bootstrap();
+
+// load tests
+codecept.loadTests('*_test.js');
+
+// run tests
+codecept.run();
+</pre> <p>In this way Codecept runner class can be extended.</p> <h2 id="done">done()</h2>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>Licensed under the MIT License.<br>
+    <a href="https://codecept.io/hooks/" class="_attribution-link" target="_blank">https://codecept.io/hooks/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

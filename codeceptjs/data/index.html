@@ -1,0 +1,176 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Data Management - CodeceptJS - W3cubDocs</title>
+  
+  <meta name="description" content=" This chapter describes data management for external sources. If you are looking for using Data Sets in tests, see Data Driven Tests section ">
+  <meta name="keywords" content="data, management, -, codeceptjs">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/codeceptjs/data/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/codeceptjs.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeceptjs/" class="_nav-link" title="" style="margin-left:0;">CodeceptJS</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="data-management">Data Management</h1> <p><em>This chapter describes data management for external sources. If you are looking for using Data Sets in tests, see <a href="https://codecept.io/advanced/#data-drivern-tests" target="_blank">Data Driven Tests</a> section</em></p> <p>Managing data for tests is always a tricky issue. How isolate data between tests, how to prepare data for different tests, etc. There are different approaches to solve it:</p> <ol> <li>reset database completely between tests</li> <li>create unique non-intersecting data sets per each test</li> <li>create and delete data for a test</li> </ol> <p>The most efficient way would be to allow test to control its data, i.e. the 3rd option. However, accessing database directly is not a good idea as database vendor, schema and data are used by application internally and are out of scope of acceptance test.</p> <p>Today all modern web applications have REST API. So it is a good idea to use it to create data for a test and delete it after. API supposed to be a stable interface and it can be used by acceptance tests. CodeceptJS provides 2 helpers for Data Management via REST API.</p> <h2 id="rest">REST</h2> <p><a href="https://codecept.io/helpers/REST/" target="_blank">REST helper</a> uses <a href="http://unirest.io/nodejs.html" target="_blank">Unirest</a> library to send HTTP requests to application. However, it doesn't provide tools for testing APIs, so it should be paired with WebDriverIO, Nightmare or Protractor helpers for browser testing.</p> <p>Enable REST helper in global config. It is recommended to set <code>endpoint</code>, a base URL for all API requests. If you need some authorization you can optionally set default headers too.</p> <p>See the sample config:</p> <pre data-language="js">"helpers": {
+  "REST": {
+    "endpoint": "http://localhost/api/v1/",
+    "defaultHeaders": {
+      "Auth": "11111"
+    }
+  },
+
+  "WebDriverIO" : {
+    "browser": "chrome"
+  }
+}
+</pre> <p>REST helper provides basic methods to send requests to application:</p> <pre data-language="js">I.sendGetRequest()
+I.sendPostRequest()
+I.sendPutRequest()
+I.sendPatchRequest()
+I.sendDeleteRequest()
+</pre> <p>As well as a method for setting headers: <code>haveRequestHeaders</code>.</p> <p>Here is a usage example:</p> <pre data-language="js">let postId = null;
+
+Scenario('check post page', async (I)  =&gt; {
+  // valid access token
+  I.haveRequestHeaders({auth: '1111111'});
+  // get the first user
+  let user = await I.sendGetRequest('/api/users/1');
+  // create a post and save its Id
+  postId = await I.sendPostRequest('/api/posts', { author: user.id, body: 'some text' });
+  // open browser page of new post
+  I.amOnPage('/posts/2.html');
+  I.see('some text', 'p.body');
+});
+
+// cleanup created data
+After((I) =&gt; {
+  I.sendDeleteRequest('/api/posts/'+postId);
+});
+</pre> <p>This can also be used to emulate Ajax requests:</p> <pre data-language="js">I.sendPostRequest('/update-status', {}, { http_x_requested_with: 'xmlhttprequest' });
+</pre> <h2 id="data-generation-with-factories">Data Generation with Factories</h2> <p>This concept is extended by <a href="https://codecept.io/helpers/ApiDataFactory/" target="_blank">ApiDataFactory</a> helper. It builds data according to defined rules and uses API to store them and automatically clean them up after a test, This way setting data for a test is as simple as writing:</p> <pre data-language="js">let post = yield I.have('post');
+I.haveMultiple('comment', 5, { postId: post.id});
+</pre> <p>Just define how many items of any kind you need and ApiDataFactory will create them for you. However, to make this work some preparations required.</p> <p>At first, you need data generation libraries which are <a href="https://github.com/rosiejs/rosie" target="_blank">Rosie</a> and <a href="https://www.npmjs.com/package/faker" target="_blank">Faker</a>. Faker can generate random names, emails, texts, and Rosie uses them to generate objects using factories.</p> <p>Install rosie and faker to create a first factory:</p> <pre data-language="js">npm i rosie faker --save-dev
+</pre> <p>Then create a module which will export a factory for an entity.</p> <p>See the example providing a factory for User generation:</p> <pre data-language="js">// factories/post.js
+var Factory = require('rosie').Factory;
+var faker = require('faker');
+
+module.exports = new Factory()
+  .attr('name', () =&gt; faker.name.findName())
+  .attr('email', () =&gt; faker.internet.email());
+</pre> <p>Next is to configure helper to match factories with API:</p> <pre data-language="js"> "ApiDataFactory": {
+   "endpoint": "http://user.com/api",
+   "factories": {
+     "user": {
+        "uri": "/users"
+        "factory": "./factories/user"
+     }
+   }
+ }
+</pre> <p>Then, calling <code>I.have('user')</code> inside a test will create a new user for you. This is done by sending POST request to <code>/api/users</code> URL. Response is returned and can be used in tests.</p> <p>At the end of a test ApiDataFactory will clean up created record for you. This is done by collecting ids from crated records and running <code>DELETE /api/users/{id}</code> requests at the end of a test. This rules can be customized in helper configuration.</p>  <h3 id="done">done()</h3>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>Licensed under the MIT License.<br>
+    <a href="https://codecept.io/data/" class="_attribution-link" target="_blank">https://codecept.io/data/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

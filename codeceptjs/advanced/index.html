@@ -1,0 +1,292 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Advanced Usage - CodeceptJS - W3cubDocs</title>
+  
+  <meta name="description" content=" Execute the same scenario on a different data set. ">
+  <meta name="keywords" content="advanced, usage, -, codeceptjs">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/codeceptjs/advanced/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/codeceptjs.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeceptjs/" class="_nav-link" title="" style="margin-left:0;">CodeceptJS</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="advanced-usage">Advanced Usage</h1> <h2 id="data-driven-tests">Data Driven Tests</h2> <p>Execute the same scenario on a different data set.</p> <p>Let's say you want to test login for different user accounts. In this case, you need to create a datatable and fill it in with credentials. Then use <code>Data().Scenario</code> to include this data and generate multiple scenarios:</p> <pre data-language="js">// Define data table inside a test or load from another module
+let accounts = new DataTable(['login', 'password']); //
+accounts.add(['davert', '123456']); // adding records to a table
+accounts.add(['admin', '123456']);
+
+// You can skip some data. But add them to report as skipped (just like with usual scenarios):
+accounts.xadd(['admin', '23456'])
+
+// Pass dataTable to Data()
+// Use special param `current` to get current data set
+Data(accounts).Scenario('Test Login', (I, current) =&gt; {
+  I.fillField('Username', current.login); // current is reserved!
+  I.fillField('Password', current.password);
+  I.click('Sign In');
+  I.see('Welcome '+ current.login);
+});
+
+
+// Also you can set only for Data tests. It will launch executes only the current test but with all data options
+Data(accounts).only.Scenario('Test Login', (I, current) =&gt; {
+  I.fillField('Username', current.login); // current is reserved!
+  I.fillField('Password', current.password);
+  I.click('Sign In');
+  I.see('Welcome '+ current.login);
+});
+</pre> <p><em>Important: you can't use name <code>current</code> for pageObjects or helpers in data scenarios</em></p> <p>This will produce 2 tests with different data sets. Current data set is appended to a test name in output:</p> <pre data-language="sh">✓ Test Login | {"login":"davert","password":"123456"}
+✓ Test Login | {"login":"admin","password":"123456"}
+S Test Login | {"login":"admin","password":"23456"}
+</pre> <pre data-language="js">// You can filter your data table
+Data(accounts.filter(account =&gt; account.login == 'admin')
+.Scenario('Test Login', (I, current) =&gt; {
+  I.fillField('Username', current.login);
+  I.fillField('Password', current.password);
+  I.click('Sign In');
+  I.see('Welcome '+ current.login);
+});
+</pre> <p>This will limit data sets accoring passed function:</p> <pre data-language="sh">✓ Test Login | {"login":"admin","password":"123456"}
+S Test Login | {"login":"admin","password":"23456"}
+</pre> <p>Data sets can also be defined with array, generator, or a function.</p> <pre data-language="js">Data(function*() {
+  yield { user: 'davert'};
+  yield { user: 'andrey'};
+}).Scenario() // ...
+</pre> <p><em>HINT: If you don't use DataTable. add <code>toString()</code> method to each object added to data set, so the data could be pretty printed in a test name</em></p> <h2 id="tags">Tags</h2> <p>Append <code>@tag</code> to your test name, so</p> <pre data-language="js">Scenario('update user profile @slow')
+</pre> <p>Alternativly, use <code>tag</code> method of Scenario to set additional tags:</p> <pre data-language="js">Scenario('update user profile', () =&gt; {
+  // test goes here
+}).tag('@slow').tag('important');
+</pre> <p>All tests with <code>@tag</code> could be executed with <code>--grep @tag</code> option.</p> <pre data-language="sh">codeceptjs run --grep @slow
+</pre> <p>Use regex for more flexible filtering:</p> <ul> <li>
+<code>--grep '(?=.*@smoke2)(?=.*@smoke3)'</code> - run tests with @smoke2 and @smoke3 in name</li> <li>
+<code>--grep "\@smoke2|\@smoke3"</code> - run tests with @smoke2 or @smoke3 in name</li> <li>
+<code>--grep '((?=.*@smoke2)(?=.*@smoke3))|@smoke4'</code> - run tests with (@smoke2 and @smoke3) or @smoke4 in name</li> <li>
+<code>--grep '(?=.*@smoke2)^(?!.*@smoke3)'</code> - run tests with @smoke2 but without @smoke3 in name</li> <li>
+<code>--grep '(?=.*)^(?!.*@smoke4)'</code> - run all tests except @smoke4</li> </ul> <h2 id="debug">Debug</h2> <p>CodeceptJS provides a debug mode in which additional information is printed. It can be turned on with <code>--debug</code> flag.</p> <pre data-language="sh">codeceptjs run --debug
+</pre> <p>to receive even more information turn on <code>--verbose</code> flag:</p> <pre data-language="sh">codeceptjs run --verbose
+</pre> <p>And don't forget that you can pause execution and enter <strong>interactive console</strong> mode by calling <code>pause()</code> inside your test.</p> <p>For advanced debugging use NodeJS debugger. In WebStorm IDE:</p> <pre data-language="sh">node $NODE_DEBUG_OPTION ./node_modules/.bin/codeceptjs run
+</pre> <p>For Visual Studio Code, add the following configuration in launch.json:</p> <pre data-language="json">{
+  "type": "node",
+  "request": "launch",
+  "name": "codeceptjs",
+  "args": ["run", "--grep", "@your_test_tag"],
+  "program": "${workspaceFolder}/node_modules/.bin/codeceptjs"
+}
+</pre> <h2 id="multiple-browsers-execution">Multiple Browsers Execution</h2> <p>This is useful if you want to execute same tests but on different browsers and with different configurations or different tests on same browsers in parallel.</p> <p>Create <code>multiple</code> section in configuration file, and fill it with run suites. Each suite should have <code>browser</code> array with browser names or driver helper's configuration:</p> <pre data-language="js">"multiple": {
+  "basic": {
+    // run all tests in chrome and firefox
+    "browsers": ["chrome", "firefox"]
+  },
+
+  "smoke": {
+    "browsers": [
+      "firefox",
+      // replace any config values from WebDriverIO helper
+      {
+        "browser": "chrome",
+        "windowSize": "maximize",
+        "desiredCapabilities": {
+          "acceptSslCerts": true
+        }
+      },
+    ]
+  },
+}
+</pre> <p>You can use <code>grep</code> and <code>outputName</code> params to filter tests and output directory for suite:</p> <pre data-language="js">"multiple": {
+  "smoke": {
+    // run only tests containing "@smoke" in name
+    "grep": "@smoke",
+
+    // store results into `output/smoke` directory
+    "outputName": "smoke",
+
+    "browsers": [
+      "firefox",
+      {"browser": "chrome", "windowSize": "maximize"}
+    ]
+  }
+}
+</pre> <p>Then tests can be executed using <code>run-multiple</code> command.</p> <p>Run all suites for all browsers:</p> <pre data-language="sh">codeceptjs run-multiple --all
+</pre> <p>Run <code>basic</code> suite for all browsers</p> <pre data-language="sh">codeceptjs run-multiple basic
+</pre> <p>Run <code>basic</code> suite for chrome only:</p> <pre data-language="sh">codeceptjs run-multiple basic:chrome
+</pre> <p>Run <code>basic</code> suite for chrome and <code>smoke</code> for firefox</p> <pre data-language="sh">codeceptjs run-multiple basic:chrome smoke:firefox
+</pre> <p>Run basic tests with grep and junit reporter</p> <pre data-language="sh">codeceptjs run-multiple basic --grep signin --reporter mocha-junit-reporter
+</pre> <p>Run regression tests specifying different config path:</p> <pre data-language="sh">codeceptjs run-multiple regression -c path/to/config
+</pre> <p>Each executed process uses custom folder for reports and output. It is stored in subfolder inside an output directory. Subfolders will be named in <code>suite_browser</code> format.</p> <p>Output is printed for all running processes. Each line is tagged with a suite and browser name:</p> <pre data-language="sh">[basic:firefox] GitHub --
+[basic:chrome] GitHub --
+[basic:chrome]    it should not enter
+[basic:chrome]  ✓ signin in 2869ms
+
+[basic:chrome]   OK  | 1 passed   // 30s
+[basic:firefox]    it should not enter
+[basic:firefox]  ✖ signin in 2743ms
+
+[basic:firefox] -- FAILURES:
+</pre> <h3 id="hooks">Hooks</h3> <p>Hooks are available when using the <code>run-multiple</code> command to perform actions before the test suites start and after the test suites have finished. See <a href="https://codecept.io/hooks/#bootstrap-teardown" target="_blank">Hooks</a> for an example.</p> <h2 id="parallel-execution">Parallel Execution</h2> <p>CodeceptJS can be configured to run tests in parallel.</p> <p>When enabled, it collects all test files and executes them in parallel by the specified amount of chunks. Given we have five test scenarios (<code>a_test.js</code>,<code>b_test.js</code>,<code>c_test.js</code>,<code>d_test.js</code> and <code>e_test.js</code>), by setting <code>"chunks": 2</code> we tell the runner to run two suites in parallel. The first suite will run <code>a_test.js</code>,<code>b_test.js</code> and <code>c_test.js</code>, the second suite will run <code>d_test.js</code> and <code>e_test.js</code>.</p> <pre data-language="js">"multiple": {
+  "parallel": {
+    // Splits tests into 2 chunks
+    "chunks": 2
+  }
+}
+</pre> <p>To execute them use <code>run-multiple</code> command passing configured suite, which is <code>parallel</code> in this example:</p> <pre>codeceptjs run-multiple parallel
+</pre> <p>Grep and multiple browsers are supported. Passing more than one browser will multiply the amount of suites by the amount of browsers passed. The following example will lead to four parallel runs.</p> <pre data-language="js">"multiple": {
+  // 2x chunks + 2x browsers = 4
+  "parallel": {
+    // Splits tests into chunks
+    "chunks": 2,
+    // run all tests in chrome and firefox
+    "browsers": ["chrome", "firefox"]
+  },
+}
+</pre> <p>Passing a function will enable you to provide your own chunking algorithm. The first argument passed to you function is an array of all test files, if you enabled grep the test files passed are already filtered to match the grep pattern.</p> <pre data-language="js">"multiple": {
+  "parallel": {
+    // Splits tests into chunks by passing an anonymous function,
+    // only execute first and last found test file
+    "chunks": (files) =&gt; {
+      return [
+        [ files[0] ], // chunk 1
+        [ files[files.length-1] ], // chunk 2
+      ]
+    },
+    // run all tests in chrome and firefox
+    "browsers": ["chrome", "firefox"]
+  }
+}
+</pre> <p>Note: Chunking will be most effective if you have many individual test files that contain only a small amount of scenarios. Otherwise the combined execution time of many scenarios or big scenarios in one single test file potentially lead to an uneven execution time.</p> <h2 id="test-options">Test Options</h2> <p>Features and Scenarios have their options that can be set by passing a hash after their names:</p> <pre data-language="js">Feature('My feature', {key: val});
+
+Scenario('My scenario', {key: val}, (I) =&gt; {});
+</pre> <h3 id="timeout">Timeout</h3> <p>By default there is no timeout for tests, however you can change this value for a specific suite:</p> <pre data-language="js">Feature('Stop me').timeout(5000); // set timeout to 5s
+</pre> <p>or for the test:</p> <pre data-language="js">// set timeout to 1s
+Scenario("Stop me faster", (I) =&gt; {
+  // test goes here
+}).timeout(1000);
+
+// alternative
+Scenario("Stop me faster", {timeout: 1000}, (I) =&gt; {});
+
+// disable timeout for this scenario
+Scenario("Don't stop me", {timeout: 0}, (I) =&gt; {});
+</pre> <h2 id="dynamic-configuration">Dynamic Configuration</h2> <p>Helpers can be reconfigured per scenario or per feature. This might be useful when some tests should be executed with different settings than others. In order to reconfigure tests use <code>.config()</code> method of <code>Scenario</code> or <code>Feature</code>.</p> <pre data-language="js">Scenario('should be executed in firefox', (I) =&gt; {
+  // I.amOnPage(..)
+}).config({ browser: 'firefox' })
+</pre> <p>In this case <code>config</code> overrides current config of the first helper. To change config of specific helper pass two arguments: helper name and config values:</p> <pre data-language="js">Scenario('should create data via v2 version of API', (I) =&gt; {
+  // I.amOnPage(..)
+}).config('REST', { endpoint: 'https://api.mysite.com/v2' })
+</pre> <p>Config can also be set by a function, in this case you can get a test object and specify config values based on it. This is very useful when running tests against cloud providers, like BrowserStack.</p> <pre data-language="js">Scenario('should report to BrowserStack', (I) =&gt; {
+  // I.amOnPage(..)
+}).config((test) =&gt; {
+  return { desiredCapabilities: {
+    project: test.suite.title,
+    name: test.title,
+  }}
+});
+</pre> <p>Config changes can be applied to all tests in suite:</p> <pre data-language="js">Feature('Admin Panel').config({ url: 'https://mysite.com/admin' });
+</pre> <p>Please note that some config changes can't be applied on the fly. For instance, if you set <code>restart: false</code> in your config and then changing value <code>browser</code> won't take an effect as browser is already started and won't be closed untill all tests finish.</p> <p>Configuration changes will be reverted after a test or a suite.</p> <h2 id="done">done()</h2>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>Licensed under the MIT License.<br>
+    <a href="https://codecept.io/advanced/" class="_attribution-link" target="_blank">https://codecept.io/advanced/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

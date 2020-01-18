@@ -1,0 +1,195 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ApiDataFactory - CodeceptJS - W3cubDocs</title>
+  
+  <meta name="description" content=" Extends Helper ">
+  <meta name="keywords" content="apidatafactory, -, codeceptjs">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/codeceptjs/helpers/apidatafactory/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/codeceptjs.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeceptjs/" class="_nav-link" title="" style="margin-left:0;">CodeceptJS</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="apidatafactory">ApiDataFactory</h1> <p><strong>Extends Helper</strong></p> <p>Helper for managing remote data using REST API. Uses data generators like <a href="https://github.com/rosiejs/rosie" target="_blank">rosie</a> or factory girl to create new record.</p> <p>By defining a factory you set the rules of how data is generated. This data will be saved on server via REST API and deleted in the end of a test.</p> <h2 id="use-case">Use Case</h2> <p>Acceptance tests interact with a websites using UI and real browser. There is no way to create data for a specific test other than from user interface. That makes tests slow and fragile. Instead of testing a single feature you need to follow all creation/removal process.</p> <p>This helper solves this problem. Most of web application have API, and it can be used to create and delete test records. By combining REST API with Factories you can easily create records for tests:</p> <pre data-language="js">I.have('user', { login: 'davert', email: 'davert@mail.com' });
+let id = await I.have('post', { title: 'My first post'});
+I.haveMultiple('comment', 3, {post_id: id});
+</pre> <p>To make this work you need</p> <ol> <li>REST API endpoint which allows to perform create / delete requests and</li> <li>define data generation rules</li> </ol> <h3 id="setup">Setup</h3> <p>Install <a href="https://github.com/rosiejs/rosie" target="_blank">Rosie</a> and <a href="https://www.npmjs.com/package/faker" target="_blank">Faker</a> libraries.</p> <pre data-language="sh">npm i rosie faker --save-dev`
+</pre> <p>Create a factory file for a resource.</p> <p>See the example for Posts factories:</p> <pre data-language="js">// tests/factories/posts.js
+
+var Factory = require('rosie').Factory;
+var faker = require('faker');
+
+module.exports = new Factory()
+   // no need to set id, it will be set by REST API
+   .attr('author', () =&gt; faker.name.findName())
+   .attr('title', () =&gt; faker.lorem.sentence())
+   .attr('body', () =&gt; faker.lorem.paragraph());
+</pre> <p>For more options see <a href="https://github.com/rosiejs/rosie" target="_blank">rosie documentation</a>.</p> <p>Then configure ApiDataHelper to match factories and REST API:</p> <h3 id="configuration">Configuration</h3> <p>ApiDataFactory has following config options:</p> <ul> <li>
+<code>endpoint</code>: base URL for the API to send requests to.</li> <li>
+<code>cleanup</code>: should inserted records be deleted up after tests. Default: true</li> <li>
+<code>factories</code>: list of defined factories</li> <li>
+<code>REST</code>: configuration for REST requests</li> </ul> <p>See the example:</p> <pre data-language="js"> "ApiDataFactory": {
+   "endpoint": "http://user.com/api",
+   "cleanup": true,
+   "factories": {
+     "post": {
+        "uri": "/posts"
+        "factory": "./factories/post"
+     },
+     "comment": {
+       "factory": "./factories/comment",
+       "create": { "post": "/comments/create" },
+       "delete": { "post": "/comments/delete" }
+     }
+   }
+}
+</pre> <p>It is required to set REST API <code>endpoint</code> which is the baseUrl for all API requests. Factory file is expected to be passed via <code>factory</code> option.</p> <p>This Helper uses <a href="https://codecept.io/helpers/REST/" target="_blank">REST</a> helper and accepts its configuration in "REST" section. So, in order to set default headers or timeout you should add:</p> <pre data-language="js">"ApiDataFactory": {
+   "REST": {
+     "timeout": "100000",
+     "defaultHeaders": {
+       "auth": "111111"
+     }
+  }
+}
+</pre> <h3 id="api-requests">Api Requests</h3> <p>By default to create a record ApiDataFactory will use endpoint and plural factory name:</p> <ul> <li>create: <code>POST {endpoint}/{resource} data</code>
+</li> <li>delete: <code>DELETE {endpoint}/{resource}/id</code>
+</li> </ul> <p>Example (<code>endpoint</code>: <code>http://app.com/api</code>):</p> <ul> <li>create: POST request to <code>http://app.com/api/users</code>
+</li> <li>delete: DELETE request to <code>http://app.com/api/users/1</code>
+</li> </ul> <p>However this behavior can be configured with following options:</p> <ul> <li>
+<code>uri</code>: set different resource uri. Example: <code>uri: account</code> =&gt; <code>http://app.com/api/account</code>.</li> <li>
+<code>create</code>: override create options. Expected format: <code>{ method: uri }</code>. Example: <code>{ "post": "/users/create" }</code>
+</li> <li>
+<code>delete</code>: override delete options. Expected format: <code>{ method: uri }</code>. Example: <code>{ "post": "/users/delete/{id}" }</code>
+</li> </ul> <h3 id="parameters">Parameters</h3> <ul> <li>
+<code>config</code> </li> </ul> <h3 id="95fetchid">_fetchId</h3> <p>Fetches id of a record after it was created by <code>have</code>. By default fetched <code>id</code> attribute from JSON body.</p> <p>Customize it from custom Helper file:</p> <pre data-language="js">this.helpers['ApiDataFactory']._fetchId = (body, factory) {
+   return body[factory][0].id;
+}
+</pre> <h4 id="parameters_1">Parameters</h4> <ul> <li>
+<code>body</code> <strong>any</strong> </li> <li>
+<code>factory</code> <strong>any</strong> </li> </ul> <h3 id="95requestcreate">_requestCreate</h3> <p>Executes request to create a record in API. Can be replaced from a in custom helper.</p> <h4 id="parameters_2">Parameters</h4> <ul> <li>
+<code>factory</code> <strong>any</strong> </li> <li>
+<code>data</code> <strong>any</strong> </li> </ul> <h3 id="95requestdelete">_requestDelete</h3> <p>Executes request to delete a record in API Can be replaced from a custom helper.</p> <h4 id="parameters_3">Parameters</h4> <ul> <li>
+<code>factory</code> <strong>any</strong> </li> <li>
+<code>id</code> <strong>any</strong> </li> </ul> <h3 id="have">have</h3> <p>Generates a new record using factory and saves API request to store it.</p> <pre data-language="js">// create a user
+I.have('user');
+// create user with defined email
+I.have('user', { email: 'user@user.com'});
+</pre> <h4 id="parameters_4">Parameters</h4> <ul> <li>
+<code>factory</code> <strong>any</strong> factory to use</li> <li>
+<code>params</code> <strong>any</strong> predefined parameters</li> </ul> <h3 id="havemultiple">haveMultiple</h3> <p>Generates bunch of records and saves multiple API requests to store them.</p> <pre data-language="js">// create 3 posts
+I.have('post', 3);
+
+// create 3 posts by one author
+I.have('post', 3, { author: 'davert' });
+</pre> <h4 id="parameters_5">Parameters</h4> <ul> <li>
+<code>factory</code> <strong>any</strong> </li> <li>
+<code>times</code> <strong>any</strong> </li> <li>
+<code>params</code> <strong>any</strong> </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>Licensed under the MIT License.<br>
+    <a href="https://codecept.io/helpers/ApiDataFactory/" class="_attribution-link" target="_blank">https://codecept.io/helpers/ApiDataFactory/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

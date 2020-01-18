@@ -1,0 +1,246 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Page Object - CodeceptJS - W3cubDocs</title>
+  
+  <meta name="description" content="UI of your web application has interaction areas which can be shared across different tests. To avoid code duplication you can put common locators &hellip;">
+  <meta name="keywords" content="page, object, -, codeceptjs">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/codeceptjs/pageobjects/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/codeceptjs.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeceptjs/" class="_nav-link" title="" style="margin-left:0;">CodeceptJS</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="page-object">Page Object</h1> <p>UI of your web application has interaction areas which can be shared across different tests. To avoid code duplication you can put common locators and methods into one place.</p> <h2 id="actor">Actor</h2> <p>At initialization you were asked to create custom steps file. If you accepted this option you may use <code>custom_steps.js</code> file to extend <code>I</code>. See how <code>login</code> method can be added to <code>I</code>:</p> <pre data-language="js">module.exports = function() {
+  return actor({
+
+    login: function(email, password) {
+      this.fillField('Email', email);
+      this.fillField('Password', password);
+      this.click('Submit');
+    }
+  });
+}
+</pre> <p>Please notice that instead of <code>I</code> you should use <code>this</code> in current context.</p> <h2 id="pageobject">PageObject</h2> <p>In case an application has different pages (login, admin, etc) you should use a page object. CodeceptJS can generate a template for it with the command:</p> <pre data-language="sh">codeceptjs gpo
+</pre> <p>This will create a sample template for a page object and include it into <code>codecept.json</code> config.</p> <pre data-language="js">const I = actor();
+
+module.exports = {
+
+  // insert your locators and methods here
+}
+</pre> <p>As you see, <code>I</code> object is available there so you can use it as you do in tests. General page object for a login page may look like this:</p> <pre data-language="js">const I = actor();
+
+module.exports = {
+
+  // setting locators
+  fields: {
+    email: '#user_basic_email',
+    password: '#user_basic_password'
+  },
+  submitButton: {css: '#new_user_basic input[type=submit]'},
+
+  // introducing methods
+  sendForm(email, password) {
+    I.fillField(this.fields.email, email);
+    I.fillField(this.fields.password, password);
+    I.click(this.submitButton);
+  }
+}
+</pre> <p>You can include this pageobject in test by its name (defined in <code>codecept.json</code>). In case you created a <code>loginPage</code> object it should be added to list of test arguments to be included in test:</p> <pre data-language="js">Scenario('login', (I, loginPage) =&gt; {
+  loginPage.sendForm('john@doe.com','123456');
+  I.see('Hello, John');
+});
+</pre> <p>Also you can use <code>async/await</code> inside PageObject:</p> <pre data-language="js">const I = actor();
+
+module.exports = {
+
+  // setting locators
+  container: "//div[@class = 'numbers']",
+  mainItem: {
+    number: ".//div[contains(@class, 'numbers__main-number')]",
+    title: ".//div[contains(@class, 'numbers__main-title-block')]"
+  },
+
+  // introducing methods
+  openMainArticle: async () =&gt; {
+    I.waitForVisible(this.container)
+    let _this = this
+    let title;
+    await within(this.container, async () =&gt; {
+      title = await I.grabTextFrom(_this.mainItem.number);
+      let subtitle = await I.grabTextFrom(_this.mainItem.title);
+      title = title + " " + subtitle.charAt(0).toLowerCase() + subtitle.slice(1);
+      await I.click(_this.mainItem.title)
+    })
+    return title;
+  }
+}
+</pre> <p>and use them in your tests:</p> <pre data-language="js">Scenario('login2', async (I, loginPage, basePage) =&gt; {
+  let title = await mainPage.openMainArticle()
+  basePage.pageShouldBeOpened(title)
+});
+</pre> <h2 id="page-fragments">Page Fragments</h2> <p>In a similar manner CodeceptJS allows you to generate <strong>PageFragments</strong> and any other are abstraction by running <code>go</code> command with <code>--type</code> (or <code>-t</code>) option:</p> <pre data-language="sh">codeceptjs go --type fragment
+</pre> <p>Page Fragments represent autonomous parts of a page, like modal boxes, components, widgets. Technically they are the same as PageObject but conceptually they are a bit different. For instance, it is recommended that Page Fragment to include a root locator of a component. Methods of page fragment can use <code>within</code> block to narrow scope to a root locator:</p> <pre data-language="js">const I = actor();
+// fragments/modal.js
+module.exports = {
+
+  root: '#modal',
+
+  // we are clicking "Accept: inside a popup window
+  accept() {
+    within(this.root, function() {
+      I.click('Accept');
+    });
+  }
+}
+</pre> <p>To use a Page Fragment within a Test Scenario just inject it into your Scenario:</p> <pre data-language="js">Scenario('failed_login', async (I, loginPage, modal) =&gt; {
+  loginPage.sendForm('john@doe.com','wrong password');
+  I.waitForVisible(modal.root);
+  within(modal.root, function () {
+    I.see('Login failed');
+  })
+});
+</pre> <p>To use a Page Fragment within a Page Object, you need to <code>require</code> it on top of the Page Object file:</p> <pre data-language="js">const I = actor();
+const modal = require('../fragments/modal');
+
+module.exports = { 
+  doStuff() {
+    ...
+    modal.accept();
+    ...
+  }
+}
+
+</pre> <h2 id="stepobjects">StepObjects</h2> <p>StepObjects represent complex actions which involve usage of multiple web pages. For instance, creating users in backend, changing permissions, etc. StepObject can be created similarly to PageObjects or PageFragments:</p> <pre data-language="sh">codeceptjs go --type step
+</pre> <p>Technically they are the same as PageObjects. StepObjects can inject PageObjects and use multiple POs to make a complex scenarios:</p> <pre data-language="js">const I = actor();
+const userPage = require('../pages/user');
+const permissionPage = require('../pages/permissions');
+
+module.exports = {
+
+  createUser(name) {
+    // action composed from actions of page objects
+    userPage.open();
+    userPage.create(name);
+    permissionPage.activate(name);
+  }
+
+};
+</pre> <h2 id="dependency-injection">Dependency Injection</h2> <h3 id="configuration">Configuration</h3> <p>All objects described here are injected with Dependency Injection. The similar way it happens in AngularJS framework. If you want an object to be injected in scenario by its name add it to configuration:</p> <pre data-language="js">  "include": {
+    "I": "./custom_steps.js",
+    "Smth": "./pages/Smth.js",
+    "loginPage": "./pages/Login.js",
+    "signinFragment": "./fragments/Signin.js"
+  }
+</pre> <p>Now this objects can be retrieved by the name specified in configuration. CodeceptJS generator commands (like <code>codeceptjs gpo</code>) will update configuration for you.</p> <h3 id="dynamic-injection">Dynamic Injection</h3> <p>You can inject objects per test by calling <code>injectDependencies</code> function on Scenario:</p> <pre data-language="js">Scenario('search @grop', (I, Data) =&gt; {
+  I.fillField('Username', Data.username);
+  I.pressKey('Enter');
+}).injectDependencies({ Data: require('./data.js') });
+</pre> <p>This requires <code>./data.js</code> module and assigns it to <code>Data</code> argument in a test.</p> <h3 id="done">done()</h3>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>Licensed under the MIT License.<br>
+    <a href="https://codecept.io/pageobjects/" class="_attribution-link" target="_blank">https://codecept.io/pageobjects/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

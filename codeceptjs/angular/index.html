@@ -1,0 +1,254 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Protractor Testing With CodeceptJS - CodeceptJS - W3cubDocs</title>
+  
+  <meta name="description" content="CodeceptJS is an acceptance testing framework. In diversified world of JavaScript testing libraries it aims to create a unified high level API for &hellip;">
+  <meta name="keywords" content="protractor, testing, with, codeceptjs, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/codeceptjs/angular/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/codeceptjs.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/codeceptjs/" class="_nav-link" title="" style="margin-left:0;">CodeceptJS</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="protractor-testing-with-codeceptjs">Protractor Testing with CodeceptJS</h1> <h2 id="introduction">Introduction</h2> <p>CodeceptJS is an acceptance testing framework. In diversified world of JavaScript testing libraries it aims to create a unified high level API for end-to-end testing, powered by different backends. CodeceptJS allows you to write a test and switch in config execution drivers: will it be <em>wedriverio</em>, <em>puppeteer</em>, or <em>protractor</em> depends on you. This way you aren't be bound to implementation, and your acceptance tests will work no matter of framework running them.</p> <p>As you know, <a href="http://www.protractortest.org/#/" target="_blank">Protractor</a> is an official tool for testing AngularJS applications. CodeceptJS should not be considered as alternative to Protractor but a testing framework utilizing this powerful library.</p> <p><img alt="" src="data:image/png;base64,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"></p> <p>So there is no magic in testing of AngularJS application in CodeceptJS. You just execute regular Protractor commands, packed in a simple high-level API.</p> <p><img alt="" src="data:image/png;base64,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"></p> <p>As an example we will use popular <a href="http://todomvc.com/examples/angularjs/#/" target="_blank">TodoMVC application</a>. How would we test creating a new todo item in CodeceptJS?</p> <pre data-language="js">Scenario('create todo item', (I) =&gt; {
+  I.amOnPage('/');
+  I.dontSeeElement('#todo-count');
+  I.fillField({model: 'newTodo'}, 'Write a guide');
+  I.pressKey('Enter');
+  I.see('Write a guide', {repeater: "todo in todos"});
+  I.see('1 item left', '#todo-count');
+});
+</pre> <p>The similar test written in native syntax of Protractor (inherited from selenium-webdriver) would look like this:</p> <pre data-language="js">it('should create todo item', (I) =&gt; {
+  browser.get("http://todomvc.com/examples/angularjs/#/");
+  expect(element(by.css("#todo-count")).isPresent()).toBeFalsy();
+  var inputField = element(by.model("newTodo"));
+  inputField.sendKeys("Write a guide");
+  inputField.sendKeys(protractor.Key.ENTER);
+  var todos = element.all(by.repeater("todo in todos"));
+  expect(todos.last().getText()).toEqual("Write a guide"));
+  element(by.css("#todo-count")).getText()).toContain('1 items left');
+});
+</pre> <p>Comparing to the API proposed by CodeceptJS, this code looks a bit more complicated. But what the more important, it's really really hard to read and follow its logic. Readability is the most crucial part in acceptance testing. You should easily change tests when changes specification or design. Probably, only a person who writes Protractor tests in your company, could do those changes, while CodeceptJS allows anyone to work with tests. Contrary, CodeceptJS provides CodeceptJS provides scenario-driven approach, so test is just a step-by-step representation of real user actions. This way you can easily read, and follow test scenario, and edit it when you need it to be changed.</p> <p>In this way CodeceptJS is more similar to Cucumber, so if you run a test with <code>--steps</code> option you will see this output:</p> <pre data-language="bash">TodoMvc --
+ create todo item
+ • I am on page "/"
+ • I dont see element "#todo-count"
+ • I fill field {"model":"newTodo"}, "Write a guide"
+ • I press key "Enter"
+ • I see "Write a guide", {"repeater":"todo in todos"}
+ • I see "1 item left", "#todo-count"
+ ✓ OK in 968ms
+</pre> <p>Unlike Cucumber, CodeceptJS is not about writing test scenarios above for business rules. To say it again, its <strong>goal is to provide standard action steps you can use for testing applications</strong>. Surely, it can't cover 100% of cases but it aims for 90%, for others you can write your own steps inside a <a href="https://codecept.io/helpers/" target="_blank">custom Helper</a> using API of Protractor</p> <h3 id="setting-up-codeceptjs-with-protractor">Setting up CodeceptJS with Protractor</h3> <p>To start using CodeceptJS you will need to install it via NPM and initialize it in directory with tests.</p> <pre data-language="bash">npm install -g codeceptjs
+codeceptjs init
+</pre> <p>You will be asked questions about initial configuration, make sure you select Protractor helper. If you didn't have Protractor library it <strong>will be installed</strong>. Please agree to extend steps, and use <code>http://todomvc.com/examples/angularjs/</code> as a url for Protractor helper.</p> <p>For TodoMVC application you will have following config created in <code>codecept.json</code> file:</p> <pre data-language="json">{
+  "tests": "./*_test.js",
+  "timeout": 10000,
+  "output": "./output",
+  "helpers": {
+    "Protractor": {
+      "url": "http://todomvc.com/examples/angularjs/",
+      "driver": "hosted",
+      "browser": "chrome",
+      "rootElement": "body"
+    }
+  },
+  "include": {
+    "I": "./steps_file.js"
+  },
+  "bootstrap": false,
+  "mocha": {},
+  "name": "todoangular"
+}
+</pre> <p>First test can be generated with <code>gt</code> command:</p> <pre data-language="bash">codeceptjs gt
+</pre> <p>After that you can start writing your first CodeceptJS/Angular tests. Please look into the reference of <a href="https://codecept.io/helpers/Protractor/" target="_blank">Protractor helper</a> for all available actions. You can also run <code>list</code> command to see methods of I:</p> <pre data-language="bash">codeceptjs list
+</pre> <h2 id="testing-non-angular-applications">Testing non-Angular Applications</h2> <p>Sure, Protractor can be used to test applications built without AngularJS. In this case you need to disable angular synchronization feature in config:</p> <pre data-language="js">"helpers": {
+  "Protractor": {
+    "url": "http://todomvc.com/examples/angularjs/",
+    "driver": "hosted",
+    "browser": "firefox",
+    "angular": false
+  }
+}
+</pre> <h2 id="writing-first-test">Writing First Test</h2> <p>Test scenario should always use <code>I</code> object to execute commands. This is important as all methods of <code>I</code> are running in global promise chain, this way CodeceptJS makes sure everything is executed in right order. At first a page should be opened to proceed, we use <code>amOnPage</code> command for that. As we already specified full URL to TodoMVC app, we can pass relative path into it instead of absolute url:</p> <pre data-language="js">Feature('Todo MVC');
+
+Scenario('create todo item', (I) =&gt; {
+  I.amOnPage('/');
+});
+</pre> <p>All scenarios should describe actions on site and assertions taken in the end. In CodeceptJS assertion commands have <code>see</code> or <code>dontSee</code> prefix:</p> <pre data-language="js">Feature('Todo MVC');
+
+Scenario('create todo item', (I) =&gt; {
+  I.amOnPage('/');
+  I.dontSeeElement('#todo-count');
+});
+</pre> <p>A test can be executed with <code>run</code> command, we recommend to use <code>--steps</code> options to follow step-by-step execution:</p> <pre data-language="sh">$ codeceptjs run --steps
+
+CodeceptJS 1.2.0
+Test root is assumed to be /home/davert/demos/todoangular
+Using the selenium server at http://localhost:4444/wd/hub
+
+TodoMvc --
+ create todo item
+ • I am on page "/"
+ • I dont see element "#todo-count"
+</pre> <h2 id="running-several-scenarios">Running Several Scenarios</h2> <p>By writing a test in similar manner we will have a test shown in the beginning of this guide. Probably we would like not to finish with one test, but have more, for testing editing of todo items, checking todo items, and more.</p> <p>Let's prepare our test for multiple scenarios. All test scenarios will need to open main page of application, so <code>amOnPage</code> can be moved into the <code>Before</code> hook: Scenarios will probably deal with created todo items, so we can move logic of crating new todo into a function.</p> <pre data-language="js">Feature('TodoMvc');
+
+Before((I) =&gt; {
+  I.amOnPage('/');
+});
+
+const createTodo = function (I, name) {
+  I.fillField({model: 'newTodo'}, name);
+  I.pressKey('Enter');
+}
+
+Scenario('create todo item', (I) =&gt; {
+  I.dontSeeElement('#todo-count');
+  createTodo(I, 'Write a guide');
+  I.see('Write a guide', {repeater: "todo in todos"});
+  I.see('1 item left', '#todo-count');
+});
+</pre> <p>and so we can add even more tests!</p> <pre data-language="js">Scenario('edit todo', (I) =&gt; {
+  createTodo(I, 'write a review');
+  I.see('write a review', {repeater: "todo in todos"});
+  I.doubleClick('write a review');
+  I.pressKey(['Control', 'a']);
+  I.pressKey('write old review');
+  I.pressKey('Enter');
+  I.see('write old review', {repeater: "todo in todos"});
+});
+
+Scenario('check todo item', (I) =&gt; {
+  createTodo(I, 'my new item');
+  I.see('1 item left', '#todo-count');
+  I.checkOption({model: 'todo.completed'});
+  I.see('0 items left', '#todo-count');
+});
+</pre> <h2 id="locators">Locators</h2> <p>Like you may have noticed, CodeceptJS doesn't use <code>by.*</code> locators similar to Protractor or Selenium Webdriver. Instead most of methods expect you to pass valid CSS or XPath. In case you don't want CodeceptJS to guess the type of locator, you can specify them using so-called strict locators. This is an absolute analogy of <code>by</code>, so you can use angular specific locators (like models, repeaters, bindings, etc) in it:</p> <pre data-language="sh">{css: 'button'}
+{repeater: "todo in todos"}
+{binding: 'latest'}
+</pre> <p>When we deal with clicks, CodeceptJS can take a text and search a web page for a valid clickable element with that text. So links and buttons can be searched by their text.</p> <p>Same thing happens for form fields: they are searched by field names, labels, and so on.</p> <p>Using such smart locators makes tests easy to write, however, searching an element by text is slower than using CSS|XPath and much slower than using strict locators.</p> <h2 id="refactoring">Refactoring</h2> <p>In previous examples, we've moved actions into <code>createTodo</code> function. Is there a more elegant way of refactoring? Can we have something like <code>I.createTodo()</code> to be used in code? Sure, we can do so by editing <code>steps_file.js</code> created by init command.</p> <pre data-language="js">// in this file you can append custom step methods to 'I' object
+
+module.exports = function() {
+  return actor({
+    createTodo: function(title) {
+      this.fillField({model: 'newTodo'}, title);
+      this.pressKey('Enter');
+    }
+  });
+}
+</pre> <p>And that's all, method is available to use as <code>I.createTodo(title)</code>:</p> <pre data-language="js">Scenario('create todo item', (I) =&gt; {
+  I.dontSeeElement('#todo-count');
+  I.createTodo('Write a guide');
+  I.see('Write a guide', {repeater: "todo in todos"});
+  I.see('1 item left', '#todo-count');
+});
+</pre> <p>To learn more about refactoring options in CodeceptJS read <a href="https://codecept.io/pageobjects/" target="_blank">PageObjects guide</a>.</p> <h2 id="multiple-sessions">Multiple Sessions</h2> <p>To run several browsers in one test see <a href="https://codecept.io/acceptance/#multiple-sessions" target="_blank">multiple session</a> chapter.</p> <h2 id="extending">Extending</h2> <p>What if CodeceptJS doesn't provide some of Protractor functionality you actually need? Sure its API is to general, and this case is possible. If you don't know how to do something with CodeceptJS - revert back to Protractor syntax!</p> <p>Create custom helper, define methods for it, and use it inside the I object. Your Helper can access <code>browser</code> from Protractor by accessing Protractor helper:</p> <pre data-language="js">let browser = this.helpers['Protractor'].browser;
+</pre> <p>or use global <code>element</code> and <code>by</code> variables to locate elements:</p> <pre data-language="js">element.all(by.repeater('result in memory'));
+</pre> <p>This way we recommend to implement all custom logic using low-level Protractor syntax and using it inside scenario tests. Please see an <a href="https://codecept.io/helpers/#protractor-example" target="_blank">example of such helper</a>.</p> <h3 id="done">done()</h3> <p>Almost ) This example is <a href="https://github.com/DavertMik/codeceptjs-angular-todomvc" target="_blank">available on GitHub</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2015 DavertMik &lt;davert@codegyre.com&gt; (http://codegyre.com)<br>Licensed under the MIT License.<br>
+    <a href="https://codecept.io/angular/" class="_attribution-link" target="_blank">https://codecept.io/angular/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
