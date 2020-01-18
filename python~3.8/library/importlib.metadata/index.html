@@ -1,0 +1,179 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Using importlib.metadata - Python 3.8 - W3cubDocs</title>
+  
+  <meta name="description" content=" Note ">
+  <meta name="keywords" content="using, importlib, metadata, -, python, python~3.8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/python~3.8/library/importlib.metadata/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/python~3.8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/python~3.8/" class="_nav-link" title="" style="margin-left:0;">Python 3.8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _python">
+				
+				
+<h1 id="using">Using importlib.metadata</h1> <div class="admonition note" id="using-importlib-metadata"> <p class="admonition-title">Note</p> <p>This functionality is provisional and may deviate from the usual version semantics of the standard library.</p> </div> <p><code>importlib.metadata</code> is a library that provides for access to installed package metadata. Built in part on Python’s import system, this library intends to replace similar functionality in the <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#entry-points" target="_blank">entry point API</a> and <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/pkg_resources.html#metadata-api" target="_blank">metadata API</a> of <code>pkg_resources</code>. Along with <code>importlib.resources</code> in <a class="reference external" href="https://docs.python.org/3/library/importlib.html#module-importlib.resources" target="_blank">Python 3.7 and newer</a> (backported as <a class="reference external" href="https://importlib-resources.readthedocs.io/en/latest/index.html" target="_blank">importlib_resources</a> for older versions of Python), this can eliminate the need to use the older and less efficient <code>pkg_resources</code> package.</p> <p>By “installed package” we generally mean a third-party package installed into Python’s <code>site-packages</code> directory via tools such as <a class="reference external" href="https://pypi.org/project/pip/" target="_blank">pip</a>. Specifically, it means a package with either a discoverable <code>dist-info</code> or <code>egg-info</code> directory, and metadata defined by <a class="reference external" href="https://www.python.org/dev/peps/pep-0566/" target="_blank">PEP 566</a> or its older specifications. By default, package metadata can live on the file system or in zip archives on <code>sys.path</code>. Through an extension mechanism, the metadata can live almost anywhere.</p>  <h2 id="overview">Overview</h2> <p>Let’s say you wanted to get the version string for a package you’ve installed using <code>pip</code>. We start by creating a virtual environment and installing something into it:</p> <pre data-language="shell">$ python3 -m venv example
+$ source example/bin/activate
+(example) $ pip install wheel
+</pre> <p>You can get the version string for <code>wheel</code> by running the following:</p> <pre data-language="pycon">(example) $ python
+&gt;&gt;&gt; from importlib.metadata import version  
+&gt;&gt;&gt; version('wheel')  
+'0.32.3'
+</pre> <p>You can also get the set of entry points keyed by group, such as <code>console_scripts</code>, <code>distutils.commands</code> and others. Each group contains a sequence of <a class="reference internal" href="#entry-points"><span class="std std-ref">EntryPoint</span></a> objects.</p> <p>You can get the <a class="reference internal" href="#metadata"><span class="std std-ref">metadata for a distribution</span></a>:</p> <pre data-language="python">&gt;&gt;&gt; list(metadata('wheel'))  
+['Metadata-Version', 'Name', 'Version', 'Summary', 'Home-page', 'Author', 'Author-email', 'Maintainer', 'Maintainer-email', 'License', 'Project-URL', 'Project-URL', 'Project-URL', 'Keywords', 'Platform', 'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Requires-Python', 'Provides-Extra', 'Requires-Dist', 'Requires-Dist']
+</pre> <p>You can also get a <a class="reference internal" href="#version"><span class="std std-ref">distribution’s version number</span></a>, list its <a class="reference internal" href="#files"><span class="std std-ref">constituent files</span></a>, and get a list of the distribution’s <a class="reference internal" href="#requirements"><span class="std std-ref">Distribution requirements</span></a>.</p>   <h2 id="functional-api">Functional API</h2> <p>This package provides the following functionality via its public API.</p>  <h3 id="id1">Entry points</h3> <p id="entry-points">The <code>entry_points()</code> function returns a dictionary of all entry points, keyed by group. Entry points are represented by <code>EntryPoint</code> instances; each <code>EntryPoint</code> has a <code>.name</code>, <code>.group</code>, and <code>.value</code> attributes and a <code>.load()</code> method to resolve the value.</p> <pre data-language="python">&gt;&gt;&gt; eps = entry_points()  
+&gt;&gt;&gt; list(eps)  
+['console_scripts', 'distutils.commands', 'distutils.setup_keywords', 'egg_info.writers', 'setuptools.installation']
+&gt;&gt;&gt; scripts = eps['console_scripts']  
+&gt;&gt;&gt; wheel = [ep for ep in scripts if ep.name == 'wheel'][0]  
+&gt;&gt;&gt; wheel  
+EntryPoint(name='wheel', value='wheel.cli:main', group='console_scripts')
+&gt;&gt;&gt; main = wheel.load()  
+&gt;&gt;&gt; main  
+&lt;function main at 0x103528488&gt;
+</pre> <p>The <code>group</code> and <code>name</code> are arbitrary values defined by the package author and usually a client will wish to resolve all entry points for a particular group. Read <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/setuptools.html#dynamic-discovery-of-services-and-plugins" target="_blank">the setuptools docs</a> for more information on entrypoints, their definition, and usage.</p>   <h3 id="metadata">Distribution metadata</h3> <p id="distribution-metadata">Every distribution includes some metadata, which you can extract using the <code>metadata()</code> function:</p> <pre data-language="python">&gt;&gt;&gt; wheel_metadata = metadata('wheel')  
+</pre> <p>The keys of the returned data structure <a class="footnote-reference brackets" href="#f1" id="id2">1</a> name the metadata keywords, and their values are returned unparsed from the distribution metadata:</p> <pre data-language="python">&gt;&gt;&gt; wheel_metadata['Requires-Python']  
+'&gt;=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*'
+</pre>   <h3 id="version">Distribution versions</h3> <p id="distribution-versions">The <code>version()</code> function is the quickest way to get a distribution’s version number, as a string:</p> <pre data-language="python">&gt;&gt;&gt; version('wheel')  
+'0.32.3'
+</pre>   <h3 id="files">Distribution files</h3> <p id="distribution-files">You can also get the full set of files contained within a distribution. The <code>files()</code> function takes a distribution package name and returns all of the files installed by this distribution. Each file object returned is a <code>PackagePath</code>, a <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" target="_blank">pathlib.Path</a> derived object with additional <code>dist</code>, <code>size</code>, and <code>hash</code> properties as indicated by the metadata. For example:</p> <pre data-language="python">&gt;&gt;&gt; util = [p for p in files('wheel') if 'util.py' in str(p)][0]  
+&gt;&gt;&gt; util  
+PackagePath('wheel/util.py')
+&gt;&gt;&gt; util.size  
+859
+&gt;&gt;&gt; util.dist  
+&lt;importlib.metadata._hooks.PathDistribution object at 0x101e0cef0&gt;
+&gt;&gt;&gt; util.hash  
+&lt;FileHash mode: sha256 value: bYkw5oMccfazVCoYQwKkkemoVyMAFoR34mmKBx8R1NI&gt;
+</pre> <p>Once you have the file, you can also read its contents:</p> <pre data-language="python">&gt;&gt;&gt; print(util.read_text())  
+import base64
+import sys
+...
+def as_bytes(s):
+    if isinstance(s, text_type):
+        return s.encode('utf-8')
+    return s
+</pre> <p>In the case where the metadata file listing files (RECORD or SOURCES.txt) is missing, <code>files()</code> will return <code>None</code>. The caller may wish to wrap calls to <code>files()</code> in <a class="reference external" href="https://more-itertools.readthedocs.io/en/stable/api.html#more_itertools.always_iterable" target="_blank">always_iterable</a> or otherwise guard against this condition if the target distribution is not known to have the metadata present.</p>   <h3 id="requirements">Distribution requirements</h3> <p id="distribution-requirements">To get the full set of requirements for a distribution, use the <code>requires()</code> function:</p> <pre data-language="python">&gt;&gt;&gt; requires('wheel')  
+["pytest (&gt;=3.0.0) ; extra == 'test'", "pytest-cov ; extra == 'test'"]
+</pre>    <h2 id="distributions">Distributions</h2> <p>While the above API is the most common and convenient usage, you can get all of that information from the <code>Distribution</code> class. A <code>Distribution</code> is an abstract object that represents the metadata for a Python package. You can get the <code>Distribution</code> instance:</p> <pre data-language="python">&gt;&gt;&gt; from importlib.metadata import distribution  
+&gt;&gt;&gt; dist = distribution('wheel')  
+</pre> <p>Thus, an alternative way to get the version number is through the <code>Distribution</code> instance:</p> <pre data-language="python">&gt;&gt;&gt; dist.version  
+'0.32.3'
+</pre> <p>There are all kinds of additional metadata available on the <code>Distribution</code> instance:</p> <pre data-language="python">&gt;&gt;&gt; d.metadata['Requires-Python']  
+'&gt;=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*'
+&gt;&gt;&gt; d.metadata['License']  
+'MIT'
+</pre> <p>The full set of available metadata is not described here. See <a class="reference external" href="https://www.python.org/dev/peps/pep-0566/" target="_blank">PEP 566</a> for additional details.</p>   <h2 id="extending-the-search-algorithm">Extending the search algorithm</h2> <p>Because package metadata is not available through <code>sys.path</code> searches, or package loaders directly, the metadata for a package is found through import system <a class="reference external" href="https://docs.python.org/3/reference/import.html#finders-and-loaders" target="_blank">finders</a>. To find a distribution package’s metadata, <code>importlib.metadata</code> queries the list of <a class="reference external" href="https://docs.python.org/3/glossary.html#term-meta-path-finder" target="_blank">meta path finders</a> on <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.meta_path" target="_blank">sys.meta_path</a>.</p> <p>The default <code>PathFinder</code> for Python includes a hook that calls into <code>importlib.metadata.MetadataPathFinder</code> for finding distributions loaded from typical file-system-based paths.</p> <p>The abstract class <a class="reference internal" href="../importlib/#importlib.abc.MetaPathFinder" title="importlib.abc.MetaPathFinder"><code>importlib.abc.MetaPathFinder</code></a> defines the interface expected of finders by Python’s import system. <code>importlib.metadata</code> extends this protocol by looking for an optional <code>find_distributions</code> callable on the finders from <code>sys.meta_path</code> and presents this extended interface as the <code>DistributionFinder</code> abstract base class, which defines this abstract method:</p> <pre data-language="python">@abc.abstractmethod
+def find_distributions(context=DistributionFinder.Context()):
+    """Return an iterable of all Distribution instances capable of
+    loading the metadata for packages for the indicated ``context``.
+    """
+</pre> <p>The <code>DistributionFinder.Context</code> object provides <code>.path</code> and <code>.name</code> properties indicating the path to search and names to match and may supply other relevant context.</p> <p>What this means in practice is that to support finding distribution package metadata in locations other than the file system, subclass <code>Distribution</code> and implement the abstract methods. Then from a custom finder, return instances of this derived <code>Distribution</code> in the <code>find_distributions()</code> method.</p> <h4 class="rubric">Footnotes</h4> <dl class="footnote brackets"> <dt class="label" id="f1">
+<code>1</code> </dt> <dd>
+<p>Technically, the returned distribution metadata object is an <a class="reference external" href="https://docs.python.org/3/library/email.message.html#email.message.EmailMessage" target="_blank">email.message.Message</a> instance, but this is an implementation detail, and not part of the stable API. You should only use dictionary-like methods and syntax to access the metadata contents.</p> </dd> </dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2001–2020 Python Software Foundation<br>Licensed under the PSF License.<br>
+    <a href="https://docs.python.org/3.8/library/importlib.metadata.html" class="_attribution-link" target="_blank">https://docs.python.org/3.8/library/importlib.metadata.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
