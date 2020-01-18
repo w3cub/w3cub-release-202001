@@ -1,0 +1,125 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Generators - CMake 3.15 - W3cubDocs</title>
+  
+  <meta name="description" content="A CMake Generator is responsible for writing the input files for a native build system. Exactly one of the CMake Generators must be selected for a &hellip;">
+  <meta name="keywords" content="cmake-generators, generators, -, cmake, cmake~3.15">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cmake~3.15/manual/cmake-generators.7/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cmake~3.15.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cmake~3.15/" class="_nav-link" title="" style="margin-left:0;">CMake 3.15</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _sphinx_simple">
+				
+				
+<h1 id="cmake-generators-7">cmake-generators(7)</h1>   <ul> <li><a class="reference internal" href="#introduction" id="id6">Introduction</a></li> <li>
+<a class="reference internal" href="#cmake-generators" id="id7">CMake Generators</a><ul> <li>
+<a class="reference internal" href="#command-line-build-tool-generators" id="id8">Command-Line Build Tool Generators</a><ul> <li><a class="reference internal" href="#makefile-generators" id="id9">Makefile Generators</a></li> <li><a class="reference internal" href="#ninja-generator" id="id10">Ninja Generator</a></li> </ul> </li> <li>
+<a class="reference internal" href="#ide-build-tool-generators" id="id11">IDE Build Tool Generators</a><ul> <li><a class="reference internal" href="#visual-studio-generators" id="id12">Visual Studio Generators</a></li> <li><a class="reference internal" href="#other-generators" id="id13">Other Generators</a></li> </ul> </li> </ul> </li> <li><a class="reference internal" href="#extra-generators" id="id14">Extra Generators</a></li> </ul>
+   <h2 id="introduction">Introduction</h2> <p>A <em>CMake Generator</em> is responsible for writing the input files for a native build system. Exactly one of the <a class="reference internal" href="#cmake-generators">CMake Generators</a> must be selected for a build tree to determine what native build system is to be used. Optionally one of the <a class="reference internal" href="#extra-generators">Extra Generators</a> may be selected as a variant of some of the <a class="reference internal" href="#command-line-build-tool-generators">Command-Line Build Tool Generators</a> to produce project files for an auxiliary IDE.</p> <p>CMake Generators are platform-specific so each may be available only on certain platforms. The <a class="reference internal" href="../cmake.1/#manual:cmake(1)" title="cmake(1)" id="index-0-manual:cmake(1)"><code>cmake(1)</code></a> command-line tool <code>--help</code> output lists available generators on the current platform. Use its <code>-G</code> option to specify the generator for a new build tree. The <a class="reference internal" href="../cmake-gui.1/#manual:cmake-gui(1)" title="cmake-gui(1)" id="index-0-manual:cmake-gui(1)"><code>cmake-gui(1)</code></a> offers interactive selection of a generator when creating a new build tree.</p>   <h2 id="cmake-generators">CMake Generators</h2>  <h3 id="id1">Command-Line Build Tool Generators</h3> <p id="command-line-build-tool-generators">These generators support command-line build tools. In order to use them, one must launch CMake from a command-line prompt whose environment is already configured for the chosen compiler and build tool.</p>  <h4 id="id2">Makefile Generators</h4>  <ul id="makefile-generators"> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Borland%20Makefiles.html" target="_blank">Borland Makefiles</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/MSYS%20Makefiles.html" target="_blank">MSYS Makefiles</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/MinGW%20Makefiles.html" target="_blank">MinGW Makefiles</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/NMake%20Makefiles.html" target="_blank">NMake Makefiles</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/NMake%20Makefiles%20JOM.html" target="_blank">NMake Makefiles JOM</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Unix%20Makefiles.html" target="_blank">Unix Makefiles</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Watcom%20WMake.html" target="_blank">Watcom WMake</a></li> </ul>    <h4 id="ninja-generator">Ninja Generator</h4>  <ul> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Ninja.html" target="_blank">Ninja</a></li> </ul>     <h3 id="id3">IDE Build Tool Generators</h3> <p id="ide-build-tool-generators">These generators support Integrated Development Environment (IDE) project files. Since the IDEs configure their own environment one may launch CMake from any environment.</p>  <h4 id="id4">Visual Studio Generators</h4>  <ul id="visual-studio-generators"> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%206.html" target="_blank">Visual Studio 6</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%207.html" target="_blank">Visual Studio 7</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%207%20.NET%202003.html" target="_blank">Visual Studio 7 .NET 2003</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%208%202005.html" target="_blank">Visual Studio 8 2005</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%209%202008.html" target="_blank">Visual Studio 9 2008</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%2010%202010.html" target="_blank">Visual Studio 10 2010</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%2011%202012.html" target="_blank">Visual Studio 11 2012</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%2012%202013.html" target="_blank">Visual Studio 12 2013</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%2014%202015.html" target="_blank">Visual Studio 14 2015</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%2015%202017.html" target="_blank">Visual Studio 15 2017</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Visual%20Studio%2016%202019.html" target="_blank">Visual Studio 16 2019</a></li> </ul>    <h4 id="other-generators">Other Generators</h4>  <ul> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Green%20Hills%20MULTI.html" target="_blank">Green Hills MULTI</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Xcode.html" target="_blank">Xcode</a></li> </ul>      <h2 id="extra-generators">Extra Generators</h2> <p>Some of the <a class="reference internal" href="#cmake-generators">CMake Generators</a> listed in the <a class="reference internal" href="../cmake.1/#manual:cmake(1)" title="cmake(1)" id="index-1-manual:cmake(1)"><code>cmake(1)</code></a> command-line tool <code>--help</code> output may have variants that specify an extra generator for an auxiliary IDE tool. Such generator names have the form <code>&lt;extra-generator&gt; - &lt;main-generator&gt;</code>. The following extra generators are known to CMake.</p>  <ul> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/CodeBlocks.html" target="_blank">CodeBlocks</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/CodeLite.html" target="_blank">CodeLite</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Eclipse%20CDT4.html" target="_blank">Eclipse CDT4</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Kate.html" target="_blank">Kate</a></li> <li class="toctree-l1"><a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Sublime%20Text%202.html" target="_blank">Sublime Text 2</a></li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2000–2019 Kitware, Inc. and Contributors<br>Licensed under the BSD 3-clause License.<br>
+    <a href="https://cmake.org/cmake/help/v3.15/manual/cmake-generators.7.html" class="_attribution-link" target="_blank">https://cmake.org/cmake/help/v3.15/manual/cmake-generators.7.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

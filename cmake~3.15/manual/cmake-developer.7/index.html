@@ -1,0 +1,256 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Developer - CMake 3.15 - W3cubDocs</title>
+  
+  <meta name="description" content="This manual is intended for reference by developers working with cmake-language(7) code, whether writing their own modules, authoring their own &hellip;">
+  <meta name="keywords" content="cmake-developer, developer, -, cmake, cmake~3.15">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cmake~3.15/manual/cmake-developer.7/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cmake~3.15.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cmake~3.15/" class="_nav-link" title="" style="margin-left:0;">CMake 3.15</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _sphinx_simple">
+				
+				
+<h1 id="cmake-developer-7">cmake-developer(7)</h1>   <ul> <li><a class="reference internal" href="#introduction" id="id3">Introduction</a></li> <li>
+<a class="reference internal" href="#find-modules" id="id4">Find Modules</a><ul> <li><a class="reference internal" href="#standard-variable-names" id="id5">Standard Variable Names</a></li> <li><a class="reference internal" href="#a-sample-find-module" id="id6">A Sample Find Module</a></li> </ul> </li> </ul>
+   <h2 id="introduction">Introduction</h2> <p>This manual is intended for reference by developers working with <a class="reference internal" href="../cmake-language.7/#manual:cmake-language(7)" title="cmake-language(7)" id="index-0-manual:cmake-language(7)"><code>cmake-language(7)</code></a> code, whether writing their own modules, authoring their own build systems, or working on CMake itself.</p> <p>See <a class="reference external" href="https://cmake.org/get-involved/" target="_blank">https://cmake.org/get-involved/</a> to get involved in development of CMake upstream. It includes links to contribution instructions, which in turn link to developer guides for CMake itself.</p>   <h2 id="id1">Find Modules</h2> <p id="find-modules">A “find module” is a <code>Find&lt;PackageName&gt;.cmake</code> file to be loaded by the <a class="reference internal" href="../../command/find_package/#command:find_package" title="find_package" id="index-0-command:find_package"><code>find_package()</code></a> command when invoked for <code>&lt;PackageName&gt;</code>.</p> <p>The primary task of a find module is to determine whether a package exists on the system, set the <code>&lt;PackageName&gt;_FOUND</code> variable to reflect this and provide any variables, macros and imported targets required to use the package. A find module is useful in cases where an upstream library does not provide a <a class="reference internal" href="../cmake-packages.7/#config-file-packages"><span class="std std-ref">config file package</span></a>.</p> <p>The traditional approach is to use variables for everything, including libraries and executables: see the <a class="reference internal" href="#standard-variable-names">Standard Variable Names</a> section below. This is what most of the existing find modules provided by CMake do.</p> <p>The more modern approach is to behave as much like <a class="reference internal" href="../cmake-packages.7/#config-file-packages"><span class="std std-ref">config file packages</span></a> files as possible, by providing <a class="reference internal" href="../cmake-buildsystem.7/#imported-targets"><span class="std std-ref">imported target</span></a>. This has the advantage of propagating <a class="reference internal" href="../cmake-buildsystem.7/#target-usage-requirements"><span class="std std-ref">Transitive Usage Requirements</span></a> to consumers.</p> <p>In either case (or even when providing both variables and imported targets), find modules should provide backwards compatibility with old versions that had the same name.</p> <p>A FindFoo.cmake module will typically be loaded by the command:</p> <pre data-language="none">find_package(Foo [major[.minor[.patch[.tweak]]]]
+             [EXACT] [QUIET] [REQUIRED]
+             [[COMPONENTS] [components...]]
+             [OPTIONAL_COMPONENTS components...]
+             [NO_POLICY_SCOPE])
+</pre> <p>See the <a class="reference internal" href="../../command/find_package/#command:find_package" title="find_package" id="index-1-command:find_package"><code>find_package()</code></a> documentation for details on what variables are set for the find module. Most of these are dealt with by using <a class="reference internal" href="../../module/findpackagehandlestandardargs/#module:FindPackageHandleStandardArgs" title="FindPackageHandleStandardArgs" id="index-0-module:FindPackageHandleStandardArgs"><code>FindPackageHandleStandardArgs</code></a>.</p> <p>Briefly, the module should only locate versions of the package compatible with the requested version, as described by the <code>Foo_FIND_VERSION</code> family of variables. If <code>Foo_FIND_QUIETLY</code> is set to true, it should avoid printing messages, including anything complaining about the package not being found. If <code>Foo_FIND_REQUIRED</code> is set to true, the module should issue a <code>FATAL_ERROR</code> if the package cannot be found. If neither are set to true, it should print a non-fatal message if it cannot find the package.</p> <p>Packages that find multiple semi-independent parts (like bundles of libraries) should search for the components listed in <code>Foo_FIND_COMPONENTS</code> if it is set , and only set <code>Foo_FOUND</code> to true if for each searched-for component <code>&lt;c&gt;</code> that was not found, <code>Foo_FIND_REQUIRED_&lt;c&gt;</code> is not set to true. The <code>HANDLE_COMPONENTS</code> argument of <code>find_package_handle_standard_args()</code> can be used to implement this.</p> <p>If <code>Foo_FIND_COMPONENTS</code> is not set, which modules are searched for and required is up to the find module, but should be documented.</p> <p>For internal implementation, it is a generally accepted convention that variables starting with underscore are for temporary use only.</p>  <h3 id="cmake-developer-standard-variable-names">Standard Variable Names</h3> <p id="standard-variable-names">For a <code>FindXxx.cmake</code> module that takes the approach of setting variables (either instead of or in addition to creating imported targets), the following variable names should be used to keep things consistent between find modules. Note that all variables start with <code>Xxx_</code> to make sure they do not interfere with other find modules; the same consideration applies to macros, functions and imported targets.</p> <dl class="docutils"> <dt>
+<code>Xxx_INCLUDE_DIRS</code> </dt> <dd>The final set of include directories listed in one variable for use by client code. This should not be a cache entry.</dd> <dt>
+<code>Xxx_LIBRARIES</code> </dt> <dd>The libraries to link against to use Xxx. These should include full paths. This should not be a cache entry.</dd> <dt>
+<code>Xxx_DEFINITIONS</code> </dt> <dd>Definitions to use when compiling code that uses Xxx. This really shouldn’t include options such as <code>-DHAS_JPEG</code> that a client source-code file uses to decide whether to <code>#include &lt;jpeg.h&gt;</code>
+</dd> <dt>
+<code>Xxx_EXECUTABLE</code> </dt> <dd>Where to find the Xxx tool.</dd> <dt>
+<code>Xxx_Yyy_EXECUTABLE</code> </dt> <dd>Where to find the Yyy tool that comes with Xxx.</dd> <dt>
+<code>Xxx_LIBRARY_DIRS</code> </dt> <dd>Optionally, the final set of library directories listed in one variable for use by client code. This should not be a cache entry.</dd> <dt>
+<code>Xxx_ROOT_DIR</code> </dt> <dd>Where to find the base directory of Xxx.</dd> <dt>
+<code>Xxx_VERSION_Yy</code> </dt> <dd>Expect Version Yy if true. Make sure at most one of these is ever true.</dd> <dt>
+<code>Xxx_WRAP_Yy</code> </dt> <dd>If False, do not try to use the relevant CMake wrapping command.</dd> <dt>
+<code>Xxx_Yy_FOUND</code> </dt> <dd>If False, optional Yy part of Xxx system is not available.</dd> <dt>
+<code>Xxx_FOUND</code> </dt> <dd>Set to false, or undefined, if we haven’t found, or don’t want to use Xxx.</dd> <dt>
+<code>Xxx_NOT_FOUND_MESSAGE</code> </dt> <dd>Should be set by config-files in the case that it has set <code>Xxx_FOUND</code> to FALSE. The contained message will be printed by the <a class="reference internal" href="../../command/find_package/#command:find_package" title="find_package" id="index-2-command:find_package"><code>find_package()</code></a> command and by <code>find_package_handle_standard_args()</code> to inform the user about the problem.</dd> <dt>
+<code>Xxx_RUNTIME_LIBRARY_DIRS</code> </dt> <dd>Optionally, the runtime library search path for use when running an executable linked to shared libraries. The list should be used by user code to create the <code>PATH</code> on windows or <code>LD_LIBRARY_PATH</code> on UNIX. This should not be a cache entry.</dd> <dt>
+<code>Xxx_VERSION</code> </dt> <dd>The full version string of the package found, if any. Note that many existing modules provide <code>Xxx_VERSION_STRING</code> instead.</dd> <dt>
+<code>Xxx_VERSION_MAJOR</code> </dt> <dd>The major version of the package found, if any.</dd> <dt>
+<code>Xxx_VERSION_MINOR</code> </dt> <dd>The minor version of the package found, if any.</dd> <dt>
+<code>Xxx_VERSION_PATCH</code> </dt> <dd>The patch version of the package found, if any.</dd> </dl> <p>The following names should not usually be used in CMakeLists.txt files, but are typically cache variables for users to edit and control the behaviour of find modules (like entering the path to a library manually)</p> <dl class="docutils"> <dt>
+<code>Xxx_LIBRARY</code> </dt> <dd>The path of the Xxx library (as used with <a class="reference internal" href="../../command/find_library/#command:find_library" title="find_library" id="index-0-command:find_library"><code>find_library()</code></a>, for example).</dd> <dt>
+<code>Xxx_Yy_LIBRARY</code> </dt> <dd>The path of the Yy library that is part of the Xxx system. It may or may not be required to use Xxx.</dd> <dt>
+<code>Xxx_INCLUDE_DIR</code> </dt> <dd>Where to find headers for using the Xxx library.</dd> <dt>
+<code>Xxx_Yy_INCLUDE_DIR</code> </dt> <dd>Where to find headers for using the Yy library of the Xxx system.</dd> </dl> <p>To prevent users being overwhelmed with settings to configure, try to keep as many options as possible out of the cache, leaving at least one option which can be used to disable use of the module, or locate a not-found library (e.g. <code>Xxx_ROOT_DIR</code>). For the same reason, mark most cache options as advanced. For packages which provide both debug and release binaries, it is common to create cache variables with a <code>_LIBRARY_&lt;CONFIG&gt;</code> suffix, such as <code>Foo_LIBRARY_RELEASE</code> and <code>Foo_LIBRARY_DEBUG</code>.</p> <p>While these are the standard variable names, you should provide backwards compatibility for any old names that were actually in use. Make sure you comment them as deprecated, so that no-one starts using them.</p>   <h3 id="a-sample-find-module">A Sample Find Module</h3> <p>We will describe how to create a simple find module for a library <code>Foo</code>.</p> <p>The top of the module should begin with a license notice, followed by a blank line, and then followed by a <a class="reference internal" href="../cmake-language.7/#bracket-comment"><span class="std std-ref">Bracket Comment</span></a>. The comment should begin with <code>.rst:</code> to indicate that the rest of its content is reStructuredText-format documentation. For example:</p> <pre data-language="none"># Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
+# file Copyright.txt or https://cmake.org/licensing for details.
+
+#[=======================================================================[.rst:
+FindFoo
+-------
+
+Finds the Foo library.
+
+Imported Targets
+^^^^^^^^^^^^^^^^
+
+This module provides the following imported targets, if found:
+
+``Foo::Foo``
+  The Foo library
+
+Result Variables
+^^^^^^^^^^^^^^^^
+
+This will define the following variables:
+
+``Foo_FOUND``
+  True if the system has the Foo library.
+``Foo_VERSION``
+  The version of the Foo library which was found.
+``Foo_INCLUDE_DIRS``
+  Include directories needed to use Foo.
+``Foo_LIBRARIES``
+  Libraries needed to link to Foo.
+
+Cache Variables
+^^^^^^^^^^^^^^^
+
+The following cache variables may also be set:
+
+``Foo_INCLUDE_DIR``
+  The directory containing ``foo.h``.
+``Foo_LIBRARY``
+  The path to the Foo library.
+
+#]=======================================================================]
+</pre> <p>The module documentation consists of:</p> <ul class="simple"> <li>An underlined heading specifying the module name.</li> <li>A simple description of what the module finds. More description may be required for some packages. If there are caveats or other details users of the module should be aware of, specify them here.</li> <li>A section listing imported targets provided by the module, if any.</li> <li>A section listing result variables provided by the module.</li> <li>Optionally a section listing cache variables used by the module, if any.</li> </ul> <p>If the package provides any macros or functions, they should be listed in an additional section, but can be documented by additional <code>.rst:</code> comment blocks immediately above where those macros or functions are defined.</p> <p>The find module implementation may begin below the documentation block. Now the actual libraries and so on have to be found. The code here will obviously vary from module to module (dealing with that, after all, is the point of find modules), but there tends to be a common pattern for libraries.</p> <p>First, we try to use <code>pkg-config</code> to find the library. Note that we cannot rely on this, as it may not be available, but it provides a good starting point.</p> <pre data-language="cmake">find_package(PkgConfig)
+pkg_check_modules(PC_Foo QUIET Foo)
+</pre> <p>This should define some variables starting <code>PC_Foo_</code> that contain the information from the <code>Foo.pc</code> file.</p> <p>Now we need to find the libraries and include files; we use the information from <code>pkg-config</code> to provide hints to CMake about where to look.</p> <pre data-language="cmake">find_path(Foo_INCLUDE_DIR
+  NAMES foo.h
+  PATHS ${PC_Foo_INCLUDE_DIRS}
+  PATH_SUFFIXES Foo
+)
+find_library(Foo_LIBRARY
+  NAMES foo
+  PATHS ${PC_Foo_LIBRARY_DIRS}
+)
+</pre> <p>If you have a good way of getting the version (from a header file, for example), you can use that information to set <code>Foo_VERSION</code> (although note that find modules have traditionally used <code>Foo_VERSION_STRING</code>, so you may want to set both). Otherwise, attempt to use the information from <code>pkg-config</code></p> <pre data-language="cmake">set(Foo_VERSION ${PC_Foo_VERSION})
+</pre> <p>Now we can use <a class="reference internal" href="../../module/findpackagehandlestandardargs/#module:FindPackageHandleStandardArgs" title="FindPackageHandleStandardArgs" id="index-1-module:FindPackageHandleStandardArgs"><code>FindPackageHandleStandardArgs</code></a> to do most of the rest of the work for us</p> <pre data-language="cmake">include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(Foo
+  FOUND_VAR Foo_FOUND
+  REQUIRED_VARS
+    Foo_LIBRARY
+    Foo_INCLUDE_DIR
+  VERSION_VAR Foo_VERSION
+)
+</pre> <p>This will check that the <code>REQUIRED_VARS</code> contain values (that do not end in <code>-NOTFOUND</code>) and set <code>Foo_FOUND</code> appropriately. It will also cache those values. If <code>Foo_VERSION</code> is set, and a required version was passed to <a class="reference internal" href="../../command/find_package/#command:find_package" title="find_package" id="index-3-command:find_package"><code>find_package()</code></a>, it will check the requested version against the one in <code>Foo_VERSION</code>. It will also print messages as appropriate; note that if the package was found, it will print the contents of the first required variable to indicate where it was found.</p> <p>At this point, we have to provide a way for users of the find module to link to the library or libraries that were found. There are two approaches, as discussed in the <a class="reference internal" href="#find-modules">Find Modules</a> section above. The traditional variable approach looks like</p> <pre data-language="cmake">if(Foo_FOUND)
+  set(Foo_LIBRARIES ${Foo_LIBRARY})
+  set(Foo_INCLUDE_DIRS ${Foo_INCLUDE_DIR})
+  set(Foo_DEFINITIONS ${PC_Foo_CFLAGS_OTHER})
+endif()
+</pre> <p>If more than one library was found, all of them should be included in these variables (see the <a class="reference internal" href="#standard-variable-names">Standard Variable Names</a> section for more information).</p> <p>When providing imported targets, these should be namespaced (hence the <code>Foo::</code> prefix); CMake will recognize that values passed to <a class="reference internal" href="../../command/target_link_libraries/#command:target_link_libraries" title="target_link_libraries" id="index-0-command:target_link_libraries"><code>target_link_libraries()</code></a> that contain <code>::</code> in their name are supposed to be imported targets (rather than just library names), and will produce appropriate diagnostic messages if that target does not exist (see policy <a class="reference internal" href="../../policy/cmp0028/#policy:CMP0028" title="CMP0028" id="index-0-policy:CMP0028"><code>CMP0028</code></a>).</p> <pre data-language="cmake">if(Foo_FOUND AND NOT TARGET Foo::Foo)
+  add_library(Foo::Foo UNKNOWN IMPORTED)
+  set_target_properties(Foo::Foo PROPERTIES
+    IMPORTED_LOCATION "${Foo_LIBRARY}"
+    INTERFACE_COMPILE_OPTIONS "${PC_Foo_CFLAGS_OTHER}"
+    INTERFACE_INCLUDE_DIRECTORIES "${Foo_INCLUDE_DIR}"
+  )
+endif()
+</pre> <p>One thing to note about this is that the <code>INTERFACE_INCLUDE_DIRECTORIES</code> and similar properties should only contain information about the target itself, and not any of its dependencies. Instead, those dependencies should also be targets, and CMake should be told that they are dependencies of this target. CMake will then combine all the necessary information automatically.</p> <p>The type of the <a class="reference internal" href="../../prop_tgt/imported/#prop_tgt:IMPORTED" title="IMPORTED" id="index-0-prop_tgt:IMPORTED"><code>IMPORTED</code></a> target created in the <a class="reference internal" href="../../command/add_library/#command:add_library" title="add_library" id="index-0-command:add_library"><code>add_library()</code></a> command can always be specified as <code>UNKNOWN</code> type. This simplifies the code in cases where static or shared variants may be found, and CMake will determine the type by inspecting the files.</p> <p>If the library is available with multiple configurations, the <a class="reference internal" href="../../prop_tgt/imported_configurations/#prop_tgt:IMPORTED_CONFIGURATIONS" title="IMPORTED_CONFIGURATIONS" id="index-0-prop_tgt:IMPORTED_CONFIGURATIONS"><code>IMPORTED_CONFIGURATIONS</code></a> target property should also be populated:</p> <pre data-language="cmake">if(Foo_FOUND)
+  if (NOT TARGET Foo::Foo)
+    add_library(Foo::Foo UNKNOWN IMPORTED)
+  endif()
+  if (Foo_LIBRARY_RELEASE)
+    set_property(TARGET Foo::Foo APPEND PROPERTY
+      IMPORTED_CONFIGURATIONS RELEASE
+    )
+    set_target_properties(Foo::Foo PROPERTIES
+      IMPORTED_LOCATION_RELEASE "${Foo_LIBRARY_RELEASE}"
+    )
+  endif()
+  if (Foo_LIBRARY_DEBUG)
+    set_property(TARGET Foo::Foo APPEND PROPERTY
+      IMPORTED_CONFIGURATIONS DEBUG
+    )
+    set_target_properties(Foo::Foo PROPERTIES
+      IMPORTED_LOCATION_DEBUG "${Foo_LIBRARY_DEBUG}"
+    )
+  endif()
+  set_target_properties(Foo::Foo PROPERTIES
+    INTERFACE_COMPILE_OPTIONS "${PC_Foo_CFLAGS_OTHER}"
+    INTERFACE_INCLUDE_DIRECTORIES "${Foo_INCLUDE_DIR}"
+  )
+endif()
+</pre> <p>The <code>RELEASE</code> variant should be listed first in the property so that the variant is chosen if the user uses a configuration which is not an exact match for any listed <code>IMPORTED_CONFIGURATIONS</code>.</p> <p>Most of the cache variables should be hidden in the <code>ccmake</code> interface unless the user explicitly asks to edit them.</p> <pre data-language="cmake">mark_as_advanced(
+  Foo_INCLUDE_DIR
+  Foo_LIBRARY
+)
+</pre> <p>If this module replaces an older version, you should set compatibility variables to cause the least disruption possible.</p> <pre data-language="cmake"># compatibility variables
+set(Foo_VERSION_STRING ${Foo_VERSION})
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2000–2019 Kitware, Inc. and Contributors<br>Licensed under the BSD 3-clause License.<br>
+    <a href="https://cmake.org/cmake/help/v3.15/manual/cmake-developer.7.html" class="_attribution-link" target="_blank">https://cmake.org/cmake/help/v3.15/manual/cmake-developer.7.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

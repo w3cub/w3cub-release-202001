@@ -1,0 +1,375 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>CMake - CMake 3.15 - W3cubDocs</title>
+  
+  <meta name="description" content="The cmake executable is the command-line interface of the cross-platform buildsystem generator CMake. The above Synopsis lists various actions the &hellip;">
+  <meta name="keywords" content="cmake, -, cmake~3.15">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/cmake~3.15/manual/cmake.1/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/cmake~3.15.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/cmake~3.15/" class="_nav-link" title="" style="margin-left:0;">CMake 3.15</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _sphinx_simple">
+				
+				
+<h1 id="cmake-1">cmake(1)</h1>  <h2 id="synopsis">Synopsis</h2> <pre class="literal-block">
+<a class="reference internal" href="#generate-a-project-buildsystem">Generate a Project Buildsystem</a>
+ cmake [&lt;options&gt;] &lt;path-to-source&gt;
+ cmake [&lt;options&gt;] &lt;path-to-existing-build&gt;
+ cmake [&lt;options&gt;] -S &lt;path-to-source&gt; -B &lt;path-to-build&gt;
+
+<a class="reference internal" href="#build-a-project">Build a Project</a>
+ cmake --build &lt;dir&gt; [&lt;options&gt;] [-- &lt;build-tool-options&gt;]
+
+<a class="reference internal" href="#install-a-project">Install a Project</a>
+ cmake --install &lt;dir&gt; [&lt;options&gt;]
+
+<a class="reference internal" href="#open-a-project">Open a Project</a>
+ cmake --open &lt;dir&gt;
+
+<a class="reference internal" href="#run-a-script">Run a Script</a>
+ cmake [{-D &lt;var&gt;=&lt;value&gt;}...] -P &lt;cmake-script-file&gt;
+
+<a class="reference internal" href="#run-a-command-line-tool">Run a Command-Line Tool</a>
+ cmake -E &lt;command&gt; [&lt;options&gt;]
+
+<a class="reference internal" href="#run-the-find-package-tool">Run the Find-Package Tool</a>
+ cmake --find-package [&lt;options&gt;]
+
+<a class="reference internal" href="#view-help">View Help</a>
+ cmake --help[-&lt;topic&gt;]
+</pre>   <h2 id="description">Description</h2> <p>The <strong>cmake</strong> executable is the command-line interface of the cross-platform buildsystem generator CMake. The above <a class="reference internal" href="#synopsis">Synopsis</a> lists various actions the tool can perform as described in sections below.</p> <p>To build a software project with CMake, <a class="reference internal" href="#generate-a-project-buildsystem">Generate a Project Buildsystem</a>. Optionally use <strong>cmake</strong> to <a class="reference internal" href="#build-a-project">Build a Project</a>, <a class="reference internal" href="#install-a-project">Install a Project</a> or just run the corresponding build tool (e.g. <code>make</code>) directly. <strong>cmake</strong> can also be used to <a class="reference internal" href="#view-help">View Help</a>.</p> <p>The other actions are meant for use by software developers writing scripts in the <a class="reference internal" href="../cmake-language.7/#manual:cmake-language(7)" title="cmake-language(7)" id="index-0-manual:cmake-language(7)"><code>CMake language</code></a> to support their builds.</p> <p>For graphical user interfaces that may be used in place of <strong>cmake</strong>, see <a class="reference internal" href="../ccmake.1/#manual:ccmake(1)" title="ccmake(1)" id="index-0-manual:ccmake(1)"><code>ccmake</code></a> and <a class="reference internal" href="../cmake-gui.1/#manual:cmake-gui(1)" title="cmake-gui(1)" id="index-0-manual:cmake-gui(1)"><code>cmake-gui</code></a>. For command-line interfaces to the CMake testing and packaging facilities, see <a class="reference internal" href="../ctest.1/#manual:ctest(1)" title="ctest(1)" id="index-0-manual:ctest(1)"><code>ctest</code></a> and <a class="reference internal" href="../cpack.1/#manual:cpack(1)" title="cpack(1)" id="index-0-manual:cpack(1)"><code>cpack</code></a>.</p> <p>For more information on CMake at large, <a class="reference internal" href="#see-also">see also</a> the links at the end of this manual.</p>   <h2 id="introduction-to-cmake-buildsystems">Introduction to CMake Buildsystems</h2> <p>A <em>buildsystem</em> describes how to build a project’s executables and libraries from its source code using a <em>build tool</em> to automate the process. For example, a buildsystem may be a <code>Makefile</code> for use with a command-line <code>make</code> tool or a project file for an Integrated Development Environment (IDE). In order to avoid maintaining multiple such buildsystems, a project may specify its buildsystem abstractly using files written in the <a class="reference internal" href="../cmake-language.7/#manual:cmake-language(7)" title="cmake-language(7)" id="index-1-manual:cmake-language(7)"><code>CMake language</code></a>. From these files CMake generates a preferred buildsystem locally for each user through a backend called a <em>generator</em>.</p> <p>To generate a buildsystem with CMake, the following must be selected:</p> <dl class="docutils"> <dt>Source Tree</dt> <dd>The top-level directory containing source files provided by the project. The project specifies its buildsystem using files as described in the <a class="reference internal" href="../cmake-language.7/#manual:cmake-language(7)" title="cmake-language(7)" id="index-2-manual:cmake-language(7)"><code>cmake-language(7)</code></a> manual, starting with a top-level file named <code>CMakeLists.txt</code>. These files specify build targets and their dependencies as described in the <a class="reference internal" href="../cmake-buildsystem.7/#manual:cmake-buildsystem(7)" title="cmake-buildsystem(7)" id="index-0-manual:cmake-buildsystem(7)"><code>cmake-buildsystem(7)</code></a> manual.</dd> <dt>Build Tree</dt> <dd>
+<p class="first">The top-level directory in which buildsystem files and build output artifacts (e.g. executables and libraries) are to be stored. CMake will write a <code>CMakeCache.txt</code> file to identify the directory as a build tree and store persistent information such as buildsystem configuration options.</p> <p class="last">To maintain a pristine source tree, perform an <em>out-of-source</em> build by using a separate dedicated build tree. An <em>in-source</em> build in which the build tree is placed in the same directory as the source tree is also supported, but discouraged.</p> </dd> <dt>Generator</dt> <dd>
+<p class="first">This chooses the kind of buildsystem to generate. See the <a class="reference internal" href="../cmake-generators.7/#manual:cmake-generators(7)" title="cmake-generators(7)" id="index-0-manual:cmake-generators(7)"><code>cmake-generators(7)</code></a> manual for documentation of all generators. Run <code>cmake --help</code> to see a list of generators available locally. Optionally use the <code>-G</code> option below to specify a generator, or simply accept the default CMake chooses for the current platform.</p> <p class="last">When using one of the <a class="reference internal" href="../cmake-generators.7/#command-line-build-tool-generators"><span class="std std-ref">Command-Line Build Tool Generators</span></a> CMake expects that the environment needed by the compiler toolchain is already configured in the shell. When using one of the <a class="reference internal" href="../cmake-generators.7/#ide-build-tool-generators"><span class="std std-ref">IDE Build Tool Generators</span></a>, no particular environment is needed.</p> </dd> </dl>   <h2 id="generate-a-project-buildsystem">Generate a Project Buildsystem</h2> <p>Run CMake with one of the following command signatures to specify the source and build trees and generate a buildsystem:</p> <dl class="docutils"> <dt>
+<code>cmake [&lt;options&gt;] &lt;path-to-source&gt;</code> </dt> <dd>
+<p class="first">Uses the current working directory as the build tree, and <code>&lt;path-to-source&gt;</code> as the source tree. The specified path may be absolute or relative to the current working directory. The source tree must contain a <code>CMakeLists.txt</code> file and must <em>not</em> contain a <code>CMakeCache.txt</code> file because the latter identifies an existing build tree. For example:</p> <pre data-language="console">$ mkdir build ; cd build
+$ cmake ../src
+</pre> </dd> <dt>
+<code>cmake [&lt;options&gt;] &lt;path-to-existing-build&gt;</code> </dt> <dd>
+<p class="first">Uses <code>&lt;path-to-existing-build&gt;</code> as the build tree, and loads the path to the source tree from its <code>CMakeCache.txt</code> file, which must have already been generated by a previous run of CMake. The specified path may be absolute or relative to the current working directory. For example:</p> <pre data-language="console">$ cd build
+$ cmake .
+</pre> </dd> <dt>
+<code>cmake [&lt;options&gt;] -S &lt;path-to-source&gt; -B &lt;path-to-build&gt;</code> </dt> <dd>
+<p class="first">Uses <code>&lt;path-to-build&gt;</code> as the build tree and <code>&lt;path-to-source&gt;</code> as the source tree. The specified paths may be absolute or relative to the current working directory. The source tree must contain a <code>CMakeLists.txt</code> file. The build tree will be created automatically if it does not already exist. For example:</p> <pre data-language="console">$ cmake -S src -B build
+</pre> </dd> </dl> <p>In all cases the <code>&lt;options&gt;</code> may be zero or more of the <a class="reference internal" href="#options">Options</a> below.</p> <p>After generating a buildsystem one may use the corresponding native build tool to build the project. For example, after using the <a class="reference internal" href="https://cmake.org/cmake/help/v3.15/generator/Unix%20Makefiles.html#generator:Unix%20Makefiles" title="Unix Makefiles" id="index-0-generator:Unix Makefiles" target="_blank"><code>Unix Makefiles</code></a> generator one may run <code>make</code> directly:</p>  <pre data-language="console">$ make
+$ make install
+</pre>  <p>Alternatively, one may use <strong>cmake</strong> to <a class="reference internal" href="#build-a-project">Build a Project</a> by automatically choosing and invoking the appropriate native build tool.</p>  <h3 id="cmake-options">Options</h3> <dl class="docutils" id="options"> <dt>
+<code>-S &lt;path-to-source&gt;</code> </dt> <dd>Path to root directory of the CMake project to build.</dd> <dt>
+<code>-B &lt;path-to-build&gt;</code> </dt> <dd>
+<p class="first">Path to directory which CMake will use as the root of build directory.</p> <p class="last">If the directory doesn’t already exist CMake will make it.</p> </dd> <dt>
+<code>-C &lt;initial-cache&gt;</code> </dt> <dd>
+<p class="first">Pre-load a script to populate the cache.</p> <p class="last">When CMake is first run in an empty build tree, it creates a <code>CMakeCache.txt</code> file and populates it with customizable settings for the project. This option may be used to specify a file from which to load cache entries before the first pass through the project’s CMake listfiles. The loaded entries take priority over the project’s default values. The given file should be a CMake script containing <a class="reference internal" href="../../command/set/#command:set" title="set" id="index-0-command:set"><code>set()</code></a> commands that use the <code>CACHE</code> option, not a cache-format file.</p> </dd> <dt>
+<code>-D &lt;var&gt;:&lt;type&gt;=&lt;value&gt;, -D &lt;var&gt;=&lt;value&gt;</code> </dt> <dd>
+<p class="first">Create or update a CMake <code>CACHE</code> entry.</p> <p>When CMake is first run in an empty build tree, it creates a <code>CMakeCache.txt</code> file and populates it with customizable settings for the project. This option may be used to specify a setting that takes priority over the project’s default value. The option may be repeated for as many <code>CACHE</code> entries as desired.</p> <p>If the <code>:&lt;type&gt;</code> portion is given it must be one of the types specified by the <a class="reference internal" href="../../command/set/#command:set" title="set" id="index-1-command:set"><code>set()</code></a> command documentation for its <code>CACHE</code> signature. If the <code>:&lt;type&gt;</code> portion is omitted the entry will be created with no type if it does not exist with a type already. If a command in the project sets the type to <code>PATH</code> or <code>FILEPATH</code> then the <code>&lt;value&gt;</code> will be converted to an absolute path.</p> <p class="last">This option may also be given as a single argument: <code>-D&lt;var&gt;:&lt;type&gt;=&lt;value&gt;</code> or <code>-D&lt;var&gt;=&lt;value&gt;</code>.</p> </dd> <dt>
+<code>-U &lt;globbing_expr&gt;</code> </dt> <dd>
+<p class="first">Remove matching entries from CMake <code>CACHE</code>.</p> <p>This option may be used to remove one or more variables from the <code>CMakeCache.txt</code> file, globbing expressions using <code>*</code> and <code>?</code> are supported. The option may be repeated for as many <code>CACHE</code> entries as desired.</p> <p class="last">Use with care, you can make your <code>CMakeCache.txt</code> non-working.</p> </dd> <dt>
+<code>-G &lt;generator-name&gt;</code> </dt> <dd>
+<p class="first">Specify a build system generator.</p> <p>CMake may support multiple native build systems on certain platforms. A generator is responsible for generating a particular build system. Possible generator names are specified in the <a class="reference internal" href="../cmake-generators.7/#manual:cmake-generators(7)" title="cmake-generators(7)" id="index-1-manual:cmake-generators(7)"><code>cmake-generators(7)</code></a> manual.</p> <p class="last">If not specified, CMake checks the <a class="reference internal" href="../../envvar/cmake_generator/#envvar:CMAKE_GENERATOR" title="CMAKE_GENERATOR" id="index-0-envvar:CMAKE_GENERATOR"><code>CMAKE_GENERATOR</code></a> environment variable and otherwise falls back to a builtin default selection.</p> </dd> <dt>
+<code>-T &lt;toolset-spec&gt;</code> </dt> <dd>
+<p class="first">Toolset specification for the generator, if supported.</p> <p class="last">Some CMake generators support a toolset specification to tell the native build system how to choose a compiler. See the <a class="reference internal" href="../../variable/cmake_generator_toolset/#variable:CMAKE_GENERATOR_TOOLSET" title="CMAKE_GENERATOR_TOOLSET" id="index-0-variable:CMAKE_GENERATOR_TOOLSET"><code>CMAKE_GENERATOR_TOOLSET</code></a> variable for details.</p> </dd> <dt>
+<code>-A &lt;platform-name&gt;</code> </dt> <dd>
+<p class="first">Specify platform name if supported by generator.</p> <p class="last">Some CMake generators support a platform name to be given to the native build system to choose a compiler or SDK. See the <a class="reference internal" href="../../variable/cmake_generator_platform/#variable:CMAKE_GENERATOR_PLATFORM" title="CMAKE_GENERATOR_PLATFORM" id="index-0-variable:CMAKE_GENERATOR_PLATFORM"><code>CMAKE_GENERATOR_PLATFORM</code></a> variable for details.</p> </dd> <dt>
+<code>-Wno-dev</code> </dt> <dd>
+<p class="first">Suppress developer warnings.</p> <p class="last">Suppress warnings that are meant for the author of the <code>CMakeLists.txt</code> files. By default this will also turn off deprecation warnings.</p> </dd> <dt>
+<code>-Wdev</code> </dt> <dd>
+<p class="first">Enable developer warnings.</p> <p class="last">Enable warnings that are meant for the author of the <code>CMakeLists.txt</code> files. By default this will also turn on deprecation warnings.</p> </dd> <dt>
+<code>-Werror=dev</code> </dt> <dd>
+<p class="first">Make developer warnings errors.</p> <p class="last">Make warnings that are meant for the author of the <code>CMakeLists.txt</code> files errors. By default this will also turn on deprecated warnings as errors.</p> </dd> <dt>
+<code>-Wno-error=dev</code> </dt> <dd>
+<p class="first">Make developer warnings not errors.</p> <p class="last">Make warnings that are meant for the author of the <code>CMakeLists.txt</code> files not errors. By default this will also turn off deprecated warnings as errors.</p> </dd> <dt>
+<code>-Wdeprecated</code> </dt> <dd>
+<p class="first">Enable deprecated functionality warnings.</p> <p class="last">Enable warnings for usage of deprecated functionality, that are meant for the author of the <code>CMakeLists.txt</code> files.</p> </dd> <dt>
+<code>-Wno-deprecated</code> </dt> <dd>
+<p class="first">Suppress deprecated functionality warnings.</p> <p class="last">Suppress warnings for usage of deprecated functionality, that are meant for the author of the <code>CMakeLists.txt</code> files.</p> </dd> <dt>
+<code>-Werror=deprecated</code> </dt> <dd>
+<p class="first">Make deprecated macro and function warnings errors.</p> <p class="last">Make warnings for usage of deprecated macros and functions, that are meant for the author of the <code>CMakeLists.txt</code> files, errors.</p> </dd> <dt>
+<code>-Wno-error=deprecated</code> </dt> <dd>
+<p class="first">Make deprecated macro and function warnings not errors.</p> <p class="last">Make warnings for usage of deprecated macros and functions, that are meant for the author of the <code>CMakeLists.txt</code> files, not errors.</p> </dd> <dt>
+<code>-L[A][H]</code> </dt> <dd>
+<p class="first">List non-advanced cached variables.</p> <p class="last">List <code>CACHE</code> variables will run CMake and list all the variables from the CMake <code>CACHE</code> that are not marked as <code>INTERNAL</code> or <a class="reference internal" href="../../prop_cache/advanced/#prop_cache:ADVANCED" title="ADVANCED" id="index-0-prop_cache:ADVANCED"><code>ADVANCED</code></a>. This will effectively display current CMake settings, which can then be changed with <code>-D</code> option. Changing some of the variables may result in more variables being created. If <code>A</code> is specified, then it will display also advanced variables. If <code>H</code> is specified, it will also display help for each variable.</p> </dd> <dt>
+<code>-N</code> </dt> <dd>
+<p class="first">View mode only.</p> <p class="last">Only load the cache. Do not actually run configure and generate steps.</p> </dd> <dt>
+<code>--graphviz=[file]</code> </dt> <dd>
+<p class="first">Generate graphviz of dependencies, see <a class="reference internal" href="../../module/cmakegraphvizoptions/#module:CMakeGraphVizOptions" title="CMakeGraphVizOptions" id="index-0-module:CMakeGraphVizOptions"><code>CMakeGraphVizOptions</code></a> for more.</p> <p class="last">Generate a graphviz input file that will contain all the library and executable dependencies in the project. See the documentation for <a class="reference internal" href="../../module/cmakegraphvizoptions/#module:CMakeGraphVizOptions" title="CMakeGraphVizOptions" id="index-1-module:CMakeGraphVizOptions"><code>CMakeGraphVizOptions</code></a> for more details.</p> </dd> <dt>
+<code>--system-information [file]</code> </dt> <dd>
+<p class="first">Dump information about this system.</p> <p class="last">Dump a wide range of information about the current system. If run from the top of a binary tree for a CMake project it will dump additional information such as the cache, log files etc.</p> </dd> <dt>
+<code>--loglevel=&lt;ERROR|WARNING|NOTICE|STATUS|VERBOSE|DEBUG|TRACE&gt;</code> </dt> <dd>
+<p class="first">Set the log level.</p> <p class="last">The <a class="reference internal" href="../../command/message/#command:message" title="message" id="index-0-command:message"><code>message()</code></a> command will only output messages of the specified log level or higher. The default log level is <code>STATUS</code>.</p> </dd> <dt>
+<code>--debug-trycompile</code> </dt> <dd>
+<p class="first">Do not delete the <a class="reference internal" href="../../command/try_compile/#command:try_compile" title="try_compile" id="index-0-command:try_compile"><code>try_compile()</code></a> build tree. Only useful on one <a class="reference internal" href="../../command/try_compile/#command:try_compile" title="try_compile" id="index-1-command:try_compile"><code>try_compile()</code></a> at a time.</p> <p class="last">Do not delete the files and directories created for <a class="reference internal" href="../../command/try_compile/#command:try_compile" title="try_compile" id="index-2-command:try_compile"><code>try_compile()</code></a> calls. This is useful in debugging failed try_compiles. It may however change the results of the try-compiles as old junk from a previous try-compile may cause a different test to either pass or fail incorrectly. This option is best used for one try-compile at a time, and only when debugging.</p> </dd> <dt>
+<code>--debug-output</code> </dt> <dd>
+<p class="first">Put cmake in a debug mode.</p> <p class="last">Print extra information during the cmake run like stack traces with <a class="reference internal" href="../../command/message/#command:message" title="message" id="index-1-command:message"><code>message(SEND_ERROR)</code></a> calls.</p> </dd> <dt>
+<code>--trace</code> </dt> <dd>
+<p class="first">Put cmake in trace mode.</p> <p class="last">Print a trace of all calls made and from where.</p> </dd> <dt>
+<code>--trace-expand</code> </dt> <dd>
+<p class="first">Put cmake in trace mode.</p> <p class="last">Like <code>--trace</code>, but with variables expanded.</p> </dd> <dt>
+<code>--trace-source=&lt;file&gt;</code> </dt> <dd>
+<p class="first">Put cmake in trace mode, but output only lines of a specified file.</p> <p class="last">Multiple options are allowed.</p> </dd> <dt>
+<code>--warn-uninitialized</code> </dt> <dd>
+<p class="first">Warn about uninitialized values.</p> <p class="last">Print a warning when an uninitialized variable is used.</p> </dd> <dt>
+<code>--warn-unused-vars</code> </dt> <dd>
+<p class="first">Warn about unused variables.</p> <p class="last">Find variables that are declared or set, but not used.</p> </dd> <dt>
+<code>--no-warn-unused-cli</code> </dt> <dd>
+<p class="first">Don’t warn about command line options.</p> <p class="last">Don’t find variables that are declared on the command line, but not used.</p> </dd> <dt>
+<code>--check-system-vars</code> </dt> <dd>
+<p class="first">Find problems with variable usage in system files.</p> <p class="last">Normally, unused and uninitialized variables are searched for only in <a class="reference internal" href="../../variable/cmake_source_dir/#variable:CMAKE_SOURCE_DIR" title="CMAKE_SOURCE_DIR" id="index-0-variable:CMAKE_SOURCE_DIR"><code>CMAKE_SOURCE_DIR</code></a> and <a class="reference internal" href="../../variable/cmake_binary_dir/#variable:CMAKE_BINARY_DIR" title="CMAKE_BINARY_DIR" id="index-0-variable:CMAKE_BINARY_DIR"><code>CMAKE_BINARY_DIR</code></a>. This flag tells CMake to warn about other files as well.</p> </dd> </dl>    <h2 id="build-tool-mode">Build a Project</h2> <p id="build-a-project">CMake provides a command-line signature to build an already-generated project binary tree:</p> <pre data-language="shell">cmake --build &lt;dir&gt; [&lt;options&gt;] [-- &lt;build-tool-options&gt;]
+</pre> <p>This abstracts a native build tool’s command-line interface with the following options:</p> <dl class="docutils"> <dt>
+<code>--build &lt;dir&gt;</code> </dt> <dd>Project binary directory to be built. This is required and must be first.</dd> <dt>
+<code>--parallel [&lt;jobs&gt;], -j [&lt;jobs&gt;]</code> </dt> <dd>
+<p class="first">The maximum number of concurrent processes to use when building. If <code>&lt;jobs&gt;</code> is omitted the native build tool’s default number is used.</p> <p>The <a class="reference internal" href="../../envvar/cmake_build_parallel_level/#envvar:CMAKE_BUILD_PARALLEL_LEVEL" title="CMAKE_BUILD_PARALLEL_LEVEL" id="index-0-envvar:CMAKE_BUILD_PARALLEL_LEVEL"><code>CMAKE_BUILD_PARALLEL_LEVEL</code></a> environment variable, if set, specifies a default parallel level when this option is not given.</p> <p class="last">Some native build tools always build in parallel. The use of <code>&lt;jobs&gt;</code> value of <code>1</code> can be used to limit to a single job.</p> </dd> <dt>
+<code>--target &lt;tgt&gt;..., -t &lt;tgt&gt;...</code> </dt> <dd>Build <code>&lt;tgt&gt;</code> instead of the default target. Multiple targets may be given, separated by spaces.</dd> <dt>
+<code>--config &lt;cfg&gt;</code> </dt> <dd>For multi-configuration tools, choose configuration <code>&lt;cfg&gt;</code>.</dd> <dt>
+<code>--clean-first</code> </dt> <dd>Build target <code>clean</code> first, then build. (To clean only, use <code>--target clean</code>.)</dd> <dt>
+<code>--use-stderr</code> </dt> <dd>Ignored. Behavior is default in CMake &gt;= 3.0.</dd> <dt>
+<code>--verbose, -v</code> </dt> <dd>
+<p class="first">Enable verbose output - if supported - including the build commands to be executed.</p> <p class="last">This option can be omitted if <a class="reference internal" href="../../envvar/verbose/#envvar:VERBOSE" title="VERBOSE" id="index-0-envvar:VERBOSE"><code>VERBOSE</code></a> environment variable or <a class="reference internal" href="../../variable/cmake_verbose_makefile/#variable:CMAKE_VERBOSE_MAKEFILE" title="CMAKE_VERBOSE_MAKEFILE" id="index-0-variable:CMAKE_VERBOSE_MAKEFILE"><code>CMAKE_VERBOSE_MAKEFILE</code></a> cached variable is set.</p> </dd> <dt>
+<code>--</code> </dt> <dd>Pass remaining options to the native tool.</dd> </dl> <p>Run <code>cmake --build</code> with no options for quick help.</p>   <h2 id="install-a-project">Install a Project</h2> <p>CMake provides a command-line signature to install an already-generated project binary tree:</p> <pre data-language="shell">cmake --install &lt;dir&gt; [&lt;options&gt;]
+</pre> <p>This may be used after building a project to run installation without using the generated build system or the native build tool. The options are:</p> <dl class="docutils"> <dt>
+<code>--install &lt;dir&gt;</code> </dt> <dd>Project binary directory to install. This is required and must be first.</dd> <dt>
+<code>--config &lt;cfg&gt;</code> </dt> <dd>For multi-configuration generators, choose configuration <code>&lt;cfg&gt;</code>.</dd> <dt>
+<code>--component &lt;comp&gt;</code> </dt> <dd>Component-based install. Only install component <code>&lt;comp&gt;</code>.</dd> <dt>
+<code>--prefix &lt;prefix&gt;</code> </dt> <dd>Override the installation prefix, <a class="reference internal" href="../../variable/cmake_install_prefix/#variable:CMAKE_INSTALL_PREFIX" title="CMAKE_INSTALL_PREFIX" id="index-0-variable:CMAKE_INSTALL_PREFIX"><code>CMAKE_INSTALL_PREFIX</code></a>.</dd> <dt>
+<code>--strip</code> </dt> <dd>Strip before installing.</dd> <dt>
+<code>-v, --verbose</code> </dt> <dd>
+<p class="first">Enable verbose output.</p> <p class="last">This option can be omitted if <a class="reference internal" href="../../envvar/verbose/#envvar:VERBOSE" title="VERBOSE" id="index-1-envvar:VERBOSE"><code>VERBOSE</code></a> environment variable is set.</p> </dd> </dl> <p>Run <code>cmake --install</code> with no options for quick help.</p>   <h2 id="open-a-project">Open a Project</h2> <pre data-language="shell">cmake --open &lt;dir&gt;
+</pre> <p>Open the generated project in the associated application. This is only supported by some generators.</p>   <h2 id="script-processing-mode">Run a Script</h2> <pre data-language="shell" id="run-a-script">cmake [{-D &lt;var&gt;=&lt;value&gt;}...] -P &lt;cmake-script-file&gt;
+</pre> <p>Process the given cmake file as a script written in the CMake language. No configure or generate step is performed and the cache is not modified. If variables are defined using <code>-D</code>, this must be done before the <code>-P</code> argument.</p>   <h2 id="run-a-command-line-tool">Run a Command-Line Tool</h2> <p>CMake provides builtin command-line tools through the signature</p> <pre data-language="shell">cmake -E &lt;command&gt; [&lt;options&gt;]
+</pre> <p>Run <code>cmake -E</code> or <code>cmake -E help</code> for a summary of commands. Available commands are:</p> <dl class="docutils"> <dt>
+<code>capabilities</code> </dt> <dd>
+<p class="first">Report cmake capabilities in JSON format. The output is a JSON object with the following keys:</p> <dl class="last docutils"> <dt>
+<code>version</code> </dt> <dd>
+<p class="first">A JSON object with version information. Keys are:</p> <dl class="last docutils"> <dt>
+<code>string</code> </dt> <dd>The full version string as displayed by cmake <code>--version</code>.</dd> <dt>
+<code>major</code> </dt> <dd>The major version number in integer form.</dd> <dt>
+<code>minor</code> </dt> <dd>The minor version number in integer form.</dd> <dt>
+<code>patch</code> </dt> <dd>The patch level in integer form.</dd> <dt>
+<code>suffix</code> </dt> <dd>The cmake version suffix string.</dd> <dt>
+<code>isDirty</code> </dt> <dd>A bool that is set if the cmake build is from a dirty tree.</dd> </dl> </dd> <dt>
+<code>generators</code> </dt> <dd>
+<p class="first">A list available generators. Each generator is a JSON object with the following keys:</p> <dl class="last docutils"> <dt>
+<code>name</code> </dt> <dd>A string containing the name of the generator.</dd> <dt>
+<code>toolsetSupport</code> </dt> <dd>
+<code>true</code> if the generator supports toolsets and <code>false</code> otherwise.</dd> <dt>
+<code>platformSupport</code> </dt> <dd>
+<code>true</code> if the generator supports platforms and <code>false</code> otherwise.</dd> <dt>
+<code>extraGenerators</code> </dt> <dd>A list of strings with all the extra generators compatible with the generator.</dd> </dl> </dd> <dt>
+<code>fileApi</code> </dt> <dd>
+<p class="first">Optional member that is present when the <a class="reference internal" href="../cmake-file-api.7/#manual:cmake-file-api(7)" title="cmake-file-api(7)" id="index-0-manual:cmake-file-api(7)"><code>cmake-file-api(7)</code></a> is available. The value is a JSON object with one member:</p> <dl class="last docutils"> <dt>
+<code>requests</code> </dt> <dd>
+<p class="first">A JSON array containing zero or more supported file-api requests. Each request is a JSON object with members:</p> <dl class="last docutils"> <dt>
+<code>kind</code> </dt> <dd>Specifies one of the supported <a class="reference internal" href="../cmake-file-api.7/#file-api-object-kinds"><span class="std std-ref">Object Kinds</span></a>.</dd> <dt>
+<code>version</code> </dt> <dd>A JSON array whose elements are each a JSON object containing <code>major</code> and <code>minor</code> members specifying non-negative integer version components.</dd> </dl> </dd> </dl> </dd> <dt>
+<code>serverMode</code> </dt> <dd>
+<code>true</code> if cmake supports server-mode and <code>false</code> otherwise.</dd> </dl> </dd> <dt>
+<code>chdir &lt;dir&gt; &lt;cmd&gt; [&lt;arg&gt;...]</code> </dt> <dd>Change the current working directory and run a command.</dd> <dt>
+<code>compare_files [--ignore-eol] &lt;file1&gt; &lt;file2&gt;</code> </dt> <dd>Check if <code>&lt;file1&gt;</code> is same as <code>&lt;file2&gt;</code>. If files are the same, then returns <code>0</code>, if not it returns <code>1</code>. The <code>--ignore-eol</code> option implies line-wise comparison and ignores LF/CRLF differences.</dd> <dt>
+<code>copy &lt;file&gt;... &lt;destination&gt;</code> </dt> <dd>Copy files to <code>&lt;destination&gt;</code> (either file or directory). If multiple files are specified, the <code>&lt;destination&gt;</code> must be directory and it must exist. Wildcards are not supported. <code>copy</code> does follow symlinks. That means it does not copy symlinks, but the files or directories it point to.</dd> <dt>
+<code>copy_directory &lt;dir&gt;... &lt;destination&gt;</code> </dt> <dd>Copy directories to <code>&lt;destination&gt;</code> directory. If <code>&lt;destination&gt;</code> directory does not exist it will be created. <code>copy_directory</code> does follow symlinks.</dd> <dt>
+<code>copy_if_different &lt;file&gt;... &lt;destination&gt;</code> </dt> <dd>Copy files to <code>&lt;destination&gt;</code> (either file or directory) if they have changed. If multiple files are specified, the <code>&lt;destination&gt;</code> must be directory and it must exist. <code>copy_if_different</code> does follow symlinks.</dd> <dt>
+<code>echo [&lt;string&gt;...]</code> </dt> <dd>Displays arguments as text.</dd> <dt>
+<code>echo_append [&lt;string&gt;...]</code> </dt> <dd>Displays arguments as text but no new line.</dd> <dt>
+<code>env [--unset=NAME]... [NAME=VALUE]... COMMAND [ARG]...</code> </dt> <dd>Run command in a modified environment.</dd> <dt>
+<code>environment</code> </dt> <dd>Display the current environment variables.</dd> <dt>
+<code>make_directory &lt;dir&gt;...</code> </dt> <dd>Create <code>&lt;dir&gt;</code> directories. If necessary, create parent directories too. If a directory already exists it will be silently ignored.</dd> <dt>
+<code>md5sum &lt;file&gt;...</code> </dt> <dd>
+<p class="first">Create MD5 checksum of files in <code>md5sum</code> compatible format:</p> <pre data-language="none">351abe79cd3800b38cdfb25d45015a15  file1.txt
+052f86c15bbde68af55c7f7b340ab639  file2.txt
+</pre> </dd> <dt>
+<code>sha1sum &lt;file&gt;...</code> </dt> <dd>
+<p class="first">Create SHA1 checksum of files in <code>sha1sum</code> compatible format:</p> <pre data-language="none">4bb7932a29e6f73c97bb9272f2bdc393122f86e0  file1.txt
+1df4c8f318665f9a5f2ed38f55adadb7ef9f559c  file2.txt
+</pre> </dd> <dt>
+<code>sha224sum &lt;file&gt;...</code> </dt> <dd>
+<p class="first">Create SHA224 checksum of files in <code>sha224sum</code> compatible format:</p> <pre data-language="none">b9b9346bc8437bbda630b0b7ddfc5ea9ca157546dbbf4c613192f930  file1.txt
+6dfbe55f4d2edc5fe5c9197bca51ceaaf824e48eba0cc453088aee24  file2.txt
+</pre> </dd> <dt>
+<code>sha256sum &lt;file&gt;...</code> </dt> <dd>
+<p class="first">Create SHA256 checksum of files in <code>sha256sum</code> compatible format:</p> <pre data-language="none">76713b23615d31680afeb0e9efe94d47d3d4229191198bb46d7485f9cb191acc  file1.txt
+15b682ead6c12dedb1baf91231e1e89cfc7974b3787c1e2e01b986bffadae0ea  file2.txt
+</pre> </dd> <dt>
+<code>sha384sum &lt;file&gt;...</code> </dt> <dd>
+<p class="first">Create SHA384 checksum of files in <code>sha384sum</code> compatible format:</p> <pre data-language="none">acc049fedc091a22f5f2ce39a43b9057fd93c910e9afd76a6411a28a8f2b8a12c73d7129e292f94fc0329c309df49434  file1.txt
+668ddeb108710d271ee21c0f3acbd6a7517e2b78f9181c6a2ff3b8943af92b0195dcb7cce48aa3e17893173c0a39e23d  file2.txt
+</pre> </dd> <dt>
+<code>sha512sum &lt;file&gt;...</code> </dt> <dd>
+<p class="first">Create SHA512 checksum of files in <code>sha512sum</code> compatible format:</p> <pre data-language="none">2a78d7a6c5328cfb1467c63beac8ff21794213901eaadafd48e7800289afbc08e5fb3e86aa31116c945ee3d7bf2a6194489ec6101051083d1108defc8e1dba89  file1.txt
+7a0b54896fe5e70cca6dd643ad6f672614b189bf26f8153061c4d219474b05dad08c4e729af9f4b009f1a1a280cb625454bf587c690f4617c27e3aebdf3b7a2d  file2.txt
+</pre> </dd> <dt>
+<code>remove [-f] &lt;file&gt;...</code> </dt> <dd>Remove the file(s). If any of the listed files already do not exist, the command returns a non-zero exit code, but no message is logged. The <code>-f</code> option changes the behavior to return a zero exit code (i.e. success) in such situations instead. <code>remove</code> does not follow symlinks. That means it remove only symlinks and not files it point to.</dd> <dt>
+<code>remove_directory &lt;dir&gt;...</code> </dt> <dd>Remove <code>&lt;dir&gt;</code> directories and their contents. If a directory does not exist it will be silently ignored.</dd> <dt>
+<code>rename &lt;oldname&gt; &lt;newname&gt;</code> </dt> <dd>Rename a file or directory (on one volume). If file with the <code>&lt;newname&gt;</code> name already exists, then it will be silently replaced.</dd> <dt>
+<code>server</code> </dt> <dd>Launch <a class="reference internal" href="../cmake-server.7/#manual:cmake-server(7)" title="cmake-server(7)" id="index-0-manual:cmake-server(7)"><code>cmake-server(7)</code></a> mode.</dd> <dt>
+<code>sleep &lt;number&gt;...</code> </dt> <dd>Sleep for given number of seconds.</dd> <dt>
+<code>tar [cxt][vf][zjJ] file.tar [&lt;options&gt;] [--] [&lt;pathname&gt;...]</code> </dt> <dd>
+<p class="first">Create or extract a tar or zip archive. Options are:</p> <dl class="last docutils"> <dt>
+<code>c</code> </dt> <dd>Create a new archive containing the specified files. If used, the <code>&lt;pathname&gt;...</code> argument is mandatory.</dd> <dt>
+<code>x</code> </dt> <dd>Extract to disk from the archive. The <code>&lt;pathname&gt;...</code> argument could be used to extract only selected files or directories. When extracting selected files or directories, you must provide their exact names including the path, as printed by list (<code>-t</code>).</dd> <dt>
+<code>t</code> </dt> <dd>List archive contents. The <code>&lt;pathname&gt;...</code> argument could be used to list only selected files or directories.</dd> <dt>
+<code>v</code> </dt> <dd>Produce verbose output.</dd> <dt>
+<code>z</code> </dt> <dd>Compress the resulting archive with gzip.</dd> <dt>
+<code>j</code> </dt> <dd>Compress the resulting archive with bzip2.</dd> <dt>
+<code>J</code> </dt> <dd>Compress the resulting archive with XZ.</dd> <dt>
+<code>--zstd</code> </dt> <dd>Compress the resulting archive with Zstandard.</dd> <dt>
+<code>--files-from=&lt;file&gt;</code> </dt> <dd>Read file names from the given file, one per line. Blank lines are ignored. Lines may not start in <code>-</code> except for <code>--add-file=&lt;name&gt;</code> to add files whose names start in <code>-</code>.</dd> <dt>
+<code>--format=&lt;format&gt;</code> </dt> <dd>Specify the format of the archive to be created. Supported formats are: <code>7zip</code>, <code>gnutar</code>, <code>pax</code>, <code>paxr</code> (restricted pax, default), and <code>zip</code>.</dd> <dt>
+<code>--mtime=&lt;date&gt;</code> </dt> <dd>Specify modification time recorded in tarball entries.</dd> <dt>
+<code>--</code> </dt> <dd>Stop interpreting options and treat all remaining arguments as file names, even if they start with <code>-</code>.</dd> </dl> </dd> <dt>
+<code>time &lt;command&gt; [&lt;args&gt;...]</code> </dt> <dd>Run command and display elapsed time.</dd> <dt>
+<code>touch &lt;file&gt;...</code> </dt> <dd>Creates <code>&lt;file&gt;</code> if file do not exist. If <code>&lt;file&gt;</code> exists, it is changing <code>&lt;file&gt;</code> access and modification times.</dd> <dt>
+<code>touch_nocreate &lt;file&gt;...</code> </dt> <dd>Touch a file if it exists but do not create it. If a file does not exist it will be silently ignored.</dd> <dt>
+<code>create_symlink &lt;old&gt; &lt;new&gt;</code> </dt> <dd>Create a symbolic link <code>&lt;new&gt;</code> naming <code>&lt;old&gt;</code>.</dd> </dl> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">Path to where <code>&lt;new&gt;</code> symbolic link will be created has to exist beforehand.</p> </div>  <h3 id="windows-specific-command-line-tools">Windows-specific Command-Line Tools</h3> <p>The following <code>cmake -E</code> commands are available only on Windows:</p> <dl class="docutils"> <dt>
+<code>delete_regv &lt;key&gt;</code> </dt> <dd>Delete Windows registry value.</dd> <dt>
+<code>env_vs8_wince &lt;sdkname&gt;</code> </dt> <dd>Displays a batch file which sets the environment for the provided Windows CE SDK installed in VS2005.</dd> <dt>
+<code>env_vs9_wince &lt;sdkname&gt;</code> </dt> <dd>Displays a batch file which sets the environment for the provided Windows CE SDK installed in VS2008.</dd> <dt>
+<code>write_regv &lt;key&gt; &lt;value&gt;</code> </dt> <dd>Write Windows registry value.</dd> </dl>    <h2 id="run-the-find-package-tool">Run the Find-Package Tool</h2> <p>CMake provides a pkg-config like helper for Makefile-based projects:</p> <pre data-language="shell">cmake --find-package [&lt;options&gt;]
+</pre> <p>It searches a package using <a class="reference internal" href="../../command/find_package/#command:find_package" title="find_package" id="index-0-command:find_package"><code>find_package()</code></a> and prints the resulting flags to stdout. This can be used instead of pkg-config to find installed libraries in plain Makefile-based projects or in autoconf-based projects (via <code>share/aclocal/cmake.m4</code>).</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">This mode is not well-supported due to some technical limitations. It is kept for compatibility but should not be used in new projects.</p> </div>   <h2 id="view-help">View Help</h2> <p>To print selected pages from the CMake documentation, use</p> <pre data-language="shell">cmake --help[-&lt;topic&gt;]
+</pre> <p>with one of the following options:</p> <dl class="docutils"> <dt>
+<code>--help,-help,-usage,-h,-H,/?</code> </dt> <dd>
+<p class="first">Print usage information and exit.</p> <p class="last">Usage describes the basic command line interface and its options.</p> </dd> <dt>
+<code>--version,-version,/V [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Show program name/version banner and exit.</p> <p class="last">If a file is specified, the version is written into it. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-full [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print all help manuals and exit.</p> <p class="last">All manuals are printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-manual &lt;man&gt; [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print one help manual and exit.</p> <p class="last">The specified manual is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-manual-list [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">List help manuals available and exit.</p> <p class="last">The list contains all manuals for which help may be obtained by using the <code>--help-manual</code> option followed by a manual name. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-command &lt;cmd&gt; [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print help for one command and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-commands.7/#manual:cmake-commands(7)" title="cmake-commands(7)" id="index-0-manual:cmake-commands(7)"><code>cmake-commands(7)</code></a> manual entry for <code>&lt;cmd&gt;</code> is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-command-list [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">List commands with help available and exit.</p> <p class="last">The list contains all commands for which help may be obtained by using the <code>--help-command</code> option followed by a command name. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-commands [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print cmake-commands manual and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-commands.7/#manual:cmake-commands(7)" title="cmake-commands(7)" id="index-1-manual:cmake-commands(7)"><code>cmake-commands(7)</code></a> manual is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-module &lt;mod&gt; [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print help for one module and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-modules.7/#manual:cmake-modules(7)" title="cmake-modules(7)" id="index-0-manual:cmake-modules(7)"><code>cmake-modules(7)</code></a> manual entry for <code>&lt;mod&gt;</code> is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-module-list [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">List modules with help available and exit.</p> <p class="last">The list contains all modules for which help may be obtained by using the <code>--help-module</code> option followed by a module name. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-modules [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print cmake-modules manual and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-modules.7/#manual:cmake-modules(7)" title="cmake-modules(7)" id="index-1-manual:cmake-modules(7)"><code>cmake-modules(7)</code></a> manual is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-policy &lt;cmp&gt; [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print help for one policy and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-policies.7/#manual:cmake-policies(7)" title="cmake-policies(7)" id="index-0-manual:cmake-policies(7)"><code>cmake-policies(7)</code></a> manual entry for <code>&lt;cmp&gt;</code> is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-policy-list [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">List policies with help available and exit.</p> <p class="last">The list contains all policies for which help may be obtained by using the <code>--help-policy</code> option followed by a policy name. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-policies [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print cmake-policies manual and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-policies.7/#manual:cmake-policies(7)" title="cmake-policies(7)" id="index-1-manual:cmake-policies(7)"><code>cmake-policies(7)</code></a> manual is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-property &lt;prop&gt; [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print help for one property and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-properties.7/#manual:cmake-properties(7)" title="cmake-properties(7)" id="index-0-manual:cmake-properties(7)"><code>cmake-properties(7)</code></a> manual entries for <code>&lt;prop&gt;</code> are printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-property-list [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">List properties with help available and exit.</p> <p class="last">The list contains all properties for which help may be obtained by using the <code>--help-property</code> option followed by a property name. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-properties [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print cmake-properties manual and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-properties.7/#manual:cmake-properties(7)" title="cmake-properties(7)" id="index-1-manual:cmake-properties(7)"><code>cmake-properties(7)</code></a> manual is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-variable &lt;var&gt; [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print help for one variable and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-variables.7/#manual:cmake-variables(7)" title="cmake-variables(7)" id="index-0-manual:cmake-variables(7)"><code>cmake-variables(7)</code></a> manual entry for <code>&lt;var&gt;</code> is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-variable-list [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">List variables with help available and exit.</p> <p class="last">The list contains all variables for which help may be obtained by using the <code>--help-variable</code> option followed by a variable name. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> <dt>
+<code>--help-variables [&lt;f&gt;]</code> </dt> <dd>
+<p class="first">Print cmake-variables manual and exit.</p> <p class="last">The <a class="reference internal" href="../cmake-variables.7/#manual:cmake-variables(7)" title="cmake-variables(7)" id="index-1-manual:cmake-variables(7)"><code>cmake-variables(7)</code></a> manual is printed in a human-readable text format. The help is printed to a named &lt;f&gt;ile if given.</p> </dd> </dl>   <h2 id="see-also">See Also</h2> <p>The following resources are available to get help using CMake:</p> <dl class="docutils"> <dt>Home Page</dt> <dd>
+<p class="first"><a class="reference external" href="https://cmake.org" target="_blank">https://cmake.org</a></p> <p class="last">The primary starting point for learning about CMake.</p> </dd> <dt>Online Documentation and Community Resources</dt> <dd>
+<p class="first"><a class="reference external" href="https://cmake.org/documentation" target="_blank">https://cmake.org/documentation</a></p> <p class="last">Links to available documentation and community resources may be found on this web page.</p> </dd> <dt>Mailing List</dt> <dd>
+<p class="first"><a class="reference external" href="https://cmake.org/mailing-lists" target="_blank">https://cmake.org/mailing-lists</a></p> <p class="last">For help and discussion about using CMake, a mailing list is provided at <a class="reference external" href="../mailto:cmake%40cmake.org/">cmake<span>@</span>cmake<span>.</span>org</a>. The list is member-post-only but one may sign up on the CMake web page. Please first read the full documentation at <a class="reference external" href="https://cmake.org" target="_blank">https://cmake.org</a> before posting questions to the list.</p> </dd> </dl>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2000–2019 Kitware, Inc. and Contributors<br>Licensed under the BSD 3-clause License.<br>
+    <a href="https://cmake.org/cmake/help/v3.15/manual/cmake.1.html" class="_attribution-link" target="_blank">https://cmake.org/cmake/help/v3.15/manual/cmake.1.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
