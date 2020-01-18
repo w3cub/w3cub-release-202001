@@ -1,0 +1,181 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>No-new-wrappers - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content="There are three primitive types in JavaScript that have wrapper objects&#58; string, number, and boolean. These are represented by the constructors &hellip;">
+  <meta name="keywords" content="disallow, primitive, wrapper, instances, no-new-wrappers, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/rules/no-new-wrappers/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>Disallow Primitive Wrapper Instances (no-new-wrappers)</h1>
+<p>There are three primitive types in JavaScript that have wrapper objects: string, number, and boolean. These are represented by the constructors <code>String</code>, <code>Number</code>, and <code>Boolean</code>, respectively. The primitive wrapper types are used whenever one of these primitive values is read, providing them with object-like capabilities such as methods. Behind the scenes, an object of the associated wrapper type is created and then destroyed, which is why you can call methods on primitive values, such as:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-keyword">var</span> text = <span class="hljs-string">"Hello world"</span>.substring(<span class="hljs-number">2</span>);
+</code></pre>
+<p>Behind the scenes in this example, a <code>String</code> object is constructed. The <code>substring()</code> method exists on <code>String.prototype</code> and so is accessible to the string instance.</p>
+<p>It's also possible to manually create a new wrapper instance:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-keyword">var</span> stringObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">"Hello world"</span>);
+<span class="hljs-keyword">var</span> numberObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Number</span>(<span class="hljs-number">33</span>);
+<span class="hljs-keyword">var</span> booleanObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Boolean</span>(<span class="hljs-literal">false</span>);
+</code></pre>
+<p>Although possible, there aren't any good reasons to use these primitive wrappers as constructors. They tend to confuse other developers more than anything else because they seem like they should act as primitives, but they do not. For example:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-keyword">var</span> stringObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">"Hello world"</span>);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> stringObject);       <span class="hljs-comment">// "object"</span>
+
+<span class="hljs-keyword">var</span> text = <span class="hljs-string">"Hello world"</span>;
+<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> text);               <span class="hljs-comment">// "string"</span>
+
+<span class="hljs-keyword">var</span> booleanObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Boolean</span>(<span class="hljs-literal">false</span>);
+<span class="hljs-keyword">if</span> (booleanObject) {    <span class="hljs-comment">// all objects are truthy!</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"This executes"</span>);
+}
+</code></pre>
+<p>The first problem is that primitive wrapper objects are, in fact, objects. That means <code>typeof</code> will return <code>"object"</code> instead of <code>"string"</code>, <code>"number"</code>, or <code>"boolean"</code>. The second problem comes with boolean objects. Every object is truthy, that means an instance of <code>Boolean</code> always resolves to <code>true</code> even when its actual value is <code>false</code>.</p>
+<p>For these reasons, it's considered a best practice to avoid using primitive wrapper types with <code>new</code>.</p>
+<h2>Rule Details</h2>
+<p>This rule aims to eliminate the use of <code>String</code>, <code>Number</code>, and <code>Boolean</code> with the <code>new</code> operator. As such, it warns whenever it sees <code>new String</code>, <code>new Number</code>, or <code>new Boolean</code>.</p>
+<p>Examples of <strong>incorrect</strong> code for this rule:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint no-new-wrappers: "error"*/</span>
+
+<span class="hljs-keyword">var</span> stringObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">"Hello world"</span>);
+<span class="hljs-keyword">var</span> numberObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Number</span>(<span class="hljs-number">33</span>);
+<span class="hljs-keyword">var</span> booleanObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Boolean</span>(<span class="hljs-literal">false</span>);
+
+<span class="hljs-keyword">var</span> stringObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>;
+<span class="hljs-keyword">var</span> numberObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Number</span>;
+<span class="hljs-keyword">var</span> booleanObject = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Boolean</span>;
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint no-new-wrappers: "error"*/</span>
+
+<span class="hljs-keyword">var</span> text = <span class="hljs-built_in">String</span>(someValue);
+<span class="hljs-keyword">var</span> num = <span class="hljs-built_in">Number</span>(someValue);
+
+<span class="hljs-keyword">var</span> object = <span class="hljs-keyword">new</span> MyString();
+</code></pre>
+<h2>When Not To Use It</h2>
+<p>If you want to allow the use of primitive wrapper objects, then you can safely disable this rule.</p>
+<h2>Further Reading</h2>
+<ul><li><a href="https://www.inkling.com/read/javascript-definitive-guide-david-flanagan-6th/chapter-3/wrapper-objects" target="_blank">Wrapper objects</a></li></ul>
+<h2>Related Rules</h2>
+<ul>
+<li><a href="../no-array-constructor/">no-array-constructor</a></li>
+<li><a href="../no-new-object/">no-new-object</a></li>
+</ul>
+<h2>Version</h2>
+<p>This rule was introduced in ESLint 0.0.6.</p>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://github.com/eslint/eslint/tree/master/lib/rules/no-new-wrappers.js" target="_blank">Rule source</a></li>
+<li><a href="https://github.com/eslint/eslint/tree/master/docs/rules/no-new-wrappers.md" target="_blank">Documentation source</a></li>
+</ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/rules/no-new-wrappers" class="_attribution-link" target="_blank">https://eslint.org/docs/rules/no-new-wrappers</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

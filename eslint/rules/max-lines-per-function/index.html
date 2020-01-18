@@ -1,0 +1,268 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Max-lines-per-function - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content="Some people consider large functions a code smell. Large functions tend to do a lot of things and can make it hard following what&#39;s going on. &hellip;">
+  <meta name="keywords" content="enforce, maximum, function, length, max-lines-per-function, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/rules/max-lines-per-function/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>enforce a maximum function length (max-lines-per-function)</h1>
+<p>Some people consider large functions a code smell. Large functions tend to do a lot of things and can make it hard following what's going on. Many coding style guides dictate a limit of the number of lines that a function can comprise of. This rule can help enforce that style.</p>
+<h2>Rule Details</h2>
+<p>This rule enforces a maximum number of lines per function, in order to aid in maintainability and reduce complexity.</p>
+<h2>Why not use <code>max-statements</code> or other complexity measurement rules instead?</h2>
+<p>Nested long method chains like the below example are often broken onto separate lines for readability:</p>
+<pre class="hljs highlight-"><code>function() {
+    return m("div", [
+        m("table", {className: "table table-striped latest-data"}, [
+            m("tbody",
+                data.map(function(db) {
+                    return m("tr", {key: db.dbname}, [
+                        m("td", {className: "dbname"}, db.dbname),
+                        m("td", {className: "query-count"},  [
+                            m("span", {className: db.lastSample.countClassName}, db.lastSample.nbQueries)
+                        ])
+                    ])
+                })
+            )
+        ])
+    ])
+}
+</code></pre>
+<ul>
+<li>
+<code>max-statements</code> will only report this as 1 statement, despite being 16 lines of code.</li>
+<li>
+<code>complexity</code> will only report a complexity of 1</li>
+<li>
+<code>max-nested-callbacks</code> will only report 1</li>
+<li>
+<code>max-depth</code> will report a depth of 0</li>
+</ul>
+<h2>Options</h2>
+<p>This rule has the following options that can be specified using an object:</p>
+<ul>
+<li><p><code>"max"</code> (default <code>50</code>) enforces a maximum number of lines in a function.</p></li>
+<li><p><code>"skipBlankLines"</code> (default <code>false</code>) ignore lines made up purely of whitespace.</p></li>
+<li><p><code>"skipComments"</code> (default <code>false</code>) ignore lines containing just comments.</p></li>
+<li><p><code>"IIFEs"</code> (default <code>false</code>) include any code included in IIFEs.</p></li>
+</ul>
+<p>Alternatively, you may specify a single integer for the <code>max</code> option:</p>
+<pre class="hljs highlight-json"><code><span class="hljs-string">"max-lines-per-function"</span>: [<span class="hljs-string">"error"</span>, <span class="hljs-number">20</span>]
+</code></pre>
+<p>is equivalent to</p>
+<pre class="hljs highlight-json"><code><span class="hljs-string">"max-lines-per-function"</span>: [<span class="hljs-string">"error"</span>, { <span class="hljs-attr">"max"</span>: <span class="hljs-number">20</span> }]
+</code></pre>
+<h3>code</h3>
+<p>Examples of <strong>incorrect</strong> code for this rule with a max value of <code>2</code>:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", 2]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", 2]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+    <span class="hljs-comment">// a comment</span>
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", 2]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+    <span class="hljs-comment">// a comment followed by a blank line</span>
+
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule with a max value of <code>3</code>:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", 3]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", 3]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+    <span class="hljs-comment">// a comment</span>
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", 3]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+    <span class="hljs-comment">// a comment followed by a blank line</span>
+
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3>skipBlankLines</h3>
+<p>Examples of <strong>incorrect</strong> code for this rule with the <code>{ "skipBlankLines": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", {"max": 2, "skipBlankLines": true}]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule with the <code>{ "skipBlankLines": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", {"max": 3, "skipBlankLines": true}]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3>skipComments</h3>
+<p>Examples of <strong>incorrect</strong> code for this rule with the <code>{ "skipComments": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", {"max": 2, "skipComments": true}]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+    <span class="hljs-comment">// a comment</span>
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule with the <code>{ "skipComments": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", {"max": 3, "skipComments": true}]*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>() </span>{
+    <span class="hljs-comment">// a comment</span>
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3>IIFEs</h3>
+<p>Examples of <strong>incorrect</strong> code for this rule with the <code>{ "IIFEs": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", {"max": 2, "IIFEs": true}]*/</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}());
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule with the <code>{ "IIFEs": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint max-lines-per-function: ["error", {"max": 3, "IIFEs": true}]*/</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span>()</span>{
+    <span class="hljs-keyword">var</span> x = <span class="hljs-number">0</span>;
+}());
+</code></pre>
+<h2>When Not To Use It</h2>
+<p>You can turn this rule off if you are not concerned with the number of lines in your functions.</p>
+<h2>Related Rules</h2>
+<ul>
+<li><a href="../complexity/">complexity</a></li>
+<li><a href="../max-depth/">max-depth</a></li>
+<li><a href="../max-lines/">max-lines</a></li>
+<li><a href="../max-nested-callbacks/">max-nested-callbacks</a></li>
+<li><a href="../max-params/">max-params</a></li>
+<li><a href="../max-statements/">max-statements</a></li>
+<li><a href="../max-statements-per-line/">max-statements-per-line</a></li>
+</ul>
+<h2>Version</h2>
+<p>This rule was introduced in ESLint 5.0.0.</p>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://github.com/eslint/eslint/tree/master/lib/rules/max-lines-per-function.js" target="_blank">Rule source</a></li>
+<li><a href="https://github.com/eslint/eslint/tree/master/docs/rules/max-lines-per-function.md" target="_blank">Documentation source</a></li>
+</ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/rules/max-lines-per-function" class="_attribution-link" target="_blank">https://eslint.org/docs/rules/max-lines-per-function</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,431 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Working With Custom Formatters - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content="While ESLint has some built-in formatters available to format the linting results, it&#39;s also possible to create and distribute your own custom &hellip;">
+  <meta name="keywords" content="working, with, custom, formatters, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/developer-guide/working-with-custom-formatters/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>Working with Custom Formatters</h1>
+<p>While ESLint has some built-in formatters available to format the linting results, it's also possible to create and distribute your own custom formatters. You can include custom formatters in your project directly or create an npm package to distribute them separately.</p>
+<p>Each formatter is just a function that receives a <code>results</code> object and returns a string. For example, the following is how the <code>json</code> built-in formatter is implemented:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">//my-awesome-formatter.js</span>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">results</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.stringify(results, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>);
+};
+</code></pre>
+<p>To run ESLint with this formatter, you can use the <code>-f</code> (or <code>--formatter</code>) command line flag:</p>
+<pre class="hljs highlight-bash"><code>eslint -f ./my-awesome-formatter.js src/
+</code></pre>
+<p>In order to use a local file as a custom formatter, you must begin the filename with a dot (such as <code>./my-awesome-formatter.js</code> or <code>../formatters/my-awesome-formatter.js</code>).</p>
+<h3>The <code>data</code> Argument</h3>
+<p>The exported function receives an optional second argument named <code>data</code>. The <code>data</code> object provides extended information related to the analysis results. Currently, the <code>data</code> object consists of a single property named <code>rulesMeta</code>. This property is a dictionary of rule metadata, keyed with <code>ruleId</code>. The value for each entry is the <code>meta</code> property from the corresponding rule object. The dictionary contains an entry for each rule that was run during the analysis.</p>
+<p>Here's what the <code>data</code> object would look like if one rule, <code>no-extra-semi</code>, had been run:</p>
+<pre class="hljs highlight-js"><code>{
+    <span class="hljs-attr">rulesMeta</span>: {
+        <span class="hljs-string">"no-extra-semi"</span>: {
+            <span class="hljs-attr">type</span>: <span class="hljs-string">"suggestion"</span>,
+            <span class="hljs-attr">docs</span>: {
+                <span class="hljs-attr">description</span>: <span class="hljs-string">"disallow unnecessary semicolons"</span>,
+                <span class="hljs-attr">category</span>: <span class="hljs-string">"Possible Errors"</span>,
+                <span class="hljs-attr">recommended</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">url</span>: <span class="hljs-string">"https://eslint.org/docs/rules/no-extra-semi"</span>
+            },
+            <span class="hljs-attr">fixable</span>: <span class="hljs-string">"code"</span>,
+            <span class="hljs-attr">schema</span>: [],
+            <span class="hljs-attr">messages</span>: {
+                <span class="hljs-attr">unexpected</span>: <span class="hljs-string">"Unnecessary semicolon."</span>
+            }
+        }
+    }
+}
+</code></pre>
+<p>The <a href="#using-rule-metadata">Using Rule metadata</a> example shows how to use the <code>data</code> object in a custom formatter. See the <a href="../working-with-rules/">Working with Rules</a> page for more information about rules.</p>
+<h2>Packaging the Custom Formatter</h2>
+<p>Custom formatters can also be distributed through npm packages. To do so, create an npm package with a name in the format of <code>eslint-formatter-*</code>, where <code>*</code> is the name of your formatter (such as <code>eslint-formatter-awesome</code>). Projects should then install the package and can use the custom formatter with the <code>-f</code> (or <code>--formatter</code>) flag like this:</p>
+<pre class="hljs highlight-bash"><code>eslint -f awesome src/
+</code></pre>
+<p>Because ESLint knows to look for packages beginning with <code>eslint-formatter-</code> when the specified formatter doesn't begin with a dot, there is no need to type <code>eslint-formatter-</code> when using a packaged custom formatter.</p>
+<p>Tips for <code>package.json</code>:</p>
+<ul>
+<li>The <code>main</code> entry should be the JavaScript file implementing your custom formatter.</li>
+<li>Add these <code>keywords</code> to help users find your formatter:<ul>
+<li><code>"eslint"</code></li>
+<li><code>"eslint-formatter"</code></li>
+<li><code>"eslintformatter"</code></li>
+</ul>
+</li>
+</ul>
+<p>See all <a href="https://www.npmjs.com/search?q=eslint-formatter" target="_blank">formatters on npm</a>;</p>
+<h2>The <code>results</code> Object</h2>
+<p>The <code>results</code> object passed into a formatter is an array of objects containing the lint results for individual files. Here's some example output:</p>
+<pre class="hljs highlight-js"><code>[
+    {
+        <span class="hljs-attr">filePath</span>: <span class="hljs-string">"path/to/file.js"</span>,
+        <span class="hljs-attr">messages</span>: [
+            {
+                <span class="hljs-attr">ruleId</span>: <span class="hljs-string">"curly"</span>,
+                <span class="hljs-attr">severity</span>: <span class="hljs-number">2</span>,
+                <span class="hljs-attr">message</span>: <span class="hljs-string">"Expected { after 'if' condition."</span>,
+                <span class="hljs-attr">line</span>: <span class="hljs-number">2</span>,
+                <span class="hljs-attr">column</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">nodeType</span>: <span class="hljs-string">"IfStatement"</span>
+            },
+            {
+                <span class="hljs-attr">ruleId</span>: <span class="hljs-string">"no-process-exit"</span>,
+                <span class="hljs-attr">severity</span>: <span class="hljs-number">2</span>,
+                <span class="hljs-attr">message</span>: <span class="hljs-string">"Don't use process.exit(); throw an error instead."</span>,
+                <span class="hljs-attr">line</span>: <span class="hljs-number">3</span>,
+                <span class="hljs-attr">column</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-attr">nodeType</span>: <span class="hljs-string">"CallExpression"</span>
+            }
+        ],
+        <span class="hljs-attr">errorCount</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">warningCount</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">fixableErrorCount</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">fixableWarningCount</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">source</span>:
+            <span class="hljs-string">"var err = doStuff();\nif (err) console.log('failed tests: ' + err);\nprocess.exit(1);\n"</span>
+    },
+    {
+        <span class="hljs-attr">filePath</span>: <span class="hljs-string">"Gruntfile.js"</span>,
+        <span class="hljs-attr">messages</span>: [],
+        <span class="hljs-attr">errorCount</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">warningCount</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">fixableErrorCount</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">fixableWarningCount</span>: <span class="hljs-number">0</span>
+    }
+]
+</code></pre>
+<h3>The <code>result</code> Object</h3>
+<p>Each object in the <code>results</code> array is a <code>result</code> object. Each <code>result</code> object contains the path of the file that was linted and information about linting issues that were encountered. Here are the properties available on each <code>result</code> object:</p>
+<ul>
+<li>
+<strong>filePath</strong>: The absolute path to the file that was linted.</li>
+<li>
+<strong>messages</strong>: An array of <code>message</code> objects. See below for more info about messages.</li>
+<li>
+<strong>errorCount</strong>: The number of errors for the given file.</li>
+<li>
+<strong>warningCount</strong>: The number of warnings for the given file.</li>
+<li>
+<strong>source</strong>: The source code for the given file. This property is omitted if this file has no errors/warnings or if the <code>output</code> property is present.</li>
+<li>
+<strong>output</strong>: The source code for the given file with as many fixes applied as possible. This property is omitted if no fix is available.</li>
+</ul>
+<h3>The <code>message</code> Object</h3>
+<p>Each <code>message</code> object contains information about the ESLint rule that was triggered by some source code. The properties available on each <code>message</code> object are:</p>
+<ul>
+<li>
+<strong>ruleId</strong>: the ID of the rule that produced the error or warning.</li>
+<li>
+<strong>severity</strong>: the severity of the failure, <code>1</code> for warnings and <code>2</code> for errors.</li>
+<li>
+<strong>message</strong>: the human readable description of the error.</li>
+<li>
+<strong>line</strong>: the line where the issue is located.</li>
+<li>
+<strong>column</strong>: the column where the issue is located.</li>
+<li>
+<strong>nodeType</strong>: the type of the node in the <a href="https://github.com/estree/estree/blob/master/spec.md#node-objects" target="_blank">AST</a>
+</li>
+</ul>
+<h2>Examples</h2>
+<h3>Summary formatter</h3>
+<p>A formatter that only cares about the total count of errors and warnings will look like this:</p>
+<pre class="hljs highlight-javascript"><code><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">results</span>) </span>{
+    <span class="hljs-comment">// accumulate the errors and warnings</span>
+    <span class="hljs-keyword">var</span> summary = results.reduce(
+        <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">seq, current</span>) </span>{
+            seq.errors += current.errorCount;
+            seq.warnings += current.warningCount;
+            <span class="hljs-keyword">return</span> seq;
+        },
+        { <span class="hljs-attr">errors</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">warnings</span>: <span class="hljs-number">0</span> }
+    );
+
+    <span class="hljs-keyword">if</span> (summary.errors &gt; <span class="hljs-number">0</span> || summary.warnings &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> (
+            <span class="hljs-string">"Errors: "</span> +
+            summary.errors +
+            <span class="hljs-string">", Warnings: "</span> +
+            summary.warnings +
+            <span class="hljs-string">"\n"</span>
+        );
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
+};
+</code></pre>
+<p>Running <code>eslint</code> with the previous custom formatter,</p>
+<pre class="hljs highlight-bash"><code>eslint -f ./my-awesome-formatter.js src/
+</code></pre>
+<p>Will produce the following output:</p>
+<pre class="hljs highlight-bash"><code>Errors: 2, Warnings: 4
+</code></pre>
+<h3>Detailed formatter</h3>
+<p>A more complex report will look something like this:</p>
+<pre class="hljs highlight-javascript"><code><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">results, data</span>) </span>{
+    <span class="hljs-keyword">var</span> results = results || [];
+
+    <span class="hljs-keyword">var</span> summary = results.reduce(
+        <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">seq, current</span>) </span>{
+            current.messages.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">msg</span>) </span>{
+                <span class="hljs-keyword">var</span> logMessage = {
+                    <span class="hljs-attr">filePath</span>: current.filePath,
+                    <span class="hljs-attr">ruleId</span>: msg.ruleId,
+                    <span class="hljs-attr">ruleUrl</span>: data.rulesMeta[msg.ruleId].url,
+                    <span class="hljs-attr">message</span>: msg.message,
+                    <span class="hljs-attr">line</span>: msg.line,
+                    <span class="hljs-attr">column</span>: msg.column
+                };
+
+                <span class="hljs-keyword">if</span> (msg.severity === <span class="hljs-number">1</span>) {
+                    logMessage.type = <span class="hljs-string">"warning"</span>;
+                    seq.warnings.push(logMessage);
+                }
+                <span class="hljs-keyword">if</span> (msg.severity === <span class="hljs-number">2</span>) {
+                    logMessage.type = <span class="hljs-string">"error"</span>;
+                    seq.errors.push(logMessage);
+                }
+            });
+            <span class="hljs-keyword">return</span> seq;
+        },
+        {
+            <span class="hljs-attr">errors</span>: [],
+            <span class="hljs-attr">warnings</span>: []
+        }
+    );
+
+    <span class="hljs-keyword">if</span> (summary.errors.length &gt; <span class="hljs-number">0</span> || summary.warnings.length &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">var</span> lines = summary.errors
+            .concat(summary.warnings)
+            .map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">msg</span>) </span>{
+                <span class="hljs-keyword">return</span> (
+                    <span class="hljs-string">"\n"</span> +
+                    msg.type +
+                    <span class="hljs-string">" "</span> +
+                    msg.ruleId + (msg.ruleUrl ? <span class="hljs-string">" ("</span> + msg.ruleUrl + <span class="hljs-string">")"</span> : <span class="hljs-string">""</span>
+                    <span class="hljs-string">"\n  "</span> +
+                    msg.filePath +
+                    <span class="hljs-string">":"</span> +
+                    msg.line +
+                    <span class="hljs-string">":"</span> +
+                    msg.column
+                );
+            })
+            .join(<span class="hljs-string">"\n"</span>);
+
+        <span class="hljs-keyword">return</span> lines + <span class="hljs-string">"\n"</span>;
+    }
+};
+</code></pre>
+<p>So running <code>eslint</code> with this custom formatter:</p>
+<pre class="hljs highlight-bash"><code>eslint -f ./my-awesome-formatter.js src/
+</code></pre>
+<p>The output will be</p>
+<pre class="hljs highlight-bash"><code>error space-infix-ops (https://eslint.org/docs/rules/space-infix-ops)
+  src/configs/bundler.js:6:8
+error semi (https://eslint.org/docs/rules/semi)
+  src/configs/bundler.js:6:10
+warning no-unused-vars (https://eslint.org/docs/rules/no-unused-vars)
+  src/configs/bundler.js:5:6
+warning no-unused-vars (https://eslint.org/docs/rules/no-unused-vars)
+  src/configs/bundler.js:6:6
+warning no-shadow (https://eslint.org/docs/rules/no-shadow)
+  src/configs/bundler.js:65:32
+warning no-unused-vars (https://eslint.org/docs/rules/no-unused-vars)
+  src/configs/clean.js:3:6
+</code></pre>
+<h2>Passing Arguments to Formatters</h2>
+<p>While custom formatter do not receive arguments in addition to the results object, it is possible to pass additional data into formatters.</p>
+<h2>Using Environment Variables</h2>
+<p>Custom formatters have access to environment variables and so can change their behavior based on environment variable data. Here's an example that uses a <code>AF_SKIP_WARNINGS</code> environment variable to determine whether or not to show warnings in the results:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">results</span>) </span>{
+    <span class="hljs-keyword">var</span> skipWarnings = process.env.AF_SKIP_WARNINGS === <span class="hljs-string">"true"</span>; <span class="hljs-comment">//af stands for awesome-formatter</span>
+
+    <span class="hljs-keyword">var</span> results = results || [];
+    <span class="hljs-keyword">var</span> summary = results.reduce(
+        <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">seq, current</span>) </span>{
+            current.messages.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">msg</span>) </span>{
+                <span class="hljs-keyword">var</span> logMessage = {
+                    <span class="hljs-attr">filePath</span>: current.filePath,
+                    <span class="hljs-attr">ruleId</span>: msg.ruleId,
+                    <span class="hljs-attr">message</span>: msg.message,
+                    <span class="hljs-attr">line</span>: msg.line,
+                    <span class="hljs-attr">column</span>: msg.column
+                };
+
+                <span class="hljs-keyword">if</span> (msg.severity === <span class="hljs-number">1</span>) {
+                    logMessage.type = <span class="hljs-string">"warning"</span>;
+                    seq.warnings.push(logMessage);
+                }
+                <span class="hljs-keyword">if</span> (msg.severity === <span class="hljs-number">2</span>) {
+                    logMessage.type = <span class="hljs-string">"error"</span>;
+                    seq.errors.push(logMessage);
+                }
+            });
+            <span class="hljs-keyword">return</span> seq;
+        },
+        {
+            <span class="hljs-attr">errors</span>: [],
+            <span class="hljs-attr">warnings</span>: []
+        }
+    );
+
+    <span class="hljs-keyword">if</span> (summary.errors.length &gt; <span class="hljs-number">0</span> || summary.warnings.length &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">var</span> warnings = !skipWarnings ? summary.warnings : []; <span class="hljs-comment">// skip the warnings in that case</span>
+
+        <span class="hljs-keyword">var</span> lines = summary.errors
+            .concat(warnings)
+            .map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">msg</span>) </span>{
+                <span class="hljs-keyword">return</span> (
+                    <span class="hljs-string">"\n"</span> +
+                    msg.type +
+                    <span class="hljs-string">" "</span> +
+                    msg.ruleId +
+                    <span class="hljs-string">"\n  "</span> +
+                    msg.filePath +
+                    <span class="hljs-string">":"</span> +
+                    msg.line +
+                    <span class="hljs-string">":"</span> +
+                    msg.column
+                );
+            })
+            .join(<span class="hljs-string">"\n"</span>);
+
+        <span class="hljs-keyword">return</span> lines + <span class="hljs-string">"\n"</span>;
+    }
+};
+</code></pre>
+<p>You would run ESLint with this custom formatter and an environment variable set like this:</p>
+<pre class="hljs highlight-bash"><code>AF_SKIP_WARNINGS=<span class="hljs-literal">true</span> eslint -f ./my-awesome-formatter.js src/
+</code></pre>
+<p>The output would be:</p>
+<pre class="hljs highlight-bash"><code>error space-infix-ops
+  src/configs/bundler.js:6:8
+
+error semi
+  src/configs/bundler.js:6:10
+</code></pre>
+<h3>Complex Argument Passing</h3>
+<p>If you find the custom formatter pattern doesn't provide enough options for the way you'd like to format ESLint results, the best option is to use ESLint's built-in <a href="../../user-guide/formatters/">JSON formatter</a> and pipe the output to a second program. For example:</p>
+<pre class="hljs highlight-bash"><code>eslint -f json src/ | your-program-that-reads-JSON --option
+</code></pre>
+<p>In this example, the <code>your-program-that-reads-json</code> program can accept the raw JSON of ESLint results and process it before outputting its own format of the results. You can pass as many command line arguments to that program as are necessary to customize the output.</p>
+<h2>Note: Formatting for Terminals</h2>
+<p>Modern terminals like <a href="https://www.iterm2.com/" target="_blank">iTerm2</a> or <a href="http://guake-project.org/" target="_blank">Guake</a> expect a specific results format to automatically open filenames when they are clicked. Most terminals support this format for that purpose:</p>
+<pre class="hljs highlight-bash"><code>file:line:column
+</code></pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/developer-guide/working-with-custom-formatters" class="_attribution-link" target="_blank">https://eslint.org/docs/developer-guide/working-with-custom-formatters</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

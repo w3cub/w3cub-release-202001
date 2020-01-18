@@ -1,0 +1,228 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Eqeqeq - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content=" The --fix option on the command line can automatically fix some of the problems reported by this rule. ">
+  <meta name="keywords" content="require, and, !, eqeqeq, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/rules/eqeqeq/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>Require === and !== (eqeqeq)</h1>
+<p>The <code>--fix</code> option on the <a href="../../user-guide/command-line-interface/#fixing-problems">command line</a> can automatically fix some of the problems reported by this rule.</p>
+<p>It is considered good practice to use the type-safe equality operators <code>===</code> and <code>!==</code> instead of their regular counterparts <code>==</code> and <code>!=</code>.</p>
+<p>The reason for this is that <code>==</code> and <code>!=</code> do type coercion which follows the rather obscure <a href="https://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3" target="_blank">Abstract Equality Comparison Algorithm</a>. For instance, the following statements are all considered <code>true</code>:</p>
+<ul>
+<li><code>[] == false</code></li>
+<li><code>[] == ![]</code></li>
+<li><code>3 == "03"</code></li>
+</ul>
+<p>If one of those occurs in an innocent-looking statement such as <code>a == b</code> the actual problem is very difficult to spot.</p>
+<h2>Rule Details</h2>
+<p>This rule is aimed at eliminating the type-unsafe equality operators.</p>
+<p>Examples of <strong>incorrect</strong> code for this rule:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint eqeqeq: "error"*/</span>
+
+<span class="hljs-keyword">if</span> (x == <span class="hljs-number">42</span>) { }
+
+<span class="hljs-keyword">if</span> (<span class="hljs-string">""</span> == text) { }
+
+<span class="hljs-keyword">if</span> (obj.getStuff() != <span class="hljs-literal">undefined</span>) { }
+</code></pre>
+<p>The <code>--fix</code> option on the command line automatically fixes some problems reported by this rule. A problem is only fixed if one of the operands is a <code>typeof</code> expression, or if both operands are literals with the same type.</p>
+<h2>Options</h2>
+<h3>always</h3>
+<p>The <code>"always"</code> option (default) enforces the use of <code>===</code> and <code>!==</code> in every situation (except when you opt-in to more specific handling of <code>null</code> [see below]).</p>
+<p>Examples of <strong>incorrect</strong> code for the <code>"always"</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint eqeqeq: ["error", "always"]*/</span>
+
+a == b
+foo == <span class="hljs-literal">true</span>
+bananas != <span class="hljs-number">1</span>
+value == <span class="hljs-literal">undefined</span>
+<span class="hljs-keyword">typeof</span> foo == <span class="hljs-string">'undefined'</span>
+<span class="hljs-string">'hello'</span> != <span class="hljs-string">'world'</span>
+<span class="hljs-number">0</span> == <span class="hljs-number">0</span>
+<span class="hljs-literal">true</span> == <span class="hljs-literal">true</span>
+foo == <span class="hljs-literal">null</span>
+
+</code></pre>
+<p>Examples of <strong>correct</strong> code for the <code>"always"</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint eqeqeq: ["error", "always"]*/</span>
+
+a === b
+foo === <span class="hljs-literal">true</span>
+bananas !== <span class="hljs-number">1</span>
+value === <span class="hljs-literal">undefined</span>
+<span class="hljs-keyword">typeof</span> foo === <span class="hljs-string">'undefined'</span>
+<span class="hljs-string">'hello'</span> !== <span class="hljs-string">'world'</span>
+<span class="hljs-number">0</span> === <span class="hljs-number">0</span>
+<span class="hljs-literal">true</span> === <span class="hljs-literal">true</span>
+foo === <span class="hljs-literal">null</span>
+
+</code></pre>
+<p>This rule optionally takes a second argument, which should be an object with the following supported properties:</p>
+<ul><li>
+<code>"null"</code>: Customize how this rule treats <code>null</code> literals. Possible values:<ul>
+<li>
+<code>always</code> (default) - Always use === or !==.</li>
+<li>
+<code>never</code> - Never use === or !== with <code>null</code>.</li>
+<li>
+<code>ignore</code> - Do not apply this rule to <code>null</code>.</li>
+</ul>
+</li></ul>
+<h3>smart</h3>
+<p>The <code>"smart"</code> option enforces the use of <code>===</code> and <code>!==</code> except for these cases:</p>
+<ul>
+<li>Comparing two literal values</li>
+<li>Evaluating the value of <code>typeof</code>
+</li>
+<li>Comparing against <code>null</code>
+</li>
+</ul>
+<p>Examples of <strong>incorrect</strong> code for the <code>"smart"</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint eqeqeq: ["error", "smart"]*/</span>
+
+<span class="hljs-comment">// comparing two variables requires ===</span>
+a == b
+
+<span class="hljs-comment">// only one side is a literal</span>
+foo == <span class="hljs-literal">true</span>
+bananas != <span class="hljs-number">1</span>
+
+<span class="hljs-comment">// comparing to undefined requires ===</span>
+value == <span class="hljs-literal">undefined</span>
+</code></pre>
+<p>Examples of <strong>correct</strong> code for the <code>"smart"</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint eqeqeq: ["error", "smart"]*/</span>
+
+<span class="hljs-keyword">typeof</span> foo == <span class="hljs-string">'undefined'</span>
+<span class="hljs-string">'hello'</span> != <span class="hljs-string">'world'</span>
+<span class="hljs-number">0</span> == <span class="hljs-number">0</span>
+<span class="hljs-literal">true</span> == <span class="hljs-literal">true</span>
+foo == <span class="hljs-literal">null</span>
+</code></pre>
+<h3>allow-null</h3>
+<p><strong>Deprecated:</strong> Instead of using this option use "always" and pass a "null" option property with value "ignore". This will tell ESLint to always enforce strict equality except when comparing with the <code>null</code> literal.</p>
+<pre class="hljs highlight-js"><code>[<span class="hljs-string">"error"</span>, <span class="hljs-string">"always"</span>, {<span class="hljs-string">"null"</span>: <span class="hljs-string">"ignore"</span>}]
+</code></pre>
+<h2>When Not To Use It</h2>
+<p>If you don't want to enforce a style for using equality operators, then it's safe to disable this rule.</p>
+<h2>Version</h2>
+<p>This rule was introduced in ESLint 0.0.2.</p>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://github.com/eslint/eslint/tree/master/lib/rules/eqeqeq.js" target="_blank">Rule source</a></li>
+<li><a href="https://github.com/eslint/eslint/tree/master/docs/rules/eqeqeq.md" target="_blank">Documentation source</a></li>
+</ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/rules/eqeqeq" class="_attribution-link" target="_blank">https://eslint.org/docs/rules/eqeqeq</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

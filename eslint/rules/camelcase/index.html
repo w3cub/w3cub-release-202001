@@ -1,0 +1,323 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Camelcase - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content="When it comes to naming variables, style guides generally fall into one of two camps&#58; camelcase (variableName) and underscores (variable_name). &hellip;">
+  <meta name="keywords" content="require, camelcase, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/rules/camelcase/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>Require CamelCase (camelcase)</h1>
+<p>When it comes to naming variables, style guides generally fall into one of two camps: camelcase (<code>variableName</code>) and underscores (<code>variable_name</code>). This rule focuses on using the camelcase approach. If your style guide calls for camelCasing your variable names, then this rule is for you!</p>
+<h2>Rule Details</h2>
+<p>This rule looks for any underscores (<code>_</code>) located within the source code. It ignores leading and trailing underscores and only checks those in the middle of a variable name. If ESLint decides that the variable is a constant (all uppercase), then no warning will be thrown. Otherwise, a warning will be thrown. This rule only flags definitions and assignments but not function calls. In case of ES6 <code>import</code> statements, this rule only targets the name of the variable that will be imported into the local module scope.</p>
+<h2>Options</h2>
+<p>This rule has an object option:</p>
+<ul>
+<li>
+<code>"properties": "always"</code> (default) enforces camelcase style for property names</li>
+<li>
+<code>"properties": "never"</code> does not check property names</li>
+<li>
+<code>"ignoreDestructuring": false</code> (default) enforces camelcase style for destructured identifiers</li>
+<li>
+<code>"ignoreDestructuring": true</code> does not check destructured identifiers (but still checks any use of those identifiers later in the code)</li>
+<li>
+<code>"ignoreImports": false</code> (default) enforces camelcase style for ES2015 imports</li>
+<li>
+<code>"ignoreImports": true</code> does not check ES2015 imports (but still checks any use of the imports later in the code except function arguments)</li>
+<li>
+<code>allow</code> (<code>string[]</code>) list of properties to accept. Accept regex.</li>
+</ul>
+<h3>properties: "always"</h3>
+<p>Examples of <strong>incorrect</strong> code for this rule with the default <code>{ "properties": "always" }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: "error"*/</span>
+
+<span class="hljs-keyword">import</span> { no_camelcased } <span class="hljs-keyword">from</span> <span class="hljs-string">"external-module"</span>
+
+<span class="hljs-keyword">var</span> my_favorite_color = <span class="hljs-string">"#112C85"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">do_something</span>() </span>{
+    <span class="hljs-comment">// ...</span>
+}
+
+obj.do_something = <span class="hljs-function"><span class="hljs-keyword">function</span>() </span>{
+    <span class="hljs-comment">// ...</span>
+};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">{ no_camelcased }</span>) </span>{
+    <span class="hljs-comment">// ...</span>
+};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">{ isCamelcased: no_camelcased }</span>) </span>{
+    <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">{ no_camelcased = <span class="hljs-string">'default value'</span> }</span>) </span>{
+    <span class="hljs-comment">// ...</span>
+};
+
+<span class="hljs-keyword">var</span> obj = {
+    <span class="hljs-attr">my_pref</span>: <span class="hljs-number">1</span>
+};
+
+<span class="hljs-keyword">var</span> { category_id = <span class="hljs-number">1</span> } = query;
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">foo</span>: no_camelcased } = bar;
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">foo</span>: bar_baz = <span class="hljs-number">1</span> } = quz;
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule with the default <code>{ "properties": "always" }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: "error"*/</span>
+
+<span class="hljs-keyword">import</span> { no_camelcased <span class="hljs-keyword">as</span> camelCased } <span class="hljs-keyword">from</span> <span class="hljs-string">"external-module"</span>;
+
+<span class="hljs-keyword">var</span> myFavoriteColor   = <span class="hljs-string">"#112C85"</span>;
+<span class="hljs-keyword">var</span> _myFavoriteColor  = <span class="hljs-string">"#112C85"</span>;
+<span class="hljs-keyword">var</span> myFavoriteColor_  = <span class="hljs-string">"#112C85"</span>;
+<span class="hljs-keyword">var</span> MY_FAVORITE_COLOR = <span class="hljs-string">"#112C85"</span>;
+<span class="hljs-keyword">var</span> foo = bar.baz_boom;
+<span class="hljs-keyword">var</span> foo = { <span class="hljs-attr">qux</span>: bar.baz_boom };
+
+obj.do_something();
+do_something();
+<span class="hljs-keyword">new</span> do_something();
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">category_id</span>: category } = query;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">{ isCamelCased }</span>) </span>{
+    <span class="hljs-comment">// ...</span>
+};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">{ isCamelCased: isAlsoCamelCased }</span>) </span>{
+    <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">{ isCamelCased = <span class="hljs-string">'default value'</span> }</span>) </span>{
+    <span class="hljs-comment">// ...</span>
+};
+
+<span class="hljs-keyword">var</span> { categoryId = <span class="hljs-number">1</span> } = query;
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">foo</span>: isCamelCased } = bar;
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">foo</span>: isCamelCased = <span class="hljs-number">1</span> } = quz;
+
+</code></pre>
+<h3>properties: "never"</h3>
+<p>Examples of <strong>correct</strong> code for this rule with the <code>{ "properties": "never" }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {properties: "never"}]*/</span>
+
+<span class="hljs-keyword">var</span> obj = {
+    <span class="hljs-attr">my_pref</span>: <span class="hljs-number">1</span>
+};
+</code></pre>
+<h3>ignoreDestructuring: false</h3>
+<p>Examples of <strong>incorrect</strong> code for this rule with the default <code>{ "ignoreDestructuring": false }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: "error"*/</span>
+
+<span class="hljs-keyword">var</span> { category_id } = query;
+
+<span class="hljs-keyword">var</span> { category_id = <span class="hljs-number">1</span> } = query;
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">category_id</span>: category_id } = query;
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">category_id</span>: category_alias } = query;
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">category_id</span>: categoryId, ...other_props } = query;
+</code></pre>
+<h3>ignoreDestructuring: true</h3>
+<p>Examples of <strong>incorrect</strong> code for this rule with the <code>{ "ignoreDestructuring": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {ignoreDestructuring: true}]*/</span>
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">category_id</span>: category_alias } = query;
+
+<span class="hljs-keyword">var</span> { category_id, ...other_props } = query;
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule with the <code>{ "ignoreDestructuring": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {ignoreDestructuring: true}]*/</span>
+
+<span class="hljs-keyword">var</span> { category_id } = query;
+
+<span class="hljs-keyword">var</span> { category_id = <span class="hljs-number">1</span> } = query;
+
+<span class="hljs-keyword">var</span> { <span class="hljs-attr">category_id</span>: category_id } = query;
+</code></pre>
+<p>Please note that this option applies only to identifiers inside destructuring patterns. It doesn't additionally allow any particular use of the created variables later in the code apart from the use that is already allowed by default or by other options.</p>
+<p>Examples of additional <strong>incorrect</strong> code for this rule with the <code>{ "ignoreDestructuring": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {ignoreDestructuring: true}]*/</span>
+
+<span class="hljs-keyword">var</span> { some_property } = obj; <span class="hljs-comment">// allowed by {ignoreDestructuring: true}</span>
+<span class="hljs-keyword">var</span> foo = some_property + <span class="hljs-number">1</span>; <span class="hljs-comment">// error, ignoreDestructuring does not apply to this statement</span>
+</code></pre>
+<p>A common use case for this option is to avoid useless renaming when the identifier is not intended to be used later in the code.</p>
+<p>Examples of additional <strong>correct</strong> code for this rule with the <code>{ "ignoreDestructuring": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {ignoreDestructuring: true}]*/</span>
+
+<span class="hljs-keyword">var</span> { some_property, ...rest } = obj;
+<span class="hljs-comment">// do something with 'rest', nothing with 'some_property'</span>
+</code></pre>
+<p>Another common use case for this option is in combination with <code>{ "properties": "never" }</code>, when the identifier is intended to be used only as a property shorthand.</p>
+<p>Examples of additional <strong>correct</strong> code for this rule with the <code>{ "properties": "never", "ignoreDestructuring": true }</code> options:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {"properties": "never", ignoreDestructuring: true}]*/</span>
+
+<span class="hljs-keyword">var</span> { some_property } = obj;
+doSomething({ some_property });
+</code></pre>
+<h3>ignoreImports: false</h3>
+<p>Examples of <strong>incorrect</strong> code for this rule with the default <code>{ "ignoreImports": false }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: "error"*/</span>
+
+<span class="hljs-keyword">import</span> { snake_cased } <span class="hljs-keyword">from</span> <span class="hljs-string">'mod'</span>;
+</code></pre>
+<h3>ignoreImports: true</h3>
+<p>Examples of <strong>incorrect</strong> code for this rule with the <code>{ "ignoreImports": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {ignoreImports: true}]*/</span>
+
+<span class="hljs-keyword">import</span> default_import <span class="hljs-keyword">from</span> <span class="hljs-string">'mod'</span>;
+
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> namespaced_import <span class="hljs-keyword">from</span> <span class="hljs-string">'mod'</span>;
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule with the <code>{ "ignoreImports": true }</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {ignoreImports: true}]*/</span>
+
+<span class="hljs-keyword">import</span> { snake_cased } <span class="hljs-keyword">from</span> <span class="hljs-string">'mod'</span>;
+</code></pre>
+<h2>allow</h2>
+<p>Examples of <strong>correct</strong> code for this rule with the <code>allow</code> option:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {allow: ["UNSAFE_componentWillMount"]}]*/</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UNSAFE_componentWillMount</span>() </span>{
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint camelcase: ["error", {allow: ["^UNSAFE_"]}]*/</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UNSAFE_componentWillMount</span>() </span>{
+    <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UNSAFE_componentWillMount</span>() </span>{
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<h2>When Not To Use It</h2>
+<p>If you have established coding standards using a different naming convention (separating words with underscores), turn this rule off.</p>
+<h2>Version</h2>
+<p>This rule was introduced in ESLint 0.0.2.</p>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://github.com/eslint/eslint/tree/master/lib/rules/camelcase.js" target="_blank">Rule source</a></li>
+<li><a href="https://github.com/eslint/eslint/tree/master/docs/rules/camelcase.md" target="_blank">Documentation source</a></li>
+</ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/rules/camelcase" class="_attribution-link" target="_blank">https://eslint.org/docs/rules/camelcase</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

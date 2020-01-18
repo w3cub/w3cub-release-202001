@@ -1,0 +1,277 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Use-isnan - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content=" The &#34;extends&#34;&#58; &#34;eslint&#58;recommended&#34; property in a configuration file enables this rule. ">
+  <meta name="keywords" content="require, calls, when, checking, for, use-isnan, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/rules/use-isnan/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>require calls to <code>isNaN()</code> when checking for <code>NaN</code> (use-isnan)</h1>
+<p>The <code>"extends": "eslint:recommended"</code> property in a configuration file enables this rule.</p>
+<p>In JavaScript, <code>NaN</code> is a special value of the <code>Number</code> type. It's used to represent any of the "not-a-number" values represented by the double-precision 64-bit format as specified by the IEEE Standard for Binary Floating-Point Arithmetic.</p>
+<p>Because <code>NaN</code> is unique in JavaScript by not being equal to anything, including itself, the results of comparisons to <code>NaN</code> are confusing:</p>
+<ul>
+<li>
+<code>NaN === NaN</code> or <code>NaN == NaN</code> evaluate to false</li>
+<li>
+<code>NaN !== NaN</code> or <code>NaN != NaN</code> evaluate to true</li>
+</ul>
+<p>Therefore, use <code>Number.isNaN()</code> or global <code>isNaN()</code> functions to test whether a value is <code>NaN</code>.</p>
+<h2>Rule Details</h2>
+<p>This rule disallows comparisons to 'NaN'.</p>
+<p>Examples of <strong>incorrect</strong> code for this rule:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint use-isnan: "error"*/</span>
+
+<span class="hljs-keyword">if</span> (foo == <span class="hljs-literal">NaN</span>) {
+    <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-keyword">if</span> (foo != <span class="hljs-literal">NaN</span>) {
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint use-isnan: "error"*/</span>
+
+<span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(foo)) {
+    <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-keyword">if</span> (!<span class="hljs-built_in">isNaN</span>(foo)) {
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<h2>Options</h2>
+<p>This rule has an object option, with two options:</p>
+<ul>
+<li>
+<code>"enforceForSwitchCase"</code> when set to <code>true</code> disallows <code>case NaN</code> and <code>switch(NaN)</code> in <code>switch</code> statements. Default is <code>false</code>, meaning that this rule by default does not warn about <code>case NaN</code> or <code>switch(NaN)</code>.</li>
+<li>
+<code>"enforceForIndexOf"</code> when set to <code>true</code> disallows the use of <code>indexOf</code> and <code>lastIndexOf</code> methods with <code>NaN</code>. Default is <code>false</code>, meaning that this rule by default does not warn about <code>indexOf(NaN)</code> or <code>lastIndexOf(NaN)</code> method calls.</li>
+</ul>
+<h3>enforceForSwitchCase</h3>
+<p>The <code>switch</code> statement internally uses the <code>===</code> comparison to match the expression's value to a case clause. Therefore, it can never match <code>case NaN</code>. Also, <code>switch(NaN)</code> can never match a case clause.</p>
+<p>Set <code>"enforceForSwitchCase"</code> to <code>true</code> if you want this rule to report <code>case NaN</code> and <code>switch(NaN)</code> in <code>switch</code> statements.</p>
+<p>Examples of <strong>incorrect</strong> code for this rule with <code>"enforceForSwitchCase"</code> option set to <code>true</code>:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint use-isnan: ["error", {"enforceForSwitchCase": true}]*/</span>
+
+<span class="hljs-keyword">switch</span> (foo) {
+    <span class="hljs-keyword">case</span> <span class="hljs-literal">NaN</span>:
+        bar();
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:
+        baz();
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-keyword">switch</span> (<span class="hljs-literal">NaN</span>) {
+    <span class="hljs-keyword">case</span> a:
+        bar();
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> b:
+        baz();
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule with <code>"enforceForSwitchCase"</code> option set to <code>true</code>:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint use-isnan: ["error", {"enforceForSwitchCase": true}]*/</span>
+
+<span class="hljs-keyword">if</span> (<span class="hljs-built_in">Number</span>.isNaN(foo)) {
+    bar();
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">switch</span> (foo) {
+        <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:
+            baz();
+            <span class="hljs-keyword">break</span>;
+        <span class="hljs-comment">// ...</span>
+    }
+}
+
+<span class="hljs-keyword">if</span> (<span class="hljs-built_in">Number</span>.isNaN(a)) {
+    bar();
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Number</span>.isNaN(b)) {
+    baz();
+} <span class="hljs-comment">// ...</span>
+</code></pre>
+<h3>enforceForIndexOf</h3>
+<p>The following methods internally use the <code>===</code> comparison to match the given value with an array element:</p>
+<ul>
+<li><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.indexof" target="_blank"><code>Array.prototype.indexOf</code></a></li>
+<li><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.lastindexof" target="_blank"><code>Array.prototype.lastIndexOf</code></a></li>
+</ul>
+<p>Therefore, for any array <code>foo</code>, <code>foo.indexOf(NaN)</code> and <code>foo.lastIndexOf(NaN)</code> will always return <code>-1</code>.</p>
+<p>Set <code>"enforceForIndexOf"</code> to <code>true</code> if you want this rule to report <code>indexOf(NaN)</code> and <code>lastIndexOf(NaN)</code> method calls.</p>
+<p>Examples of <strong>incorrect</strong> code for this rule with <code>"enforceForIndexOf"</code> option set to <code>true</code>:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint use-isnan: ["error", {"enforceForIndexOf": true}]*/</span>
+
+<span class="hljs-keyword">var</span> hasNaN = myArray.indexOf(<span class="hljs-literal">NaN</span>) &gt;= <span class="hljs-number">0</span>;
+
+<span class="hljs-keyword">var</span> firstIndex = myArray.indexOf(<span class="hljs-literal">NaN</span>);
+
+<span class="hljs-keyword">var</span> lastIndex = myArray.lastIndexOf(<span class="hljs-literal">NaN</span>);
+</code></pre>
+<p>Examples of <strong>correct</strong> code for this rule with <code>"enforceForIndexOf"</code> option set to <code>true</code>:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-comment">/*eslint use-isnan: ["error", {"enforceForIndexOf": true}]*/</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myIsNaN</span>(<span class="hljs-params">val</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> val === <span class="hljs-string">"number"</span> &amp;&amp; <span class="hljs-built_in">isNaN</span>(val);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">indexOfNaN</span>(<span class="hljs-params">arr</span>) </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) {
+        <span class="hljs-keyword">if</span> (myIsNaN(arr[i])) {
+            <span class="hljs-keyword">return</span> i;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">lastIndexOfNaN</span>(<span class="hljs-params">arr</span>) </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = arr.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-keyword">if</span> (myIsNaN(arr[i])) {
+            <span class="hljs-keyword">return</span> i;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+}
+
+<span class="hljs-keyword">var</span> hasNaN = myArray.some(myIsNaN);
+
+<span class="hljs-keyword">var</span> hasNaN = indexOfNaN(myArray) &gt;= <span class="hljs-number">0</span>;
+
+<span class="hljs-keyword">var</span> firstIndex = indexOfNaN(myArray);
+
+<span class="hljs-keyword">var</span> lastIndex = lastIndexOfNaN(myArray);
+
+<span class="hljs-comment">// ES2015</span>
+<span class="hljs-keyword">var</span> hasNaN = myArray.some(<span class="hljs-built_in">Number</span>.isNaN);
+
+<span class="hljs-comment">// ES2015</span>
+<span class="hljs-keyword">var</span> firstIndex = myArray.findIndex(<span class="hljs-built_in">Number</span>.isNaN);
+
+<span class="hljs-comment">// ES2016</span>
+<span class="hljs-keyword">var</span> hasNaN = myArray.includes(<span class="hljs-literal">NaN</span>);
+</code></pre>
+<h4>Known Limitations</h4>
+<p>This option checks methods with the given names, <em>even if</em> the object which has the method is <em>not</em> an array.</p>
+<h2>Version</h2>
+<p>This rule was introduced in ESLint 0.0.6.</p>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://github.com/eslint/eslint/tree/master/lib/rules/use-isnan.js" target="_blank">Rule source</a></li>
+<li><a href="https://github.com/eslint/eslint/tree/master/docs/rules/use-isnan.md" target="_blank">Documentation source</a></li>
+</ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/rules/use-isnan" class="_attribution-link" target="_blank">https://eslint.org/docs/rules/use-isnan</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

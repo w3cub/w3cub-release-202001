@@ -1,0 +1,326 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Migrating to v1.0.0 - ESLint - W3cubDocs</title>
+  
+  <meta name="description" content="ESLint v1.0.0 is the first major version release. As a result, there are some significant changes between how ESLint worked during its life in 0.x &hellip;">
+  <meta name="keywords" content="migrating, -, eslint">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/eslint/user-guide/migrating-to-1.0.0/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/eslint.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/eslint/" class="_nav-link" title="" style="margin-left:0;">ESLint</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>Migrating to v1.0.0</h1>
+<p>ESLint v1.0.0 is the first major version release. As a result, there are some significant changes between how ESLint worked during its life in 0.x and how it will work going forward. These changes are the direct result of feedback from the ESLint community of users and were not made without due consideration for the upgrade path. We believe that these changes make ESLint even better, and while some work is necessary to upgrade, we hope the pain of this upgrade is small enough that you will see the benefit of upgrading.</p>
+<h2>All Rules Off by Default</h2>
+<p>The most important difference in v1.0.0 is that all rules are off by default. We made this change after numerous requests to allow turning off the default rules from within configuration files. While that wasn't technically feasible, it was feasible to have all rules off by default and then re-enable rules in configuration files using <code>extends</code>. As such, we've made the <code>--reset</code> behavior the default and removed this command line option.</p>
+<p>When using <code>--init</code>, your configuration file will automatically include the following line:</p>
+<pre class="hljs highlight-json"><code>{
+    <span class="hljs-attr">"extends"</span>: <span class="hljs-string">"eslint:recommended"</span>
+}
+</code></pre>
+<p>This setting mimics some of the default behavior from 0.x, but not all. If you don't want to use any of the recommended rules, you can delete this line.</p>
+<p><strong>To address:</strong> If you are currently using <code>--reset</code>, then you should stop passing <code>--reset</code> on the command line; no other changes are necessary. If you are not using <code>--reset</code>, then you should review your configuration to determine which rules should be on by default. You can partially restore some of the default behavior by adding the following to your configuration file:</p>
+<p>The <code>"eslint:recommended"</code> configuration contains many of the same default rule settings from 0.x, but not all. These rules are no longer on by default, so you should review your settings to ensure they are still as you expect:</p>
+<ul>
+<li><a href="../../rules/no-alert/">no-alert</a></li>
+<li><a href="../../rules/no-array-constructor/">no-array-constructor</a></li>
+<li><a href="../../rules/no-caller/">no-caller</a></li>
+<li><a href="../../rules/no-catch-shadow/">no-catch-shadow</a></li>
+<li><a href="../../rules/no-empty-label/">no-empty-label</a></li>
+<li><a href="../../rules/no-eval/">no-eval</a></li>
+<li><a href="../../rules/no-extend-native/">no-extend-native</a></li>
+<li><a href="../../rules/no-extra-bind/">no-extra-bind</a></li>
+<li><a href="../../rules/no-extra-strict/">no-extra-strict</a></li>
+<li><a href="../../rules/no-implied-eval/">no-implied-eval</a></li>
+<li><a href="../../rules/no-iterator/">no-iterator</a></li>
+<li><a href="../../rules/no-label-var/">no-label-var</a></li>
+<li><a href="../../rules/no-labels/">no-labels</a></li>
+<li><a href="../../rules/no-lone-blocks/">no-lone-blocks</a></li>
+<li><a href="../../rules/no-loop-func/">no-loop-func</a></li>
+<li><a href="../../rules/no-multi-spaces/">no-multi-spaces</a></li>
+<li><a href="../../rules/no-multi-str/">no-multi-str</a></li>
+<li><a href="../../rules/no-native-reassign/">no-native-reassign</a></li>
+<li><a href="../../rules/no-new/">no-new</a></li>
+<li><a href="../../rules/no-new-func/">no-new-func</a></li>
+<li><a href="../../rules/no-new-object/">no-new-object</a></li>
+<li><a href="../../rules/no-new-wrappers/">no-new-wrappers</a></li>
+<li><a href="../../rules/no-octal-escape/">no-octal-escape</a></li>
+<li><a href="../../rules/no-process-exit/">no-process-exit</a></li>
+<li><a href="../../rules/no-proto/">no-proto</a></li>
+<li><a href="../../rules/no-return-assign/">no-return-assign</a></li>
+<li><a href="../../rules/no-script-url/">no-script-url</a></li>
+<li><a href="../../rules/no-sequences/">no-sequences</a></li>
+<li><a href="../../rules/no-shadow/">no-shadow</a></li>
+<li><a href="../../rules/no-shadow-restricted-names/">no-shadow-restricted-names</a></li>
+<li><a href="../../rules/no-spaced-func/">no-spaced-func</a></li>
+<li><a href="../../rules/no-trailing-spaces/">no-trailing-spaces</a></li>
+<li><a href="../../rules/no-undef-init/">no-undef-init</a></li>
+<li><a href="../../rules/no-underscore-dangle/">no-underscore-dangle</a></li>
+<li><a href="../../rules/no-unused-expressions/">no-unused-expressions</a></li>
+<li><a href="../../rules/no-use-before-define/">no-use-before-define</a></li>
+<li><a href="../../rules/no-with/">no-with</a></li>
+<li><a href="../../rules/no-wrap-func/">no-wrap-func</a></li>
+<li><a href="../../rules/camelcase/">camelcase</a></li>
+<li><a href="../../rules/comma-spacing/">comma-spacing</a></li>
+<li><a href="../../rules/consistent-return/">consistent-return</a></li>
+<li><a href="../../rules/curly/">curly</a></li>
+<li><a href="../../rules/dot-notation/">dot-notation</a></li>
+<li><a href="../../rules/eol-last/">eol-last</a></li>
+<li><a href="../../rules/eqeqeq/">eqeqeq</a></li>
+<li><a href="../../rules/key-spacing/">key-spacing</a></li>
+<li><a href="../../rules/new-cap/">new-cap</a></li>
+<li><a href="../../rules/new-parens/">new-parens</a></li>
+<li><a href="../../rules/quotes/">quotes</a></li>
+<li><a href="../../rules/semi/">semi</a></li>
+<li><a href="../../rules/semi-spacing/">semi-spacing</a></li>
+<li><a href="../../rules/space-infix-ops/">space-infix-ops</a></li>
+<li><a href="../../rules/space-return-throw-case/">space-return-throw-case</a></li>
+<li><a href="../../rules/space-unary-ops/">space-unary-ops</a></li>
+<li><a href="../../rules/strict/">strict</a></li>
+<li><a href="../../rules/yoda/">yoda</a></li>
+</ul>
+<p>See also: the <a href="https://github.com/eslint/eslint/commit/e3e9dbd9876daf4bdeb4e15f8a76a9d5e6e03e39#diff-b01a5cfd9361ca9280a460fd6bb8edbbL1" target="_blank">full diff</a> where the defaults were changed.</p>
+<p>Here's a configuration file with the closest equivalent of the old defaults:</p>
+<pre class="hljs highlight-json"><code>{
+    <span class="hljs-attr">"extends"</span>: <span class="hljs-string">"eslint:recommended"</span>,
+    <span class="hljs-attr">"rules"</span>: {
+        <span class="hljs-attr">"no-alert"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-array-constructor"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-caller"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-catch-shadow"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-empty-label"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-eval"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-extend-native"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-extra-bind"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-implied-eval"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-iterator"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-label-var"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-labels"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-lone-blocks"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-loop-func"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-multi-spaces"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-multi-str"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-native-reassign"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-new"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-new-func"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-new-object"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-new-wrappers"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-octal-escape"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-process-exit"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-proto"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-return-assign"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-script-url"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-sequences"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-shadow"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-shadow-restricted-names"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-spaced-func"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-trailing-spaces"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-undef-init"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-underscore-dangle"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-unused-expressions"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-use-before-define"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-with"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"camelcase"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"comma-spacing"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"consistent-return"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"curly"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"all"</span>],
+        <span class="hljs-attr">"dot-notation"</span>: [<span class="hljs-number">2</span>, { <span class="hljs-attr">"allowKeywords"</span>: <span class="hljs-literal">true</span> }],
+        <span class="hljs-attr">"eol-last"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"no-extra-parens"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"functions"</span>],
+        <span class="hljs-attr">"eqeqeq"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"key-spacing"</span>: [<span class="hljs-number">2</span>, { <span class="hljs-attr">"beforeColon"</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">"afterColon"</span>: <span class="hljs-literal">true</span> }],
+        <span class="hljs-attr">"new-cap"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"new-parens"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"quotes"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"double"</span>],
+        <span class="hljs-attr">"semi"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"semi-spacing"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-attr">"before"</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">"after"</span>: <span class="hljs-literal">true</span>}],
+        <span class="hljs-attr">"space-infix-ops"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"space-return-throw-case"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"space-unary-ops"</span>: [<span class="hljs-number">2</span>, { <span class="hljs-attr">"words"</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">"nonwords"</span>: <span class="hljs-literal">false</span> }],
+        <span class="hljs-attr">"strict"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"function"</span>],
+        <span class="hljs-attr">"yoda"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"never"</span>]
+    }
+}
+</code></pre>
+<h2>Removed Rules</h2>
+<p>Over the past several releases, we have been deprecating rules and introducing new rules to take their place. The following is a list of the removed rules and their replacements:</p>
+<ul>
+<li>
+<a href="../../rules/generator-star/">generator-star</a> is replaced by <a href="../../rules/generator-star-spacing/">generator-star-spacing</a>
+</li>
+<li>
+<a href="../../rules/global-strict/">global-strict</a> is replaced by <a href="../../rules/strict/">strict</a>
+</li>
+<li>
+<a href="../../rules/no-comma-dangle/">no-comma-dangle</a> is replaced by <a href="../../rules/comma-dangle/">comma-dangle</a>
+</li>
+<li>
+<a href="../../rules/no-empty-class/">no-empty-class</a> is replaced by <a href="../../rules/no-empty-character-class/">no-empty-character-class</a>
+</li>
+<li>
+<a href="../../rules/no-extra-strict/">no-extra-strict</a> is replaced by <a href="../../rules/strict/">strict</a>
+</li>
+<li>
+<a href="../../rules/no-reserved-keys/">no-reserved-keys</a> is replaced by <a href="../../rules/quote-props/">quote-props</a>
+</li>
+<li>
+<a href="../../rules/no-space-before-semi/">no-space-before-semi</a> is replaced by <a href="../../rules/semi-spacing/">semi-spacing</a>
+</li>
+<li>
+<a href="../../rules/no-wrap-func/">no-wrap-func</a> is replaced by <a href="../../rules/no-extra-parens/">no-extra-parens</a>
+</li>
+<li>
+<a href="../../rules/space-after-function-name/">space-after-function-name</a> is replaced by <a href="../../rules/space-before-function-paren/">space-before-function-paren</a>
+</li>
+<li>
+<a href="../../rules/space-before-function-parentheses/">space-before-function-parentheses</a> is replaced by <a href="../../rules/space-before-function-paren/">space-before-function-paren</a>
+</li>
+<li>
+<a href="../../rules/space-in-brackets/">space-in-brackets</a> is replaced by<a href="../../rules/object-curly-spacing/">object-curly-spacing</a> and <a href="../../rules/array-bracket-spacing/">array-bracket-spacing</a>
+</li>
+<li>
+<a href="../../rules/space-unary-word-ops/">space-unary-word-ops</a> is replaced by <a href="../../rules/space-unary-ops/">space-unary-ops</a>
+</li>
+<li>
+<a href="../../rules/spaced-line-comment/">spaced-line-comment</a> is replaced by <a href="../../rules/spaced-comment/">spaced-comment</a>
+</li>
+</ul>
+<p><strong>To address:</strong> You'll need to update your rule configurations to use the new rules. ESLint v1.0.0 will also warn you when you're using a rule that has been removed and will suggest the replacement rules. Hopefully, this will result in few surprises during the upgrade process.</p>
+<h2>Column Numbers are 1-based</h2>
+<p>From the beginning, ESLint has reported errors using 0-based columns because that's what Esprima, and later Espree, reported. However, most tools and editors use 1-based columns, which made for some tricky integrations with ESLint. In v1.0.0, we've switched over to reporting errors using 1-based columns to fall into line with the tools developers use everyday.</p>
+<p><strong>To address:</strong> If you've created an editor integration, or a tool that had to correct the column number, you'll need to update to just pass through the column number from ESLint. Otherwise, no change is necessary.</p>
+<h2>No Longer Exporting cli</h2>
+<p>In 0.x, the <code>cli</code> object was exported for use by external tools. It was later deprecated in favor of <code>CLIEngine</code>. In v1.0.0, we are no longer exporting <code>cli</code> as it should not be used by external tools. This will break existing tools that make use of it.</p>
+<p><strong>To address:</strong> If you are using the exported <code>cli</code> object, switch to using <code>CLIEngine</code> instead.</p>
+<h2>Deprecating eslint-tester</h2>
+<p>The <code>eslint-tester</code> module, which has long been the primary tester for ESLint rules, has now been moved into the <code>eslint</code> module. This was the result of a difficult relationship between these two modules that created circular dependencies and was causing a lot of problems in rule tests. Moving the tester into the <code>eslint</code> module fixed a lot of those issues.</p>
+<p>The replacement for <code>eslint-tester</code> is called <code>RuleTester</code>. It's a simplified version of <code>ESLintTester</code> that's designed to work with any testing framework. This object is exposed by the package.</p>
+<p><strong>To address:</strong> Convert all of your rule tests to use <code>RuleTester</code>. If you have this as a test using <code>ESLintTester</code>:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-keyword">var</span> eslint = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../../../lib/eslint"</span>),
+    ESLintTester = <span class="hljs-built_in">require</span>(<span class="hljs-string">"eslint-tester"</span>);
+
+<span class="hljs-keyword">var</span> eslintTester = <span class="hljs-keyword">new</span> ESLintTester(eslint);
+eslintTester.addRuleTest(<span class="hljs-string">"lib/rules/your-rule"</span>, {
+    <span class="hljs-attr">valid</span>: [],
+    <span class="hljs-attr">invalid</span>: []
+});
+</code></pre>
+<p>Then you can change to:</p>
+<pre class="hljs highlight-js"><code><span class="hljs-keyword">var</span> rule = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../../../lib/rules/your-rule"</span>),
+    RuleTester = <span class="hljs-built_in">require</span>(<span class="hljs-string">"eslint"</span>).RuleTester;
+
+<span class="hljs-keyword">var</span> ruleTester = <span class="hljs-keyword">new</span> RuleTester();
+ruleTester.run(<span class="hljs-string">"your-rule"</span>, rule, {
+    <span class="hljs-attr">valid</span>: [],
+    <span class="hljs-attr">invalid</span>: []
+});
+</code></pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the MIT License.<br>
+    <a href="https://eslint.org/docs/user-guide/migrating-to-1.0.0" class="_attribution-link" target="_blank">https://eslint.org/docs/user-guide/migrating-to-1.0.0</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
