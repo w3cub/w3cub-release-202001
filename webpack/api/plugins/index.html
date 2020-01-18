@@ -1,0 +1,148 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Plugin API - Webpack - W3cubDocs</title>
+  
+  <meta name="description" content="Plugins are a key piece of the webpack ecosystem and provide the community with a powerful way to tap into webpack&#39;s compilation process. A &hellip;">
+  <meta name="keywords" content="plugin, api, -, webpack">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/webpack/api/plugins/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/webpack.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/webpack/" class="_nav-link" title="" style="margin-left:0;">webpack</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _webpack">
+				
+				
+<h1>Plugin API</h1>
+<p>Plugins are a key piece of the webpack ecosystem and provide the community with a powerful way to tap into webpack's compilation process. A plugin is able to <a href="../compiler-hooks/#hooks">hook</a> into key events that are fired throughout each compilation. Every step of the way, the plugin will have full access to the <code>compiler</code> and, when applicable, the current <code>compilation</code>.</p> <blockquote class="tip"> For a high-level introduction to writing plugins, start with <a href="https://webpack.js.org/contribute/writing-a-plugin" target="_blank">writing a plugin</a>. </blockquote>
+<p>Let's start by going over <code>tapable</code> utility, which provides the backbone of webpack's plugin interface.</p> <h2 class="header" id="tapable">  Tapable  </h2> <p>This small library is a core utility in webpack but can also be used elsewhere to provide a similar plugin interface. Many objects in webpack extend the <code>Tapable</code> class. The class exposes <code>tap</code>, <code>tapAsync</code>, and <code>tapPromise</code> methods which plugins can use to inject custom build steps that will be fired throughout a compilation.</p> <p>Please see the <a href="https://github.com/webpack/tapable" target="_blank">documentation</a> to learn more. An understanding of the three <code>tap</code> methods, as well as the hooks that provide them is crucial. The objects that extend <code>Tapable</code> (e.g. the compiler), the hooks they provide, and each hook's type (e.g. the <code>SyncHook</code>) will be noted.</p> <h2 class="header" id="plugin-types">  Plugin Types  </h2> <p>Depending on the hooks used and <code>tap</code> methods applied, plugins can function in a different number of ways. The way this works is closely related to the <a href="https://github.com/webpack/tapable#tapable" target="_blank">hooks</a> provided by <code>Tapable</code>. The <a href="../compiler-hooks/#hooks">compiler hooks</a> each note the underlying <code>Tapable</code> hook indicating which <code>tap</code> methods are available.</p> <p>So depending which event you <code>tap</code> into, the plugin may run differently. For example, when hooking into <code>compile</code> stage, only the synchronous <code>tap</code> method can be used:</p> <pre data-language="js">compiler.hooks.compile.tap('MyPlugin', params =&gt; {
+  console.log('Synchronously tapping the compile hook.');
+});
+</pre> <p>However, for <code>run</code> which utilizes the <code>AsyncHook</code>, we can utilize <code>tapAsync</code> or <code>tapPromise</code> (as well as <code>tap</code>):</p> <pre data-language="js">compiler.hooks.run.tapAsync('MyPlugin', (compiler, callback) =&gt; {
+  console.log('Asynchronously tapping the run hook.');
+  callback();
+});
+
+compiler.hooks.run.tapPromise('MyPlugin', compiler =&gt; {
+  return new Promise(resolve =&gt; setTimeout(resolve, 1000)).then(() =&gt; {
+    console.log('Asynchronously tapping the run hook with a delay.');
+  });
+});
+
+compiler.hooks.run.tapPromise('MyPlugin', async compiler =&gt; {
+  await new Promise(resolve =&gt; setTimeout(resolve, 1000));
+  console.log('Asynchronously tapping the run hook with a delay.');
+});
+</pre> <p>The moral of the story is that there are a variety of ways to <code>hook</code> into the <code>compiler</code>, each one allowing your plugin to run as it sees fit.</p> <h2 class="header" id="custom-hooks">  Custom Hooks  </h2> <p>In order to add a new hook to the compilation for other plugins to <code>tap</code> into, simply <code>require</code> the necessary hook class from <code>tapable</code> and create one:</p> <pre data-language="js">const SyncHook = require('tapable').SyncHook;
+
+// Within the `apply` method...
+if (compiler.hooks.myCustomHook) throw new Error('Already in use');
+compiler.hooks.myCustomHook = new SyncHook(['a', 'b', 'c']);
+
+// Wherever/whenever you'd like to trigger the hook...
+compiler.hooks.myCustomHook.call(a, b, c);
+</pre> <p>Again, see the <a href="https://github.com/webpack/tapable" target="_blank">documentation</a> for <code>tapable</code> to learn more about the different hook classes and how they work.</p> <h2 class="header" id="next-steps">  Next Steps  </h2> <p>See the <a href="../compiler-hooks/">compiler hooks</a> section for a detailed listing of all the available <code>compiler</code> hooks and the parameters they make available.</p> <div class="_attribution">
+  <p class="_attribution-p">
+    © JS Foundation and other contributors<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://webpack.js.org/api/plugins" class="_attribution-link" target="_blank">https://webpack.js.org/api/plugins</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
