@@ -1,0 +1,290 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Preloading Content - HTML - W3cubDocs</title>
+  
+  <meta name="description" content="The preload value of the &#60;link&#62; element&#39;s rel attribute allows you to write declarative fetch requests in your HTML &#60;head&#62;, &hellip;">
+  <meta name="keywords" content="preloading, content, -, html">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/html/preloading_content/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/html.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/html/" class="_nav-link" title="" style="margin-left:0;">HTML</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Preloading content</h1>
+<p class="summary">The <code>preload</code> value of the <a href="../element/link/"><code>&lt;link&gt;</code></a> element's <code><a href="../element/link/#attr-rel">rel</a></code> attribute allows you to write declarative fetch requests in your HTML <a href="../element/head/"><code>&lt;head&gt;</code></a>, specifying resources that your pages will need very soon after loading, which you therefore want to start preloading early in the lifecycle of a page load, before the browser's main rendering machinery kicks in. This ensures that they are made available earlier and are less likely to block the page's first render, leading to performance improvements. This article provides a basic guide to how <code>preload</code> works.</p> <h2 id="The_basics">The basics</h2> <p>You most commonly use the humble <code>&lt;link&gt;</code> element when loading a CSS file to style your page with:</p> <pre data-language="html">&lt;link rel="stylesheet" href="styles/main.css"&gt;</pre> <p>Here however, we will use a <code>rel</code> value of <code>preload</code>, which turns the <code>&lt;link&gt;</code> element into a preloader for pretty much any resource we want. At a basic level, you also need to specify the path to the resource to be preloaded in the <code><a href="../element/link/#attr-href">href</a></code> attribute, and the type of resource you are preloading in the <code><a href="../element/link/#attr-as">as</a></code> attribute.</p> <p>A simple example might look like this (see our <a href="https://github.com/mdn/html-examples/tree/master/link-rel-preload/js-and-css" target="_blank">JS and CSS example source</a>, and <a href="https://mdn.github.io/html-examples/link-rel-preload/js-and-css/" target="_blank">also live</a>):</p> <pre data-language="html">&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;JS and CSS preload example&lt;/title&gt;
+
+  &lt;link rel="preload" href="style.css" as="style"&gt;
+  &lt;link rel="preload" href="main.js" as="script"&gt;
+
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;h1&gt;bouncing balls&lt;/h1&gt;
+  &lt;canvas&gt;&lt;/canvas&gt;
+
+  &lt;script src="main.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</pre> <p>Here we are preloading our CSS and JavaScript files so they will be available as soon as they are required during the rendering of the page later on. This example is somewhat trivial, but the benefits can be seen much more clearly, the later in the rendering the resources are discovered and the larger they are. For example, what about resources that are pointed to from inside a CSS file like fonts or images, or larger images and video files?</p> <p><code>preload</code> has other advantages too. Using <code>as</code> to specify the type of content to be preloaded allows the browser to:</p> <ul> <li>Prioritize resource loading more accurately.</li> <li>Match future requests, reusing the same resource if appropriate.</li> <li>Apply the correct <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank">content security policy</a> to the resource.</li> <li>Set the correct <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept" target="_blank"><code>Accept</code></a> request headers for it.</li> </ul> <h3 id="What_types_of_content_can_be_preloaded">What types of content can be preloaded?</h3> <p>Many different content types can be preloaded; the main available <code>as</code> attribute values are as follows:</p> <ul> <li>
+<code>audio</code>: Audio file.</li> <li>
+<code>document</code>: An HTML document intended to be embedded inside a <a href="../element/frame/"><code>&lt;frame&gt;</code></a> or <a href="../element/iframe/"><code>&lt;iframe&gt;</code></a>.</li> <li>
+<code>embed</code>: A resource to be embedded inside an <a href="../element/embed/"><code>&lt;embed&gt;</code></a> element.</li> <li>
+<code>fetch</code>: Resource to be accessed by a fetch or XHR request, such as an ArrayBuffer or JSON file.</li> <li>
+<code>font</code>: Font file.</li> <li>
+<code>image</code>: Image file.</li> <li>
+<code>object</code>: A resource to be embedded inside an <a href="../element/embed/"><code>&lt;embed&gt;</code></a> element.</li> <li>
+<code>script</code>: JavaScript file.</li> <li>
+<code>style</code>: Stylesheet.</li> <li>
+<code>track</code>: WebVTT file.</li> <li>
+<code>worker</code>: A JavaScript web worker or shared worker.</li> <li>
+<code>video</code>: Video file.</li> </ul> <div class="note"> <p><strong>Note</strong>: You can read a bit more detail about these values and the web features they are expected to be consumed by in the Preload spec — see <a href="https://w3c.github.io/preload/#link-element-extensions" target="_blank">link element extensions</a>. Also note that the full list of values the <code>as</code> attribute can take is governed by the definitions in the Fetch spec — see <a href="https://fetch.spec.whatwg.org/#concept-request-destination" target="_blank">request destinations</a>.</p> </div> <h2 id="Including_a_MIME_type">Including a MIME type</h2> <p><code>&lt;link&gt;</code> elements can accept a <code><a href="../element/link/#attr-type">type</a></code> attribute, which contains the MIME type of the resource the element is pointing to. This is especially useful when preloading resources — the browser will use the <code>type</code> attribute value to work out whether it supports that resource, and will only start downloading it if this is the case, ignoring it if not.</p> <p>You can see an example of this in our video example (see the <a href="https://github.com/mdn/html-examples/tree/master/link-rel-preload/video" target="_blank">full source code</a>, and also <a href="https://mdn.github.io/html-examples/link-rel-preload/video/" target="_blank">the live version</a>):</p> <pre data-language="html">&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Video preload example&lt;/title&gt;
+
+  &lt;link rel="preload" href="sintel-short.mp4" as="video" type="video/mp4"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;video controls&gt;
+    &lt;source src="sintel-short.mp4" type="video/mp4"&gt;
+    &lt;source src="sintel-short.webm" type="video/webm"&gt;
+    &lt;p&gt;Your browser doesn't support HTML5 video. Here is a &lt;a href="sintel-short.mp4"&gt;link to the video&lt;/a&gt; instead.&lt;/p&gt;
+  &lt;/video&gt;
+&lt;/body&gt;</pre> <p>So in this case, browsers that support MP4s will preload and use the MP4, making the video player hopefully smoother/more responsive for users. Browsers that don't support the MP4 can still load the WebM version, but don't get the advantages of preloading. This shows how preloading content can be combined with the philosophy of progressive enhancement.</p> <h2 id="Cross-origin_fetches">Cross-origin fetches</h2> <p>If you've got your sites' <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS" target="_blank">CORS</a> settings worked out properly, you can successfully preload cross-origin resources as long as you set a <code><a href="../element/link/#attr-crossorigin">crossorigin</a></code> attribute on your <code>&lt;link&gt;</code> element.</p> <p>One interesting case in which this applies even if the fetch is not cross-origin is font files. Because of various reasons, these have to be fetched using anonymous mode CORS (see <a href="https://drafts.csswg.org/css-fonts/#font-fetching-requirements" target="_blank">Font fetching requirements</a> if you are interested in all the details).</p> <p>Let's use this case as an example, firstly because font loading is a really good use case for preloading, and secondly, because it is easier than setting up a cross-origin request example. You can see the full <a href="https://github.com/mdn/html-examples/tree/master/link-rel-preload/fonts" target="_blank">example source code on GitHub</a> (<a href="https://mdn.github.io/html-examples/link-rel-preload/fonts/" target="_blank">also see it live</a>):</p> <pre data-language="html">&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Web font example&lt;/title&gt;
+
+  &lt;link rel="preload" href="fonts/cicle_fina-webfont.eot" as="font" type="application/vnd.ms-fontobject" crossorigin="anonymous"&gt;
+  &lt;link rel="preload" href="fonts/cicle_fina-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous"&gt;
+  &lt;link rel="preload" href="fonts/cicle_fina-webfont.woff" as="font" type="font/woff" crossorigin="anonymous"&gt;
+  &lt;link rel="preload" href="fonts/cicle_fina-webfont.ttf" as="font" type="font/ttf" crossorigin="anonymous"&gt;
+  &lt;link rel="preload" href="fonts/cicle_fina-webfont.svg" as="font" type="image/svg+xml" crossorigin="anonymous"&gt;
+
+  &lt;link rel="preload" href="fonts/zantroke-webfont.eot" as="font" type="application/vnd.ms-fontobject" crossorigin="anonymous"&gt;
+  &lt;link rel="preload" href="fonts/zantroke-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous"&gt;
+  &lt;link rel="preload" href="fonts/zantroke-webfont.woff" as="font" type="font/woff" crossorigin="anonymous"&gt;
+  &lt;link rel="preload" href="fonts/zantroke-webfont.ttf" as="font" type="font/ttf" crossorigin="anonymous"&gt;
+  &lt;link rel="preload" href="fonts/zantroke-webfont.svg" as="font" type="image/svg+xml" crossorigin="anonymous"&gt;
+
+  &lt;link href="style.css" rel="stylesheet" type="text/css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  ...
+&lt;/body&gt;</pre> <p>You'll see here that not only are we providing the MIME type hints in the <code>type</code> attributes, but we are also providing the <code>crossorigin</code> attribute to handle the CORS issue.</p> <h2 id="Including_media">Including media</h2> <p>One nice feature of <code>&lt;link&gt;</code> elements is their ability to accept <code><a href="../element/link/#attr-media">media</a></code> attributes. These can accept <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types" target="_blank">media types</a> or full-blown <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries" target="_blank">media queries</a>, allowing you to do responsive preloading!</p> <p>Let's look at a very simple example (see it on GitHub — <a href="https://github.com/mdn/html-examples/tree/master/link-rel-preload/media" target="_blank">source code</a>, <a href="https://mdn.github.io/html-examples/link-rel-preload/media/" target="_blank">live example</a>):</p> <pre data-language="html">&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;Responsive preload example&lt;/title&gt;
+
+  &lt;link rel="preload" href="bg-image-narrow.png" as="image" media="(max-width: 600px)"&gt;
+  &lt;link rel="preload" href="bg-image-wide.png" as="image" media="(min-width: 601px)"&gt;
+
+  &lt;link rel="stylesheet" href="main.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;My site&lt;/h1&gt;
+  &lt;/header&gt;
+
+  &lt;script&gt;
+    var mediaQueryList = window.matchMedia("(max-width: 600px)");
+    var header = document.querySelector('header');
+
+    if(mediaQueryList.matches) {
+      header.style.backgroundImage = 'url(bg-image-narrow.png)';
+    } else {
+      header.style.backgroundImage = 'url(bg-image-wide.png)';
+    }
+  &lt;/script&gt;
+&lt;/body&gt;</pre> <p>You'll see that we are including <code>media</code> attributes on our <code>&lt;link&gt;</code> elements so that a narrow image is preloaded if the user is on a narrow screen device, and a wider image is loaded if they are on a wider screen device. We still need to attach the correct image to the header depending on the result — we use <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia" target="_blank"><code>Window.matchMedia</code></a> / <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaQueryList" target="_blank"><code>MediaQueryList</code></a> to do this (see <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Testing_media_queries" target="_blank">Testing media queries</a> for more information on this).</p> <p>This makes it much more likely that the font will be available by the time the page render is complete, cutting down on FOUT (flash of unstyled text) issues.</p> <p>Note that this doesn't have to be limited to images, or even files of the same type — think big! You could perhaps preload then display a simple SVG diagram if the user is on a narrow screen where bandwidth and CPU is potentially more limited, or preload a complex chunk of JavaScript then use it to render an interactive 3D model if the user's resources are more plentiful.</p> <h2 id="Scripting_and_preloads">Scripting and preloads</h2> <p>Another nice thing about these preloads is that you can execute them completely with script if desired. For example, here we are creating a <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLLinkElement" target="_blank"><code>HTMLLinkElement</code></a> instance, then attaching it to the DOM:</p> <pre data-language="js"><span class="keyword token">var</span> preloadLink <span class="operator token">=</span> document<span class="punctuation token">.</span><span class="function token">createElement</span><span class="punctuation token">(</span><span class="string token">"link"</span><span class="punctuation token">)</span><span class="punctuation token">;</span>
+preloadLink<span class="punctuation token">.</span>href <span class="operator token">=</span> <span class="string token">"myscript.js"</span><span class="punctuation token">;</span>
+preloadLink<span class="punctuation token">.</span>rel <span class="operator token">=</span> <span class="string token">"preload"</span><span class="punctuation token">;</span>
+preloadLink<span class="punctuation token">.</span><span class="keyword token">as</span> <span class="operator token">=</span> <span class="string token">"script"</span><span class="punctuation token">;</span>
+document<span class="punctuation token">.</span>head<span class="punctuation token">.</span><span class="function token">appendChild</span><span class="punctuation token">(</span>preloadLink<span class="punctuation token">)</span><span class="punctuation token">;</span>
+</pre> <p>This means that the browser will preload the JavaScript file, but not actually use it yet.</p> <p>To use it, you could do this when desired:</p> <pre data-language="js"><span class="keyword token">var</span> preloadedScript <span class="operator token">=</span> document<span class="punctuation token">.</span><span class="function token">createElement</span><span class="punctuation token">(</span><span class="string token">"script"</span><span class="punctuation token">)</span><span class="punctuation token">;</span>
+preloadedScript<span class="punctuation token">.</span>src <span class="operator token">=</span> <span class="string token">"myscript.js"</span><span class="punctuation token">;</span>
+document<span class="punctuation token">.</span>body<span class="punctuation token">.</span><span class="function token">appendChild</span><span class="punctuation token">(</span>preloadedScript<span class="punctuation token">)</span><span class="punctuation token">;</span>
+</pre> <p>This is useful when you want to preload a script, but then defer executing it until exactly when you need it.</p> <h2 id="Other_resource_preloading_mechanisms">Other resource preloading mechanisms</h2> <p>Other preloading features exist, but none are quite as fit for purpose as <code>&lt;link rel="preload"&gt;</code>:</p> <ul> <li>
+<code>&lt;link rel="prefetch"&gt;</code> has been supported in browsers for a long time, but it is intended for prefetching resources that will be used in the next navigation/page load (e.g. when you go to the next page). This is fine, but isn't useful for the current page! In addition, browsers will give <code>prefetch</code> resources a lower priority than <code>preload</code> ones — the current page is more important than the next one. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ" target="_blank">Link prefetching FAQ</a> for more details.</li> <li>
+<code>&lt;link rel="subresource"&gt;</code> was supported in Chrome a while ago, and was intended to tackle preloading resources for the current navigation/page load, but it had a problem — there was no way to work out a priority for fetching the items (<code>as</code> didn't exist back then), so they all ended up being fetched with fairly low priority, which didn't help the situation.</li> <li>There are a number of script-based resource loaders out there, but they don't have any power over the browser's fetch prioritization queue, and are subject to much the same performance problems.</li> </ul> <h2 name="Specifications" id="Specifications">Specifications</h2> <div class="_table"><table class="standard-table"> <thead> <tr> <th scope="col">Specification</th> <th scope="col">Status</th> <th scope="col">Comment</th> </tr> </thead> <tbody> <tr> <td><a href="https://w3c.github.io/preload/#x2.link-type-preload" hreflang="en" target="_blank">Preload<br><small>The definition of 'preload' in that specification.</small></a></td> <td><span class="spec-CR">Candidate Recommendation</span></td> <td>Further details of <code>preload</code>.</td> </tr> <tr> <td><a href="https://html.spec.whatwg.org/multipage/link-type-preload" hreflang="en" target="_blank">HTML Living Standard<br><small>The definition of 'rel=preload' in that specification.</small></a></td> <td><span class="spec-Living">Living Standard</span></td> <td>Definition of <code>rel=preload</code>.</td> </tr> </tbody> </table></div> <h2 id="Browser_compatibility">Browser compatibility<a href="https://github.com/mdn/browser-compat-data" class="bc-github-link" target="_blank">Update compatibility data on GitHub</a>
+</h2>  <div class="_table">
+<table class="bc-table bc-table-web">
+<thead>
+<tr>
+<th></th>
+<th colspan="6">Desktop</th>
+</tr>
+<tr>
+<th></th>
+<th>Chrome</th>
+<th>Edge</th>
+<th>Firefox</th>
+<th>Internet Explorer</th>
+<th>Opera</th>
+<th>Safari</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support 
+</th>
+<td class="bc-supports-yes"> 50</td>
+<td> ? </td>
+<td class="bc-supports-no bc-has-history">56 — 57
+<dl>
+<dt class="bc-supports-no bc-supports">56 — 57
+</dt>
+<dd> Disabled due to various web compatibility issues (e.g. <a href="https://bugzil.la/1405761" target="_blank">bug 1405761</a>). An improved version that works for non-cacheable resources is expected to land soon.</dd>
+</dl>
+</td>
+<td> ? </td>
+<td> ? </td>
+<td> ? </td>
+</tr></tbody>
+</table>
+<table class="bc-table bc-table-web">
+<thead>
+<tr>
+<th></th>
+<th colspan="7">Mobile</th>
+</tr>
+<tr>
+<th></th>
+<th>Android webview</th>
+<th>Chrome for Android</th>
+<th>Edge Mobile</th>
+<th>Firefox for Android</th>
+<th>Opera for Android</th>
+<th>iOS Safari</th>
+<th>Samsung Internet</th>
+</tr>
+</thead>
+<tbody><tr>
+<th scope="row">Basic support 
+</th>
+<td class="bc-supports-yes"> 50</td>
+<td class="bc-supports-yes"> 50</td>
+<td> ? </td>
+<td class="bc-supports-no bc-has-history">56 — 57
+<dl>
+<dt class="bc-supports-no bc-supports">56 — 57
+</dt>
+<dd> Disabled due to various web compatibility issues (e.g. <a href="https://bugzil.la/1405761" target="_blank">bug 1405761</a>). An improved version that works for non-cacheable resources is expected to land soon.</dd>
+</dl>
+</td>
+<td> ? </td>
+<td> ? </td>
+<td class="bc-supports-yes"> 5.0</td>
+</tr></tbody>
+</table>
+</div> <h2 id="See_also">See also</h2> <ul> <li>
+<a href="https://www.smashingmagazine.com/2016/02/preload-what-is-it-good-for/" target="_blank">Preload: What Is It Good For?</a> by Yoav Weiss</li> </ul> <div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
