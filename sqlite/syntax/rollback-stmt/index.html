@@ -1,0 +1,121 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>SQLite Syntax&#58; Rollback-stmt - SQLite - W3cubDocs</title>
+  
+  <meta name="description" content=" SQLite is in the Public Domain. https&#58;&#47;&#47;sqlite.org&#47;syntax&#47;rollback-stmt.html ">
+  <meta name="keywords" content="rollback-stmt, sqlite, syntax, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/sqlite/syntax/rollback-stmt/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/sqlite.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/sqlite/" class="_nav-link" title="" style="margin-left:0;">SQLite</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _sqlite">
+				
+				
+<h1>rollback-stmt</h1> <div class="imgcontainer"> <img alt="syntax diagram rollback-stmt" src="data:image/gif;base64,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"><br> Used by: <a href="../sql-stmt/">sql-stmt</a><br> See also: <a href="../../lang_savepoint/">lang_savepoint.html</a> <a href="../../lang_transaction/">lang_transaction.html</a> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    SQLite is in the Public Domain.<br>
+    <a href="https://sqlite.org/syntax/rollback-stmt.html" class="_attribution-link" target="_blank">https://sqlite.org/syntax/rollback-stmt.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

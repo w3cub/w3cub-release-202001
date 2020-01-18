@@ -1,0 +1,130 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>On CONFLICT Clause - SQLite - W3cubDocs</title>
+  
+  <meta name="description" content=" [Top] ">
+  <meta name="keywords" content="sql, understood, sqlite, on, conflict, clause, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/sqlite/lang_conflict/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/sqlite.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/sqlite/" class="_nav-link" title="" style="margin-left:0;">SQLite</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _sqlite">
+				
+				
+<h1>SQL As Understood By SQLite</h1>
+<p><a href="../lang/">[Top]</a></p>
+<h2>ON CONFLICT clause</h2>
+<p><b><a href="../syntax/conflict-clause/">conflict-clause:</a></b> <button id="x1813" class="_btn" data-toggle="x1814">hide</button></p> <div id="x1814" class="imgcontainer"> <img alt="syntax diagram conflict-clause" src="data:image/gif;base64,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"> </div> <p>The ON CONFLICT clause is a non-standard extension specific to SQLite that can appear in many other SQL commands. It is given its own section in this document because it is not part of standard SQL and therefore might not be familiar.</p> <p>The ON CONFLICT clause described here has been a part of SQLite since before version 3.0.0 (2004-06-18). The phrase "ON CONFLICT" is also part of <a href="../lang_upsert/">UPSERT</a>, which is an extension to <a href="../lang_insert/">INSERT</a> added in version 3.24.0 (2018-06-04). Do not confuse these two separate uses of the "ON CONFLICT" phrase. </p>
+<p>The syntax for the ON CONFLICT clause is as shown above for the CREATE TABLE command. For the INSERT and UPDATE commands, the keywords "ON CONFLICT" are replaced by "OR" so that the syntax reads more naturally. For example, instead of "INSERT ON CONFLICT IGNORE" we have "INSERT OR IGNORE". The keywords change but the meaning of the clause is the same either way.</p> <p>The ON CONFLICT clause applies to <a href="../lang_createtable/#uniqueconst">UNIQUE</a>, <a href="../lang_createtable/#notnullconst">NOT NULL</a>, <a href="../lang_createtable/#ckconst">CHECK</a>, and <a href="../lang_createtable/#primkeyconst">PRIMARY KEY</a> constraints. The ON CONFLICT algorithm does not apply to <a href="../foreignkeys/">FOREIGN KEY constraints</a>. There are five conflict resolution algorithm choices: ROLLBACK, ABORT, FAIL, IGNORE, and REPLACE. The default conflict resolution algorithm is ABORT. This is what they mean:</p> <dl> <dt><b>ROLLBACK</b></dt> <dd><p> When an applicable constraint violation occurs, the ROLLBACK resolution algorithm aborts the current SQL statement with an SQLITE_CONSTRAINT error and rolls back the current transaction. If no transaction is active (other than the implied transaction that is created on every command) then the ROLLBACK resolution algorithm works the same as the ABORT algorithm.</p></dd> <dt><b>ABORT</b></dt> <dd><p> When an applicable constraint violation occurs, the ABORT resolution algorithm aborts the current SQL statement with an SQLITE_CONSTRAINT error and backs out any changes made by the current SQL statement; but changes caused by prior SQL statements within the same transaction are preserved and the transaction remains active. This is the default behavior and the behavior specified by the SQL standard.</p></dd> <dt><b>FAIL</b></dt> <dd>
+<p> When an applicable constraint violation occurs, the FAIL resolution algorithm aborts the current SQL statement with an SQLITE_CONSTRAINT error. But the FAIL resolution does not back out prior changes of the SQL statement that failed nor does it end the transaction. For example, if an UPDATE statement encountered a constraint violation on the 100th row that it attempts to update, then the first 99 row changes are preserved but changes to rows 100 and beyond never occur.</p> <p>The FAIL behavior only works for uniqueness, NOT NULL, and CHECK constraints. A <a href="../foreignkeys/">foreign key constraint</a> violation causes an ABORT. </p>
+</dd> <dt><b>IGNORE</b></dt> <dd>
+<p> When an applicable constraint violation occurs, the IGNORE resolution algorithm skips the one row that contains the constraint violation and continues processing subsequent rows of the SQL statement as if nothing went wrong. Other rows before and after the row that contained the constraint violation are inserted or updated normally. No error is returned for uniqueness, NOT NULL, and UNIQUE constraint errors when the IGNORE conflict resolution algorithm is used. However, the IGNORE conflict resolution algorithm works like ABORT for <a href="../foreignkeys/">foreign key constraint</a> errors. </p> </dd> <dt><b>REPLACE</b></dt> <dd>
+<p> When a <a href="../lang_createtable/#uniqueconst">UNIQUE</a> or <a href="../lang_createtable/#primkeyconst">PRIMARY KEY</a> constraint violation occurs, the REPLACE algorithm deletes pre-existing rows that are causing the constraint violation prior to inserting or updating the current row and the command continues executing normally. If a <a href="../lang_createtable/#notnullconst">NOT NULL</a> constraint violation occurs, the REPLACE conflict resolution replaces the NULL value with the default value for that column, or if the column has no default value, then the ABORT algorithm is used. If a <a href="../lang_createtable/#ckconst">CHECK constraint</a> or <a href="../foreignkeys/">foreign key constraint</a> violation occurs, the REPLACE conflict resolution algorithm works like ABORT.</p> <p>When the REPLACE conflict resolution strategy deletes rows in order to satisfy a constraint, <a href="../lang_createtrigger/">delete triggers</a> fire if and only if <a href="../pragma/#pragma_recursive_triggers">recursive triggers</a> are enabled.</p> <p>The <a href="../c3ref/update_hook/">update hook</a> is not invoked for rows that are deleted by the REPLACE conflict resolution strategy. Nor does REPLACE increment the <a href="../c3ref/changes/">change counter</a>. The exceptional behaviors defined in this paragraph might change in a future release.</p> </dd>
+</dl> <p>The algorithm specified in the OR clause of an INSERT or UPDATE overrides any algorithm specified in a CREATE TABLE. If no algorithm is specified anywhere, the ABORT algorithm is used.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    SQLite is in the Public Domain.<br>
+    <a href="https://sqlite.org/lang_conflict.html" class="_attribution-link" target="_blank">https://sqlite.org/lang_conflict.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
