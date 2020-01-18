@@ -1,0 +1,200 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Higher-order Components - Flow - W3cubDocs</title>
+  
+  <meta name="description" content="A popular pattern in React is the higher-order component pattern, so it’s important that we can provide effective types for higher-order components &hellip;">
+  <meta name="keywords" content="higher-order, components, -, flow">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/flow/react/hoc/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/flow.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/flow/" class="_nav-link" title="" style="margin-left:0;">Flow</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>Higher-order Components</h1> <p>A popular pattern in React is the <a href="https://facebook.github.io/react/docs/higher-order-components.html" target="_blank">higher-order component pattern</a>, so it’s important that we can provide effective types for higher-order components in Flow. If you don’t already know what a higher-order component is then make sure to read the <a href="https://facebook.github.io/react/docs/higher-order-components.html" target="_blank">React documentation on higher-order components</a> before continuing.</p> <p>To learn how to type higher-order components we will look to <a href="https://github.com/acdlite/recompose" target="_blank">Recompose</a> for examples of higher-order components. <a href="https://github.com/acdlite/recompose" target="_blank">Recompose</a> is a popular React library that provides many higher-order components. Let’s see how you would type the <a href="https://github.com/acdlite/recompose/blob/0ff7cf36f35e97dbd422a6924c7e7eddd47d0d34/docs/API.md#mapprops" target="_blank"><code>mapProps()</code> higher-order component from Recompose</a>.</p> <p><code>mapProps()</code> takes a function that will transform the input props into some output props. You can use <code>mapProps()</code> like this:</p> <pre data-language="javascript">function MyComponent({ bar }: { bar: number }) {
+  return &lt;div&gt;{bar}&lt;/div&gt;;
+}
+
+const MyEnhancedComponent = mapProps(
+  ({ foo }) =&gt; ({ bar: foo + 1 }),
+)(MyComponent);
+
+&lt;MyEnhancedComponent foo={1} /&gt;; // This will render the number 2.
+</pre> <p>For the type of <code>MyComponent</code> and the type of <code>MyEnhancedComponent</code> we will use <a href="../../types/#toc-react-componenttype"><code>React.ComponentType&lt;Props&gt;</code></a>. <a href="../../types/#toc-react-componenttype"><code>React.ComponentType&lt;Props&gt;</code></a> is a union of stateless functional components and class components where <code>Props</code> is the defined type for the component’s props.</p> <p>We want <code>mapProps()</code> to return a function that will take a React component as its first and only argument and return a React component.</p> <pre data-language="javascript">import * as React from 'react';
+
+function mapProps(): (React.ComponentType&lt;any&gt;) =&gt; React.ComponentType&lt;any&gt; {
+  return Component =&gt; {
+    // implementation...
+  };
+}
+</pre> <blockquote> <p><strong>Remember:</strong> We are returning a <em>function type</em> here and we are taking no arguments. We will add the argument (which is also a function) in a later step.</p> </blockquote> <p>To start we used <code>any</code> for our <a href="../../types/#toc-react-componenttype"><code>React.ComponentType&lt;Props&gt;</code></a>s’ <code>Props</code> types! So next we will use a <a href="https://flow.org/en/types/generics/" target="_blank">generic function type</a> to provide better types than <code>any</code>.</p> <pre data-language="javascript">import * as React from 'react';
+
+function mapProps&lt;PropsInput: {}, PropsOutput: {}&gt;(
+  // TODO
+): (React.ComponentType&lt;PropsOutput&gt;) =&gt; React.ComponentType&lt;PropsInput&gt; {
+  return Component =&gt; {
+    // implementation...
+  };
+}
+</pre> <p>Note that <code>PropsInput</code> and <code>PropsOutput</code> have bound of <code><span class="p">{}</span></code>. (As expressed in <code>PropsInput: {}</code> and <code>PropsOutput: {}</code>.) This means that <code>PropsInput</code> and <code>PropsOutput</code> must be object types so we may treat them as such in the implementation of <code>mapProps()</code>. If you do not add the <code>: {}</code> then you would not be able to spread <code>PropsInput</code> or <code>PropsOutput</code>!</p> <p>We have one last thing to do. Add a type for the mapper function which will take <code>PropsInput</code> and return <code>PropsOutput</code> for <code>mapProps()</code>.</p> <pre data-language="javascript">import * as React from 'react';
+
+function mapProps&lt;PropsInput: {}, PropsOutput: {}&gt;(
+  mapperFn: (PropsInput) =&gt; PropsOutput,
+): (React.ComponentType&lt;PropsOutput&gt;) =&gt; React.ComponentType&lt;PropsInput&gt; {
+  return Component =&gt; {
+    // implementation...
+  };
+}
+</pre> <p>Now you can use <code>mapProps()</code> with confidence that Flow is ensuring your types are correct.</p> <blockquote> <p><strong>Note:</strong> While when you use <code>mapProps()</code> in the following:</p> <pre data-language="">const MyEnhancedComponent = mapProps(
+  ({ foo }) =&gt; ({ bar: foo + 1 }),
+)(MyComponent);</pre> <p>Flow will not require you to add type annotations, but it is a smart idea to add annotations anyway. By adding type annotations you will get better error messages when something is broken. An annotated version of a <code>mapProps()</code> usage would look like:</p> <pre data-language="">const MyEnhancedComponent = mapProps(
+  (props: PropsA): PropsB =&gt; /* ... */,
+)(MyComponent);</pre> <p>Where <code>PropsA</code> and <code>PropsB</code> are your type annotations.</p> </blockquote> <h2 id="toc-injecting-props-with-a-higher-order-component">Injecting Props With a Higher-order Component </h2> <p>A common use case for higher-order components is to inject a prop. Like a navigation prop, or in the case of <a href="https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options" target="_blank"><code>react-redux</code> a <code>store</code> prop</a>. How would one type this? Let us start with a higher-order component that does not add any new props:</p> <pre data-language="javascript">import * as React from 'react';
+
+function injectProp&lt;Props: {}&gt;(
+  Component: React.ComponentType&lt;Props&gt;,
+): React.ComponentType&lt;Props&gt; {
+  // implementation...
+}
+</pre> <p>This <a href="https://flow.org/en/types/generics/" target="_blank">generic function type</a> will take a React component and return a React component with the exact same type for props. To remove a prop from the returned component we will use <a href="https://flow.org/en/types/utilities/#toc-diff" target="_blank"><code>$Diff</code></a>.</p> <pre data-language="javascript">import * as React from 'react';
+
+function injectProp&lt;Props: {}&gt;(
+  Component: React.ComponentType&lt;Props&gt;,
+): React.ComponentType&lt;$Diff&lt;Props, { foo: number | void }&gt;&gt; {
+  // implementation...
+}
+</pre> <p>Let’s look at the type for our output component. In other words the type for <code>MyOutputComponent</code> in <code>const MyOutputComponent = injectProp(MyInputComponent)</code>.</p> <pre data-language="javascript">React.ComponentType&lt;$Diff&lt;Props, { foo: number | void }&gt;
+</pre> <p>The type of props for this component is:</p> <pre data-language="javascript">$Diff&lt;Props, { foo: number | void }&gt;
+</pre> <p>This uses <a href="https://flow.org/en/types/utilities/#toc-diff" target="_blank"><code>$Diff</code></a> to say that the type for props is everything in <code>Props</code> (which is the props type for our output component) <em>except</em> for <code>foo</code> which has a type of <code>number</code>.</p> <blockquote> <p><strong>Note:</strong> If <code>foo</code> does not exist in <code>Props</code> you will get an error! <code>$Diff&lt;{}, { foo: number }&gt;</code> will be an error. To work around this use a union with <code>void</code>, see: <code>$Diff&lt;{}, { foo: number | void }&gt;</code>. An optional prop will not completely remove <code>foo</code>. <code>$Diff&lt;{ foo: number }, { foo?: number }&gt;</code> is <code><span class="p">{</span><span class="err">foo?:</span><span class="err">number</span><span class="p">}</span></code> instead of <code><span class="p">{}</span></code>.</p> </blockquote> <p>With this we can now use <code>injectProp()</code> to inject <code>foo</code>.</p> <pre data-language="javascript">import * as React from 'react';
+
+function injectProp&lt;Props: {}&gt;(
+  Component: React.ComponentType&lt;Props&gt;,
+): React.ComponentType&lt;$Diff&lt;Props, { foo: number | void }&gt;&gt; {
+  return function WrapperComponent(props: Props) {
+    return &lt;Component {...props} foo={42} /&gt;;
+  };
+}
+
+class MyComponent extends React.Component&lt;{
+  a: number,
+  b: number,
+  foo: number,
+}&gt; {}
+
+const MyEnhancedComponent = injectProp(MyComponent);
+
+// We don't need to pass in `foo` even though `MyComponent` requires it.
+&lt;MyEnhancedComponent a={1} b={2} /&gt;;
+</pre> <blockquote> <p><strong>Note:</strong> Remember that the generic type, <code>Props</code>, needs the bound <code><span class="p">{}</span></code>. As in <code>Props: {}</code>. Otherwise you would not be able to spread <code>Props</code> in <code>&lt;Component {...props} foo={42} /&gt;</code>.</p> </blockquote> <h2 id="toc-supporting-defaultprops-with-react-elementconfig">Supporting <code>defaultProps</code> With <code>React.ElementConfig&lt;&gt;</code> </h2> <p>The higher-order-components we’ve typed so far will all make <code>defaultProps</code> required. To preserve the optionality of <code>defaultProps</code> you can use <a href="../../types/#toc-react-elementconfig"><code>React.ElementConfig&lt;typeof Component&gt;</code></a>. Your enhancer function will need a generic type for your component. Like this:</p> <pre data-language="javascript">function myHOC&lt;Props, Component: React.ComponentType&lt;Props&gt;&gt;(
+  WrappedComponent: Component
+): React.ComponentType&lt;React.ElementConfig&lt;Component&gt;&gt; {
+  return props =&gt; &lt;WrappedComponent {...props} /&gt;;
+}
+</pre> <p>Notice here how we used <code>React.ComponentType&lt;React.ElementConfig&lt;Component&gt;&gt;</code> as the output component type instead of <code>React.ComponentType&lt;Props&gt;</code> as we’ve seen in previous examples.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–present Facebook Inc.<br>Licensed under the MIT License.<br>
+    <a href="https://flow.org/en/docs/react/hoc" class="_attribution-link" target="_blank">https://flow.org/en/docs/react/hoc</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

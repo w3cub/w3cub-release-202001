@@ -1,0 +1,269 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Object Types - Flow - W3cubDocs</title>
+  
+  <meta name="description" content="Objects can be used in many different ways in JavaScript. There are a number of different ways to type them in order to support all the different &hellip;">
+  <meta name="keywords" content="object, types, -, flow">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/flow/types/objects/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/flow.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/flow/" class="_nav-link" title="" style="margin-left:0;">Flow</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>Object Types</h1> <p>Objects can be used in many different ways in JavaScript. There are a number of different ways to type them in order to support all the different use cases.</p> <h2 id="toc-object-type-syntax">Object type syntax </h2> <p>Object types try to match the syntax for objects in JavaScript as much as possible. Using curly braces <code><span class="p">{}</span></code> and name-value pairs using a colon <code>:</code> split by commas <code>,</code>.</p> <pre data-language="javascript">// @flow
+var obj1: { foo: boolean } = { foo: true };
+var obj2: {
+  foo: number,
+  bar: boolean,
+  baz: string,
+} = {
+  foo: 1,
+  bar: true,
+  baz: 'three',
+};
+</pre> <blockquote> <p><strong>Note:</strong> Previously object types used semicolons <code>;</code> for splitting name-value pairs. While the syntax is still valid, you should use commas <code>,</code>.</p> </blockquote> <h4 id="toc-optional-object-type-properties">Optional object type properties </h4> <p>In JavaScript, accessing a property that doesn’t exist evaluates to <code>undefined</code>. This is a common source of errors in JavaScript programs, so Flow turns these into type errors.</p> <pre data-language="javascript">// @flow
+var obj = { foo: "bar" };
+// $ExpectError
+obj.bar; // Error!
+</pre> <p>If you have an object that sometimes does not have a property you can make it an <em>optional property</em> by adding a question mark <code>?</code> after the property name in the object type.</p> <pre data-language="javascript">// @flow
+var obj: { foo?: boolean } = {};
+
+obj.foo = true;    // Works!
+// $ExpectError
+obj.foo = 'hello'; // Error!
+</pre> <p>In addition to their set value type, these optional properties can either be <code>void</code> or omitted altogether. However, they cannot be <code>null</code>.</p> <pre data-language="javascript">// @flow
+function acceptsObject(value: { foo?: string }) {
+  // ...
+}
+
+acceptsObject({ foo: "bar" });     // Works!
+acceptsObject({ foo: undefined }); // Works!
+// $ExpectError
+acceptsObject({ foo: null });      // Error!
+acceptsObject({});                 // Works!
+</pre> <h2 id="toc-object-type-inference">Object type inference </h2> <p>Flow can infer the type of object literals in two different ways depending on how they are used.</p> <h3 id="toc-sealed-objects">Sealed objects </h3> <p>When you create an object with its properties, you create a <em>sealed</em> object type in Flow. These sealed objects will know all of the properties you declared them with and the types of their values.</p> <pre data-language="javascript">// @flow
+var obj = {
+  foo: 1,
+  bar: true,
+  baz: 'three'
+};
+
+var foo: number  = obj.foo; // Works!
+var bar: boolean = obj.bar; // Works!
+// $ExpectError
+var baz: null    = obj.baz; // Error!
+var bat: string  = obj.bat; // Error!
+</pre> <p>But when objects are sealed, Flow will not allow you to add new properties to them.</p> <pre data-language="javascript">// @flow
+var obj = {
+  foo: 1
+};
+
+// $ExpectError
+obj.bar = true;    // Error!
+// $ExpectError
+obj.baz = 'three'; // Error!
+</pre> <p>The workaround here might be to turn your object into an <em>unsealed object</em>.</p> <h3 id="toc-unsealed-objects">Unsealed objects </h3> <p>When you create an object without any properties, you create an <em>unsealed</em> object type in Flow. These unsealed objects will not know all of their properties and will allow you to add new ones.</p> <pre data-language="javascript">// @flow
+var obj = {};
+
+obj.foo = 1;       // Works!
+obj.bar = true;    // Works!
+obj.baz = 'three'; // Works!
+</pre> <p>The inferred type of the property becomes what you set it to.</p> <pre data-language="javascript">// @flow
+var obj = {};
+obj.foo = 42;
+var num: number = obj.foo;
+</pre> <h5 id="toc-reassigning-unsealed-object-properties">Reassigning unsealed object properties </h5> <p>Similar to <a href="../../variables/#toc-reassigning-variables"><code>var</code> and <code>let</code> variables</a> if you reassign a property of an unsealed object, by default Flow will give it the type of all possible assignments.</p> <pre data-language="javascript">// @flow
+var obj = {};
+
+if (Math.random()) obj.prop = true;
+else obj.prop = "hello";
+
+// $ExpectError
+var val1: boolean = obj.prop; // Error!
+// $ExpectError
+var val2: string  = obj.prop; // Error!
+var val3: boolean | string = obj.prop; // Works!
+</pre> <p>Sometimes Flow is able to figure out (with certainty) the type of a property after reassignment. In that case, Flow will give it the known type.</p> <pre data-language="javascript">// @flow
+var obj = {};
+
+obj.prop = true;
+obj.prop = "hello";
+
+// $ExpectError
+var val1: boolean = obj.prop; // Error!
+var val2: string  = obj.prop; // Works!
+</pre> <p>As Flow gets smarter and smarter, it will figure out the types of properties in more scenarios.</p> <h5 id="toc-unknown-property-lookup-on-unsealed-objects-is-unsafe">Unknown property lookup on unsealed objects is unsafe </h5> <p>Unsealed objects allow new properties to be written at any time. Flow ensures that reads are compatible with writes, but does not ensure that writes happen before reads (in the order of execution).</p> <p>This means that reads from unsealed objects with no matching writes are never checked. This is an unsafe behavior of Flow which may be improved in the future.</p> <pre data-language="javascript">var obj = {};
+
+obj.foo = 1;
+obj.bar = true;
+
+var foo: number  = obj.foo; // Works!
+var bar: boolean = obj.bar; // Works!
+var baz: string  = obj.baz; // Works?
+</pre> <h2 id="toc-exact-object-types">Exact object types </h2> <p>In Flow, it is considered safe to pass an object with extra properties where a normal object type is expected.</p> <pre data-language="javascript">// @flow
+function method(obj: { foo: string }) {
+  // ...
+}
+
+method({
+  foo: "test", // Works!
+  bar: 42      // Works!
+});
+</pre> <blockquote> <p><strong>Note:</strong> This is because of <a href="https://flow.org/en/lang/width-subtyping/" target="_blank">“width subtyping”</a>.</p> </blockquote> <p>Sometimes it is useful to disable this behavior and only allow a specific set of properties. For this, Flow supports “exact” object types.</p> <pre data-language="javascript">{| foo: string, bar: number |}
+</pre> <p>Unlike regular object types, it is not valid to pass an object with “extra” properties to an exact object type.</p> <pre data-language="javascript">// @flow
+var foo: {| foo: string |} = { foo: "Hello", bar: "World!" }; // Error!
+</pre> <p>Intersections of exact object types may not work as you expect. If you need to combine exact object types, use object type spread:</p> <pre data-language="javascript">// @flow
+
+type FooT = {| foo: string |};
+type BarT = {| bar: number |};
+
+type FooBarFailT = FooT &amp; BarT;
+type FooBarT = {| ...FooT, ...BarT |};
+
+const fooBarFail: FooBarFailT = { foo: '123', bar: 12 }; // Error!
+const fooBar: FooBarT = { foo: '123', bar: 12 }; // Works!
+</pre> <h2 id="toc-objects-as-maps">Objects as maps </h2> <p>Newer versions of the JavaScript standard include a <code>Map</code> class, but it is still very common to use objects as maps as well. In this use case, an object will likely have properties added to it and retrieved throughout its lifecycle. Furthermore, the property keys may not even be known statically, so writing out a type annotation would not be possible.</p> <p>For objects like these, Flow provides a special kind of property, called an “indexer property.” An indexer property allows reads and writes using any key that matches the indexer key type.</p> <pre data-language="javascript">// @flow
+var o: { [string]: number } = {};
+o["foo"] = 0;
+o["bar"] = 1;
+var foo: number = o["foo"];
+</pre> <p>An indexer can be optionally named, for documentation purposes:</p> <pre data-language="javascript">// @flow
+var obj: { [user_id: number]: string } = {};
+obj[1] = "Julia";
+obj[2] = "Camille";
+obj[3] = "Justin";
+obj[4] = "Mark";
+</pre> <p>When an object type has an indexer property, property accesses are assumed to have the annotated type, even if the object does not have a value in that slot at runtime. It is the programmer’s responsibility to ensure the access is safe, as with arrays.</p> <pre data-language="javascript">var obj: { [number]: string } = {};
+obj[42].length; // No type error, but will throw at runtime
+</pre> <p>Indexer properties can be mixed with named properties:</p> <pre data-language="javascript">// @flow
+var obj: {
+  size: number,
+  [id: number]: string
+} = {
+  size: 0
+};
+
+function add(id: number, name: string) {
+  obj[id] = name;
+  obj.size++;
+}
+</pre> <h3 id="toc-object-type">
+<code>Object</code> Type </h3> <p>Sometimes it is useful to write types that accept arbitrary objects, for those you should write <code><span class="p">{}</span></code> like this:</p> <pre data-language="javascript">function method(obj: {}) {
+  // ...
+}
+</pre> <p>However, if you need to opt-out of the type checker, and don’t want to go all the way to <code>any</code>, you can instead use <code>Object</code>. <strong><code>Object</code> is unsafe and should be avoided.</strong></p> <p>For example, the following code will not report any errors:</p> <pre data-language="javascript">function method(obj: Object) {
+  obj.foo = 42;               // Works.
+  let bar: boolean = obj.bar; // Works.
+  obj.baz.bat.bam.bop;        // Works.
+}
+
+method({ baz: 3.14, bar: "hello" });
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–present Facebook Inc.<br>Licensed under the MIT License.<br>
+    <a href="https://flow.org/en/docs/types/objects" class="_attribution-link" target="_blank">https://flow.org/en/docs/types/objects</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,286 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Function Types - Flow - W3cubDocs</title>
+  
+  <meta name="description" content=" Functions have two places where types are applied&#58; Parameters (input) and the return value (output). ">
+  <meta name="keywords" content="function, types, -, flow">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/flow/types/functions/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/flow.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/flow/" class="_nav-link" title="" style="margin-left:0;">Flow</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1>Function Types</h1> <p>Functions have two places where types are applied: Parameters (input) and the return value (output).</p> <pre data-language="javascript">// @flow
+function concat(a: string, b: string): string {
+  return a + b;
+}
+
+concat("foo", "bar"); // Works!
+// $ExpectError
+concat(true, false);  // Error!
+</pre> <p>Using inference, these types are often optional:</p> <pre data-language="javascript">// @flow
+function concat(a, b) {
+  return a + b;
+}
+
+concat("foo", "bar"); // Works!
+// $ExpectError
+concat(true, false);  // Error!
+</pre> <p>Sometimes Flow’s inference will create types that are more permissive than you want them to be.</p> <pre data-language="javascript">// @flow
+function concat(a, b) {
+  return a + b;
+}
+
+concat("foo", "bar"); // Works!
+concat(1, 2);         // Works!
+</pre> <p>For that reason (and others), it’s useful to write types for important functions.</p> <h2 id="toc-syntax-of-functions">Syntax of functions </h2> <p>There are three forms of functions that each have their own slightly different syntax.</p> <h3 id="toc-function-declarations">Function Declarations </h3> <p>Here you can see the syntax for function declarations with and without types added.</p> <pre data-language="javascript">function method(str, bool, ...nums) {
+  // ...
+}
+
+function method(str: string, bool?: boolean, ...nums: Array&lt;number&gt;): void {
+  // ...
+}
+</pre> <h3 id="toc-arrow-functions">Arrow Functions </h3> <p>Here you can see the syntax for arrow functions with and without types added.</p> <pre data-language="javascript">let method = (str, bool, ...nums) =&gt; {
+  // ...
+};
+
+let method = (str: string, bool?: boolean, ...nums: Array&lt;number&gt;): void =&gt; {
+  // ...
+};
+</pre> <h3 id="toc-function-types">Function Types </h3> <p>Here you can see the syntax for writing types that are functions.</p> <pre data-language="javascript">(str: string, bool?: boolean, ...nums: Array&lt;number&gt;) =&gt; void
+</pre> <p>You may also optionally leave out the parameter names.</p> <pre data-language="javascript">(string, boolean | void, Array&lt;number&gt;) =&gt; void
+</pre> <p>You might use these functions types for something like a callback.</p> <pre data-language="javascript">function method(callback: (error: Error | null, value: string | null) =&gt; void) {
+  // ...
+}
+</pre> <h2 id="toc-function-parameters">Function Parameters </h2> <p>Function parameters can have types by adding a colon <code>:</code> followed by the type after the name of the parameter.</p> <pre data-language="javascript">function method(param1: string, param2: boolean) {
+  // ...
+}
+</pre> <h2 id="toc-optional-parameters">Optional Parameters </h2> <p>You can also have optional parameters by adding a question mark <code>?</code> after the name of the parameter and before the colon <code>:</code>.</p> <pre data-language="javascript">function method(optionalValue?: string) {
+  // ...
+}
+</pre> <p>Optional parameters will accept missing, <code>undefined</code>, or matching types. But they will not accept <code>null</code>.</p> <pre data-language="javascript">// @flow
+function method(optionalValue?: string) {
+  // ...
+}
+
+method();          // Works.
+method(undefined); // Works.
+method("string");  // Works.
+// $ExpectError
+method(null);      // Error!
+</pre> <h3 id="toc-rest-parameters">Rest Parameters </h3> <p>JavaScript also supports having rest parameters or parameters that collect an array of arguments at the end of a list of parameters. These have an ellipsis <code>...</code> before them.</p> <p>You can also add type annotations for rest parameters using the same syntax but with an <code>Array</code>.</p> <pre data-language="javascript">function method(...args: Array&lt;number&gt;) {
+  // ...
+}
+</pre> <p>You can pass as many arguments as you want into a rest parameter.</p> <pre data-language="javascript">// @flow
+function method(...args: Array&lt;number&gt;) {
+  // ...
+}
+
+method();        // Works.
+method(1);       // Works.
+method(1, 2);    // Works.
+method(1, 2, 3); // Works.
+</pre> <blockquote> <p>Note: If you add a type annotation to a rest parameter, it must always explicitly be an <code>Array</code> type.</p> </blockquote> <h3 id="toc-function-returns">Function Returns </h3> <p>Function returns can also add a type using a colon <code>:</code> followed by the type after the list of parameters.</p> <pre data-language="javascript">function method(): number {
+  // ...
+}
+</pre> <p>Return types ensure that every branch of your function returns the same type. This prevents you from accidentally not returning a value under certain conditions.</p> <pre data-language="javascript">// @flow
+// $ExpectError
+function method(): boolean {
+  if (Math.random() &gt; 0.5) {
+    return true;
+  }
+}
+</pre> <h3 id="toc-function-this">Function <code>this</code> </h3> <p>Every function in JavaScript can be called with a special context named <code>this</code>. You can call a function with any context that you want.</p> <p>In Flow you don’t type annotate <code>this</code> and Flow will check whatever context you call the function with.</p> <pre data-language="javascript">function method() {
+  return this;
+}
+
+var num: number = method.call(42);
+// $ExpectError
+var str: string = method.call(42);
+</pre> <h3 id="toc-predicate-functions">Predicate Functions </h3> <p>Sometimes you will want to move the condition from an <code>if</code> statement into a function:</p> <pre data-language="javascript">function concat(a: ?string, b: ?string): string {
+  if (a &amp;&amp; b) {
+    return a + b;
+  }
+  return '';
+}
+</pre> <p>However, Flow will flag an error in the code below:</p> <pre data-language="javascript">function truthy(a, b): boolean {
+  return a &amp;&amp; b;
+}
+
+function concat(a: ?string, b: ?string): string {
+  if (truthy(a, b)) {
+    // $ExpectError
+    return a + b;
+  }
+  return '';
+}
+</pre> <p>You can fix this by making <code>truthy</code> a <em>predicate function</em>, by using the <code>%checks</code> annotation like so:</p> <pre data-language="javascript">function truthy(a, b): boolean %checks {
+  return !!a &amp;&amp; !!b;
+}
+
+function concat(a: ?string, b: ?string): string {
+  if (truthy(a, b)) {
+    return a + b;
+  }
+  return '';
+}
+</pre> <p>The body of these predicate functions need to be expressions (i.e. local variable declarations are not supported). But it’s possible to call other predicate functions inside a predicate function. For example:</p> <pre data-language="javascript">function isString(y): %checks {
+  return typeof y === "string";
+}
+
+function isNumber(y): %checks {
+  return typeof y === "number";
+}
+
+function isNumberOrString(y): %checks {
+  return isString(y) || isNumber(y);
+}
+
+function foo(x): string | number {
+  if (isNumberOrString(x)) {
+    return x + x;
+  } else {
+    return x.length; // no error, because Flow infers that x can only be an array
+  }
+}
+
+foo('a');
+foo(5);
+foo([]);
+</pre> <h3 id="toc-callable-objects">Callable Objects </h3> <p>Callable objects can be typed, for example:</p> <pre data-language="javascript">type CallableObj = {
+  (number, number): number,
+  bar: string
+};
+
+function add(x, y) {
+  return x + y; 
+}
+
+// $ExpectError
+(add: CallableObj);
+
+add.bar = "hello world";
+
+(add: CallableObj);
+</pre> <h3 id="toc-function-type">
+<code>Function</code> Type </h3> <p>Sometimes it is useful to write types that accept arbitrary functions, for those you should write <code>() =&gt; mixed</code> like this:</p> <pre data-language="javascript">function method(func: () =&gt; mixed) {
+  // ...
+}
+</pre> <p>However, if you need to opt-out of the type checker, and don’t want to go all the way to <code>any</code>, you can instead use <code>Function</code>. <strong><code>Function</code> is unsafe and should be avoided.</strong></p> <p>For example, the following code will not report any errors:</p> <pre data-language="javascript">function method(func: Function) {
+  func(1, 2);     // Works.
+  func("1", "2"); // Works.
+  func({}, []);   // Works.
+}
+
+method(function(a: number, b: number) {
+  // ...
+});
+</pre> <blockquote> <p><strong><em>You should follow <a href="../../any/">all the same rules</a> as <code>any</code> when using <code>Function</code>.</em></strong>.</p> </blockquote>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013–present Facebook Inc.<br>Licensed under the MIT License.<br>
+    <a href="https://flow.org/en/docs/types/functions" class="_attribution-link" target="_blank">https://flow.org/en/docs/types/functions</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
