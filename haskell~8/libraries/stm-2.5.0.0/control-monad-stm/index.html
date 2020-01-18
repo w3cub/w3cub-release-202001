@@ -1,0 +1,291 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Control.Monad.STM - Haskell 8 - W3cubDocs</title>
+  
+  <meta name="description" content=" Software Transactional Memory&#58; a modular composable concurrency abstraction. See ">
+  <meta name="keywords" content="control, monad, stm, -, haskell, haskell~8">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/haskell~8/libraries/stm-2.5.0.0/control-monad-stm/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/haskell~8.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/haskell~8/" class="_nav-link" title="" style="margin-left:0;">Haskell 8</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _haskell">
+				
+				
+<h1 class="caption">Control.Monad.STM</h1>
+<div class="_haskell-api">
+<table class="info">
+<tr>
+<th valign="top">Copyright</th>
+<td>(c) The University of Glasgow 2004</td>
+</tr>
+<tr>
+<th>License</th>
+<td>BSD-style (see the file libraries/base/LICENSE)</td>
+</tr>
+<tr>
+<th>Maintainer</th>
+<td>libraries@haskell.org</td>
+</tr>
+<tr>
+<th>Stability</th>
+<td>experimental</td>
+</tr>
+<tr>
+<th>Portability</th>
+<td>non-portable (requires STM)</td>
+</tr>
+<tr>
+<th>Safe Haskell</th>
+<td>Trustworthy</td>
+</tr>
+<tr>
+<th>Language</th>
+<td>Haskell2010</td>
+</tr>
+</table>
+<div id="table-of-contents">
+<h4 class="caption">Contents</h4>
+<ul><li><a href="#section.orphans">Orphan instances</a></li></ul>
+</div>
+<div id="description">
+<h4 class="caption">Description</h4>
+<p>Software Transactional Memory: a modular composable concurrency abstraction. See</p>
+<ul><li>
+<em>Composable memory transactions</em>, by Tim Harris, Simon Marlow, Simon Peyton Jones, and Maurice Herlihy, in <em>ACM Conference on Principles and Practice of Parallel Programming</em> 2005. <a href="https://www.microsoft.com/en-us/research/publication/composable-memory-transactions/" target="_blank">https://www.microsoft.com/en-us/research/publication/composable-memory-transactions/</a>
+</li></ul>
+<p>This module only defines the <code><a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a></code> monad; you probably want to import <a href="../control-concurrent-stm/">Control.Concurrent.STM</a> (which exports <a href="../control-monad-stm/">Control.Monad.STM</a>).</p>
+<p>Note that invariant checking (namely the <code>always</code> and <code>alwaysSucceeds</code> functions) has been removed. See ticket <a href="https://ghc.haskell.org/trac/ghc/ticket/14324" target="_blank">#14324</a> and the <a href="https://github.com/ghc-proposals/ghc-proposals/blob/master/proposals/0011-deprecate-stm-invariants.rst" target="_blank">removal proposal</a>. Existing users are encouraged to encapsulate their STM operations in safe abstractions which can perform the invariant checking without help from the runtime system.</p>
+</div>
+<p class="src">data <a id="t:STM" class="def">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Conc-Sync.html#STM" class="link" target="_blank">Source</a> </p>
+<p>A monad supporting atomic memory transactions.</p>
+<div class="subs instances"><details id="i:STM" open="open"><summary>Instances</summary><table>
+<tr>
+<td class="src clearfix">
+ <a href="../../base-4.12.0.0/control-monad/#t:Monad" title="Control.Monad">Monad</a> <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a>
+</td>
+<td class="doc"><p><span class="version">Since: base-4.3.0.0</span></p></td>
+</tr>
+<tr><td colspan="2"><details id="i:id:STM:Monad:1"><summary class="hide-when-js-enabled">Instance details</summary><p>Defined in <a href="../../base-4.12.0.0/ghc-conc-sync/">GHC.Conc.Sync</a></p> <div class="subs methods">
+<h4 class="caption">Methods</h4>
+<p class="src"><a href="#v:-62--62--61-">(&gt;&gt;=)</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; (a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b) -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#%3E%3E%3D" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:-62--62-">(&gt;&gt;)</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#%3E%3E" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:return">return</a> :: a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#return" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:fail">fail</a> :: <a href="../../base-4.12.0.0/data-string/#t:String" title="Data.String">String</a> -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#fail" class="link" target="_blank">Source</a> </p>
+</div></details></td></tr>
+<tr>
+<td class="src clearfix">
+ <a href="../../base-4.12.0.0/data-functor/#t:Functor" title="Data.Functor">Functor</a> <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a>
+</td>
+<td class="doc"><p><span class="version">Since: base-4.3.0.0</span></p></td>
+</tr>
+<tr><td colspan="2"><details id="i:id:STM:Functor:2"><summary class="hide-when-js-enabled">Instance details</summary><p>Defined in <a href="../../base-4.12.0.0/ghc-conc-sync/">GHC.Conc.Sync</a></p> <div class="subs methods">
+<h4 class="caption">Methods</h4>
+<p class="src"><a href="#v:fmap">fmap</a> :: (a -&gt; b) -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#fmap" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:-60--36-">(&lt;$)</a> :: a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#%3C%24" class="link" target="_blank">Source</a> </p>
+</div></details></td></tr>
+<tr>
+<td class="src clearfix">
+ <a href="../../base-4.12.0.0/control-monad-fix/#t:MonadFix" title="Control.Monad.Fix">MonadFix</a> <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> </td>
+<td class="doc"><p><span class="version">Since: stm-2.3</span></p></td>
+</tr>
+<tr><td colspan="2"><details id="i:id:STM:MonadFix:3"><summary class="hide-when-js-enabled">Instance details</summary><p>Defined in <a href="../control-monad-stm/">Control.Monad.STM</a></p> <div class="subs methods">
+<h4 class="caption">Methods</h4>
+<p class="src"><a href="#v:mfix">mfix</a> :: (a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a) -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/Control-Monad-Fix.html#mfix" class="link" target="_blank">Source</a> </p>
+</div></details></td></tr>
+<tr>
+<td class="src clearfix">
+ <a href="../../base-4.12.0.0/control-applicative/#t:Applicative" title="Control.Applicative">Applicative</a> <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a>
+</td>
+<td class="doc"><p><span class="version">Since: base-4.8.0.0</span></p></td>
+</tr>
+<tr><td colspan="2"><details id="i:id:STM:Applicative:4"><summary class="hide-when-js-enabled">Instance details</summary><p>Defined in <a href="../../base-4.12.0.0/ghc-conc-sync/">GHC.Conc.Sync</a></p> <div class="subs methods">
+<h4 class="caption">Methods</h4>
+<p class="src"><a href="#v:pure">pure</a> :: a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#pure" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:-60--42--62-">(&lt;*&gt;)</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> (a -&gt; b) -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#%3C%2A%3E" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:liftA2">liftA2</a> :: (a -&gt; b -&gt; c) -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> c <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#liftA2" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:-42--62-">(*&gt;)</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#%2A%3E" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:-60--42-">(&lt;*)</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> b -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#%3C%2A" class="link" target="_blank">Source</a> </p>
+</div></details></td></tr>
+<tr>
+<td class="src clearfix">
+ <a href="../../base-4.12.0.0/control-applicative/#t:Alternative" title="Control.Applicative">Alternative</a> <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a>
+</td>
+<td class="doc"><p><span class="version">Since: base-4.8.0.0</span></p></td>
+</tr>
+<tr><td colspan="2"><details id="i:id:STM:Alternative:5"><summary class="hide-when-js-enabled">Instance details</summary><p>Defined in <a href="../../base-4.12.0.0/ghc-conc-sync/">GHC.Conc.Sync</a></p> <div class="subs methods">
+<h4 class="caption">Methods</h4>
+<p class="src"><a href="#v:empty">empty</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#empty" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:-60--124--62-">(&lt;|&gt;)</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#%3C%7C%3E" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:some">some</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> [a] <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#some" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:many">many</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> [a] <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#many" class="link" target="_blank">Source</a> </p>
+</div></details></td></tr>
+<tr>
+<td class="src clearfix">
+ <a href="../../base-4.12.0.0/control-monad/#t:MonadPlus" title="Control.Monad">MonadPlus</a> <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a>
+</td>
+<td class="doc"><p><span class="version">Since: base-4.3.0.0</span></p></td>
+</tr>
+<tr><td colspan="2"><details id="i:id:STM:MonadPlus:6"><summary class="hide-when-js-enabled">Instance details</summary><p>Defined in <a href="../../base-4.12.0.0/ghc-conc-sync/">GHC.Conc.Sync</a></p> <div class="subs methods">
+<h4 class="caption">Methods</h4>
+<p class="src"><a href="#v:mzero">mzero</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#mzero" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:mplus">mplus</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Base.html#mplus" class="link" target="_blank">Source</a> </p>
+</div></details></td></tr>
+<tr>
+<td class="src clearfix">
+ <a href="../../array-0.5.2.0/data-array-marray/#t:MArray" title="Data.Array.MArray">MArray</a> <a href="../control-concurrent-stm-tarray/#t:TArray" title="Control.Concurrent.STM.TArray">TArray</a> e <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> </td>
+<td class="doc empty"> </td>
+</tr>
+<tr><td colspan="2"><details id="i:id:STM:MArray:7"><summary class="hide-when-js-enabled">Instance details</summary><p>Defined in <a href="../control-concurrent-stm-tarray/">Control.Concurrent.STM.TArray</a></p> <div class="subs methods">
+<h4 class="caption">Methods</h4>
+<p class="src"><a href="#v:getBounds">getBounds</a> :: <a href="../../base-4.12.0.0/data-ix/#t:Ix" title="Data.Ix">Ix</a> i =&gt; <a href="../control-concurrent-stm-tarray/#t:TArray" title="Control.Concurrent.STM.TArray">TArray</a> i e -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> (i, i) <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/array-0.5.2.0/src/Data-Array-Base.html#getBounds" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:getNumElements">getNumElements</a> :: <a href="../../base-4.12.0.0/data-ix/#t:Ix" title="Data.Ix">Ix</a> i =&gt; <a href="../control-concurrent-stm-tarray/#t:TArray" title="Control.Concurrent.STM.TArray">TArray</a> i e -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> <a href="../../base-4.12.0.0/data-int/#t:Int" title="Data.Int">Int</a></p>
+<p class="src"><a href="#v:newArray">newArray</a> :: <a href="../../base-4.12.0.0/data-ix/#t:Ix" title="Data.Ix">Ix</a> i =&gt; (i, i) -&gt; e -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> (<a href="../control-concurrent-stm-tarray/#t:TArray" title="Control.Concurrent.STM.TArray">TArray</a> i e) <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/array-0.5.2.0/src/Data-Array-Base.html#newArray" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:newArray_">newArray_</a> :: <a href="../../base-4.12.0.0/data-ix/#t:Ix" title="Data.Ix">Ix</a> i =&gt; (i, i) -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> (<a href="../control-concurrent-stm-tarray/#t:TArray" title="Control.Concurrent.STM.TArray">TArray</a> i e) <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/array-0.5.2.0/src/Data-Array-Base.html#newArray_" class="link" target="_blank">Source</a> </p>
+<p class="src"><a href="#v:unsafeNewArray_">unsafeNewArray_</a> :: <a href="../../base-4.12.0.0/data-ix/#t:Ix" title="Data.Ix">Ix</a> i =&gt; (i, i) -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> (<a href="../control-concurrent-stm-tarray/#t:TArray" title="Control.Concurrent.STM.TArray">TArray</a> i e)</p>
+<p class="src"><a href="#v:unsafeRead">unsafeRead</a> :: <a href="../../base-4.12.0.0/data-ix/#t:Ix" title="Data.Ix">Ix</a> i =&gt; <a href="../control-concurrent-stm-tarray/#t:TArray" title="Control.Concurrent.STM.TArray">TArray</a> i e -&gt; <a href="../../base-4.12.0.0/data-int/#t:Int" title="Data.Int">Int</a> -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> e</p>
+<p class="src"><a href="#v:unsafeWrite">unsafeWrite</a> :: <a href="../../base-4.12.0.0/data-ix/#t:Ix" title="Data.Ix">Ix</a> i =&gt; <a href="../control-concurrent-stm-tarray/#t:TArray" title="Control.Concurrent.STM.TArray">TArray</a> i e -&gt; <a href="../../base-4.12.0.0/data-int/#t:Int" title="Data.Int">Int</a> -&gt; e -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> ()</p>
+</div></details></td></tr>
+</table></details></div>
+<p class="src"><a id="v:atomically" class="def">atomically</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../../base-4.12.0.0/system-io/#t:IO" title="System.IO">IO</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Conc-Sync.html#atomically" class="link" target="_blank">Source</a> </p>
+<p>Perform a series of STM actions atomically.</p>
+<p>Using <code><a href="../control-monad-stm/#v:atomically" title="Control.Monad.STM">atomically</a></code> inside an <code><a href="../../base-4.12.0.0/system-io-unsafe/#v:unsafePerformIO" title="System.IO.Unsafe">unsafePerformIO</a></code> or <code><a href="../../base-4.12.0.0/system-io-unsafe/#v:unsafeInterleaveIO" title="System.IO.Unsafe">unsafeInterleaveIO</a></code> subverts some of guarantees that STM provides. It makes it possible to run a transaction inside of another transaction, depending on when the thunk is evaluated. If a nested transaction is attempted, an exception is thrown by the runtime. It is possible to safely use <code><a href="../control-monad-stm/#v:atomically" title="Control.Monad.STM">atomically</a></code> inside <code><a href="../../base-4.12.0.0/system-io-unsafe/#v:unsafePerformIO" title="System.IO.Unsafe">unsafePerformIO</a></code> or <code><a href="../../base-4.12.0.0/system-io-unsafe/#v:unsafeInterleaveIO" title="System.IO.Unsafe">unsafeInterleaveIO</a></code>, but the typechecker does not rule out programs that may attempt nested transactions, meaning that the programmer must take special care to prevent these.</p>
+<p>However, there are functions for creating transactional variables that can always be safely called in <code><a href="../../base-4.12.0.0/system-io-unsafe/#v:unsafePerformIO" title="System.IO.Unsafe">unsafePerformIO</a></code>. See: <code><a href="../control-concurrent-stm-tvar/#v:newTVarIO" title="Control.Concurrent.STM.TVar">newTVarIO</a></code>, <code>newTChanIO</code>, <code>newBroadcastTChanIO</code>, <code>newTQueueIO</code>, <code>newTBQueueIO</code>, and <code>newTMVarIO</code>.</p>
+<p>Using <code><a href="../../base-4.12.0.0/system-io-unsafe/#v:unsafePerformIO" title="System.IO.Unsafe">unsafePerformIO</a></code> inside of <code><a href="../control-monad-stm/#v:atomically" title="Control.Monad.STM">atomically</a></code> is also dangerous but for different reasons. See <code><a href="../../base-4.12.0.0/ghc-conc/#v:unsafeIOToSTM" title="GHC.Conc">unsafeIOToSTM</a></code> for more on this.</p>
+<p class="src"><a id="v:retry" class="def">retry</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Conc-Sync.html#retry" class="link" target="_blank">Source</a> </p>
+<p>Retry execution of the current memory transaction because it has seen values in <code><a href="../control-concurrent-stm-tvar/#t:TVar" title="Control.Concurrent.STM.TVar">TVar</a></code>s which mean that it should not continue (e.g. the <code><a href="../control-concurrent-stm-tvar/#t:TVar" title="Control.Concurrent.STM.TVar">TVar</a></code>s represent a shared buffer that is now empty). The implementation may block the thread until one of the <code><a href="../control-concurrent-stm-tvar/#t:TVar" title="Control.Concurrent.STM.TVar">TVar</a></code>s that it has read from has been updated. (GHC only)</p>
+<p class="src"><a id="v:orElse" class="def">orElse</a> :: <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Conc-Sync.html#orElse" class="link" target="_blank">Source</a> </p>
+<p>Compose two alternative STM actions (GHC only).</p>
+<p>If the first action completes without retrying then it forms the result of the <code><a href="../control-monad-stm/#v:orElse" title="Control.Monad.STM">orElse</a></code>. Otherwise, if the first action retries, then the second action is tried in its place. If both actions retry then the <code><a href="../control-monad-stm/#v:orElse" title="Control.Monad.STM">orElse</a></code> as a whole retries.</p>
+<p class="src"><a id="v:check" class="def">check</a> :: <a href="../../base-4.12.0.0/data-bool/#t:Bool" title="Data.Bool">Bool</a> -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> () <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/stm-2.5.0.0/src/Control-Monad-STM.html#check" class="link" target="_blank">Source</a> </p>
+<p>Check that the boolean condition is true and, if not, <code><a href="../control-monad-stm/#v:retry" title="Control.Monad.STM">retry</a></code>.</p>
+<p>In other words, <code>check b = unless b retry</code>.</p>
+<p><span class="version">Since: stm-2.1.1</span></p>
+<p class="src"><a id="v:throwSTM" class="def">throwSTM</a> :: <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/Control-Exception-Base.html#t:Exception" title="Control.Exception.Base" target="_blank">Exception</a> e =&gt; e -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Conc-Sync.html#throwSTM" class="link" target="_blank">Source</a> </p>
+<p>A variant of <code><a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/Control-Exception-Base.html#v:throw" title="Control.Exception.Base" target="_blank">throw</a></code> that can only be used within the <code><a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a></code> monad.</p>
+<p>Throwing an exception in <code>STM</code> aborts the transaction and propagates the exception.</p>
+<p>Although <code><a href="../control-monad-stm/#v:throwSTM" title="Control.Monad.STM">throwSTM</a></code> has a type that is an instance of the type of <code><a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/Control-Exception-Base.html#v:throw" title="Control.Exception.Base" target="_blank">throw</a></code>, the two functions are subtly different:</p>
+<pre>throw e    `seq` x  ===&gt; throw e
+throwSTM e `seq` x  ===&gt; x</pre>
+<p>The first example will cause the exception <code>e</code> to be raised, whereas the second one won't. In fact, <code><a href="../control-monad-stm/#v:throwSTM" title="Control.Monad.STM">throwSTM</a></code> will only cause an exception to be raised when it is used within the <code><a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a></code> monad. The <code><a href="../control-monad-stm/#v:throwSTM" title="Control.Monad.STM">throwSTM</a></code> variant should be used in preference to <code><a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/Control-Exception-Base.html#v:throw" title="Control.Exception.Base" target="_blank">throw</a></code> to raise an exception within the <code><a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a></code> monad because it guarantees ordering with respect to other <code><a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a></code> operations, whereas <code><a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/Control-Exception-Base.html#v:throw" title="Control.Exception.Base" target="_blank">throw</a></code> does not.</p>
+<p class="src"><a id="v:catchSTM" class="def">catchSTM</a> :: <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/Control-Exception-Base.html#t:Exception" title="Control.Exception.Base" target="_blank">Exception</a> e =&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a -&gt; (e -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a) -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/GHC-Conc-Sync.html#catchSTM" class="link" target="_blank">Source</a> </p>
+<p>Exception handling within STM actions.</p>
+<h2>Orphan instances</h2>
+<div id="section.orphans"><table>
+<tr>
+<td class="src clearfix">
+ <a href="../../base-4.12.0.0/control-monad-fix/#t:MonadFix" title="Control.Monad.Fix">MonadFix</a> <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> </td>
+<td class="doc"><p><span class="version">Since: stm-2.3</span></p></td>
+</tr>
+<tr><td colspan="2"><details id="i:o:ic:MonadFix:MonadFix:1"><summary class="hide-when-js-enabled">Instance details</summary> <div class="subs methods">
+<h4 class="caption">Methods</h4>
+<p class="src"><a href="#v:mfix">mfix</a> :: (a -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a) -&gt; <a href="../control-monad-stm/#t:STM" title="Control.Monad.STM">STM</a> a <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/base-4.12.0.0/src/Control-Monad-Fix.html#mfix" class="link" target="_blank">Source</a> </p>
+</div></details></td></tr>
+</table></div>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © The University of Glasgow and others<br>Licensed under a BSD-style license (see top of the page).<br>
+    <a href="https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/stm-2.5.0.0/Control-Monad-STM.html" class="_attribution-link" target="_blank">https://downloads.haskell.org/~ghc/8.6.1/docs/html/libraries/stm-2.5.0.0/Control-Monad-STM.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
