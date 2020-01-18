@@ -1,0 +1,414 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Internationalization (I18n) - Angular 7 - W3cubDocs</title>
+  
+  <meta name="description" content="Application internationalization is a many-faceted area of development, focused on making applications available and user-friendly to a worldwide &hellip;">
+  <meta name="keywords" content="internationalization, i, n, -, angular, angular~7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~7/guide/i18n/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/angular~7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~7/" class="_nav-link" title="" style="margin-left:0;">Angular 7</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _angular">
+				
+				
+<h1 id="internationalization-i18n">Internationalization (i18n)</h1> <p>Application internationalization is a many-faceted area of development, focused on making applications available and user-friendly to a worldwide audience. This page describes Angular's internationalization (i18n) tools, which can help you make your app available in multiple languages.</p> <p>See the <span downloadonly="" name="i18n">i18n Example</span> for a simple example of an AOT-compiled app, translated into French.</p>  <h2 id="angular-and-i18n">Angular and i18n</h2> <p><em>Internationalization</em> is the process of designing and preparing your app to be usable in different languages. <em>Localization</em> is the process of translating your internationalized app into specific languages for particular locales. </p> <p>Angular simplifies the following aspects of internationalization:</p> <ul> <li>Displaying dates, number, percentages, and currencies in a local format.</li> <li>Preparing text in component templates for translation.</li> <li>Handling plural forms of words.</li> <li>Handling alternative text.</li> </ul> <p>For localization, you can use the <a href="../cli/">Angular CLI</a> to generate most of the boilerplate necessary to create files for translators, and to publish your app in multiple languages. After you have set up your app to use i18n, the CLI can help you with the following steps:</p> <ul> <li>Extracting localizable text into a file that you can send out to be translated.</li> <li>Building and serving the app for a given locale, using the translated text.</li> <li>Creating multiple language versions of your app.</li> </ul>  <h2 id="setting-up-the-locale-of-your-app">Setting up the locale of your app</h2> <p>A locale is an identifier (id) that refers to a set of user preferences that tend to be shared within a region of the world, such as country. This document refers to a locale identifier as a "locale" or "locale id".</p> <p>A Unicode locale identifier is composed of a Unicode language identifier and (optionally) the character <code>-</code> followed by a locale extension. (For historical reasons the character <code><a href="../i18n/" class="code-anchor">_</a></code> is supported as an alternative to <code>-</code>.) For example, in the locale id <code>fr-CA</code> the <code>fr</code> refers to the French language identifier, and the <code>CA</code> refers to the locale extension Canada.</p> <blockquote class="alert is-critical"> <p>Angular follows the Unicode LDML convention that uses stable identifiers (Unicode locale identifiers) based on the norm <a href="http://www.rfc-editor.org/rfc/bcp/bcp47.txt" target="_blank">BCP47</a>. It is very important that you follow this convention when you define your locale, because the Angular i18n tools use this locale id to find the correct corresponding locale data.</p> </blockquote> <p>By default, Angular uses the locale <code>en-US</code>, which is English as spoken in the United States of America.</p> <p>For more information about Unicode locale identifiers, see the <a href="http://cldr.unicode.org/core-spec#Unicode_Language_and_Locale_Identifiers" target="_blank">CLDR core spec</a>.</p> <p>For a complete list of locales supported by Angular, see <a href="https://github.com/angular/angular/tree/master/packages/common/locales" target="_blank">the Angular repository</a>.</p> <p>The locale identifiers used by CLDR and Angular are based on <a href="http://www.rfc-editor.org/rfc/bcp/bcp47.txt" target="_blank">BCP47</a>. These specifications change over time; the following table maps previous identifiers to current ones at time of writing:</p> <table> <thead> <tr> <th>Locale name</th> <th>Old locale id</th> <th>New locale id</th> </tr> </thead> <tbody> <tr> <td>Indonesian</td> <td>in</td> <td>id</td> </tr> <tr> <td>Hebrew</td> <td>iw</td> <td>he</td> </tr> <tr> <td>Romanian Moldova</td> <td>mo</td> <td>ro-MD</td> </tr> <tr> <td>Norwegian Bokmål</td> <td>no, no-NO</td> <td>nb</td> </tr> <tr> <td>Serbian Latin</td> <td>sh</td> <td>sr-Latn</td> </tr> <tr> <td>Filipino</td> <td>tl</td> <td>fil</td> </tr> <tr> <td>Portuguese Brazil</td> <td>pt-BR</td> <td>pt</td> </tr> <tr> <td>Chinese Simplified</td> <td>zh-cn, zh-Hans-CN</td> <td>zh-Hans</td> </tr> <tr> <td>Chinese Traditional</td> <td>zh-tw, zh-Hant-TW</td> <td>zh-Hant</td> </tr> <tr> <td>Chinese Traditional Hong Kong</td> <td>zh-hk</td> <td>zh-Hant-HK</td> </tr> </tbody> </table> <h2 id="i18n-pipes">i18n pipes</h2> <p>Angular pipes can help you with internationalization: the <code><a href="../../api/common/datepipe/" class="code-anchor">DatePipe</a></code>, <code><a href="../../api/common/currencypipe/" class="code-anchor">CurrencyPipe</a></code>, <code><a href="../../api/common/decimalpipe/" class="code-anchor">DecimalPipe</a></code> and <code><a href="../../api/common/percentpipe/" class="code-anchor">PercentPipe</a></code> use locale data to format data based on the <code><a href="../../api/core/locale_id/" class="code-anchor">LOCALE_ID</a></code>.</p> <p>By default, Angular only contains locale data for <code>en-US</code>. If you set the value of <code><a href="../../api/core/locale_id/" class="code-anchor">LOCALE_ID</a></code> to another locale, you must import locale data for that new locale. The CLI imports the locale data for you when you use the parameter <code>--configuration</code> with <code>ng serve</code> and <code>ng build</code>.</p> <p>If you want to import locale data for other languages, you can do it manually:</p> <pre header="src/app/app.module.ts" data-language="typescript">import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeFr, 'fr');</pre> <p>The first parameter is an object containing the locale data imported from <code>@angular/common/locales</code>. By default, the imported locale data is registered with the locale id that is defined in the Angular locale data itself. If you want to register the imported locale data with another locale id, use the second parameter to specify a custom locale id. For example, Angular's locale data defines the locale id for French as "fr". You can use the second parameter to associate the imported French locale data with the custom locale id "fr-FR" instead of "fr".</p> <p>The files in <code>@angular/common/locales</code> contain most of the locale data that you need, but some advanced formatting options might only be available in the extra dataset that you can import from <code>@angular/common/locales/extra</code>. An error message informs you when this is the case.</p> <pre header="src/app/app.module.ts" data-language="typescript">import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import localeFrExtra from '@angular/common/locales/extra/fr';
+
+registerLocaleData(localeFr, 'fr-FR', localeFrExtra);</pre> <blockquote class="alert is-helpful"> <p> All locale data used by Angular are extracted from the Unicode Consortium's <a href="http://cldr.unicode.org/" title="CLDR" target="_blank">Common Locale Data Repository (CLDR)</a>.</p> </blockquote> <h2 id="template-translations">Template translations</h2> <blockquote class="alert is-helpful"> <p> This document refers to a unit of translatable text as "text," a "message", or a "text message."</p> </blockquote> <p>The i18n template translation process has four phases:</p> <ol> <li> <p>Mark static text messages in your component templates for translation.</p> </li> <li> <p>Create a translation file: Use the Angular CLI <code>xi18n</code> command to extract the marked text into an industry-standard translation source file.</p> </li> <li> <p>Edit the generated translation file: Translate the extracted text into the target language.</p> </li> <li> <p>Merge the completed translation file into the app. To do this, use the Angular CLI <code>build</code> command to compile the app, choosing a <a href="../i18n/#merge-aot">locale-specific configuration</a>, or specifying the following command options.</p> <ul> <li>
+<code>--i18nFile</code>=<em>path to the translation file</em>
+</li> <li>
+<code>--i18nFormat</code>=<em>format of the translation file</em>
+</li> <li>
+<code>--i18nLocale</code>= <em>locale id</em> </li> </ul> </li> </ol> <p>The command replaces the original messages with translated text, and generates a new version of the app in the target language. </p> <p>You need to build and deploy a separate version of the app for each supported language.</p>  <h3 id="mark-text-with-the-i18n-attribute">Mark text with the i18n attribute</h3> <p>The Angular <code>i18n</code> attribute marks translatable content. Place it on every element tag whose fixed text is to be translated.</p> <p>In the example below, an <code>&lt;h1&gt;</code> tag displays a simple English language greeting, "Hello i18n!"</p> <pre header="src/app/app.component.html" data-language="html">&lt;h1&gt;Hello i18n!&lt;/h1&gt;</pre> <p>To mark the greeting for translation, add the <code>i18n</code> attribute to the <code>&lt;h1&gt;</code> tag.</p> <pre header="src/app/app.component.html" data-language="html">&lt;h1 i18n&gt;Hello i18n!&lt;/h1&gt;</pre> <blockquote class="alert is-helpful"> <p> <code>i18n</code> is a custom attribute, recognized by Angular tools and compilers. After translation, the compiler removes it. It is not an Angular directive.</p> </blockquote>  <h3 id="help-the-translator-with-a-description-and-meaning">Help the translator with a description and meaning</h3> <p>To translate a text message accurately, the translator may need additional information or context.</p> <p>You can add a description of the text message as the value of the <code>i18n</code> attribute, as shown in the example below:</p> <pre header="src/app/app.component.html" data-language="html">&lt;h1 i18n="An introduction header for this sample"&gt;Hello i18n!&lt;/h1&gt;</pre> <p>The translator may also need to know the meaning or intent of the text message within this particular app context.</p> <p>You add context by beginning the <code>i18n</code> attribute value with the <em>meaning</em> and separating it from the <em>description</em> with the <code>|</code> character: <code>&lt;meaning&gt;|&lt;description&gt;</code></p> <pre header="src/app/app.component.html" data-language="html">&lt;h1 i18n="site header|An introduction header for this sample"&gt;Hello i18n!&lt;/h1&gt;</pre> <p>All occurrences of a text message that have the same meaning will have the same translation. A text message that is associated with different meanings can have different translations.</p> <p>The Angular extraction tool preserves both the meaning and the description in the translation source file to facilitate contextually-specific translations, but only the combination of meaning and text message are used to generate the specific id of a translation. If you have two similar text messages with different meanings, they are extracted separately. If you have two similar text messages with different descriptions (not different meanings), then they are extracted only once.</p>  <h3 id="set-a-custom-id-for-persistence-and-maintenance">Set a custom id for persistence and maintenance</h3> <p>The angular i18n extractor tool generates a file with a translation unit entry for each <code>i18n</code> attribute in a template. By default, it assigns each translation unit a unique id such as this one:</p> <pre data-language="html">&lt;trans-unit id="ba0cc104d3d69bf669f97b8d96a4c5d8d9559aa3" datatype="html"&gt;</pre> <p>When you change the translatable text, the extractor tool generates a new id for that translation unit. You must then update the translation file with the new id.</p> <p>Alternatively, you can specify a custom id in the <code>i18n</code> attribute by using the prefix <code>@@</code>. The example below defines the custom id <code>introductionHeader</code>:</p> <pre header="app/app.component.html" data-language="html">&lt;h1 i18n="@@introductionHeader"&gt;Hello i18n!&lt;/h1&gt;</pre> <p>When you specify a custom id, the extractor tool and compiler generate a translation unit with that custom id.</p> <pre data-language="html">&lt;trans-unit id="introductionHeader" datatype="html"&gt;</pre> <p>The custom id is persistent. The extractor tool does not change it when the translatable text changes. Therefore, you do not need to update the translation. This approach makes maintenance easier.</p> <h4 id="use-a-custom-id-with-a-description">Use a custom id with a description</h4> <p>You can use a custom id in combination with a description by including both in the value of the <code>i18n</code> attribute. In the example below, the <code>i18n</code> attribute value includes a description, followed by the custom <code>id</code>:</p> <pre header="app/app.component.html" data-language="html">&lt;h1 i18n="An introduction header for this sample@@introductionHeader"&gt;Hello i18n!&lt;/h1&gt;</pre> <p>You also can add a meaning, as shown in this example:</p> <pre header="app/app.component.html" data-language="html">&lt;h1 i18n="site header|An introduction header for this sample@@introductionHeader"&gt;Hello i18n!&lt;/h1&gt;</pre> <h4 id="define-unique-custom-ids">Define unique custom ids</h4> <p>Be sure to define custom ids that are unique. If you use the same id for two different text messages, only the first one is extracted, and its translation is used in place of both original text messages.</p> <p>In the example below the custom id <code>myId</code> is used for two different messages:</p> <pre data-language="html">&lt;h3 i18n="@@myId"&gt;Hello&lt;/h3&gt;
+  &lt;!-- ... --&gt;
+  &lt;p i18n="@@myId"&gt;Good bye&lt;/p&gt;</pre> <p>Consider this translation to French:</p> <pre data-language="xml">&lt;trans-unit id="myId" datatype="html"&gt;
+    &lt;source&gt;Hello&lt;/source&gt;
+    &lt;target state="new"&gt;Bonjour&lt;/target&gt;
+  &lt;/trans-unit&gt;</pre> <p>Because the custom id is the same, both of the elements in the resulting translation contain the same text, <code>Bonjour</code>:</p> <pre data-language="html">&lt;h3&gt;Bonjour&lt;/h3&gt;
+  &lt;!-- ... --&gt;
+  &lt;p&gt;Bonjour&lt;/p&gt;</pre>  <h3 id="translate-text-without-creating-an-element">Translate text without creating an element</h3> <p>If there is a section of text that you would like to translate, you can wrap it in a <code>&lt;span&gt;</code> tag. However, if you don't want to create a new DOM element merely to facilitate translation, you can wrap the text in an <code>&lt;ng-container&gt;</code> element. The <code>&lt;ng-container&gt;</code> is transformed into an html comment:</p> <pre header="src/app/app.component.html" data-language="html">&lt;ng-container i18n&gt;I don't output any element&lt;/ng-container&gt;</pre>  <h3 id="translate-attributes">Translate attributes</h3> <p>Displayed text is sometimes supplied as the value of an attribute, rather than the content of tag. For example, if your template has an image with a <code>title</code> attribute, the text value of the <code>title</code> attribute needs to be translated.</p> <pre header="src/app/app.component.html" data-language="html">&lt;img [src]="logo" title="Angular logo"&gt;</pre> <p>To mark an attribute for translation, add an attribute in the form of <code>i18n-x</code>, where <code>x</code> is the name of the attribute to translate. The following example shows how to mark the <code>title</code> attribute for translation by adding the <code>i18n-title</code> attribute on the <code>img</code> tag:</p> <pre header="src/app/app.component.html" data-language="html">&lt;img [src]="logo" i18n-title title="Angular logo" /&gt;</pre> <p>This technique works for any attribute of any element.</p> <p>You also can assign a meaning, description, and id with the <code>i18n-x="&lt;meaning&gt;|&lt;description&gt;@@&lt;id&gt;"</code> syntax.</p> <h2 id="regular-expressions-for-plurals-and-selections">Regular expressions for plurals and selections</h2> <p>Different languages have different pluralization rules and grammatical constructions that add complexity to the translation task. You can use regular expressions with the <code>plural</code> and <code>select</code> clauses to provide patterns that aid translation in these cases.</p>  <h3 id="pluralization">Pluralization</h3> <p>Suppose that you want to say that something was "updated x minutes ago". In English, depending upon the number of minutes, you could display "just now", "one minute ago", or "x minutes ago" (with x being the actual number). Other languages might express the cardinality differently.</p> <p>The example below shows how to use a <code>plural</code> ICU expression to display one of those three options based on when the update occurred:</p> <pre header="src/app/app.component.html" data-language="html">&lt;span i18n&gt;Updated {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}}&lt;/span&gt;</pre> <ul> <li>The first parameter is the key. It is bound to the component property (<code>minutes</code>), which determines the number of minutes.</li> <li>The second parameter identifies this as a <code>plural</code> translation type.</li> <li>The third parameter defines a pluralization pattern consisting of pluralization categories and their matching values.</li> </ul> <blockquote class="alert is-helpful"> <p> This syntax conforms to the <a href="http://userguide.icu-project.org/formatparse/messages" title="ICU Message Format" target="_blank">ICU Message Format</a> as specified in the <a href="http://cldr.unicode.org/index/cldr-spec/plural-rules" title="Pluralization Rules" target="_blank">CLDR pluralization rules</a>.</p> </blockquote> <p>Pluralization categories include (depending on the language):</p> <ul> <li>=0 (or any other number)</li> <li>zero</li> <li>one</li> <li>two</li> <li>few</li> <li>many</li> <li>other</li> </ul> <p>After the pluralization category, put the default English text in braces (<code>{}</code>).</p> <p>In the example above, the three options are specified according to that pluralization pattern. For talking about zero minutes, you use <code>=0 {just now}</code>. For one minute, you use <code>=1 {one minute}</code>. Any unmatched cardinality uses <code>other {{{minutes}} minutes ago}</code>. You could choose to add patterns for two, three, or any other number if the pluralization rules were different. For the example of "minute", only these three patterns are necessary in English.</p> <blockquote class="alert is-helpful"> <p> You can use interpolations and html markup inside of your translations.</p> </blockquote>  <h3 id="select-among-alternative-text-messages">Select among alternative text messages</h3> <p>If your template needs to display different text messages depending on the value of a variable, you need to translate all of those alternative text messages.</p> <p>You can handle this with a <code>select</code> ICU expression. It is similar to the <code>plural</code> expressions except that you choose among alternative translations based on a string value instead of a number, and you define those string values.</p> <p>The following format message in the component template binds to the component's <code>gender</code> property, which outputs one of the following string values: "male", "female" or "other". The message maps those values to the appropriate translations:</p> <pre header="src/app/app.component.html" data-language="html">&lt;span i18n&gt;The author is {gender, select, male {male} female {female} other {other}}&lt;/span&gt;</pre>  <h3 id="nesting-plural-and-select-icu-expressions">Nesting plural and select ICU expressions</h3> <p>You can also nest different ICU expressions together, as shown in this example:</p> <pre header="src/app/app.component.html" data-language="html">&lt;span i18n&gt;Updated: {minutes, plural,
+  =0 {just now}
+  =1 {one minute ago}
+  other {{{minutes}} minutes ago by {gender, select, male {male} female {female} other {other}}}}
+&lt;/span&gt;</pre>   <h2 id="create-a-translation-source-file">Create a translation source file</h2> <p>When your app is ready, you can use the Angular CLI to extract the text messages marked with <code>i18n</code> and attributes marked with <code>i18n-x</code> into a translation source file. Open a terminal window at the root of the app project and run the CLI command <code>xi18n</code>.</p> <pre data-language="sh">ng xi18n</pre> <p>By default, the command creates a file named <code>messages.xlf</code> in your <code>src/</code> folder. </p> <blockquote class="alert is-helpful"> <p>If you don't use the CLI, you have two options:</p> <ul> <li>You can use the <code>ng-xi18n</code> tool directly from the <code>@angular/compiler-cli</code> package. For more information, see the <a href="../cli/xi18n/"><code>ng xi18n</code> command documentation</a>.</li> <li>You can use the CLI Webpack plugin <code>AngularCompilerPlugin</code> from the <code>@ngtools/webpack</code> package. Set the parameters <code>i18nOutFile</code> and <code>i18nOutFormat</code> to trigger the extraction. For more information, see the <a href="https://github.com/angular/angular-cli/tree/master/packages/%40ngtools/webpack" target="_blank">Angular Ahead-of-Time Webpack Plugin documentation</a>.</li> </ul> </blockquote>  <h3 id="output-options">Output options</h3> <p>You can supply command options to change the format, the name, the location, and the source locale of the extracted file. For example, to create a file in the <code>src/<a href="../../api/common/nglocalelocalization/#locale" class="code-anchor">locale</a></code> folder, specify the output path:</p> <pre data-language="sh">ng xi18n --output-path src/locale</pre> <p>By default, the <code>xi18n</code> command generates a translation file named <code>messages.xlf</code> in the <a href="https://en.wikipedia.org/wiki/XLIFF" target="_blank">XML Localization Interchange File Format (XLIFF, version 1.2)</a>.</p> <p>The command can read and write files in three translation formats:</p> <ul> <li>XLIFF 1.2 (default)</li> <li>XLIFF 2</li> <li><a href="http://cldr.unicode.org/development/development-process/design-proposals/xmb" target="_blank">XML Message Bundle (XMB)</a></li> </ul> <p>You can specify the translation format explicitly with the <code>--i18nFormat</code> command option, as illustrated in these example commands:</p> <pre data-language="sh">ng xi18n  --i18n-format=xlf
+ng xi18n  --i18n-format=xlf2
+ng xi18n  --i18n-format=xmb</pre> <p>The sample in this guide uses the default XLIFF 1.2 format.</p> <blockquote class="alert is-helpful"> <p> XLIFF files have the extension .xlf. The XMB format generates .xmb source files but uses .xtb (XML Translation Bundle: XTB) translation files.</p> </blockquote> <p>You can change the name of the translation source file that is generated by the extraction tool with the <code>--outFile</code> command option:</p> <pre data-language="sh">ng xi18n --out-file source.xlf</pre> <p>You can specify the base locale of your app with the<code>--i18n-locale</code> command option:</p> <pre data-language="sh">ng xi18n --i18n-locale fr</pre> <p>The extraction tool uses the locale to add the app locale information into your translation source file. This information is not used by Angular, but external translation tools may need it.</p>  <h2 id="translate-the-source-text">Translate the source text</h2> <p>The <code>ng xi18n</code> command generates a translation source file named <code>messages.xlf</code> in the project <code>src</code> folder. The next step is to translate the display strings in this source file into language-specific translation files. The example in this guide creates a French translation file.</p>  <h3 id="create-a-localization-folder">Create a localization folder</h3> <p>Most apps are translated into more than one other language. For this reason, it is standard practice for the project structure to reflect the entire internationalization effort.</p> <p>One approach is to dedicate a folder to localization and store related assets, such as internationalization files, there.</p> <blockquote class="alert is-helpful"> <p> Localization and internationalization are <a href="https://en.wikipedia.org/wiki/Internationalization_and_localization" target="_blank">different but closely related terms</a>.</p> </blockquote> <p>This guide follows that approach. It has a <code><a href="../../api/common/nglocalelocalization/#locale" class="code-anchor">locale</a></code> folder under <code>src/</code>. Assets within that folder have a filename extension that matches their associated locale.</p> <h3 id="create-the-translation-files">Create the translation files</h3> <p>For each translation source file, there must be at least one language translation file for the resulting translation.</p> <p>For this example:</p> <ol> <li>Make a copy of the <code>messages.xlf</code> file.</li> <li>Put the copy in the <code><a href="../../api/common/nglocalelocalization/#locale" class="code-anchor">locale</a></code> folder.</li> <li>Rename the copy to <code>messages.fr.xlf</code> for the French language translation.</li> </ol> <p>If you were translating to other languages, you would repeat these steps for each target language.</p>  <h3 id="translate-text-nodes">Translate text nodes</h3> <p>In a large translation project, you would send the <code>messages.fr.xlf</code> file to a French translator who would enter the translations using an XLIFF file editor.</p> <p>This sample file is easy to translate without a special editor or knowledge of French.</p> <ol> <li>Open <code>messages.fr.xlf</code> and find the first <code>&lt;trans-unit&gt;</code> section:</li> </ol> <blockquote> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" data-language="html">&lt;trans-unit id="introductionHeader" datatype="html"&gt;
+  &lt;source&gt;Hello i18n!&lt;/source&gt;
+  &lt;note priority="1" from="description"&gt;An introduction header for this sample&lt;/note&gt;
+  &lt;note priority="1" from="meaning"&gt;User welcome&lt;/note&gt;
+&lt;/trans-unit&gt;</pre> <p>This XML element represents the translation of the <code>&lt;h1&gt;</code> greeting tag that you marked with the <code>i18n</code> attribute earlier in this guide.</p> <p>Note that the translation unit <code>id=introductionHeader</code> is derived from the <a href="../i18n/#custom-id" title="Set a custom id">custom <code>id</code></a> that you set earlier, but without the <code>@@</code> prefix required in the source HTML.</p> </blockquote> <ol start="2"> <li>Duplicate the <code>&lt;<a href="../i18n/" class="code-anchor">source</a>/&gt;</code> tag, rename it <code><a href="../../api/router/routerlinkwithhref/#target" class="code-anchor">target</a></code>, and then replace its content with the French greeting. If you were working with a more complex translation, you could use the information and context provided by the source, description, and meaning elements to guide your selection of the appropriate French translation.</li> </ol> <blockquote> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;, after translation)" data-language="html">&lt;trans-unit id="introductionHeader" datatype="html"&gt;
+  &lt;source&gt;Hello i18n!&lt;/source&gt;
+  &lt;target&gt;Bonjour i18n !&lt;/target&gt;
+  &lt;note priority="1" from="description"&gt;An introduction header for this sample&lt;/note&gt;
+  &lt;note priority="1" from="meaning"&gt;User welcome&lt;/note&gt;
+&lt;/trans-unit&gt;</pre> </blockquote> <ol start="3"> <li>Translate the other text nodes the same way:</li> </ol> <blockquote> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" data-language="html">&lt;trans-unit id="ba0cc104d3d69bf669f97b8d96a4c5d8d9559aa3" datatype="html"&gt;
+  &lt;source&gt;I don&amp;apos;t output any element&lt;/source&gt;
+  &lt;target&gt;Je n'affiche aucun élément&lt;/target&gt;
+&lt;/trans-unit&gt;
+&lt;trans-unit id="701174153757adf13e7c24a248c8a873ac9f5193" datatype="html"&gt;
+  &lt;source&gt;Angular logo&lt;/source&gt;
+  &lt;target&gt;Logo d'Angular&lt;/target&gt;
+&lt;/trans-unit&gt;</pre> </blockquote> <blockquote class="alert is-important"> <p> <strong>The Angular i18n tools generated the ids for these translation units. Don't change them.</strong> Each <code>id</code> depends upon the content of the template text and its assigned meaning. If you change either the text or the meaning, then the <code>id</code> changes. For more information, see the <strong><a href="../i18n/#custom-id">translation file maintenance discussion</a></strong>.</p> </blockquote>  <h2 id="translating-plural-and-select-expressions">Translating plural and select expressions</h2> <p>The <em>plural</em> and <em>select</em> ICU expressions are extracted separately, so they require special attention when preparing for translation.</p> <p>Look for these expressions in relation to other translation units that you recognize from elsewhere in the source template. In this example, you know the translation unit for the <code>select</code> must be just below the translation unit for the logo.</p>  <h3 id="translate-plural">Translate <code>plural</code>
+</h3> <p>To translate a <code>plural</code>, translate its ICU format match values:</p> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" data-language="html">&lt;trans-unit id="5a134dee893586d02bffc9611056b9cadf9abfad" datatype="html"&gt;
+  &lt;source&gt;{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {&lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes ago} }&lt;/source&gt;
+  &lt;target&gt;{VAR_PLURAL, plural, =0 {à l'instant} =1 {il y a une minute} other {il y a &lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes} }&lt;/target&gt;
+&lt;/trans-unit&gt;</pre> <p>You can add or remove plural cases, with each language having its own cardinality. (See <a href="http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html" target="_blank">CLDR plural rules</a>.)</p>  <h3 id="translate-select">Translate <code>select</code>
+</h3> <p>Below is the content of our example <code>select</code> ICU expression in the component template:</p> <pre header="src/app/app.component.html" data-language="html">&lt;span i18n&gt;The author is {gender, select, male {male} female {female} other {other}}&lt;/span&gt;</pre> <p>The extraction tool broke that into two translation units because ICU expressions are extracted separately.</p> <p>The first unit contains the text that was outside of the <code>select</code>. In place of the <code>select</code> is a placeholder, <code>&lt;x id="ICU"&gt;</code>, that represents the <code>select</code> message. Translate the text and move around the placeholder if necessary, but don't remove it. If you remove the placeholder, the ICU expression will not be present in your translated app.</p> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" data-language="html">&lt;/trans-unit&gt;
+&lt;trans-unit id="f99f34ac9bd4606345071bd813858dec29f3b7d1" datatype="html"&gt;
+  &lt;source&gt;The author is &lt;x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/&gt;&lt;/source&gt;
+  &lt;target&gt;L'auteur est &lt;x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/&gt;&lt;/target&gt;
+&lt;/trans-unit&gt;</pre> <p>The second translation unit, immediately below the first one, contains the <code>select</code> message. Translate that as well.</p> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" data-language="html">&lt;trans-unit id="eff74b75ab7364b6fa888f1cbfae901aaaf02295" datatype="html"&gt;
+  &lt;source&gt;{VAR_SELECT, select, male {male} female {female} other {other} }&lt;/source&gt;
+  &lt;target&gt;{VAR_SELECT, select, male {un homme} female {une femme} other {autre} }&lt;/target&gt;
+&lt;/trans-unit&gt;</pre> <p>Here they are together, after translation:</p> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" data-language="html">&lt;/trans-unit&gt;
+&lt;trans-unit id="f99f34ac9bd4606345071bd813858dec29f3b7d1" datatype="html"&gt;
+  &lt;source&gt;The author is &lt;x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/&gt;&lt;/source&gt;
+  &lt;target&gt;L'auteur est &lt;x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/&gt;&lt;/target&gt;
+&lt;/trans-unit&gt;
+&lt;trans-unit id="eff74b75ab7364b6fa888f1cbfae901aaaf02295" datatype="html"&gt;
+  &lt;source&gt;{VAR_SELECT, select, male {male} female {female} other {other} }&lt;/source&gt;
+  &lt;target&gt;{VAR_SELECT, select, male {un homme} female {une femme} other {autre} }&lt;/target&gt;
+&lt;/trans-unit&gt;</pre>  <h3 id="translate-a-nested-expression">Translate a nested expression</h3> <p>A nested expression is similar to the previous examples. As in the previous example, there are two translation units. The first one contains the text outside of the nested expression:</p> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" data-language="html">&lt;trans-unit id="972cb0cf3e442f7b1c00d7dab168ac08d6bdf20c" datatype="html"&gt;
+  &lt;source&gt;Updated: &lt;x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/&gt;&lt;/source&gt;
+  &lt;target&gt;Mis à jour: &lt;x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/&gt;&lt;/target&gt;
+&lt;/trans-unit&gt;</pre> <p>The second unit contains the complete nested expression:</p> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" data-language="html">&lt;trans-unit id="7151c2e67748b726f0864fc443861d45df21d706" datatype="html"&gt;
+  &lt;source&gt;{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {&lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes ago by {VAR_SELECT, select, male {male} female {female} other {other} }} }&lt;/source&gt;
+  &lt;target&gt;{VAR_PLURAL, plural, =0 {à l'instant} =1 {il y a une minute} other {il y a &lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes par {VAR_SELECT, select, male {un homme} female {une femme} other {autre} }} }&lt;/target&gt;
+&lt;/trans-unit&gt;</pre> <p>And both together:</p> <pre header="src/locale/messages.fr.xlf (&lt;trans-unit&gt;)" data-language="html">&lt;trans-unit id="972cb0cf3e442f7b1c00d7dab168ac08d6bdf20c" datatype="html"&gt;
+  &lt;source&gt;Updated: &lt;x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/&gt;&lt;/source&gt;
+  &lt;target&gt;Mis à jour: &lt;x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/&gt;&lt;/target&gt;
+&lt;/trans-unit&gt;
+&lt;trans-unit id="7151c2e67748b726f0864fc443861d45df21d706" datatype="html"&gt;
+  &lt;source&gt;{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {&lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes ago by {VAR_SELECT, select, male {male} female {female} other {other} }} }&lt;/source&gt;
+  &lt;target&gt;{VAR_PLURAL, plural, =0 {à l'instant} =1 {il y a une minute} other {il y a &lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes par {VAR_SELECT, select, male {un homme} female {une femme} other {autre} }} }&lt;/target&gt;
+&lt;/trans-unit&gt;</pre> <p>The entire template translation is complete. The next section describes how to load that translation into the app.</p>  <h3 id="the-app-and-its-translation-file">The app and its translation file</h3> <p>The sample app and its translation file are now as follows:</p> <code-tabs> <pre header="src/app/app.component.html" data-language="html">&lt;h1 i18n="User welcome|An introduction header for this sample@@introductionHeader"&gt;
+  Hello i18n!
+&lt;/h1&gt;
+
+&lt;ng-container i18n&gt;I don't output any element&lt;/ng-container&gt;
+
+&lt;br /&gt;
+
+&lt;img [src]="logo" i18n-title title="Angular logo" /&gt;
+&lt;br&gt;
+&lt;button (click)="inc(1)"&gt;+&lt;/button&gt; &lt;button (click)="inc(-1)"&gt;-&lt;/button&gt;
+&lt;span i18n&gt;Updated {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}}&lt;/span&gt;
+({{minutes}})
+&lt;br&gt;&lt;br&gt;
+&lt;button (click)="male()"&gt;&amp;#9794;&lt;/button&gt; &lt;button (click)="female()"&gt;&amp;#9792;&lt;/button&gt; &lt;button (click)="other()"&gt;&amp;#9895;&lt;/button&gt;
+&lt;span i18n&gt;The author is {gender, select, male {male} female {female} other {other}}&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;span i18n&gt;Updated: {minutes, plural,
+  =0 {just now}
+  =1 {one minute ago}
+  other {{{minutes}} minutes ago by {gender, select, male {male} female {female} other {other}}}}
+&lt;/span&gt;</pre> <pre header="src/app/app.component.ts" data-language="typescript">import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  minutes = 0;
+  gender = 'female';
+  fly = true;
+  logo = 'https://angular.io/assets/images/logos/angular/angular.png';
+  heroes: string[] = ['Magneta', 'Celeritas', 'Dynama'];
+  inc(i: number) {
+    this.minutes = Math.min(5, Math.max(0, this.minutes + i));
+  }
+  male() { this.gender = 'male'; }
+  female() { this.gender = 'female'; }
+  other() { this.gender = 'other'; }
+}</pre> <pre header="src/app/app.module.ts" data-language="typescript">import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  imports: [ BrowserModule ],
+  declarations: [ AppComponent ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule { }</pre> <pre header="src/main.ts" data-language="typescript">import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);</pre> <pre header="src/locale/messages.fr.xlf" data-language="html">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2"&gt;
+  &lt;file source-language="en" datatype="plaintext" original="ng2.template"&gt;
+    &lt;body&gt;
+      &lt;trans-unit id="introductionHeader" datatype="html"&gt;
+        &lt;source&gt;Hello i18n!&lt;/source&gt;
+        &lt;note priority="1" from="description"&gt;An introduction header for this sample&lt;/note&gt;
+        &lt;note priority="1" from="meaning"&gt;User welcome&lt;/note&gt;
+      &lt;/trans-unit&gt;
+      &lt;trans-unit id="introductionHeader" datatype="html"&gt;
+        &lt;source&gt;Hello i18n!&lt;/source&gt;
+        &lt;target&gt;Bonjour i18n !&lt;/target&gt;
+        &lt;note priority="1" from="description"&gt;An introduction header for this sample&lt;/note&gt;
+        &lt;note priority="1" from="meaning"&gt;User welcome&lt;/note&gt;
+      &lt;/trans-unit&gt;
+      &lt;trans-unit id="ba0cc104d3d69bf669f97b8d96a4c5d8d9559aa3" datatype="html"&gt;
+        &lt;source&gt;I don&amp;apos;t output any element&lt;/source&gt;
+        &lt;target&gt;Je n'affiche aucun élément&lt;/target&gt;
+      &lt;/trans-unit&gt;
+      &lt;trans-unit id="701174153757adf13e7c24a248c8a873ac9f5193" datatype="html"&gt;
+        &lt;source&gt;Angular logo&lt;/source&gt;
+        &lt;target&gt;Logo d'Angular&lt;/target&gt;
+      &lt;/trans-unit&gt;
+      &lt;trans-unit id="5a134dee893586d02bffc9611056b9cadf9abfad" datatype="html"&gt;
+        &lt;source&gt;{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {&lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes ago} }&lt;/source&gt;
+        &lt;target&gt;{VAR_PLURAL, plural, =0 {à l'instant} =1 {il y a une minute} other {il y a &lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes} }&lt;/target&gt;
+      &lt;/trans-unit&gt;
+      &lt;/trans-unit&gt;
+      &lt;trans-unit id="f99f34ac9bd4606345071bd813858dec29f3b7d1" datatype="html"&gt;
+        &lt;source&gt;The author is &lt;x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/&gt;&lt;/source&gt;
+        &lt;target&gt;L'auteur est &lt;x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/&gt;&lt;/target&gt;
+      &lt;/trans-unit&gt;
+      &lt;trans-unit id="eff74b75ab7364b6fa888f1cbfae901aaaf02295" datatype="html"&gt;
+        &lt;source&gt;{VAR_SELECT, select, male {male} female {female} other {other} }&lt;/source&gt;
+        &lt;target&gt;{VAR_SELECT, select, male {un homme} female {une femme} other {autre} }&lt;/target&gt;
+      &lt;/trans-unit&gt;
+      &lt;trans-unit id="972cb0cf3e442f7b1c00d7dab168ac08d6bdf20c" datatype="html"&gt;
+        &lt;source&gt;Updated: &lt;x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/&gt;&lt;/source&gt;
+        &lt;target&gt;Mis à jour: &lt;x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/&gt;&lt;/target&gt;
+      &lt;/trans-unit&gt;
+      &lt;trans-unit id="7151c2e67748b726f0864fc443861d45df21d706" datatype="html"&gt;
+        &lt;source&gt;{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {&lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes ago by {VAR_SELECT, select, male {male} female {female} other {other} }} }&lt;/source&gt;
+        &lt;target&gt;{VAR_PLURAL, plural, =0 {à l'instant} =1 {il y a une minute} other {il y a &lt;x id="INTERPOLATION" equiv-text="{{minutes}}"/&gt; minutes par {VAR_SELECT, select, male {un homme} female {une femme} other {autre} }} }&lt;/target&gt;
+      &lt;/trans-unit&gt;
+    &lt;/body&gt;
+  &lt;/file&gt;
+&lt;/xliff&gt;</pre> </code-tabs>  <h2 id="merge-the-completed-translation-file-into-the-app">Merge the completed translation file into the app</h2> <p>To merge the translated text into component templates, compile the app with the completed translation file.</p> <p> Provide the Angular compiler with three translation-specific pieces of information:</p> <ul> <li>The translation file.</li> <li>The translation file format.</li> <li>The locale (<code>fr</code> or <code>en-US</code> for instance).</li> </ul> <p>The compilation process is the same whether the translation file is in <code>.xlf</code> format or in another format that Angular understands, such as <code>.xtb</code>.</p> <p>How you provide this information depends upon whether you compile with the JIT compiler or the AOT compiler.</p> <ul> <li>With <a href="../i18n/#merge-aot">AOT</a>, you pass the information as configuration settings.</li> <li>With <a href="../i18n/#merge-jit">JIT</a>, you provide the information at bootstrap time.</li> </ul>  <h3 id="merge-with-the-aot-compiler">Merge with the AOT compiler</h3> <p>The <a href="../glossary/#aot">AOT compiler</a> is part of a build process that produces a small, fast, ready-to-run application package, typically for production.</p> <p>When you internationalize with the AOT compiler, you must pre-build a separate application package for each language and serve the appropriate package based on either server-side language detection or url parameters.</p> <p>To instruct the AOT compiler to use your translation configuration, set the three "i18n" build configuration options in your <code>angular.json</code> file.</p> <ul> <li>
+<code>i18nFile</code>: the path to the translation file.</li> <li>
+<code>i18nFormat</code>: the format of the translation file.</li> <li>
+<code>i18nLocale</code>: the locale id.</li> </ul> <p>You should also direct the output to a locale-specific folder to keep it separate from other locale versions of your app, by setting the <code>outputPath</code> configuration option.</p> <pre>"build": {
+  ...
+  "configurations": {
+    ...
+    "fr": {
+      "aot": true,
+      "outputPath": "dist/my-project-fr/",
+      "i18nFile": "src/locale/messages.fr.xlf",
+      "i18nFormat": "xlf",
+      "i18nLocale": "fr",
+      ...
+    }
+  }
+},
+"serve": {
+  ...
+  "configurations": {
+    ...
+    "fr": {
+      "browserTarget": "*project-name*:build:fr"
+    }
+  }
+}</pre> <p>You can then pass this configuration to the <code>ng serve</code> or <code>ng build</code> commands. The example below shows how to serve the French language file created in previous sections of this guide:</p> <pre data-language="sh">ng serve --configuration=fr</pre> <p>For production builds, you define a separate <code>production-fr</code> build configuration in the CLI configuration file, <code>angular.json</code>.</p> <pre>...
+"architect": {
+  "build": {
+    "builder": "@angular-devkit/build-angular:browser",
+    "options": { ... },
+    "configurations": {
+      "fr": {
+        "aot": true,
+        "outputPath": "dist/my-project-fr/",
+        "i18nFile": "src/locale/messages.fr.xlf",
+        "i18nFormat": "xlf",
+        "i18nLocale": "fr",
+        "i18nMissingTranslation": "error",
+      }
+// ...
+"serve": {
+  "builder": "@angular-devkit/build-angular:dev-server",
+  "options": {
+    "browserTarget": "my-project:build"
+  },
+  "configurations": {
+    "production": {
+      "browserTarget": "my-project:build:production"
+    },
+    "fr": {
+      "browserTarget": "my-project:build:fr"
+    }
+  }
+},</pre> <p>The same configuration options can also be provided through the CLI with your existing <code>production</code> configuration.</p> <pre data-language="sh">ng build --prod --i18n-file src/locale/messages.fr.xlf --i18n-format xlf --i18n-locale fr</pre>  <h3 id="merge-with-the-jit-compiler">Merge with the JIT compiler</h3> <p>The <a href="../glossary/#jit">JITcompiler</a> compiles your app in the browser as the app loads. To support translation with the JIT compiler, you must do the following:</p> <ol> <li>Import the appropriate language translation file as a string constant.</li> <li>Create corresponding translation providers for the JIT compiler.</li> <li>Bootstrap the app with those providers.</li> </ol> <p>Three providers tell the JIT compiler how to translate the template texts for a particular language while compiling the app:</p> <ul> <li>
+<code><a href="../../api/core/translations/" class="code-anchor">TRANSLATIONS</a></code> is a string containing the content of the translation file.</li> <li>
+<code><a href="../../api/core/translations_format/" class="code-anchor">TRANSLATIONS_FORMAT</a></code> is the format of the file: <code>xlf</code>, <code>xlf2</code>, or <code>xtb</code>.</li> <li>
+<code><a href="../../api/core/locale_id/" class="code-anchor">LOCALE_ID</a></code> is the locale of the target language.</li> </ul> <p>The Angular <code>bootstrapModule</code> method has a second <code>compilerOptions</code> parameter that can influence the behavior of the compiler. You can use it to specify the translation providers:</p> <pre header="src/main.ts" data-language="typescript">import { enableProdMode, TRANSLATIONS, TRANSLATIONS_FORMAT } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+// use the require method provided by webpack
+declare const require;
+// we use the webpack raw-loader to return the content as a string
+const translations = require(`raw-loader!./locale/messages.fr.xlf`);
+
+platformBrowserDynamic().bootstrapModule(AppModule, {
+  providers: [
+    {provide: TRANSLATIONS, useValue: translations},
+    {provide: TRANSLATIONS_FORMAT, useValue: 'xlf'}
+  ]
+});</pre> <p>Then provide the <code><a href="../../api/core/locale_id/" class="code-anchor">LOCALE_ID</a></code> in the main module:</p> <pre header="src/app/app.module.ts" data-language="typescript">import { LOCALE_ID, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from '../src/app/app.component';
+
+@NgModule({
+  imports: [ BrowserModule ],
+  declarations: [ AppComponent ],
+  providers: [ { provide: LOCALE_ID, useValue: 'fr' } ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule { }</pre>  <h3 id="report-missing-translations">Report missing translations</h3> <p>By default, when a translation is missing, the build succeeds but generates a warning such as <code>Missing translation for <a href="../../api/common/http/httperrorresponse/#message" class="code-anchor">message</a> "foo"</code>. You can configure the level of warning that is generated by the Angular compiler:</p> <ul> <li>Error: throw an error. If you are using AOT compilation, the build will fail. If you are using JIT compilation, the app will fail to load.</li> <li>Warning (default): show a 'Missing translation' warning in the console or shell.</li> <li>Ignore: do nothing.</li> </ul> <p>You specify the warning level in the <code>configurations</code> section your Angular CLI build configuration. The example below shows how to set the warning level to error:</p> <pre>"configurations": {
+  ...
+  "fr": {
+    ...
+    "i18nMissingTranslation": "error"
+  }
+}</pre> <p>If you use the JIT compiler, specify the warning level in the compiler config at bootstrap by adding the 'MissingTranslationStrategy' property. The example below shows how to set the warning level to error:</p> <pre header="src/main.ts" data-language="typescript">import { MissingTranslationStrategy } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+
+// ...
+
+platformBrowserDynamic().bootstrapModule(AppModule, {
+  missingTranslation: MissingTranslationStrategy.Error,
+  providers: [
+    // ...
+  ]
+});</pre> <h3 id="build-for-multiple-locales">Build for multiple locales</h3> <p>When you use the CLI <code>build</code> or <code>serve</code> command to build your application for different locales, change the output path using the <code>--outputPath</code> command option (along with the i18n-specific command options), so that the translation files are saved to different locations. When you are serving a locale-specific version from a subdirectory, you can also change the base URL used by your app by specifying the <code>--baseHref</code> option.</p> <p>For example, if the French version of your application is served from <a href="https://myapp.com/fr/" target="_blank">https://myapp.com/fr/</a>, configure the build for the French version as follows.</p> <pre>"configurations": {
+  "fr": {
+    "aot": true,
+    "outputPath": "dist/my-project-fr/",
+    "baseHref": "/fr/",
+    "i18nFile": "src/locale/messages.fr.xlf",
+    "i18nFormat": "xlf",
+    "i18nLocale": "fr",
+    "i18nMissingTranslation": "error",
+  }</pre> <p>For more details about how to create scripts to generate an app in multiple languages and how to set up Apache 2 to serve them from different subdirectories, read <a href="https://medium.com/@feloy/deploying-an-i18n-angular-app-with-angular-cli-fc788f17e358#.1xq4iy6fp" target="_blank">this tutorial by Philippe Martin</a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v7.angular.io/guide/i18n" class="_attribution-link" target="_blank">https://v7.angular.io/guide/i18n</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

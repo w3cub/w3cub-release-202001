@@ -1,0 +1,444 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>The Ahead-of-Time (AOT) Compiler - Angular 7 - W3cubDocs</title>
+  
+  <meta name="description" content="An Angular application consists mainly of components and their HTML templates. Because the components and templates provided by Angular cannot be &hellip;">
+  <meta name="keywords" content="ahead-of-time, aot, compiler, -, angular, angular~7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~7/guide/aot-compiler/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/angular~7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~7/" class="_nav-link" title="" style="margin-left:0;">Angular 7</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _angular">
+				
+				
+<h1 id="the-ahead-of-time-aot-compiler">The Ahead-of-Time (AOT) compiler</h1> <p>An Angular application consists mainly of components and their HTML templates. Because the components and templates provided by Angular cannot be understood by the browser directly, Angular applications require a compilation process before they can run in a browser.</p> <p>The Angular Ahead-of-Time (AOT) compiler converts your Angular HTML and TypeScript code into efficient JavaScript code during the build phase <em>before</em> the browser downloads and runs that code. Compiling your application during the build process provides a faster rendering in the browser.</p> <p>This guide explains how to specify metadata and apply available compiler options to compile your applications efficiently using the AOT compiler.</p> <blockquote class="alert is-helpful"> <a href="https://www.youtube.com/watch?v=kW9cJsvcsGo" target="_blank">Watch compiler author Tobias Bosch explain the Angular compiler</a> at AngularConnect 2016. </blockquote>  <h2 id="angular-compilation">Angular compilation</h2> <p>Angular offers two ways to compile your application:</p> <ol> <li>
+<strong><em>Just-in-Time</em> (JIT)</strong>, which compiles your app in the browser at runtime.</li> <li>
+<strong><em>Ahead-of-Time</em> (AOT)</strong>, which compiles your app at build time.</li> </ol> <p>JIT compilation is the default when you run the <a href="../cli/build/"><code>ng build</code></a> (build only) or <a href="../cli/serve/"><code>ng serve</code></a> (build and serve locally) CLI commands: </p> <pre data-language="sh">ng build
+  ng serve</pre>  <p>For AOT compilation, include the <code>--aot</code> option with the <code>ng build</code> or <code>ng serve</code> command:</p> <pre data-language="sh">ng build --aot
+  ng serve --aot</pre> <blockquote class="alert is-helpful"> <p>The <code>ng build</code> command with the <code>--prod</code> meta-flag (<code>ng build --prod</code>) compiles with AOT by default.</p> <p>See the <a href="../cli/">CLI command reference</a> and <a href="../build/">Building and serving Angular apps</a> for more information.</p> </blockquote>  <h2 id="why-compile-with-aot">Why compile with AOT?</h2> <p><em>Faster rendering</em></p> <p>With AOT, the browser downloads a pre-compiled version of the application. The browser loads executable code so it can render the application immediately, without waiting to compile the app first.</p> <p><em>Fewer asynchronous requests</em></p> <p>The compiler <em>inlines</em> external HTML templates and CSS style sheets within the application JavaScript, eliminating separate ajax requests for those source files.</p> <p><em>Smaller Angular framework download size</em></p> <p>There's no need to download the Angular compiler if the app is already compiled. The compiler is roughly half of Angular itself, so omitting it dramatically reduces the application payload.</p> <p><em>Detect template errors earlier</em></p> <p>The AOT compiler detects and reports template binding errors during the build step before users can see them.</p> <p><em>Better security</em></p> <p>AOT compiles HTML templates and components into JavaScript files long before they are served to the client. With no templates to read and no risky client-side HTML or JavaScript evaluation, there are fewer opportunities for injection attacks.</p> <h2 id="controlling-app-compilation">Controlling app compilation</h2> <p>When you use the Angular AOT compiler, you can control your app compilation in two ways:</p> <ul> <li> <p>By providing template compiler options in the <code>tsconfig.json</code> file.</p> <p> For more information, see <a href="../aot-compiler/#compiler-options">Angular template compiler options</a>.</p> </li> <li> <p>By <a href="../aot-compiler/#metadata-aot">specifying Angular metadata</a>.</p> </li> </ul>  <h2 id="specifying-angular-metadata">Specifying Angular metadata</h2> <p>Angular metadata tells Angular how to construct instances of your application classes and interact with them at runtime. The Angular <strong>AOT compiler</strong> extracts <strong>metadata</strong> to interpret the parts of the application that Angular is supposed to manage.</p> <p>You can specify the metadata with <strong>decorators</strong> such as <code>@<a href="../../api/core/component/" class="code-anchor">Component</a>()</code> and <code>@<a href="../../api/core/input/" class="code-anchor">Input</a>()</code> or implicitly in the constructor declarations of these decorated classes.</p> <p>In the following example, the <code>@<a href="../../api/core/component/" class="code-anchor">Component</a>()</code> metadata object and the class constructor tell Angular how to create and display an instance of <code>TypicalComponent</code>.</p> <pre data-language="typescript">@Component({
+  selector: 'app-typical',
+  template: '&lt;div&gt;A typical component for {{data.name}}&lt;/div&gt;'
+)}
+export class TypicalComponent {
+  @Input() data: TypicalData;
+  constructor(private someService: SomeService) { ... }
+}</pre> <p>The Angular compiler extracts the metadata <em>once</em> and generates a <em>factory</em> for <code>TypicalComponent</code>. When it needs to create a <code>TypicalComponent</code> instance, Angular calls the factory, which produces a new visual element, bound to a new instance of the component class with its injected dependency.</p> <h2 id="metadata-restrictions">Metadata restrictions</h2> <p>You write metadata in a <em>subset</em> of TypeScript that must conform to the following general constraints:</p> <ol> <li>Limit <a href="../aot-compiler/#expression-syntax">expression syntax</a> to the supported subset of JavaScript.</li> <li>Only reference exported symbols after <a href="../aot-compiler/#folding">code folding</a>.</li> <li>Only call <a href="../aot-compiler/#supported-functions">functions supported</a> by the compiler.</li> <li>Decorated and data-bound class members must be public.</li> </ol> <p>The next sections elaborate on these points.</p> <h2 id="how-aot-works">How AOT works</h2> <p>It helps to think of the AOT compiler as having two phases: a code analysis phase in which it simply records a representation of the source; and a code generation phase in which the compiler's <code>StaticReflector</code> handles the interpretation as well as places restrictions on what it interprets.</p> <h2 id="phase-1-analysis">Phase 1: analysis</h2> <p>The TypeScript compiler does some of the analytic work of the first phase. It emits the <code>.d.ts</code> <em>type definition files</em> with type information that the AOT compiler needs to generate application code.</p> <p>At the same time, the AOT <strong><em>collector</em></strong> analyzes the metadata recorded in the Angular decorators and outputs metadata information in <strong><code>.metadata.json</code></strong> files, one per <code>.d.ts</code> file.</p> <p>You can think of <code>.metadata.json</code> as a diagram of the overall structure of a decorator's metadata, represented as an <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree" target="_blank">abstract syntax tree (AST)</a>.</p> <blockquote class="alert is-helpful"> <p>Angular's <a href="https://github.com/angular/angular/blob/master/packages/compiler-cli/src/metadata/schema.ts" target="_blank">schema.ts</a> describes the JSON format as a collection of TypeScript interfaces.</p> </blockquote>  <h3 id="expression-syntax">Expression syntax</h3> <p>The <em>collector</em> only understands a subset of JavaScript. Define metadata objects with the following limited syntax:</p>  <table> <tbody>
+<tr> <th>Syntax</th> <th>Example</th> </tr> <tr> <td>Literal object </td> <td><code>{cherry: true, apple: true, mincemeat: false}</code></td> </tr> <tr> <td>Literal array </td> <td><code>['cherries', 'flour', 'sugar']</code></td> </tr> <tr> <td>Spread in literal array</td> <td><code>['apples', 'flour', ...the_rest]</code></td> </tr> <tr> <td>Calls</td> <td><code>bake(ingredients)</code></td> </tr> <tr> <td>New</td> <td><code>new Oven()</code></td> </tr> <tr> <td>Property access</td> <td><code>pie.slice</code></td> </tr> <tr> <td>Array index</td> <td><code>ingredients[0]</code></td> </tr> <tr> <td>Identity reference</td> <td><code><a href="../../api/core/component/" class="code-anchor">Component</a></code></td> </tr> <tr> <td>A template string</td> <td><code>`pie is ${multiplier} times better than cake`</code></td> </tr>
+<tr> <td>Literal string</td> <td><code>pi</code></td> </tr> <tr> <td>Literal number</td> <td><code>3.14153265</code></td> </tr> <tr> <td>Literal boolean</td> <td><code>true</code></td> </tr> <tr> <td>Literal null</td> <td><code>null</code></td> </tr> <tr> <td>Supported prefix operator </td> <td><code>!cake</code></td> </tr> <tr> <td>Supported binary operator </td> <td><code><a href="../../api/router/routerlinkwithhref/" class="code-anchor">a</a>+b</code></td> </tr> <tr> <td>Conditional operator</td> <td><code><a href="../../api/router/routerlinkwithhref/" class="code-anchor">a</a> ? b : c</code></td> </tr> <tr> <td>Parentheses</td> <td><code>(<a href="../../api/router/routerlinkwithhref/" class="code-anchor">a</a>+b)</code></td> </tr> </tbody>
+</table> <p>If an expression uses unsupported syntax, the <em>collector</em> writes an error node to the <code>.metadata.json</code> file. The compiler later reports the error if it needs that piece of metadata to generate the application code.</p> <blockquote class="alert is-helpful"> <p> If you want <code>ngc</code> to report syntax errors immediately rather than produce a <code>.metadata.json</code> file with errors, set the <code>strictMetadataEmit</code> option in <code>tsconfig</code>.</p> <pre>"angularCompilerOptions": {
+   ...
+   "strictMetadataEmit" : true
+ }</pre> <p>Angular libraries have this option to ensure that all Angular <code>.metadata.json</code> files are clean and it is a best practice to do the same when building your own libraries.</p> </blockquote>   <h3 id="no-arrow-functions">No arrow functions</h3> <p>The AOT compiler does not support <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function" target="_blank">function expressions</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank">arrow functions</a>, also called <em>lambda</em> functions.</p> <p>Consider the following component decorator:</p> <pre data-language="typescript">@Component({
+  ...
+  providers: [{provide: server, useFactory: () =&gt; new Server()}]
+})</pre> <p>The AOT <em>collector</em> does not support the arrow function, <code>() =&gt; new Server()</code>, in a metadata expression. It generates an error node in place of the function.</p> <p>When the compiler later interprets this node, it reports an error that invites you to turn the arrow function into an <em>exported function</em>.</p> <p>You can fix the error by converting to this:</p> <pre data-language="typescript">export function serverFactory() {
+  return new Server();
+}
+
+@Component({
+  ...
+  providers: [{provide: server, useFactory: serverFactory}]
+})</pre> <p>Beginning in version 5, the compiler automatically performs this rewriting while emitting the <code>.js</code> file.</p>  <h3 id="limited-function-calls">Limited function calls</h3> <p>The <em>collector</em> can represent a function call or object creation with <code>new</code> as long as the syntax is valid. The <em>collector</em> only cares about proper syntax.</p> <p>But beware. The compiler may later refuse to generate a call to a <em>particular</em> function or creation of a <em>particular</em> object. The compiler only supports calls to a small set of functions and will use <code>new</code> for only a few designated classes. These functions and classes are in a table of <a href="../aot-compiler/#supported-functions">below</a>.</p> <h3 id="folding">Folding</h3>  <p>The compiler can only resolve references to <strong><em>exported</em></strong> symbols. Fortunately, the <em>collector</em> enables limited use of non-exported symbols through <em>folding</em>.</p> <p>The <em>collector</em> may be able to evaluate an expression during collection and record the result in the <code>.metadata.json</code> instead of the original expression.</p> <p>For example, the <em>collector</em> can evaluate the expression <code>1 + 2 + 3 + 4</code> and replace it with the result, <code>10</code>.</p> <p>This process is called <em>folding</em>. An expression that can be reduced in this manner is <em>foldable</em>.</p>  <p>The collector can evaluate references to module-local <code>const</code> declarations and initialized <code>var</code> and <code>let</code> declarations, effectively removing them from the <code>.metadata.json</code> file.</p> <p>Consider the following component definition:</p> <pre data-language="typescript">const template = '&lt;div&gt;{{hero.name}}&lt;/div&gt;';
+
+@Component({
+  selector: 'app-hero',
+  template: template
+})
+export class HeroComponent {
+  @Input() hero: Hero;
+}</pre> <p>The compiler could not refer to the <code>template</code> constant because it isn't exported.</p> <p>But the <em>collector</em> can <em>fold</em> the <code>template</code> constant into the metadata definition by inlining its contents. The effect is the same as if you had written:</p> <pre data-language="typescript">@Component({
+  selector: 'app-hero',
+  template: '&lt;div&gt;{{hero.name}}&lt;/div&gt;'
+})
+export class HeroComponent {
+  @Input() hero: Hero;
+}</pre> <p>There is no longer a reference to <code>template</code> and, therefore, nothing to trouble the compiler when it later interprets the <em>collector's</em> output in <code>.metadata.json</code>.</p> <p>You can take this example a step further by including the <code>template</code> constant in another expression:</p> <pre data-language="typescript">const template = '&lt;div&gt;{{hero.name}}&lt;/div&gt;';
+
+@Component({
+  selector: 'app-hero',
+  template: template + '&lt;div&gt;{{hero.title}}&lt;/div&gt;'
+})
+export class HeroComponent {
+  @Input() hero: Hero;
+}</pre> <p>The <em>collector</em> reduces this expression to its equivalent <em>folded</em> string:</p> <p><code>'&lt;div&gt;{{hero.name}}&lt;/div&gt;&lt;div&gt;{{hero.title}}&lt;/div&gt;'</code>.</p> <h4 id="foldable-syntax">Foldable syntax</h4> <p>The following table describes which expressions the <em>collector</em> can and cannot fold:</p>  <table> <tbody>
+<tr> <th>Syntax</th> <th>Foldable</th> </tr> <tr> <td>Literal object </td> <td>Yes</td> </tr> <tr> <td>Literal array </td> <td>Yes</td> </tr> <tr> <td>Spread in literal array</td> <td>no</td> </tr> <tr> <td>Calls</td> <td>no</td> </tr> <tr> <td>New</td> <td>no</td> </tr> <tr> <td>Property access</td> <td>yes, if target is foldable</td> </tr> <tr> <td>Array index</td> <td> yes, if target and index are foldable</td> </tr> <tr> <td>Identity reference</td> <td>yes, if it is a reference to a local</td> </tr> <tr> <td>A template with no substitutions</td> <td>yes</td> </tr> <tr> <td>A template with substitutions</td> <td>yes, if the substitutions are foldable</td> </tr> <tr> <td>Literal string</td> <td>yes</td> </tr> <tr> <td>Literal number</td> <td>yes</td> </tr> <tr> <td>Literal boolean</td> <td>yes</td> </tr> <tr> <td>Literal null</td> <td>yes</td> </tr> <tr> <td>Supported prefix operator </td> <td>yes, if operand is foldable</td> </tr> <tr> <td>Supported binary operator </td> <td>yes, if both left and right are foldable</td> </tr> <tr> <td>Conditional operator</td> <td>yes, if condition is foldable </td> </tr> <tr> <td>Parentheses</td> <td>yes, if the expression is foldable</td> </tr> </tbody>
+</table> <p>If an expression is not foldable, the collector writes it to <code>.metadata.json</code> as an <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree" target="_blank">AST</a> for the compiler to resolve.</p> <h2 id="phase-2-code-generation">Phase 2: code generation</h2> <p>The <em>collector</em> makes no attempt to understand the metadata that it collects and outputs to <code>.metadata.json</code>. It represents the metadata as best it can and records errors when it detects a metadata syntax violation.</p> <p>It's the compiler's job to interpret the <code>.metadata.json</code> in the code generation phase.</p> <p>The compiler understands all syntax forms that the <em>collector</em> supports, but it may reject <em>syntactically</em> correct metadata if the <em>semantics</em> violate compiler rules.</p> <p>The compiler can only reference <em>exported symbols</em>.</p> <p>Decorated component class members must be public. You cannot make an <code>@<a href="../../api/core/input/" class="code-anchor">Input</a>()</code> property private or protected.</p> <p>Data bound properties must also be public.</p> <pre data-language="typescript">// BAD CODE - title is private
+@Component({
+  selector: 'app-root',
+  template: '&lt;h1&gt;{{title}}&lt;/h1&gt;'
+})
+export class AppComponent {
+  private title = 'My App'; // Bad
+}</pre>  <p>Most importantly, the compiler only generates code to create instances of certain classes, support certain decorators, and call certain functions from the following lists.</p> <h3 id="new-instances">New instances</h3> <p>The compiler only allows metadata that create instances of the class <code><a href="../../api/core/injectiontoken/" class="code-anchor">InjectionToken</a></code> from <code>@angular/core</code>.</p> <h3 id="annotationsdecorators">Annotations/Decorators</h3> <p>The compiler only supports metadata for these Angular decorators.</p>  <table> <tbody>
+<tr> <th>Decorator</th> <th>Module</th> </tr> <tr> <td><code><a href="../../api/core/attribute/" class="code-anchor">Attribute</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/component/" class="code-anchor">Component</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/contentchild/" class="code-anchor">ContentChild</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/contentchildren/" class="code-anchor">ContentChildren</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/directive/" class="code-anchor">Directive</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/host/" class="code-anchor">Host</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/hostbinding/" class="code-anchor">HostBinding</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code>HostListner</code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/inject/" class="code-anchor">Inject</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/injectable/" class="code-anchor">Injectable</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/input/" class="code-anchor">Input</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/ngmodule/" class="code-anchor">NgModule</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/optional/" class="code-anchor">Optional</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/output/" class="code-anchor">Output</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/pipe/" class="code-anchor">Pipe</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/self/" class="code-anchor">Self</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/skipself/" class="code-anchor">SkipSelf</a></code></td> <td><code>@angular/core</code></td> </tr> <tr> <td><code><a href="../../api/core/viewchild/" class="code-anchor">ViewChild</a></code></td> <td><code>@angular/core</code></td> </tr> </tbody>
+</table> <h3 id="macro-functions-and-macro-static-methods">Macro-functions and macro-static methods</h3> <p>The compiler also supports <em>macros</em> in the form of functions or static methods that return an expression.</p> <p>For example, consider the following function:</p> <pre data-language="typescript">export function wrapInArray&lt;T&gt;(value: T): T[] {
+  return [value];
+}</pre> <p>You can call the <code>wrapInArray</code> in a metadata definition because it returns the value of an expression that conforms to the compiler's restrictive JavaScript subset.</p> <p>You might use <code>wrapInArray()</code> like this:</p> <pre data-language="typescript">@NgModule({
+  declarations: wrapInArray(TypicalComponent)
+})
+export class TypicalModule {}</pre> <p>The compiler treats this usage as if you had written:</p> <pre data-language="typescript">@NgModule({
+  declarations: [TypicalComponent]
+})
+export class TypicalModule {}</pre> <p>The collector is simplistic in its determination of what qualifies as a macro function; it can only contain a single <code>return</code> statement.</p> <p>The Angular <a href="../../api/router/routermodule/"><code>RouterModule</code></a> exports two macro static methods, <code>forRoot</code> and <code>forChild</code>, to help declare root and child routes. Review the <a href="https://github.com/angular/angular/blob/master/packages/router/src/router_module.ts#L139" title="RouterModule.forRoot source code" target="_blank">source code</a> for these methods to see how macros can simplify configuration of complex <a href="../ngmodules/">NgModules</a>.</p>  <h3 id="metadata-rewriting">Metadata rewriting</h3> <p>The compiler treats object literals containing the fields <code>useClass</code>, <code>useValue</code>, <code>useFactory</code>, and <code>data</code> specially. The compiler converts the expression initializing one of these fields into an exported variable, which replaces the expression. This process of rewriting these expressions removes all the restrictions on what can be in them because the compiler doesn't need to know the expression's value—it just needs to be able to generate a reference to the value.</p> <p>You might write something like:</p> <pre data-language="typescript">class TypicalServer {
+
+}
+
+@NgModule({
+  providers: [{provide: SERVER, useFactory: () =&gt; TypicalServer}]
+})
+export class TypicalModule {}</pre> <p>Without rewriting, this would be invalid because lambdas are not supported and <code>TypicalServer</code> is not exported.</p> <p>To allow this, the compiler automatically rewrites this to something like:</p> <pre data-language="typescript">class TypicalServer {
+
+}
+
+export const ɵ0 = () =&gt; new TypicalServer();
+
+@NgModule({
+  providers: [{provide: SERVER, useFactory: ɵ0}]
+})
+export class TypicalModule {}</pre> <p>This allows the compiler to generate a reference to <code>ɵ0</code> in the factory without having to know what the value of <code>ɵ0</code> contains.</p> <p>The compiler does the rewriting during the emit of the <code>.js</code> file. This doesn't rewrite the <code>.d.ts</code> file, however, so TypeScript doesn't recognize it as being an export. Thus, it does not pollute the ES module's exported API.</p> <h2 id="metadata-errors">Metadata errors</h2> <p>The following are metadata errors you may encounter, with explanations and suggested corrections.</p> <p><a href="../aot-compiler/#expression-form-not-supported">Expression form not supported</a> <a href="../aot-compiler/#reference-to-a-local-symbol">Reference to a local (non-exported) symbol</a> <a href="../aot-compiler/#only-initialized-variables">Only initialized variables and constants</a> <a href="../aot-compiler/#reference-to-a-non-exported-class">Reference to a non-exported class</a> <a href="../aot-compiler/#reference-to-a-non-exported-function">Reference to a non-exported function</a> <a href="../aot-compiler/#function-calls-not-supported">Function calls are not supported</a> <a href="../aot-compiler/#destructured-variable-not-supported">Destructured variable or constant not supported</a> <a href="../aot-compiler/#could-not-resolve-type">Could not resolve type</a> <a href="../aot-compiler/#name-expected">Name expected</a> <a href="../aot-compiler/#unsupported-enum-member-name">Unsupported enum member name</a> <a href="../aot-compiler/#tagged-template-expressions-not-supported">Tagged template expressions are not supported</a> <a href="../aot-compiler/#symbol-reference-expected">Symbol reference expected</a></p>  <h3 class="no-toc" id="expression-form-not-supported">Expression form not supported</h3> <p>The compiler encountered an expression it didn't understand while evaluating Angular metadata.</p> <p>Language features outside of the compiler's <a href="../aot-compiler/#expression-syntax">restricted expression syntax</a> can produce this error, as seen in the following example:</p> <pre>// ERROR
+export class Fooish { ... }
+...
+const prop = typeof Fooish; // typeof is not valid in metadata
+  ...
+  // bracket notation is not valid in metadata
+  { provide: 'token', useValue: { [prop]: 'value' } };
+  ...</pre> <p>You can use <code>typeof</code> and bracket notation in normal application code. You just can't use those features within expressions that define Angular metadata.</p> <p>Avoid this error by sticking to the compiler's <a href="../aot-compiler/#expression-syntax">restricted expression syntax</a> when writing Angular metadata and be wary of new or unusual TypeScript features.</p>   <h3 class="no-toc" id="reference-to-a-local-non-exported-symbol">Reference to a local (non-exported) symbol</h3> <blockquote class="alert is-helpful"> <p><em>Reference to a local (non-exported) symbol 'symbol name'. Consider exporting the symbol.</em></p> </blockquote> <p>The compiler encountered a referenced to a locally defined symbol that either wasn't exported or wasn't initialized.</p> <p>Here's a <code>provider</code> example of the problem.</p> <pre>// ERROR
+let foo: number; // neither exported nor initialized
+
+@Component({
+  selector: 'my-component',
+  template: ... ,
+  providers: [
+    { provide: Foo, useValue: foo }
+  ]
+})
+export class MyComponent {}</pre> <p>The compiler generates the component factory, which includes the <code>useValue</code> provider code, in a separate module. <em>That</em> factory module can't reach back to <em>this</em> source module to access the local (non-exported) <code>foo</code> variable.</p> <p>You could fix the problem by initializing <code>foo</code>.</p> <pre>let foo = 42; // initialized</pre> <p>The compiler will <a href="../aot-compiler/#folding">fold</a> the expression into the provider as if you had written this.</p> <pre>providers: [
+    { provide: Foo, useValue: 42 }
+  ]</pre> <p>Alternatively, you can fix it by exporting <code>foo</code> with the expectation that <code>foo</code> will be assigned at runtime when you actually know its value.</p> <pre>// CORRECTED
+export let foo: number; // exported
+
+@Component({
+  selector: 'my-component',
+  template: ... ,
+  providers: [
+    { provide: Foo, useValue: foo }
+  ]
+})
+export class MyComponent {}</pre> <p>Adding <code>export</code> often works for variables referenced in metadata such as <code>providers</code> and <code>animations</code> because the compiler can generate <em>references</em> to the exported variables in these expressions. It doesn't need the <em>values</em> of those variables.</p> <p>Adding <code>export</code> doesn't work when the compiler needs the <em>actual value</em> in order to generate code. For example, it doesn't work for the <code>template</code> property.</p> <pre>// ERROR
+export let someTemplate: string; // exported but not initialized
+
+@Component({
+  selector: 'my-component',
+  template: someTemplate
+})
+export class MyComponent {}</pre> <p>The compiler needs the value of the <code>template</code> property <em>right now</em> to generate the component factory. The variable reference alone is insufficient. Prefixing the declaration with <code>export</code> merely produces a new error, "<a href="../aot-compiler/#only-initialized-variables"><code>Only initialized variables and constants can be referenced</code></a>".</p>   <h3 class="no-toc" id="only-initialized-variables-and-constants">Only initialized variables and constants</h3> <blockquote class="alert is-helpful"> <p><em>Only initialized variables and constants can be referenced because the value of this variable is needed by the template compiler.</em></p> </blockquote> <p>The compiler found a reference to an exported variable or static field that wasn't initialized. It needs the value of that variable to generate code.</p> <p>The following example tries to set the component's <code>template</code> property to the value of the exported <code>someTemplate</code> variable which is declared but <em>unassigned</em>.</p> <pre>// ERROR
+export let someTemplate: string;
+
+@Component({
+  selector: 'my-component',
+  template: someTemplate
+})
+export class MyComponent {}</pre> <p>You'd also get this error if you imported <code>someTemplate</code> from some other module and neglected to initialize it there.</p> <pre>// ERROR - not initialized there either
+import { someTemplate } from './config';
+
+@Component({
+  selector: 'my-component',
+  template: someTemplate
+})
+export class MyComponent {}</pre> <p>The compiler cannot wait until runtime to get the template information. It must statically derive the value of the <code>someTemplate</code> variable from the source code so that it can generate the component factory, which includes instructions for building the element based on the template.</p> <p>To correct this error, provide the initial value of the variable in an initializer clause <em>on the same line</em>.</p> <pre>// CORRECTED
+export let someTemplate = '&lt;h1&gt;Greetings from Angular&lt;/h1&gt;';
+
+@Component({
+  selector: 'my-component',
+  template: someTemplate
+})
+export class MyComponent {}</pre>  <h3 class="no-toc" id="reference-to-a-non-exported-class">Reference to a non-exported class</h3> <blockquote class="alert is-helpful"> <p><em>Reference to a non-exported class <class name="">. Consider exporting the class.</class></em></p> </blockquote> <p>Metadata referenced a class that wasn't exported.</p> <p>For example, you may have defined a class and used it as an injection token in a providers array but neglected to export that class.</p> <pre>// ERROR
+abstract class MyStrategy { }
+
+  ...
+  providers: [
+    { provide: MyStrategy, useValue: ... }
+  ]
+  ...</pre> <p>Angular generates a class factory in a separate module and that factory <a href="../aot-compiler/#exported-symbols">can only access exported classes</a>. To correct this error, export the referenced class.</p> <pre>// CORRECTED
+export abstract class MyStrategy { }
+
+  ...
+  providers: [
+    { provide: MyStrategy, useValue: ... }
+  ]
+  ...</pre>  <h3 class="no-toc" id="reference-to-a-non-exported-function">Reference to a non-exported function</h3> <p>Metadata referenced a function that wasn't exported.</p> <p>For example, you may have set a providers <code>useFactory</code> property to a locally defined function that you neglected to export.</p> <pre>// ERROR
+function myStrategy() { ... }
+
+  ...
+  providers: [
+    { provide: MyStrategy, useFactory: myStrategy }
+  ]
+  ...</pre> <p>Angular generates a class factory in a separate module and that factory <a href="../aot-compiler/#exported-symbols">can only access exported functions</a>. To correct this error, export the function.</p> <pre>// CORRECTED
+export function myStrategy() { ... }
+
+  ...
+  providers: [
+    { provide: MyStrategy, useFactory: myStrategy }
+  ]
+  ...</pre>   <h3 class="no-toc" id="function-calls-are-not-supported">Function calls are not supported</h3> <blockquote class="alert is-helpful"> <p><em>Function calls are not supported. Consider replacing the function or lambda with a reference to an exported function.</em></p> </blockquote> <p>The compiler does not currently support <a href="../aot-compiler/#function-expression">function expressions or lambda functions</a>. For example, you cannot set a provider's <code>useFactory</code> to an anonymous function or arrow function like this.</p> <pre>// ERROR
+  ...
+  providers: [
+    { provide: MyStrategy, useFactory: function() { ... } },
+    { provide: OtherStrategy, useFactory: () =&gt; { ... } }
+  ]
+  ...</pre> <p>You also get this error if you call a function or method in a provider's <code>useValue</code>.</p> <pre>// ERROR
+import { calculateValue } from './utilities';
+
+  ...
+  providers: [
+    { provide: SomeValue, useValue: calculateValue() }
+  ]
+  ...</pre> <p>To correct this error, export a function from the module and refer to the function in a <code>useFactory</code> provider instead.</p> <pre>// CORRECTED
+import { calculateValue } from './utilities';
+
+export function myStrategy() { ... }
+export function otherStrategy() { ... }
+export function someValueFactory() {
+  return calculateValue();
+}
+  ...
+  providers: [
+    { provide: MyStrategy, useFactory: myStrategy },
+    { provide: OtherStrategy, useFactory: otherStrategy },
+    { provide: SomeValue, useFactory: someValueFactory }
+  ]
+  ...</pre>   <h3 class="no-toc" id="destructured-variable-or-constant-not-supported">Destructured variable or constant not supported</h3> <blockquote class="alert is-helpful"> <p><em>Referencing an exported destructured variable or constant is not supported by the template compiler. Consider simplifying this to avoid destructuring.</em></p> </blockquote> <p>The compiler does not support references to variables assigned by <a href="https://www.typescriptlang.org/docs/handbook/variable-declarations.html#destructuring" target="_blank">destructuring</a>.</p> <p>For example, you cannot write something like this:</p> <pre>// ERROR
+import { configuration } from './configuration';
+
+// destructured assignment to foo and bar
+const {foo, bar} = configuration;
+  ...
+  providers: [
+    {provide: Foo, useValue: foo},
+    {provide: Bar, useValue: bar},
+  ]
+  ...</pre> <p>To correct this error, refer to non-destructured values.</p> <pre>// CORRECTED
+import { configuration } from './configuration';
+  ...
+  providers: [
+    {provide: Foo, useValue: configuration.foo},
+    {provide: Bar, useValue: configuration.bar},
+  ]
+  ...</pre>  <h3 class="no-toc" id="could-not-resolve-type">Could not resolve type</h3> <p>The compiler encountered a type and can't determine which module exports that type.</p> <p>This can happen if you refer to an ambient type. For example, the <code>Window</code> type is an ambient type declared in the global <code>.d.ts</code> file.</p> <p>You'll get an error if you reference it in the component constructor, which the compiler must statically analyze.</p> <pre>// ERROR
+@Component({ })
+export class MyComponent {
+  constructor (private win: Window) { ... }
+}</pre> <p>TypeScript understands ambient types so you don't import them. The Angular compiler does not understand a type that you neglect to export or import.</p> <p>In this case, the compiler doesn't understand how to inject something with the <code>Window</code> token.</p> <p>Do not refer to ambient types in metadata expressions.</p> <p>If you must inject an instance of an ambient type, you can finesse the problem in four steps:</p> <ol> <li>Create an injection token for an instance of the ambient type.</li> <li>Create a factory function that returns that instance.</li> <li>Add a <code>useFactory</code> provider with that factory function.</li> <li>Use <code>@<a href="../../api/core/inject/" class="code-anchor">Inject</a></code> to inject the instance.</li> </ol> <p>Here's an illustrative example.</p> <pre>// CORRECTED
+import { Inject } from '@angular/core';
+
+export const WINDOW = new InjectionToken('Window');
+export function _window() { return window; }
+
+@Component({
+  ...
+  providers: [
+    { provide: WINDOW, useFactory: _window }
+  ]
+})
+export class MyComponent {
+  constructor (@Inject(WINDOW) private win: Window) { ... }
+}</pre> <p>The <code>Window</code> type in the constructor is no longer a problem for the compiler because it uses the <code>@<a href="../../api/core/inject/" class="code-anchor">Inject</a>(WINDOW)</code> to generate the injection code.</p> <p>Angular does something similar with the <code><a href="../../api/common/document/" class="code-anchor">DOCUMENT</a></code> token so you can inject the browser's <code><a href="../../api/platform-server/platformconfig/#document" class="code-anchor">document</a></code> object (or an abstraction of it, depending upon the platform in which the application runs).</p> <pre>import { Inject }   from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
+
+@Component({ ... })
+export class MyComponent {
+  constructor (@Inject(DOCUMENT) private doc: Document) { ... }
+}</pre>  <h3 class="no-toc" id="name-expected">Name expected</h3> <p>The compiler expected a name in an expression it was evaluating. This can happen if you use a number as a property name as in the following example.</p> <pre>// ERROR
+provider: [{ provide: Foo, useValue: { 0: 'test' } }]</pre> <p>Change the name of the property to something non-numeric.</p> <pre>// CORRECTED
+provider: [{ provide: Foo, useValue: { '0': 'test' } }]</pre>  <h3 class="no-toc" id="unsupported-enum-member-name">Unsupported enum member name</h3> <p>Angular couldn't determine the value of the <a href="https://www.typescriptlang.org/docs/handbook/enums.html" target="_blank">enum member</a> that you referenced in metadata.</p> <p>The compiler can understand simple enum values but not complex values such as those derived from computed properties.</p> <pre>// ERROR
+enum Colors {
+  Red = 1,
+  White,
+  Blue = "Blue".length // computed
+}
+
+  ...
+  providers: [
+    { provide: BaseColor,   useValue: Colors.White } // ok
+    { provide: DangerColor, useValue: Colors.Red }   // ok
+    { provide: StrongColor, useValue: Colors.Blue }  // bad
+  ]
+  ...</pre> <p>Avoid referring to enums with complicated initializers or computed properties.</p>   <h3 class="no-toc" id="tagged-template-expressions-are-not-supported">Tagged template expressions are not supported</h3> <blockquote class="alert is-helpful"> <p><em>Tagged template expressions are not supported in metadata.</em></p> </blockquote> <p>The compiler encountered a JavaScript ES2015 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals" target="_blank">tagged template expression</a> such as,</p> <pre>// ERROR
+const expression = 'funky';
+const raw = String.raw`A tagged template ${expression} string`;
+ ...
+ template: '&lt;div&gt;' + raw + '&lt;/div&gt;'
+ ...</pre> <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/raw" target="_blank"><code>String.raw()</code></a> is a <em>tag function</em> native to JavaScript ES2015.</p> <p>The AOT compiler does not support tagged template expressions; avoid them in metadata expressions.</p>  <h3 class="no-toc" id="symbol-reference-expected">Symbol reference expected</h3> <p>The compiler expected a reference to a symbol at the location specified in the error message.</p> <p>This error can occur if you use an expression in the <code>extends</code> clause of a class.</p>   <h2 id="phase-3-binding-expression-validation">Phase 3: binding expression validation</h2> <p> In the validation phase, the Angular template compiler uses the TypeScript compiler to validate the binding expressions in templates. Enable this phase explicitly by adding the compiler option <code>"fullTemplateTypeCheck"</code> in the <code>"angularCompilerOptions"</code> of the project's <code>tsconfig.json</code> (see <a href="../aot-compiler/#compiler-options">Angular Compiler Options</a>).</p> <p> Template validation produces error messages when a type error is detected in a template binding expression, similar to how type errors are reported by the TypeScript compiler against code in a <code>.ts</code> file.</p> <p> For example, consider the following component:</p> <pre data-language="typescript">@Component({
+  selector: 'my-component',
+  template: '{{person.addresss.street}}'
+})
+class MyComponent {
+  person?: Person;
+}</pre> <p> This will produce the following error:</p> <pre>my.component.ts.MyComponent.html(1,1): : Property 'addresss' does not exist on type 'Person'. Did you mean 'address'?</pre> <p> The file name reported in the error message, <code>my.component.ts.MyComponent.html</code>, is a synthetic file generated by the template compiler that holds contents of the <code>MyComponent</code> class template. Compiler never writes this file to disk. The line and column numbers are relative to the template string in the <code>@<a href="../../api/core/component/" class="code-anchor">Component</a></code> annotation of the class, <code>MyComponent</code> in this case. If a component uses <code>templateUrl</code> instead of <code>template</code>, the errors are reported in the HTML file referenced by the <code>templateUrl</code> instead of a synthetic file.</p> <p> The error location is the beginning of the text node that contains the interpolation expression with the error. If the error is in an attribute binding such as <code>[value]="person.address.street"</code>, the error location is the location of the attribute that contains the error.</p> <p> The validation uses the TypeScript type checker and the options supplied to the TypeScript compiler to control how detailed the type validation is. For example, if the <code>strictTypeChecks</code> is specified, the error <code>my.component.ts.MyComponent.html(1,1): : Object is possibly 'undefined'</code> is reported as well as the above error message.</p> <h3 id="type-narrowing">Type narrowing</h3> <p> The expression used in an <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> directive is used to narrow type unions in the Angular template compiler, the same way the <code>if</code> expression does in TypeScript. For example, to avoid <code>Object is possibly 'undefined'</code> error in the template above, modify it to only emit the interpolation if the value of <code>person</code> is initialized as shown below:</p> <pre data-language="typescript">@Component({
+  selector: 'my-component',
+  template: '&lt;span *ngIf="person"&gt; {{person.addresss.street}} &lt;/span&gt;'
+})
+class MyComponent {
+  person?: Person;
+}</pre> <p> Using <code>*<a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> allows the TypeScript compiler to infer that the <code>person</code> used in the binding expression will never be <code>undefined</code>.</p> <h4 id="custom-ngif-like-directives">Custom <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> like directives</h4> <p> Directives that behave like <code>*<a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> can declare that they want the same treatment by including a static member marker that is a signal to the template compiler to treat them like <code>*<a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code>. This static member for <code>*<a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> is:</p> <pre data-language="typescript">public static ngIfUseIfTypeGuard: void;</pre> <p> This declares that the input property <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> of the <code><a href="../../api/common/ngif/" class="code-anchor">NgIf</a></code> directive should be treated as a guard to the use of its template, implying that the template will only be instantiated if the <code><a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> input property is true.</p> <h3 id="non-null-type-assertion-operator">Non-null type assertion operator</h3> <p> Use the <a href="../template-syntax/#non-null-assertion-operator">non-null type assertion operator</a> to suppress the <code>Object is possibly 'undefined'</code> error when it is inconvenient to use <code>*<a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code> or when some constraint in the component ensures that the expression is always non-null when the binding expression is interpolated.</p> <p> In the following example, the <code>person</code> and <code>address</code> properties are always set together, implying that <code>address</code> is always non-null if <code>person</code> is non-null. There is no convenient way to describe this constraint to TypeScript and the template compiler, but the error is suppressed in the example by using <code>address!.street</code>.</p> <pre data-language="typescript">@Component({
+  selector: 'my-component',
+  template: '&lt;span *ngIf="person"&gt; {{person.name}} lives on {{address!.street}} &lt;/span&gt;'
+})
+class MyComponent {
+  person?: Person;
+  address?: Address;
+
+  setData(person: Person, address: Address) {
+    this.person = person;
+    this.address = address;
+  }
+}</pre> <p> The non-null assertion operator should be used sparingly as refactoring of the component might break this constraint.</p> <p> In this example it is recommended to include the checking of <code>address</code> in the <code>*<a href="../../api/common/ngif/" class="code-anchor">ngIf</a></code>as shown below:</p> <pre data-language="typescript">@Component({
+  selector: 'my-component',
+  template: '&lt;span *ngIf="person &amp;&amp; address"&gt; {{person.name}} lives on {{address.street}} &lt;/span&gt;'
+})
+class MyComponent {
+  person?: Person;
+  address?: Address;
+
+  setData(person: Person, address: Address) {
+    this.person = person;
+    this.address = address;
+  }
+}</pre> <h3 id="disabling-type-checking-using-any">Disabling type checking using <code>$any()</code>
+</h3> <p> Disable checking of a binding expression by surrounding the expression in a call to the <a href="../template-syntax/"><code>$any()</code> cast pseudo-function</a>. The compiler treats it as a cast to the <code>any</code> type just like in TypeScript when a <code>&lt;any&gt;</code> or <code>as any</code> cast is used.</p> <p> In the following example, the error <code>Property addresss does not exist</code> is suppressed by casting <code>person</code> to the <code>any</code> type.</p> <pre data-language="typescript">@Component({
+  selector: 'my-component',
+  template: '{{$any(person).addresss.street}}'
+})
+class MyComponent {
+  person?: Person;
+}</pre>  <h2 id="configuration-inheritance-with-extends">Configuration inheritance with extends</h2> <p>Similar to TypeScript Compiler, Angular Compiler also supports <code>extends</code> in the <code>tsconfig.json</code> on <code>angularCompilerOptions</code>. A tsconfig file can inherit configurations from another file using the <code>extends</code> property. The <code>extends</code> is a top level property parallel to <code>compilerOptions</code> and <code>angularCompilerOptions</code>. The configuration from the base file are loaded first, then overridden by those in the inheriting config file. Example:</p> <pre data-language="json">{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    ...
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true,
+    ...
+  }
+}</pre> <p> More information about tsconfig extends can be found in the <a href="https://www.typescriptlang.org/docs/handbook/tsconfig-json.html" target="_blank">TypeScript Handbook</a>.</p>  <h2 id="angular-template-compiler-options">Angular template compiler options</h2> <p>The template compiler options are specified as members of the <code>"angularCompilerOptions"</code> object in the <code>tsconfig.json</code> file. Specify template compiler options along with the options supplied to the TypeScript compiler as shown here:</p> <pre data-language="json">{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+              ...
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true,
+              ...
+  }
+}</pre> <p>The following section describes the Angular's template compiler options.</p> <h3 id="enableresourceinlining"><code>enableResourceInlining</code></h3> <p>This option instructs the compiler to replace the <code>templateUrl</code> and <code><a href="../../api/core/component/#styleUrls" class="code-anchor">styleUrls</a></code> property in all <code>@<a href="../../api/core/component/" class="code-anchor">Component</a></code> decorators with inlined contents in <code>template</code> and <code>styles</code> properties. When enabled, the <code>.js</code> output of <code>ngc</code> will have no lazy-loaded <code>templateUrl</code> or <code><a href="../../api/core/component/#styleUrls" class="code-anchor">styleUrls</a></code>.</p> <h3 id="skipmetadataemit"><code>skipMetadataEmit</code></h3> <p>This option tells the compiler not to produce <code>.metadata.json</code> files. The option is <code>false</code> by default.</p> <p><code>.metadata.json</code> files contain information needed by the template compiler from a <code>.ts</code> file that is not included in the <code>.d.ts</code> file produced by the TypeScript compiler. This information contains, for example, the content of annotations (such as a component's template), which TypeScript emits to the <code>.js</code> file but not to the <code>.d.ts</code> file.</p> <p>This option should be set to <code>true</code> if you are using TypeScript's <code>--outFile</code> option, because the metadata files are not valid for this style of TypeScript output. It is not recommended to use <code>--outFile</code> with Angular. Use a bundler, such as <a href="https://webpack.js.org/" target="_blank">webpack</a>, instead.</p> <p>This option can also be set to <code>true</code> when using factory summaries because the factory summaries include a copy of the information that is in the <code>.metadata.json</code> file.</p> <h3 id="strictmetadataemit"><code>strictMetadataEmit</code></h3> <p>This option tells the template compiler to report an error to the <code>.metadata.json</code> file if <code>"skipMetadataEmit"</code> is <code>false</code>. This option is <code>false</code> by default. This should only be used when <code>"skipMetadataEmit"</code> is <code>false</code> and <code>"skipTemplateCodeGen"</code> is <code>true</code>.</p> <p>This option is intended to validate the <code>.metadata.json</code> files emitted for bundling with an <code>npm</code> package. The validation is strict and can emit errors for metadata that would never produce an error when used by the template compiler. You can choose to suppress the error emitted by this option for an exported symbol by including <code>@dynamic</code> in the comment documenting the symbol.</p> <p>It is valid for <code>.metadata.json</code> files to contain errors. The template compiler reports these errors if the metadata is used to determine the contents of an annotation. The metadata collector cannot predict the symbols that are designed for use in an annotation, so it will preemptively include error nodes in the metadata for the exported symbols. The template compiler can then use the error nodes to report an error if these symbols are used. If the client of a library intends to use a symbol in an annotation, the template compiler will not normally report this until the client uses the symbol. This option allows detecting these errors during the build phase of the library and is used, for example, in producing Angular libraries themselves.</p> <h3 id="skiptemplatecodegen"><code>skipTemplateCodegen</code></h3> <p>This option tells the compiler to suppress emitting <code>.ngfactory.js</code> and <code>.ngstyle.js</code> files. When set, this turns off most of the template compiler and disables reporting template diagnostics. This option can be used to instruct the template compiler to produce <code>.metadata.json</code> files for distribution with an <code>npm</code> package while avoiding the production of <code>.ngfactory.js</code> and <code>.ngstyle.js</code> files that cannot be distributed to <code>npm</code>.</p> <h3 id="strictinjectionparameters"><code>strictInjectionParameters</code></h3> <p>When set to <code>true</code>, this options tells the compiler to report an error for a parameter supplied whose injection type cannot be determined. When this option is not provided or is <code>false</code>, constructor parameters of classes marked with <code>@<a href="../../api/core/injectable/" class="code-anchor">Injectable</a></code> whose type cannot be resolved will produce a warning.</p> <p><em>Note</em>: It is recommended to change this option explicitly to <code>true</code> as this option will default to <code>true</code> in the future.</p> <h3 id="flatmoduleoutfile"><code>flatModuleOutFile</code></h3> <p>When set to <code>true</code>, this option tells the template compiler to generate a flat module index of the given file name and the corresponding flat module metadata. Use this option when creating flat modules that are packaged similarly to <code>@angular/core</code> and <code>@angular/common</code>. When this option is used, the <code>package.json</code> for the library should refer to the generated flat module index instead of the library index file. With this option only one <code>.metadata.json</code> file is produced, which contains all the metadata necessary for symbols exported from the library index. In the generated <code>.ngfactory.js</code> files, the flat module index is used to import symbols that includes both the public API from the library index as well as shrowded internal symbols.</p> <p>By default the <code>.ts</code> file supplied in the <code>files</code> field is assumed to be the library index. If more than one <code>.ts</code> file is specified, <code>libraryIndex</code> is used to select the file to use. If more than one <code>.ts</code> file is supplied without a <code>libraryIndex</code>, an error is produced. A flat module index <code>.d.ts</code> and <code>.js</code> will be created with the given <code>flatModuleOutFile</code> name in the same location as the library index <code>.d.ts</code> file. For example, if a library uses the <code>public_api.ts</code> file as the library index of the module, the <code>tsconfig.json</code> <code>files</code> field would be <code>["public_api.ts"]</code>. The <code>flatModuleOutFile</code> options could then be set to, for example <code>"index.js"</code>, which produces <code>index.d.ts</code> and <code>index.metadata.json</code> files. The library's <code>package.json</code>'s <code>module</code> field would be <code>"index.js"</code> and the <code>typings</code> field would be <code>"index.d.ts"</code>.</p> <h3 id="flatmoduleid"><code>flatModuleId</code></h3> <p>This option specifies the preferred module id to use for importing a flat module. References generated by the template compiler will use this module name when importing symbols from the flat module. This is only meaningful when <code>flatModuleOutFile</code> is also supplied. Otherwise the compiler ignores this option.</p> <h3 id="generatecodeforlibraries"><code>generateCodeForLibraries</code></h3> <p>This option tells the template compiler to generate factory files (<code>.ngfactory.js</code> and <code>.ngstyle.js</code>) for <code>.d.ts</code> files with a corresponding <code>.metadata.json</code> file. This option defaults to <code>true</code>. When this option is <code>false</code>, factory files are generated only for <code>.ts</code> files.</p> <p>This option should be set to <code>false</code> when using factory summaries.</p> <h3 id="fulltemplatetypecheck"><code>fullTemplateTypeCheck</code></h3> <p>This option tells the compiler to enable the <a href="../aot-compiler/#binding-expression-validation">binding expression validation</a> phase of the template compiler which uses TypeScript to validate binding expressions.</p> <p>This option is <code>false</code> by default.</p> <p><em>Note</em>: It is recommended to set this to <code>true</code> because this option will default to <code>true</code> in the future.</p> <h3 id="annotateforclosurecompiler"><code>annotateForClosureCompiler</code></h3> <p>This option tells the compiler to use <a href="https://github.com/angular/tsickle" target="_blank">Tsickle</a> to annotate the emitted JavaScript with <a href="http://usejsdoc.org/" target="_blank">JSDoc</a> comments needed by the <a href="https://github.com/google/closure-compiler" target="_blank">Closure Compiler</a>. This option defaults to <code>false</code>.</p> <h3 id="annotationsas"><code>annotationsAs</code></h3> <p>Use this option to modify how the Angular specific annotations are emitted to improve tree-shaking. Non-Angular annotations and decorators are unaffected. Default is <code><a href="../../api/upgrade/static/" class="code-anchor">static</a> fields</code>.</p>  <table> <tbody>
+<tr> <th>Value</th> <th>Description</th> </tr> <tr> <td><code>decorators</code></td> <td>Leave the decorators in place. This makes compilation faster. TypeScript will emit calls to the __decorate helper. Use <code>--emitDecoratorMetadata</code> for runtime reflection. However, the resulting code will not properly tree-shake.</td> </tr> <tr> <td><code><a href="../../api/upgrade/static/" class="code-anchor">static</a> fields</code></td> <td>Replace decorators with a static field in the class. Allows advanced tree-shakers like <a href="https://github.com/google/closure-compiler" target="_blank">Closure compiler</a> to remove unused classes.</td> </tr> </tbody>
+</table> <h3 id="trace"><code>trace</code></h3> <p>This tells the compiler to print extra information while compiling templates.</p> <h3 id="enablelegacytemplate"><code>enableLegacyTemplate</code></h3> <p>Use of the <code>&lt;template&gt;</code> element was deprecated starting in Angular 4.0 in favor of using <code>&lt;ng-template&gt;</code> to avoid colliding with the DOM's element of the same name. Setting this option to <code>true</code> enables the use of the deprecated <code>&lt;template&gt;</code> element. This option is <code>false</code> by default. This option might be required by some third-party Angular libraries.</p> <h3 id="disableexpressionlowering"><code>disableExpressionLowering</code></h3> <p>The Angular template compiler transforms code that is used, or could be used, in an annotation to allow it to be imported from template factory modules. See <a href="../aot-compiler/#metadata-rewriting">metadata rewriting</a> for more information.</p> <p>Setting this option to <code>false</code> disables this rewriting, requiring the rewriting to be done manually.</p> <h3 id="disabletypescriptversioncheck"><code>disableTypeScriptVersionCheck</code></h3> <p>When <code>true</code>, this option tells the compiler not to check the TypeScript version. The compiler will skip checking and will not error out when an unsupported version of TypeScript is used. Setting this option to <code>true</code> is not recommended because unsupported versions of TypeScript might have undefined behavior.</p> <p>This option is <code>false</code> by default.</p> <h3 id="preservewhitespaces"><code>preserveWhitespaces</code></h3> <p>This option tells the compiler whether to remove blank text nodes from compiled templates. As of v6, this option is <code>false</code> by default, which results in smaller emitted template factory modules.</p> <h3 id="allowemptycodegenfiles"><code>allowEmptyCodegenFiles</code></h3> <p>Tells the compiler to generate all the possible generated files even if they are empty. This option is <code>false</code> by default. This is an option used by the Bazel build rules and is needed to simplify how Bazel rules track file dependencies. It is not recommended to use this option outside of the Bazel rules.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v7.angular.io/guide/aot-compiler" class="_attribution-link" target="_blank">https://v7.angular.io/guide/aot-compiler</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

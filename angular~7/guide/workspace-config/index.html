@@ -1,0 +1,160 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Angular Workspace Configuration - Angular 7 - W3cubDocs</title>
+  
+  <meta name="description" content="A file named angular.json at the root level of an Angular workspace provides workspace-wide and project-specific configuration defaults for build &hellip;">
+  <meta name="keywords" content="angular, workspace, configuration, -, angular~7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~7/guide/workspace-config/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/angular~7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~7/" class="_nav-link" title="" style="margin-left:0;">Angular 7</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _angular">
+				
+				
+<h1 id="angular-workspace-configuration">Angular Workspace Configuration</h1> <p>A file named <code>angular.json</code> at the root level of an Angular <a href="../glossary/#workspace">workspace</a> provides workspace-wide and project-specific configuration defaults for build and development tools provided by the Angular CLI. Path values given in the configuration are relative to the root workspace folder.</p> <h2 id="overall-json-structure">Overall JSON structure</h2> <p>At the top level of <code>angular.json</code>, a few properties configure the workspace, and a <code>projects</code> section contains the remaining per-project configuration options.</p> <ul> <li>
+<code>version</code>: The configuration-file version.</li> <li>
+<code>newProjectRoot</code>: Path where new projects are created. Absolute or relative to the workspace folder.</li> <li>
+<code>defaultProject</code>: Default project name to use in commands, where not provided as an argument. When you use <code>ng new</code> to create a new app in a new workspace, that app is the default project for the workspace until you change it here.</li> <li>
+<code>schematics</code> : A set of <a href="../glossary/#schematic">schematics</a> that customize the <code>ng generate</code> sub-command option defaults for this workspace. See <a href="../workspace-config/#schematics">Generation schematics</a> below.</li> <li>
+<code>projects</code> : Contains a subsection for each project (library, app, e2e test app) in the workspace, with the per-project configuration options.</li> </ul> <p>The initial app that you create with <code>ng new app_name</code> is listed under "projects", along with its corresponding end-to-end test app:</p> <pre format="." data-language="none">projects
+  app_name
+    ...
+  app_name-e2e
+    ...</pre> <p>Each additional app that you create with <code>ng generate application</code> has a corresponding end-to-end test project, with its own configuration section. When you create a library project with <code>ng generate library</code>, the library project is also added to the <code>projects</code> section.</p> <blockquote class="alert is-helpful"> <p> Note that the <code>projects</code> section of the configuration file does not correspond exactly to the workspace file structure.</p> <ul> <li> <p>The initial app created by <code>ng new</code> is at the top level of the workspace file structure, along with its e2e app.</p> </li> <li> <p>Additional apps, e2e apps, and libraries go into a <code>projects</code> folder in the workspace.</p> <p>For more information, see <a href="../file-structure/">Workspace and project file structure</a>.</p> </li> </ul> </blockquote> <h2 id="project-configuration-options">Project configuration options</h2> <p>The following top-level configuration properties are available for each project, under <code>projects:&lt;project_name&gt;</code>.</p> <pre format="." data-language="json">"my-v7-app": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {}
+    }</pre> <table> <thead> <tr> <th align="left">PROPERTY</th> <th align="left">DESCRIPTION</th> </tr> </thead> <tbody> <tr> <td align="left"><code>root</code></td> <td align="left">The root folder for this project's files, relative to the workspace folder. Empty for the initial app, which resides at the top level of the workspace.</td> </tr> <tr> <td align="left"><code>sourceRoot</code></td> <td align="left">The root folder for this project's source files.</td> </tr> <tr> <td align="left"><code>projectType</code></td> <td align="left">One of "application" or "library". An application can run independently in a browser, while a library cannot. Both an app and its e2e test app are of type "application".</td> </tr> <tr> <td align="left"><code>prefix</code></td> <td align="left">A string that Angular prepends to generated selectors. Can be customized to identify an app or feature area.</td> </tr> <tr> <td align="left"><code>schematics</code></td> <td align="left">A set of schematics that customize the <code>ng generate</code> sub-command option defaults for this project. See <a href="../workspace-config/#schematics">Generation schematics</a> below.</td> </tr> <tr> <td align="left"><code>architect</code></td> <td align="left">Configuration defaults for Architect builder targets for this project.</td> </tr> </tbody> </table>  <h2 id="generation-schematics">Generation schematics</h2> <p>Angular generation <a href="../glossary/#schematic">schematics</a> are instructions for modifying a project by adding files or modifying existing files. Individual schematics for the default Angular CLI <code>ng generate</code> sub-commands are collected in the package <code>@angular</code>. Specify the schematic name for a subcommand in the format <code>schematic-package:schematic-name</code>; for example, the schematic for generating a component is <code>@angular:component</code>.</p> <p>The JSON schemas for the default schematics used by the CLI to generate projects and parts of projects are collected in the package <a href="https://github.com/angular/angular-cli/blob/7.0.x/packages/schematics/angular/application/schema.json" target="_blank"><code>@schematics/angular</code></a>. The schema describes the options available to the CLI for each of the <code>ng generate</code> sub-commands, as shown in the <code>--help</code> output.</p> <p>The fields given in the schema correspond to the allowed argument values and defaults for the CLI sub-command options. You can update your workspace schema file to set a different default for a sub-command option.</p>  <h2 id="project-tool-configuration-options">Project tool configuration options</h2> <p>Architect is the tool that the CLI uses to perform complex tasks, such as compilation and test running, according to provided configurations. The <code>architect</code> section of <code>angular.json</code> contains a set of Architect <em>targets</em>. Many of the targets correspond to the CLI commands that run them. Some additional predefined targets can be run using the <code>ng run</code> command, and you can define your own targets.</p> <p>Each target object specifies the <code>builder</code> for that target, which is the npm package for the tool that Architect runs. In addition, each target has an <code>options</code> section that configure default options for the target, and a <code>configurations</code> section that names and specifies alternative configurations for the target. See the example in <a href="../workspace-config/#build-target">Build target</a> below.</p> <pre format="." data-language="json">"architect": {
+        "build": { },
+        "serve": { },
+        "e2e" : { },
+        "test": { },
+        "lint": { },
+        "extract-i18n": { },
+        "server": { },
+        "app-shell": { }
+      }</pre> <ul> <li> <p>The <code>architect/build</code> section configures defaults for options of the <code>ng build</code> command. See <a href="../workspace-config/#build-target">Build target</a> below for more information.</p> </li> <li> <p>The <code>architect/serve</code> section overrides build defaults and supplies additional serve defaults for the <code>ng serve</code> command. In addition to the options available for the <code>ng build</code> command, it adds options related to serving the app.</p> </li> <li> <p>The <code>architect/e2e</code> section overrides build-option defaults for building end-to-end testing apps using the <code>ng e2e</code> command.</p> </li> <li> <p>The <code>architect/test</code> section overrides build-option defaults for test builds and supplies additional test-running defaults for the <code>ng test</code> command.</p> </li> <li> <p>The <code>architect/lint</code> section configures defaults for options of the <code>ng lint</code> command, which performs code analysis on project source files. The default linting tool for Angular is <a href="https://palantir.github.io/tslint/" target="_blank">TSLint</a>.</p> </li> <li> <p>The <code>architect/extract-i18n</code> section configures defaults for options of the <code>ng-xi18n</code> tool used by the <code>ng xi18n</code> command, which extracts marked message strings from source code and outputs translation files.</p> </li> <li> <p>The <code>architect/server</code> section configures defaults for creating a Universal app with server-side rendering, using the <code>ng run &lt;project&gt;:server</code> command.</p> </li> <li> <p>The <code>architect/app-shell</code> section configures defaults for creating an app shell for a progressive web app (PWA), using the <code>ng run &lt;project&gt;:app-shell</code> command.</p> </li> </ul> <p>In general, the options for which you can configure defaults correspond to the command options listed in the <a href="../cli/">CLI reference page</a> for each command. Note that all options in the configuration file must use <a href="../glossary/#case-conventions">camelCase</a>, rather than dash-case.</p>  <h2 id="build-target">Build target</h2> <p>The <code>architect/build</code> section configures defaults for options of the <code>ng build</code> command. It has the following top-level properties.</p> <table> <thead> <tr> <th align="left">PROPERTY</th> <th align="left">DESCRIPTION</th> </tr> </thead> <tbody> <tr> <td align="left"><code>builder</code></td> <td align="left">The npm package for the build tool used to create this target. The default is <code>@angular-devkit/build-angular:<a href="../../api/animations/browser/" class="code-anchor">browser</a></code>, which uses the <a href="https://webpack.js.org/" target="_blank">webpack</a> package bundler.</td> </tr> <tr> <td align="left"><code>options</code></td> <td align="left">This section contains default build target options, used when no named alternative configuration is specified. See <a href="../workspace-config/#default-build-targets">Default build targets</a> below.</td> </tr> <tr> <td align="left"><code>configurations</code></td> <td align="left">This section defines and names alternative configurations for different intended destinations. It contains a section for each named configuration, which sets the default options for that intended environment. See <a href="../workspace-config/#build-configs">Alternate build configurations</a> below.</td> </tr> </tbody> </table>  <h3 id="default-build-targets">Default build targets</h3> <p>Angular defines default builders for use with the Architect tool and <code>ng run</code> command. The default builders provide implementations that use a particular tool to perform a complex operation.</p> <p>The JSON schemas that the define the options and defaults for each of these default builders are collected in the <a href="https://github.com/angular/angular-cli/blob/7.0.x/packages/angular/cli/lib/config/schema.json" target="_blank"><code>@angular-devkit/build-angular</code></a> package. The schemas configure options for the following Architect build targets:</p> <ul> <li>app-shell</li> <li>browser</li> <li>dev-server</li> <li>extract-i18n</li> <li>karma</li> <li>protractor</li> <li>server</li> <li>tslint</li> </ul>  <h3 id="alternate-build-configurations">Alternate build configurations</h3> <p>By default, a <code>production</code> configuration is defined, and the <code>ng build</code> command has <code>--prod</code> option that builds using this configuration. The <code>production</code> configuration sets defaults that optimize the app in a number of ways, such bundling files, minimizing excess whitespace, removing comments and dead code, and rewriting code to use short, cryptic names ("minification").</p> <p>You can define and name additional alternate configurations (such as <code>stage</code>, for instance) appropriate to your development process. Some examples of different build configurations are <code>stable</code>, <code>archive</code> and <code>next</code> used by AIO itself, and the individual locale-specific configurations required for building localized versions of an app. For details, see <a href="../i18n/#merge-aot">Internationalization (i18n)</a>.</p>  <h3 id="additional-build-and-test-options">Additional build and test options</h3> <p>The configurable options for a default or targeted build generally correspond to the options available for the <a href="../cli/build/"><code>ng build</code></a>, <a href="../cli/serve/"><code>ng serve</code></a>, and <a href="../cli/test/"><code>ng test</code></a> commands. For details of those options and their possible values, see the <a href="../cli/">CLI Reference</a>.</p> <p>Some additional options (listed below) can only be set through the configuration file, either by direct editing or with the <a href="../cli/config/"><code>ng config</code></a> command.</p> <table> <thead> <tr> <th align="left">OPTIONS PROPERTIES</th> <th align="left">DESCRIPTION</th> </tr> </thead> <tbody> <tr> <td align="left"><code>fileReplacements</code></td> <td align="left">An object containing files and their compile-time replacements.</td> </tr> <tr> <td align="left"><code>stylePreprocessorOptions</code></td> <td align="left">An object containing option-value pairs to pass to style preprocessors.</td> </tr> <tr> <td align="left"><code>assets</code></td> <td align="left">An object containing paths to static assets to add to the global context of the project. The default paths point to the project's icon file and its <code>assets</code> folder. See more below.</td> </tr> <tr> <td align="left"><code>styles</code></td> <td align="left">An object containing style files to add to the global context of the project. Angular CLI supports CSS imports and all major CSS preprocessors: <a href="http://sass-lang.com/" target="_blank">sass/scss</a>, <a href="http://lesscss.org/" target="_blank">less</a>, and <a href="http://stylus-lang.com/" target="_blank">stylus</a>.</td> </tr> <tr> <td align="left"><code>scripts</code></td> <td align="left">An object containing JavaScript script files to add to the global context of the project. The scripts are loaded exactly as if you had added them in a <code>&lt;script&gt;</code> tag inside <code>index.html</code>.</td> </tr> <tr> <td align="left"><code>budgets</code></td> <td align="left">Default size-budget type and threshholds for all or parts of your app. You can configure the builder to report a warning or an error when the output reaches or exceeds a threshold size. See <a href="../build/#configure-size-budgets">Configure size budgets</a>. (Not available in <code>test</code> section.)</td> </tr> </tbody> </table> <h2 id="project-asset-configuration">Project asset configuration</h2> <p>Each <code>build</code> target configuration can include as <code>assets</code> array that lists files or folders you want to copy as-is when building your project. By default, the <code>src/assets/</code> folder and <code>src/favicon.ico</code> are copied over.</p> <pre format="." data-language="json">"assets": [
+  "src/assets",
+  "src/favicon.ico"
+]</pre> <p>To exclude an asset, you can remove it from the assets configuration.</p> <p>You can further configure assets to be copied by specifying assets as objects, rather than as simple paths relative to the workspace root. A asset specification object can have the following fields.</p> <ul> <li>
+<code>glob</code>: A <a href="https://github.com/isaacs/node-glob/blob/master/README.md" target="_blank">node-glob</a> using <code>input</code> as base directory.</li> <li>
+<code>input</code>: A path relative to the workspace root.</li> <li>
+<code>output</code>: A path relative to <code>outDir</code> (default is <code>dist/</code><em>project-name</em>). Because of the security implications, the CLI never writes files outside of the project output path.</li> <li>
+<code>ignore</code>: A list of globs to exclude.</li> </ul> <p>For example, the default asset paths can be represented in more detail using the following objects.</p> <pre format="." data-language="json">"assets": [
+  { "glob": "**/*", "input": "src/assets/", "output": "/assets/" },
+  { "glob": "favicon.ico", "input": "src/", "output": "/" },
+]</pre> <p>You can use this extended configuration to copy assets from outside your project. For example, the following configuration copies assets from a node package:</p> <pre format="." data-language="json">"assets": [
+ { "glob": "**/*", "input": "./node_modules/some-package/images", "output": "/some-package/" },
+]</pre> <p>The contents of <code>node_modules/some-package/images/</code> will be available in <code>dist/some-package/</code>.</p> <p>The following example uses the <code>ignore</code> field to exclude certain files in the assets folder from being copied into the build:</p> <pre format="." data-language="json">"assets": [
+ { "glob": "**/*", "input": "src/assets/", "ignore": ["**/*.svg"], "output": "/assets/" },
+]</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v7.angular.io/guide/workspace-config" class="_attribution-link" target="_blank">https://v7.angular.io/guide/workspace-config</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

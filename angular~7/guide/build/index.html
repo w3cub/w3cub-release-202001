@@ -1,0 +1,298 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Building and Serving Angular Apps - Angular 7 - W3cubDocs</title>
+  
+  <meta name="description" content=" This page discusses build-specific configuration options for Angular projects. ">
+  <meta name="keywords" content="building, and, serving, angular, apps, -, angular~7">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/angular~7/guide/build/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/angular~7.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/angular~7/" class="_nav-link" title="" style="margin-left:0;">Angular 7</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _angular">
+				
+				
+<h1 id="building-and-serving-angular-apps">Building and serving Angular apps</h1> <p>This page discusses build-specific configuration options for Angular projects.</p>  <h2 id="configuring-application-environments">Configuring application environments</h2> <p>You can define different named build configurations for your project, such as <em>stage</em> and <em>production</em>, with different defaults. </p> <p>Each named build configuration can have defaults for any of the options that apply to the various build targets, such as <code>build</code>, <code>serve</code>, and <code>test</code>. The <a href="../cli/">Angular CLI</a> <code>build</code>, <code>serve</code>, and <code>test</code> commands can then replace files with appropriate versions for your intended target environment.</p> <p>The following figure shows how a project has multiple build targets, which can be executed using the named configurations that you define.</p> <figure> <img src="data:image/gif;base64,R0lGODlhWAK6AXcAACH5BAEAAAAALAAAAABYAroBh/8A/wEAAAMECQEDIgAbSwA6gAUFFQYHPQcPHAgSMgsXIwsaLwgfOgcmPggxVw0FBhQcTw8nRhgDAhUJFxMOCxcXFxUcMBweIBwlhxgnOBsxRxcwXRwzcxpAUxc7ZSEZLycpLSMoSyEoWCQvOyYyax86diU5TyY7SCNDWyVGaCRNgCYDAygRBCkRHiYjIys5eig8nypVcytclS0dDzEoIzEuUTM1NjE8SDI4Wi48ajNGUy9NezUBADgVADoQCzcQGjgZLDMtLjwoPDlIaTtHdztNijxWbTdaejZYizxojDyIvEIVFUEeAUMgCkIfGEYtD0IvI0c4JT46OEQ4S0M7WEFAPUdISERQW0NaeT5rmUxaakpgjE1gmUtme0txkk57oUwVIk0fElIqBVgyCFAzJ1I4RWIoAFUkHlYwGV01NVo/GVhBKlZFOFNQTltaWlh2jld4oVaFs1uHumMyJmRcc2Noa2BxfGZ3i2J0pl+Co2SUumebx2o5H2pBPGhTSWWCmW2Sr26r2HNCGHFEKXFPF3RRK25RO3NUVnRiQ3NjUnFpWm1sa3R0dm98rHKEjXGMpXGRs3CUw3GkzXtBCnxZQ3xzaXp6d4CBgX6NjX6MtX6SoXubtX+cwoJFX4ZNKoNrWYdyXYWrx4Ow1Ia63I5VGo9bLIpePYxjUIxqQo5uUIx6ao1/fIuIfIyMjYqWn4idsYujuZV5WpSfrZWpspWxxJa11JfC35pjO6N4NJ19aJqEcp6McpaUkZ2cnaFibqNpT6NxQKZ7SqR+WqKio6Owu6atr6PH5almKq1zWamHW6qHZ6mSga2Uc62ciqqpqa65v6y/yqzG3KzO4a/S6rLd9rZ3OLaQaLKxsruQdbiegL2ohLurlry8vLzI0b3Y68KEQsOTW8OUj8edcMegg8O4q8jIyMbT2MXi9c+UfsyrhdCyksq5oczCsMvLy83Z5dft99fX1920geC9jty/nd7IrNrNvN7e3uHXz+rav+rg0OrMn+3Vsu7u7vXeuvfp0P7+/gj+AP8JHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mixo8ePIEOKHEmypMmTKFOqXMmypcuXMGPKnEmzps2bOHPq3Mmzp8+fQIMKHUq0qNGjSJMqXcq0qdOnUKNKnUq1qtWK/Ozxu8q1q9evYHfy49brmr2waNOqXcsWK7dhzuKebUu3rt27Vsf24lburbO5eAMLHkxYp15u7RKXgwu4sOPHkCN7PJy48uK/kjNr3szZ4NhhfCtX5ubMbOfTqFPb/Rxa9Gi5qmPLnk31cDnXrkljps27t++glHHjvtz4t/HjyFkGFz6ccfLn0KNPfouYOfNysKVr3859Ievb1pn+6y7evbz55N/Dhx9/vr373svVWyf+vr59zvHlz3d+v79/wazpJyB2pv1n4IFppSegfuwh6OCDtVEH3oIMZgfhhRgiZRuFFNKX4Ycg+pQfh/p5GOKJKMoUIIkkYrdbijDGeJKCLHLYoIw45sgRjTXaaKGOQAYJ0YY91miikEgmWdCIRXJ4pJJQArlik0W6SF6UWKLII5U13pjllyBuyWWXP4JppoNEjknlk2e2eR+TavbIppt0mjdlnGNaWeeedkqIJ55e8ikoen7+CWiZgybKW5qGxjmnopCeBmejXD4a6aWR3Unpn3pi6qlkYm4aZ6CflopXqKKOiqiprK7FaKr+jfp1Zau0evUqrI1aWuuuUmmK66ad8irsVKj+aiipwyabVLHGHruqstAKdWuzoiIb7bU8TUotsPxh661YZFW3LbXBfmsuTb6O+2u557bbErPqAvusu/SSNG28qboIT738onQvvvIOs2+/BI+kLcC5OtPLwAU3PB1oCDeLncAOV7xjoRHDqq/FHGMEL57lXFOMuOTGxXDHKEf0r6HkfCLFCHd0s+3EJ6dsM0MH/0lOIjbcoMUr5UyIK3YLS3nzU+kCG8sNbxRzjSpsaKGJ0PLyUtY1WGet9dZcd+3112CHLfbYZJdt9tloc11a2my37fbbcMct99xdbxXYWM609uv+OmuYoEkzfszwgAFD0KKxwmUpFvTijDfu+OOQRy755JRXbvnlmGeueWLXlHWb5qCHLvropJdu+umUt1NOL73M6irGe6+BgA1QgKCFIlBosEm+iHNjd4xj+b4rPNe083tdKxsKTzv1qNICAjpo0g07hpgQiqjYWS28jGMVSGs7zhh/argSN7OII9CUw0srI18Dig1vyEwpdq3sdXyK/GDnOqbtDNPO3dSRWC6gEAAEHIEW8CiHLqogBRt0gRjyqt/2gAe+mpWKH+D73/hAQ7VUbYMMQbDCDAyQgllwgxVVsIIjIDg/Z2jvfikingZbhcHiAZCDxsJOKqzwB2eowgf+hDOhM4jRQUe50H45Il45YPipdhSPia/bSxHn1ww2zOCAqssFEHPwCt5JEIohssc1llgr7MxwNeSTGDOeEIAIdDExuvDBALxgjgjyYoLAuwYeTWXGG5Ish8xoggCGAAvF6MIOs7AjGXHUPTBGKn/OsGBbPuaozvXiGeVYI+EKqbqgtbB+i+QeN7xnqvxdQ5JsoaSayKGLNgTBBlpwRSafMAEcJBJ7zgClIz9kyv1BypSojKLeYMWOXCxhBFagwQMysIlyKOMJCMhDHT/Zi1DKyInBfGTIspmgNIpqeZXRBhlCAItyNGMNAdgALcqxizoY7pO8sGaM4BE+WkGSm2j+SRqersELFpYjFjSIX2KaEQUD/EFmU8xTLuO5yw/Rsxz2xA4+w6LKIrEDFTZ4RB3/6YIjQCMxF6WAQCNYzYZmSIx79BQw/ZjQOF3UDa64xkeZ8YMD5EFm7EiFBfLQ0jXlshfiy5E9uJFSTK10fFL81SiX0QY7QIMchnhAA+7QC1UEIQXvTFj9zijKol6qe77MpzerBUF4sCMWLBDAG7ixDTZQIAACQIAIOKlVoEpplGEdFN7yChZ94okchxCBJnrRCmegggIIsMMzyKGKBtaBhXUNKiNDxlc+7ZWluNpGHyaQASlogRjkQAULKqDYvgyTUz+VLI62SUPKYnZozBj+QwHf8FFyIGK0TvWiXYFET66qFK8ATKqxtjGICghABJloBzxCy4IFbEJ+kQ2SGCHKKrAG94+w4gYvFsEKNDxABJuo4zYQYYSsGop+RQMSSmkIXKRiV1SMbcPP2pGNMzwAAq2oxAo9WdeJ8lKPJrUsaSprK9ilamcgcEEFcFDOZczhARS4ABaeQVL/Zih4Ad6TdTd4Wvh+AmaqeMJxgXbOCxhhFj2t0k8tjKENX5CoBO5K8v60DCCoABrbWAMFBIADoF1jGBSmJosvBMkYuyl4Rr5Kzv5Uj1hMIAuMvYIlxiCAEGhCuRUWUgWri7UMFxhiOSSqLsrwCl1M4RHlEAb+BSzwhxSr2H9JfpATffvVLvuxWfDYRiKadg3NUoEY7ACFETQR5Fxd40XqtSGr2uHV1+FwXe3IxQ+wAI08i2EEjqhERt0sJ4UtkR+gDrWoR03qUpv61KhOtapXzepWu/rVsDa1PUqjlVjb+ta4zrWud83rXov6upzOEz/bIAQ0t2MdhajABUBwhEKfF3FwiYu0p03talv72tjOtra3ze1ue/vb4A73tVlXP3Gb+9zoTre6183udjtjGLt1L7XY8YkKPEAHWdWzFe7wUWqaxR4AD7jAB07wghv84AhPuMIXzvCGO/zhEC94O3rxl4hb/OIYz7jGN87xjgOcn3RO5Vj+YbWNXhCjGQRsgLETQ9Rgswi9jU5RyLxMp97SXMkBNBY7EuGCzzaDDAIwwRsP98Ig9bKUGXztumIxgwpo4RkEpYAOgMa7ogcJm4t+IoddvqbEMBcBXXjGMqIgAB2Us2pIDJIMsx5yYTar5Cw8a1rD/vMQrJOaMUeRPfx38zMlXd46R4SE+51TCQjgs86QBdc79NO8n2jWjudTHzlMLlXMAOxBzoYaeAxZrd6x7w9CKei/hMF6ji9vi7doK2TBDcuDnYi5YEMXZIn2yM+EH63gBmQwfEGsbz2HyoBCDmDRehZAzw1BGEK/W2g1eWarCq0YvYxhfEHWAl6pvFDDAwT+kIJy6mIGAQiABR6BS11KywrRd4xrmWKPS1xD+oGR6HWbtbMbXCERM+C+4XjhBjdIT5HwhxLOsAiLAFToZzfXQICtcBbwUE0DMWvU5RVb1hTt4AKMEIDII3+Uly+iEQsuUF7coAtnQELXQ1Tlx1AicgkK5gIgYAUXwAv/wA+9oGAUUAFuwGhWcIEC4QxW0Atf0VtP0Q42YAkYOEkaeBcVZSTNcAdxNwgt8AcblQsj1H265Xw5cQ0VIAW8cA2tUAEB0Av8MAwXYAXwVgcVcAn24AZWAFH8YAlVEIFXoURLwQ/XwAiMQHE2cAlbMRaWwAitsC+rwzDgE2d5YX1IaGD+LNMHIbA77cAOgzABXdBv2cAGFWBAnYda5icidfAAYBiDi8CJ/FAHAgCGY2EDVmAPrXABrfAP5SAFblCEPzFdsPgSMmgDAuACQVAFF6CHuGcDFfCLbtCANjAMA3EJVqB7p2KIaLQX+TJKn3AHxQBk7SAMM8AA/PZPV1AHaLAAK4eJJQUU9mAFFDBDQsgLafgAVtB/bVABINAXNuAG/9ALILCKXEGHttcT3AACFdAK12AJF0AB0ccNudgLw7AILrAI3CAFi3AW/NAGwTg+pzR/2NMMidBmTSYEWwAN7IAID4AAV9AGHzBhv9ACcJB68oFebZcT9tAG4zgQ8KCFaWj+g3XgBnWwCObID4xwipfQBkN2FHT4fnPYCi5wCQORigtYBy7gDAIRjhVQDkh5Df8wDPt4eoQYIWAGX4bwAW9QDuxwCnKUkdugCDQgAAowBECDCiAACCYZHig5iybBD27wAFApEJdQAWDoBhWAjP/wY1shj26gkG5pGKMUmC5hD4tQBYKYh/Agjm5AgIvghWThAj5YBxcwl8gzYHdGcmfwAXewCprgDKnwlcSgXXXgCK5QVcx2iZWSWoRpL1JpBafkDC7whbj3AG1QDrMWBK/IilYQAC5AjIVISstymIl5CYtpg4zgmIsADyvJCIu5m5cpnHSRhEVCDn1AASAABF7+8FSnsAIIsAUspGcvEwN0pSZtWRQ4SQHvCAL/yAtZ8ZiumGBKGYOXEACnmBe+xxS9CJz/IJvG6QYgoHugNgzptwjv6AL0OJ3tdYjCpTG7AH4DQH6N2J0IgAXEAA/ZgAhWYAeq6VNbpSGX0H8FeAnIiIoiapn/wA1uwJ9UsXZPgYU24DvcYAVnKIMuUAfwQIc2UAVnMQwgEAA2AIevI52TNHL5wgxB4IU9BlKnwAIQkFyL82z105Mn5QxCyn6ieAFuYAM7xouLAKRtsGzAyQ+9SZQKimiXeZXG0gyOwAroJHRepwqXsHxSml5IIotS0X4i2gqMUKIh2n/D8Du94Ab+ejmkVUksObcuzbB6QfNzFCB0n7OWJbJiSiJ6VRFqB4GpS6KgRCpyj4Yr3DBAFRA9MuOoJnBLWZYkjfRb3HCovRIuksoizOAELuACDxAB0tQO5wQCjwBddUqlLTaYv9Wpbkd/qTACf7MGD8AAGqWrrkCn3gisGLJ+dQaU1zc0gFMFXiAzmvUABPAHzpYwl2CnSJKfj2Rnv6dzaGVAH1UO3boBQ2dow0AxSgKEmDJU9/hlHUZyhUABC/AH/aZZWGBenHJoOQolYpSSGkZUrbkssNoso4RJ21AIEpAAAOt1mPRJp+RxHNuxHvuxINs/CwOyJFuyJnuyHJsV+Tp9Dar+MRQpBVegCWxVCA9gsdAqpfXDOjq7szzbsz77s0AbtEI7tERbtEZ7tEibtETbCkyrtE77tFAbtVI7tVQ7te4Hapm5dLTqAogVdsgmARHAiBrra2RbtmZ7tmibFV2Wtmzbtm77trq2OgrbTWqKK8wABVSgCcOgCBWwAF7grobQBQQLMrlkrapKfZcyZwCCiKJyUSBwUO1ADqBQAXYXuRmbMFvYsPVxdImraO4Vqyf5Y71QDBSGbBkgoXmmBi4gtmMbJRMYKX93rbmyDFVAAQ+wABl5UQaQAxcKD+tACeRUfoabJPYaKYsxt2LFjI0bC04AYRSQATcFD8vgAwZkQlb+5VERNLxIIofaZHobKCprtABYoLNB1jIugAAXYAMfsKStmxeuehR4+kvKiEafSikbiQBE0HnmtAqysAqUeAFaoHgtVBaaWxP8cAnLSVEMq00RqXSbwjcMkAeuQQ6UYAFfMEoE+V7m6ULaOxXhaAPIizQLnE8FfBTze5nKCyvaoAYRPMGIIAA5UGnwAE5atbIugbWZShA4vKnhKAUh3BR4U8I8kYDS2iuLUcQRksKwwjcDQGmukQsSkAODyykEasMqgXuXYAlWYAN1QF2ro102AIYquqMLOBBjjH424MO2oj9r0QtV8MNKdoSHWLepUg/dyQBwAF059QBEcLOAUsX+QowRaRhhVeCLNgCVw2ADCYagvGADLlAFQXCjZ+EMNnABDBQEFICYMmauQLGHmqrDOPxroLwVw2AFcHypJ3ym+yoqOSYA1ohJIegEC8BT8pJ2PLGSAmAJqsMIFbAI8VgBFLAIqwMCNhA+3ECZC+jIQFUOllABNoDEQqG4Q4F7hKWGwiwQP1YOIQpR11AHVoB+gHHM6dgLxnjKxJLKRVq/67ILUECWVlAHbeACBtBs3GLLt9x/c5GGPNoLNngWvbCLZuwCx2iDdgMPr2TORpGwgewR9uCLxJykVaB7jOAClRwEi6GPCdbL/yOQzqzIjwzNc4jOIqfE5HJODwBXBRT+dtySewudEWlopgJhCRSgMEMpEK0AAj4oEPDgBlXgn3bTwwhNFJDX0h3BDy4gAJeQGEIZjF96hqojBQiaGG6A1DsNkInBCAEgBSDtsGiKwhrcLNewCotAk67w1ZUCyEHx0gTBCBdAFiBgpq0QBDn9D4tZBdcwlHZDpmp8qQCW0CCgyTHognWI1FvRCg9AhALRDlXgBvxsBT8tBYDdTV2toHQcLy1XLcPweUKhzxrUDt9sD/Jopvy8CHbjDFpaDhVgBQNTDiCg1Zc6wkXR0DoYg3jpDLw8l5YgADA4EJZQB4YNj8VoymrhYoeIehkDqvBmhbfcBgKwos6Al5YQjzX+/Q+efQGMsDpSAALOAJdaGhdt8ACujaitihQNTdoCAZcVYNuVGdMPsNue6NsUANwxmJNBPYcLOserfNwgk9xEvRErWQEsqI8P2QtBkKAzmsm1mn7tgJfEfAECENlRQa0JTdEaFI6VydZz2YWzLZCLIJs8KhDl8NFiRazFqt/Y0wsoKNSNaUm7QTwnM3FWR9eIc2hWDBRybBRGbZ/cAA+PWQeGud7/wJR9SskAyQ+LIAAIyQ1tkNVbPc2YKRgNWDwmfuKtoNw+kYYJ6hjw4D9LYQ9Jmr42YJ//Q5mWyQ028AD6SAGWcBbhGAAZ7QLhXWCTXRezZqVTTilvkeKx7Qb+WU4YxZsUDb2ihLVbb9EY6sO0LwIPTNsKw4Cu00fidEFPeXPnf/IW3+iTnksY8asUDY3YnYFkkCHpoEvpo8HfWcJ77GcDs70ZoB4ZdT7qlL46lx4lqK6f9gwqWPO+P/husG7iq6PnUELcArbdnDFrw9DrGUMWQNXf5VFkirKqnSHqpN4i8KZaSlJ6Td5Vuq4W0j7tA8LrYOKieoW4qdHt3s6WpZHtoZfpltXXskFPx37u+3EJx4469n7v+J7v+h45qsM6iLHvAB/wAj/wo8NyHVzuvC7vuGHpa0M3Dv/wEB/xEp81hNXoE3/xGJ/xGp82hHXwqiHpZn3nlm7tler+6Hxiqb9h7udu6Vd67TOXKLWe8nGB7Jui7FZudBK+JyiPHMZO88eC4i2vJK978ibP8wlP6WTBCyQv9OxeJzsPHa8u8qyz9MQbPsz+H/h69Wyh8hGj7PX9eGOk9f3x9NoR9ck+9WZC9nSi9mV/9ADj9WYC7eS946gxax7f9vGOL3APJnKPFFLJCKfB9t1h9uOy96SX80CRQOVwsAfcz+fdSY3BD4r/yfYQNNu+2e5eH4QPsWhvJpz8E3TYBiDQgts9gwJQozJYBSCgm3OZ+hRtCZYAlOWAfC7QBjWe0JlvH5sPqp0f7t4rFGZ+AW1AoxdAoBcAVwv5z+/ogo4djwn+poYXUKOKLdBV4MyFWhWC7x67Xy1Wo+4Q8lBGYQkBQNq4t48yeAGkzeNuwJCXwKP2wIK+g5MWGI4zDWq8oIpinxJDjSA9z/vkmiUAYe9auX8FDR5EmFDhQoYNHSIcdqHCIm7lyvH758yFpYL22sFr18uGDY8uFmH8164KI3hBXPTixo2XCzfwHt7EmVOnTnjXuKHcGVToUKJFjQa158xZuXZNnT6FGlXqVG69etk8mlXrVq5dvdqLCdTrWIX8RNqQEqSOzWEuGP3jx81NFStWLkixVy5IK5T2rDBqZ6MC3bo2WJJFPLTnxcSNHT8emtQZt6mVLUutehXyZs6dycb+/enZK792FntZEXDpX1uO5azstWjJSl63KMuthDdyacXJYkU/Xuz793DiRyUzvZycqlWsxZ0//x33mj3oRi/ZuAb32gU3/CIu+rfdCkZ7daTAg3fBBkF+ljbaq1KBW0F+i/hWJwtvqXD8/f3/S2oY5JQjsB1uWtHsPwUXLIobZ6hjMKdWAgChFWfceOCtYSpw4RqNLrCwjQcq4OuSCkC4xI0KKriEH2cucMHCKgTgJcKj4BkmNBt3JC7AAQu0TKYEeSSyyHacaa7Ihfi5xAUXbODOpnbcoGAReFpxEoQq3LhgPH6wvACENmr7pxeXBLOEPyUb0o+xNd90zEcgg2T+Dk47/WvnmnbuLKucmLiBEEDK4PKTsrza4accn5gaxoY04TKwIjX5NCg4Si/dSjLK5oyqqmGSxDRUyHpCVNSi7HHDimE8es0ZUx+y9FVZdTqO06cyA3VWXbMSyM1dczILBBCskILFSWVt89hff5XT1gOHXDZaoVzUUVqc8uxFQGVNxZEga781qFkgn80VXHMT4ueaa7Y9t92UlnL3W3GVu4YXaON1V7pA8eW3oDz37DdaTQnENeB8Fd3XYHf/ZVdhPmu9rGCHzVW03ImtPbLUi3edN6pyhvl042/bGQZgkcEl2eSTZ+3YqY9DXllgeBqO+dJ0Va751ZbLUUpdn3/+BjpooYcmumijj0Y6aaWXZrppp4OO6Wmpp6a6aquvxpponHPWWalNm+L5wQOVIrtss89GO22112a7bbffhjtuueemu26778Y7b7335tttqxLmuuulwFbKJm4EtDVxxRdnvHHHH4c8csknp7zyyqsCPHBTffwYyYIO/9Fy0UcnvXTTT0c9ddXpzFxzUQPMtjnQV6e9dttvxz133efE3PVf9XvwoNl3J754449HPnnWfWfWt+GVhz566aenvvHemf/2+eq3575775G/Hntptf++fPPPR3/y8MVflvz034c/fvlv7aV19l91f3799+df+vXv11X++jdAAhaQdv8DoKz+BGhABjbQgZBDYAJNtcAHVtCCF1yeBAOIOAx2Dz0fBEniQthBEjolghrEFAVLWDyeWcWFw3hG6JLDM14UQ4YrfOAJUUgpFeJQd+xIhAtAQANh2UALmrhhZcjRhxlgARq2IscqWkGMJPqQejrc4Z16aMXbscMQARAAjCpAAQGMYBNAIschgpCEJ3JqGT7IQB66wcXvYTGLcNoiHWnnxQBk4A68WMUaJDAAJHBDXdwgBwxLcw2r5AhsvWiFLJCTyGx9bZFWKQZl2KGKFSBgC8RoCiVhWEU96s6Od1xTHkuZOj7qABroYYYYBJCDXlDCCnUwRAve8AxesIECfewCKMn+8Yk2vOGJzfADCwJgATuAsh3s0AUbJmCAG9xhGLpwQQACgIArzGIZfpiBBCpwBU1YcpXEOyUqi6TKc5qulbTwUyyYIIAd8AINDxCAADLwBlDMIAAwooABUkAMcszhATGARjagYIAL0KACDzACLeoRCx+E0QUUGAAOFJFNASjACpcIwwMUAIJsMkAT7TReOtXJI3aidHR8vIAWFuEHGmzzC80YQwAMgANHsAINAViAI3qBCDL+wRkGjUExDCEBBrzBGYZgwQLysA01CEADj0BmBW6gCVCsQAFdKMYyeCAAFLRCF0HY6hxdasr6rTSFHFxrF/0AxgmMkQIV0AEttDH+BgGQgIrNWIIB2NiOZjghAEnoBVJ7EYUAMKALrCgECwawhV0wYQBYmKMzLNGKZzCDBxbIQzu2YVgE3LIOmnhGXNlqP7euE66q3eMXDTCCulyBEcQwx14V4AVzwAOwFQBEU7Yxh8Mm9qC8YCwChuikD9xhFz04ABfAFpNyeBa0FlFFEFZ01xS8gpSwLZ1KW8ugloI3cny8ATwt0hR47PUCoSXsEibwhW7AYxtnKC5SeQGFAHTgEcOA5CVmoYweJIC39q0EI2Zh3dC2sBeqYKxg22je1Yl3vAoqL4Ud984RNsW9cGhKM/ALAU044xNkdCpSi9EHCWhAE9fQRRQiMNX+n55AE9vwwwNMsOBOYmEYuziRI5yRCxYIYLAaVp2FL+yfDCN5cexgQwDSGxVtiOECIH5mLGYggO0iYAO0KOhBOwuFEdkVBbCoxydYUOYHIAALz8iGD3TqKCc84AJVqLMF/qBWJ59OyUvGT5P7bCsgxnTCTtnGIGzwCKeQQxVOWNEFjPAK0SIVGuzYRbFWZAVXMIUcqYDCikDQhVm0gxyncKgNXrGLNVRAIiG4Q2oH7ee2AvpNgp41kBTljBh67JBPUVQjU7tJwyL0klbpdVMc1MivOWgYNlQUgHtBxVzTmrW2XhCuq12gDkel2x+BijZqKoA38Bkk364Mep4SQnT+b5tyf8a2c7TtbtJpoww2qIMz6c09eMebOPPet+XCluyAV6/f/v4NwAu+8BUeHOGeUTjDJX5Bhz+cMxGfeMYbWHGLQwbjGgf5ADneccd8POQnn9/ISZ4Yk6Pc5elT+crJ0vKX17yOtZb5f2huc54bHOc57w/oLDJ0ohfd6EdHetKVvnSmN93pT4d61KU+dapX3epXx3rWtb71pRvo5+OVTtbELjRIutDsZ0d72tW+dra33e1vh3vc5T53utfd7nfHe971vne+9x3u0r52Fu3Bi2H0zfBoa4WAuL54xjfe8Y9Xei8GAnnKV97yl2e61wO/Q3vApHo5Avpv9BR60bj+aPMo7Lw5oQd60ndm9K3njOltnfrPzwf2m3n97R8je0DTnnqs171jch/8xPB+yb6fHvCJj5jhL38sxr8w8qWnfOd7pfnV5wr0xyv96FEf+1u5/vezov3Wcn/1thc/V8Kf/qKQ363mV5732V+U9c9/WsHrved/j377G6X+/dcJ91sp+Ese+QPAnfi/A7wJAVQnAkQeA1RAnEjACGwIBkQlBzweCMyXeugGfkgUd/gHfPCVV5lAClwS/Ds+/Us+/gsYfwCGHTgHfagCQOCHbxgCY9CVEjRBdEHB6FPB6WPBfvEHVIDBflgFaOCHasABHJwVHdzBg7DAO8JA49HAIuH+B3jwiGt4hnfgh3rwCRC8wncwCH64BxBEiCGEwUSxhyTEAYnSQjMMFSf0D3ugQ0PqwEQZCPIwB6AIw4XIB0OCBjO8QnvwwmeAQ36gw0KEQziJQsH7we4LQjhJB0WoAzaYARB4A1boAxe4gC2IBiB6BJSoB0WIA99Aw3PYh0WghRo0oipwAQUwAiSMw63hEX6whjpQhFAzAUdQBTKogBF4BHPIBjegBYNIBy0QBYWgh0RwqA/AAhycBzeYCxeoAC2ohYIYB1x0RQvAgmi4k0bkvEc8P0wBhx5AAC2wBDLYpiu4hDUwAC5gh0I4AWooiGwAASUwRSKMwRmsQRZAgBj+cARKYIEc8EZMkUP88AdSkIAMsANQUKYLqANVeIIDgIV0eIIkEMMhjIBRSAh6GITLgqwLkAF+0IYKGIAcaAVDmAEPkIZ/AAZ/jAFMgKohmAY7AUfUE8f4i8Q3AQcf8IJz+Adx8AEs8IZ/kAc04AJ7YAYQ2IN/8IdUuIFp8MCpdEp9lEEa/AYW2IKi5IdfaIE8oJkIOcjqSEgQ2AQPvIUWeAQuBAch4IR8MIQNwEF9WIMj4MKpxAh66AQ8wIh5mIMceAdtAAEkKEp/EAYa0IMknIGfdMpTAAJIsMke3L6cLMCdXJNvCAJOKAh9SAM4wIh+MAQueId5IIMieAd66AP+LujCVWAES2AEW8iHF9xHGqwGINDMgpiHNXgDMbyUsYQOfyiFISjKfwCHKSjGf4iHKeAEW2yBSOAHcRAC59wG16yER/CGLlSXXkiEHyCBwLSBSDCIeWADjAQGIQgFg1AHMniDsMSPm9SgKSyeKiSSb7iBZPwHfWADvvwH0NyCdxjCEJCGbJgCSfiHeWiDKqCLQGgH2bzKJKyBaywI0OwC3qQU33wO4CTMghAHKoDQ5NTMfSCDLTCHVBgCauAHZrCCKpCCI4BNZliDKUjRFniBwKyC8yyIfWADFXCHYLhBg8BRL6BQJXFPCYJP4pFPHqFP+8RP/eRPMRyHIHiDRBD+Triwhw/ih9iEwQatTRu9zzWYUIOkxR3B0OHc0OP0ULi4hRtghDbwTLj4oDXMBiAYAmKwB3qghBnVBhsg0IKgBzbIAnsoTy6VB90MUiuUzPKjzAe0TCVJ0s3Mz880hP7cT08Aqi/gj1Ns0KzsAq58yT8oVDuxUOcYUw2lAjNVzoKIhycIAAewT4Tgh1zIAPD8h3QAg+4UTBXgSmFwgVKshhmQVH+4hRnIg8g8vfdM1Axc1CL5BhtQ0s7EiH3oA0k90QfQAFtYCGBVgRiUglCsBhZQAC3ABFSYgRSwVjCFk4TcATKtAVO9TX/4IiwASoWIUxHAhEogAwlIAFjIhlf+1IJLSAQQwAFvfMmYagVEmIEYYMI3GdIEKtLdOdIdEQc6KNd+WIRMwAh/UIVG4M15cAIs+NSC8Adr2M19UIRVBAc3sIO5iAJrZE8GCdXiMMw84E11oANowE06gNB/EAYgAASGyAdVsIEquAJcvAE8YAYbuAI/qAIbiKiCAIYbqIO5kIIukEVGPNT3O1YqTFYiQUSU6Npw8VrodE6GQEQqxYiuhQeLKFYeednioMMxXEP6iFunNIUhKNclKQ1zoMOPyIYq2IS0LQcI4QdgGIJaOJS1/Y+FBaCG1Z2HxZR8aAY10IGaVJi2jZAuFAYo2M2gEAcbOE4oJNyEpRTFvR/+xs0dx6UUf2CGE1lOh7FcBumHRKiAISjIndAGK8jZMfyFZwwV0mUf08Ud1KWUfLiGDpyY112QRCGGRQzAmVGIMmzZ5L3aAcza+NzaJ0QI5LU/3xUf4L0d4X1C7Z0/7sUe77Ud8N1B8WU/8mUe860d9DVB9U0/9vUd96Ud+KVA+RU/+nUd+10d/I1A/f0+/tUc/1UdAFZAAcY+Ag4cA04dBD5ABa4+BuYaB0YdCAZACXY+Cs4ZCz4dDO4/ZwhT7D1BxF3c6jVSyRu7FWbhFnbhFk68F5bhGabhGiYaZ/g6RFW9+HutnkOdcpA8H66dmKtgFHbY6yXhgtDg5ePgmvH+YNMBYftbYuJr4ph54tKJ4vmb4uCr4pW5YtLJYvbbYt3r4pP54tEJ4/Qb49srY5E5Y9FJY/FbY9hr4415Y8uJ4++b49ar44u548rJY+zbY9Lr44n5Y8oJ5Oob5NArZIc55MlJZOdbZKBrZIV5ZMmJ5OWb5JyrZIO55MjJZOLbZJnr5ID5ZMgJZc+oh2p5iC7sBkJhXvrgBnNowhH+xlnWiT8UQ11Gl3KgZVkp5X455cdJ5dj7BSoQXYfAB1NAgneAVplNCBz1VFkZZbLoBzaYZpwYByEIhBO1grv10T7Ag48d3eltQCNuXCS2wl+ogWRuCH/IBouFVjj4VBzdXBL+tGU7uWZoxgl6eM0TvQFwvtE+oGdgNucLROfTVWeuZeda4BlDlNtDRBQypOV55s178BBz6NNsNpVqHotrfoNyIAdiMN5/yAfndVMwLAcuZIaALoh7IAdn6AZ2IGhy5pNg5pdhdpxi3oyubIErKJYLcCKnzAXR5NNDqIV70AWwtOh/WAc/kAgdWAQb4GhR8WivuOagpYEJuIFNEENsoAPKxVhPnYdFsAWAtlY7bYEL0AE3CIKCfhWcxhedbhyehgx+QIZO0oJW8AMKQIFp6Ic7ndkl2IN6YGZnrul9QIML6IJWaAMJEICqnkVZ6Yc1EABYi4UnYIDEZOeJjdR32Ob+bm5pY8AHQlCAIShYf/wCm/7Gg5bChA7eha5FZHiAzX3KzV7mGS0IdQADSTBsJOCHZ7YHcHABaPYHU6AAyTbXV6nsDYBQdVgDLDAHZMCBiaWE/kwHbgZoaNCGC8gCoOQHXV1tgzbh0oXt75XtHenKD2jVeHACLigHwd7t3v7t4O6DPICHY3hQY4wC5e7NfIaTawZSkD2FHLAFZKAC68Zu7WaGvEqGEeDSeZCC8Y5r13bEHa7MuP6FJTSIo9yC+Nbtf+Bt32Zm+8bvYyBIg6BL/65QAH+Ta6ZwfkgFE6AFBPfsBRftvAoGG7jbpq7w8v7d8z7f9LaRrgyBnJWH9y7+hwKfWSAgceAW7mM4cmOEAhbnk6vuCgHnTX84hSGABgRnQn2YAxw/UQcHgQhnA7g2FbmOF7pmHLvePWSYgK2sSgvQg3yIBQY463xIBQR4cvumZ3CYgTcAQeBMbtYGVRdfk36oAgcIBQ9UByg4guk2T34wTAkg85a2hXQQSa5EBReg8DW38HDEcEXVcAlYgH71gxUgyhOtABRgBEVYkUCoh1KA8s58h37ogxboV6iKbESHEyznin6IAmqqg0oIggjIhH9ABx+4gUtQhCcwgGZ+UtHmceB0gSHw1xlAgFAXFTZ3FzdfHDh/DGxogzpQWiHQgoLMB1AIWjewhESohXz+sAaw7IdPOMt/oIdDkAIroII6aINXiF4bEfat8AdFcINDKAMp0AGvJmopEFo7oING4Id5OISz3oY6qMl6AAUEtQJpzPcfnz0hf18iL/I1vAem2BfSKIeZiVsP7Aig8IhycIevpWZFXxM6nHmUhhRfpsqvtXmW19u5Ffn8K3VkTWIJxHkSBvd2EXfFIffQK3h/a/pzefrEiXqgm/p4q3pzOeT1QmWTz9+lx96uB5cvNiQq2gYpsiFiFvsAJvsnNHt5IfmpKIdcEAIsaAY+WBEdgAW3T/qb2Hpsm3truWJtqCqNegBtQoAk+C4CyfqcG3xbK3xpeWJ4YAYmGIFLKIT+ARgCP2gBEjg0qH/7BI77Hax8gal7qcgFF8ACXhCDBXiEZTgDERh9rC/9CD59E0z9ZbliZXACHEiEFRiBWVAFF0iB27eVyJe5yQe03meW1Y8KZhiDCSCjIWAFMkAAGXh85WD+lXP+JYN+jpF+qGAHSpAAoHoETsqAM9rp3M/g3afA8deVy39qqO00HAuCP+j+5ACwwwMIZwIHEixo8CDChAoXMmzo8CHEiAtb9bom8SLGjBo3cuyI8dqwXvb+kSxp8iTKlCpXsmzp8iXMmDJJ2uvFrR3OnDp38tRZjhu3XECGzALqLNEFJN16Mm3abpgzp1KnUq1q9SrWrFq3cmX+WrEr2LBix5Itq5WbyJlq17Jt67ZtzZth2amyQuPBhSlWrFRxgUBFObHDuL0tbPgw4sSKXV5rt/gx5MiSJfNzNnIy5syK44pdZygA6NChESQJHHaw5tSqV2NuzPo17NhsK1+Wbfs157mq2kShYMGKmzZt3NShNRb17eTKZbte7vx5ZtrQp2+2KfYnt11QhhDjdu0ZN9OCCVMvb95t8/Pq17uUzv69y9xjya1atKhNnVariJFFDv//e+kBOKB57hFIoHzX8VIFBQGM4MYZWvA33oEVTieghRnaZqCG7CUY1jZrBCCAg4uEgYAX4nXlX4ctsoahizFixqGM1H0IFjP+TGTgxgwjuPLJBC9AQ2GNRUoGo5FJGkajksrd2FUuPwzhTCEj0LLMDyIMeRp5TXr5FpJfigkTk2PC9iRXyvhgwiVrZKAJkCRsCRaLZtrZUph36llSmXtqhuZW2qiBwAgzIGADDQqkSKSfjZaUp6Nm9hlpZIBqVY4qM4gmgA6wHNclpXtCGqqXk5JanVxkcaOLFTa4qsUr/YF6qpmj0mqkqbcaZmlWpnHjzDDEqMhlk+TI8s5a9PTijpe26ipjrs+6xStW16hiH7bYXiIsnbPK6A8qKJyzljhT0NKsY9KKGa26a1FrFTzMNPEAiQLYSyICEnabJD/0uBkKs//kQ07+sAH/ww9aw3TDDz/1pCLEHwYb6ex//BA8y8IlDdwLMQHzA48991wjLLIk8dPOZfUACw0/NbLb7kzvVhWvGAEYAAINDQoAAgUKvLEUV3XGiE8qFBhgQib84AMKFC6A0IUxAusiBQggUJFJO6kw8cAIcJQ8cbot5rNLFDSAoMMmyNaTCxlOdwHNP/R8wggiNqBQRtIkpeNGLfyoY0gQLtzwyNctvgxzTDJTZY42Y1iAxSzOKDIDCJokMoEKz6zorYv56GKoEbTkc0q+rCDiggz2ZOOCDq6oQoMFsyiDRgVXEK4kxezxA84MKGgSixME2OLPKS5owUsiLhxBjTxmCMD+QBeXgEHEuP7cUgM065wxgiOssLHAHi27eDjiLylOlTJLDAENPPCsUwgIm2wDxg6aB825i+CaMK46YCCBLLgsEAphuCAPyFJHJaLxD3FQoRboGh8wJPCFd/AjHHSYhjzI0IXqfSICe2heBCTBMGCMYBT/2MccuFCOYHwgFC2bBw0K4I0Yka98LTnfVHLhgxpsohzlWAYZLpAHXbSgfptTkv7OwQ9stMAIl2gFK9aAAD1sgwz5aoXCSMJABzYpd+vhhzjQsAAtYLEb/wCHE3DwRO8NgAvqQAMXSpYOEMSBH+mgQSjqUYoP2KEVrahECw7ARcNZxoaHwaFU5GWAENj+oRJVeIAF6oAGBCBhTloRWoz8gYj98UMZFTiBcNpghSuIwh7b8IMVpECDLkhjgQ184Pi24YZUgkAL5kDjCK4gHCtMQRPqWEMdSdKPPmBhhSbwBj5KUQErhNIKQ1Dg+AppyMIg0inkQITOQGOAK1iCByPQxLCwgsn8IUJc/8gGEODQPniQoxfduAfK4LENQ7igjluEZYf4cY9uhGyeFPgDM6TwBnO0j2DSkMca5CA+fiRDCpZYQxb44Q9TmIAW7WvHNo5FQ2lOc1rWIUs5mtEGF1zgAiAYgiyawQZHWPKS+GuRJjVgDL+B4QUz9IcwRjCLWExBFAdLBxkiWq5NiC/+SV5UD/FM4EAwzsAL11iDEVrJD2FQQRQIVWhJ3oiADJiQoS6ABLLoMQgZjCuatekoW6rZlGYkog6uABa3fBjOrIzTcLEQAApgAQ9hTAAFl0hEC3JgjtUd4A6qUAMI9GBHJ9gAEIWr0VHPs7smRMAOliCDBTjBj1i04AaOQMQMjDCNeJAhmCTxRykEwIGy0oMME9BCJdTgAsVu9KxoVYtamZI+DQDCLDmpa4vogQgcJM0fU5OCFVh5sGZUwQbI1QSy+pGKKmxhhkYNW4f8kY1WVeEKaROYMthQBSnUQYH6UIQL+aSNKwCCT/SgxHitAF1ocfS2uP3oWEKkgCN0Byj+QPlUqeyxUHi0Ax5F5Yc9cCJgPtnDtpDFbj4TDLIDS/gyDCuqyRZsEnsQWMO1tW9a8dsZQwgAATWog33qAE5GgThDkW0xdWoI49z2JEeiAQ0CdgC0fcHYxRDu8YBk3GIa84QZtKsAkpFsgdKwGMgDerGTlyNkEBN5J7/qBZaz3ItZzJWuL42yeqAM5ttM2b5V9sk2KuGGNa/5Cosi1pgBJOY4x6bMtz1zTtaBzQdQgAIPeAACZLDjI9IZPnMuNGvsjFY844QZNavXAwIQ6C6L88uIfs6hL50aRXeU0e1QhpRYgYYQ/MgFWaD0VYCr6eVketUzqu+qPS2ULVyDEhr+oEUzyJCDlm5F1a6+Tat/HRlOT5PR8WqCBhyRCJ9VIku8dqmwyxPsaC+G2IY880/KsY1BYUEVLECyAXbwbC9T+0I/LjeZYa3pM2fDEEZ4BfCG0As+gGYBeUC1VXyNbtVU5tz7rrO6L33mZPSAAZvgxjCGoW1LMKIV46YrRUKi5YlTvOIWvzjGM67xjXO84x7/OMhDPvGQtIIXEhc5ylOu8pWzvOUux7LEHSxwEaeJCRHYxE7k2p+o+LbnPv850H9eEQIHvehGPzrSeQKPcgxD5og+szKYsIAu+LHqVZcFvqui739rZtpcf4u1bQh1JgjgAi44O9pdMIItZJ0qW//++mS8DvfZBPzpNN9K1G8sGgOoYND3m7tt5A74mYS9fGNHwBUWUYfFL17xj2j7VN4++MUIfvJkqnuhx94ASMi18z4EsOVf5O/QUwbzdB77zYMuedIbpvKsX0nhEXdmI3dK9ZZ+fWJcj3uUxB5mZyYHL3rxcNDvPu6jLz5iet8uTxd99chXi+6ffzDTx5n5tpd+ZKL/fOWry/pAdz72YaJ95HNfWt7/OfjDz5jjq5/uTs/83ZNObi/V4xrMqscsHsv7WrF/fBgmvJKU37Ocn8+lH4BgQxmIAj8EQwbYAuzNQytITBf1X4fgQzMQw1pUUCbon1lFGwH2nAH+Bzb01D/+rEMrcKDJgIMQRI2YjJ9yzAMb4MFa+IMnYAAK5hP1jdkH+lYIwgc2VNU/3EM5MAw8mMNTcAzDsAMqgMAjuMP/gY2X3ENAYQHLHEw9NIMrVCFJ1MM2cAyz8MM2zIEHEMMNZogA6soOmkUPvscP+lQ20IE35EMsXIEbqFIIPB4qzMsIGNCXuOBtGBkFXMARzJQ2tIHZ3MB8qYMfBAEIjMDbqEMfrAAC4MAg0df7nV78yV+q3V6HtCFD3YA01MMkBIAOQJEUZMAs6MIcVIAWfBc+JcnfdNYfdMM2sAEKdM8a3AAn4AMpXMAb8AIlTIAMXEMqNMHUtVKRnOGtpGFZrCH+e3hiMoCiKFqAA4JRBSigOOAAC/YhBWrIPPiBDMaUT/1DOpwBFpCDGYCAC/mDLxRXKahAWSVjDoIZM8rKl0CjNA7CC8jRBWCjNo6JH97GN8pgPxRCBkTPX/XACTwDLlRAZWVhy6AWPPLLPEZZPRKfkuCjNNBDIciA+KRDPy5RDWzjKybJQJ5QIVyADjSTHZyDP+xCG1QB7PzBO0hkPLpMRTrZRTaZkWgkR3qk3oQkNvxjC3ZjhnxjHvxDPxiCDtBCg6kMMcADN/BTPSxDGIyALeRDKZAVRV5i9WWiJmodJ2qIT3bkR4akNQhBenHjl8DgFlBQLNgAJDDMOvjBG4T+oReYQ8N4AgjUglaWADTJo1fqIFiGZeSNZYZYQ08x1Ahs5FiVjDZcI1ONgGOxpZeI1QVU1zwMwtNYQhVowB4kk0oyAmANQRzeggFEFa7kJJDtJJw1iTowQtRoQx0gUyyY1jy0gQIRjQ1wgXVN4JfwAzOwQQ44ED0kgg0EwRXAArIsjRS4ShcokN8gF9wIpgcWpmE6hTN+0UJ1p0kcGMMU5bpcWIYJGIU1GIaF52oOJj1iZ3YyxXa236MYpXy+hDLSimvyWH22Hn3uJ0vc56nkJ6H5J5j0J4GmBICSioD+3YGih4E26HeyZo8taK8hJoSiREC+XoKGCoVC24WuRYb+st6GUkqHzt+HzkSIkt6IRkqJVtqJQt+DfuiKOkqLbuKLomiMXuiMNkqN5puF3miKht6O+kmPiuWNykSQWt6Q7kmRuh03XBiURqmUTimVVqmVXimWZqmWbimXdqmXfumUOsMQgimZlqmZnimapqmaRqk9SOiMued78sQwYFHC1amd3ime5qme7imf9qmf/imgBqqgDiqhFqqdRpyhJqqiLiqjNqqjPuqdYhl7WiScxqlOQMU6ZaqmbiqndqqnfiqohqqojiqplqqpniqqcupgpCqrtqqrviqsxqqsaqo9MN2k6mSlWipOxGd9JunkLameNOlhHmlM+OrgAeudCKv+VPCqfBor4CGrnSirdv7oizrr3EGrmUhrUzBr+1kr3GHrmGgrfFLriXrr14GrmIhrT3Cr+pkr16Hrl6irnJLrh7rrv8Grl8jrTrBr+NnrvuFrk+jrpdLrhforugGskgjsbxEshBpsuSFskijsrjJsgzostUGskUjsU1DsgVpstY1M3AyDBPLeE3bldaaKrg4rsb6ExypGPyACFrwDMlCBCa1EPixD3gSnmw5Zruoqv2JfyybGy8YsO8jCb6ZEP/ABDJSsdQqbxv6s9AUtYrxsF7xDPhjYyZjDPTRDK5ChwDQDGqiA15bKzlJZz1oq1D6f1B4G1b7DOMimP4CCLjX+zQcMVBVJAAI8k87eamuebZymLfKtrWG0rTJQgS0UJF45Ai/MwQiEAjucQhMwwB0crck6rd++J+AWn+AWBuEabkEyQCBoERBIAkrKQBl+mOWibMpO68qybI7+R+cebiGkQFmlw+gqZUeebgem7uo6aeuu35fE7lIWgRzd7j7k7rqUrZldbnZm7u5t7lsIryEQr94YL/Lu7cn2rsr+7kpAr1sM7TsU7uFOb/GS7j4MQt8xrSVmr/ayLvd27+vCB/gmg+f6AfX+wzjcbj94wgB0AeWuJ/u277i+L/x+yUs+Aj+8rTQYVyOIzzwcQjVmgxRoATI2CcYWydNyLIF6L7/yqe/68q4ADzABpwQHx9kF10gGjzAJx++BnrCMpLAKn0QJj5kLxwgMx/B84nCE8u2EMq9hOi/uzTCY1bCL3LAOC3GUEXGLGDEOI7GTKXGHMHEMOzGQQbGGSLEKU3GPWXGGYPEIazGMcbGFeDEBg3GLiXGFkPH7mjGIofGBxIXnxbEczzEd17Edz3FFrKke7zEf97EfX6mY/rEgDzIhF7KW2kPTXefLLTLGeYQjPzIkR7Ikb0QvQMUkXzImZ7Imb0TC8fAWGzIoh7IojzIpl7IpnzIqn6kOrzIrt7IrvzIsx7IszzIt17It3zIu57Iu7zK6BQQAOw==" alt="build configurations and targets" width="600" height="442"> </figure> <h3 id="configure-environment-specific-defaults">Configure environment-specific defaults</h3> <p>A project's <code>src/environments/</code> folder contains the base configuration file, <code>environment.ts</code>, which provides a default environment. You can add override defaults for additional environments, such as production and staging, in target-specific configuration files. </p> <p>For example:</p> <pre>└──myProject/src/environments/
+                   └──environment.ts
+                   └──environment.prod.ts
+                   └──environment.stage.ts</pre> <p>The base file <code>environment.ts</code>, contains the default environment settings. For example:</p> <pre>export const environment = {
+  production: false
+};</pre> <p>The <code>build</code> command uses this as the build target when no environment is specified. You can add further variables, either as additional properties on the environment object, or as separate objects. For example, the following adds a default for a variable to the default environment:</p> <pre>export const environment = {
+  production: false,
+  apiUrl: 'http://my-api-url'
+};</pre> <p>You can add target-specific configuration files, such as <code>environment.prod.ts</code>. The following sets content sets default values for the production build target:</p> <pre>export const environment = {
+  production: true,
+  apiUrl: 'http://my-prod-url'
+};</pre> <h3 id="using-environment-specific-variables-in-your-app">Using environment-specific variables in your app</h3> <p>The following application structure configures build targets for production and staging environments:</p> <pre>└── src
+    └── app
+        ├── app.component.html
+        └── app.component.ts
+    └── environments
+        ├── environment.prod.ts
+        ├── environment.staging.ts
+        └── environment.ts</pre> <p>To use the environment configurations you have defined, your components must import the original environments file:</p> <pre>import { environment } from './../environments/environment';</pre> <p>This ensures that the build and serve commands can find the configurations for specific build targets.</p> <p>The following code in the component file (<code>app.component.ts</code>) uses an environment variable defined in the configuration files.</p> <pre>import { Component } from '@angular/core';
+import { environment } from './../environments/environment';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  constructor() {
+    console.log(environment.production); // Logs false for default environment
+  }
+  title = 'app works!';
+}</pre>  <h2 id="configure-target-specific-file-replacements">Configure target-specific file replacements</h2> <p>The main CLI configuration file, <code>angular.json</code>, contains a <code>fileReplacements</code> section in the configuration for each build target, which allows you to replace any file with a target-specific version of that file. This is useful for including target-specific code or variables in a build that targets a specific environment, such as production or staging.</p> <p>By default no files are replaced. You can add file replacements for specific build targets. For example:</p> <pre>"configurations": {
+  "production": {
+    "fileReplacements": [
+      {
+        "replace": "src/environments/environment.ts",
+        "with": "src/environments/environment.prod.ts"
+      }
+    ],
+    ...</pre> <p>This means that when you build your production configuration (using <code>ng build --prod</code> or <code>ng build --configuration=production</code>), the <code>src/environments/environment.ts</code> file is replaced with the target-specific version of the file, <code>src/environments/environment.prod.ts</code>.</p> <p>You can add additional configurations as required. To add a staging environment, create a copy of <code>src/environments/environment.ts</code> called <code>src/environments/environment.staging.ts</code>, then add a <code>staging</code> configuration to <code>angular.json</code>:</p> <pre>"configurations": {
+  "production": { ... },
+  "staging": {
+    "fileReplacements": [
+      {
+        "replace": "src/environments/environment.ts",
+        "with": "src/environments/environment.staging.ts"
+      }
+    ]
+  }
+}</pre> <p>You can add more configuration options to this target environment as well. Any option that your build supports can be overridden in a build target configuration.</p> <p>To build using the staging configuration, run the following command:</p> <pre data-language="sh">ng build --configuration=staging</pre> <p>You can also configure the <code>serve</code> command to use the targeted build configuration if you add it to the "serve:configurations" section of <code>angular.json</code>:</p> <pre>"serve": {
+  "builder": "@angular-devkit/build-angular:dev-server",
+  "options": {
+    "browserTarget": "your-project-name:build"
+  },
+  "configurations": {
+    "production": {
+      "browserTarget": "your-project-name:build:production"
+    },
+    "staging": {
+      "browserTarget": "your-project-name:build:staging"
+    }
+  }
+},</pre>  <h2 id="configure-size-budgets">Configure size budgets</h2> <p>As applications grow in functionality, they also grow in size. The CLI allows you to set size thresholds in your configuration to ensure that parts of your application stay within size boundaries that you define.</p> <p>Define your size boundaries in the CLI configuration file, <code>angular.json</code>, in a <code>budgets</code> section for each <a href="../build/#app-environments">configured environment</a>. </p> <pre>{
+  ...
+  "configurations": {
+    "production": {
+      ...
+      budgets: []
+    }
+  }
+}</pre> <p>You can specify size budgets for the entire app, and for particular parts. Each budget entry configures a budget of a given type. Specify size values in the following formats:</p> <ul> <li> <p>123 or 123b: Size in bytes</p> </li> <li> <p>123kb: Size in kilobytes</p> </li> <li> <p>123mb: Size in megabytes</p> </li> <li> <p>12%: Percentage of size relative to baseline. (Not valid for baseline values.)</p> </li> </ul> <p>When you configure a budget, the build system warns or reports an error when a given part of the app reaches or exceeds a boundary size that you set.</p> <p>Each budget entry is a JSON object with the following properties:</p> <table> <tbody>
+<tr> <th>Property</th> <th>Value</th> </tr> <tr> <td>type</td> <td>The type of budget. One of: <p> <em> bundle - The size of a specific bundle. </em> initial - The initial size of the app. <em> allScript - The size of all scripts. </em> all - The size of the entire app. <em> anyScript - The size of any one script. </em> any - The size of any file.</p> </td> </tr> <tr> <td>name</td> <td> The name of the bundle (for `type=bundle`). </td> </tr> <tr> <td>baseline</td> <td>The baseline size for comparison.</td> </tr> <tr> <td>maximumWarning</td> <td>The maximum threshold for warning relative to the baseline.</td> </tr> <tr> <td>maximumError</td> <td>The maximum threshold for error relative to the baseline.</td> </tr> <tr> <td>minimumWarning</td> <td>The minimum threshold for warning relative to the baseline.</td> </tr> <tr> <td>minimumError</td> <td>The minimum threshold for error relative to the baseline.</td> </tr> <tr> <td>warning</td> <td>The threshold for warning relative to the baseline (min &amp; max).</td> </tr> <tr> <td>error</td> <td>The threshold for error relative to the baseline (min &amp; max).</td> </tr> </tbody>
+</table>  <h2 id="configuring-browser-compatibility">Configuring browser compatibility</h2> <p>The CLI uses <a href="https://github.com/postcss/autoprefixer" target="_blank">Autoprefixer</a> to ensure compatibility with different browser and browser versions. You may find it necessary to target specific browsers or exclude certain browser versions from your build.</p> <p>Internally, Autoprefixer relies on a library called <a href="https://github.com/browserslist/browserslist" target="_blank">Browserslist</a> to figure out which browsers to support with prefixing. Browserlist looks for configuration options in a <code>browserslist</code> property of the package configuration file, or in a configuration file named <code>.browserslistrc</code>. Autoprefixer looks for the <code>browserslist</code> configuration when it prefixes your CSS. </p> <ul> <li>You can tell Autoprefixer what browsers to target by adding a browserslist property to the package configuration file, <code>package.json</code>:</li> </ul> <pre>"browserslist": [
+   "&gt; 1%",
+   "last 2 versions"
+ ]</pre> <ul> <li>Alternatively, you can add a new file, <code>.browserslistrc</code>, to the project directory, that specifies browsers you want to support:</li> </ul> <pre>### Supported Browsers
+ &gt; 1%
+ last 2 versions</pre> <p>See the <a href="https://github.com/browserslist/browserslist" target="_blank">browserslist repo</a> for more examples of how to target specific browsers and versions.</p> <blockquote class="alert is-helpful"> Backward compatibility <p>If you want to produce a progressive web app and are using <a href="https://developers.google.com/web/tools/lighthouse/" target="_blank">Lighthouse</a> to grade the project, add the following browserslist entry to your <code>package.json</code> file, in order to eliminate the <a href="https://developers.google.com/web/tools/lighthouse/audits/old-flexbox" target="_blank">old flexbox</a> prefixes:</p> <pre>"browserslist": [
+  "last 2 versions",
+  "not ie &lt;= 10",
+  "not ie_mob &lt;= 10"
+]</pre> </blockquote>  <h2 id="proxying-to-a-backend-server">Proxying to a backend server</h2> <p>You can use the <a href="https://webpack.js.org/configuration/dev-server/#devserver-proxy" target="_blank">proxying support</a> in the <code>webpack</code> dev server to divert certain URLs to a backend server, by passing a file to the <code>--proxy-config</code> build option. For example, to divert all calls for <code><a href="../../api/common/http/" class="code-anchor">http</a>://localhost:4200/api</code> to a server running on <code><a href="../../api/common/http/" class="code-anchor">http</a>://localhost:3000/api</code>, take the following steps.</p> <ol> <li> <p>Create a file <code>proxy.conf.json</code> in the projects <code>src/</code> folder, next to <code>package.json</code>.</p> </li> <li> <p>Add the following content to the new proxy file:</p> <pre>{
+  "/api": {
+    "target": "http://localhost:3000",
+    "secure": false
+  }
+}</pre> </li> <li> <p>In the CLI configuration file, <code>angular.json</code>, add the <code>proxyConfig</code> option to the <code>serve</code> target:</p> <pre>...
+"architect": {
+  "serve": {
+    "builder": "@angular-devkit/build-angular:dev-server",
+    "options": {
+      "browserTarget": "your-application-name:build",
+      "proxyConfig": "src/proxy.conf.json"
+    },
+...</pre> </li> <li> <p>To run the dev server with this proxy configuration, call <code>ng serve</code>. </p> </li> </ol> <p>You can edit the proxy configuration file to add configuration options; some examples are given below. For a description of all options, see <a href="https://webpack.js.org/configuration/dev-server/#devserver-proxy" target="_blank">webpack DevServer documentation</a>.</p> <p>Note that if you edit the proxy configuration file, you must relaunch the <code>ng serve</code> process to make your changes effective.</p> <h3 id="rewrite-the-url-path">Rewrite the URL path</h3> <p>The <code>pathRewrite</code> proxy configuration option lets you rewrite the URL path at run time. For example, you can specify the following <code>pathRewrite</code> value to the proxy configuration to remove "api" from the end of a path.</p> <pre>{
+  "/api": {
+    "target": "http://localhost:3000",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}</pre> <p>If you need to access a backend that is not on <code>localhost</code>, set the <code>changeOrigin</code> option as well. For example:</p> <pre>{
+  "/api": {
+    "target": "http://npmjs.org",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "changeOrigin": true
+  }
+}</pre> <p>To help determine whether your proxy is working as intended, set the <code>logLevel</code> option. For example:</p> <pre>{
+  "/api": {
+    "target": "http://localhost:3000",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "logLevel": "debug"
+  }
+}</pre> <p>Proxy log levels are <code>info</code> (the default), <code>debug</code>, <code>warn</code>, <code>error</code>, and <code>silent</code>.</p> <h3 id="proxy-multiple-entries">Proxy multiple entries</h3> <p>You can proxy multiple entries to the same target by defining the configuration in JavaScript.</p> <p>Set the proxy configuration file to <code>proxy.conf.js</code> (instead of <code>proxy.conf.json</code>), and specify configuration files as in the following example.</p> <pre>const PROXY_CONFIG = [
+    {
+        context: [
+            "/my",
+            "/many",
+            "/endpoints",
+            "/i",
+            "/need",
+            "/to",
+            "/proxy"
+        ],
+        target: "http://localhost:3000",
+        secure: false
+    }
+]
+
+module.exports = PROXY_CONFIG;</pre> <p>In the CLI configuration file, <code>angular.json</code>, point to the JavaScript proxy configuration file:</p> <pre>...
+"architect": {
+  "serve": {
+    "builder": "@angular-devkit/build-angular:dev-server",
+    "options": {
+      "browserTarget": "your-application-name:build",
+      "proxyConfig": "src/proxy.conf.js"
+    },
+...</pre> <h3 id="bypass-the-proxy">Bypass the proxy</h3> <p>If you need to optionally bypass the proxy, or dynamically change the request before it's sent, add the bypass option, as shown in this JavaScript example.</p> <pre>const PROXY_CONFIG = {
+    "/api/proxy": {
+        "target": "http://localhost:3000",
+        "secure": false,
+        "bypass": function (req, res, proxyOptions) {
+            if (req.headers.accept.indexOf("html") !== -1) {
+                console.log("Skipping proxy for browser request.");
+                return "/index.html";
+            }
+            req.headers["X-Custom-Header"] = "yes";
+        }
+    }
+}
+
+module.exports = PROXY_CONFIG;</pre> <h3 id="using-corporate-proxy">Using corporate proxy</h3> <p>If you work behind a corporate proxy, the cannot directly proxy calls to any URL outside your local network. In this case, you can configure the backend proxy to redirect calls through your corporate proxy using an agent:</p> <pre data-language="none">npm install --save-dev https-proxy-agent</pre> <p>When you define an environment variable <code>http_proxy</code> or <code>HTTP_PROXY</code>, an agent is automatically added to pass calls through your corporate proxy when running <code>npm start</code>.</p> <p>Use the following content in the JavaScript configuration file.</p> <pre>var HttpsProxyAgent = require('https-proxy-agent');
+var proxyConfig = [{
+  context: '/api',
+  target: 'http://your-remote-server.com:3000',
+  secure: false
+}];
+
+function setupForCorporateProxy(proxyConfig) {
+  var proxyServer = process.env.http_proxy || process.env.HTTP_PROXY;
+  if (proxyServer) {
+    var agent = new HttpsProxyAgent(proxyServer);
+    console.log('Using corporate proxy server: ' + proxyServer);
+    proxyConfig.forEach(function(entry) {
+      entry.agent = agent;
+    });
+  }
+  return proxyConfig;
+}
+
+module.exports = setupForCorporateProxy(proxyConfig);</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2010–2019 Google, Inc.<br>Licensed under the Creative Commons Attribution License 4.0.<br>
+    <a href="https://v7.angular.io/guide/build" class="_attribution-link" target="_blank">https://v7.angular.io/guide/build</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

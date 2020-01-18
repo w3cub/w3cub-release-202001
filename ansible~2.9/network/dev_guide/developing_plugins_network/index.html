@@ -1,0 +1,170 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Network Connection Plugins - Ansible 2.9 - W3cubDocs</title>
+  
+  <meta name="description" content="Each network connection plugin has a set of its own plugins which provide a specification of the connection for a particular set of devices. The &hellip;">
+  <meta name="keywords" content="network, connection, plugins, -, ansible, ansible~2.9">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/ansible~2.9/network/dev_guide/developing_plugins_network/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/ansible~2.9.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/ansible~2.9/" class="_nav-link" title="" style="margin-left:0;">Ansible 2.9</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _sphinx">
+				
+				
+<h1 id="developing-modules-network">Network connection plugins</h1> <p id="network-connection-plugins">Each network connection plugin has a set of its own plugins which provide a specification of the connection for a particular set of devices. The specific plugin used is selected at runtime based on the value of the <code>ansible_network_os</code> variable assigned to the host. This variable should be set to the same value as the name of the plugin to be loaed. Thus, <code>ansible_network_os=nxos</code> will try to load a plugin in a file named <code>nxos.py</code>, so it is important to name the plugin in a way that will be sensible to users.</p> <p>Public methods of these plugins may be called from a module or module_utils with the connection proxy object just as other connection methods can. The following is a very simple example of using such a call in a module_utils file so it may be shared with other modules.</p> <pre data-language="python">from ansible.module_utils.connection import Connection
+
+def get_config(module):
+    # module is your AnsibleModule instance.
+    connection = Connection(module._socket_path)
+
+    # You can now call any method (that doesn't start with '_') of the connection
+    # plugin or its platform-specific plugin
+    return connection.get_config()
+</pre>  <ul> <li><a class="reference internal" href="#making-requests" id="id2">Making requests</a></li> <li><a class="reference internal" href="#authenticating" id="id3">Authenticating</a></li> <li><a class="reference internal" href="#error-handling" id="id4">Error handling</a></li> </ul>
+   <h2 id="developing-plugins-httpapi">Developing httpapi plugins</h2> <p id="developing-httpapi-plugins"><a class="reference internal" href="../../../plugins/httpapi/#httpapi-plugins"><span class="std std-ref">httpapi plugins</span></a> serve as adapters for various HTTP(S) APIs for use with the <code>httpapi</code> connection plugin. They should implement a minimal set of convenience methods tailored to the API you are attempting to use.</p> <p>Specifically, there are a few methods that the <code>httpapi</code> connection plugin expects to exist.</p>  <h3 id="making-requests">Making requests</h3> <p>The <code>httpapi</code> connection plugin has a <code>send()</code> method, but an httpapi plugin needs a <code>send_request(self, data, **message_kwargs)</code> method as a higher-level wrapper to <code>send()</code>. This method should prepare requests by adding fixed values like common headers or URL root paths. This method may do more complex work such as turning data into formatted payloads, or determining which path or method to request. It may then also unpack responses to be more easily consumed by the caller.</p> <pre data-language="python">from ansible.module_utils.six.moves.urllib.error import HTTPError
+
+def send_request(self, data, path, method='POST'):
+    # Fixed headers for requests
+    headers = {'Content-Type': 'application/json'}
+    try:
+        response, response_content = self.connection.send(path, data, method=method, headers=headers)
+    except HTTPError as exc:
+        return exc.code, exc.read()
+
+    # handle_response (defined separately) will take the format returned by the device
+    # and transform it into something more suitable for use by modules.
+    # This may be JSON text to Python dictionaries, for example.
+    return handle_response(response_content)
+</pre>   <h3 id="authenticating">Authenticating</h3> <p>By default, all requests will authenticate with HTTP Basic authentication. If a request can return some kind of token to stand in place of HTTP Basic, the <code>update_auth(self, response, response_text)</code> method should be implemented to inspect responses for such tokens. If the token is meant to be included with the headers of each request, it is sufficient to return a dictionary which will be merged with the computed headers for each request. The default implementation of this method does exactly this for cookies. If the token is used in another way, say in a query string, you should instead save that token to an instance variable, where the <code>send_request()</code> method (above) can add it to each request</p> <pre data-language="python">def update_auth(self, response, response_text):
+    cookie = response.info().get('Set-Cookie')
+    if cookie:
+        return {'Cookie': cookie}
+
+    return None
+</pre> <p>If instead an explicit login endpoint needs to be requested to receive an authentication token, the <code>login(self, username, password)</code> method can be implemented to call that endpoint. If implemented, this method will be called once before requesting any other resources of the server. By default, it will also be attempted once when a HTTP 401 is returned from a request.</p> <pre data-language="python">def login(self, username, password):
+    login_path = '/my/login/path'
+    data = {'user': username, 'password': password}
+
+    response = self.send_request(data, path=login_path)
+    try:
+        # This is still sent as an HTTP header, so we can set our connection's _auth
+        # variable manually. If the token is returned to the device in another way,
+        # you will have to keep track of it another way and make sure that it is sent
+        # with the rest of the request from send_request()
+        self.connection._auth = {'X-api-token': response['token']}
+    except KeyError:
+        raise AnsibleAuthenticationFailure(message="Failed to acquire login token.")
+</pre> <p>Similarly, <code>logout(self)</code> can be implemented to call an endpoint to invalidate and/or release the current token, if such an endpoint exists. This will be automatically called when the connection is closed (and, by extension, when reset).</p> <pre data-language="python">def logout(self):
+    logout_path = '/my/logout/path'
+    self.send_request(None, path=logout_path)
+
+    # Clean up tokens
+    self.connection._auth = None
+</pre>   <h3 id="error-handling">Error handling</h3> <p>The <code>handle_httperror(self, exception)</code> method can deal with status codes returned by the server. The return value indicates how the plugin will continue with the request:</p> <ul class="simple"> <li>A value of <code>true</code> means that the request can be retried. This my be used to indicate a transient error, or one that has been resolved. For example, the default implementation will try to call <code>login()</code> when presented with a 401, and return <code>true</code> if successful.</li> <li>A value of <code>false</code> means that the plugin is unable to recover from this response. The status code will be returned to the calling module as an exception. Any other value will be taken as a nonfatal response from the request. This may be useful if the server returns error messages in the body of the response. Returning the original exception is usually sufficient in this case, as HTTPError objects have the same interface as a successful response.</li> </ul> <p>For example httpapi plugins, see the <a class="reference external" href="https://github.com/ansible/ansible/tree/devel/lib/ansible/plugins/httpapi" target="_blank">source code for the httpapi plugins</a> included with Ansible Core.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2018 Michael DeHaan<br>© 2018–2019 Red Hat, Inc.<br>Licensed under the GNU General Public License version 3.<br>
+    <a href="https://docs.ansible.com/ansible/2.9/network/dev_guide/developing_plugins_network.html" class="_attribution-link" target="_blank">https://docs.ansible.com/ansible/2.9/network/dev_guide/developing_plugins_network.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
