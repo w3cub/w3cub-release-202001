@@ -1,0 +1,139 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Client Unblock - Redis - W3cubDocs</title>
+  
+  <meta name="description" content=" Available since 5.0.0. ">
+  <meta name="keywords" content="client, unblock, -, redis">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/redis/client-unblock/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/redis.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/redis/" class="_nav-link" title="" style="margin-left:0;">Redis</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _redis">
+				
+				
+<h1 class="command">CLIENT</h1>
+<pre>CLIENT UNBLOCK client-id [TIMEOUT|ERROR]</pre>   <div class="metadata"> <p><strong>Available since 5.0.0.</strong></p> <p><strong>Time complexity:</strong> O(log N) where N is the number of client connections</p> </div> <p>This command can unblock, from a different connection, a client blocked in a blocking operation, such as for instance <a href="../brpop/">BRPOP</a> or <a href="../xread/">XREAD</a> or <a href="../wait/">WAIT</a>.</p> <p>By default the client is unblocked as if the timeout of the command was reached, however if an additional (and optional) argument is passed, it is possible to specify the unblocking behavior, that can be <strong>TIMEOUT</strong> (the default) or <strong>ERROR</strong>. If <strong>ERROR</strong> is specified, the behavior is to unblock the client returning as error the fact that the client was force-unblocked. Specifically the client will receive the following error:</p> <pre>-UNBLOCKED client unblocked via CLIENT UNBLOCK
+</pre> <p>Note: of course as usually it is not guaranteed that the error text remains the same, however the error code will remain <code>-UNBLOCKED</code>.</p> <p>This command is useful especially when we are monitoring many keys with a limited number of connections. For instance we may want to monitor multiple streams with <a href="../xread/">XREAD</a> without using more than N connections. However at some point the consumer process is informed that there is one more stream key to monitor. In order to avoid using more connections, the best behavior would be to stop the blocking command from one of the connections in the pool, add the new key, and issue the blocking command again.</p> <p>To obtain this behavior the following pattern is used. The process uses an additional <em>control connection</em> in order to send the <a href="../client-unblock/">CLIENT UNBLOCK</a> command if needed. In the meantime, before running the blocking operation on the other connections, the process runs <a href="../client-id/">CLIENT ID</a> in order to get the ID associated with that connection. When a new key should be added, or when a key should no longer be monitored, the relevant connection blocking command is aborted by sending <a href="../client-unblock/">CLIENT UNBLOCK</a> in the control connection. The blocking command will return and can be finally reissued.</p> <p>This example shows the application in the context of Redis streams, however the pattern is a general one and can be applied to other cases.</p> <pre>Connection A (blocking connection):
+&gt; CLIENT ID
+2934
+&gt; BRPOP key1 key2 key3 0
+(client is blocked)
+
+... Now we want to add a new key ...
+
+Connection B (control connection):
+&gt; CLIENT UNBLOCK 2934
+1
+
+Connection A (blocking connection):
+... BRPOP reply with timeout ...
+NULL
+&gt; BRPOP key1 key2 key3 key4 0
+(client is blocked again)
+</pre>  <div class="_attribution">
+  <p class="_attribution-p">
+    © 2009–2018 Salvatore Sanfilippo<br>Licensed under the Creative Commons Attribution-ShareAlike License 4.0.<br>
+    <a href="https://redis.io/commands/client-unblock" class="_attribution-link" target="_blank">https://redis.io/commands/client-unblock</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,127 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Xgroup - Redis - W3cubDocs</title>
+  
+  <meta name="description" content=" Available since 5.0.0. ">
+  <meta name="keywords" content="xgroup, -, redis">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/redis/xgroup/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/redis.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/redis/" class="_nav-link" title="" style="margin-left:0;">Redis</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _redis">
+				
+				
+<h1 class="command">XGROUP</h1>
+<pre>XGROUP [CREATE key groupname id-or-$] [SETID key groupname id-or-$] [DESTROY key groupname] [DELCONSUMER key groupname consumername]</pre>   <div class="metadata"> <p><strong>Available since 5.0.0.</strong></p> <p><strong>Time complexity:</strong> O(1) for all the subcommands, with the exception of the DESTROY subcommand which takes an additional O(M) time in order to delete the M entries inside the consumer group pending entries list (PEL).</p> </div> <p>This command is used in order to manage the consumer groups associated with a stream data structure. Using <a href="../xgroup/">XGROUP</a> you can:</p> <ul> <li>Create a new consumer group associated with a stream.</li> <li>Destroy a consumer group.</li> <li>Remove a specific consumer from a consumer group.</li> <li>Set the consumer group <em>last delivered ID</em> to something else.</li> </ul> <p>To create a new consumer group, use the following form:</p> <pre>XGROUP CREATE mystream consumer-group-name $
+</pre> <p>The last argument is the ID of the last item in the stream to consider already delivered. In the above case we used the special ID '$' (that means: the ID of the last item in the stream). In this case the consumers fetching data from that consumer group will only see new elements arriving in the stream.</p> <p>If instead you want consumers to fetch the whole stream history, use zero as the starting ID for the consumer group:</p> <pre>XGROUP CREATE mystream consumer-group-name 0
+</pre> <p>Of course it is also possible to use any other valid ID. If the specified consumer group already exists, the command returns a <code>-BUSYGROUP</code> error. Otherwise the operation is performed and OK is returned. There are no hard limits to the number of consumer groups you can associate to a given stream.</p> <p>A consumer can be destroyed completely by using the following form:</p> <pre>XGROUP DESTROY mystream consumer-group-name
+</pre> <p>The consumer group will be destroyed even if there are active consumers and pending messages, so make sure to call this command only when really needed.</p> <p>To just remove a given consumer from a consumer group, the following form is used:</p> <pre>XGROUP DELCONSUMER mystream consumer-group-name myconsumer123
+</pre> <p>Consumers in a consumer group are auto-created every time a new consumer name is mentioned by some command. However sometimes it may be useful to remove old consumers since they are no longer used. This form returns the number of pending messages that the consumer had before it was deleted.</p> <p>Finally it possible to set the next message to deliver using the <code>SETID</code> subcommand. Normally the next ID is set when the consumer is created, as the last argument of <code>XGROUP CREATE</code>. However using this form the next ID can be modified later without deleting and creating the consumer group again. For instance if you want the consumers in a consumer group to re-process all the messages in a stream, you may want to set its next ID to 0:</p> <pre>XGROUP SETID mystream consumer-group-name 0
+</pre> <p>Finally to get some help if you don't remember the syntax, use the HELP subcommand:</p> <pre>XGROUP HELP
+</pre>  <div class="_attribution">
+  <p class="_attribution-p">
+    © 2009–2018 Salvatore Sanfilippo<br>Licensed under the Creative Commons Attribution-ShareAlike License 4.0.<br>
+    <a href="https://redis.io/commands/xgroup" class="_attribution-link" target="_blank">https://redis.io/commands/xgroup</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
