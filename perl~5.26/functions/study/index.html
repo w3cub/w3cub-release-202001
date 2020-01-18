@@ -1,0 +1,142 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Study - Perl 5.26 - W3cubDocs</title>
+  
+  <meta name="description" content="May take extra time to study SCALAR (&#36;_ if unspecified) in anticipation of doing many pattern matches on the string before it is next modified. &hellip;">
+  <meta name="keywords" content="study, -, perl, perl~5.26">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/perl~5.26/functions/study/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/perl~5.26.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/perl~5.26/" class="_nav-link" title="" style="margin-left:0;">Perl 5.26</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _perl">
+				
+				
+<h1>study</h1>   <h2 id="study-SCALAR">study SCALAR</h2>   <h2 id="study">study</h2> <p>May take extra time to study SCALAR (<code class="inline"><span class="i">$_</span></code> if unspecified) in anticipation of doing many pattern matches on the string before it is next modified. This may or may not save time, depending on the nature and number of patterns you are searching and the distribution of character frequencies in the string to be searched; you probably want to compare run times with and without it to see which is faster. Those loops that scan for many short constant strings (including the constant parts of more complex patterns) will benefit most.</p> <p>Note that since Perl version 5.16 this function has been a no-op, but this might change in a future release.</p> <p>(The way <code class="inline"><a class="l_k" href="../study/">study</a></code> works is this: a linked list of every character in the string to be searched is made, so we know, for example, where all the <code class="inline"><span class="q">'k'</span></code> characters are. From each search string, the rarest character is selected, based on some static frequency tables constructed from some C programs and English text. Only those places that contain this "rarest" character are examined.)</p> <p>For example, here is a loop that inserts index producing entries before any line containing a certain pattern:</p> <pre class="verbatim" data-language="perl">while (&lt;&gt;) {
+    study;
+    print ".IX foo\n"    if /\bfoo\b/;
+    print ".IX bar\n"    if /\bbar\b/;
+    print ".IX blurfl\n" if /\bblurfl\b/;
+    # ...
+    print;
+}
+</pre>
+<p>In searching for <code class="inline"><span class="q">/\bfoo\b/</span></code> , only locations in <code class="inline"><span class="i">$_</span></code> that contain <code class="inline"><span class="w">f</span></code> will be looked at, because <code class="inline"><span class="w">f</span></code> is rarer than <code class="inline"><span class="w">o</span></code> . In general, this is a big win except in pathological cases. The only question is whether it saves you more time than it took to build the linked list in the first place.</p> <p>Note that if you have to look for strings that you don't know till runtime, you can build an entire loop as a string and <code class="inline"><a class="l_k" href="../eval/">eval</a></code> that to avoid recompiling all your patterns all the time. Together with undefining <code class="inline"><span class="i">$/</span></code> to input entire files as one record, this can be quite fast, often faster than specialized programs like fgrep(1). The following scans a list of files (<code class="inline"><span class="i">@files</span></code> ) for a list of words (<code class="inline"><span class="i">@words</span></code> ), and prints out the names of those files that contain a match:</p> <pre class="verbatim" data-language="perl">$search = 'while (&lt;&gt;) { study;';
+foreach $word (@words) {
+    $search .= "++\$seen{\$ARGV} if /\\b$word\\b/;\n";
+}
+$search .= "}";
+@ARGV = @files;
+undef $/;
+eval $search;        # this screams
+$/ = "\n";        # put back to normal input delimiter
+foreach $file (sort keys(%seen)) {
+    print $file, "\n";
+}
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2016 Larry Wall and others<br>Licensed under the GNU General Public License version 1 or later, or the Artistic License.<br>The Perl logo is a trademark of the Perl Foundation.<br>
+    <a href="https://perldoc.perl.org/5.26.0/functions/study.html" class="_attribution-link" target="_blank">https://perldoc.perl.org/5.26.0/functions/study.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

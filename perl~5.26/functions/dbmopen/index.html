@@ -1,0 +1,131 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dbmopen - Perl 5.26 - W3cubDocs</title>
+  
+  <meta name="description" content=" [This function has been largely superseded by the tie function.] ">
+  <meta name="keywords" content="dbmopen, -, perl, perl~5.26">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/perl~5.26/functions/dbmopen/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/perl~5.26.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/perl~5.26/" class="_nav-link" title="" style="margin-left:0;">Perl 5.26</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _perl">
+				
+				
+<h1>dbmopen</h1>   <h2 id="dbmopen-HASH%2cDBNAME%2cMASK">dbmopen HASH,DBNAME,MASK</h2>  <p>[This function has been largely superseded by the <a href="#tie-VARIABLE%2cCLASSNAME%2cLIST">tie</a> function.]</p> <p>This binds a dbm(3), ndbm(3), sdbm(3), gdbm(3), or Berkeley DB file to a hash. HASH is the name of the hash. (Unlike normal <code class="inline"><a class="l_k" href="../open/">open</a></code>, the first argument is <i>not</i> a filehandle, even though it looks like one). DBNAME is the name of the database (without the <i>.dir</i> or <i>.pag</i> extension if any). If the database does not exist, it is created with protection specified by MASK (as modified by the <code class="inline"><a class="l_k" href="../umask/">umask</a></code>). To prevent creation of the database if it doesn't exist, you may specify a MODE of 0, and the function will return a false value if it can't find an existing database. If your system supports only the older DBM functions, you may make only one <code class="inline"><a class="l_k" href="../dbmopen/">dbmopen</a></code> call in your program. In older versions of Perl, if your system had neither DBM nor ndbm, calling <code class="inline"><a class="l_k" href="../dbmopen/">dbmopen</a></code> produced a fatal error; it now falls back to sdbm(3).</p> <p>If you don't have write access to the DBM file, you can only read hash variables, not set them. If you want to test whether you can write, either use file tests or try setting a dummy hash entry inside an <code class="inline"><a class="l_k" href="../eval/">eval</a></code> to trap the error.</p> <p>Note that functions such as <code class="inline"><a class="l_k" href="../keys/">keys</a></code> and <code class="inline"><a class="l_k" href="../values/">values</a></code> may return huge lists when used on large DBM files. You may prefer to use the <code class="inline"><a class="l_k" href="../each/">each</a></code> function to iterate over large DBM files. Example:</p> <pre class="verbatim" data-language="perl"># print out history file offsets
+dbmopen(%HIST,'/usr/lib/news/history',0666);
+while (($key,$val) = each %HIST) {
+    print $key, ' = ', unpack('L',$val), "\n";
+}
+dbmclose(%HIST);
+</pre>
+<p>See also <a href="../../anydbm_file/">AnyDBM_File</a> for a more general description of the pros and cons of the various dbm approaches, as well as <a href="../../db_file/">DB_File</a> for a particularly rich implementation.</p> <p>You can control which DBM library you use by loading that library before you call dbmopen():</p> <pre class="verbatim" data-language="perl">use DB_File;
+dbmopen(%NS_Hist, "$ENV{HOME}/.netscape/history.db")
+    or die "Can't open netscape history file: $!";
+</pre>
+<p>Portability issues: <a href="../../perlport/#dbmopen">dbmopen in perlport</a>.</p> <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2016 Larry Wall and others<br>Licensed under the GNU General Public License version 1 or later, or the Artistic License.<br>The Perl logo is a trademark of the Perl Foundation.<br>
+    <a href="https://perldoc.perl.org/5.26.0/functions/dbmopen.html" class="_attribution-link" target="_blank">https://perldoc.perl.org/5.26.0/functions/dbmopen.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
