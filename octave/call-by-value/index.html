@@ -1,0 +1,127 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Call by Value - Octave - W3cubDocs</title>
+  
+  <meta name="description" content="In Octave, unlike Fortran, function arguments are passed by value, which means that each argument in a function call is evaluated and assigned to a &hellip;">
+  <meta name="keywords" content="call, value, -, octave">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/octave/call-by-value/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/octave.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/octave/" class="_nav-link" title="" style="margin-left:0;">Octave</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _octave">
+				
+				
+<h1 class="subsection">8.2.1 Call by Value</h1> <p>In Octave, unlike Fortran, function arguments are passed by value, which means that each argument in a function call is evaluated and assigned to a temporary location in memory before being passed to the function. There is currently no way to specify that a function parameter should be passed by reference instead of by value. This means that it is impossible to directly alter the value of a function parameter in the calling function. It can only change the local copy within the function body. For example, the function </p> <pre class="example" data-language="matlab">function f (x, n)
+  while (n-- &gt; 0)
+    disp (x);
+  endwhile
+endfunction</pre> <p>displays the value of the first argument <var>n</var> times. In this function, the variable <var>n</var> is used as a temporary variable without having to worry that its value might also change in the calling function. Call by value is also useful because it is always possible to pass constants for any function parameter without first having to determine that the function will not attempt to modify the parameter. </p> <p>The caller may use a variable as the expression for the argument, but the called function does not know this: it only knows what value the argument had. For example, given a function called as </p> <pre class="example" data-language="matlab">foo = "bar";
+fcn (foo)</pre> <p>you should not think of the argument as being “the variable <code>foo</code>.” Instead, think of the argument as the string value, <code>"bar"</code>. </p> <p>Even though Octave uses pass-by-value semantics for function arguments, values are not copied unnecessarily. For example, </p> <pre class="example" data-language="matlab">x = rand (1000);
+f (x);</pre> <p>does not actually force two 1000 by 1000 element matrices to exist <em>unless</em> the function <code>f</code> modifies the value of its argument. Then Octave must create a copy to avoid changing the value outside the scope of the function <code>f</code>, or attempting (and probably failing!) to modify the value of a constant or the value of a temporary result. </p>
+<div class="_attribution">
+  <p class="_attribution-p">
+          © 1996–2018 John W. Eaton<br>      Permission is granted to make and distribute verbatim copies of this manual provided the copyright notice and this permission notice are preserved on all copies.<br>Permission is granted to copy and distribute modified versions of this manual under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.Permission is granted to copy and distribute translations of this manual into another language, under the above conditions for modified versions.<br>
+    <a href="https://octave.org/doc/interpreter/Call-by-Value.html" class="_attribution-link" target="_blank">https://octave.org/doc/interpreter/Call-by-Value.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
