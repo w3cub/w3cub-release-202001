@@ -1,0 +1,137 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Phoenix.Socket.Transport - Phoenix - W3cubDocs</title>
+  
+  <meta name="description" content=" API for building transports. ">
+  <meta name="keywords" content="phoenix, socket, transport, summary, functions, callbacks, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/phoenix/phoenix/phoenix.socket.transport/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/phoenix.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/phoenix/" class="_nav-link" title="" style="margin-left:0;">Phoenix</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Phoenix.Socket.Transport <small>behaviour</small>  </h1>  <p>API for building transports.</p> <p>This module describes what is required to build a Phoenix transport. The transport sits between the socket and channels, forwarding client messages to channels and vice-versa.</p> <p>A transport is responsible for:</p> <ul> <li>Implementing the transport behaviour </li> <li>Establishing the socket connection </li> <li>Handling of incoming messages </li> <li>Handling of outgoing messages </li> <li>Managing channels </li> <li>Providing secure defaults </li> </ul> <h2 id="module-the-transport-behaviour" class="section-heading">  The transport behaviour </h2> <p>The transport requires one function:</p> <ul> <li>
+<code class="inline">default_config/0</code> - returns the default transport configuration to be merged when the transport is declared in the socket module </li> </ul> <h2 id="module-socket-connections" class="section-heading">  Socket connections </h2> <p>Once a connection is established, the transport is responsible for invoking the <code class="inline">Phoenix.Socket.connect/2</code> callback and acting accordingly. Once connected, the transport should request the <code class="inline">Phoenix.Socket.id/1</code> and subscribe to the topic if one exists. On subscribed, the transport must be able to handle “disconnect” broadcasts on the given id topic.</p> <p>The <a href="#connect/6"><code class="inline">connect/6</code></a> function in this module can be used as a convenience or a documentation on such steps.</p> <h2 id="module-incoming-messages" class="section-heading">  Incoming messages </h2> <p>Incoming messages are encoded in whatever way the transport chooses. Those messages must be decoded in the transport into a <a href="../phoenix.socket.message/"><code class="inline">Phoenix.Socket.Message</code></a> before being forwarded to a channel.</p> <p>Most of those messages are user messages except:</p> <ul> <li>“heartbeat” events in the “phoenix” topic - should just emit an OK reply </li> <li>“phx_join” on any topic - should join the topic </li> <li>“phx_leave” on any topic - should leave the topic </li> </ul> <p>The function <a href="#dispatch/3"><code class="inline">dispatch/3</code></a> can be used to handle these messages.</p> <h2 id="module-outgoing-messages" class="section-heading">  Outgoing messages </h2> <p>Channels can send two types of message back to a transport: <a href="../phoenix.socket.message/"><code class="inline">Phoenix.Socket.Message</code></a> and <a href="../phoenix.socket.reply/"><code class="inline">Phoenix.Socket.Reply</code></a>. Those messages are encoded in the channel into a format defined by the transport. That’s why transports are required to pass a serializer that abides to the behaviour described in <a href="../phoenix.transports.serializer/"><code class="inline">Phoenix.Transports.Serializer</code></a>.</p> <h2 id="module-managing-channel-exits" class="section-heading">  Managing channel exits </h2> <p>Because channels are spawned from the transport process, transports must trap exits and correctly handle the <code class="inline">{:EXIT, _, _}</code> messages arriving from channels, relaying the proper response to the client.</p> <p>The <code class="inline">"phx_error"</code> event is sent by the transport when a channel exits, and represents the channel terminating against its will. The <a href="#on_exit_message/3"><code class="inline">on_exit_message/3</code></a> function aids in constructing the <code class="inline">"phx_error"</code> message.</p> <p>For graceful exits, the channel will notify the transort it is gracefully terminating via the following message:</p> <pre data-language="elixir">{:graceful_exit, channel_pid, %Phoenix.Socket.Message{}}</pre> <p>The <code class="inline">%Phoenix.Socket.Message{}</code> is the leave message for the transport to relay to the client.</p> <h2 id="module-duplicate-join-subscriptions" class="section-heading">  Duplicate Join Subscriptions </h2> <p>For a given topic, the client may only establish a single channel subscription. When attempting to create a duplicate subscription, <a href="#dispatch/3"><code class="inline">dispatch/3</code></a> will close the existing channel, log a warning, and spawn a new channel for the topic. When sending the <code class="inline">"phx_close"</code> event from the closed channel, the message will contain the <code class="inline">ref</code> the client sent when joining. This allows the client to uniquely identify <code class="inline">"phx_close"</code> and <code class="inline">"phx_error"</code> messages when force-closing a channel on duplicate joins.</p> <h2 id="module-security" class="section-heading">  Security </h2> <p>This module also provides functions to enable a secure environment on transports that, at some point, have access to a <a href="../../plug/1.5.1/plug.conn/"><code class="inline">Plug.Conn</code></a>.</p> <p>The functionality provided by this module helps in performing “origin” header checks and ensuring only SSL connections are allowed.</p> <h2 id="module-remote-client" class="section-heading">  Remote Client </h2> <p>Channels can reply, synchronously, to any <code class="inline">handle_in/3</code> event. To match pushes with replies, clients must include a unique <code class="inline">ref</code> with every message and the channel server will reply with a matching ref where the client can pick up the callback for the matching reply.</p> <p>Phoenix includes a JavaScript client for WebSocket and Longpolling support using JSON encodings.</p> <p>Clients can be implemented for other protocols and encodings by abiding by the <a href="../phoenix.socket.message/"><code class="inline">Phoenix.Socket.Message</code></a> format.</p> <h2 id="module-protocol-versioning" class="section-heading">  Protocol Versioning </h2> <p>Clients are expected to send the Channel Transport protocol version that they expect to be talking to. The version can be retrieved on the server from <code class="inline">Phoenix.Channel.Transport.protocol_version/0</code>. If no version is provided, the Transport adapters should default to assume a <code class="inline">"1.0.0"</code> version number. See <code class="inline">web/static/js/phoenix.js</code> for an example transport client implementation.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#check_origin/5">check_origin(conn, handler, endpoint, opts, sender \\ &amp;Plug.Conn.send_resp/1)</a> </dt> <dd class="summary-synopsis">
+<p>Checks the origin request header against the list of allowed origins</p> </dd>   <dt class="summary-signature"> <a href="#connect/6">connect(endpoint, handler, transport_name, transport, serializer_config, params)</a> </dt> <dd class="summary-synopsis">
+<p>Handles the socket connection</p> </dd>   <dt class="summary-signature"> <a href="#dispatch/3">dispatch(msg, channels, socket)</a> </dt> <dd class="summary-synopsis">
+<p>Dispatches <a href="../phoenix.socket.message/"><code class="inline">Phoenix.Socket.Message</code></a> to a channel</p> </dd>   <dt class="summary-signature"> <a href="#force_ssl/4">force_ssl(conn, socket, endpoint, opts)</a> </dt> <dd class="summary-synopsis">
+<p>Forces SSL in the socket connection</p> </dd>   <dt class="summary-signature"> <a href="#on_exit_message/3">on_exit_message(topic, join_ref, reason)</a> </dt> <dd class="summary-synopsis">
+<p>Returns the message to be relayed when a channel exits</p> </dd>   <dt class="summary-signature"> <a href="#protocol_version/0">protocol_version()</a> </dt> <dd class="summary-synopsis">
+<p>Returns the Channel Transport protocol version</p> </dd>   <dt class="summary-signature"> <a href="#transport_log/2">transport_log(conn, level)</a> </dt> <dd class="summary-synopsis">
+<p>Logs the transport request</p> </dd>  </dl> <h2> Callbacks </h2>
+<dl class="summary-callbacks summary">   <dt class="summary-signature"> <a href="#c:default_config/0">default_config()</a> </dt> <dd class="summary-synopsis">
+<p>Provides a keyword list of default configuration for socket transports</p> </dd>  </dl>   <h1 class="section-heading" id="functions">  Functions </h1>   <h3 class="detail-header function" id="check_origin/5">  <span class="signature">check_origin(conn, handler, endpoint, opts, sender \\ &amp;Plug.Conn.send_resp/1)</span>  </h3>  <p>Checks the origin request header against the list of allowed origins.</p> <p>Should be called by transports before connecting when appropriate. If the origin header matches the allowed origins, no origin header was sent or no origin was configured, it will return the given connection.</p> <p>Otherwise a 403 Forbidden response will be sent and the connection halted. It is a noop if the connection has been halted.</p>    <h3 class="detail-header function" id="connect/6">  <span class="signature">connect(endpoint, handler, transport_name, transport, serializer_config, params)</span>  </h3>  <p>Handles the socket connection.</p> <p>It builds a new <a href="../phoenix.socket/"><code class="inline">Phoenix.Socket</code></a>, invokes the handler <code class="inline">connect/2</code> callback and returns the result.</p> <p>If the connection was successful, generates <a href="../../phoenix_pubsub/1.0.2/phoenix.pubsub/"><code class="inline">Phoenix.PubSub</code></a> topic from the <code class="inline">id/1</code> callback.</p>    <h3 class="detail-header function" id="dispatch/3">  <span class="signature">dispatch(msg, channels, socket)</span>  </h3>  <p>Dispatches <a href="../phoenix.socket.message/"><code class="inline">Phoenix.Socket.Message</code></a> to a channel.</p> <p>All serialized, remote client messages should be deserialized and forwarded through this function by adapters.</p> <p>The following returns must be handled by transports:</p> <ul> <li>
+<code class="inline">:noreply</code> - Nothing to be done by the transport </li> <li>
+<code class="inline">{:reply, reply}</code> - The reply to be sent to the client </li> <li>
+<code class="inline">{:joined, channel_pid, reply}</code> - The channel was joined and the reply must be sent as result </li> <li>
+<code class="inline">{:error, reason, reply}</code> - An error occurred and the reply must be sent as result </li> </ul> <h4 id="dispatch/3-parameter-filtering-on-join" class="section-heading">  Parameter filtering on join </h4> <p>When logging parameters, Phoenix can filter out sensitive parameters such as passwords and tokens. Parameters to be filtered can be added via the <code class="inline">:filter_parameters</code> option:</p> <pre data-language="elixir">config :phoenix, :filter_parameters, ["password", "secret"]</pre> <p>With the configuration above, Phoenix will filter any parameter that contains the terms <code class="inline">password</code> or <code class="inline">secret</code>. The match is case sensitive.</p> <p>Phoenix’s default is <code class="inline">["password"]</code>.</p>    <h3 class="detail-header function" id="force_ssl/4">  <span class="signature">force_ssl(conn, socket, endpoint, opts)</span>  </h3>  <p>Forces SSL in the socket connection.</p> <p>Uses the endpoint configuration to decide so. It is a noop if the connection has been halted.</p>    <h3 class="detail-header function" id="on_exit_message/3">  <span class="signature">on_exit_message(topic, join_ref, reason)</span>  </h3>  <p>Returns the message to be relayed when a channel exits.</p>    <h3 class="detail-header function" id="protocol_version/0">  <span class="signature">protocol_version()</span>  </h3>  <p>Returns the Channel Transport protocol version.</p>    <h3 class="detail-header function" id="transport_log/2">  <span class="signature">transport_log(conn, level)</span>  </h3>  <p>Logs the transport request.</p> <p>Available for transports that generate a connection.</p>     <h1 class="section-heading" id="callbacks">  Callbacks </h1>  <h3 class="detail-header callback" id="c:default_config/0">  <span class="signature">default_config()</span>     </h3>
+<pre data-language="elixir">default_config() :: Keyword.t()</pre>  <p>Provides a keyword list of default configuration for socket transports.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2014 Chris McCord<br>Licensed under the MIT License.<br>
+    <a href="https://hexdocs.pm/phoenix/Phoenix.Socket.Transport.html" class="_attribution-link" target="_blank">https://hexdocs.pm/phoenix/Phoenix.Socket.Transport.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

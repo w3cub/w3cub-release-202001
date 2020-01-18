@@ -1,0 +1,221 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Phoenix.Endpoint - Phoenix - W3cubDocs</title>
+  
+  <meta name="description" content=" Defines a Phoenix endpoint. ">
+  <meta name="keywords" content="phoenix, endpoint, summary, types, functions, callbacks, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/phoenix/phoenix/phoenix.endpoint/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/phoenix.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/phoenix/" class="_nav-link" title="" style="margin-left:0;">Phoenix</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Phoenix.Endpoint <small>behaviour</small>  </h1>  <p>Defines a Phoenix endpoint.</p> <p>The endpoint is the boundary where all requests to your web application start. It is also the interface your application provides to the underlying web servers.</p> <p>Overall, an endpoint has three responsibilities:</p> <ul> <li>
+<p>to provide a wrapper for starting and stopping the endpoint as part of a supervision tree;</p> </li> <li>
+<p>to define an initial plug pipeline for requests to pass through;</p> </li> <li>
+<p>to host web specific configuration for your application.</p> </li> </ul> <h2 id="module-endpoints" class="section-heading">  Endpoints </h2> <p>An endpoint is simply a module defined with the help of <a href="../phoenix.endpoint/#content"><code class="inline">Phoenix.Endpoint</code></a>. If you have used the <code class="inline">mix phx.new</code> generator, an endpoint was automatically generated as part of your application:</p> <pre data-language="elixir">defmodule YourApp.Endpoint do
+  use Phoenix.Endpoint, otp_app: :your_app
+
+  # plug ...
+  # plug ...
+
+  plug YourApp.Router
+end</pre> <p>Endpoints must be explicitly started as part of your application supervision tree. Endpoints are added by default to the supervision tree in generated applications. Endpoints can be added to the supervision tree as follows:</p> <pre data-language="elixir">supervisor(YourApp.Endpoint, [])</pre> <h3 id="module-endpoint-configuration" class="section-heading">  Endpoint configuration </h3> <p>All endpoints are configured in your application environment. For example:</p> <pre data-language="elixir">config :your_app, YourApp.Endpoint,
+  secret_key_base: "kjoy3o1zeidquwy1398juxzldjlksahdk3"</pre> <p>Endpoint configuration is split into two categories. Compile-time configuration means the configuration is read during compilation and changing it at runtime has no effect. The compile-time configuration is mostly related to error handling and instrumentation.</p> <p>Runtime configuration, instead, is accessed during or after your application is started and can be read through the <a href="#c:config/2"><code class="inline">config/2</code></a> function:</p> <pre data-language="elixir">YourApp.Endpoint.config(:port)
+YourApp.Endpoint.config(:some_config, :default_value)</pre> <h3 id="module-dynamic-configuration" class="section-heading">  Dynamic configuration </h3> <p>For dynamically configuring the endpoint, such as loading data from environment variables or configuration files, Phoenix invokes the <code class="inline">init/2</code> callback on the endpoint, passing a <code class="inline">:supervivsor</code> atom as first argument and the endpoint configuration as second.</p> <p>All of Phoenix configuration, except the Compile-time configuration below can be set dynamically from the <a href="#c:init/2"><code class="inline">init/2</code></a> callback.</p> <h3 id="module-compile-time-configuration" class="section-heading">  Compile-time configuration </h3> <ul> <li>
+<p><code class="inline">:code_reloader</code> - when <code class="inline">true</code>, enables code reloading functionality</p> </li> <li>
+<p><code class="inline">:debug_errors</code> - when <code class="inline">true</code>, uses <a href="../../plug/1.5.1/plug.debugger/"><code class="inline">Plug.Debugger</code></a> functionality for debugging failures in the application. Recommended to be set to <code class="inline">true</code> only in development as it allows listing of the application source code during debugging. Defaults to <code class="inline">false</code>.</p> </li> <li>
+<p><code class="inline">:render_errors</code> - responsible for rendering templates whenever there is a failure in the application. For example, if the application crashes with a 500 error during a HTML request, <code class="inline">render("500.html", assigns)</code> will be called in the view given to <code class="inline">:render_errors</code>. Defaults to:</p> <pre data-language="elixir">[view: MyApp.ErrorView, accepts: ~w(html), layout: false]</pre> <p>The default format is used when none is set in the connection.</p> </li> <li>
+<p><code class="inline">:instrumenters</code> - a list of instrumenter modules whose callbacks will be fired on instrumentation events. Read more on instrumentation in the “Instrumentation” section below.</p> </li> </ul> <h3 id="module-runtime-configuration" class="section-heading">  Runtime configuration </h3> <ul> <li>
+<p><code class="inline">:cache_static_manifest</code> - a path to a json manifest file that contains static files and their digested version. This is typically set to “priv/static/cache_manifest.json” which is the file automatically generated by <code class="inline">mix phx.digest</code>.</p> </li> <li>
+<p><code class="inline">:check_origin</code> - configure transports to check origins or not. May be false, true or a list of hosts that are allowed. Hosts also support wildcards. For example:</p> <pre data-language="elixir">check_origin: ["//phoenixframework.org", "//*.example.com"]</pre> </li> <li>
+<p><code class="inline">:http</code> - the configuration for the HTTP server. Currently uses Cowboy and accepts all options as defined by <a href="../../plug/plug.adapters.cowboy/"><code class="inline">Plug.Adapters.Cowboy</code></a>. Defaults to <code class="inline">false</code>.</p> </li> <li>
+<p><code class="inline">:https</code> - the configuration for the HTTPS server. Currently uses Cowboy and accepts all options as defined by <a href="../../plug/plug.adapters.cowboy/"><code class="inline">Plug.Adapters.Cowboy</code></a>. Defaults to <code class="inline">false</code>.</p> </li> <li>
+<p><code class="inline">:force_ssl</code> - ensures no data is ever sent via http, always redirecting to https. It expects a list of options which are forwarded to <a href="../../plug/1.5.1/plug.ssl/"><code class="inline">Plug.SSL</code></a>. By defalts it sets the “strict-transport-security” header in https requests, forcing browsers to always use https. If an unsafe request (http) is sent, it redirects to the https version using the <code class="inline">:host</code> specified in the <code class="inline">:url</code> configuration. To dynamically redirect to the <code class="inline">host</code> of the current request, <code class="inline">:host</code> must be set <code class="inline">nil</code>.</p> </li> <li>
+<p><code class="inline">:secret_key_base</code> - a secret key used as a base to generate secrets for encrypting and signing data. For example, cookies and tokens are signed by default, but they may also be encrypted if desired. Defaults to <code class="inline">nil</code> as it must be set per application.</p> </li> <li>
+<p><code class="inline">:server</code> - when <code class="inline">true</code>, starts the web server when the endpoint supervision tree starts. Defaults to <code class="inline">false</code>. The <code class="inline">mix phx.server</code> task automatically sets this to <code class="inline">true</code>.</p> </li> <li>
+<p><code class="inline">:url</code> - configuration for generating URLs throughout the app. Accepts the <code class="inline">:host</code>, <code class="inline">:scheme</code>, <code class="inline">:path</code> and <code class="inline">:port</code> options. All keys except <code class="inline">:path</code> can be changed at runtime. Defaults to:</p> <pre data-language="elixir">[host: "localhost", path: "/"]</pre> <p>The <code class="inline">:port</code> option requires either an integer, string, or <code class="inline">{:system, "ENV_VAR"}</code>. When given a tuple like <code class="inline">{:system, "PORT"}</code>, the port will be referenced from <code class="inline">System.get_env("PORT")</code> at runtime as a workaround for releases where environment specific information is loaded only at compile-time.</p> <p>The <code class="inline">:host</code> option requires a string or <code class="inline">{:system, "ENV_VAR"}</code>. Similar to <code class="inline">:port</code>, when given a tuple like <code class="inline">{:system, "HOST"}</code>, the host will be referenced from <code class="inline">System.get_env("HOST")</code> at runtime.</p> </li> <li>
+<p><code class="inline">:static_url</code> - configuration for generating URLs for static files. It will fallback to <code class="inline">url</code> if no option is provided. Accepts the same options as <code class="inline">url</code>.</p> </li> <li>
+<p><code class="inline">:watchers</code> - a set of watchers to run alongside your server. It expects a list of tuples containing the executable and its arguments. Watchers are guaranteed to run in the application directory, but only when the server is enabled. For example, the watcher below will run the “watch” mode of the brunch build tool when the server starts. You can configure it to whatever build tool or command you want:</p> <pre data-language="elixir">[node: ["node_modules/brunch/bin/brunch", "watch"]]</pre> <p>The <code class="inline">:cd</code> option can be used on a watcher to override the folder from which the watcher will run. By default this will be the project’s root: <code class="inline">File.cwd!()</code></p> <pre data-language="elixir">[node: ["node_Modules/brunch/bin/brunch", "watch", cd: "my_frontend"]]</pre> </li> <li>
+<p><code class="inline">:live_reload</code> - configuration for the live reload option. Configuration requires a <code class="inline">:patterns</code> option which should be a list of file patterns to watch. When these files change, it will trigger a reload. If you are using a tool like <a href="http://pow.cx" target="_blank">pow</a> in development, you may need to set the <code class="inline">:url</code> option appropriately.</p> <pre data-language="elixir">live_reload: [
+  url: "ws://localhost:4000",
+  patterns: [
+    ~r{priv/static/.*(js|css|png|jpeg|jpg|gif)$},
+    ~r{web/views/.*(ex)$},
+    ~r{web/templates/.*(eex)$}
+  ]
+]</pre> </li> <li>
+<p><code class="inline">:pubsub</code> - configuration for this endpoint’s pubsub adapter. Configuration either requires a <code class="inline">:name</code> of the registered pubsub server or a <code class="inline">:name</code> and <code class="inline">:adapter</code> pair. The pubsub name and adapter are compile time configuration, while the remaining options are runtime. The given adapter and name pair will be started as part of the supervision tree. If no adapter is specified, the pubsub system will work by sending events and subscribing to the given name. Defaults to:</p> <pre data-language="elixir">[adapter: Phoenix.PubSub.PG2, name: MyApp.PubSub]</pre> <p>It also supports custom adapter configuration:</p> <pre data-language="elixir">[name: :my_pubsub, adapter: Phoenix.PubSub.Redis,
+ host: "192.168.100.1"]</pre> </li> </ul> <h2 id="module-endpoint-api" class="section-heading">  Endpoint API </h2> <p>In the previous section, we have used the <a href="#c:config/2"><code class="inline">config/2</code></a> function that is automatically generated in your endpoint. Here’s a list of all the functions that are automatically defined in your endpoint:</p> <ul> <li>for handling paths and URLs: <a href="#c:struct_url/0"><code class="inline">struct_url/0</code></a>, <a href="#c:url/0"><code class="inline">url/0</code></a>, <a href="#c:path/1"><code class="inline">path/1</code></a>, <a href="#c:static_url/0"><code class="inline">static_url/0</code></a>, and <a href="#c:static_path/1"><code class="inline">static_path/1</code></a>; </li> <li>for handling channel subscriptions: <a href="#c:subscribe/2"><code class="inline">subscribe/2</code></a> and <a href="#c:unsubscribe/1"><code class="inline">unsubscribe/1</code></a>; </li> <li>for broadcasting to channels: <a href="#c:broadcast/3"><code class="inline">broadcast/3</code></a>, <a href="#c:broadcast!/3"><code class="inline">broadcast!/3</code></a>, <a href="#c:broadcast_from/4"><code class="inline">broadcast_from/4</code></a>, and <a href="#c:broadcast_from!/4"><code class="inline">broadcast_from!/4</code></a> </li> <li>for configuration: <a href="#c:start_link/0"><code class="inline">start_link/0</code></a>, <a href="#c:config/2"><code class="inline">config/2</code></a>, and <a href="#c:config_change/2"><code class="inline">config_change/2</code></a>; </li> <li>for instrumentation: <a href="#c:instrument/3"><code class="inline">instrument/3</code></a>; </li> <li>as required by the <a href="../../plug/1.5.1/plug/"><code class="inline">Plug</code></a> behaviour: <a href="../../plug/1.5.1/plug/#c:init/1"><code class="inline">Plug.init/1</code></a> and <a href="../../plug/1.5.1/plug/#c:call/2"><code class="inline">Plug.call/2</code></a>. </li> </ul> <h2 id="module-instrumentation" class="section-heading">  Instrumentation </h2> <p>Phoenix supports instrumentation through an extensible API. Each endpoint defines an <a href="#c:instrument/3"><code class="inline">instrument/3</code></a> macro that both users and Phoenix internals can call to instrument generic events. This macro is responsible for measuring the time it takes for the event to be processed and for notifying a list of interested instrumenter modules of this measurement.</p> <p>You can configure this list of instrumenter modules in the compile-time configuration of your endpoint. (see the <code class="inline">:instrumenters</code> option above). The way these modules express their interest in events is by exporting public functions where the name of each function is the name of an event. For example, if someone instruments the <code class="inline">:render_view</code> event, then each instrumenter module interested in that event will have to export <code class="inline">render_view/3</code>.</p> <h3 id="module-callbacks-cycle" class="section-heading">  Callbacks cycle </h3> <p>The event callback sequence is:</p> <ol> <li>The event callback is called <em>before</em> the event happens (in this case, before the view is rendered) with the atom <code class="inline">:start</code> as the first argument; see the “Before clause” section below. </li> <li>The event occurs (in this case, the view is rendered). </li> <li>The same event callback is called again, this time with the atom <code class="inline">:stop</code> as the first argument; see the “After clause” section below. </li> </ol> <p>The second and third argument that each event callback takes depends on the callback being an “after” or a “before” callback i.e. it depends on the value of the first argument, <code class="inline">:start</code> or <code class="inline">:stop</code>. For this reason, most of the time you will want to define (at least) two separate clauses for each event callback, one for the “before” and one for the “after” callbacks.</p> <p>All event callbacks are run in the same process that calls the <a href="#c:instrument/3"><code class="inline">instrument/3</code></a> macro; hence, instrumenters should be careful to avoid performing blocking actions. If an event callback fails in any way (exits, throws, or raises), it won’t affect anything as the error is caught, but the failure will be logged. Note that “after” callbacks are not guaranteed to be called as, for example, a link may break before they’ve been called.</p> <h4>“Before” clause</h4> <p>When the first argument to an event callback is <code class="inline">:start</code>, the signature of that callback is:</p> <pre data-language="elixir">event_callback(:start, compile_metadata, runtime_metadata)</pre> <p>where:</p> <ul> <li>
+<code class="inline">compile_metadata</code> is a map of compile-time metadata about the environment where <a href="#instrument/3"><code class="inline">instrument/3</code></a> has been called. It contains the module where the instrumentation is happening (under the <code class="inline">:module</code> key), the file and line (<code class="inline">:file</code> and <code class="inline">:line</code>), and the function inside which the instrumentation is happening (under <code class="inline">:function</code>). This information can be used arbitrarily by the callback. </li> <li>
+<code class="inline">runtime_metadata</code> is a map of runtime data that the instrumentation passes to the callbacks. This can be used for any purposes: for example, when instrumenting the rendering of a view, the name of the view could be passed in these runtime data so that instrumenters know which view is being rendered (<code class="inline">instrument(:view_render, %{view: "index.html"}, fn
+...)</code>). </li> </ul> <h4>“After” clause</h4> <p>When the first argument to an event callback is <code class="inline">:stop</code>, the signature of that callback is:</p> <pre data-language="elixir">event_callback(:stop, time_diff, result_of_before_callback)</pre> <p>where:</p> <ul> <li>
+<p><code class="inline">time_diff</code> is an integer representing the time it took to execute the instrumented function <strong>in native units</strong>.</p> </li> <li>
+<p><code class="inline">result_of_before_callback</code> is the return value of the “before” clause of the same <code class="inline">event_callback</code>. This is a means of passing data from the “before” clause to the “after” clause when instrumenting.</p> </li> </ul> <p>The return value of each “before” event callback will be stored and passed to the corresponding “after” callback.</p> <h3 id="module-using-instrumentation" class="section-heading">  Using instrumentation </h3> <p>Each Phoenix endpoint defines its own <a href="#instrument/3"><code class="inline">instrument/3</code></a> macro. This macro is called like this:</p> <pre data-language="elixir">require MyApp.Endpoint
+MyApp.Endpoint.instrument(:render_view, %{view: "index.html"}, fn -&gt;
+  # actual view rendering
+end)</pre> <p>All the instrumenter modules that export a <code class="inline">render_view/3</code> function will be notified of the event so that they can perform their respective actions.</p> <h3 id="module-phoenix-default-events" class="section-heading">  Phoenix default events </h3> <p>By default, Phoenix instruments the following events:</p> <ul> <li>
+<code class="inline">:phoenix_controller_call</code> - it’s the whole controller pipeline. The <code class="inline">%Plug.Conn{}</code> is passed as runtime metadata. </li> <li>
+<code class="inline">:phoenix_controller_render</code> - the rendering of a view from a controller. The map of runtime metadata passed to instrumentation callbacks has the <code class="inline">:view</code> key - for the name of the view, e.g. <code class="inline">HexWeb.ErrorView</code>, the <code class="inline">:template</code> key - for the name of the template, e.g., <code class="inline">"index.html"</code>, the <code class="inline">:format</code> key - for the format of the template, and the <code class="inline">:conn</code> key - containing the <code class="inline">%Plug.Conn{}</code>. </li> <li>
+<code class="inline">:phoenix_channel_join</code> - the joining of a channel. The <code class="inline">%Phoenix.Socket{}</code> and join params are passed as runtime metadata via <code class="inline">:socket</code> and <code class="inline">:params</code>. </li> <li>
+<code class="inline">:phoenix_channel_receive</code> - the receipt of an incoming message over a channel. The <code class="inline">%Phoenix.Socket{}</code>, payload, event, and ref are passed as runtime metadata via <code class="inline">:socket</code>, <code class="inline">:params</code>, <code class="inline">:event</code>, and <code class="inline">:ref</code>. </li> </ul> <h3 id="module-dynamic-instrumentation" class="section-heading">  Dynamic instrumentation </h3> <p>If you want to instrument a piece of code, but the endpoint that should instrument it (the one that contains the <a href="#c:instrument/3"><code class="inline">instrument/3</code></a> macro you want to use) is not known at compile time, only at runtime, you can use the <a href="../phoenix.endpoint/#instrument/4"><code class="inline">Phoenix.Endpoint.instrument/4</code></a> macro. Refer to its documentation for more information.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Types </h2>
+<dl class="summary-types summary">   <dt class="summary-signature"> <a href="#t:event/0">event()</a> </dt>   <dt class="summary-signature"> <a href="#t:msg/0">msg()</a> </dt>   <dt class="summary-signature"> <a href="#t:topic/0">topic()</a> </dt>  </dl> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#instrument/4">instrument(endpoint_or_conn_or_socket, event, runtime \\ Macro.escape(%{}), fun)</a> </dt> <dd class="summary-synopsis">
+<p>Instruments the given function using the instrumentation provided by the given endpoint</p> </dd>   <dt class="summary-signature"> <a href="#server?/2">server?(otp_app, endpoint)</a> </dt> <dd class="summary-synopsis">
+<p>Checks if Endpoint’s web server has been configured to start</p> </dd>   <dt class="summary-signature"> <a href="#socket/2">socket(path, module)</a> </dt> <dd class="summary-synopsis">
+<p>Defines a mount-point for a Socket module to handle channel definitions</p> </dd>  </dl> <h2> Callbacks </h2>
+<dl class="summary-callbacks summary">   <dt class="summary-signature"> <a href="#c:broadcast/3">broadcast(topic, event, msg)</a> </dt> <dd class="summary-synopsis">
+<p>Broadcasts a <code class="inline">msg</code> as <code class="inline">event</code> in the given <code class="inline">topic</code></p> </dd>   <dt class="summary-signature"> <a href="#c:broadcast!/3">broadcast!(topic, event, msg)</a> </dt> <dd class="summary-synopsis">
+<p>Broadcasts a <code class="inline">msg</code> as <code class="inline">event</code> in the given <code class="inline">topic</code></p> </dd>   <dt class="summary-signature"> <a href="#c:broadcast_from/4">broadcast_from(from, topic, event, msg)</a> </dt> <dd class="summary-synopsis">
+<p>Broadcasts a <code class="inline">msg</code> from the given <code class="inline">from</code> as <code class="inline">event</code> in the given <code class="inline">topic</code></p> </dd>   <dt class="summary-signature"> <a href="#c:broadcast_from!/4">broadcast_from!(from, topic, event, msg)</a> </dt> <dd class="summary-synopsis">
+<p>Broadcasts a <code class="inline">msg</code> from the given <code class="inline">from</code> as <code class="inline">event</code> in the given <code class="inline">topic</code></p> </dd>   <dt class="summary-signature"> <a href="#c:config/2">config(key, default)</a> </dt> <dd class="summary-synopsis">
+<p>Access the endpoint configuration given by key</p> </dd>   <dt class="summary-signature"> <a href="#c:config_change/2">config_change(changed, removed)</a> </dt> <dd class="summary-synopsis">
+<p>Reload the endpoint configuration on application upgrades</p> </dd>   <dt class="summary-signature"> <a href="#c:init/2">init(atom, config)</a> </dt> <dd class="summary-synopsis">
+<p>Initialize the endpoint configuration</p> </dd>   <dt class="summary-signature"> <a href="#c:instrument/3">instrument(instrument_event, runtime_metadata, funcion)</a> </dt> <dd class="summary-synopsis">
+<p>Allows instrumenting operation defined by <code class="inline">function</code></p> </dd>   <dt class="summary-signature"> <a href="#c:path/1">path(path)</a> </dt> <dd class="summary-synopsis">
+<p>Generates the path information when routing to this endpoint</p> </dd>   <dt class="summary-signature"> <a href="#c:start_link/0">start_link()</a> </dt> <dd class="summary-synopsis">
+<p>Starts the Endpoint supervision tree</p> </dd>   <dt class="summary-signature"> <a href="#c:static_path/1">static_path(path)</a> </dt> <dd class="summary-synopsis">
+<p>Generates a route to a static file in <code class="inline">priv/static</code></p> </dd>   <dt class="summary-signature"> <a href="#c:static_url/0">static_url()</a> </dt> <dd class="summary-synopsis">
+<p>Geerates the static URL without any path information</p> </dd>   <dt class="summary-signature"> <a href="#c:struct_url/0">struct_url()</a> </dt> <dd class="summary-synopsis">
+<p>Generates the endpoint base URL, but as a <a href="https://hexdocs.pm/elixir/URI.html" target="_blank"><code class="inline">URI</code></a> struct</p> </dd>   <dt class="summary-signature"> <a href="#c:subscribe/2">subscribe(topic, opts)</a> </dt> <dd class="summary-synopsis">
+<p>Subscribes the caller to the given topic</p> </dd>   <dt class="summary-signature"> <a href="#c:unsubscribe/1">unsubscribe(topic)</a> </dt> <dd class="summary-synopsis">
+<p>Unsubscribes the caller from the given topic</p> </dd>   <dt class="summary-signature"> <a href="#c:url/0">url()</a> </dt> <dd class="summary-synopsis">
+<p>Generates the endpoint base URL without any path information</p> </dd>  </dl>   <h1 class="section-heading" id="types">  Types </h1>   <h3 class="detail-header type" id="t:event/0">  <span class="signature">event()</span>     </h3>
+<pre data-language="elixir">event() :: String.t()</pre>     <h3 class="detail-header type" id="t:msg/0">  <span class="signature">msg()</span>     </h3>
+<pre data-language="elixir">msg() :: map()</pre>     <h3 class="detail-header type" id="t:topic/0">  <span class="signature">topic()</span>     </h3>
+<pre data-language="elixir">topic() :: String.t()</pre>       <h1 class="section-heading" id="functions">  Functions </h1>   <h3 class="detail-header function" id="instrument/4">  <span class="signature">instrument(endpoint_or_conn_or_socket, event, runtime \\ Macro.escape(%{}), fun)</span>  <span class="note">(macro)</span> </h3>  <p>Instruments the given function using the instrumentation provided by the given endpoint.</p> <p>To specify the endpoint that will provide instrumentation, the first argument can be:</p> <ul> <li>a module name - the endpoint itself </li> <li>a <a href="../../plug/1.5.1/plug.conn/"><code class="inline">Plug.Conn</code></a> struct - this macro will look for the endpoint module in the <code class="inline">:private</code> field of the connection; if it’s not there, <code class="inline">fun</code> will be executed with no instrumentation </li> <li>a <a href="../phoenix.socket/"><code class="inline">Phoenix.Socket</code></a> struct - this macro will look for the endpoint module in the <code class="inline">:endpoint</code> field of the socket; if it’s not there, <code class="inline">fun</code> will be executed with no instrumentation </li> </ul> <p>Usually, users should prefer to instrument events using the <a href="#c:instrument/3"><code class="inline">instrument/3</code></a> macro defined in every Phoenix endpoint. This macro should only be used for cases when the endpoint is dynamic and not known at compile time.</p> <h4 id="instrument/4-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">endpoint = MyApp.Endpoint
+Phoenix.Endpoint.instrument endpoint, :render_view, fn -&gt; ... end</pre>    <h3 class="detail-header function" id="server?/2">  <span class="signature">server?(otp_app, endpoint)</span>  </h3>  <p>Checks if Endpoint’s web server has been configured to start.</p> <ul> <li>
+<code class="inline">otp_app</code> - The otp app running the endpoint, for example <code class="inline">:my_app</code> </li> <li>
+<code class="inline">endpoint</code> - The endpoint module, for example <code class="inline">MyApp.Endpoint</code> </li> </ul> <h4 id="server?/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Phoenix.Endpoint.server?(:my_app, MyApp.Endpoint)
+true</pre>    <h3 class="detail-header function" id="socket/2">  <span class="signature">socket(path, module)</span>  <span class="note">(macro)</span> </h3>  <p>Defines a mount-point for a Socket module to handle channel definitions.</p> <h4 id="socket/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">socket "/ws", MyApp.UserSocket
+socket "/ws/admin", MyApp.AdminUserSocket</pre> <p>By default, the given path is a websocket upgrade endpoint, with long-polling fallback. The transports can be configured within the Socket handler. See <a href="../phoenix.socket/"><code class="inline">Phoenix.Socket</code></a> for more information on defining socket handlers.</p>     <h1 class="section-heading" id="callbacks">  Callbacks </h1>  <h3 class="detail-header callback" id="c:broadcast/3">  <span class="signature">broadcast(topic, event, msg)</span>     </h3>
+<pre data-language="elixir">broadcast(topic(), event(), msg()) :: :ok | {:error, term()}</pre>  <p>Broadcasts a <code class="inline">msg</code> as <code class="inline">event</code> in the given <code class="inline">topic</code>.</p>    <h3 class="detail-header callback" id="c:broadcast!/3">  <span class="signature">broadcast!(topic, event, msg)</span>     </h3>
+<pre data-language="elixir">broadcast!(topic(), event(), msg()) :: :ok | no_return()</pre>  <p>Broadcasts a <code class="inline">msg</code> as <code class="inline">event</code> in the given <code class="inline">topic</code>.</p> <p>Raises in case of failures.</p>    <h3 class="detail-header callback" id="c:broadcast_from/4">  <span class="signature">broadcast_from(from, topic, event, msg)</span>     </h3>
+<pre data-language="elixir">broadcast_from(from :: pid(), topic(), event(), msg()) ::
+  :ok | {:error, term()}</pre>  <p>Broadcasts a <code class="inline">msg</code> from the given <code class="inline">from</code> as <code class="inline">event</code> in the given <code class="inline">topic</code>.</p>    <h3 class="detail-header callback" id="c:broadcast_from!/4">  <span class="signature">broadcast_from!(from, topic, event, msg)</span>     </h3>
+<pre data-language="elixir">broadcast_from!(from :: pid(), topic(), event(), msg()) :: :ok | no_return()</pre>  <p>Broadcasts a <code class="inline">msg</code> from the given <code class="inline">from</code> as <code class="inline">event</code> in the given <code class="inline">topic</code>.</p> <p>Raises in case of failures.</p>    <h3 class="detail-header callback" id="c:config/2">  <span class="signature">config(key, default)</span>     </h3>
+<pre data-language="elixir">config(key :: atom(), default :: term()) :: term()</pre>  <p>Access the endpoint configuration given by key.</p>    <h3 class="detail-header callback" id="c:config_change/2">  <span class="signature">config_change(changed, removed)</span>     </h3>
+<pre data-language="elixir">config_change(changed :: term(), removed :: term()) :: term()</pre>  <p>Reload the endpoint configuration on application upgrades.</p>    <h3 class="detail-header callback" id="c:init/2">  <span class="signature">init(atom, config)</span>     </h3>
+<pre data-language="elixir">init(:supervisor, config :: Keyword.t()) :: {:ok, Keyword.t()}</pre>  <p>Initialize the endpoint configuration.</p> <p>Invoked when the endpoint supervisor starts, allows dynamically configuring the endpoint from system environment or other runtime sources.</p>    <h3 class="detail-header callback" id="c:instrument/3">  <span class="signature">instrument(instrument_event, runtime_metadata, funcion)</span>     </h3>
+<pre data-language="elixir">instrument(
+  term(),
+  instrument_event :: Macro.t(),
+  runtime_metadata :: Macro.t(),
+  funcion :: Macro.t()
+) :: Macro.t()</pre>  <p>Allows instrumenting operation defined by <code class="inline">function</code>.</p> <p><code class="inline">runtime_metadata</code> may be omitted and defaults to <code class="inline">nil</code>.</p> <p>Read more about instrumentation in the “Instrumentation” section.</p>    <h3 class="detail-header callback" id="c:path/1">  <span class="signature">path(path)</span>     </h3>
+<pre data-language="elixir">path(path :: String.t()) :: String.t()</pre>  <p>Generates the path information when routing to this endpoint.</p>    <h3 class="detail-header callback" id="c:start_link/0">  <span class="signature">start_link()</span>     </h3>
+<pre data-language="elixir">start_link() :: Supervisor.on_start()</pre>  <p>Starts the Endpoint supervision tree.</p> <p>Starts endpoint’s configuration cache and possibly the servers for handling requests.</p>    <h3 class="detail-header callback" id="c:static_path/1">  <span class="signature">static_path(path)</span>     </h3>
+<pre data-language="elixir">static_path(path :: String.t()) :: String.t()</pre>  <p>Generates a route to a static file in <code class="inline">priv/static</code></p>    <h3 class="detail-header callback" id="c:static_url/0">  <span class="signature">static_url()</span>     </h3>
+<pre data-language="elixir">static_url() :: String.t()</pre>  <p>Geerates the static URL without any path information.</p>    <h3 class="detail-header callback" id="c:struct_url/0">  <span class="signature">struct_url()</span>     </h3>
+<pre data-language="elixir">struct_url() :: URI.t()</pre>  <p>Generates the endpoint base URL, but as a <a href="https://hexdocs.pm/elixir/URI.html" target="_blank"><code class="inline">URI</code></a> struct.</p>    <h3 class="detail-header callback" id="c:subscribe/2">  <span class="signature">subscribe(topic, opts)</span>     </h3>
+<pre data-language="elixir">subscribe(topic(), opts :: Keyword.t()) :: :ok | {:error, term()}</pre>  <p>Subscribes the caller to the given topic.</p> <p>See <a href="../../phoenix_pubsub/1.0.2/phoenix.pubsub/#subscribe/3"><code class="inline">Phoenix.PubSub.subscribe/3</code></a> for options.</p>    <h3 class="detail-header callback" id="c:unsubscribe/1">  <span class="signature">unsubscribe(topic)</span>     </h3>
+<pre data-language="elixir">unsubscribe(topic()) :: :ok | {:error, term()}</pre>  <p>Unsubscribes the caller from the given topic.</p>    <h3 class="detail-header callback" id="c:url/0">  <span class="signature">url()</span>     </h3>
+<pre data-language="elixir">url() :: String.t()</pre>  <p>Generates the endpoint base URL without any path information.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2014 Chris McCord<br>Licensed under the MIT License.<br>
+    <a href="https://hexdocs.pm/phoenix/Phoenix.Endpoint.html" class="_attribution-link" target="_blank">https://hexdocs.pm/phoenix/Phoenix.Endpoint.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

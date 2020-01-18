@@ -1,0 +1,167 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ecto.Query.WindowAPI - Phoenix - W3cubDocs</title>
+  
+  <meta name="description" content=" Lists all windows functions. ">
+  <meta name="keywords" content="ecto, query, windowapi, summary, functions, -, phoenix">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/phoenix/ecto/ecto.query.windowapi/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/phoenix.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/phoenix/" class="_nav-link" title="" style="margin-left:0;">Phoenix</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Ecto.Query.WindowAPI  </h1>  <p>Lists all windows functions.</p> <p>Windows functions must always be used as the first argument of <code class="inline">over/2</code> where the second argument is the name of an window:</p> <pre data-language="elixir">from e in Employee,
+  select: {e.depname, e.empno, e.salary, over(avg(e.salary), :department)},
+  windows: [department: [partition_by: e.depname]]</pre> <p>In the example above, we get the average salary per department. <code class="inline">:department</code> is the window name, partitioned by <code class="inline">e.depname</code> and <a href="#avg/1"><code class="inline">avg/1</code></a> is the window function.</p> <p>However, note that defining a window is not necessary, as the window definition can be given as the second argument to <code class="inline">over</code>:</p> <pre data-language="elixir">from e in Employee,
+  select: {e.depname, e.empno, e.salary, over(avg(e.salary), partition_by: e.depname)}</pre> <p>Both queries are equivalent. However, if you are using the same partitioning over and over again, defining a window will reduce the query size. See <a href="../ecto.query/#windows/3"><code class="inline">Ecto.Query.windows/3</code></a> for all possible window expressions, such as <code class="inline">:partition_by</code> and <code class="inline">:order_by</code>.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#avg/1">avg(value)</a> </dt> <dd class="summary-synopsis">
+<p>Calculates the average for the given entry</p> </dd>   <dt class="summary-signature"> <a href="#count/0">count()</a> </dt> <dd class="summary-synopsis">
+<p>Counts the entries in the table</p> </dd>   <dt class="summary-signature"> <a href="#count/1">count(value)</a> </dt> <dd class="summary-synopsis">
+<p>Counts the given entry</p> </dd>   <dt class="summary-signature"> <a href="#cume_dist/0">cume_dist()</a> </dt> <dd class="summary-synopsis">
+<p>Returns relative rank of the current row: (number of rows preceding or peer with current row) / (total rows)</p> </dd>   <dt class="summary-signature"> <a href="#dense_rank/0">dense_rank()</a> </dt> <dd class="summary-synopsis">
+<p>Returns rank of the current row without gaps; this function counts peer groups</p> </dd>   <dt class="summary-signature"> <a href="#first_value/1">first_value(value)</a> </dt> <dd class="summary-synopsis">
+<p>Returns value evaluated at the row that is the first row of the window frame</p> </dd>   <dt class="summary-signature"> <a href="#lag/3">lag(value, offset \\ 1, default \\ nil)</a> </dt> <dd class="summary-synopsis">
+<p>Returns value evaluated at the row that is offset rows before the current row within the partition</p> </dd>   <dt class="summary-signature"> <a href="#last_value/1">last_value(value)</a> </dt> <dd class="summary-synopsis">
+<p>Returns value evaluated at the row that is the last row of the window frame</p> </dd>   <dt class="summary-signature"> <a href="#lead/3">lead(value, offset \\ 1, default \\ nil)</a> </dt> <dd class="summary-synopsis">
+<p>Returns value evaluated at the row that is offset rows after the current row within the partition</p> </dd>   <dt class="summary-signature"> <a href="#max/1">max(value)</a> </dt> <dd class="summary-synopsis">
+<p>Calculates the maximum for the given entry</p> </dd>   <dt class="summary-signature"> <a href="#min/1">min(value)</a> </dt> <dd class="summary-synopsis">
+<p>Calculates the minimum for the given entry</p> </dd>   <dt class="summary-signature"> <a href="#nth_value/2">nth_value(value, nth)</a> </dt> <dd class="summary-synopsis">
+<p>Returns value evaluated at the row that is the nth row of the window frame (counting from 1); null if no such row</p> </dd>   <dt class="summary-signature"> <a href="#ntile/1">ntile(num_buckets)</a> </dt> <dd class="summary-synopsis">
+<p>Returns integer ranging from 1 to the argument value, dividing the partition as equally as possible</p> </dd>   <dt class="summary-signature"> <a href="#percent_rank/0">percent_rank()</a> </dt> <dd class="summary-synopsis">
+<p>Returns relative rank of the current row: (rank - 1) / (total rows - 1)</p> </dd>   <dt class="summary-signature"> <a href="#rank/0">rank()</a> </dt> <dd class="summary-synopsis">
+<p>Returns rank of the current row with gaps; same as <a href="#row_number/0"><code class="inline">row_number/0</code></a> of its first peer</p> </dd>   <dt class="summary-signature"> <a href="#row_number/0">row_number()</a> </dt> <dd class="summary-synopsis">
+<p>Returns number of the current row within its partition, counting from 1</p> </dd>   <dt class="summary-signature"> <a href="#sum/1">sum(value)</a> </dt> <dd class="summary-synopsis">
+<p>Calculates the sum for the given entry</p> </dd>  </dl>   <h1 class="section-heading" id="functions">  Functions </h1>  <h3 class="detail-header function" id="avg/1">  <span class="signature">avg(value)</span>  </h3>  <p>Calculates the average for the given entry.</p> <pre data-language="elixir">from p in Payment, select: avg(p.value)</pre>    <h3 class="detail-header function" id="count/0">  <span class="signature">count()</span>  </h3>  <p>Counts the entries in the table.</p> <pre data-language="elixir">from p in Post, select: count()</pre>    <h3 class="detail-header function" id="count/1">  <span class="signature">count(value)</span>  </h3>  <p>Counts the given entry.</p> <pre data-language="elixir">from p in Post, select: count(p.id)</pre>    <h3 class="detail-header function" id="cume_dist/0">  <span class="signature">cume_dist()</span>  </h3>  <p>Returns relative rank of the current row: (number of rows preceding or peer with current row) / (total rows).</p> <pre data-language="elixir">from p in Post,
+     select: cume_dist() |&gt; over(partition_by: p.category_id, order_by: p.date)</pre> <p>Note that this function must be invoked using window function syntax.</p>    <h3 class="detail-header function" id="dense_rank/0">  <span class="signature">dense_rank()</span>  </h3>  <p>Returns rank of the current row without gaps; this function counts peer groups.</p> <pre data-language="elixir">from p in Post,
+     select: dense_rank() |&gt; over(partition_by: p.category_id, order_by: p.date)</pre> <p>Note that this function must be invoked using window function syntax.</p>    <h3 class="detail-header function" id="first_value/1">  <span class="signature">first_value(value)</span>  </h3>  <p>Returns value evaluated at the row that is the first row of the window frame.</p> <pre data-language="elixir">from p in Post,
+     select: first_value(p.id) |&gt; over(partition_by: p.category_id, order_by: p.date)</pre> <p>Note that this function must be invoked using window function syntax.</p>      <h3 class="detail-header function" id="lag/3">  <span class="signature">lag(value, offset \\ 1, default \\ nil)</span>  </h3>  <p>Returns value evaluated at the row that is offset rows before the current row within the partition.</p> <p>Ff there is no such row, instead return default (which must be of the same type as value). Both offset and default are evaluated with respect to the current row. If omitted, offset defaults to 1 and default to null.</p> <pre data-language="elixir">from e in Events,
+     windows: [w: [partition_by: e.name, order_by: e.tick]],
+     select: {
+       e.tick,
+       e.action,
+       e.name,
+       lag(e.action) |&gt; over(:w), # previous_action
+       lead(e.action) |&gt; over(:w) # next_action
+     }</pre> <p>Note that this function must be invoked using window function syntax.</p>    <h3 class="detail-header function" id="last_value/1">  <span class="signature">last_value(value)</span>  </h3>  <p>Returns value evaluated at the row that is the last row of the window frame.</p> <pre data-language="elixir">from p in Post,
+     select: last_value(p.id) |&gt; over(partition_by: p.category_id, order_by: p.date)</pre> <p>Note that this function must be invoked using window function syntax.</p>      <h3 class="detail-header function" id="lead/3">  <span class="signature">lead(value, offset \\ 1, default \\ nil)</span>  </h3>  <p>Returns value evaluated at the row that is offset rows after the current row within the partition.</p> <p>Ff there is no such row, instead return default (which must be of the same type as value). Both offset and default are evaluated with respect to the current row. If omitted, offset defaults to 1 and default to null.</p> <pre data-language="elixir">from e in Events,
+     windows: [w: [partition_by: e.name, order_by: e.tick],
+     select: {
+       e.tick,
+       e.action,
+       e.name,
+       lag(e.action) |&gt; over(:w), # previous_action
+       lead(e.action) |&gt; over(:w) # next_action
+     }</pre> <p>Note that this function must be invoked using window function syntax.</p>    <h3 class="detail-header function" id="max/1">  <span class="signature">max(value)</span>  </h3>  <p>Calculates the maximum for the given entry.</p> <pre data-language="elixir">from p in Payment, select: max(p.value)</pre>    <h3 class="detail-header function" id="min/1">  <span class="signature">min(value)</span>  </h3>  <p>Calculates the minimum for the given entry.</p> <pre data-language="elixir">from p in Payment, select: min(p.value)</pre>    <h3 class="detail-header function" id="nth_value/2">  <span class="signature">nth_value(value, nth)</span>  </h3>  <p>Returns value evaluated at the row that is the nth row of the window frame (counting from 1); null if no such row.</p> <pre data-language="elixir">from p in Post,
+     select: nth_value(p.id, 4) |&gt; over(partition_by: p.category_id, order_by: p.date)</pre> <p>Note that this function must be invoked using window function syntax.</p>    <h3 class="detail-header function" id="ntile/1">  <span class="signature">ntile(num_buckets)</span>  </h3>  <p>Returns integer ranging from 1 to the argument value, dividing the partition as equally as possible.</p> <pre data-language="elixir">from p in Post,
+     select: ntile(10) |&gt; over(partition_by: p.category_id, order_by: p.date)</pre> <p>Note that this function must be invoked using window function syntax.</p>    <h3 class="detail-header function" id="percent_rank/0">  <span class="signature">percent_rank()</span>  </h3>  <p>Returns relative rank of the current row: (rank - 1) / (total rows - 1).</p> <pre data-language="elixir">from p in Post,
+     select: percent_rank() |&gt; over(partition_by: p.category_id, order_by: p.date)</pre> <p>Note that this function must be invoked using window function syntax.</p>    <h3 class="detail-header function" id="rank/0">  <span class="signature">rank()</span>  </h3>  <p>Returns rank of the current row with gaps; same as <a href="#row_number/0"><code class="inline">row_number/0</code></a> of its first peer.</p> <pre data-language="elixir">from p in Post,
+     select: rank() |&gt; over(partition_by: p.category_id, order_by: p.date)</pre> <p>Note that this function must be invoked using window function syntax.</p>    <h3 class="detail-header function" id="row_number/0">  <span class="signature">row_number()</span>  </h3>  <p>Returns number of the current row within its partition, counting from 1.</p> <pre data-language="elixir">from p in Post,
+     select: row_number() |&gt; over(partition_by: p.category_id, order_by: p.date)</pre> <p>Note that this function must be invoked using window function syntax.</p>    <h3 class="detail-header function" id="sum/1">  <span class="signature">sum(value)</span>  </h3>  <p>Calculates the sum for the given entry.</p> <pre data-language="elixir">from p in Payment, select: sum(p.value)</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/ecto/Ecto.Query.WindowAPI.html" class="_attribution-link" target="_blank">https://hexdocs.pm/ecto/Ecto.Query.WindowAPI.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

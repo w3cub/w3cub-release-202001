@@ -1,0 +1,324 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Plug.Conn - Phoenix - W3cubDocs</title>
+  
+  <meta name="description" content=" The Plug connection. ">
+  <meta name="keywords" content="plug, conn, summary, types, functions, -, phoenix">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/phoenix/plug/1.5.0/plug.conn/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/phoenix.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/phoenix/" class="_nav-link" title="" style="margin-left:0;">Phoenix</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Plug.Conn  </h1>  <p>The Plug connection.</p> <p>This module defines a <a href="../plug.conn/#content"><code class="inline">Plug.Conn</code></a> struct and the main functions for working with Plug connections.</p> <p>Note request headers are normalized to lowercase and response headers are expected to have lower-case keys.</p> <h2 id="module-request-fields" class="section-heading">  Request fields </h2> <p>These fields contain request information:</p> <ul> <li>
+<code class="inline">host</code> - the requested host as a binary, example: <code class="inline">"www.example.com"</code> </li> <li>
+<code class="inline">method</code> - the request method as a binary, example: <code class="inline">"GET"</code> </li> <li>
+<code class="inline">path_info</code> - the path split into segments, example: <code class="inline">["hello", "world"]</code> </li> <li>
+<code class="inline">script_name</code> - the initial portion of the URL’s path that corresponds to the application routing, as segments, example: [“sub”,”app”]. </li> <li>
+<code class="inline">request_path</code> - the requested path, example: <code class="inline">/trailing/and//double//slashes/</code> </li> <li>
+<code class="inline">port</code> - the requested port as an integer, example: <code class="inline">80</code> </li> <li>
+<code class="inline">peer</code> - the actual TCP peer that connected, example: <code class="inline">{{127, 0, 0, 1}, 12345}</code>. Often this is not the actual IP and port of the client, but rather of a load-balancer or request-router. </li> <li>
+<code class="inline">remote_ip</code> - the IP of the client, example: <code class="inline">{151, 236, 219, 228}</code>. This field is meant to be overwritten by plugs that understand e.g. the <code class="inline">X-Forwarded-For</code> header or HAProxy’s PROXY protocol. It defaults to peer’s IP. </li> <li>
+<code class="inline">req_headers</code> - the request headers as a list, example: <code class="inline">[{"content-type", "text/plain"}]</code>. Note all headers will be downcased. </li> <li>
+<code class="inline">scheme</code> - the request scheme as an atom, example: <code class="inline">:http</code> </li> <li>
+<code class="inline">query_string</code> - the request query string as a binary, example: <code class="inline">"foo=bar"</code> </li> </ul> <h2 id="module-fetchable-fields" class="section-heading">  Fetchable fields </h2> <p>The request information in these fields is not populated until it is fetched using the associated <code class="inline">fetch_</code> function. For example, the <code class="inline">cookies</code> field uses <a href="#fetch_cookies/2"><code class="inline">fetch_cookies/2</code></a>.</p> <p>If you access these fields before fetching them, they will be returned as <a href="../plug.conn.unfetched/"><code class="inline">Plug.Conn.Unfetched</code></a> structs.</p> <ul> <li>
+<code class="inline">cookies</code>- the request cookies with the response cookies </li> <li>
+<code class="inline">body_params</code> - the request body params, populated through a <a href="../plug.parsers/"><code class="inline">Plug.Parsers</code></a> parser. </li> <li>
+<code class="inline">query_params</code> - the request query params, populated through <a href="#fetch_query_params/2"><code class="inline">fetch_query_params/2</code></a> </li> <li>
+<code class="inline">path_params</code> - the request path params, populated by routers such as <a href="../plug.router/"><code class="inline">Plug.Router</code></a> </li> <li>
+<code class="inline">params</code> - the request params, the result of merging the <code class="inline">:body_params</code> and <code class="inline">:query_params</code> with <code class="inline">:path_params</code> </li> <li>
+<code class="inline">req_cookies</code> - the request cookies (without the response ones) </li> </ul> <h2 id="module-response-fields" class="section-heading">  Response fields </h2> <p>These fields contain response information:</p> <ul> <li>
+<code class="inline">resp_body</code> - the response body, by default is an empty string. It is set to nil after the response is sent, except for test connections. </li> <li>
+<code class="inline">resp_charset</code> - the response charset, defaults to “utf-8” </li> <li>
+<code class="inline">resp_cookies</code> - the response cookies with their name and options </li> <li>
+<code class="inline">resp_headers</code> - the response headers as a list of tuples, by default <code class="inline">cache-control</code> is set to <code class="inline">"max-age=0, private, must-revalidate"</code>. Note, response headers are expected to have lower-case keys. </li> <li>
+<code class="inline">status</code> - the response status </li> </ul> <p>Furthermore, the <code class="inline">before_send</code> field stores callbacks that are invoked before the connection is sent. Callbacks are invoked in the reverse order they are registered (callbacks registered first are invoked last) in order to reproduce a pipeline ordering.</p> <h2 id="module-connection-fields" class="section-heading">  Connection fields </h2> <ul> <li>
+<code class="inline">assigns</code> - shared user data as a map </li> <li>
+<code class="inline">owner</code> - the Elixir process that owns the connection </li> <li>
+<code class="inline">halted</code> - the boolean status on whether the pipeline was halted </li> <li>
+<code class="inline">secret_key_base</code> - a secret key used to verify and encrypt cookies. the field must be set manually whenever one of those features are used. This data must be kept in the connection and never used directly, always use <a href="../plug.crypto.keygenerator/#generate/3"><code class="inline">Plug.Crypto.KeyGenerator.generate/3</code></a> to derive keys from it </li> <li>
+<code class="inline">state</code> - the connection state </li> </ul> <p>The connection state is used to track the connection lifecycle. It starts as <code class="inline">:unset</code> but is changed to <code class="inline">:set</code> (via <a href="#resp/3"><code class="inline">resp/3</code></a>) or <code class="inline">:set_chunked</code> (used only for <code class="inline">before_send</code> callbacks by <a href="#send_chunked/2"><code class="inline">send_chunked/2</code></a>) or <code class="inline">:file</code> (when invoked via <a href="#send_file/3"><code class="inline">send_file/3</code></a>). Its final result is <code class="inline">:sent</code>, <code class="inline">:file</code> or <code class="inline">:chunked</code> depending on the response model.</p> <h2 id="module-private-fields" class="section-heading">  Private fields </h2> <p>These fields are reserved for libraries/framework usage.</p> <ul> <li>
+<code class="inline">adapter</code> - holds the adapter information in a tuple </li> <li>
+<code class="inline">private</code> - shared library data as a map </li> </ul> <h2 id="module-protocols" class="section-heading">  Protocols </h2> <p><a href="../plug.conn/#content"><code class="inline">Plug.Conn</code></a> implements both the Collectable and Inspect protocols out of the box. The inspect protocol provides a nice representation of the connection while the collectable protocol allows developers to easily chunk data. For example:</p> <pre data-language="elixir"># Send the chunked response headers
+conn = send_chunked(conn, 200)
+
+# Pipe the given list into a connection
+# Each item is emitted as a chunk
+Enum.into(~w(each chunk as a word), conn)</pre> <h2 id="module-custom-status-codes" class="section-heading">  Custom status codes </h2> <p>Plug allows status codes to be overridden or added in order to allow new codes not directly specified by Plug or its adapters. Adding or overriding a status code is done through the Mix configuration of the <code class="inline">:plug</code> application. For example, to override the existing 404 reason phrase for the 404 status code (“Not Found” by default) and add a new 451 status code, the following config can be specified:</p> <pre data-language="elixir">config :plug, :statuses, %{
+  404 =&gt; "Actually This Was Found",
+  451 =&gt; "Unavailable For Legal Reasons"
+}</pre> <p>As this configuration is Plug specific, Plug will need to be recompiled for the changes to take place: this will not happen automatically as dependencies are not automatically recompiled when their configuration changes. To recompile Plug:</p> <pre data-language="elixir">mix deps.clean --build plug</pre> <p>The atoms that can be used in place of the status code in many functions are inflected from the reason phrase of the status code. With the above configuration, the following will all work:</p> <pre data-language="elixir">put_status(conn, :not_found)                     # 404
+put_status(conn, :actually_this_was_found)       # 404
+put_status(conn, :unavailable_for_legal_reasons) # 451</pre> <p>Even though 404 has been overridden, the <code class="inline">:not_found</code> atom can still be used to set the status to 404 as well as the new atom <code class="inline">:actually_this_was_found</code> inflected from the reason phrase “Actually This Was Found”.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Types </h2>
+<dl class="summary-types summary">   <dt class="summary-signature"> <a href="#t:adapter/0">adapter()</a> </dt>   <dt class="summary-signature"> <a href="#t:assigns/0">assigns()</a> </dt>   <dt class="summary-signature"> <a href="#t:before_send/0">before_send()</a> </dt>   <dt class="summary-signature"> <a href="#t:body/0">body()</a> </dt>   <dt class="summary-signature"> <a href="#t:cookies/0">cookies()</a> </dt>   <dt class="summary-signature"> <a href="#t:halted/0">halted()</a> </dt>   <dt class="summary-signature"> <a href="#t:headers/0">headers()</a> </dt>   <dt class="summary-signature"> <a href="#t:host/0">host()</a> </dt>   <dt class="summary-signature"> <a href="#t:int_status/0">int_status()</a> </dt>   <dt class="summary-signature"> <a href="#t:method/0">method()</a> </dt>   <dt class="summary-signature"> <a href="#t:owner/0">owner()</a> </dt>   <dt class="summary-signature"> <a href="#t:param/0">param()</a> </dt>   <dt class="summary-signature"> <a href="#t:params/0">params()</a> </dt>   <dt class="summary-signature"> <a href="#t:peer/0">peer()</a> </dt>   <dt class="summary-signature"> <a href="#t:port_number/0">port_number()</a> </dt>   <dt class="summary-signature"> <a href="#t:query_string/0">query_string()</a> </dt>   <dt class="summary-signature"> <a href="#t:resp_cookies/0">resp_cookies()</a> </dt>   <dt class="summary-signature"> <a href="#t:scheme/0">scheme()</a> </dt>   <dt class="summary-signature"> <a href="#t:secret_key_base/0">secret_key_base()</a> </dt>   <dt class="summary-signature"> <a href="#t:segments/0">segments()</a> </dt>   <dt class="summary-signature"> <a href="#t:state/0">state()</a> </dt>   <dt class="summary-signature"> <a href="#t:status/0">status()</a> </dt>   <dt class="summary-signature"> <a href="#t:t/0">t()</a> </dt>  </dl> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#assign/3">assign(conn, key, value)</a> </dt> <dd class="summary-synopsis">
+<p>Assigns a value to a key in the connection</p> </dd>   <dt class="summary-signature"> <a href="#async_assign/3">async_assign(conn, key, fun)</a> </dt> <dd class="summary-synopsis">
+<p>Starts a task to assign a value to a key in the connection</p> </dd>   <dt class="summary-signature"> <a href="#await_assign/3">await_assign(conn, key, timeout \\ 5000)</a> </dt> <dd class="summary-synopsis">
+<p>Awaits the completion of an async assign</p> </dd>   <dt class="summary-signature"> <a href="#chunk/2">chunk(conn, chunk)</a> </dt> <dd class="summary-synopsis">
+<p>Sends a chunk as part of a chunked response</p> </dd>   <dt class="summary-signature"> <a href="#clear_session/1">clear_session(conn)</a> </dt> <dd class="summary-synopsis">
+<p>Clears the entire session</p> </dd>   <dt class="summary-signature"> <a href="#configure_session/2">configure_session(conn, opts)</a> </dt> <dd class="summary-synopsis">
+<p>Configures the session</p> </dd>   <dt class="summary-signature"> <a href="#delete_req_header/2">delete_req_header(conn, key)</a> </dt> <dd class="summary-synopsis">
+<p>Deletes a request header if present</p> </dd>   <dt class="summary-signature"> <a href="#delete_resp_cookie/3">delete_resp_cookie(conn, key, opts \\ [])</a> </dt> <dd class="summary-synopsis">
+<p>Deletes a response cookie</p> </dd>   <dt class="summary-signature"> <a href="#delete_resp_header/2">delete_resp_header(conn, key)</a> </dt> <dd class="summary-synopsis">
+<p>Deletes a response header if present</p> </dd>   <dt class="summary-signature"> <a href="#delete_session/2">delete_session(conn, key)</a> </dt> <dd class="summary-synopsis">
+<p>Deletes the session for the given <code class="inline">key</code></p> </dd>   <dt class="summary-signature"> <a href="#fetch_cookies/2">fetch_cookies(conn, opts \\ [])</a> </dt> <dd class="summary-synopsis">
+<p>Fetches cookies from the request headers</p> </dd>   <dt class="summary-signature"> <a href="#fetch_query_params/2">fetch_query_params(conn, opts \\ [])</a> </dt> <dd class="summary-synopsis">
+<p>Fetches query parameters from the query string</p> </dd>   <dt class="summary-signature"> <a href="#fetch_session/2">fetch_session(conn, opts \\ [])</a> </dt> <dd class="summary-synopsis">
+<p>Fetches the session from the session store. Will also fetch cookies</p> </dd>   <dt class="summary-signature"> <a href="#get_req_header/2">get_req_header(conn, key)</a> </dt> <dd class="summary-synopsis">
+<p>Returns the values of the request header specified by <code class="inline">key</code></p> </dd>   <dt class="summary-signature"> <a href="#get_resp_header/2">get_resp_header(conn, key)</a> </dt> <dd class="summary-synopsis">
+<p>Returns the values of the response header specified by <code class="inline">key</code></p> </dd>   <dt class="summary-signature"> <a href="#get_session/2">get_session(conn, key)</a> </dt> <dd class="summary-synopsis">
+<p>Returns session value for the given <code class="inline">key</code>. If <code class="inline">key</code> is not set, <code class="inline">nil</code> is returned</p> </dd>   <dt class="summary-signature"> <a href="#halt/1">halt(conn)</a> </dt> <dd class="summary-synopsis">
+<p>Halts the Plug pipeline by preventing further plugs downstream from being invoked. See the docs for <a href="../plug.builder/"><code class="inline">Plug.Builder</code></a> for more information on halting a plug pipeline</p> </dd>   <dt class="summary-signature"> <a href="#merge_resp_headers/2">merge_resp_headers(conn, headers)</a> </dt> <dd class="summary-synopsis">
+<p>Merges a series of response headers into the connection</p> </dd>   <dt class="summary-signature"> <a href="#prepend_resp_headers/2">prepend_resp_headers(conn, headers)</a> </dt> <dd class="summary-synopsis">
+<p>Prepends the list of headers to the connection response headers</p> </dd>   <dt class="summary-signature"> <a href="#push/3">push(conn, path, headers \\ [])</a> </dt> <dd class="summary-synopsis">
+<p>Pushes a resource to the client</p> </dd>   <dt class="summary-signature"> <a href="#push!/3">push!(conn, path, headers \\ [])</a> </dt> <dd class="summary-synopsis">
+<p>Pushes a resource to the client but raises if the adapter does not support server push</p> </dd>   <dt class="summary-signature"> <a href="#put_private/3">put_private(conn, key, value)</a> </dt> <dd class="summary-synopsis">
+<p>Assigns a new <strong>private</strong> key and value in the connection</p> </dd>   <dt class="summary-signature"> <a href="#put_req_header/3">put_req_header(conn, key, value)</a> </dt> <dd class="summary-synopsis">
+<p>Adds a new request header (<code class="inline">key</code>) if not present, otherwise replaces the previous value of that header with <code class="inline">value</code></p> </dd>   <dt class="summary-signature"> <a href="#put_resp_content_type/3">put_resp_content_type(conn, content_type, charset \\ "utf-8")</a> </dt> <dd class="summary-synopsis">
+<p>Sets the value of the <code class="inline">"content-type"</code> response header taking into account the <code class="inline">charset</code></p> </dd>   <dt class="summary-signature"> <a href="#put_resp_cookie/4">put_resp_cookie(conn, key, value, opts \\ [])</a> </dt> <dd class="summary-synopsis">
+<p>Puts a response cookie</p> </dd>   <dt class="summary-signature"> <a href="#put_resp_header/3">put_resp_header(conn, key, value)</a> </dt> <dd class="summary-synopsis">
+<p>Adds a new response header (<code class="inline">key</code>) if not present, otherwise replaces the previous value of that header with <code class="inline">value</code></p> </dd>   <dt class="summary-signature"> <a href="#put_session/3">put_session(conn, key, value)</a> </dt> <dd class="summary-synopsis">
+<p>Puts the specified <code class="inline">value</code> in the session for the given <code class="inline">key</code></p> </dd>   <dt class="summary-signature"> <a href="#put_status/2">put_status(conn, status)</a> </dt> <dd class="summary-synopsis">
+<p>Stores the given status code in the connection</p> </dd>   <dt class="summary-signature"> <a href="#read_body/2">read_body(conn, opts \\ [])</a> </dt> <dd class="summary-synopsis">
+<p>Reads the request body</p> </dd>   <dt class="summary-signature"> <a href="#read_part_body/2">read_part_body(conn, opts)</a> </dt> <dd class="summary-synopsis">
+<p>Reads the body of a multipart request</p> </dd>   <dt class="summary-signature"> <a href="#read_part_headers/2">read_part_headers(conn, opts \\ [])</a> </dt> <dd class="summary-synopsis">
+<p>Reads the headers of a multipart request</p> </dd>   <dt class="summary-signature"> <a href="#register_before_send/2">register_before_send(conn, callback)</a> </dt> <dd class="summary-synopsis">
+<p>Registers a callback to be invoked before the response is sent</p> </dd>   <dt class="summary-signature"> <a href="#request_url/1">request_url(conn)</a> </dt> <dd class="summary-synopsis">
+<p>Returns the full request URL</p> </dd>   <dt class="summary-signature"> <a href="#resp/3">resp(conn, status, body)</a> </dt> <dd class="summary-synopsis">
+<p>Sets the response to the given <code class="inline">status</code> and <code class="inline">body</code></p> </dd>   <dt class="summary-signature"> <a href="#send_chunked/2">send_chunked(conn, status)</a> </dt> <dd class="summary-synopsis">
+<p>Sends the response headers as a chunked response</p> </dd>   <dt class="summary-signature"> <a href="#send_file/5">send_file(conn, status, file, offset \\ 0, length \\ :all)</a> </dt> <dd class="summary-synopsis">
+<p>Sends a file as the response body with the given <code class="inline">status</code> and optionally starting at the given offset until the given length</p> </dd>   <dt class="summary-signature"> <a href="#send_resp/1">send_resp(conn)</a> </dt> <dd class="summary-synopsis">
+<p>Sends a response to the client</p> </dd>   <dt class="summary-signature"> <a href="#send_resp/3">send_resp(conn, status, body)</a> </dt> <dd class="summary-synopsis">
+<p>Sends a response with the given status and body</p> </dd>   <dt class="summary-signature"> <a href="#update_req_header/4">update_req_header(conn, key, initial, fun)</a> </dt> <dd class="summary-synopsis">
+<p>Updates a request header if present, otherwise it sets it to an initial value</p> </dd>   <dt class="summary-signature"> <a href="#update_resp_header/4">update_resp_header(conn, key, initial, fun)</a> </dt> <dd class="summary-synopsis">
+<p>Updates a response header if present, otherwise it sets it to an initial value</p> </dd>  </dl>   <h1 class="section-heading" id="types">  Types </h1>   <h3 class="detail-header type" id="t:adapter/0">  <span class="signature">adapter()</span>     </h3>
+<pre data-language="elixir">adapter() :: {module, term}</pre>     <h3 class="detail-header type" id="t:assigns/0">  <span class="signature">assigns()</span>     </h3>
+<pre data-language="elixir">assigns() :: %{optional(atom) =&gt; any}</pre>     <h3 class="detail-header type" id="t:before_send/0">  <span class="signature">before_send()</span>     </h3>
+<pre data-language="elixir">before_send() :: [(t -&gt; t)]</pre>     <h3 class="detail-header type" id="t:body/0">  <span class="signature">body()</span>     </h3>
+<pre data-language="elixir">body() :: iodata</pre>     <h3 class="detail-header type" id="t:cookies/0">  <span class="signature">cookies()</span>     </h3>
+<pre data-language="elixir">cookies() :: %{optional(binary) =&gt; binary}</pre>     <h3 class="detail-header type" id="t:halted/0">  <span class="signature">halted()</span>     </h3>
+<pre data-language="elixir">halted() :: boolean</pre>     <h3 class="detail-header type" id="t:headers/0">  <span class="signature">headers()</span>     </h3>
+<pre data-language="elixir">headers() :: [{binary, binary}]</pre>     <h3 class="detail-header type" id="t:host/0">  <span class="signature">host()</span>     </h3>
+<pre data-language="elixir">host() :: binary</pre>     <h3 class="detail-header type" id="t:int_status/0">  <span class="signature">int_status()</span>     </h3>
+<pre data-language="elixir">int_status() :: non_neg_integer | nil</pre>     <h3 class="detail-header type" id="t:method/0">  <span class="signature">method()</span>     </h3>
+<pre data-language="elixir">method() :: binary</pre>     <h3 class="detail-header type" id="t:owner/0">  <span class="signature">owner()</span>     </h3>
+<pre data-language="elixir">owner() :: pid</pre>     <h3 class="detail-header type" id="t:param/0">  <span class="signature">param()</span>     </h3>
+<pre data-language="elixir">param() :: binary | %{optional(binary) =&gt; param} | [param]</pre>     <h3 class="detail-header type" id="t:params/0">  <span class="signature">params()</span>     </h3>
+<pre data-language="elixir">params() :: %{optional(binary) =&gt; param}</pre>     <h3 class="detail-header type" id="t:peer/0">  <span class="signature">peer()</span>     </h3>
+<pre data-language="elixir">peer() :: {:inet.ip_address, :inet.port_number}</pre>     <h3 class="detail-header type" id="t:port_number/0">  <span class="signature">port_number()</span>     </h3>
+<pre data-language="elixir">port_number() :: :inet.port_number</pre>     <h3 class="detail-header type" id="t:query_string/0">  <span class="signature">query_string()</span>     </h3>
+<pre data-language="elixir">query_string() :: String.t</pre>     <h3 class="detail-header type" id="t:resp_cookies/0">  <span class="signature">resp_cookies()</span>     </h3>
+<pre data-language="elixir">resp_cookies() :: %{optional(binary) =&gt; %{}}</pre>     <h3 class="detail-header type" id="t:scheme/0">  <span class="signature">scheme()</span>     </h3>
+<pre data-language="elixir">scheme() :: :http | :https</pre>     <h3 class="detail-header type" id="t:secret_key_base/0">  <span class="signature">secret_key_base()</span>     </h3>
+<pre data-language="elixir">secret_key_base() :: binary | nil</pre>     <h3 class="detail-header type" id="t:segments/0">  <span class="signature">segments()</span>     </h3>
+<pre data-language="elixir">segments() :: [binary]</pre>     <h3 class="detail-header type" id="t:state/0">  <span class="signature">state()</span>     </h3>
+<pre data-language="elixir">state ::
+  :unset |
+  :set |
+  :set_chunked |
+  :set_file |
+  :file |
+  :chunked |
+  :sent</pre>     <h3 class="detail-header type" id="t:status/0">  <span class="signature">status()</span>     </h3>
+<pre data-language="elixir">status() :: atom | int_status</pre>     <h3 class="detail-header type" id="t:t/0">  <span class="signature">t()</span>     </h3>
+<pre data-language="elixir">t() :: %Plug.Conn{adapter: adapter, assigns: assigns, before_send: before_send, body_params: params | Plug.Conn.Unfetched.t, cookies: cookies | Plug.Conn.Unfetched.t, halted: term, host: host, method: method, owner: owner, params: params | Plug.Conn.Unfetched.t, path_info: segments, path_params: params, peer: peer, port: :inet.port_number, private: assigns, query_params: params | Plug.Conn.Unfetched.t, query_string: query_string, remote_ip: :inet.ip_address, req_cookies: cookies | Plug.Conn.Unfetched.t, req_headers: headers, request_path: binary, resp_body: body | nil, resp_cookies: resp_cookies, resp_headers: headers, scheme: scheme, script_name: segments, secret_key_base: secret_key_base, state: state, status: int_status}</pre>       <h1 class="section-heading" id="functions">  Functions </h1>  <h3 class="detail-header function" id="assign/3">  <span class="signature">assign(conn, key, value)</span>     </h3>
+<pre data-language="elixir">assign(t, atom, term) :: t</pre>  <p>Assigns a value to a key in the connection</p> <h4 id="assign/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; conn.assigns[:hello]
+nil
+iex&gt; conn = assign(conn, :hello, :world)
+iex&gt; conn.assigns[:hello]
+:world</pre>    <h3 class="detail-header function" id="async_assign/3">  <span class="signature">async_assign(conn, key, fun)</span>     </h3>
+<pre data-language="elixir">async_assign(t, atom, (() -&gt; term)) :: t</pre>  <p>Starts a task to assign a value to a key in the connection.</p> <p><a href="#await_assign/2"><code class="inline">await_assign/2</code></a> can be used to wait for the async task to complete and retrieve the resulting value.</p> <p>Behind the scenes, it uses <a href="https://hexdocs.pm/elixir/Task.html#async/1" target="_blank"><code class="inline">Task.async/1</code></a>.</p> <h4 id="async_assign/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; conn.assigns[:hello]
+nil
+iex&gt; conn = async_assign(conn, :hello, fn -&gt; :world end)
+iex&gt; conn.assigns[:hello]
+%Task{...}</pre>     <h3 class="detail-header function" id="await_assign/3">  <span class="signature">await_assign(conn, key, timeout \\ 5000)</span>     </h3>
+<pre data-language="elixir">await_assign(t, atom, timeout) :: t</pre>  <p>Awaits the completion of an async assign.</p> <p>Returns a connection with the value resulting from the async assignment placed under <code class="inline">key</code> in the <code class="inline">:assigns</code> field.</p> <p>Behind the scenes, it uses <a href="https://hexdocs.pm/elixir/Task.html#await/2" target="_blank"><code class="inline">Task.await/2</code></a>.</p> <h4 id="await_assign/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; conn.assigns[:hello]
+nil
+iex&gt; conn = async_assign(conn, :hello, fn -&gt; :world end)
+iex&gt; conn = await_assign(conn, :hello) # blocks until `conn.assigns[:hello]` is available
+iex&gt; conn.assigns[:hello]
+:world</pre>    <h3 class="detail-header function" id="chunk/2">  <span class="signature">chunk(conn, chunk)</span>     </h3>
+<pre data-language="elixir">chunk(t, body) :: {:ok, t} | {:error, term} | no_return</pre>  <p>Sends a chunk as part of a chunked response.</p> <p>It expects a connection with state <code class="inline">:chunked</code> as set by <a href="#send_chunked/2"><code class="inline">send_chunked/2</code></a>. It returns <code class="inline">{:ok, conn}</code> in case of success, otherwise <code class="inline">{:error, reason}</code>.</p> <p>To stream data use <a href="https://hexdocs.pm/elixir/Enum.html#reduce_while/3" target="_blank"><code class="inline">Enum.reduce_while/3</code></a> instead of <a href="https://hexdocs.pm/elixir/Enum.html#into/2" target="_blank"><code class="inline">Enum.into/2</code></a>. <a href="https://hexdocs.pm/elixir/Enum.html#reduce_while/3" target="_blank"><code class="inline">Enum.reduce_while/3</code></a> allows aborting the execution if <a href="#chunk/2"><code class="inline">chunk/2</code></a> fails to deliver the chunk of data.</p> <h4 id="chunk/2-example" class="section-heading">  Example </h4> <pre data-language="elixir">~w(each chunk as a word)
+|&gt; Enum.reduce_while(conn, fn (chunk, conn) -&gt;
+  case Plug.Conn.chunk(conn, chunk) do
+    {:ok, conn} -&gt;
+      {:cont, conn}
+    {:error, :closed} -&gt;
+      {:halt, conn}
+  end
+end)</pre>    <h3 class="detail-header function" id="clear_session/1">  <span class="signature">clear_session(conn)</span>     </h3>
+<pre data-language="elixir">clear_session(t) :: t</pre>  <p>Clears the entire session.</p> <p>This function removes every key from the session, clearing the session.</p> <p>Note that, even if <a href="#clear_session/1"><code class="inline">clear_session/1</code></a> is used, the session is still sent to the client. If the session should be effectively <em>dropped</em>, <a href="#configure_session/2"><code class="inline">configure_session/2</code></a> should be used with the <code class="inline">:drop</code> option set to <code class="inline">true</code>.</p>    <h3 class="detail-header function" id="configure_session/2">  <span class="signature">configure_session(conn, opts)</span>     </h3>
+<pre data-language="elixir">configure_session(t, Keyword.t) :: t</pre>  <p>Configures the session.</p> <h4 id="configure_session/2-options" class="section-heading">  Options </h4> <ul> <li>
+<code class="inline">:renew</code> - generates a new session id for the cookie </li> <li>
+<code class="inline">:drop</code> - drops the session, a session cookie will not be included in the response </li> <li>
+<code class="inline">:ignore</code> - ignores all changes made to the session in this request cycle </li> </ul>    <h3 class="detail-header function" id="delete_req_header/2">  <span class="signature">delete_req_header(conn, key)</span>     </h3>
+<pre data-language="elixir">delete_req_header(t, binary) :: t</pre>  <p>Deletes a request header if present.</p> <p>Raises a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> if the connection has already been <code class="inline">:sent</code> or <code class="inline">:chunked</code>.</p>     <h3 class="detail-header function" id="delete_resp_cookie/3">  <span class="signature">delete_resp_cookie(conn, key, opts \\ [])</span>     </h3>
+<pre data-language="elixir">delete_resp_cookie(t, binary, Keyword.t) :: t</pre>  <p>Deletes a response cookie.</p> <p>Deleting a cookie requires the same options as to when the cookie was put. Check <a href="#put_resp_cookie/4"><code class="inline">put_resp_cookie/4</code></a> for more information.</p>    <h3 class="detail-header function" id="delete_resp_header/2">  <span class="signature">delete_resp_header(conn, key)</span>     </h3>
+<pre data-language="elixir">delete_resp_header(t, binary) :: t</pre>  <p>Deletes a response header if present.</p> <p>Raises a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> if the connection has already been <code class="inline">:sent</code> or <code class="inline">:chunked</code>.</p>    <h3 class="detail-header function" id="delete_session/2">  <span class="signature">delete_session(conn, key)</span>     </h3>
+<pre data-language="elixir">delete_session(t, String.t | atom) :: t</pre>  <p>Deletes the session for the given <code class="inline">key</code>.</p> <p>The key can be a string or an atom, where atoms are automatically converted to strings.</p>     <h3 class="detail-header function" id="fetch_cookies/2">  <span class="signature">fetch_cookies(conn, opts \\ [])</span>     </h3>
+<pre data-language="elixir">fetch_cookies(t, Keyword.t) :: t</pre>  <p>Fetches cookies from the request headers.</p>     <h3 class="detail-header function" id="fetch_query_params/2">  <span class="signature">fetch_query_params(conn, opts \\ [])</span>     </h3>
+<pre data-language="elixir">fetch_query_params(t, Keyword.t) :: t</pre>  <p>Fetches query parameters from the query string.</p> <p>This function does not fetch parameters from the body. To fetch parameters from the body, use the <a href="../plug.parsers/"><code class="inline">Plug.Parsers</code></a> plug.</p> <h4 id="fetch_query_params/2-options" class="section-heading">  Options </h4> <ul> <li>
+<code class="inline">:length</code> - the maximum query string length. Defaults to 1_000_000 bytes. </li> </ul>     <h3 class="detail-header function" id="fetch_session/2">  <span class="signature">fetch_session(conn, opts \\ [])</span>     </h3>
+<pre data-language="elixir">fetch_session(t, Keyword.t) :: t</pre>  <p>Fetches the session from the session store. Will also fetch cookies.</p>    <h3 class="detail-header function" id="get_req_header/2">  <span class="signature">get_req_header(conn, key)</span>     </h3>
+<pre data-language="elixir">get_req_header(t, binary) :: [binary]</pre>  <p>Returns the values of the request header specified by <code class="inline">key</code>.</p>    <h3 class="detail-header function" id="get_resp_header/2">  <span class="signature">get_resp_header(conn, key)</span>     </h3>
+<pre data-language="elixir">get_resp_header(t, binary) :: [binary]</pre>  <p>Returns the values of the response header specified by <code class="inline">key</code>.</p> <h4 id="get_resp_header/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; conn = %{conn | resp_headers: [{"content-type", "text/plain"}]}
+iex&gt; get_resp_header(conn, "content-type")
+["text/plain"]</pre>    <h3 class="detail-header function" id="get_session/2">  <span class="signature">get_session(conn, key)</span>     </h3>
+<pre data-language="elixir">get_session(t, String.t | atom) :: any</pre>  <p>Returns session value for the given <code class="inline">key</code>. If <code class="inline">key</code> is not set, <code class="inline">nil</code> is returned.</p> <p>The key can be a string or an atom, where atoms are automatically converted to strings.</p>    <h3 class="detail-header function" id="halt/1">  <span class="signature">halt(conn)</span>     </h3>
+<pre data-language="elixir">halt(t) :: t</pre>  <p>Halts the Plug pipeline by preventing further plugs downstream from being invoked. See the docs for <a href="../plug.builder/"><code class="inline">Plug.Builder</code></a> for more information on halting a plug pipeline.</p>    <h3 class="detail-header function" id="merge_resp_headers/2">  <span class="signature">merge_resp_headers(conn, headers)</span>     </h3>
+<pre data-language="elixir">merge_resp_headers(t, Enum.t) :: t</pre>  <p>Merges a series of response headers into the connection.</p> <h4 id="merge_resp_headers/2-example" class="section-heading">  Example </h4> <pre data-language="elixir">iex&gt; conn = merge_resp_headers(conn, [{"content-type", "text/plain"}, {"X-1337", "5P34K"}])</pre>    <h3 class="detail-header function" id="prepend_resp_headers/2">  <span class="signature">prepend_resp_headers(conn, headers)</span>     </h3>
+<pre data-language="elixir">prepend_resp_headers(t, headers) :: t</pre>  <p>Prepends the list of headers to the connection response headers.</p> <p>Similar to <code class="inline">put_resp_header</code> this functions adds a new response header (<code class="inline">key</code>) but rather then replacing the exising one it prepends another header with the same <code class="inline">key</code>.</p> <p>It is recommended for header keys to be in lower-case, to avoid sending duplicate keys in a request. As a convenience, this is validated during testing which raises a <a href="../plug.conn.invalidheadererror/"><code class="inline">Plug.Conn.InvalidHeaderError</code></a> if the header key is not lowercase.</p> <p>Raises a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> if the connection has already been <code class="inline">:sent</code> or <code class="inline">:chunked</code>.</p> <p>Raises a <a href="../plug.conn.invalidheadererror/"><code class="inline">Plug.Conn.InvalidHeaderError</code></a> if the header value contains control feed (<code class="inline">\r</code>) or newline (<code class="inline">\n</code>) characters.</p>     <h3 class="detail-header function" id="push/3">  <span class="signature">push(conn, path, headers \\ [])</span>     </h3>
+<pre data-language="elixir">push(t, String.t, Keyword.t) :: t</pre>  <p>Pushes a resource to the client.</p> <p>Server pushes must happen prior to a response being sent. If a server push is attempted after a response is sent then a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> will be raised.</p> <p>If the adapter does not support server push then this is a noop.</p>     <h3 class="detail-header function" id="push!/3">  <span class="signature">push!(conn, path, headers \\ [])</span>     </h3>
+<pre data-language="elixir">push!(t, String.t, Keyword.t) :: t</pre>  <p>Pushes a resource to the client but raises if the adapter does not support server push.</p>    <h3 class="detail-header function" id="put_private/3">  <span class="signature">put_private(conn, key, value)</span>     </h3>
+<pre data-language="elixir">put_private(t, atom, term) :: t</pre>  <p>Assigns a new <strong>private</strong> key and value in the connection.</p> <p>This storage is meant to be used by libraries and frameworks to avoid writing to the user storage (the <code class="inline">:assigns</code> field). It is recommended for libraries/frameworks to prefix the keys with the library name.</p> <p>For example, if some plug needs to store a <code class="inline">:hello</code> key, it should do so as <code class="inline">:plug_hello</code>:</p> <pre data-language="elixir">iex&gt; conn.private[:plug_hello]
+nil
+iex&gt; conn = put_private(conn, :plug_hello, :world)
+iex&gt; conn.private[:plug_hello]
+:world</pre>    <h3 class="detail-header function" id="put_req_header/3">  <span class="signature">put_req_header(conn, key, value)</span>     </h3>
+<pre data-language="elixir">put_req_header(t, binary, binary) :: t</pre>  <p>Adds a new request header (<code class="inline">key</code>) if not present, otherwise replaces the previous value of that header with <code class="inline">value</code>.</p> <p>It is recommended for header keys to be in lower-case, to avoid sending duplicate keys in a request. As a convenience, this is validated during testing which raises a <a href="../plug.conn.invalidheadererror/"><code class="inline">Plug.Conn.InvalidHeaderError</code></a> if the header key is not lowercase.</p> <p>Raises a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> if the connection has already been <code class="inline">:sent</code> or <code class="inline">:chunked</code>.</p>     <h3 class="detail-header function" id="put_resp_content_type/3">  <span class="signature">put_resp_content_type(conn, content_type, charset \\ "utf-8")</span>     </h3>
+<pre data-language="elixir">put_resp_content_type(t, binary, binary | nil) :: t</pre>  <p>Sets the value of the <code class="inline">"content-type"</code> response header taking into account the <code class="inline">charset</code>.</p>     <h3 class="detail-header function" id="put_resp_cookie/4">  <span class="signature">put_resp_cookie(conn, key, value, opts \\ [])</span>     </h3>
+<pre data-language="elixir">put_resp_cookie(t, binary, binary, Keyword.t) :: t</pre>  <p>Puts a response cookie.</p> <p>The cookie value is not automatically escaped. Therefore, if you want to store values with comma, quotes, etc, you need to explicitly escape them or use a function such as <code class="inline">Base.encode64(value, padding: false)</code> when writing and <code class="inline">Base.decode64(encoded, padding: false)</code> when reading the cookie. Padding needs to be disabled since <code class="inline">=</code> is not a valid character in cookie values.</p> <h4 id="put_resp_cookie/4-options" class="section-heading">  Options </h4> <ul> <li>
+<code class="inline">:domain</code> - the domain the cookie applies to </li> <li>
+<code class="inline">:max_age</code> - the cookie max-age, in seconds. Providing a value for this option will set both the <em>max-age</em> and <em>expires</em> cookie attributes </li> <li>
+<code class="inline">:path</code> - the path the cookie applies to </li> <li>
+<code class="inline">:http_only</code> - when false, the cookie is accessible beyond http </li> <li>
+<code class="inline">:secure</code> - if the cookie must be sent only over https. Defaults to true when the connection is https </li> <li>
+<code class="inline">:extra</code> - string to append to cookie. Use this to take advantage of non-standard cookie attributes. </li> </ul>    <h3 class="detail-header function" id="put_resp_header/3">  <span class="signature">put_resp_header(conn, key, value)</span>     </h3>
+<pre data-language="elixir">put_resp_header(t, binary, binary) :: t</pre>  <p>Adds a new response header (<code class="inline">key</code>) if not present, otherwise replaces the previous value of that header with <code class="inline">value</code>.</p> <p>It is recommended for header keys to be in lower-case, to avoid sending duplicate keys in a request. As a convenience, this is validated during testing which raises a <a href="../plug.conn.invalidheadererror/"><code class="inline">Plug.Conn.InvalidHeaderError</code></a> if the header key is not lowercase.</p> <p>Raises a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> if the connection has already been <code class="inline">:sent</code> or <code class="inline">:chunked</code>.</p> <p>Raises a <a href="../plug.conn.invalidheadererror/"><code class="inline">Plug.Conn.InvalidHeaderError</code></a> if the header value contains control feed (<code class="inline">\r</code>) or newline (<code class="inline">\n</code>) characters.</p>    <h3 class="detail-header function" id="put_session/3">  <span class="signature">put_session(conn, key, value)</span>     </h3>
+<pre data-language="elixir">put_session(t, String.t | atom, any) :: t</pre>  <p>Puts the specified <code class="inline">value</code> in the session for the given <code class="inline">key</code>.</p> <p>The key can be a string or an atom, where atoms are automatically converted to strings. Can only be invoked on unsent <code class="inline">conn</code>s. Will raise otherwise.</p>    <h3 class="detail-header function" id="put_status/2">  <span class="signature">put_status(conn, status)</span>     </h3>
+<pre data-language="elixir">put_status(t, status) :: t</pre>  <p>Stores the given status code in the connection.</p> <p>The status code can be <code class="inline">nil</code>, an integer or an atom. The list of allowed atoms is available in <a href="../plug.conn.status/"><code class="inline">Plug.Conn.Status</code></a>.</p> <p>Raises a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> if the connection has already been <code class="inline">:sent</code> or <code class="inline">:chunked</code>.</p>     <h3 class="detail-header function" id="read_body/2">  <span class="signature">read_body(conn, opts \\ [])</span>     </h3>
+<pre data-language="elixir">read_body(t, Keyword.t) ::
+  {:ok, binary, t} |
+  {:more, binary, t} |
+  {:error, term}</pre>  <p>Reads the request body.</p> <p>This function reads a chunk of the request body up to a given <code class="inline">:length</code>. If there is more data to be read, then <code class="inline">{:more, partial_body, conn}</code> is returned. Otherwise <code class="inline">{:ok, body, conn}</code> is returned. In case of an error reading the socket, <code class="inline">{:error, reason}</code> is returned as per <a href="http://www.erlang.org/doc/man/gen_tcp.html#recv-2" target="_blank"><code class="inline">:gen_tcp.recv/2</code></a>.</p> <p>In order to, for instance, support slower clients you can tune the <code class="inline">:read_length</code> and <code class="inline">:read_timeout</code> options. These specify how much time should be allowed to pass for each read from the underlying socket.</p> <p>Because the request body can be of any size, reading the body will only work once, as Plug will not cache the result of these operations. If you need to access the body multiple times, it is your responsibility to store it. Finally keep in mind some plugs like <a href="../plug.parsers/"><code class="inline">Plug.Parsers</code></a> may read the body, so the body may be unavailable after being accessed by such plugs.</p> <p>This function is able to handle both chunked and identity transfer-encoding by default.</p> <h4 id="read_body/2-options" class="section-heading">  Options </h4> <ul> <li>
+<code class="inline">:length</code> - sets the maximum number of bytes to read from the body on every call, defaults to 8_000_000 bytes </li> <li>
+<code class="inline">:read_length</code> - sets the amount of bytes to read at one time from the underlying socket to fill the chunk, defaults to 1_000_000 bytes </li> <li>
+<code class="inline">:read_timeout</code> - sets the timeout for each socket read, defaults to 15_000ms </li> </ul> <p>The values above are not meant to be exact. For example, setting the length to 8_000_000 may end up reading some hundred bytes more from the socket until we halt.</p> <h4 id="read_body/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">{:ok, body, conn} = Plug.Conn.read_body(conn, length: 1_000_000)</pre>    <h3 class="detail-header function" id="read_part_body/2">  <span class="signature">read_part_body(conn, opts)</span>     </h3>
+<pre data-language="elixir">read_part_body(t, Keyword.t) ::
+  {:ok, binary, t} |
+  {:more, binary, t} |
+  {:done, t}</pre>  <p>Reads the body of a multipart request.</p> <p>Returns <code class="inline">{:ok, body, conn}</code> if all body has been read, <code class="inline">{:more, binary, conn}</code> otherwise, and <code class="inline">{:done, conn}</code> if there is no more body.</p> <p>It accepts the same options as <a href="#read_body/2"><code class="inline">read_body/2</code></a>.</p>     <h3 class="detail-header function" id="read_part_headers/2">  <span class="signature">read_part_headers(conn, opts \\ [])</span>     </h3>
+<pre data-language="elixir">read_part_headers(t, Keyword.t) ::
+  {:ok, headers, t} |
+  {:done, t}</pre>  <p>Reads the headers of a multipart request.</p> <p>It returns <code class="inline">{:ok, headers, conn}</code> with the headers or <code class="inline">{:done, conn}</code> if there are no more parts.</p> <p>Once <a href="#read_part_headers/2"><code class="inline">read_part_headers/2</code></a> is invoked, a developer may call <a href="#read_part_body/2"><code class="inline">read_part_body/2</code></a> to read the body associated to the headers. If <a href="#read_part_headers/2"><code class="inline">read_part_headers/2</code></a> is called instead, the body is automatically skipped until the next part headers.</p> <h4 id="read_part_headers/2-options" class="section-heading">  Options </h4> <ul> <li>
+<code class="inline">:length</code> - sets the maximum number of bytes to read from the body for each chunk, defaults to 64_000 bytes </li> <li>
+<code class="inline">:read_length</code> - sets the amount of bytes to read at one time from the underlying socket to fill the chunk, defaults to 64_000 bytes </li> <li>
+<code class="inline">:read_timeout</code> - sets the timeout for each socket read, defaults to 5_000ms </li> </ul>    <h3 class="detail-header function" id="register_before_send/2">  <span class="signature">register_before_send(conn, callback)</span>     </h3>
+<pre data-language="elixir">register_before_send(t, (t -&gt; t)) :: t</pre>  <p>Registers a callback to be invoked before the response is sent.</p> <p>Callbacks are invoked in the reverse order they are defined (callbacks defined first are invoked last).</p>    <h3 class="detail-header function" id="request_url/1">  <span class="signature">request_url(conn)</span>  </h3>  <p>Returns the full request URL.</p>    <h3 class="detail-header function" id="resp/3">  <span class="signature">resp(conn, status, body)</span>     </h3>
+<pre data-language="elixir">resp(t, status, body) :: t</pre>  <p>Sets the response to the given <code class="inline">status</code> and <code class="inline">body</code>.</p> <p>It sets the connection state to <code class="inline">:set</code> (if not already <code class="inline">:set</code>) and raises <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> if it was already <code class="inline">:sent</code>.</p>    <h3 class="detail-header function" id="send_chunked/2">  <span class="signature">send_chunked(conn, status)</span>     </h3>
+<pre data-language="elixir">send_chunked(t, status) :: t | no_return</pre>  <p>Sends the response headers as a chunked response.</p> <p>It expects a connection that has not been <code class="inline">:sent</code> yet and sets its state to <code class="inline">:chunked</code> afterwards. Otherwise raises <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a>.</p>      <h3 class="detail-header function" id="send_file/5">  <span class="signature">send_file(conn, status, file, offset \\ 0, length \\ :all)</span>     </h3>
+<pre data-language="elixir">send_file(t, status, filename :: binary, offset :: integer, length :: integer | :all) ::
+  t |
+  no_return</pre>  <p>Sends a file as the response body with the given <code class="inline">status</code> and optionally starting at the given offset until the given length.</p> <p>If available, the file is sent directly over the socket using the operating system <code class="inline">sendfile</code> operation.</p> <p>It expects a connection that has not been <code class="inline">:sent</code> yet and sets its state to <code class="inline">:file</code> afterwards. Otherwise raises <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a>.</p> <h4 id="send_file/5-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">Plug.Conn.send_file(conn, 200, "README.md")</pre>    <h3 class="detail-header function" id="send_resp/1">  <span class="signature">send_resp(conn)</span>     </h3>
+<pre data-language="elixir">send_resp(t) :: t | no_return</pre>  <p>Sends a response to the client.</p> <p>It expects the connection state to be <code class="inline">:set</code>, otherwise raises an <a href="https://hexdocs.pm/elixir/ArgumentError.html" target="_blank"><code class="inline">ArgumentError</code></a> for <code class="inline">:unset</code> connections or a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> for already <code class="inline">:sent</code> connections.</p> <p>At the end sets the connection state to <code class="inline">:sent</code>.</p>    <h3 class="detail-header function" id="send_resp/3">  <span class="signature">send_resp(conn, status, body)</span>     </h3>
+<pre data-language="elixir">send_resp(t, status, body) :: t | no_return</pre>  <p>Sends a response with the given status and body.</p> <p>See <a href="#send_resp/1"><code class="inline">send_resp/1</code></a> for more information.</p>    <h3 class="detail-header function" id="update_req_header/4">  <span class="signature">update_req_header(conn, key, initial, fun)</span>     </h3>
+<pre data-language="elixir">update_req_header(t, binary, binary, (binary -&gt; binary)) :: t</pre>  <p>Updates a request header if present, otherwise it sets it to an initial value.</p> <p>Raises a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> if the connection has already been <code class="inline">:sent</code> or <code class="inline">:chunked</code>.</p>    <h3 class="detail-header function" id="update_resp_header/4">  <span class="signature">update_resp_header(conn, key, initial, fun)</span>     </h3>
+<pre data-language="elixir">update_resp_header(t, binary, binary, (binary -&gt; binary)) :: t</pre>  <p>Updates a response header if present, otherwise it sets it to an initial value.</p> <p>Raises a <a href="../plug.conn.alreadysenterror/"><code class="inline">Plug.Conn.AlreadySentError</code></a> if the connection has already been <code class="inline">:sent</code> or <code class="inline">:chunked</code>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/plug/1.5.0/Plug.Conn.html" class="_attribution-link" target="_blank">https://hexdocs.pm/plug/1.5.0/Plug.Conn.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,152 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Plug.SSL - Phoenix - W3cubDocs</title>
+  
+  <meta name="description" content=" A plug to force SSL connections and enable HSTS. ">
+  <meta name="keywords" content="plug, ssl, summary, functions, -, phoenix">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/phoenix/plug/plug.ssl/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/phoenix.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/phoenix/" class="_nav-link" title="" style="margin-left:0;">Phoenix</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Plug.SSL  </h1>  <p>A plug to force SSL connections and enable HSTS.</p> <p>If the scheme of a request is <code class="inline">https</code>, it’ll add a <code class="inline">strict-transport-security</code> header to enable HTTP Strict Transport Security by default.</p> <p>Otherwise, the request will be redirected to a corresponding location with the <code class="inline">https</code> scheme by setting the <code class="inline">location</code> header of the response. The status code will be 301 if the method of <code class="inline">conn</code> is <code class="inline">GET</code> or <code class="inline">HEAD</code>, or 307 in other situations.</p> <p>Besides being a Plug, this module also provides conveniences for configuring SSL. See <a href="#configure/1"><code class="inline">configure/1</code></a>.</p> <h2 id="module-x-forwarded-proto" class="section-heading">  x-forwarded-proto </h2> <p>If your Plug application is behind a proxy that handles HTTPS, you will need to tell Plug to parse the proper protocol from the <code class="inline">x-forwarded-proto</code> header. This can be done using the <code class="inline">:rewrite_on</code> option:</p> <pre data-language="elixir">plug Plug.SSL, rewrite_on: [:x_forwarded_proto]</pre> <p>The command above will effectively change the value of <code class="inline">conn.scheme</code> by the one sent in <code class="inline">x-forwarded-proto</code>.</p> <p>Since rewriting the scheme based on <code class="inline">x-forwarded-proto</code> can open up security vulnerabilities, only provide the option above if:</p> <ul> <li>your app is behind a proxy </li> <li>your proxy strips <code class="inline">x-forwarded-proto</code> headers from all incoming requests </li> <li>your proxy sets the <code class="inline">x-forwarded-proto</code> and sends it to Plug </li> </ul> <h2 id="module-plug-options" class="section-heading">  Plug Options </h2> <ul> <li>
+<code class="inline">:rewrite_on</code> - rewrites the scheme to https based on the given headers </li> <li>
+<code class="inline">:hsts</code> - a boolean on enabling HSTS or not, defaults to <code class="inline">true</code> </li> <li>
+<code class="inline">:expires</code> - seconds to expires for HSTS, defaults to <code class="inline">7884000</code> (three months) </li> <li>
+<code class="inline">:preload</code> - a boolean to request inclusion on the HSTS preload list (for full set of required flags, see: <a href="https://hstspreload.org" target="_blank">Chromium HSTS submission site</a>), defaults to <code class="inline">false</code> </li> <li>
+<code class="inline">:subdomains</code> - a boolean on including subdomains or not in HSTS, defaults to <code class="inline">false</code> </li> <li>
+<code class="inline">:exclude</code> - exclude the given hosts from redirecting to the <code class="inline">https</code> scheme. Defaults to <code class="inline">["localhost"]</code> </li> <li>
+<code class="inline">:host</code> - a new host to redirect to if the request’s scheme is <code class="inline">http</code>, defaults to <code class="inline">conn.host</code>. It may be set to a binary or a tuple <code class="inline">{module, function, args}</code> that will be invoked on demand </li> <li>
+<code class="inline">:log</code> - The log level at which this plug should log its request info. Default is <code class="inline">:info</code>. Can be <code class="inline">false</code> to disable logging. </li> </ul> <h2 id="module-port" class="section-heading">  Port </h2> <p>It is not possible to directly configure the port in <a href="../plug.ssl/#content"><code class="inline">Plug.SSL</code></a> because HSTS expects the port to be 443 for SSL. If you are not using HSTS and wants to redirect to HTTPS on another port, you can sneak it alongside the host, for example: <code class="inline">host: "example.com:443"</code>.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#call/2">call(conn, arg)</a> </dt> <dd class="summary-synopsis">
+<p>Plug pipeline callback</p> </dd>   <dt class="summary-signature"> <a href="#configure/1">configure(options)</a> </dt> <dd class="summary-synopsis">
+<p>Configures and validates the options given to the <code class="inline">:ssl</code> application</p> </dd>   <dt class="summary-signature"> <a href="#init/1">init(opts)</a> </dt> <dd class="summary-synopsis">
+<p>Plug initialization callback</p> </dd>  </dl>   <h1 class="section-heading" id="functions">  Functions </h1>  <h3 class="detail-header function" id="call/2">  <span class="signature">call(conn, arg)</span>  </h3>  <p>Plug pipeline callback.</p>    <h3 class="detail-header function" id="configure/1">  <span class="signature">configure(options)</span>     </h3>
+<pre data-language="elixir">configure(Keyword.t()) :: {:ok, Keyword.t()} | {:error, String.t()}</pre>  <p>Configures and validates the options given to the <code class="inline">:ssl</code> application.</p> <p>This function is often called internally by adapters, such as Cowboy, to validate and set reasonable defaults for SSL handling. Therefore Plug users are not expected to invoke it directly, rather you pass the relevant SSL options to your adapter which then invokes this.</p> <p>For instance, here is how you would pass the SSL options to the Cowboy adapter:</p> <pre data-language="elixir">Plug.Cowboy.https MyPlug, [],
+  port: 443,
+  password: "SECRET",
+  otp_app: :my_app,
+  cipher_suite: :strong,
+  keyfile: "priv/ssl/key.pem",
+  certfile: "priv/ssl/cert.pem",
+  dhfile: "priv/ssl/dhparam.pem"</pre> <p>or using the new child spec API:</p> <pre data-language="elixir">{Plug.Cowboy, scheme: :https, plug: MyPlug, options: [
+   port: 443,
+   password: "SECRET",
+   otp_app: :my_app,
+   cipher_suite: :strong,
+   keyfile: "priv/ssl/key.pem",
+   certfile: "priv/ssl/cert.pem",
+   dhfile: "priv/ssl/dhparam.pem"
+ ]}</pre> <h4 id="configure/1-options" class="section-heading">  Options </h4> <p>This function accepts and validates all options defined in <a href="http://www.erlang.org/doc/man/ssl.html" target="_blank">the <code class="inline">ssl</code> erlang module</a>. With the following additions:</p> <ul> <li>
+<p>The <code class="inline">:cipher_suite</code> option provides <code class="inline">:strong</code> and <code class="inline">:compatible</code> options for setting up better cipher and version defaults according to the OWASP recommendations. See the “Cipher Suites” section below</p> </li> <li>
+<p>The certificate files, like keyfile, certfile, cacertfile, dhfile can be given as a relative path. For such, the <code class="inline">:otp_app</code> option must also be given and certificates will be looked from the priv directory of the given application</p> </li> <li>
+<p>In order to provide better security, this function also enables <code class="inline">:reuse_sessions</code> and <code class="inline">:secure_renegotiate</code> by default, to instruct clients to reuse sessions and enforce secure renegotiation according to RFC 5746 respectively</p> </li> </ul> <h4 id="configure/1-cipher-suites" class="section-heading">  Cipher Suites </h4> <p>To simplify configuration of TLS defaults Plug provides two preconfifured options: <code class="inline">cipher_suite: :strong</code> and <code class="inline">cipher_suite: :compatible</code>. The Ciphers chosen and related configuration come from the OWASP recommendations found here: https://www.owasp.org/index.php/TLS_Cipher_String_Cheat_Sheet</p> <p>We’ve made two modifications to the suggested config from the OWASP recommendations. First we include ECDSA certificates which are excluded from their configuration. Second we have changed the order of the ciphers to deprioritize DHE because of performance implications noted within the OWASP post itself. As the article notes “…the TLS handshake with DHE hinders the CPU about 2.4 times more than ECDHE”.</p> <p>The <strong>Strong</strong> cipher suite only supports tlsv1.2. Ciphers were based on the OWASP Group A+ and includes support for RSA or ECDSA certificates. The intention of this configuration is to provide as secure as possible defaults knowing that it will not be fully compatible with older browsers and operating systems.</p> <p>The <strong>Compatible</strong> cipher suite supports tlsv1, tlsv1.1 and tlsv1.2. Ciphers were based on the OWASP Group B and includes support for RSA or ECDSA certificates. The intention of this configuration is to provide as secure as possible defaults that still maintain support for older browsers and Android versions 4.3 and earlier</p> <p>For both suites we’ve specified ceritifcate curves secp256r1, ecp384r1 and secp521r1. Since OWASP doesn’t perscribe curves we’ve based the selection on the following Mozilla recommendations: https://wiki.mozilla.org/Security/Server_Side_TLS#Cipher_names_correspondence_table</p> <p>In addition to selecting a group of ciphers, selecting a cipher suite will also disable client renegotiation and force the client to honor the server specified cipher order.</p> <p>Any of those choices can be disabled on a per choice basis by specifying the equivalent SSL option alongside the cipher suite.</p> <p><strong>The cipher suites were last updated on 2018-JUN-14.</strong></p> <h4 id="configure/1-manual-cipher-configuration" class="section-heading">  Manual Cipher Configuration </h4> <p>Should you choose to configure your own ciphers you cannot use the <code class="inline">:cipher_suite</code> option as setting a cipher suite overrides your cipher selections.</p> <p>Instead, you can see the valid options for ciphers in the Erlang SSL documentation: http://erlang.org/doc/man/ssl.html</p> <p>Please note that specifying a cipher as a binary string is not valid and would silently fail in the past. This was problematic because the result would be for Erlang to use the default list of ciphers. To prevent this Plug will now throw an error to ensure you’re aware of this.</p> <h4 id="configure/1-diffie-hellman-parameters" class="section-heading">  Diffie Hellman parameters </h4> <p>It is recommended to generate a custom set of Diffie Hellman parameters, to be used for the DHE key exchange. Use the following OpenSSL CLI command to create a ‘dhparam.pem’ file:</p> <pre data-language="elixir">openssl dhparam -out dhparam.pem 4096</pre> <p>On a slow machine (e.g. a cheap VPS) this may take several hours. You may want to run the command on a strong machine and copy the file over: the file does not need to be kept secret.</p> <p>Add the resulting file to your application’s <code class="inline">priv</code> directory and pass the path using the <code class="inline">:dhfile</code> key. It is best practice to rotate the file periodically.</p> <p>If no custom parameters are specified, Erlang’s <code class="inline">ssl</code> uses its built-in defaults. Since OTP 19 this has been the 2048-bit ‘group 14’ from RFC 3526.</p>    <h3 class="detail-header function" id="init/1">  <span class="signature">init(opts)</span>  </h3>  <p>Plug initialization callback.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/plug/Plug.SSL.html" class="_attribution-link" target="_blank">https://hexdocs.pm/plug/Plug.SSL.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

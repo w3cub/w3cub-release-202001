@@ -1,0 +1,202 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Phoenix.Tracker - Phoenix - W3cubDocs</title>
+  
+  <meta name="description" content=" Provides distributed Presence tracking to processes. ">
+  <meta name="keywords" content="phoenix, tracker, summary, types, functions, callbacks, -">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/phoenix/phoenix_pubsub/1.0.2/phoenix.tracker/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/phoenix.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/phoenix/" class="_nav-link" title="" style="margin-left:0;">Phoenix</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Phoenix.Tracker <small>behaviour</small>  </h1>  <p>Provides distributed Presence tracking to processes.</p> <p>Tracker servers use a heartbeat protocol and CRDT to replicate presence information across a cluster in an eventually consistent, conflict-free manner. Under this design, there is no single source of truth or global process. Instead, each node runs one or more <a href="../phoenix.tracker/#content"><code class="inline">Phoenix.Tracker</code></a> servers and node-local changes are replicated across the cluster and handled locally as a diff of changes.</p> <ul> <li>
+<code class="inline">tracker</code> - The name of the tracker handler module implementing the <a href="../phoenix.tracker/#content"><code class="inline">Phoenix.Tracker</code></a> behaviour </li> <li>
+<code class="inline">tracker_opts</code> - The list of options to pass to the tracker handler </li> <li>
+<code class="inline">server_opts</code> - The list of options to pass to the tracker server </li> </ul> <h2>Required <code class="inline">server_opts</code>:</h2> <ul> <li>
+<code class="inline">:name</code> - The name of the server, such as: <code class="inline">MyApp.Tracker</code> </li> <li>
+<code class="inline">:pubsub_server</code> - The name of the PubSub server, such as: <code class="inline">MyApp.PubSub</code> </li> </ul> <h2>Optional <code class="inline">server_opts</code>:</h2> <ul> <li>
+<code class="inline">broadcast_period</code> - The interval in milliseconds to send delta broadcats across the cluster. Default <code class="inline">1500</code> </li> <li>
+<code class="inline">max_silent_periods</code> - The max integer of broadcast periods for which no delta broadcasts have been sent. Defaults <code class="inline">10</code> (15s heartbeat) </li> <li>
+<code class="inline">down_period</code> - The interval in milliseconds to flag a replica as down temporarily down. Default <code class="inline">broadcast_period * max_silent_periods * 2</code> (30s down detection). Note: This must be at least 2x the <code class="inline">broadcast_period</code>. </li> <li>
+<code class="inline">permdown_period</code> - The interval in milliseconds to flag a replica as permanently down, and discard its state. Note: This must be at least greater than the <code class="inline">down_period</code>. Default <code class="inline">1_200_000</code> (20 minutes) </li> <li>
+<code class="inline">clock_sample_periods</code> - The numbers of heartbeat windows to sample remote clocks before collapsing and requesting transfer. Default <code class="inline">2</code> </li> <li>
+<code class="inline">max_delta_sizes</code> - The list of delta generation sizes to keep before falling back to sending entire state. Defaults <code class="inline">[100, 1000, 10_000]</code>. </li> <li>log_level - The log level to log events, defaults <code class="inline">:debug</code> and can be disabled with <code class="inline">false</code> </li> </ul> <h2>Implementing a Tracker</h2> <p>To start a tracker, first add the tracker to your supervision tree:</p> <pre data-language="elixir">worker(MyTracker, [[name: MyTracker, pubsub_server: MyPubSub]])</pre> <p>Next, implement <code class="inline">MyTracker</code> with support for the <a href="../phoenix.tracker/#content"><code class="inline">Phoenix.Tracker</code></a> behaviour callbacks. An example of a minimal tracker could include:</p> <pre data-language="elixir">defmodule MyTracker do
+  @behaviour Phoenix.Tracker
+
+  def start_link(opts) do
+    opts = Keyword.merge([name: __MODULE__], opts)
+    GenServer.start_link(Phoenix.Tracker, [__MODULE__, opts, opts], name: __MODULE__)
+  end
+
+  def init(opts) do
+    server = Keyword.fetch!(opts, :pubsub_server)
+    {:ok, %{pubsub_server: server, node_name: Phoenix.PubSub.node_name(server)}}
+  end
+
+  def handle_diff(diff, state) do
+    for {topic, {joins, leaves}} &lt;- diff do
+      for {key, meta} &lt;- joins do
+        IO.puts "presence join: key \"#{key}\" with meta #{inspect meta}"
+        msg = {:join, key, meta}
+        Phoenix.PubSub.direct_broadcast!(state.node_name, state.pubsub_server, topic, msg)
+      end
+      for {key, meta} &lt;- leaves do
+        IO.puts "presence leave: key \"#{key}\" with meta #{inspect meta}"
+        msg = {:leave, key, meta}
+        Phoenix.PubSub.direct_broadcast!(state.node_name, state.pubsub_server, topic, msg)
+      end
+    end
+    {:ok, state}
+  end
+end</pre> <p>Trackers must implement <code class="inline">start_link/1</code>, <code class="inline">init/1</code>, and <code class="inline">handle_diff/2</code>. The <code class="inline">init/1</code> callback allows the tracker to manage its own state when running within the <a href="../phoenix.tracker/#content"><code class="inline">Phoenix.Tracker</code></a> server. The <code class="inline">handle_diff</code> callback is invoked with a diff of presence join and leave events, grouped by topic. As replicas heartbeat and replicate data, the local tracker state is merged with the remote data, and the diff is sent to the callback. The handler can use this information to notify subscribers of events, as done above.</p> <h2>Special Considerations</h2> <p>Operations within <code class="inline">handle_diff/2</code> happen <em>in the tracker server’s context</em>. Therefore, blocking operations should be avoided when possible, and offloaded to a supervised task when required. Also, a crash in the <code class="inline">handle_diff/2</code> will crash the tracker server, so operations that may crash the server should be offloaded with a <code class="inline">Task.Supervisor</code> spawned process.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Types </h2>
+<dl class="summary-types summary">   <dt class="summary-signature"> <a href="#t:presence/0">presence()</a> </dt>   <dt class="summary-signature"> <a href="#t:topic/0">topic()</a> </dt>  </dl> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#graceful_permdown/1">graceful_permdown(server_name)</a> </dt> <dd class="summary-synopsis">
+<p>Gracefully shuts down by broadcasting permdown to all replicas</p> </dd>   <dt class="summary-signature"> <a href="#list/2">list(server_name, topic)</a> </dt> <dd class="summary-synopsis">
+<p>Lists all presences tracked under a given topic</p> </dd>   <dt class="summary-signature"> <a href="#start_link/3">start_link(tracker, tracker_opts, server_opts)</a> </dt>   <dt class="summary-signature"> <a href="#track/5">track(server_name, pid, topic, key, meta)</a> </dt> <dd class="summary-synopsis">
+<p>Tracks a presence</p> </dd>   <dt class="summary-signature"> <a href="#untrack/2">untrack(server_name, pid)</a> </dt>   <dt class="summary-signature"> <a href="#untrack/4">untrack(server_name, pid, topic, key)</a> </dt> <dd class="summary-synopsis">
+<p>Untracks a presence</p> </dd>   <dt class="summary-signature"> <a href="#update/5">update(server_name, pid, topic, key, meta)</a> </dt> <dd class="summary-synopsis">
+<p>Updates a presence’s metadata</p> </dd>   <dt class="summary-signature"> <a href="#validate_down_period/2">validate_down_period(d_period, b_period)</a> </dt>   <dt class="summary-signature"> <a href="#validate_permdown_period/2">validate_permdown_period(p_period, d_period)</a> </dt>  </dl> <h2> Callbacks </h2>
+<dl class="summary-callbacks summary">   <dt class="summary-signature"> <a href="#c:handle_diff/2">handle_diff(%{}, state)</a> </dt>   <dt class="summary-signature"> <a href="#c:init/1">init(arg0)</a> </dt>  </dl>   <h1 class="section-heading" id="types">  Types </h1>  <div id="t:presence/0" class="type-detail"> <pre data-language="elixir">presence :: {key :: String.t, meta :: Map.t}</pre> </div> <div id="t:topic/0" class="type-detail"> <pre data-language="elixir">topic :: String.t</pre> </div>    <h1 class="section-heading" id="functions">  Functions </h1>  <h3 class="detail-header function" id="graceful_permdown/1">  <span class="signature">graceful_permdown(server_name)</span>  </h3>  <h4 class="specs-title">Specs</h4>  <pre data-language="elixir">graceful_permdown(atom) :: :ok</pre>    <p>Gracefully shuts down by broadcasting permdown to all replicas.</p> <h4>Examples</h4> <pre data-language="elixir">iex&gt; Phoenix.Tracker.graceful_permdown(MyTracker)
+:ok</pre>    <h3 class="detail-header function" id="list/2">  <span class="signature">list(server_name, topic)</span>  </h3>  <h4 class="specs-title">Specs</h4>  <pre data-language="elixir">list(atom, topic) :: [presence]</pre>    <p>Lists all presences tracked under a given topic.</p> <ul> <li>
+<code class="inline">server_name</code> - The registered name of the tracker server </li> <li>
+<code class="inline">topic</code> - The <a href="../phoenix.pubsub/"><code class="inline">Phoenix.PubSub</code></a> topic to update for this presence </li> </ul> <p>Returns a lists of presences in key/metadata tuple pairs.</p> <h4>Examples</h4> <pre data-language="elixir">iex&gt; Phoenix.Tracker.list(MyTracker, "lobby")
+[{123, %{name: "user 123"}}, {456, %{name: "user 456"}}]</pre>    <h3 class="detail-header function" id="start_link/3">  <span class="signature">start_link(tracker, tracker_opts, server_opts)</span>  </h3>     <h3 class="detail-header function" id="track/5">  <span class="signature">track(server_name, pid, topic, key, meta)</span>  </h3>  <h4 class="specs-title">Specs</h4>  <pre data-language="elixir">track(atom, pid, topic, term, Map.t) ::
+  {:ok, ref :: binary} |
+  {:error, reason :: term}</pre>    <p>Tracks a presence.</p> <ul> <li>
+<code class="inline">server_name</code> - The registered name of the tracker server </li> <li>
+<code class="inline">pid</code> - The Pid to track </li> <li>
+<code class="inline">topic</code> - The <a href="../phoenix.pubsub/"><code class="inline">Phoenix.PubSub</code></a> topic for this presence </li> <li>
+<code class="inline">key</code> - The key identifying this presence </li> <li>
+<code class="inline">meta</code> - The map of metadata to attach to this presence </li> </ul> <p>A process may be tracked multipled times, provided the topic and key pair are unique for any prior calls for the given process.</p> <h4>Examples</h4> <pre data-language="elixir">iex&gt; Phoenix.Tracker.track(MyTracker, self(), "lobby", u.id, %{stat: "away"})
+{:ok, "1WpAofWYIAA="}
+
+iex&gt; Phoenix.Tracker.track(MyTracker, self(), "lobby", u.id, %{stat: "away"})
+{:error, {:already_tracked, #PID&lt;0.56.0&gt;, "lobby", "123"}}</pre>    <h3 class="detail-header function" id="untrack/2">  <span class="signature">untrack(server_name, pid)</span>  </h3>     <h3 class="detail-header function" id="untrack/4">  <span class="signature">untrack(server_name, pid, topic, key)</span>  </h3>  <h4 class="specs-title">Specs</h4>  <pre data-language="elixir">untrack(atom, pid, topic, term) :: :ok</pre>    <p>Untracks a presence.</p> <ul> <li>
+<code class="inline">server_name</code> - The registered name of the tracker server </li> <li>
+<code class="inline">pid</code> - The Pid to untrack </li> <li>
+<code class="inline">topic</code> - The <a href="../phoenix.pubsub/"><code class="inline">Phoenix.PubSub</code></a> topic to untrack for this presence </li> <li>
+<code class="inline">key</code> - The key identifying this presence </li> </ul> <p>All presences for a given Pid can be untracked by calling the <a href="../phoenix.tracker/#untrack/2"><code class="inline">Phoenix.Tracker.untrack/2</code></a> signature of this function.</p> <h4>Examples</h4> <pre data-language="elixir">iex&gt; Phoenix.Tracker.untrack(MyTracker, self(), "lobby", u.id)
+:ok
+iex&gt; Phoenix.Tracker.untrack(MyTracker, self())
+:ok</pre>    <h3 class="detail-header function" id="update/5">  <span class="signature">update(server_name, pid, topic, key, meta)</span>  </h3>  <h4 class="specs-title">Specs</h4>  <pre data-language="elixir">update(atom, pid, topic, term, Map.t | (Map.t -&gt; Map.t)) ::
+  {:ok, ref :: binary} |
+  {:error, reason :: term}</pre>    <p>Updates a presence’s metadata.</p> <ul> <li>
+<code class="inline">server_name</code> - The registered name of the tracker server </li> <li>
+<code class="inline">pid</code> - The Pid being tracked </li> <li>
+<code class="inline">topic</code> - The <a href="../phoenix.pubsub/"><code class="inline">Phoenix.PubSub</code></a> topic to update for this presence </li> <li>
+<code class="inline">key</code> - The key identifying this presence </li> </ul> <h4>Examples</h4> <pre data-language="elixir">iex&gt; Phoenix.Tracker.update(MyTracker, self(), "lobby", u.id, %{stat: "zzz"})
+{:ok, "1WpAofWYIAA="}
+
+iex&gt; Phoenix.Tracker.update(MyTracker, self(), "lobby", u.id, fn meta -&gt; Map.put(meta, :away, true) end)
+{:ok, "1WpAofWYIAA="}</pre>    <h3 class="detail-header function" id="validate_down_period/2">  <span class="signature">validate_down_period(d_period, b_period)</span>  </h3>     <h3 class="detail-header function" id="validate_permdown_period/2">  <span class="signature">validate_permdown_period(p_period, d_period)</span>  </h3>      <h1 class="section-heading" id="callbacks">  Callbacks </h1>  <h3 class="detail-header callback" id="c:handle_diff/2">  <span class="signature">handle_diff(%{}, state)</span>  </h3>  <h4 class="specs-title">Specs</h4>  <pre data-language="elixir">handle_diff(%{optional(topic) =&gt; {joins :: [presence], leaves :: [presence]}}, state :: term) :: {:ok, state :: term}</pre>       <h3 class="detail-header callback" id="c:init/1">  <span class="signature">init(arg0)</span>  </h3>  <h4 class="specs-title">Specs</h4>  <pre data-language="elixir">init(Keyword.t) ::
+  {:ok, state :: term} |
+  {:error, reason :: term}</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2014 Chris McCord<br>Licensed under the MIT License.<br>
+    <a href="https://hexdocs.pm/phoenix_pubsub/1.0.2/Phoenix.Tracker.html" class="_attribution-link" target="_blank">https://hexdocs.pm/phoenix_pubsub/1.0.2/Phoenix.Tracker.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,154 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Plug.CSRFProtection - Phoenix - W3cubDocs</title>
+  
+  <meta name="description" content=" Plug to protect from cross-site request forgery. ">
+  <meta name="keywords" content="plug, csrfprotection, summary, functions, -, phoenix">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/phoenix/plug/1.5.0/plug.csrfprotection/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/phoenix.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/phoenix/" class="_nav-link" title="" style="margin-left:0;">Phoenix</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Plug.CSRFProtection  </h1>  <p>Plug to protect from cross-site request forgery.</p> <p>For this plug to work, it expects a session to have been previously fetched. It will then compare the plug stored in the session with the one sent by the request to determine the validity of the request. For an invalid request the action taken is based on the <code class="inline">:with</code> option.</p> <p>The token may be sent by the request either via the params with key “_csrf_token” or a header with name “x-csrf-token”.</p> <p>GET requests are not protected, as they should not have any side-effect or change your application state. JavaScript requests are an exception: by using a script tag, external websites can embed server-side generated JavaScript, which can leak information. For this reason, this plug also forbids any GET JavaScript request that is not XHR (or AJAX).</p> <p>Note that it is recommended to enable CSRFProtection whenever a session is used, even for JSON requests. For example, Chrome had a bug that allowed POST requests to be triggered with arbitrary content-type, making JSON exploitable. More info: https://bugs.chromium.org/p/chromium/issues/detail?id=490015</p> <h2 id="module-token-generation" class="section-heading">  Token generation </h2> <p>This plug won’t generate tokens automatically. Instead, tokens will be generated only when required by calling <a href="#get_csrf_token/0"><code class="inline">get_csrf_token/0</code></a>. In case you are generating the token for certain specific URL, you should use <a href="#get_csrf_token_for/1"><code class="inline">get_csrf_token_for/1</code></a> as that will avoid tokens from being leaked to other applications.</p> <p>Once a token is generated, it is cached in the process dictionary. The CSRF token is usually generated inside forms which may be isolated from <a href="../plug.conn/"><code class="inline">Plug.Conn</code></a>. Storing them in the process dictionary allows them to be generated as a side-effect only when necessary, becoming one of those rare situations where using the process dictionary is useful.</p> <h2 id="module-cross-host-protection" class="section-heading">  Cross-host protection </h2> <p>If you are sending data to a full URI, such as <code class="inline">//subdomain.host.com/path</code> or <code class="inline">//external.com/path</code>, instead of a simple path such as <code class="inline">/path</code>, you may want to consider using <a href="#get_csrf_token_for/1"><code class="inline">get_csrf_token_for/1</code></a>, as that will encode the host in the CSRF token. Once received, Plug will only consider the CSRF token to be valid if the <code class="inline">host</code> encoded in the token is the same as the one in <code class="inline">conn.host</code>.</p> <p>Therefore, if you get a warning that the host does not match, it is either because someone is attempting to steal CSRF tokens or because you have a misconfigured host configuration.</p> <p>For example, if you are running your application behind a proxy, the browser will send a request to the proxy with <code class="inline">www.example.com</code> but the proxy will request you using an internal IP. In such cases, it is common for proxies to attach information such as <code class="inline">"x-forwarded-host" that contains the original
+host.
+
+This may also happen on redirects. If you have a POST request to</code>foo.example.com<code class="inline">that redirects with status</code>bar.example.com<code class="inline">with status 407. The token and
+the server will be running on different versions.
+
+You can pass the</code>:allow_hosts<code class="inline">option to control any host that you may want
+to allow. The values in</code>:allow_hosts<code class="inline">may either be a full host name or a
+host suffix. For example:</code>[“www.example.com”, “.subdomain.example.com”]<code class="inline">will allow the exact host of</code>”www.example.com”<code class="inline">and any host that ends with</code>”.subdomain.example.com”<code class="inline">.
+
+## Options
+
+  *</code>:session_key<code class="inline">- the name of the key in session to store the token under
+  *</code>:allow_hosts<code class="inline">- a list with hosts to allow on cross-host tokens
+  *</code>:with<code class="inline">- should be one of</code>:exception<code class="inline">or</code>:clear_session<code class="inline">. Defaults to</code>:exception<code class="inline">.
+    *</code>:exception<code class="inline">-  for invalid requests, this plug will raise
+    [</code>Plug.CSRFProtection.InvalidCSRFTokenError<code class="inline">](Plug.CSRFProtection.InvalidCSRFTokenError.html).
+    *</code>:clear_session<code class="inline">-  for invalid requests, this plug will set an empty
+    session for only this request. Also any changes to the session during this
+    request will be ignored.
+
+## Disabling
+
+You may disable this plug by doing</code>Plug.Conn.put_private(conn, :plug_skip_csrf_protection, true)<code class="inline">. This was made
+available for disabling [</code>Plug.CSRFProtection<code class="inline">](Plug.CSRFProtection.html#content) in tests and not for dynamically
+skipping [</code>Plug.CSRFProtection<code class="inline">](Plug.CSRFProtection.html#content) in production code. If you want specific routes to
+skip [</code>Plug.CSRFProtection<code class="inline">](Plug.CSRFProtection.html#content), then use a different stack of plugs for that route that
+does not include [</code>Plug.CSRFProtection`](Plug.CSRFProtection.html#content). ## Examples plug Plug.Session, … plug :fetch_session plug Plug.CSRFProtection</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#call/2">call(conn, arg)</a> </dt> <dd class="summary-synopsis">
+<p>Callback implementation for <a href="../plug/#c:call/2"><code class="inline">Plug.call/2</code></a></p> </dd>   <dt class="summary-signature"> <a href="#delete_csrf_token/0">delete_csrf_token()</a> </dt> <dd class="summary-synopsis">
+<p>Deletes the CSRF token from the process dictionary</p> </dd>   <dt class="summary-signature"> <a href="#get_csrf_token/0">get_csrf_token()</a> </dt> <dd class="summary-synopsis">
+<p>Gets the CSRF token</p> </dd>   <dt class="summary-signature"> <a href="#get_csrf_token_for/1">get_csrf_token_for(url)</a> </dt> <dd class="summary-synopsis">
+<p>Gets the CSRF token for the associated URL (as a string or a URI struct)</p> </dd>   <dt class="summary-signature"> <a href="#init/1">init(opts)</a> </dt> <dd class="summary-synopsis">
+<p>Callback implementation for <a href="../plug/#c:init/1"><code class="inline">Plug.init/1</code></a></p> </dd>  </dl>   <h1 class="section-heading" id="functions">  Functions </h1>  <h3 class="detail-header function" id="call/2">  <span class="signature">call(conn, arg)</span>  </h3>  <p>Callback implementation for <a href="../plug/#c:call/2"><code class="inline">Plug.call/2</code></a>.</p>    <h3 class="detail-header function" id="delete_csrf_token/0">  <span class="signature">delete_csrf_token()</span>  </h3>  <p>Deletes the CSRF token from the process dictionary.</p> <p>This will force the token to be deleted once the response is sent.</p>    <h3 class="detail-header function" id="get_csrf_token/0">  <span class="signature">get_csrf_token()</span>  </h3>  <p>Gets the CSRF token.</p> <p>Generates a token and stores it in the process dictionary if one does not exist.</p>    <h3 class="detail-header function" id="get_csrf_token_for/1">  <span class="signature">get_csrf_token_for(url)</span>  </h3>  <p>Gets the CSRF token for the associated URL (as a string or a URI struct).</p> <p>If the URL has a host, a CSRF token that is tied to that host will be generated. If it is a relative path URL, a simple token emitted with <a href="#get_csrf_token/0"><code class="inline">get_csrf_token/0</code></a> will be used.</p>    <h3 class="detail-header function" id="init/1">  <span class="signature">init(opts)</span>  </h3>  <p>Callback implementation for <a href="../plug/#c:init/1"><code class="inline">Plug.init/1</code></a>.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2013 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/plug/1.5.0/Plug.CSRFProtection.html" class="_attribution-link" target="_blank">https://hexdocs.pm/plug/1.5.0/Plug.CSRFProtection.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
