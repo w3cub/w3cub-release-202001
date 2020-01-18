@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Fastly Provider - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" The Fastly provider is used to interact with the content delivery network (CDN) provided by Fastly. ">
+  <meta name="keywords" content="fastly, provider, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/fastly/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _terraform">
+				
+				
+<h1 id="fastly-provider">  Fastly Provider </h1> <p>The Fastly provider is used to interact with the content delivery network (CDN) provided by Fastly.</p> <p>In order to use this Provider, you must have an active account with Fastly. Pricing and signup information can be found at <a href="https://www.fastly.com/signup" target="_blank">https://www.fastly.com/signup</a></p> <p>Use the navigation to the left to read about the available resources.</p> <h2 id="example-usage">  Example Usage </h2> <pre data-language="ruby"># Configure the Fastly Provider
+provider "fastly" {
+  api_key = "test"
+}
+
+# Create a Service
+resource "fastly_service_v1" "myservice" {
+  name = "myawesometestservice"
+
+  # ...
+}
+</pre>
+<h2 id="authentication">  Authentication </h2> <p>The Fastly provider offers an API key based method of providing credentials for authentication. The following methods are supported, in this order, and explained below:</p> <ul> <li>Static API key </li> <li>Environment variables </li> </ul> <h3 id="static-api-key">  Static API Key </h3> <p>Static credentials can be provided by adding a <code>api_key</code> in-line in the Fastly provider block:</p> <p>Usage:</p> <pre data-language="ruby">provider "fastly" {
+  api_key = "test"
+}
+
+resource "fastly_service_v1" "myservice" {
+  # ...
+}
+</pre>
+<p>You can create a credential on the Personal API Tokens page: <a href="https://manage.fastly.com/account/personal/tokens" target="_blank">https://manage.fastly.com/account/personal/tokens</a></p> <h3 id="environment-variables">  Environment variables </h3> <p>You can provide your API key via <code>FASTLY_API_KEY</code> environment variable, representing your Fastly API key. When using this method, you may omit the Fastly <code>provider</code> block entirely:</p> <pre data-language="ruby">resource "fastly_service_v1" "myservice" {
+  # ...
+}
+</pre>
+<p>Usage:</p> <pre>$ export FASTLY_API_KEY="afastlyapikey"
+$ terraform plan
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported in the <code>provider</code> block:</p> <ul> <li>
+<p><a href="#api_key"><code>api_key</code></a> - (Optional) This is the API key. It must be provided, but it can also be sourced from the <code>FASTLY_API_KEY</code> environment variable</p> </li> <li>
+<p><a href="#base_url"><code>base_url</code></a> - (Optional) This is the API server hostname. It is required if using a private instance of the API and otherwise defaults to the public Fastly production service. It can also be sourced from the <code>FASTLY_API_URL</code> environment variable</p> </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/fastly/index.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/fastly/index.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

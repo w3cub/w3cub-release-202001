@@ -1,0 +1,167 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Vcd_vapp - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Provides a vCloud Director vApp resource. This can be used to create, modify, and delete vApps. ">
+  <meta name="keywords" content="vcd, vapp, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/vcd/r/vapp/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _terraform">
+				
+				
+<h1 id="vcd_vapp">  vcd_vapp </h1> <p>Provides a vCloud Director vApp resource. This can be used to create, modify, and delete vApps.</p> <h2 id="example-usage">  Example Usage </h2> <pre data-language="ruby">resource "vcd_network" "net" {
+  # ...
+}
+
+resource "vcd_vapp" "web" {
+  name          = "web"
+  catalog_name  = "Boxes"
+  template_name = "lampstack-1.10.1-ubuntu-10.04"
+  memory        = 2048
+  cpus          = 1
+
+  network_name = "${vcd_network.net.name}"
+  network_href = "${vcd_network.net.href}"
+  ip           = "10.10.104.160"
+
+  metadata {
+    role    = "web"
+    env     = "staging"
+    version = "v1"
+  }
+
+  ovf {
+    hostname = "web"
+  }
+}
+</pre>
+<h2 id="example-raw-vapp-with-no-vms">  Example RAW vApp with No VMS </h2> <pre data-language="ruby">resource "vcd_network" "net" {
+  # ...
+}
+
+resource "vcd_vapp" "web" {
+  name          = "web"
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<a href="#name"><code>name</code></a> - (Required) A unique name for the vApp </li> <li>
+<a href="#catalog_name"><code>catalog_name</code></a> - (Optional) The catalog name in which to find the given vApp Template </li> <li>
+<a href="#template_name"><code>template_name</code></a> - (Optional) The name of the vApp Template to use </li> <li>
+<a href="#memory"><code>memory</code></a> - (Optional) The amount of RAM (in MB) to allocate to the vApp </li> <li>
+<a href="#cpus"><code>cpus</code></a> - (Optional) The number of virtual CPUs to allocate to the vApp </li> <li>
+<a href="#initscript"><code>initscript</code></a> (Optional) A script to be run only on initial boot </li> <li>
+<a href="#network_name"><code>network_name</code></a> - (Optional) Name of the network this vApp should join </li> <li>
+<a href="#network_href"><code>network_href</code></a> - (Deprecated) The vCloud Director generated href of the network this vApp should join. If empty it will use the network name and query vCloud Director to discover this </li> <li>
+<a href="#ip"><code>ip</code></a> - (Optional) The IP to assign to this vApp. Must be an IP address or one of dhcp, allocated or none. If given the address must be within the <code>static_ip_pool</code> set for the network. If left blank, and the network has <code>dhcp_pool</code> set with at least one available IP then this will be set with DHCP. </li> <li>
+<a href="#metadata"><code>metadata</code></a> - (Optional) Key value map of metadata to assign to this vApp </li> <li>
+<a href="#ovf"><code>ovf</code></a> - (Optional) Key value map of ovf parameters to assign to VM product section </li> <li>
+<a href="#power_on"><code>power_on</code></a> - (Optional) A boolean value stating if this vApp should be powered on. Default to <code>true</code> </li> </ul>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/vcd/r/vapp.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/vcd/r/vapp.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

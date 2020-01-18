@@ -1,0 +1,140 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Google_kms_crypto_key - Terraform - W3cubDocs</title>
+  
+  <meta name="description" content=" Allows creation of a Google Cloud Platform KMS CryptoKey. For more information see the official documentation and API. ">
+  <meta name="keywords" content="google, kms, crypto, key, -, terraform">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/terraform/providers/google/r/google_kms_crypto_key/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/terraform.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/terraform/" class="_nav-link" title="" style="margin-left:0;">Terraform</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _terraform">
+				
+				
+<h1 id="google_kms_crypto_key">  google_kms_crypto_key </h1> <p>Allows creation of a Google Cloud Platform KMS CryptoKey. For more information see <a href="https://cloud.google.com/kms/docs/object-hierarchy#cryptokey" target="_blank">the official documentation</a> and <a href="https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys" target="_blank">API</a>.</p> <p>A CryptoKey is an interface to key material which can be used to encrypt and decrypt data. A CryptoKey belongs to a Google Cloud KMS KeyRing.</p> <blockquote class="alert alert-warning" role="alert"> <p>Note: CryptoKeys cannot be deleted from Google Cloud Platform. Destroying a Terraform-managed CryptoKey will remove it from state and delete all CryptoKeyVersions, rendering the key unusable, but <strong>will not delete the resource on the server</strong>.</p> </blockquote> <h2 id="example-usage">  Example Usage </h2> <pre data-language="ruby">resource "google_kms_key_ring" "my_key_ring" {
+  name     = "my-key-ring"
+  project  = "my-project"
+  location = "us-central1"
+}
+
+resource "google_kms_crypto_key" "my_crypto_key" {
+  name            = "my-crypto-key"
+  key_ring        = "${google_kms_key_ring.my_key_ring.id}"
+  rotation_period = "100000s"
+}
+</pre>
+<h2 id="argument-reference">  Argument Reference </h2> <p>The following arguments are supported:</p> <ul> <li>
+<p><a href="#name"><code>name</code></a> - (Required) The CryptoKey's name. A CryptoKey’s name must be unique within a location and match the regular expression <code>[a-zA-Z0-9_-]{1,63}</code></p> </li> <li>
+<p><a href="#key_ring"><code>key_ring</code></a> - (Required) The id of the Google Cloud Platform KeyRing to which the key shall belong.</p> </li> </ul>  <ul> <li>
+<a href="#rotation_period"><code>rotation_period</code></a> - (Optional) Every time this period passes, generate a new CryptoKeyVersion and set it as the primary. The first rotation will take place after the specified period. The rotation period has the format of a decimal number with up to 9 fractional digits, followed by the letter s (seconds). It must be greater than a day (ie, 83400). </li> </ul> <h2 id="attributes-reference">  Attributes Reference </h2> <p>In addition to the arguments listed above, the following computed attributes are exported:</p> <ul> <li>
+<a href="#id"><code>id</code></a> - The ID of the created CryptoKey. Its format is <code>{projectId}/{location}/{keyRingName}/{cryptoKeyName}</code>. </li> </ul> <h2 id="import">  Import </h2> <p>CryptoKeys can be imported using the CryptoKey autogenerated <code>id</code>, e.g.</p> <pre>$ terraform import google_kms_crypto_key.my_crypto_key my-gcp-project/us-central1/my-key-ring/my-crypto-key
+
+$ terraform import google_kms_crypto_key.my_crypto_key us-central1/my-key-ring/my-crypto-key
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2018 HashiCorpLicensed under the MPL 2.0 License.<br>
+    <a href="https://www.terraform.io/docs/providers/google/r/google_kms_crypto_key.html" class="_attribution-link" target="_blank">https://www.terraform.io/docs/providers/google/r/google_kms_crypto_key.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
