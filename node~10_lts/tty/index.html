@@ -1,0 +1,167 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Tty - Node.js 10 LTS - W3cubDocs</title>
+  
+  <meta name="description" content="The tty module provides the tty.ReadStream and tty.WriteStream classes. In most cases, it will not be necessary or possible to use this module &hellip;">
+  <meta name="keywords" content="tty, -, node, js, lts, node~10_lts">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/node~10_lts/tty/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/node~10_lts.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/node~10_lts/" class="_nav-link" title="" style="margin-left:0;">Node.js 10 LTS</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _node">
+				
+				
+<h1 id="tty_tty">TTY</h1> 
+<div class="api_stability api_stability_2">
+<a href="https://nodejs.org/dist/latest-v10.x/docs/api/documentation.html#documentation_stability_index" target="_blank">Stability: 2</a> - Stable</div>
+ <p>The <code>tty</code> module provides the <code>tty.ReadStream</code> and <code>tty.WriteStream</code> classes. In most cases, it will not be necessary or possible to use this module directly. However, it can be accessed using:</p> <pre data-language="js">const tty = require('tty');
+</pre> <p>When Node.js detects that it is being run with a text terminal ("TTY") attached, <a href="../process/#process_process_stdin"><code>process.stdin</code></a> will, by default, be initialized as an instance of <code>tty.ReadStream</code> and both <a href="../process/#process_process_stdout"><code>process.stdout</code></a> and <a href="../process/#process_process_stderr"><code>process.stderr</code></a> will, by default be instances of <code>tty.WriteStream</code>. The preferred method of determining whether Node.js is being run within a TTY context is to check that the value of the <code>process.stdout.isTTY</code> property is <code>true</code>:</p> <pre data-language="sh">$ node -p -e "Boolean(process.stdout.isTTY)"
+true
+$ node -p -e "Boolean(process.stdout.isTTY)" | cat
+false
+</pre> <p>In most cases, there should be little to no reason for an application to manually create instances of the <code>tty.ReadStream</code> and <code>tty.WriteStream</code> classes.</p> <h2 id="tty_class_tty_readstream">Class: tty.ReadStream<a class="srclink" href="https://github.com/nodejs/node/blob/75657ee41677d56a498e298b01d049aef5bf199f/lib/tty.js#L41" target="_blank">[src]</a>
+</h2> <div class="api_metadata"> <span>Added in: v0.5.8</span> </div> <p>The <code>tty.ReadStream</code> class is a subclass of <a href="../net/#net_class_net_socket"><code>net.Socket</code></a> that represents the readable side of a TTY. In normal circumstances <a href="../process/#process_process_stdin"><code>process.stdin</code></a> will be the only <code>tty.ReadStream</code> instance in a Node.js process and there should be no reason to create additional instances.</p> <h3 id="tty_readstream_israw">readStream.isRaw</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <p>A <code>boolean</code> that is <code>true</code> if the TTY is currently configured to operate as a raw device. Defaults to <code>false</code>.</p> <h3 id="tty_readstream_istty">readStream.isTTY</h3> <div class="api_metadata"> <span>Added in: v0.5.8</span> </div> <p>A <code>boolean</code> that is always <code>true</code> for <code>tty.ReadStream</code> instances.</p> <h3 id="tty_readstream_setrawmode_mode">readStream.setRawMode(mode)</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <ul> <li>
+<code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" class="type" target="_blank">&lt;boolean&gt;</a> If <code>true</code>, configures the <code>tty.ReadStream</code> to operate as a raw device. If <code>false</code>, configures the <code>tty.ReadStream</code> to operate in its default mode. The <code>readStream.isRaw</code> property will be set to the resulting mode.</li> <li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" class="type" target="_blank">&lt;this&gt;</a> - the read stream instance.</li> </ul> <p>Allows configuration of <code>tty.ReadStream</code> so that it operates as a raw device.</p> <p>When in raw mode, input is always available character-by-character, not including modifiers. Additionally, all special processing of characters by the terminal is disabled, including echoing input characters. Note that <code>CTRL</code>+<code>C</code> will no longer cause a <code>SIGINT</code> when in this mode.</p> <h2 id="tty_class_tty_writestream">Class: tty.WriteStream<a class="srclink" href="https://github.com/nodejs/node/blob/75657ee41677d56a498e298b01d049aef5bf199f/lib/tty.js#L78" target="_blank">[src]</a>
+</h2> <div class="api_metadata"> <span>Added in: v0.5.8</span> </div> <p>The <code>tty.WriteStream</code> class is a subclass of <a href="../net/#net_class_net_socket"><code>net.Socket</code></a> that represents the writable side of a TTY. In normal circumstances, <a href="../process/#process_process_stdout"><code>process.stdout</code></a> and <a href="../process/#process_process_stderr"><code>process.stderr</code></a> will be the only <code>tty.WriteStream</code> instances created for a Node.js process and there should be no reason to create additional instances.</p> <h3 id="tty_event_resize">Event: 'resize'</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <p>The <code>'resize'</code> event is emitted whenever either of the <code>writeStream.columns</code> or <code>writeStream.rows</code> properties have changed. No arguments are passed to the listener callback when called.</p> <pre data-language="js">process.stdout.on('resize', () =&gt; {
+  console.log('screen size has changed!');
+  console.log(`${process.stdout.columns}x${process.stdout.rows}`);
+});
+</pre> <h3 id="tty_writestream_clearline_dir">writeStream.clearLine(dir)</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <ul> <li> <p><code>dir</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type" target="_blank">&lt;number&gt;</a></p> <ul> <li>
+<code>-1</code> - to the left from cursor</li> <li>
+<code>1</code> - to the right from cursor</li> <li>
+<code>0</code> - the entire line</li> </ul> </li> </ul> <p><code>writeStream.clearLine()</code> clears the current line of this <code>WriteStream</code> in a direction identified by <code>dir</code>.</p> <h3 id="tty_writestream_clearscreendown">writeStream.clearScreenDown()</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <p><code>writeStream.clearScreenDown()</code> clears this <code>WriteStream</code> from the current cursor down.</p> <h3 id="tty_writestream_columns">writeStream.columns</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <p>A <code>number</code> specifying the number of columns the TTY currently has. This property is updated whenever the <code>'resize'</code> event is emitted.</p> <h3 id="tty_writestream_cursorto_x_y">writeStream.cursorTo(x, y)</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <ul> <li>
+<code>x</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type" target="_blank">&lt;number&gt;</a>
+</li> <li>
+<code>y</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type" target="_blank">&lt;number&gt;</a>
+</li> </ul> <p><code>writeStream.cursorTo()</code> moves this <code>WriteStream</code>'s cursor to the specified position.</p> <h3 id="tty_writestream_getcolordepth_env">writeStream.getColorDepth([env])</h3> <div class="api_metadata"> <span>Added in: v9.9.0</span> </div> <ul> <li>
+<code>env</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type" target="_blank">&lt;Object&gt;</a> An object containing the environment variables to check. <strong>Default:</strong> <code>process.env</code>.</li> <li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type" target="_blank">&lt;number&gt;</a>
+</li> </ul> <p>Returns:</p> <ul> <li>
+<code>1</code> for 2,</li> <li>
+<code>4</code> for 16,</li> <li>
+<code>8</code> for 256,</li> <li>
+<code>24</code> for 16,777,216 colors supported.</li> </ul> <p>Use this to determine what colors the terminal supports. Due to the nature of colors in terminals it is possible to either have false positives or false negatives. It depends on process information and the environment variables that may lie about what terminal is used. To enforce a specific behavior without relying on <code>process.env</code> it is possible to pass in an object with different settings.</p> <p>Use the <code>NODE_DISABLE_COLORS</code> environment variable to enforce this function to always return 1.</p> <h3 id="tty_writestream_getwindowsize">writeStream.getWindowSize()</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <ul> <li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type" target="_blank">&lt;number[]&gt;</a>
+</li> </ul> <p><code>writeStream.getWindowSize()</code> returns the size of the <a href="../tty/">TTY</a> corresponding to this <code>WriteStream</code>. The array is of the type <code>[numColumns, numRows]</code> where <code>numColumns</code> and <code>numRows</code> represent the number of columns and rows in the corresponding <a href="../tty/">TTY</a>.</p> <h3 id="tty_writestream_hascolors_count_env">writeStream.hasColors([count][, env])</h3> <div class="api_metadata"> <span>Added in: v10.16.0</span> </div> <ul> <li>
+<code>count</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type" target="_blank">&lt;integer&gt;</a> The number of colors that are requested (minimum 2). <strong>Default:</strong> 16.</li> <li>
+<code>env</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type" target="_blank">&lt;Object&gt;</a> An object containing the environment variables to check. This enables simulating the usage of a specific terminal. <strong>Default:</strong> <code>process.env</code>.</li> <li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" class="type" target="_blank">&lt;boolean&gt;</a>
+</li> </ul> <p>Returns <code>true</code> if the <code>writeStream</code> supports at least as many colors as provided in <code>count</code>. Minimum support is 2 (black and white).</p> <p>This has the same false positives and negatives as described in <a href="#tty_writestream_getcolordepth_env"><code>writeStream.getColorDepth()</code></a>.</p> <pre data-language="js">process.stdout.hasColors();
+// Returns true or false depending on if `stdout` supports at least 16 colors.
+process.stdout.hasColors(256);
+// Returns true or false depending on if `stdout` supports at least 256 colors.
+process.stdout.hasColors({ TMUX: '1' });
+// Returns true.
+process.stdout.hasColors(2 ** 24, { TMUX: '1' });
+// Returns false (the environment setting pretends to support 2 ** 8 colors).
+</pre> <h3 id="tty_writestream_istty">writeStream.isTTY</h3> <div class="api_metadata"> <span>Added in: v0.5.8</span> </div> <p>A <code>boolean</code> that is always <code>true</code>.</p> <h3 id="tty_writestream_movecursor_dx_dy">writeStream.moveCursor(dx, dy)</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <ul> <li>
+<code>dx</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type" target="_blank">&lt;number&gt;</a>
+</li> <li>
+<code>dy</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type" target="_blank">&lt;number&gt;</a>
+</li> </ul> <p><code>writeStream.moveCursor()</code> moves this <code>WriteStream</code>'s cursor <em>relative</em> to its current position.</p> <h3 id="tty_writestream_rows">writeStream.rows</h3> <div class="api_metadata"> <span>Added in: v0.7.7</span> </div> <p>A <code>number</code> specifying the number of rows the TTY currently has. This property is updated whenever the <code>'resize'</code> event is emitted.</p> <h2 id="tty_tty_isatty_fd">tty.isatty(fd)<a class="srclink" href="https://github.com/nodejs/node/blob/75657ee41677d56a498e298b01d049aef5bf199f/lib/tty.js#L37" target="_blank">[src]</a>
+</h2> <div class="api_metadata"> <span>Added in: v0.5.8</span> </div> <ul> <li>
+<code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type" target="_blank">&lt;number&gt;</a> A numeric file descriptor</li> </ul> <p>The <code>tty.isatty()</code> method returns <code>true</code> if the given <code>fd</code> is associated with a TTY and <code>false</code> if it is not, including whenever <code>fd</code> is not a non-negative integer.</p>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © Joyent, Inc. and other Node contributors<br>Licensed under the MIT License.<br>Node.js is a trademark of Joyent, Inc. and is used with its permission.<br>We are not endorsed by or affiliated with Joyent.<br>
+    <a href="https://nodejs.org/dist/latest-v10.x/docs/api/tty.html" class="_attribution-link" target="_blank">https://nodejs.org/dist/latest-v10.x/docs/api/tty.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
