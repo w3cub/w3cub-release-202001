@@ -1,0 +1,183 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Filter Effects - SVG - W3cubDocs</title>
+  
+  <meta name="description" content="There are situations, where basic shapes do not provide the flexibility you need to achieve a certain effect. Drop shadows, to provide a popular &hellip;">
+  <meta name="keywords" content="filter, effects, -, svg">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/svg/tutorial/filter_effects/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/svg.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/svg/" class="_nav-link" title="" style="margin-left:0;">SVG</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mdn">
+				
+				
+<h1>Filter effects</h1> <p>There are situations, where basic shapes do not provide the flexibility you need to achieve a certain effect. Drop shadows, to provide a popular example, cannot be created reasonably with a combination of gradients. Filters are SVG's mechanism to create sophisticated effects.</p> <p>A basic example is to add a blur effect to SVG content. While basic blurs can be achieved with the help of gradients, the blur filter is needed to do anything beyond.</p> <h2 id="Example">Example</h2> <p>Filters are defined by <a href="../../element/filter/"><code>&lt;filter&gt;</code></a> element, which should be put in the <code>&lt;defs&gt;</code> section of your SVG file. Between the filter tags, goes a list of <em>primitives</em>, basic operations that build on top of the previous operations (like blurring, adding a lighting effect, etc). To apply your created filter on a graphic element, you set the <code><a href="../../attribute/filter/">filter</a></code> attribute.</p> <pre data-language="html">&lt;svg width="250" viewBox="0 0 200 85"
+     xmlns="http://www.w3.org/2000/svg" version="1.1"&gt;
+  &lt;defs&gt;
+    &lt;!-- Filter declaration --&gt;
+    &lt;filter id="MyFilter" filterUnits="userSpaceOnUse"
+            x="0" y="0"
+            width="200" height="120"&gt;
+
+      &lt;!-- offsetBlur --&gt;
+      &lt;feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/&gt;
+      &lt;feOffset in="blur" dx="4" dy="4" result="offsetBlur"/&gt;
+
+      &lt;!-- litPaint --&gt;
+      &lt;feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75" 
+                          specularExponent="20" lighting-color="#bbbbbb"  
+                          result="specOut"&gt;
+        &lt;fePointLight x="-5000" y="-10000" z="20000"/&gt;
+      &lt;/feSpecularLighting&gt;
+      &lt;feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/&gt;
+      &lt;feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" 
+                   k1="0" k2="1" k3="1" k4="0" result="litPaint"/&gt;
+
+      &lt;!-- merge offsetBlur + litPaint --&gt;
+      &lt;feMerge&gt;
+        &lt;feMergeNode in="offsetBlur"/&gt;
+        &lt;feMergeNode in="litPaint"/&gt;
+      &lt;/feMerge&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+
+  &lt;!-- Graphic elements --&gt;
+  &lt;g filter="url(#MyFilter)"&gt;
+      &lt;path fill="none" stroke="#D90000" stroke-width="10" 
+            d="M50,66 c-50,0 -50,-60 0,-60 h100 c50,0 50,60 0,60z" /&gt;
+      &lt;path fill="#D90000" 
+            d="M60,56 c-30,0 -30,-40 0,-40 h80 c30,0 30,40 0,40z" /&gt;
+      &lt;g fill="#FFFFFF" stroke="black" font-size="45" font-family="Verdana" &gt;
+        &lt;text x="52" y="52"&gt;SVG&lt;/text&gt;
+      &lt;/g&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+</pre> <p><iframe src="https://mdn.mozillademos.org/en-US/docs/Web/SVG/Tutorial/Filter_effects%24samples/Example?revision=1431809" height="120" class="live-sample-frame sample-code-frame" width="100%" frameborder="0" id="frame_Example"></iframe></p> <h3 id="Step_1">Step 1</h3> <pre data-language="html">&lt;feGaussianBlur in="SourceAlpha"
+                stdDeviation="4"
+                result="blur"/&gt;</pre> <p><a href="../../element/fegaussianblur/"><code>&lt;feGaussianBlur&gt;</code></a> takes <code>in</code> "SourceAlpha", which is the alpha channel of the source graphic, applies a blur of 4, and stores the <code>result</code> in a temporary buffer named "blur".</p> <h3 id="Step_2">Step 2</h3> <pre data-language="html">&lt;feOffset in="blur"
+          dx="4" dy="4"
+          result="offsetBlur"/&gt;</pre> <p><a href="../../element/feoffset/"><code>&lt;feOffset&gt;</code></a> takes <code>in</code> "blur", which we previously created, shifts the result 4 to the right and 4 to the bottom, and stores the <code>result</code> in the buffer "blur". The two first primitives just created a drop shadow.</p> <h3 id="Step_3">Step 3</h3> <pre data-language="html">&lt;feSpecularLighting in="blur"
+                    surfaceScale="5" specularConstant=".75" 
+                    specularExponent="20" lighting-color="#bbbbbb"
+                    result="specOut"&gt;
+  &lt;fePointLight x="-5000" y="-10000" z="20000"/&gt;
+&lt;/feSpecularLighting&gt;</pre> <p><a href="../../element/fespecularlighting/"><code>&lt;feSpecularLighting&gt;</code></a> takes <code>in</code> "offsetBlur", generates a lighting effect, and stores the <code>result</code> in the buffer "specOut".</p> <h3 id="Step_4">Step 4</h3> <pre data-language="html">&lt;feComposite in="specOut" in2="SourceAlpha"
+             operator="in"
+             result="specOut"/&gt;</pre> <p>The first <a href="../../element/fecomposite/"><code>&lt;feComposite&gt;</code></a> takes <code>in</code> "specOut" and "SourceAlpha", masks out the result of "specOut" so that the result is not bigger than "SourceAlpha" (the original source graphic), and overrides the <code>result</code> "specOut".</p> <h3 id="Step_5">Step 5</h3> <pre data-language="html">&lt;feComposite in="SourceGraphic" in2="specOut"
+             operator="arithmetic" 
+             k1="0" k2="1" k3="1" k4="0"
+             result="litPaint"/&gt;</pre> <p>The second <a href="../../element/fecomposite/"><code>&lt;feComposite&gt;</code></a> takes <code>in</code> "SourceAlpha" and "specOut", adds the result of "specOut" on top of "SourceAlpha", and stores the <code>result</code> in "litPaint".</p> <h3 id="Step_6">Step 6</h3> <pre data-language="html">&lt;feMerge&gt;
+  &lt;feMergeNode in="offsetBlur"/&gt;
+  &lt;feMergeNode in="litPaint"/&gt;
+&lt;/feMerge&gt;</pre> <p>Finallly, <a href="../../element/femerge/"><code>&lt;feMerge&gt;</code></a> merges together "offsetBlur", which is the drop shadow, and "litPaint", which is the original source graphic with a lighting effect.</p>  <img src="data:image/png;base64,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" alt="Source graphic" style="height: 70px; width: 115px;"> <p>Source graphic</p>  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAABGCAMAAADIKlvKAAAAGnRFWHRHZW5lcmF0b3IAQWRvYmUgU1ZHIFZpZXdlcpMqA+8AAACTUExURQAAAIGBgYeHhyQkJL+//2Zmpjg4OIiIiBkZGYWFhTIyMikpKXNzcxsbG0JCQn5+fh4eHgQEBHd3dyIiIgwMDGBgYDs7O3p6eicnJzU1NUpKSlBQUGZmZk1NTT09PW5ubltbW2NjY0Rh4kRERMKHh39h4WlpaS4uLlRUVEdHRwYGBlZWVhAQEM/P/1VV5W9V5ZJmpvmCIucAAAQnSURBVFjD7Znplps4EIVtM0NoFkHALGJ3yCAw5My8/9PNLQG9JN6AnGbOHN9u/+g2qk9VKoGq2P3447P1Y/f3P39+sr7t/vr+5XN12ID55cl8Mv8/zAPpZb3IzEPMEbff43edXvYj+DZT8vZ72w7D0F0r2LBtoH/CfmQSEcDQNc2irut0sU74SdO6LkzTDUfsZaYkAljUJ7/smmStuq70T+C6oaReYEonQxfAssniiuVBoC4WxyfIWRVnTQksqG+uvjGJaLtm7XdZlau6MKIoUlYpigyhq3mVdX5tuvarq69M6SSITcxUYSieY1mWtlKW5XiKIVQWN6CGE3RiDsi0zBgXimNNY1ZpNOIogrOsTF+hIxNIOyxOTauCOFzpITZSi6I6jPQcaQxUtW1ORWhL6MBE+uzDwk8Yj5xhalgJrlIScc71ucIYlQZznVaJ/HUizhK/gKdIpJE5InUFF1ieQSsfZ1kWxy1jORJ4lvKcsTaW4ykbDaJaij5BByYhzVPCBH3rRHpQIcNLvyy7JJPQmQIySzppocmqQKfgWZ5gyYnW9DAybTPtmA4kvgraBFsKOpUdkEN85whxBbSbjCRtIKRlnXWpaQ9MGdmy5QgsQpAjxXDLMuVOZQGWxIjmyUAyBEzuSqjAZsh1aZu3JUV3YNqIbGA4U9RN3JxNymKExXPmb1MkPRaIMnWwNGaKYwSIri2ZcLMuK+FpGtyXKb2XG6fimEbfH+er7wHg1TtbWDiYF1VZh3vJlG5GmIjI5TLj0WKmuEzR+uP5/HW+zudjryFmDdYP1ihBc4EwRtJRYsrVxDysSM1kOo/r62lHAHdLBOxR88b1kxsxU+GUp9N/JNOtm9wgN1lXu/RsHxwn5G6pCDq4RYcAt+4YOWrkTe0SE4RMVTRN4Zk/XAI3K+H0K5AE7R2sn3QUTvgZJ4SKWQxMP6bQyklgz2JaaUNurkECSo426WhxCKWnx/7AlF5RaGlWB7l1Mu715906nXuPZxTcw4EixyQDC0rM6W+99eUFL9Jx5zcwHXJrMtnqo1/vmN6HC4S1MrQUXEt8cMP7TzA/NbZb5NAme2WDe8IW974t7vFbPMu2eGbfOpsYC88mxp2zyc0zGBc4hM2UEPzeGezqWdPvknhBSYhTNYuTzr911rxxpkYh2lZsrqoWZeedM/XV2oGKh2oBsxpKh1u1w/UaibSgyh4HyhrJuVIjXasFjTWStaA11oLBL7Xg5ZoXZauzXFPRe7XmvVDbO9MYzVpe2t+s7S/2MBTFW64HehiXejVjFbikzpYV4WuvxrzSq7nUk5K7ZZEwMkmauz2pn3pvRZ2mJ8hfIhqYpnVxv/c2NTXfeozmcj3aY/zYSyXhUbRIUzf1kV7qu6bx+o7x4z3jXzvWS/R8B/BkPpm/gbnFu+UN3qH/C0zQg7uZ+zn1AAAAAElFTkSuQmCC" alt="Primitive 1" style="height: 70px; width: 115px;"> <p>Primitive 1</p>  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAABGCAMAAADIKlvKAAAAGnRFWHRHZW5lcmF0b3IAQWRvYmUgU1ZHIFZpZXdlcpMqA+8AAACHUExURYiIiEJCQiUlJTIyMr+//2ZmphgYGAAAABoaGoeHhzw8PIGBgQQEBCgoKAwMDHd3d1BQUEpKSn5+fnNzcx4eHiIiIjg4ODk5OWZmZmBgYDU1NYSEhFtbWyoqKmtra1VVVXBwcHt7e2NjY0Rh4UZGRsOIiH9h4S0tLRISEs/P/ztV5W9V5ZJmpvbAD6EAAAP4SURBVFjD7ZntmqJGEIWnIXEURGi+QaCBdIKb5P6vL6cKnB1dUQFnzA/P/tpnmn6pr6arfPvx23frx9s///7+zfr77a8/375Zf7yYL+aL+WLewdw8UHcxaeEespeLtjnn/srsgbbvN43buAvVNI3v22fYc+YAbNygrqsqna8W/9K0quo6cJsBe5nJRAJWbVYo5S2VUkXWVoRl6gUmGQkigIXypBCWlcxUzEosSwjpqQJYog6mfmYS0XfrNFNSW7HZlY6xVE7ZmbGlpcrS2vXt3tRPTDYyqEAUcVcaUbh+hMLIKM1YgFoFTQ/9yWRknRZS5J0B3mq1egCSdwmNLheySOse+sEEEn5tlU6IyCsj+Aaa61Z+NAp5M1ATrVr4F9Ajk6x068wTuTMsQiRyToc8z82pwjMxPZybFCXe0MmFl9UuLP1gkmOBNA1aEDmIvJDSk1Jqyt/JEkIPjyMbHaYaJkHh3oEJM5u6BRJ/xSuZlkaGF1lBNUNQMZUI5McO2jLJeesI0LZuPph7P0hVj4zgeq9ocYZwnWphsX/vVwy/WkJzXeIsawsPSRL1UJUGfs+kYFaFzuFYuMDyirQKAhxGVDcJFepUIRkSro8a+1Rp4Vkm753ronKPTD9oPcsJB69XOKxQqshiuCXqC2eKKOkpQKpFUdJOQ6aEjuW1ATM3GzITnu3Np5S2uXAoi1eH3WE3XYcVZernvShw2L6oeiabmTh4kc6iMNs4BDm+BojbOdptQTX6+NlUE3BjBzc6idcOzKYuNJlpxJLTeYhvtCLi+xwRdxVx/Gg7FKKMDTJUF8Rk1yqrJDOFojXH+BLyfa4IyvHD2UM2KEGGlpZiJhPwFsgrmdGSjd3AzC5cgmRo2MHQxqaDNchkTojEOzIzSa51LJW6WAHDU8Vmvi8RG3qyIzlXDsyarCLX4q32/FatzKPDMiSghyiX7FykDCqDGbpnHv9v6qz294MnzHC3lLnbheYQLdiVaZPtOmFGpwvWi5nb3frUjOh/wXy4b7dXfPtFObS9lkNPqZXvPxOecPY944z/im/Z9ua37PHf7MOtb/YX303cS3eT63ewvOvKabewsuy6/NYdbPSumVFPSC1hPEUJNYG432bX7ppX7tT9pXqqNF2pb9ypx3oHvv1roedA+95BjPYOYz0SdwI/G+e7fZsMT3KPFI70SKO9YDlffS+4Hu0FR3vecL5u9rynvb1Zcrf6gNb+am8/MsOI5uuOGcaFWU0ydIFz+mzutG/Oai7OpORcefKumdSF2VsLZXNED943ezubMULBfPVDxtszxl9nqfgUzdKUWer50Hg/S5sedf/M+DET69dvAC/mFzKf8dvyE35D/w9t81ZtSNdZVgAAAABJRU5ErkJggg==" alt="Primitive 2" style="height: 70px; width: 115px;"> <p>Primitive 2</p>  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAABGCAMAAADIKlvKAAAAGnRFWHRHZW5lcmF0b3IAQWRvYmUgU1ZHIFZpZXdlcpMqA+8AAABOUExURZ+fn6Kiop2dnbKysoyMjKysrJiYmIqKioiIiJWVlYODt6SkpI2NjY+Pj5KSkqioqJqamszM/46Ojr+//0Rh4Zh/6M+goK+vrztV5aeDt6XIgbcAAATbSURBVFjD7Zlrk+smDIZBNhDKdWlPaf//H60kLrbT7XRtZ9OZztGHHc/G8WMJSbwi4uP9Jn78+cub7Q/x43fxZvvtJ/Mn83/ElPfMOdcuvsqkr6Sk7ltKidj/ykRgUnVBq7XeAg7u37BH5gTW5CRA1vcsZxD4xGfsgUlEBgptYwjFe7/eMe9LiFZDW97PmOgkEREYQ1lX8yrzIRJ2S6iNiU5iVJWwCHwV7sFmzBosiAmdTHZSSRs8EVeKSoz2hkVcHY9YBjP1mcnIlKMnYIkWnKpk7e81U8mBDWvz1qwU4T2TkFXSDfRGsi6J7ybjXDhla08Gj76lJKzvVArwxmxIcnINOi3J9pV4gXntnF37dYN2ZqpKRHw7H+XiwuOlZqIUoTmx2jyY6GZHWlXj81fM2bI0z1EyVtoBhc7EfJEYdeP1Ig/3+5ZLJ5usk3mmTrcitBlPBGLKpBwhV1vhsBIyJW5c7tSeIgC4jQW/w67QPQ2amU6lHDDPotohCzj6KhaavlCZnhO3hHWDithXNxMzJRmxdotz2wpoB7H0fnnSEBpmecR1C2/p0WWm03iP0Wp+HsBp8rzE1qBPmZSg4wYNI8Ixt5YUmCnQzUdxektupwshrUi17aSn+o9KUofZCIarBloRel5P7Smf02jJUdD6PrByHAFVumAyD2jU1ndHm1OG85bcNJBnYFP7D/aHRZ1M2i17tR/1ljvUQPOYmBA4tGGWCDuOF6qmz1XUF0xCHI7m3JufjpPJhODGLeB4fU0AXJfrihJGly0aeqB7cInJ1RpFryMrXC4tk5K7oWJhBNdg62nRDTCZHATb+0HQUuq1Z6+8xQwjJ0G0lC3CHJl5RF+2hozpewe5Z2Yp+JFFTiZ/Npm4mbfVD3CPacsoBHKDQhfk48CMMJk947y+hZw5hA3IOV6u+MTsfu/8xEu4wcxx9hhIzDT6KYeM8CMQwm57HVz1cjQC3rFxr8RHrtIemQ9tR620vCXfbb4GJWTY9uGkWJyE5I/1iSkzIupg3I/7ClLPW9Z2bie4ijXxxpX7Xjn7EHbD2B11buo+3M3iJTltdgqhVsoQE1LcmDk8do7iimKP30kwc1LgrmYvwoyuC1YKii1Ij405urHWfVMF9TK92ZAktnQdPYKZeuw1tgc0K/UaWW2gKohN3w1JUBqzh9/3yqQ1XeQLXI2O5rwmnMVUIcyEUUte9DIxBUeIqfmv6ndsaX0EylVOLcYabNczVoApZLSj4bBN3CctoFzMWKORRlkc8+QC25voxpx7ADYNVnycsAU3BLWc1mAs5UUmxdmIWCyzDkzX1NQcZ6d6+OzGHOhJ3Z5tRa0lRD6NoLEeRZXe8pFaW2eiIt1Jbu1Qt1FpU0Og44+Tprv01+DqcbD01E37zHuE0mci7U95zlutfABzTEOPGh3mbP8M5WmcJgd6XX3lOCGU55mQxwLYnWEQ1D++01DSM3J3VkMTXDDfh1zj2Bl3Z1KUb7GY73NyVMDh7I2H1e+g4ni2q7njGSO0Edm/EtsO3/JO5jyfpW4VbYwxd2lmpbZiD8RPz4wZq7klBDoW+II9d1u2dnbXxM1Xzsabqmk95fLhbW5a6uxvAHDd/vmZb//dAeDdTPL/vUwmvtXPTnyjn5P4Nj93RGb+B78tf/z6bvv4C9AiysOFB+QlAAAAAElFTkSuQmCC" alt="Primitive 3" style="height: 70px; width: 115px;"> <p>Primitive 3</p>  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAABGCAMAAADIKlvKAAAAGnRFWHRHZW5lcmF0b3IAQWRvYmUgU1ZHIFZpZXdlcpMqA+8AAABIUExURZ+fn7CwsJaWloqKipeXl46OjpOTk4iIiL+//2ZmpqKioouLi4mJiZ2dnaWlpaurq5qamqioqERh4sOIiH9h4c/P/5Jmpm9V5Yy0ajQAAAKRSURBVFjD7ZnbctswDEQp3NISBEW2Tfv/f1rKceyKkFtLspPpjNYPeYl4zAuWCzm8fvlovYZfP79+sL6FH99fPlgH82AezIN5MD+XmRKiNuEGqZ6fTOl+ZlJlZtksaGp/2hiK6R5mQmUBy+OwT+35mg0WsI7ZiBDbEyas7+KVn9PSTmsFVmsA7qgdMylTHSpoetB5SUw5d8PNmcgSh8zpoccUJQbGW0xkGAdJDy8OhAi4zESmIepTSpID4RIzKQzmJslCsE5TlWA/jNp1pldmUhl7ZGK5jHT/Z6pMdwg1XDbtykTOuftHnJwBaKXa92P2HsSBHVNp7PZyMgeymFcqRiNhb0BSsGMmztQ7IEvY4kbjWCP5LUXjjolQsV9ZyOch1isWD5WS5ky10k9TJg+c1mqLAjlrUdMZsy0t92e2jENtD29TNOknmor0TOyuF7a2L2GzDJy9CM2ZElLHlFhz2MEkdv7yVv8XJpi35hz3MX2J4pxZHDPsQS4y45wpxd18to8J7EaM87UV77W0C+nPUJI5833es8U128EsrlaQrPOE4JcCbCvVrID3hAid3xL4LANlG3QRiVy5u1fY0EOFGnW9Ci1d2yWn/v40WQjXfI7IK5OCv7NflKu4bMK2kIXeWgheoyncpoXQaTU5JhLh8xojpYEXcp/aE3LmNd+VxXzLQZ4z01YB4/UOmef4FkP1CVNVLkNMt/oVNWNMD17WqSH501n7vgwhl+WucRtwyo42DPL3/pNLPveBeKqRLU3vuWSmp6mFqoL/7LOVcsttcO6ZqawXnYwByFpwrID3vU9gCHXcpbekG2ThTN5+bzJtBZ+Mjwi22N/NY3G8kzqYB/NgHsyD+f8zP+O35U/4Df034JXb59BnjPYAAAAASUVORK5CYII=" alt="Primitive 4" style="height: 70px; width: 115px;"> <p>Primitive 4</p>  <img src="data:image/png;base64,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" alt="Primitive 5" style="height: 70px; width: 115px;"> <p>Primitive 5</p>  <img src="data:image/png;base64,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" alt="Primitive 6" style="height: 70px; width: 115px;"> <p>Primitive 6</p>   <div class="_attribution">
+  <p class="_attribution-p">
+    <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Filter_effects%24edit" class="_attribution-link" target="_blank">Edit this page on MDN</a>
+  </p>
+</div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2005–2018 Mozilla Developer Network and individual contributors.<br>Licensed under the Creative Commons Attribution-ShareAlike License v2.5 or later.<br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Filter_effects" class="_attribution-link" target="_blank">https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Filter_effects</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
