@@ -1,0 +1,195 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>XmlElementDecl - OpenJDK 8 Web - W3cubDocs</title>
+  
+  <meta name="description" content=" Maps a factory method to a XML element. ">
+  <meta name="keywords" content="annotation, type, xmlelementdecl, -, openjdk, web, openjdk~8_web">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_web/javax/xml/bind/annotation/xmlelementdecl/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_web.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_web/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 Web</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Annotation Type XmlElementDecl</h1>       <pre data-language="java">@Retention(value=RUNTIME)
+ @Target(value=METHOD)
+public @interface XmlElementDecl</pre> <div>
+<p>Maps a factory method to a XML element. </p>
+<p> <b>Usage</b> </p> The annotation creates a mapping between an XML schema element declaration and a <i> element factory method </i> that returns a JAXBElement instance representing the element declaration. Typically, the element factory method is generated (and annotated) from a schema into the ObjectFactory class in a Java package that represents the binding of the element declaration's target namespace. Thus, while the annotation syntax allows @XmlElementDecl to be used on any method, semantically its use is restricted to annotation of element factory method. The usage is subject to the following constraints: <ul> <li> The class containing the element factory method annotated with @XmlElementDecl must be marked with <a href="../xmlregistry/"><code>XmlRegistry</code></a>. </li> <li> The element factory method must take one parameter assignable to <a href="..//openjdk~8/java/lang/object/"><code>Object</code></a>.</li> </ul> <p><b>Example 1: </b>Annotation on a factory method </p>
+<pre data-language="java">// Example: code fragment
+     @XmlRegistry
+     class ObjectFactory {
+         @XmlElementDecl(name="foo")
+         JAXBElement&lt;String&gt; createFoo(String s) { ... }
+     }</pre> <pre data-language="java">&lt;!-- XML input --&gt;
+       &lt;foo&gt;string
+
+     // Example: code fragment corresponding to XML input
+     JAXBElement o =
+     (JAXBElement)unmarshaller.unmarshal(aboveDocument);
+     // print JAXBElement instance to show values
+     System.out.println(o.getName());   // prints  "{}foo"
+     System.out.println(o.getValue());  // prints  "string"
+     System.out.println(o.getValue().getClass()); // prints "java.lang.String"
+
+     &lt;!-- Example: XML schema definition --&gt;
+     &lt;xs:element name="foo" type="xs:string"/&gt;</pre> <p><b>Example 2: </b> Element declaration with non local scope </p>
+<p> The following example illustrates the use of scope annotation parameter in binding of element declaration in schema derived code. </p>
+<p> The following example may be replaced in a future revision of this javadoc. </p>
+<pre data-language="java">&lt;!-- Example: XML schema definition --&gt;
+     &lt;xs:schema&gt;
+       &lt;xs:complexType name="pea"&gt;
+         &lt;xs:choice maxOccurs="unbounded"&gt;
+           &lt;xs:element name="foo" type="xs:string"/&gt;
+           &lt;xs:element name="bar" type="xs:string"/&gt;
+         &lt;/xs:choice&gt;
+       &lt;/xs:complexType&gt;
+       &lt;xs:element name="foo" type="xs:int"/&gt;
+     &lt;/xs:schema&gt;</pre> <pre data-language="java">// Example: expected default binding
+     class Pea {
+         @XmlElementRefs({
+             @XmlElementRef(name="foo",type=JAXBElement.class)
+             @XmlElementRef(name="bar",type=JAXBElement.class)
+         })
+         List&lt;JAXBElement&lt;String&gt;&gt; fooOrBar;
+     }
+
+     @XmlRegistry
+     class ObjectFactory {
+         @XmlElementDecl(scope=Pea.class,name="foo")
+         JAXBElement createPeaFoo(String s);
+
+         @XmlElementDecl(scope=Pea.class,name="bar")
+         JAXBElement createPeaBar(String s);
+
+         @XmlElementDecl(name="foo")
+         JAXBElement createFoo(Integer i);
+     }</pre> Without scope createFoo and createPeaFoo would become ambiguous since both of them map to a XML schema element with the same local name "foo".</div> <dl> <dt>Since:</dt> <dd>JAXB 2.0</dd> <dt>See Also:</dt> <dd><a href="../xmlregistry/"><code>XmlRegistry</code></a></dd> </dl>         <h2 id="annotation.type.element.detail">Elements</h2>   <h3 id="name--">name</h3> <pre data-language="java">public abstract String name</pre> <div>
+<p>local name of the XML element. </p>
+<p> <b> Note to reviewers: </b> There is no default name; since the annotation is on a factory method, it is not clear that the method name can be derived from the factory method name.</p>
+</div> <dl> <dt>See Also:</dt> <dd><a href="../xmlelementdecl/#namespace--"><code>namespace()</code></a></dd> </dl>     <div>       <h3 id="scope--">scope</h3> <pre data-language="java">public abstract Class scope</pre> <div>
+<p>scope of the mapping. </p>
+<p> If this is not <a href="../xmlelementdecl.global/"><code>XmlElementDecl.GLOBAL</code></a>, then this element declaration mapping is only active within the specified class.</p>
+</div> <dl> <dt>Default:</dt> <dd>javax.xml.bind.annotation.XmlElementDecl.GLOBAL.class</dd> </dl>     <h3 id="namespace--">namespace</h3> <pre data-language="java">public abstract String namespace</pre> <div>
+<p>namespace name of the XML element. </p>
+<p> If the value is "##default", then the value is the namespace name for the package of the class containing this factory method.</p>
+</div> <dl> <dt>See Also:</dt> <dd><a href="../xmlelementdecl/#name--"><code>name()</code></a></dd> </dl> <dl> <dt>Default:</dt> <dd>"##default"</dd> </dl>     <h3 id="substitutionHeadNamespace--">substitutionHeadNamespace</h3> <pre data-language="java">public abstract String substitutionHeadNamespace</pre> <div>
+<p>namespace name of a substitution group's head XML element. </p>
+<p> This specifies the namespace name of the XML element whose local name is specified by <code>substitutionHeadName()</code>. </p>
+<p> If <code>susbtitutionHeadName()</code> is "", then this value can only be "##default". But the value is ignored since since this element is not part of susbtitution group when the value of <code>susbstitutionHeadName()</code> is "". </p>
+<p> If <code>susbtitutionHeadName()</code> is not "" and the value is "##default", then the namespace name is the namespace name to which the package of the containing class, marked with <a href="../xmlregistry/"><code>XmlRegistry</code></a>, is mapped. </p>
+<p> If <code>susbtitutionHeadName()</code> is not "" and the value is not "##default", then the value is the namespace name.</p>
+</div> <dl> <dt>See Also:</dt> <dd><a href="../xmlelementdecl/#substitutionHeadName--"><code>substitutionHeadName()</code></a></dd> </dl> <dl> <dt>Default:</dt> <dd>"##default"</dd> </dl>     <h3 id="substitutionHeadName--">substitutionHeadName</h3> <pre data-language="java">public abstract String substitutionHeadName</pre> <div>
+<p>XML local name of a substitution group's head element. </p>
+<p> If the value is "", then this element is not part of any substitution group.</p>
+</div> <dl> <dt>See Also:</dt> <dd><a href="../xmlelementdecl/#substitutionHeadNamespace--"><code>substitutionHeadNamespace()</code></a></dd> </dl> <dl> <dt>Default:</dt> <dd>""</dd> </dl>     <h3 id="defaultValue--">defaultValue</h3> <pre data-language="java">public abstract String defaultValue</pre> <div>
+<p>Default value of this element. </p>
+<p> The </p>
+<pre data-language="java">' '</pre> value specified as a default of this annotation element is used as a poor-man's substitute for null to allow implementations to recognize the 'no default value' state.</div> <dl> <dt>Default:</dt> <dd>"\u0000"</dd> </dl>    </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

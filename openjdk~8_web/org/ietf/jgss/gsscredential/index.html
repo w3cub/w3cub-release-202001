@@ -1,0 +1,211 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>GSSCredential - OpenJDK 8 Web - W3cubDocs</title>
+  
+  <meta name="description" content="This interface encapsulates the GSS-API credentials for an entity. A credential contains all the necessary cryptographic information to enable the &hellip;">
+  <meta name="keywords" content="interface, gsscredential, -, openjdk, web, openjdk~8_web">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_web/org/ietf/jgss/gsscredential/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_web.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_web/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 Web</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface GSSCredential</h1>     <dl> <dt>All Superinterfaces:</dt> <dd><a href="..//openjdk~8/java/lang/cloneable/">Cloneable</a></dd> </dl>   <pre data-language="java">public interface GSSCredential
+extends Cloneable</pre> <div>
+<p>This interface encapsulates the GSS-API credentials for an entity. A credential contains all the necessary cryptographic information to enable the creation of a context on behalf of the entity that it represents. It may contain multiple, distinct, mechanism specific credential elements, each containing information for a specific security mechanism, but all referring to the same entity. A credential may be used to perform context initiation, acceptance, or both.</p>
+<p> Credentials are instantiated using one of the <code>createCredential</code> methods in the <a href="../gssmanager/"><code>GSSManager</code></a> class. GSS-API credential creation is not intended to provide a "login to the network" function, as such a function would involve the creation of new credentials rather than merely acquiring a handle to existing credentials. The <a href="../package-summary/#useSubjectCredsOnly">section on credential acquisition</a> in the package level description describes how existing credentials are acquired in the Java platform. GSS-API implementations must impose a local access-control policy on callers to prevent unauthorized callers from acquiring credentials to which they are not entitled. </p>
+<p> Applications will create a credential object passing the desired parameters. The application can then use the query methods to obtain specific information about the instantiated credential object. When the credential is no longer needed, the application should call the <a href="../gsscredential/#dispose--"><code>dispose</code></a> method to release any resources held by the credential object and to destroy any cryptographically sensitive information.</p>
+<p> This example code demonstrates the creation of a GSSCredential implementation for a specific entity, querying of its fields, and its release when it is no longer needed:</p>
+
+<pre data-language="java">GSSManager manager = GSSManager.getInstance();
+
+    // start by creating a name object for the entity
+    GSSName name = manager.createName("myusername", GSSName.NT_USER_NAME);
+
+    // now acquire credentials for the entity
+    GSSCredential cred = manager.createCredential(name,
+                    GSSCredential.ACCEPT_ONLY);
+
+    // display credential information - name, remaining lifetime,
+    // and the mechanisms it has been acquired over
+    System.out.println(cred.getName().toString());
+    System.out.println(cred.getRemainingLifetime());
+
+    Oid [] mechs = cred.getMechs();
+    if (mechs != null) {
+            for (int i = 0; i &lt; mechs.length; i++)
+                    System.out.println(mechs[i].toString());
+    }
+
+    // release system resources held by the credential
+    cred.dispose();</pre>
+</div> <dl> <dt>Since:</dt> <dd>1.4</dd> <dt>See Also:</dt> <dd>
+<a href="../gssmanager/#createCredential-int-"><code>GSSManager.createCredential(int)</code></a>, <a href="../gssmanager/#createCredential-org.ietf.jgss.GSSName-int-org.ietf.jgss.Oid-int-"><code>GSSManager.createCredential(GSSName, int, Oid, int)</code></a>, <a href="../gssmanager/#createCredential-org.ietf.jgss.GSSName-int-org.ietf.jgss.Oid:A-int-"><code>GSSManager.createCredential(GSSName, int, Oid[], int)</code></a>, <a href="../gsscredential/#dispose--"><code>dispose()</code></a>
+</dd> </dl>       <h2 id="field.detail">Fields</h2>   <h3 id="INITIATE_AND_ACCEPT">INITIATE_AND_ACCEPT</h3> <pre data-language="java">static final int INITIATE_AND_ACCEPT</pre> <p>Credential usage flag requesting that it be usable for both context initiation and acceptance.</p>     <h3 id="INITIATE_ONLY">INITIATE_ONLY</h3> <pre data-language="java">static final int INITIATE_ONLY</pre> <p>Credential usage flag requesting that it be usable for context initiation only.</p>     <h3 id="ACCEPT_ONLY">ACCEPT_ONLY</h3> <pre data-language="java">static final int ACCEPT_ONLY</pre> <p>Credential usage flag requesting that it be usable for context acceptance only.</p>     <h3 id="DEFAULT_LIFETIME">DEFAULT_LIFETIME</h3> <pre data-language="java">static final int DEFAULT_LIFETIME</pre> <p>A lifetime constant representing the default credential lifetime. This value it set to 0.</p>     <h3 id="INDEFINITE_LIFETIME">INDEFINITE_LIFETIME</h3> <pre data-language="java">static final int INDEFINITE_LIFETIME</pre> <p>A lifetime constant representing indefinite credential lifetime. This value must is set to the maximum integer value in Java - <a href="..//openjdk~8/java/lang/integer/"><code>Integer.MAX_VALUE</code></a>.</p>      <h2 id="method.detail">Methods</h2>   <h3 id="dispose--">dispose</h3> <pre data-language="java">void dispose()
+      throws GSSException</pre> <p>Releases any sensitive information that the GSSCredential object may be containing. Applications should call this method as soon as the credential is no longer needed to minimize the time any sensitive information is maintained.</p> <dl> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> </dl>    <h3 id="getName--">getName</h3> <pre data-language="java">GSSName getName()
+         throws GSSException</pre> <p>Retrieves the name of the entity that the credential asserts.</p> <dl> <dt>Returns:</dt> <dd>a GSSName representing the entity</dd> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> </dl>    <h3 id="getName-org.ietf.jgss.Oid-">getName</h3> <pre data-language="java">GSSName getName(Oid mech)
+         throws GSSException</pre> <p>Retrieves a Mechanism Name of the entity that the credential asserts. This is equivalent to calling <a href="../gssname/#canonicalize-org.ietf.jgss.Oid-"><code>canonicalize</code></a> on the value returned by the other form of <a href="../gsscredential/#getName--"><code>getName</code></a>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>mech</code> - the Oid of the mechanism for which the Mechanism Name should be returned.</dd> <dt>Returns:</dt> <dd>a GSSName representing the entity canonicalized for the desired mechanism</dd> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#BAD_MECH"><code>GSSException.BAD_MECH</code></a>, <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> </dl>    <h3 id="getRemainingLifetime--">getRemainingLifetime</h3> <pre data-language="java">int getRemainingLifetime()
+                  throws GSSException</pre> <p>Returns the remaining lifetime in seconds for a credential. The remaining lifetime is the minimum lifetime amongst all of the underlying mechanism specific credential elements.</p> <dl> <dt>Returns:</dt> <dd>the minimum remaining lifetime in seconds for this credential. A return value of <a href="../gsscredential/#INDEFINITE_LIFETIME"><code>INDEFINITE_LIFETIME</code></a> indicates that the credential does not expire. A return value of 0 indicates that the credential is already expired.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> <dt>See Also:</dt> <dd>
+<a href="../gsscredential/#getRemainingInitLifetime-org.ietf.jgss.Oid-"><code>getRemainingInitLifetime(Oid)</code></a>, <a href="../gsscredential/#getRemainingAcceptLifetime-org.ietf.jgss.Oid-"><code>getRemainingAcceptLifetime(Oid)</code></a>
+</dd> </dl>    <h3 id="getRemainingInitLifetime-org.ietf.jgss.Oid-">getRemainingInitLifetime</h3> <pre data-language="java">int getRemainingInitLifetime(Oid mech)
+                      throws GSSException</pre> <p>Returns the lifetime in seconds for the credential to remain capable of initiating security contexts using the specified mechanism. This method queries the initiator credential element that belongs to the specified mechanism.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>mech</code> - the Oid of the mechanism whose initiator credential element should be queried.</dd> <dt>Returns:</dt> <dd>the number of seconds remaining in the life of this credential element. A return value of <a href="../gsscredential/#INDEFINITE_LIFETIME"><code>INDEFINITE_LIFETIME</code></a> indicates that the credential element does not expire. A return value of 0 indicates that the credential element is already expired.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#BAD_MECH"><code>GSSException.BAD_MECH</code></a>, <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> </dl>    <h3 id="getRemainingAcceptLifetime-org.ietf.jgss.Oid-">getRemainingAcceptLifetime</h3> <pre data-language="java">int getRemainingAcceptLifetime(Oid mech)
+                        throws GSSException</pre> <p>Returns the lifetime in seconds for the credential to remain capable of accepting security contexts using the specified mechanism. This method queries the acceptor credential element that belongs to the specified mechanism.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>mech</code> - the Oid of the mechanism whose acceptor credential element should be queried.</dd> <dt>Returns:</dt> <dd>the number of seconds remaining in the life of this credential element. A return value of <a href="../gsscredential/#INDEFINITE_LIFETIME"><code>INDEFINITE_LIFETIME</code></a> indicates that the credential element does not expire. A return value of 0 indicates that the credential element is already expired.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#BAD_MECH"><code>GSSException.BAD_MECH</code></a>, <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> </dl>    <h3 id="getUsage--">getUsage</h3> <pre data-language="java">int getUsage()
+      throws GSSException</pre> <p>Returns the credential usage mode. In other words, it tells us if this credential can be used for initiating or accepting security contexts. It does not tell us which mechanism(s) has to be used in order to do so. It is expected that an application will allow the GSS-API to pick a default mechanism after calling this method.</p> <dl> <dt>Returns:</dt> <dd>The return value will be one of <a href="../gsscredential/#INITIATE_ONLY"><code>INITIATE_ONLY</code></a>, <a href="../gsscredential/#ACCEPT_ONLY"><code>ACCEPT_ONLY</code></a>, and <a href="../gsscredential/#INITIATE_AND_ACCEPT"><code>INITIATE_AND_ACCEPT</code></a>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> </dl>    <h3 id="getUsage-org.ietf.jgss.Oid-">getUsage</h3> <pre data-language="java">int getUsage(Oid mech)
+      throws GSSException</pre> <p>Returns the credential usage mode for a specific mechanism. In other words, it tells us if this credential can be used for initiating or accepting security contexts with a given underlying mechanism.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>mech</code> - the Oid of the mechanism whose credentials usage mode is to be determined.</dd> <dt>Returns:</dt> <dd>The return value will be one of <a href="../gsscredential/#INITIATE_ONLY"><code>INITIATE_ONLY</code></a>, <a href="../gsscredential/#ACCEPT_ONLY"><code>ACCEPT_ONLY</code></a>, and <a href="../gsscredential/#INITIATE_AND_ACCEPT"><code>INITIATE_AND_ACCEPT</code></a>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#BAD_MECH"><code>GSSException.BAD_MECH</code></a>, <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> </dl>    <h3 id="getMechs--">getMechs</h3> <pre data-language="java">Oid[] getMechs()
+        throws GSSException</pre> <p>Returns a list of mechanisms supported by this credential. It does not tell us which ones can be used to initiate contexts and which ones can be used to accept contexts. The application must call the <a href="../gsscredential/#getUsage-org.ietf.jgss.Oid-"><code>getUsage</code></a> method with each of the returned Oid's to determine the possible modes of usage.</p> <dl> <dt>Returns:</dt> <dd>an array of Oid's corresponding to the supported mechanisms.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> </dl>    <h3 id="add-org.ietf.jgss.GSSName-int-int-org.ietf.jgss.Oid-int-">add</h3> <pre data-language="java">void add(GSSName name,
+         int initLifetime,
+         int acceptLifetime,
+         Oid mech,
+         int usage)
+  throws GSSException</pre> <div>
+<p>Adds a mechanism specific credential-element to an existing credential. This method allows the construction of credentials, one mechanism at a time.</p>
+<p> This routine is envisioned to be used mainly by context acceptors during the creation of acceptor credentials which are to be used with a variety of clients using different security mechanisms.</p>
+<p> This routine adds the new credential element "in-place". To add the element in a new credential, first call <code>clone</code> to obtain a copy of this credential, then call its <code>add</code> method.</p>
+<p> As always, GSS-API implementations must impose a local access-control policy on callers to prevent unauthorized callers from acquiring credentials to which they are not entitled. Non-default values for initLifetime and acceptLifetime cannot always be honored by the underlying mechanisms, thus callers should be prepared to call <a href="../gsscredential/#getRemainingInitLifetime-org.ietf.jgss.Oid-"><code>getRemainingInitLifetime</code></a> and <a href="../gsscredential/#getRemainingAcceptLifetime-org.ietf.jgss.Oid-"><code>getRemainingAcceptLifetime</code></a> on the credential.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>name</code> - the name of the principal for whom this credential is to be acquired. Use <code>null</code> to specify the default principal.</dd> <dd>
+<code>initLifetime</code> - the number of seconds that the credential element should remain valid for initiating of security contexts. Use <a href="../gsscredential/#INDEFINITE_LIFETIME"><code>GSSCredential.INDEFINITE_LIFETIME</code></a> to request that the credentials have the maximum permitted lifetime for this. Use <a href="../gsscredential/#DEFAULT_LIFETIME"><code>GSSCredential.DEFAULT_LIFETIME</code></a> to request default credential lifetime for this.</dd> <dd>
+<code>acceptLifetime</code> - the number of seconds that the credential element should remain valid for accepting security contexts. Use <a href="../gsscredential/#INDEFINITE_LIFETIME"><code>GSSCredential.INDEFINITE_LIFETIME</code></a> to request that the credentials have the maximum permitted lifetime for this. Use <a href="../gsscredential/#DEFAULT_LIFETIME"><code>GSSCredential.DEFAULT_LIFETIME</code></a> to request default credential lifetime for this.</dd> <dd>
+<code>mech</code> - the mechanism over which the credential is to be acquired.</dd> <dd>
+<code>usage</code> - the usage mode that this credential element should add to the credential. The value of this parameter must be one of: <a href="../gsscredential/#INITIATE_AND_ACCEPT"><code>INITIATE_AND_ACCEPT</code></a>, <a href="../gsscredential/#ACCEPT_ONLY"><code>ACCEPT_ONLY</code></a>, and <a href="../gsscredential/#INITIATE_ONLY"><code>INITIATE_ONLY</code></a>.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../gssexception/">GSSException</a></code> - containing the following major error codes: <a href="../gssexception/#DUPLICATE_ELEMENT"><code>GSSException.DUPLICATE_ELEMENT</code></a>, <a href="../gssexception/#BAD_MECH"><code>GSSException.BAD_MECH</code></a>, <a href="../gssexception/#BAD_NAMETYPE"><code>GSSException.BAD_NAMETYPE</code></a>, <a href="../gssexception/#NO_CRED"><code>GSSException.NO_CRED</code></a>, <a href="../gssexception/#CREDENTIALS_EXPIRED"><code>GSSException.CREDENTIALS_EXPIRED</code></a>, <a href="../gssexception/#FAILURE"><code>GSSException.FAILURE</code></a>
+</dd> </dl>    <h3 id="equals-java.lang.Object-">equals</h3> <pre data-language="java">boolean equals(Object another)</pre> <p>Tests if this GSSCredential asserts the same entity as the supplied object. The two credentials must be acquired over the same mechanisms and must refer to the same principal.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/object/">equals</a></code> in class <code><a href="..//openjdk~8/java/lang/object/">Object</a></code>
+</dd> <dt>Parameters:</dt> <dd>
+<code>another</code> - another GSSCredential for comparison to this one</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if the two GSSCredentials assert the same entity; <code>false</code> otherwise.</dd> <dt>See Also:</dt> <dd>
+<a href="..//openjdk~8/java/lang/object/"><code>Object.hashCode()</code></a>, <a href="..//openjdk~8/java/util/hashmap/"><code>HashMap</code></a>
+</dd> </dl>    <h3 id="hashCode--">hashCode</h3> <pre data-language="java">int hashCode()</pre> <p>Returns a hashcode value for this GSSCredential.</p> <dl> <dt>Overrides:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/object/">hashCode</a></code> in class <code><a href="..//openjdk~8/java/lang/object/">Object</a></code>
+</dd> <dt>Returns:</dt> <dd>a hashCode value</dd> <dt>See Also:</dt> <dd>
+<a href="..//openjdk~8/java/lang/object/"><code>Object.equals(java.lang.Object)</code></a>, <a href="..//openjdk~8/java/lang/system/"><code>System.identityHashCode(java.lang.Object)</code></a>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

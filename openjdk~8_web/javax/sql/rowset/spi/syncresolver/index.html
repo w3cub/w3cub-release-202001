@@ -1,0 +1,202 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>SyncResolver - OpenJDK 8 Web - W3cubDocs</title>
+  
+  <meta name="description" content="Defines a framework that allows applications to use a manual decision tree to decide what should be done when a synchronization conflict occurs. &hellip;">
+  <meta name="keywords" content="interface, syncresolver, -, openjdk, web, openjdk~8_web">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_web/javax/sql/rowset/spi/syncresolver/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_web.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_web/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 Web</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface SyncResolver</h1>     <dl> <dt>All Superinterfaces:</dt> <dd>
+<a href="..//openjdk~8/java/lang/autocloseable/">AutoCloseable</a>, <a href="../../../../../java/sql/resultset/">ResultSet</a>, <a href="../../../rowset/">RowSet</a>, <a href="../../../../../java/sql/wrapper/">Wrapper</a>
+</dd> </dl>   <pre data-language="java">public interface SyncResolver
+extends RowSet</pre> <div>
+<p>Defines a framework that allows applications to use a manual decision tree to decide what should be done when a synchronization conflict occurs. Although it is not mandatory for applications to resolve synchronization conflicts manually, this framework provides the means to delegate to the application when conflicts arise. </p>
+<p> Note that a conflict is a situation where the <code>RowSet</code> object's original values for a row do not match the values in the data source, which indicates that the data source row has been modified since the last synchronization. Note also that a <code>RowSet</code> object's original values are the values it had just prior to the the last synchronization, which are not necessarily its initial values. </p>
+<h2>Description of a <code>SyncResolver</code> Object</h2> A <code>SyncResolver</code> object is a specialized <code>RowSet</code> object that implements the <code>SyncResolver</code> interface. It <b>may</b> operate as either a connected <code>RowSet</code> object (an implementation of the <code>JdbcRowSet</code> interface) or a connected <code>RowSet</code> object (an implementation of the <code>CachedRowSet</code> interface or one of its subinterfaces). For information on the subinterfaces, see the <a href="../../package-summary/"><code>javax.sql.rowset</code></a> package description. The reference implementation for <code>SyncResolver</code> implements the <code>CachedRowSet</code> interface, but other implementations may choose to implement the <code>JdbcRowSet</code> interface to satisfy particular needs. <p> After an application has attempted to synchronize a <code>RowSet</code> object with the data source (by calling the <code>CachedRowSet</code> method <code>acceptChanges</code>), and one or more conflicts have been found, a rowset's <code>SyncProvider</code> object creates an instance of <code>SyncResolver</code>. This new <code>SyncResolver</code> object has the same number of rows and columns as the <code>RowSet</code> object that was attempting the synchronization. The <code>SyncResolver</code> object contains the values from the data source that caused the conflict(s) and <code>null</code> for all other values. In addition, it contains information about each conflict. </p>
+<h2>Getting and Using a <code>SyncResolver</code> Object</h2> When the method <code>acceptChanges</code> encounters conflicts, the <code>SyncProvider</code> object creates a <code>SyncProviderException</code> object and sets it with the new <code>SyncResolver</code> object. The method <code>acceptChanges</code> will throw this exception, which the application can then catch and use to retrieve the <code>SyncResolver</code> object it contains. The following code snippet uses the <code>SyncProviderException</code> method <code>getSyncResolver</code> to get the <code>SyncResolver</code> object <i>resolver</i>. <pre data-language="java">catch (SyncProviderException spe) {
+         SyncResolver resolver = spe.getSyncResolver();
+     ...
+     }
+
+ }</pre> <p> With <i>resolver</i> in hand, an application can use it to get the information it contains about the conflict or conflicts. A <code>SyncResolver</code> object such as <i>resolver</i> keeps track of the conflicts for each row in which there is a conflict. It also places a lock on the table or tables affected by the rowset's command so that no more conflicts can occur while the current conflicts are being resolved. </p>
+<p> The following kinds of information can be obtained from a <code>SyncResolver</code> object: </p>
+<h2>What operation was being attempted when a conflict occurred</h2> The <code>SyncProvider</code> interface defines four constants describing states that may occur. Three constants describe the type of operation (update, delete, or insert) that a <code>RowSet</code> object was attempting to perform when a conflict was discovered, and the fourth indicates that there is no conflict. These constants are the possible return values when a <code>SyncResolver</code> object calls the method <code>getStatus</code>. <pre data-language="java">int operation = resolver.getStatus();</pre> <h2>The value in the data source that caused a conflict</h2> A conflict exists when a value that a <code>RowSet</code> object has changed and is attempting to write to the data source has also been changed in the data source since the last synchronization. An application can call the <code>SyncResolver</code> method <code>getConflictValue</code> to retrieve the value in the data source that is the cause of the conflict because the values in a <code>SyncResolver</code> object are the conflict values from the data source. <pre data-language="java">java.lang.Object conflictValue = resolver.getConflictValue(2);</pre> Note that the column in <i>resolver</i> can be designated by the column number, as is done in the preceding line of code, or by the column name. <p> With the information retrieved from the methods <code>getStatus</code> and <code>getConflictValue</code>, the application may make a determination as to which value should be persisted in the data source. The application then calls the <code>SyncResolver</code> method <code>setResolvedValue</code>, which sets the value to be persisted in the <code>RowSet</code> object and also in the data source. </p>
+<pre data-language="java">resolver.setResolvedValue("DEPT", 8390426);</pre> In the preceding line of code, the column name designates the column in the <code>RowSet</code> object that is to be set with the given value. The column number can also be used to designate the column. <p> An application calls the method <code>setResolvedValue</code> after it has resolved all of the conflicts in the current conflict row and repeats this process for each conflict row in the <code>SyncResolver</code> object. </p>
+<h2>Navigating a <code>SyncResolver</code> Object</h2> Because a <code>SyncResolver</code> object is a <code>RowSet</code> object, an application can use all of the <code>RowSet</code> methods for moving the cursor to navigate a <code>SyncResolver</code> object. For example, an application can use the <code>RowSet</code> method <code>next</code> to get to each row and then call the <code>SyncResolver</code> method <code>getStatus</code> to see if the row contains a conflict. In a row with one or more conflicts, the application can iterate through the columns to find any non-null values, which will be the values from the data source that are in conflict. <p> To make it easier to navigate a <code>SyncResolver</code> object, especially when there are large numbers of rows with no conflicts, the <code>SyncResolver</code> interface defines the methods <code>nextConflict</code> and <code>previousConflict</code>, which move only to rows that contain at least one conflict value. Then an application can call the <code>SyncResolver</code> method <code>getConflictValue</code>, supplying it with the column number, to get the conflict value itself. The code fragment in the next section gives an example. </p>
+<h2>Code Example</h2> The following code fragment demonstrates how a disconnected <code>RowSet</code> object <i>crs</i> might attempt to synchronize itself with the underlying data source and then resolve the conflicts. In the <code>try</code> block, <i>crs</i> calls the method <code>acceptChanges</code>, passing it the <code>Connection</code> object <i>con</i>. If there are no conflicts, the changes in <i>crs</i> are simply written to the data source. However, if there is a conflict, the method <code>acceptChanges</code> throws a <code>SyncProviderException</code> object, and the <code>catch</code> block takes effect. In this example, which illustrates one of the many ways a <code>SyncResolver</code> object can be used, the <code>SyncResolver</code> method <code>nextConflict</code> is used in a <code>while</code> loop. The loop will end when <code>nextConflict</code> returns <code>false</code>, which will occur when there are no more conflict rows in the <code>SyncResolver</code> object <i>resolver</i>. In This particular code fragment, <i>resolver</i> looks for rows that have update conflicts (rows with the status <code>SyncResolver.UPDATE_ROW_CONFLICT</code>), and the rest of this code fragment executes only for rows where conflicts occurred because <i>crs</i> was attempting an update. <p> After the cursor for <i>resolver</i> has moved to the next conflict row that has an update conflict, the method <code>getRow</code> indicates the number of the current row, and the cursor for the <code>CachedRowSet</code> object <i>crs</i> is moved to the comparable row in <i>crs</i>. By iterating through the columns of that row in both <i>resolver</i> and <i>crs</i>, the conflicting values can be retrieved and compared to decide which one should be persisted. In this code fragment, the value in <i>crs</i> is the one set as the resolved value, which means that it will be used to overwrite the conflict value in the data source. </p>
+<pre data-language="java">try {
+
+         crs.acceptChanges(con);
+
+     } catch (SyncProviderException spe) {
+
+         SyncResolver resolver = spe.getSyncResolver();
+
+         Object crsValue;  // value in the RowSet object
+         Object resolverValue:  // value in the SyncResolver object
+         Object resolvedValue:  // value to be persisted
+
+         while(resolver.nextConflict())  {
+             if(resolver.getStatus() == SyncResolver.UPDATE_ROW_CONFLICT)  {
+                 int row = resolver.getRow();
+                 crs.absolute(row);
+
+                 int colCount = crs.getMetaData().getColumnCount();
+                 for(int j = 1; j &lt;= colCount; j++) {
+                     if (resolver.getConflictValue(j) != null)  {
+                         crsValue = crs.getObject(j);
+                         resolverValue = resolver.getConflictValue(j);
+                         . . .
+                         // compare crsValue and resolverValue to determine
+                         // which should be the resolved value (the value to persist)
+                         resolvedValue = crsValue;
+
+                         resolver.setResolvedValue(j, resolvedValue);
+                      }
+                  }
+              }
+          }
+      }</pre>
+</div>       <h2 id="field.detail">Fields</h2>   <h3 id="UPDATE_ROW_CONFLICT">UPDATE_ROW_CONFLICT</h3> <pre data-language="java">static final int UPDATE_ROW_CONFLICT</pre> <p>Indicates that a conflict occurred while the <code>RowSet</code> object was attempting to update a row in the data source. The values in the data source row to be updated differ from the <code>RowSet</code> object's original values for that row, which means that the row in the data source has been updated or deleted since the last synchronization.</p>     <h3 id="DELETE_ROW_CONFLICT">DELETE_ROW_CONFLICT</h3> <pre data-language="java">static final int DELETE_ROW_CONFLICT</pre> <p>Indicates that a conflict occurred while the <code>RowSet</code> object was attempting to delete a row in the data source. The values in the data source row to be updated differ from the <code>RowSet</code> object's original values for that row, which means that the row in the data source has been updated or deleted since the last synchronization.</p>     <h3 id="INSERT_ROW_CONFLICT">INSERT_ROW_CONFLICT</h3> <pre data-language="java">static final int INSERT_ROW_CONFLICT</pre> <p>Indicates that a conflict occurred while the <code>RowSet</code> object was attempting to insert a row into the data source. This means that a row with the same primary key as the row to be inserted has been inserted into the data source since the last synchronization.</p>     <h3 id="NO_ROW_CONFLICT">NO_ROW_CONFLICT</h3> <pre data-language="java">static final int NO_ROW_CONFLICT</pre> <p>Indicates that <b>no</b> conflict occurred while the <code>RowSet</code> object was attempting to update, delete or insert a row in the data source. The values in the <code>SyncResolver</code> will contain <code>null</code> values only as an indication that no information in pertinent to the conflict resolution in this row.</p>      <h2 id="method.detail">Methods</h2>   <h3 id="getStatus--">getStatus</h3> <pre data-language="java">int getStatus()</pre> <p>Retrieves the conflict status of the current row of this <code>SyncResolver</code>, which indicates the operation the <code>RowSet</code> object was attempting when the conflict occurred.</p> <dl> <dt>Returns:</dt> <dd>one of the following constants: <code>SyncResolver.UPDATE_ROW_CONFLICT</code>, <code>SyncResolver.DELETE_ROW_CONFLICT</code>, <code>SyncResolver.INSERT_ROW_CONFLICT</code>, or <code>SyncResolver.NO_ROW_CONFLICT</code>
+</dd> </dl>    <h3 id="getConflictValue-int-">getConflictValue</h3> <pre data-language="java">Object getConflictValue(int index)
+                 throws SQLException</pre> <p>Retrieves the value in the designated column in the current row of this <code>SyncResolver</code> object, which is the value in the data source that caused a conflict.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>index</code> - an <code>int</code> designating the column in this row of this <code>SyncResolver</code> object from which to retrieve the value causing a conflict</dd> <dt>Returns:</dt> <dd>the value of the designated column in the current row of this <code>SyncResolver</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../../java/sql/sqlexception/">SQLException</a></code> - if a database access error occurs</dd> </dl>    <h3 id="getConflictValue-java.lang.String-">getConflictValue</h3> <pre data-language="java">Object getConflictValue(String columnName)
+                 throws SQLException</pre> <p>Retrieves the value in the designated column in the current row of this <code>SyncResolver</code> object, which is the value in the data source that caused a conflict.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>columnName</code> - a <code>String</code> object designating the column in this row of this <code>SyncResolver</code> object from which to retrieve the value causing a conflict</dd> <dt>Returns:</dt> <dd>the value of the designated column in the current row of this <code>SyncResolver</code> object</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../../java/sql/sqlexception/">SQLException</a></code> - if a database access error occurs</dd> </dl>    <h3 id="setResolvedValue-int-java.lang.Object-">setResolvedValue</h3> <pre data-language="java">void setResolvedValue(int index,
+                      Object obj)
+               throws SQLException</pre> <p>Sets <i>obj</i> as the value in column <i>index</i> in the current row of the <code>RowSet</code> object that is being synchronized. <i>obj</i> is set as the value in the data source internally.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>index</code> - an <code>int</code> giving the number of the column into which to set the value to be persisted</dd> <dd>
+<code>obj</code> - an <code>Object</code> that is the value to be set in the <code>RowSet</code> object and persisted in the data source</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../../java/sql/sqlexception/">SQLException</a></code> - if a database access error occurs</dd> </dl>    <h3 id="setResolvedValue-java.lang.String-java.lang.Object-">setResolvedValue</h3> <pre data-language="java">void setResolvedValue(String columnName,
+                      Object obj)
+               throws SQLException</pre> <p>Sets <i>obj</i> as the value in column <i>columnName</i> in the current row of the <code>RowSet</code> object that is being synchronized. <i>obj</i> is set as the value in the data source internally.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>columnName</code> - a <code>String</code> object giving the name of the column into which to set the value to be persisted</dd> <dd>
+<code>obj</code> - an <code>Object</code> that is the value to be set in the <code>RowSet</code> object and persisted in the data source</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../../java/sql/sqlexception/">SQLException</a></code> - if a database access error occurs</dd> </dl>    <h3 id="nextConflict--">nextConflict</h3> <pre data-language="java">boolean nextConflict()
+              throws SQLException</pre> <div>
+<p>Moves the cursor down from its current position to the next row that contains a conflict value. A <code>SyncResolver</code> object's cursor is initially positioned before the first conflict row; the first call to the method <code>nextConflict</code> makes the first conflict row the current row; the second call makes the second conflict row the current row, and so on. </p>
+<p> A call to the method <code>nextConflict</code> will implicitly close an input stream if one is open and will clear the <code>SyncResolver</code> object's warning chain.</p>
+</div> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if the new current row is valid; <code>false</code> if there are no more rows</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../../java/sql/sqlexception/">SQLException</a></code> - if a database access error occurs or the result set type is <code>TYPE_FORWARD_ONLY</code>
+</dd> </dl>    <h3 id="previousConflict--">previousConflict</h3> <pre data-language="java">boolean previousConflict()
+                  throws SQLException</pre> <div>
+<p>Moves the cursor up from its current position to the previous conflict row in this <code>SyncResolver</code> object. </p>
+<p> A call to the method <code>previousConflict</code> will implicitly close an input stream if one is open and will clear the <code>SyncResolver</code> object's warning chain.</p>
+</div> <dl> <dt>Returns:</dt> <dd>
+<code>true</code> if the cursor is on a valid row; <code>false</code> if it is off the result set</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../../java/sql/sqlexception/">SQLException</a></code> - if a database access error occurs or the result set type is <code>TYPE_FORWARD_ONLY</code>
+</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

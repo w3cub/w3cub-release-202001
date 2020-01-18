@@ -1,0 +1,181 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Predicate - OpenJDK 8 Web - W3cubDocs</title>
+  
+  <meta name="description" content=" The standard interface that provides the framework for all FilteredRowSet objects to describe their filters. ">
+  <meta name="keywords" content="interface, predicate, -, openjdk, web, openjdk~8_web">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_web/javax/sql/rowset/predicate/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_web.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_web/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 Web</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface Predicate</h1>       <pre data-language="java">public interface Predicate</pre> <div>
+<p>The standard interface that provides the framework for all <code>FilteredRowSet</code> objects to describe their filters. </p>
+<h2>1.0 Background</h2> The <code>Predicate</code> interface is a standard interface that applications can implement to define the filter they wish to apply to a a <code>FilteredRowSet</code> object. A <code>FilteredRowSet</code> object consumes implementations of this interface and enforces the constraints defined in the implementation of the method <code>evaluate</code>. A <code>FilteredRowSet</code> object enforces the filter constraints in a bi-directional manner: It outputs only rows that are within the constraints of the filter; and conversely, it inserts, modifies, or updates only rows that are within the constraints of the filter. <h2>2.0 Implementation Guidelines</h2> In order to supply a predicate for the <code>FilteredRowSet</code>. this interface must be implemented. At this time, the JDBC RowSet Implementations (JSR-114) does not specify any standard filters definitions. By specifying a standard means and mechanism for a range of filters to be defined and deployed with both the reference and vendor implementations of the <code>FilteredRowSet</code> interface, this allows for a flexible and application motivated implementations of <code>Predicate</code> to emerge. 
+<p> A sample implementation would look something like this: </p>
+<pre data-language="java">public class Range implements Predicate {
+
+       private int[] lo;
+       private int[] hi;
+       private int[] idx;
+
+       public Range(int[] lo, int[] hi, int[] idx) {
+          this.lo = lo;
+          this.hi = hi;
+          this.idx = idx;
+       }
+
+      public boolean evaluate(RowSet rs) {
+
+          // Check the present row determine if it lies
+          // within the filtering criteria.
+
+          for (int i = 0; i &lt; idx.length; i++) {
+             int value;
+             try {
+                 value = (Integer) rs.getObject(idx[i]);
+             } catch (SQLException ex) {
+                 Logger.getLogger(Range.class.getName()).log(Level.SEVERE, null, ex);
+                 return false;
+             }
+
+             if (value &lt; lo[i] &amp;&amp; value &gt; hi[i]) {
+                 // outside of filter constraints
+                 return false;
+             }
+         }
+         // Within filter constraints
+        return true;
+      }
+   }</pre> <p> The example above implements a simple range predicate. Note, that implementations should but are not required to provide <code>String</code> and integer index based constructors to provide for JDBC RowSet Implementation applications that use both column identification conventions.</p>
+</div>       <h2 id="method.detail">Methods</h2>   <h3 id="evaluate-javax.sql.RowSet-">evaluate</h3> <pre data-language="java">boolean evaluate(RowSet rs)</pre> <p>This method is typically called a <code>FilteredRowSet</code> object internal methods (not public) that control the <code>RowSet</code> object's cursor moving from row to the next. In addition, if this internal method moves the cursor onto a row that has been deleted, the internal method will continue to ove the cursor until a valid row is found.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>rs</code> - The <code>RowSet</code> to be evaluated</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if there are more rows in the filter; <code>false</code> otherwise</dd> </dl>    <h3 id="evaluate-java.lang.Object-int-">evaluate</h3> <pre data-language="java">boolean evaluate(Object value,
+                 int column)
+          throws SQLException</pre> <div>
+<p>This method is called by a <code>FilteredRowSet</code> object to check whether the value lies between the filtering criterion (or criteria if multiple constraints exist) set using the <code>setFilter()</code> method. </p>
+<p> The <code>FilteredRowSet</code> object will use this method internally while inserting new rows to a <code>FilteredRowSet</code> instance.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>value</code> - An <code>Object</code> value which needs to be checked, whether it can be part of this <code>FilterRowSet</code> object.</dd> <dd>
+<code>column</code> - a <code>int</code> object that must match the SQL index of a column in this <code>RowSet</code> object. This must have been passed to <code>Predicate</code> as one of the columns for filtering while initializing a <code>Predicate</code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if row value lies within the filter; <code>false</code> otherwise</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/sql/sqlexception/">SQLException</a></code> - if the column is not part of filtering criteria</dd> </dl>    <h3 id="evaluate-java.lang.Object-java.lang.String-">evaluate</h3> <pre data-language="java">boolean evaluate(Object value,
+                 String columnName)
+          throws SQLException</pre> <div>
+<p>This method is called by the <code>FilteredRowSet</code> object to check whether the value lies between the filtering criteria set using the setFilter method. </p>
+<p> The <code>FilteredRowSet</code> object will use this method internally while inserting new rows to a <code>FilteredRowSet</code> instance.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>value</code> - An <code>Object</code> value which needs to be checked, whether it can be part of this <code>FilterRowSet</code>.</dd> <dd>
+<code>columnName</code> - a <code>String</code> object that must match the SQL name of a column in this <code>RowSet</code>, ignoring case. This must have been passed to <code>Predicate</code> as one of the columns for filtering while initializing a <code>Predicate</code>
+</dd> <dt>Returns:</dt> <dd>
+<code>true</code> if value lies within the filter; <code>false</code> otherwise</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/sql/sqlexception/">SQLException</a></code> - if the column is not part of filtering criteria</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

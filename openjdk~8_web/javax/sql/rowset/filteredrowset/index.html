@@ -1,0 +1,147 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>FilteredRowSet - OpenJDK 8 Web - W3cubDocs</title>
+  
+  <meta name="description" content="The standard interface that all standard implementations of FilteredRowSet must implement. The FilteredRowSetImpl class provides the reference &hellip;">
+  <meta name="keywords" content="interface, filteredrowset, -, openjdk, web, openjdk~8_web">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_web/javax/sql/rowset/filteredrowset/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_web.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_web/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 Web</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface FilteredRowSet</h1>     <dl> <dt>All Superinterfaces:</dt> <dd>
+<a href="..//openjdk~8/java/lang/autocloseable/">AutoCloseable</a>, <a href="../cachedrowset/">CachedRowSet</a>, <a href="../joinable/">Joinable</a>, <a href="../../../../java/sql/resultset/">ResultSet</a>, <a href="../../rowset/">RowSet</a>, <a href="../webrowset/">WebRowSet</a>, <a href="../../../../java/sql/wrapper/">Wrapper</a>
+</dd> </dl>   <pre data-language="java">public interface FilteredRowSet
+extends WebRowSet</pre> <div>
+<p>The standard interface that all standard implementations of <code>FilteredRowSet</code> must implement. The <code>FilteredRowSetImpl</code> class provides the reference implementation which may be extended if required. Alternatively, a vendor is free to implement its own version by implementing this interface. </p>
+<h2>1.0 Background</h2> There are occasions when a <code>RowSet</code> object has a need to provide a degree of filtering to its contents. One possible solution is to provide a query language for all standard <code>RowSet</code> implementations; however, this is an impractical approach for lightweight components such as disconnected <code>RowSet</code> objects. The <code>FilteredRowSet</code> interface seeks to address this need without supplying a heavyweight query language along with the processing that such a query language would require. 
+<p> A JDBC <code>FilteredRowSet</code> standard implementation implements the <code>RowSet</code> interfaces and extends the <code>CachedRowSet</code>™ class. The <code>CachedRowSet</code> class provides a set of protected cursor manipulation methods, which a <code>FilteredRowSet</code> implementation can override to supply filtering support. </p>
+<h2>2.0 Predicate Sharing</h2> If a <code>FilteredRowSet</code> implementation is shared using the inherited <code>createShared</code> method in parent interfaces, the <code>Predicate</code> should be shared without modification by all <code>FilteredRowSet</code> instance clones. <h2>3.0 Usage</h2> <p> By implementing a <code>Predicate</code> (see example in <a href="../predicate/">Predicate</a> class JavaDoc), a <code>FilteredRowSet</code> could then be used as described below. </p>
+<pre data-language="java">FilteredRowSet frs = new FilteredRowSetImpl();
+     frs.populate(rs);
+
+     Range name = new Range("Alpha", "Bravo", "columnName");
+     frs.setFilter(name);
+
+     frs.next() // only names from "Alpha" to "Bravo" will be returned</pre> In the example above, we initialize a <code>Range</code> object which implements the <code>Predicate</code> interface. This object expresses the following constraints: All rows outputted or modified from this <code>FilteredRowSet</code> object must fall between the values 'Alpha' and 'Bravo' both values inclusive, in the column 'columnName'. If a filter is applied to a <code>FilteredRowSet</code> object that contains no data that falls within the range of the filter, no rows are returned. <p> This framework allows multiple classes implementing predicates to be used in combination to achieved the required filtering result with out the need for query language processing. </p>
+<h2>4.0 Updating a <code>FilteredRowSet</code> Object</h2> The predicate set on a <code>FilteredRowSet</code> object applies a criterion on all rows in a <code>RowSet</code> object to manage a subset of rows in a <code>RowSet</code> object. This criterion governs the subset of rows that are visible and also defines which rows can be modified, deleted or inserted. <p> Therefore, the predicate set on a <code>FilteredRowSet</code> object must be considered as bi-directional and the set criterion as the gating mechanism for all views and updates to the <code>FilteredRowSet</code> object. Any attempt to update the <code>FilteredRowSet</code> that violates the criterion will result in a <code>SQLException</code> object being thrown. </p>
+<p> The <code>FilteredRowSet</code> range criterion can be modified by applying a new <code>Predicate</code> object to the <code>FilteredRowSet</code> instance at any time. This is possible if no additional references to the <code>FilteredRowSet</code> object are detected. A new filter has has an immediate effect on criterion enforcement within the <code>FilteredRowSet</code> object, and all subsequent views and updates will be subject to similar enforcement. </p>
+<h2>5.0 Behavior of Rows Outside the Filter</h2> Rows that fall outside of the filter set on a <code>FilteredRowSet</code> object cannot be modified until the filter is removed or a new filter is applied. <p> Furthermore, only rows that fall within the bounds of a filter will be synchronized with the data source.</p>
+</div>       <h2 id="field.summary">Fields</h2>  <h2 id="fields.inherited.from.class.javax.sql.rowset.WebRowSet">Fields inherited from interface javax.sql.rowset.<a href="../webrowset/">WebRowSet</a>
+</h2> <code><a href="../webrowset/#PUBLIC_XML_SCHEMA">PUBLIC_XML_SCHEMA</a>, <a href="../webrowset/#SCHEMA_SYSTEM_ID">SCHEMA_SYSTEM_ID</a></code>  <h2 id="fields.inherited.from.class.javax.sql.rowset.CachedRowSet">Fields inherited from interface javax.sql.rowset.<a href="../cachedrowset/">CachedRowSet</a>
+</h2> <code><a href="../cachedrowset/#COMMIT_ON_ACCEPT_CHANGES">COMMIT_ON_ACCEPT_CHANGES</a></code>  <h2 id="fields.inherited.from.class.java.sql.ResultSet">Fields inherited from interface java.sql.<a href="../../../../java/sql/resultset/">ResultSet</a>
+</h2> <code><a href="../../../../java/sql/resultset/#CLOSE_CURSORS_AT_COMMIT">CLOSE_CURSORS_AT_COMMIT</a>, <a href="../../../../java/sql/resultset/#CONCUR_READ_ONLY">CONCUR_READ_ONLY</a>, <a href="../../../../java/sql/resultset/#CONCUR_UPDATABLE">CONCUR_UPDATABLE</a>, <a href="../../../../java/sql/resultset/#FETCH_FORWARD">FETCH_FORWARD</a>, <a href="../../../../java/sql/resultset/#FETCH_REVERSE">FETCH_REVERSE</a>, <a href="../../../../java/sql/resultset/#FETCH_UNKNOWN">FETCH_UNKNOWN</a>, <a href="../../../../java/sql/resultset/#HOLD_CURSORS_OVER_COMMIT">HOLD_CURSORS_OVER_COMMIT</a>, <a href="../../../../java/sql/resultset/#TYPE_FORWARD_ONLY">TYPE_FORWARD_ONLY</a>, <a href="../../../../java/sql/resultset/#TYPE_SCROLL_INSENSITIVE">TYPE_SCROLL_INSENSITIVE</a>, <a href="../../../../java/sql/resultset/#TYPE_SCROLL_SENSITIVE">TYPE_SCROLL_SENSITIVE</a></code>    <h2 id="method.detail">Methods</h2>   <h3 id="setFilter-javax.sql.rowset.Predicate-">setFilter</h3> <pre data-language="java">void setFilter(Predicate p)
+        throws SQLException</pre> <div>
+<p>Applies the given <code>Predicate</code> object to this <code>FilteredRowSet</code> object. The filter applies controls both to inbound and outbound views, constraining which rows are visible and which rows can be manipulated. </p>
+<p> A new <code>Predicate</code> object may be set at any time. This has the effect of changing constraints on the <code>RowSet</code> object's data. In addition, modifying the filter at runtime presents issues whereby multiple components may be operating on one <code>FilteredRowSet</code> object. Application developers must take responsibility for managing multiple handles to <code>FilteredRowSet</code> objects when their underling <code>Predicate</code> objects change.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>p</code> - a <code>Predicate</code> object defining the filter for this <code>FilteredRowSet</code> object. Setting a <b>null</b> value will clear the predicate, allowing all rows to become visible.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../../../../java/sql/sqlexception/">SQLException</a></code> - if an error occurs when setting the <code>Predicate</code> object</dd> </dl>    <h3 id="getFilter--">getFilter</h3> <pre data-language="java">Predicate getFilter()</pre> <p>Retrieves the active filter for this <code>FilteredRowSet</code> object.</p> <dl> <dt>Returns:</dt> <dd>p the <code>Predicate</code> for this <code>FilteredRowSet</code> object; <code>null</code> if no filter has been set.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,166 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ServerRequestInterceptorOperations - OpenJDK 8 Web - W3cubDocs</title>
+  
+  <meta name="description" content=" Server-side request interceptor. ">
+  <meta name="keywords" content="interface, serverrequestinterceptoroperations, -, openjdk, web, openjdk~8_web">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_web/org/omg/portableinterceptor/serverrequestinterceptoroperations/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_web.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_web/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 Web</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface ServerRequestInterceptorOperations</h1>     <dl> <dt>All Superinterfaces:</dt> <dd><a href="../interceptoroperations/">InterceptorOperations</a></dd> </dl> <dl> <dt>All Known Subinterfaces:</dt> <dd><a href="../serverrequestinterceptor/">ServerRequestInterceptor</a></dd> </dl>   <pre data-language="java">public interface ServerRequestInterceptorOperations
+extends InterceptorOperations</pre> <div>
+<p>Server-side request interceptor. </p>
+<p> A request Interceptor is designed to intercept the flow of a request/reply sequence through the ORB at specific points so that services can query the request information and manipulate the service contexts which are propagated between clients and servers. The primary use of request Interceptors is to enable ORB services to transfer context information between clients and servers. There are two types of request Interceptors: client-side and server-side. </p>
+<p> To write a server-side Interceptor, implement the ServerRequestInterceptor interface.</p>
+</div> <dl> <dt>See Also:</dt> <dd><a href="../serverrequestinfo/"><code>ServerRequestInfo</code></a></dd> </dl>       <h2 id="method.detail">Methods</h2>   <h3 id="receive_request_service_contexts-org.omg.PortableInterceptor.ServerRequestInfo-">receive_request_service_contexts</h3> <pre data-language="java">void receive_request_service_contexts(ServerRequestInfo ri)
+                               throws ForwardRequest</pre> <div>
+<p>Allows the interceptor to process service context information. </p>
+<p> At this interception point, Interceptors must get their service context information from the incoming request transfer it to <code>PortableInterceptor.Current</code>'s slots. </p>
+<p> This interception point is called before the servant manager is called. Operation parameters are not yet available at this point. This interception point may or may not execute in the same thread as the target invocation. </p>
+<p> This interception point may throw a system exception. If it does, no other Interceptors' <code>receive_request_service_contexts</code> operations are called. Those Interceptors on the Flow Stack are popped and their <code>send_exception</code> interception points are called. </p>
+<p> This interception point may also throw a <code>ForwardRequest</code> exception. If an Interceptor throws this exception, no other Interceptors' <code>receive_request_service_contexts</code> operations are called. Those Interceptors on the Flow Stack are popped and their <code>send_other</code> interception points are called. </p>
+<p> Compliant Interceptors shall properly follow <code>completion_status</code> semantics if they throw a system exception from this interception point. The <code>completion_status</code> shall be COMPLETED_NO.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>ri</code> - Information about the current request being intercepted.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../forwardrequest/">ForwardRequest</a></code> - If thrown, indicates to the ORB that a retry of the request should occur with the new object given in the exception.</dd> </dl>    <h3 id="receive_request-org.omg.PortableInterceptor.ServerRequestInfo-">receive_request</h3> <pre data-language="java">void receive_request(ServerRequestInfo ri)
+              throws ForwardRequest</pre> <div>
+<p>Allows an Interceptor to query request information after all the information, including operation parameters, are available. This interception point shall execute in the same thread as the target invocation. </p>
+<p> In the DSI model, since the parameters are first available when the user code calls <code>arguments</code>, <code>receive_request</code> is called from within <code>arguments</code>. It is possible that <code>arguments</code> is not called in the DSI model. The target may call <code>set_exception</code> before calling <code>arguments</code>. The ORB shall guarantee that <code>receive_request</code> is called once, either through <code>arguments</code> or through <code>set_exception</code>. If it is called through <code>set_exception</code>, requesting the arguments will result in <code>NO_RESOURCES</code> being thrown with a standard minor code of 1. </p>
+<p> This interception point may throw a system exception. If it does, no other Interceptors' <code>receive_request</code> operations are called. Those Interceptors on the Flow Stack are popped and their <code>send_exception</code> interception points are called. </p>
+<p> This interception point may also throw a <code>ForwardRequest</code> exception. If an Interceptor throws this exception, no other Interceptors' <code>receive_request</code> operations are called. Those Interceptors on the Flow Stack are popped and their <code>send_other</code> interception points are called. </p>
+<p> Compliant Interceptors shall properly follow <code>completion_status</code> semantics if they throw a system exception from this interception point. The <code>completion_status</code> shall be <code>COMPLETED_NO</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>ri</code> - Information about the current request being intercepted.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../forwardrequest/">ForwardRequest</a></code> - If thrown, indicates to the ORB that a retry of the request should occur with the new object given in the exception.</dd> </dl>    <h3 id="send_reply-org.omg.PortableInterceptor.ServerRequestInfo-">send_reply</h3> <pre data-language="java">void send_reply(ServerRequestInfo ri)</pre> <div>
+<p>Allows an Interceptor to query reply information and modify the reply service context after the target operation has been invoked and before the reply is returned to the client. This interception point shall execute in the same thread as the target invocation. </p>
+<p> This interception point may throw a system exception. If it does, no other Interceptors' <code>send_reply</code> operations are called. The remaining Interceptors in the Flow Stack shall have their <code>send_exception</code> interception point called. </p>
+<p> Compliant Interceptors shall properly follow <code>completion_status</code> semantics if they throw a system exception from this interception point. The <code>completion_status</code> shall be <code>COMPLETED_YES</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>ri</code> - Information about the current request being intercepted.</dd> </dl>    <h3 id="send_exception-org.omg.PortableInterceptor.ServerRequestInfo-">send_exception</h3> <pre data-language="java">void send_exception(ServerRequestInfo ri)
+             throws ForwardRequest</pre> <div>
+<p>Allows an Interceptor to query the exception information and modify the reply service context before the exception is thrown to the client. When an exception occurs, this interception point is called. This interception point shall execute in the same thread as the target invocation. </p>
+<p> This interception point may throw a system exception. This has the effect of changing the exception which successive Interceptors popped from the Flow Stack receive on their calls to <code>send_exception</code>. The exception thrown to the client will be the last exception thrown by an Interceptor, or the original exception if no Interceptor changes the exception. </p>
+<p> This interception point may also throw a <code>ForwardRequest</code> exception. If an Interceptor throws this exception, no other Interceptors' <code>send_exception</code> operations are called. The remaining Interceptors in the Flow Stack shall have their <code>send_other</code> interception points called. </p>
+<p> If the <code>completion_status</code> of the exception is not <code>COMPLETED_NO</code>, then it is inappropriate for this interception point to throw a <code>ForwardRequest</code> exception. The request's at-most-once semantics would be lost. </p>
+<p> Compliant Interceptors shall properly follow <code>completion_status</code> semantics if they throw a system exception from this interception point. If the original exception is a system exception, the <code>completion_status</code> of the new exception shall be the same as on the original. If the original exception is a user exception, then the <code>completion_status</code> of the new exception shall be <code>COMPLETED_YES</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>ri</code> - Information about the current request being intercepted.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../forwardrequest/">ForwardRequest</a></code> - If thrown, indicates to the ORB that a retry of the request should occur with the new object given in the exception.</dd> </dl>    <h3 id="send_other-org.omg.PortableInterceptor.ServerRequestInfo-">send_other</h3> <pre data-language="java">void send_other(ServerRequestInfo ri)
+         throws ForwardRequest</pre> <div>
+<p>Allows an Interceptor to query the information available when a request results in something other than a normal reply or an exception. For example, a request could result in a retry (e.g., a GIOP Reply with a <code>LOCATION_FORWARD</code> status was received). This interception point shall execute in the same thread as the target invocation. </p>
+<p> This interception point may throw a system exception. If it does, no other Interceptors' <code>send_other</code> operations are called. The remaining Interceptors in the Flow Stack shall have their <code>send_exception</code> interception points called. </p>
+<p> This interception point may also throw a <code>ForwardRequest</code> exception. If an Interceptor throws this exception, successive Interceptors' <code>send_other</code> operations are called with the new information provided by the <code>ForwardRequest</code> exception. </p>
+<p> Compliant Interceptors shall properly follow <code>completion_status</code> semantics if they throw a system exception from this interception point. The <code>completion_status</code> shall be <code>COMPLETED_NO</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>ri</code> - Information about the current request being intercepted.</dd> <dt>Throws:</dt> <dd>
+<code><a href="../forwardrequest/">ForwardRequest</a></code> - If thrown, indicates to the ORB that a retry of the request should occur with the new object given in the exception.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

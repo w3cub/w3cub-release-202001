@@ -1,0 +1,212 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>DriverManager - OpenJDK 8 Web - W3cubDocs</title>
+  
+  <meta name="description" content="The basic service for managing a set of JDBC drivers. NOTE&#58; The DataSource interface, new in the JDBC 2.0 API, provides another way to connect &hellip;">
+  <meta name="keywords" content="class, drivermanager, -, openjdk, web, openjdk~8_web">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_web/java/sql/drivermanager/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_web.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_web/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 Web</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class DriverManager</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>java.sql.DriverManager</li> </ul> </li> </ul>     <pre data-language="java">public class DriverManager
+extends Object</pre> <div>
+
+<p>The basic service for managing a set of JDBC drivers.<br> <b>NOTE:</b> The <a href="../../../javax/sql/datasource/"><code>DataSource</code></a> interface, new in the JDBC 2.0 API, provides another way to connect to a data source. The use of a <code>DataSource</code> object is the preferred means of connecting to a data source. </p>
+<p>As part of its initialization, the <code>DriverManager</code> class will attempt to load the driver classes referenced in the "jdbc.drivers" system property. This allows a user to customize the JDBC Drivers used by their applications. For example in your ~/.hotjava/properties file you might specify: </p>
+<pre data-language="java">jdbc.drivers=foo.bah.Driver:wombat.sql.Driver:bad.taste.ourDriver</pre> <p> The <code>DriverManager</code> methods <code>getConnection</code> and <code>getDrivers</code> have been enhanced to support the Java Standard Edition Service Provider mechanism. JDBC 4.0 Drivers must include the file <code>META-INF/services/java.sql.Driver</code>. This file contains the name of the JDBC drivers implementation of <code>java.sql.Driver</code>. For example, to load the <code>my.sql.Driver</code> class, the <code>META-INF/services/java.sql.Driver</code> file would contain the entry: </p>
+<pre data-language="java">my.sql.Driver</pre> <p>Applications no longer need to explicitly load JDBC drivers using <code>Class.forName()</code>. Existing programs which currently load JDBC drivers using <code>Class.forName()</code> will continue to work without modification. </p>
+<p>When the method <code>getConnection</code> is called, the <code>DriverManager</code> will attempt to locate a suitable driver from amongst those loaded at initialization and those loaded explicitly using the same classloader as the current applet or application. </p>
+<p> Starting with the Java 2 SDK, Standard Edition, version 1.3, a logging stream can be set only if the proper permission has been granted. Normally this will be done with the tool PolicyTool, which can be used to grant <code>permission
+ java.sql.SQLPermission "setLog"</code>.</p>
+</div> <dl> <dt>See Also:</dt> <dd>
+<a href="../driver/"><code>Driver</code></a>, <a href="../connection/"><code>Connection</code></a>
+</dd> </dl>       <h2 id="method.detail">Methods</h2>   <h3 id="getLogWriter--">getLogWriter</h3> <pre data-language="java">public static PrintWriter getLogWriter()</pre> <p>Retrieves the log writer. The <code>getLogWriter</code> and <code>setLogWriter</code> methods should be used instead of the <code>get/setlogStream</code> methods, which are deprecated.</p> <dl> <dt>Returns:</dt> <dd>a <code>java.io.PrintWriter</code> object</dd> <dt>Since:</dt> <dd>1.2</dd> <dt>See Also:</dt> <dd><a href="../drivermanager/#setLogWriter-java.io.PrintWriter-"><code>setLogWriter(java.io.PrintWriter)</code></a></dd> </dl>    <h3 id="setLogWriter-java.io.PrintWriter-">setLogWriter</h3> <pre data-language="java">public static void setLogWriter(PrintWriter out)</pre> <div>
+<p>Sets the logging/tracing <code>PrintWriter</code> object that is used by the <code>DriverManager</code> and all drivers. </p>
+<p> There is a minor versioning problem created by the introduction of the method <code>setLogWriter</code>. The method <code>setLogWriter</code> cannot create a <code>PrintStream</code> object that will be returned by <code>getLogStream</code>---the Java platform does not provide a backward conversion. As a result, a new application that uses <code>setLogWriter</code> and also uses a JDBC 1.0 driver that uses <code>getLogStream</code> will likely not see debugging information written by that driver. </p>
+<p> Starting with the Java 2 SDK, Standard Edition, version 1.3 release, this method checks to see that there is an <code>SQLPermission</code> object before setting the logging stream. If a <code>SecurityManager</code> exists and its <code>checkPermission</code> method denies setting the log writer, this method throws a <code>java.lang.SecurityException</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>out</code> - the new logging/tracing <code>PrintStream</code> object; <code>null</code> to disable logging and tracing</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkPermission</code> method denies setting the log writer</dd> <dt>Since:</dt> <dd>1.2</dd> <dt>See Also:</dt> <dd>
+<a href="..//openjdk~8/java/lang/securitymanager/"><code>SecurityManager.checkPermission(java.security.Permission)</code></a>, <a href="../drivermanager/#getLogWriter--"><code>getLogWriter()</code></a>
+</dd> </dl>    <h3 id="getConnection-java.lang.String-java.util.Properties-">getConnection</h3> <pre data-language="java">public static Connection getConnection(String url,
+                                       Properties info)
+                                throws SQLException</pre> <div>
+<p>Attempts to establish a connection to the given database URL. The <code>DriverManager</code> attempts to select an appropriate driver from the set of registered JDBC drivers. </p>
+<p> <b>Note:</b> If a property is specified as part of the <code>url</code> and is also specified in the <code>Properties</code> object, it is implementation-defined as to which value will take precedence. For maximum portability, an application should only specify a property once.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>url</code> - a database url of the form <code> jdbc:<em>subprotocol</em>:<em>subname</em></code>
+</dd> <dd>
+<code>info</code> - a list of arbitrary string tag/value pairs as connection arguments; normally at least a "user" and "password" property should be included</dd> <dt>Returns:</dt> <dd>a Connection to the URL</dd> <dt>Throws:</dt> <dd>
+<code><a href="../sqlexception/">SQLException</a></code> - if a database access error occurs or the url is <code>null</code>
+</dd> <dd>
+<code><a href="../sqltimeoutexception/">SQLTimeoutException</a></code> - when the driver has determined that the timeout value specified by the <code>setLoginTimeout</code> method has been exceeded and has at least tried to cancel the current database connection attempt</dd> </dl>    <h3 id="getConnection-java.lang.String-java.lang.String-java.lang.String-">getConnection</h3> <pre data-language="java">public static Connection getConnection(String url,
+                                       String user,
+                                       String password)
+                                throws SQLException</pre> <div>
+<p>Attempts to establish a connection to the given database URL. The <code>DriverManager</code> attempts to select an appropriate driver from the set of registered JDBC drivers. </p>
+<p> <b>Note:</b> If the <code>user</code> or <code>password</code> property are also specified as part of the <code>url</code>, it is implementation-defined as to which value will take precedence. For maximum portability, an application should only specify a property once.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>url</code> - a database url of the form <code>jdbc:<em>subprotocol</em>:<em>subname</em></code>
+</dd> <dd>
+<code>user</code> - the database user on whose behalf the connection is being made</dd> <dd>
+<code>password</code> - the user's password</dd> <dt>Returns:</dt> <dd>a connection to the URL</dd> <dt>Throws:</dt> <dd>
+<code><a href="../sqlexception/">SQLException</a></code> - if a database access error occurs or the url is <code>null</code>
+</dd> <dd>
+<code><a href="../sqltimeoutexception/">SQLTimeoutException</a></code> - when the driver has determined that the timeout value specified by the <code>setLoginTimeout</code> method has been exceeded and has at least tried to cancel the current database connection attempt</dd> </dl>    <h3 id="getConnection-java.lang.String-">getConnection</h3> <pre data-language="java">public static Connection getConnection(String url)
+                                throws SQLException</pre> <p>Attempts to establish a connection to the given database URL. The <code>DriverManager</code> attempts to select an appropriate driver from the set of registered JDBC drivers.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>url</code> - a database url of the form <code> jdbc:<em>subprotocol</em>:<em>subname</em></code>
+</dd> <dt>Returns:</dt> <dd>a connection to the URL</dd> <dt>Throws:</dt> <dd>
+<code><a href="../sqlexception/">SQLException</a></code> - if a database access error occurs or the url is <code>null</code>
+</dd> <dd>
+<code><a href="../sqltimeoutexception/">SQLTimeoutException</a></code> - when the driver has determined that the timeout value specified by the <code>setLoginTimeout</code> method has been exceeded and has at least tried to cancel the current database connection attempt</dd> </dl>    <h3 id="getDriver-java.lang.String-">getDriver</h3> <pre data-language="java">public static Driver getDriver(String url)
+                        throws SQLException</pre> <p>Attempts to locate a driver that understands the given URL. The <code>DriverManager</code> attempts to select an appropriate driver from the set of registered JDBC drivers.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>url</code> - a database URL of the form <code>jdbc:<em>subprotocol</em>:<em>subname</em></code>
+</dd> <dt>Returns:</dt> <dd>a <code>Driver</code> object representing a driver that can connect to the given URL</dd> <dt>Throws:</dt> <dd>
+<code><a href="../sqlexception/">SQLException</a></code> - if a database access error occurs</dd> </dl>    <h3 id="registerDriver-java.sql.Driver-">registerDriver</h3> <pre data-language="java">public static void registerDriver(Driver driver)
+                           throws SQLException</pre> <p>Registers the given driver with the <code>DriverManager</code>. A newly-loaded driver class should call the method <code>registerDriver</code> to make itself known to the <code>DriverManager</code>. If the driver is currently registered, no action is taken.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>driver</code> - the new JDBC Driver that is to be registered with the <code>DriverManager</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="../sqlexception/">SQLException</a></code> - if a database access error occurs</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>driver</code> is null</dd> </dl>    <h3 id="registerDriver-java.sql.Driver-java.sql.DriverAction-">registerDriver</h3> <pre data-language="java">public static void registerDriver(Driver driver,
+                                  DriverAction da)
+                           throws SQLException</pre> <p>Registers the given driver with the <code>DriverManager</code>. A newly-loaded driver class should call the method <code>registerDriver</code> to make itself known to the <code>DriverManager</code>. If the driver is currently registered, no action is taken.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>driver</code> - the new JDBC Driver that is to be registered with the <code>DriverManager</code>
+</dd> <dd>
+<code>da</code> - the <code>DriverAction</code> implementation to be used when <code>DriverManager#deregisterDriver</code> is called</dd> <dt>Throws:</dt> <dd>
+<code><a href="../sqlexception/">SQLException</a></code> - if a database access error occurs</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/nullpointerexception/">NullPointerException</a></code> - if <code>driver</code> is null</dd> <dt>Since:</dt> <dd>1.8</dd> </dl>    <h3 id="deregisterDriver-java.sql.Driver-">deregisterDriver</h3> <pre data-language="java">public static void deregisterDriver(Driver driver)
+                             throws SQLException</pre> <div>
+<p>Removes the specified driver from the <code>DriverManager</code>'s list of registered drivers. </p>
+<p> If a <code>null</code> value is specified for the driver to be removed, then no action is taken. </p>
+<p> If a security manager exists and its <code>checkPermission</code> denies permission, then a <code>SecurityException</code> will be thrown. </p>
+<p> If the specified driver is not found in the list of registered drivers, then no action is taken. If the driver was found, it will be removed from the list of registered drivers. </p>
+<p> If a <code>DriverAction</code> instance was specified when the JDBC driver was registered, its deregister method will be called prior to the driver being removed from the list of registered drivers.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>driver</code> - the JDBC Driver to remove</dd> <dt>Throws:</dt> <dd>
+<code><a href="../sqlexception/">SQLException</a></code> - if a database access error occurs</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkPermission</code> method denies permission to deregister a driver.</dd> <dt>See Also:</dt> <dd><a href="..//openjdk~8/java/lang/securitymanager/"><code>SecurityManager.checkPermission(java.security.Permission)</code></a></dd> </dl>    <h3 id="getDrivers--">getDrivers</h3> <pre data-language="java">public static Enumeration&lt;Driver&gt; getDrivers()</pre> <div>
+<p>Retrieves an Enumeration with all of the currently loaded JDBC drivers to which the current caller has access. </p>
+<p><b>Note:</b> The classname of a driver can be found using <code>d.getClass().getName()</code></p>
+</div> <dl> <dt>Returns:</dt> <dd>the list of JDBC Drivers loaded by the caller's class loader</dd> </dl>    <h3 id="setLoginTimeout-int-">setLoginTimeout</h3> <pre data-language="java">public static void setLoginTimeout(int seconds)</pre> <p>Sets the maximum time in seconds that a driver will wait while attempting to connect to a database once the driver has been identified.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>seconds</code> - the login time limit in seconds; zero means there is no limit</dd> <dt>See Also:</dt> <dd><a href="../drivermanager/#getLoginTimeout--"><code>getLoginTimeout()</code></a></dd> </dl>    <h3 id="getLoginTimeout--">getLoginTimeout</h3> <pre data-language="java">public static int getLoginTimeout()</pre> <p>Gets the maximum time in seconds that a driver can wait when attempting to log in to a database.</p> <dl> <dt>Returns:</dt> <dd>the driver login time limit in seconds</dd> <dt>See Also:</dt> <dd><a href="../drivermanager/#setLoginTimeout-int-"><code>setLoginTimeout(int)</code></a></dd> </dl>    <h3 id="setLogStream-java.io.PrintStream-">setLogStream</h3> <pre data-language="java">@Deprecated
+public static void setLogStream(PrintStream out)</pre> <p><strong>Deprecated.</strong> Use <code>setLogWriter</code></p> <div>
+<p>Sets the logging/tracing PrintStream that is used by the <code>DriverManager</code> and all drivers. </p>
+<p> In the Java 2 SDK, Standard Edition, version 1.3 release, this method checks to see that there is an <code>SQLPermission</code> object before setting the logging stream. If a <code>SecurityManager</code> exists and its <code>checkPermission</code> method denies setting the log writer, this method throws a <code>java.lang.SecurityException</code>.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>out</code> - the new logging/tracing PrintStream; to disable, set to <code>null</code>
+</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/securityexception/">SecurityException</a></code> - if a security manager exists and its <code>checkPermission</code> method denies setting the log stream</dd> <dt>See Also:</dt> <dd>
+<a href="..//openjdk~8/java/lang/securitymanager/"><code>SecurityManager.checkPermission(java.security.Permission)</code></a>, <a href="../drivermanager/#getLogStream--"><code>getLogStream()</code></a>
+</dd> </dl>    <h3 id="getLogStream--">getLogStream</h3> <pre data-language="java">@Deprecated
+public static PrintStream getLogStream()</pre> <p><strong>Deprecated.</strong> Use <code>getLogWriter</code></p> <p>Retrieves the logging/tracing PrintStream that is used by the <code>DriverManager</code> and all drivers.</p> <dl> <dt>Returns:</dt> <dd>the logging/tracing PrintStream; if disabled, is <code>null</code>
+</dd> <dt>See Also:</dt> <dd><a href="../drivermanager/#setLogStream-java.io.PrintStream-"><code>setLogStream(java.io.PrintStream)</code></a></dd> </dl>    <h3 id="println-java.lang.String-">println</h3> <pre data-language="java">public static void println(String message)</pre> <p>Prints a message to the current JDBC log stream.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>message</code> - a log or tracing message</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

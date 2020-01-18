@@ -1,0 +1,329 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>DatatypeConverter - OpenJDK 8 Web - W3cubDocs</title>
+  
+  <meta name="description" content="The javaType binding declaration can be used to customize the binding of an XML schema datatype to a Java datatype. Customizations can involve &hellip;">
+  <meta name="keywords" content="class, datatypeconverter, -, openjdk, web, openjdk~8_web">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_web/javax/xml/bind/datatypeconverter/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_web.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_web/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 Web</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Class DatatypeConverter</h1>   <ul class="inheritance"> <li><a href="..//openjdk~8/java/lang/object/">java.lang.Object</a></li> <li> <ul class="inheritance"> <li>javax.xml.bind.DatatypeConverter</li> </ul> </li> </ul>     <pre data-language="java">public final class DatatypeConverter
+extends Object</pre> <div>
+
+<p> The javaType binding declaration can be used to customize the binding of an XML schema datatype to a Java datatype. Customizations can involve writing a parse and print method for parsing and printing lexical representations of a XML schema datatype respectively. However, writing parse and print methods requires knowledge of the lexical representations ( <a href="http://www.w3.org/TR/xmlschema-2/" target="_blank"> XML Schema Part2: Datatypes specification </a>) and hence may be difficult to write. </p> <p> This class makes it easier to write parse and print methods. It defines static parse and print methods that provide access to a JAXB provider's implementation of parse and print methods. These methods are invoked by custom parse and print methods. For example, the binding of xsd:dateTime to a long can be customized using parse and print methods as follows: </p>
+<pre data-language="java">// Customized parse method
+public long myParseCal( String dateTimeString ) {
+    java.util.Calendar cal = DatatypeConverter.parseDateTime(dateTimeString);
+    long longval = convert_calendar_to_long(cal); //application specific
+    return longval;
+}
+
+// Customized print method
+public String myPrintCal( Long longval ) {
+    java.util.Calendar cal = convert_long_to_calendar(longval) ; //application specific
+    String dateTimeString = DatatypeConverter.printDateTime(cal);
+    return dateTimeString;
+}</pre> <p> There is a static parse and print method corresponding to each parse and print method respectively in the <a href="../datatypeconverterinterface/"><code>DatatypeConverterInterface</code></a>. </p>
+<p> The static methods defined in the class can also be used to specify a parse or a print method in a javaType binding declaration. </p> <p> JAXB Providers are required to call the <a href="../datatypeconverter/#setDatatypeConverter-javax.xml.bind.DatatypeConverterInterface-"><code>setDatatypeConverter</code></a> api at some point before the first marshal or unmarshal operation (perhaps during the call to JAXBContext.newInstance). This step is necessary to configure the converter that should be used to perform the print and parse functionality. </p> <p> A print method for a XML schema datatype can output any lexical representation that is valid with respect to the XML schema datatype. If an error is encountered during conversion, then an IllegalArgumentException, or a subclass of IllegalArgumentException must be thrown by the method. </p>
+</div> <dl> <dt>Since:</dt> <dd>JAXB1.0</dd> <dt>See Also:</dt> <dd>
+<a href="../datatypeconverterinterface/"><code>DatatypeConverterInterface</code></a>, <a href="../parseconversionevent/"><code>ParseConversionEvent</code></a>, <a href="../printconversionevent/"><code>PrintConversionEvent</code></a>
+</dd> </dl>       <h2 id="method.detail">Methods</h2>   <h3 id="setDatatypeConverter-javax.xml.bind.DatatypeConverterInterface-">setDatatypeConverter</h3> <pre data-language="java">public static void setDatatypeConverter(DatatypeConverterInterface converter)</pre> <div>
+<p>This method is for JAXB provider use only. </p>
+<p> JAXB Providers are required to call this method at some point before allowing any of the JAXB client marshal or unmarshal operations to occur. This is necessary to configure the datatype converter that should be used to perform the print and parse conversions. </p>
+<p> Calling this api repeatedly will have no effect - the DatatypeConverterInterface instance passed into the first invocation is the one that will be used from then on.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>converter</code> - an instance of a class that implements the DatatypeConverterInterface class - this parameter must not be null.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if the parameter is null</dd> <dd>
+<code><a href="..//openjdk~8/java/lang/securityexception/">SecurityException</a></code> - If the <a href="..//openjdk~8/java/lang/securitymanager/"><code>SecurityManager</code></a> in charge denies the access to set the datatype converter.</dd> <dt>See Also:</dt> <dd><a href="../jaxbpermission/"><code>JAXBPermission</code></a></dd> </dl>    <h3 id="parseString-java.lang.String-">parseString</h3> <pre data-language="java">public static String parseString(String lexicalXSDString)</pre> <div>
+
+<p> Convert the lexical XSD string argument into a String value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDString</code> - A string containing a lexical representation of xsd:string.</dd> <dt>Returns:</dt> <dd>A String value represented by the string argument.</dd> </dl>    <h3 id="parseInteger-java.lang.String-">parseInteger</h3> <pre data-language="java">public static BigInteger parseInteger(String lexicalXSDInteger)</pre> <div>
+
+<p> Convert the string argument into a BigInteger value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDInteger</code> - A string containing a lexical representation of xsd:integer.</dd> <dt>Returns:</dt> <dd>A BigInteger value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/numberformatexception/">NumberFormatException</a></code> - <code>lexicalXSDInteger</code> is not a valid string representation of a <a href="..//openjdk~8/java/math/biginteger/"><code>BigInteger</code></a> value.</dd> </dl>    <h3 id="parseInt-java.lang.String-">parseInt</h3> <pre data-language="java">public static int parseInt(String lexicalXSDInt)</pre> <div>
+
+<p> Convert the string argument into an int value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDInt</code> - A string containing a lexical representation of xsd:int.</dd> <dt>Returns:</dt> <dd>A int value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/numberformatexception/">NumberFormatException</a></code> - <code>lexicalXSDInt</code> is not a valid string representation of an <code>int</code> value.</dd> </dl>    <h3 id="parseLong-java.lang.String-">parseLong</h3> <pre data-language="java">public static long parseLong(String lexicalXSDLong)</pre> <div>
+
+<p> Converts the string argument into a long value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDLong</code> - A string containing lexical representation of xsd:long.</dd> <dt>Returns:</dt> <dd>A long value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/numberformatexception/">NumberFormatException</a></code> - <code>lexicalXSDLong</code> is not a valid string representation of a <code>long</code> value.</dd> </dl>    <h3 id="parseShort-java.lang.String-">parseShort</h3> <pre data-language="java">public static short parseShort(String lexicalXSDShort)</pre> <div>
+
+<p> Converts the string argument into a short value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDShort</code> - A string containing lexical representation of xsd:short.</dd> <dt>Returns:</dt> <dd>A short value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/numberformatexception/">NumberFormatException</a></code> - <code>lexicalXSDShort</code> is not a valid string representation of a <code>short</code> value.</dd> </dl>    <h3 id="parseDecimal-java.lang.String-">parseDecimal</h3> <pre data-language="java">public static BigDecimal parseDecimal(String lexicalXSDDecimal)</pre> <div>
+
+<p> Converts the string argument into a BigDecimal value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDDecimal</code> - A string containing lexical representation of xsd:decimal.</dd> <dt>Returns:</dt> <dd>A BigDecimal value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/numberformatexception/">NumberFormatException</a></code> - <code>lexicalXSDDecimal</code> is not a valid string representation of <a href="..//openjdk~8/java/math/bigdecimal/"><code>BigDecimal</code></a>.</dd> </dl>    <h3 id="parseFloat-java.lang.String-">parseFloat</h3> <pre data-language="java">public static float parseFloat(String lexicalXSDFloat)</pre> <div>
+
+<p> Converts the string argument into a float value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDFloat</code> - A string containing lexical representation of xsd:float.</dd> <dt>Returns:</dt> <dd>A float value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/numberformatexception/">NumberFormatException</a></code> - <code>lexicalXSDFloat</code> is not a valid string representation of a <code>float</code> value.</dd> </dl>    <h3 id="parseDouble-java.lang.String-">parseDouble</h3> <pre data-language="java">public static double parseDouble(String lexicalXSDDouble)</pre> <div>
+
+<p> Converts the string argument into a double value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDDouble</code> - A string containing lexical representation of xsd:double.</dd> <dt>Returns:</dt> <dd>A double value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/numberformatexception/">NumberFormatException</a></code> - <code>lexicalXSDDouble</code> is not a valid string representation of a <code>double</code> value.</dd> </dl>    <h3 id="parseBoolean-java.lang.String-">parseBoolean</h3> <pre data-language="java">public static boolean parseBoolean(String lexicalXSDBoolean)</pre> <div>
+
+<p> Converts the string argument into a boolean value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDBoolean</code> - A string containing lexical representation of xsd:boolean.</dd> <dt>Returns:</dt> <dd>A boolean value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if string parameter does not conform to lexical value space defined in XML Schema Part 2: Datatypes for xsd:boolean.</dd> </dl>    <h3 id="parseByte-java.lang.String-">parseByte</h3> <pre data-language="java">public static byte parseByte(String lexicalXSDByte)</pre> <div>
+
+<p> Converts the string argument into a byte value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDByte</code> - A string containing lexical representation of xsd:byte.</dd> <dt>Returns:</dt> <dd>A byte value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if string parameter does not conform to lexical value space defined in XML Schema Part 2: Datatypes for xsd:byte.</dd> </dl>    <h3 id="parseQName-java.lang.String-javax.xml.namespace.NamespaceContext-">parseQName</h3> <pre data-language="java">public static QName parseQName(String lexicalXSDQName,
+                               NamespaceContext nsc)</pre> <div>
+
+<p> Converts the string argument into a byte value. </p>
+<p> String parameter <code>lexicalXSDQname</code> must conform to lexical value space specifed at <a href="http://www.w3.org/TR/xmlschema-2/#QName" target="_blank">XML Schema Part 2:Datatypes specification:QNames</a></p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDQName</code> - A string containing lexical representation of xsd:QName.</dd> <dd>
+<code>nsc</code> - A namespace context for interpreting a prefix within a QName.</dd> <dt>Returns:</dt> <dd>A QName value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if string parameter does not conform to XML Schema Part 2 specification or if namespace prefix of <code>lexicalXSDQname</code> is not bound to a URI in NamespaceContext <code>nsc</code>.</dd> </dl>    <h3 id="parseDateTime-java.lang.String-">parseDateTime</h3> <pre data-language="java">public static Calendar parseDateTime(String lexicalXSDDateTime)</pre> <div>
+
+<p> Converts the string argument into a Calendar value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDDateTime</code> - A string containing lexical representation of xsd:datetime.</dd> <dt>Returns:</dt> <dd>A Calendar object represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if string parameter does not conform to lexical value space defined in XML Schema Part 2: Datatypes for xsd:dateTime.</dd> </dl>    <h3 id="parseBase64Binary-java.lang.String-">parseBase64Binary</h3> <pre data-language="java">public static byte[] parseBase64Binary(String lexicalXSDBase64Binary)</pre> <div>
+
+<p> Converts the string argument into an array of bytes.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDBase64Binary</code> - A string containing lexical representation of xsd:base64Binary.</dd> <dt>Returns:</dt> <dd>An array of bytes represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if string parameter does not conform to lexical value space defined in XML Schema Part 2: Datatypes for xsd:base64Binary</dd> </dl>    <h3 id="parseHexBinary-java.lang.String-">parseHexBinary</h3> <pre data-language="java">public static byte[] parseHexBinary(String lexicalXSDHexBinary)</pre> <div>
+
+<p> Converts the string argument into an array of bytes.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDHexBinary</code> - A string containing lexical representation of xsd:hexBinary.</dd> <dt>Returns:</dt> <dd>An array of bytes represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if string parameter does not conform to lexical value space defined in XML Schema Part 2: Datatypes for xsd:hexBinary.</dd> </dl>    <h3 id="parseUnsignedInt-java.lang.String-">parseUnsignedInt</h3> <pre data-language="java">public static long parseUnsignedInt(String lexicalXSDUnsignedInt)</pre> <div>
+
+<p> Converts the string argument into a long value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDUnsignedInt</code> - A string containing lexical representation of xsd:unsignedInt.</dd> <dt>Returns:</dt> <dd>A long value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/numberformatexception/">NumberFormatException</a></code> - if string parameter can not be parsed into a <code>long</code> value.</dd> </dl>    <h3 id="parseUnsignedShort-java.lang.String-">parseUnsignedShort</h3> <pre data-language="java">public static int parseUnsignedShort(String lexicalXSDUnsignedShort)</pre> <div>
+
+<p> Converts the string argument into an int value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDUnsignedShort</code> - A string containing lexical representation of xsd:unsignedShort.</dd> <dt>Returns:</dt> <dd>An int value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/numberformatexception/">NumberFormatException</a></code> - if string parameter can not be parsed into an <code>int</code> value.</dd> </dl>    <h3 id="parseTime-java.lang.String-">parseTime</h3> <pre data-language="java">public static Calendar parseTime(String lexicalXSDTime)</pre> <div>
+
+<p> Converts the string argument into a Calendar value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDTime</code> - A string containing lexical representation of xsd:time.</dd> <dt>Returns:</dt> <dd>A Calendar value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if string parameter does not conform to lexical value space defined in XML Schema Part 2: Datatypes for xsd:Time.</dd> </dl>    <h3 id="parseDate-java.lang.String-">parseDate</h3> <pre data-language="java">public static Calendar parseDate(String lexicalXSDDate)</pre> <div>
+
+<p> Converts the string argument into a Calendar value.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDDate</code> - A string containing lexical representation of xsd:Date.</dd> <dt>Returns:</dt> <dd>A Calendar value represented by the string argument.</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if string parameter does not conform to lexical value space defined in XML Schema Part 2: Datatypes for xsd:Date.</dd> </dl>    <h3 id="parseAnySimpleType-java.lang.String-">parseAnySimpleType</h3> <pre data-language="java">public static String parseAnySimpleType(String lexicalXSDAnySimpleType)</pre> <div>
+
+<p> Return a string containing the lexical representation of the simple type.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>lexicalXSDAnySimpleType</code> - A string containing lexical representation of the simple type.</dd> <dt>Returns:</dt> <dd>A string containing the lexical representation of the simple type.</dd> </dl>    <h3 id="printString-java.lang.String-">printString</h3> <pre data-language="java">public static String printString(String val)</pre> <div>
+
+<p> Converts the string argument into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A string value.</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:string.</dd> </dl>    <h3 id="printInteger-java.math.BigInteger-">printInteger</h3> <pre data-language="java">public static String printInteger(BigInteger val)</pre> <div>
+
+<p> Converts a BigInteger value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A BigInteger value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:integer</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - <code>val</code> is null.</dd> </dl>    <h3 id="printInt-int-">printInt</h3> <pre data-language="java">public static String printInt(int val)</pre> <div>
+
+<p> Converts an int value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - An int value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:int</dd> </dl>    <h3 id="printLong-long-">printLong</h3> <pre data-language="java">public static String printLong(long val)</pre> <div>
+
+<p> Converts A long value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A long value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:long</dd> </dl>    <h3 id="printShort-short-">printShort</h3> <pre data-language="java">public static String printShort(short val)</pre> <div>
+
+<p> Converts a short value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A short value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:short</dd> </dl>    <h3 id="printDecimal-java.math.BigDecimal-">printDecimal</h3> <pre data-language="java">public static String printDecimal(BigDecimal val)</pre> <div>
+
+<p> Converts a BigDecimal value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A BigDecimal value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:decimal</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - <code>val</code> is null.</dd> </dl>    <h3 id="printFloat-float-">printFloat</h3> <pre data-language="java">public static String printFloat(float val)</pre> <div>
+
+<p> Converts a float value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A float value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:float</dd> </dl>    <h3 id="printDouble-double-">printDouble</h3> <pre data-language="java">public static String printDouble(double val)</pre> <div>
+
+<p> Converts a double value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A double value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:double</dd> </dl>    <h3 id="printBoolean-boolean-">printBoolean</h3> <pre data-language="java">public static String printBoolean(boolean val)</pre> <div>
+
+<p> Converts a boolean value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A boolean value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:boolean</dd> </dl>    <h3 id="printByte-byte-">printByte</h3> <pre data-language="java">public static String printByte(byte val)</pre> <div>
+
+<p> Converts a byte value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A byte value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:byte</dd> </dl>    <h3 id="printQName-javax.xml.namespace.QName-javax.xml.namespace.NamespaceContext-">printQName</h3> <pre data-language="java">public static String printQName(QName val,
+                                NamespaceContext nsc)</pre> <div>
+
+<p> Converts a QName instance into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A QName value</dd> <dd>
+<code>nsc</code> - A namespace context for interpreting a prefix within a QName.</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of QName</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>val</code> is null or if <code>nsc</code> is non-null or <code>nsc.getPrefix(nsprefixFromVal)</code> is null.</dd> </dl>    <h3 id="printDateTime-java.util.Calendar-">printDateTime</h3> <pre data-language="java">public static String printDateTime(Calendar val)</pre> <div>
+
+<p> Converts a Calendar value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A Calendar value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:dateTime</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>val</code> is null.</dd> </dl>    <h3 id="printBase64Binary-byte:A-">printBase64Binary</h3> <pre data-language="java">public static String printBase64Binary(byte[] val)</pre> <div>
+
+<p> Converts an array of bytes into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - An array of bytes</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:base64Binary</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>val</code> is null.</dd> </dl>    <h3 id="printHexBinary-byte:A-">printHexBinary</h3> <pre data-language="java">public static String printHexBinary(byte[] val)</pre> <div>
+
+<p> Converts an array of bytes into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - An array of bytes</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:hexBinary</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>val</code> is null.</dd> </dl>    <h3 id="printUnsignedInt-long-">printUnsignedInt</h3> <pre data-language="java">public static String printUnsignedInt(long val)</pre> <div>
+
+<p> Converts a long value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A long value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:unsignedInt</dd> </dl>    <h3 id="printUnsignedShort-int-">printUnsignedShort</h3> <pre data-language="java">public static String printUnsignedShort(int val)</pre> <div>
+
+<p> Converts an int value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - An int value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:unsignedShort</dd> </dl>    <h3 id="printTime-java.util.Calendar-">printTime</h3> <pre data-language="java">public static String printTime(Calendar val)</pre> <div>
+
+<p> Converts a Calendar value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A Calendar value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:time</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>val</code> is null.</dd> </dl>    <h3 id="printDate-java.util.Calendar-">printDate</h3> <pre data-language="java">public static String printDate(Calendar val)</pre> <div>
+
+<p> Converts a Calendar value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A Calendar value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:date</dd> <dt>Throws:</dt> <dd>
+<code><a href="..//openjdk~8/java/lang/illegalargumentexception/">IllegalArgumentException</a></code> - if <code>val</code> is null.</dd> </dl>    <h3 id="printAnySimpleType-java.lang.String-">printAnySimpleType</h3> <pre data-language="java">public static String printAnySimpleType(String val)</pre> <div>
+
+<p> Converts a string value into a string.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>val</code> - A string value</dd> <dt>Returns:</dt> <dd>A string containing a lexical representation of xsd:AnySimpleType</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

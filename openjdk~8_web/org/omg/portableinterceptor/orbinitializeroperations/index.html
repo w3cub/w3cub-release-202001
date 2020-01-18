@@ -1,0 +1,163 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>ORBInitializerOperations - OpenJDK 8 Web - W3cubDocs</title>
+  
+  <meta name="description" content=" Facilitates interceptor registration and ORB initialization. ">
+  <meta name="keywords" content="interface, orbinitializeroperations, -, openjdk, web, openjdk~8_web">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/openjdk~8_web/org/omg/portableinterceptor/orbinitializeroperations/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/openjdk~8_web.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/openjdk~8_web/" class="_nav-link" title="" style="margin-left:0;">OpenJDK 8 Web</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _openjdk">
+				
+				
+<h1>Interface ORBInitializerOperations</h1>     <dl> <dt>All Known Subinterfaces:</dt> <dd><a href="../orbinitializer/">ORBInitializer</a></dd> </dl>   <pre data-language="java">public interface ORBInitializerOperations</pre> <div>
+<p>Facilitates interceptor registration and ORB initialization. </p>
+<p> Interceptors are intended to be a means by which ORB services gain access to ORB processing, effectively becoming part of the ORB. Since Interceptors are part of the ORB, when <code>ORB.init</code> returns an ORB, the Interceptors shall have been registered. Interceptors cannot be registered on an ORB after it has been returned by a call to <code>ORB.init</code>. </p>
+<p> An Interceptor is registered by registering an associated <code>ORBInitializer</code> object which implements the <code>ORBInitializer</code> interface. When an ORB is initializing, it shall call each registered <code>ORBInitializer</code>, passing it an <code>ORBInitInfo</code> object which is used to register its Interceptor. </p>
+<p> <b>Registering ORB Initializers in Java</b> </p>
+<p> ORBInitializers are registered via Java ORB properties. </p>
+<p> The property names are of the form: </p>
+<pre data-language="java">org.omg.PortableInterceptor.ORBInitializerClass.&lt;Service&gt;</pre> where <code>&lt;Service&gt;</code> is the string name of a class which implements <pre data-language="java">org.omg.PortableInterceptor.ORBInitializer</pre> To avoid name collisions, the reverse DNS name convention should be used. For example, if company X has three initializers, it could define the following properties: <ul> <li><code>
+     org.omg.PortableInterceptor.ORBInitializerClass.com.x.Init1
+   </code></li> <li><code>
+     org.omg.PortableInterceptor.ORBInitializerClass.com.x.Init2
+   </code></li> <li><code>
+     org.omg.PortableInterceptor.ORBInitializerClass.com.x.Init3
+   </code></li> </ul> During ORB.init, these ORB properties which begin with <code>org.omg.PortableInterceptor.ORBInitializerClass</code> shall be collected, the <code>&lt;Service&gt;</code> portion of each property shall be extracted, an object shall be instantiated with the <code>&lt;Service&gt;</code> string as its class name, and the <code>pre_init</code> and <code>post_init</code> methods shall be called on that object. If there are any exceptions, the ORB shall ignore them and proceed. <p> <b><i>Example</i></b> </p>
+<p> A client-side logging service written by company X, for example, may have the following ORBInitializer implementation: <code><pre data-language="java">package com.x.logging;
+ 
+ import org.omg.PortableInterceptor.Interceptor; 
+ import org.omg.PortableInterceptor.ORBInitializer; 
+ import org.omg.PortableInterceptor.ORBInitInfo; 
+ 
+ public class LoggingService implements ORBInitializer { 
+     void pre_init( ORBInitInfo info ) { 
+         // Instantiate the Logging Service s Interceptor. 
+         Interceptor interceptor = new LoggingInterceptor(); 
+
+         // Register the Logging Service s Interceptor. 
+         info.add_client_request_interceptor( interceptor ); 
+     } 
+ 
+     void post_init( ORBInitInfo info ) { 
+         // This service does not need two init points. 
+     } 
+ }</pre></code> To run a program called <code>MyApp</code> using this logging service, the user could type: </p>
+<pre data-language="java">java -Dorg.omg.PortableInterceptor.ORBInitializerClass.com.x.Logging.LoggingService MyApp</pre> <p> <b>Notes about Registering Interceptors</b> </p>
+<p> Request Interceptors are registered on a per-ORB basis. </p>
+<p> To achieve virtual per-object Interceptors, query the policies on the target from within the interception points to determine whether they should do any work. </p>
+<p> To achieve virtual per-POA Interceptors, instantiate each POA with a different ORB. While Interceptors may be ordered administratively, there is no concept of order with respect to the registration of Interceptors. Request Interceptors are concerned with service contexts. Service contexts have no order, so there is no purpose for request Interceptors to have an order. IOR Interceptors are concerned with tagged components. Tagged components also have no order, so there is no purpose for IOR Interceptors to have an order. </p>
+<p> Registration code should avoid using the ORB (i.e., calling <code>ORB.init</code> with the provided <code>orb_id</code>). Since registration occurs during ORB initialization, results of invocations on this ORB while it is in this state are undefined.</p>
+</div> <dl> <dt>See Also:</dt> <dd><a href="../orbinitinfo/"><code>ORBInitInfo</code></a></dd> </dl>       <h2 id="method.detail">Methods</h2>   <h3 id="pre_init-org.omg.PortableInterceptor.ORBInitInfo-">pre_init</h3> <pre data-language="java">void pre_init(ORBInitInfo info)</pre> <p>Called during ORB initialization. If it is expected that initial services registered by an interceptor will be used by other interceptors, then those initial services shall be registered at this point via calls to <code>ORBInitInfo.register_initial_reference</code>.</p> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - provides initialization attributes and operations by which Interceptors can be registered.</dd> </dl>    <h3 id="post_init-org.omg.PortableInterceptor.ORBInitInfo-">post_init</h3> <pre data-language="java">void post_init(ORBInitInfo info)</pre> <div>
+<p>Called during ORB initialization. If a service must resolve initial references as part of its initialization, it can assume that all initial references will be available at this point. </p>
+<p> Calling the <code>post_init</code> operations is not the final task of ORB initialization. The final task, following the <code>post_init</code> calls, is attaching the lists of registered interceptors to the ORB. Therefore, the ORB does not contain the interceptors during calls to <code>post_init</code>. If an ORB-mediated call is made from within <code>post_init</code>, no request interceptors will be invoked on that call. Likewise, if an operation is performed which causes an IOR to be created, no IOR interceptors will be invoked.</p>
+</div> <dl> <dt>Parameters:</dt> <dd>
+<code>info</code> - provides initialization attributes and operations by which Interceptors can be registered.</dd> </dl>     <div class="_attribution">
+  <p class="_attribution-p">
+    © 1993–2017, Oracle and/or its affiliates. All rights reserved.<br>Documentation extracted from Debian's OpenJDK Development Kit package.<br>Licensed under the GNU General Public License, version 2, with the Classpath Exception.<br>Various third party code in OpenJDK is licensed under different licenses (see Debian package).<br>Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.<br>
+    
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
