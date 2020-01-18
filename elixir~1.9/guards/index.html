@@ -1,0 +1,177 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Guards - Elixir 1.9 - W3cubDocs</title>
+  
+  <meta name="description" content="Guards are a way to augment pattern matching with more complex checks. They are allowed in a predefined set of constructs where pattern matching is &hellip;">
+  <meta name="keywords" content="guards, -, elixir, elixir~1.9">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/elixir~1.9/guards/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/elixir~1.9.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/elixir~1.9/" class="_nav-link" title="" style="margin-left:0;">Elixir 1.9</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>Guards</h1> <p>Guards are a way to augment pattern matching with more complex checks. They are allowed in a predefined set of constructs where pattern matching is allowed.</p> <p>Not all expressions are allowed in guard clauses, but only a handful of them. This is a deliberate choice. This way, Elixir (and Erlang) can make sure that nothing bad happens while executing guards and no mutations happen anywhere. It also allows the compiler to optimize the code related to guards efficiently.</p> <h2 id="list-of-allowed-expressions" class="section-heading">  List of allowed expressions </h2> <p>You can find the built-in list of guards <a href="../kernel/#guards">in the <code class="inline">Kernel</code> module</a>. Here is an overview:</p> <ul> <li>comparison operators (<a href="../kernel/#==/2"><code class="inline">==</code></a>, <a href="../kernel/#!=/2"><code class="inline">!=</code></a>, <a href="../kernel/#===/2"><code class="inline">===</code></a>, <a href="../kernel/#!==/2"><code class="inline">!==</code></a>, <a href="../kernel/#%253E/2"><code class="inline">&gt;</code></a>, <a href="../kernel/#%253E=/2"><code class="inline">&gt;=</code></a>, <a href="../kernel/#%253C/2"><code class="inline">&lt;</code></a>, <a href="../kernel/#%253C=/2"><code class="inline">&lt;=</code></a>) </li> <li>strictly boolean operators (<a href="../kernel/#and/2"><code class="inline">and</code></a>, <a href="../kernel/#or/2"><code class="inline">or</code></a>, <a href="../kernel/#not/1"><code class="inline">not</code></a>). Note <a href="../kernel/#&amp;&amp;/2"><code class="inline">&amp;&amp;</code></a>, <a href="../kernel/#%257C%257C/2"><code class="inline">||</code></a>, and <a href="../kernel/#!/1"><code class="inline">!</code></a> sibling operators are <strong>not allowed</strong> as they're not <em>strictly</em> boolean - meaning they don't require arguments to be booleans </li> <li>arithmetic unary and binary operators (<a href="../kernel/#+/1"><code class="inline">+</code></a>, <a href="../kernel/#-/1"><code class="inline">-</code></a>, <a href="../kernel/#+/2"><code class="inline">+</code></a>, <a href="../kernel/#-/2"><code class="inline">-</code></a>, <a href="../kernel/#*/2"><code class="inline">*</code></a>, <a href="../kernel/#//2"><code class="inline">/</code></a>) </li> <li>
+<a href="../kernel/#in/2"><code class="inline">in</code></a> and <a href="../kernel/#in/2"><code class="inline">not in</code></a> operators (as long as the right-hand side is a list or a range) </li> <li>"type-check" functions (<a href="../kernel/#is_list/1"><code class="inline">is_list/1</code></a>, <a href="../kernel/#is_number/1"><code class="inline">is_number/1</code></a>, etc.) </li> <li>functions that work on built-in datatypes (<a href="../kernel/#abs/1"><code class="inline">abs/1</code></a>, <a href="../kernel/#map_size/1"><code class="inline">map_size/1</code></a>, etc.) </li> </ul> <p>The module <a href="../bitwise/"><code class="inline">Bitwise</code></a> also includes a handful of <a href="../bitwise/#guards">Erlang bitwise operations as guards</a>.</p> <p>Macros constructed out of any combination of the above guards are also valid guards - for example, <a href="../integer/#is_even/1"><code class="inline">Integer.is_even/1</code></a>. For more information, see the "Defining custom guard expressions" section shown below.</p> <h2 id="why-guards" class="section-heading">  Why guards </h2> <p>Let's see an example of a guard used in a function clause:</p> <pre data-language="elixir">def empty_map?(map) when map_size(map) == 0, do: true
+def empty_map?(map) when is_map(map), do: false</pre> <p>Guards start with the <code class="inline">when</code> keyword, which is followed by a boolean expression (we will define the grammar of guards more formally later on).</p> <p>Writing the <code class="inline">empty_map?/1</code> function by only using pattern matching would not be possible (as pattern matching on <code class="inline">%{}</code> would match <em>every</em> map, not empty maps).</p> <h2 id="where-guards-can-be-used" class="section-heading">  Where guards can be used </h2> <p>In the example above, we show how guards can be used in function clauses. There are several constructs that allow guards; for example:</p> <ul> <li>function clauses: </li> </ul> <pre data-language="elixir">  def foo(term) when is_integer(term), do: term
+  def foo(term) when is_float(term), do: round(term)</pre> <ul> <li>
+<a href="../kernel.specialforms/#case/2"><code class="inline">case</code></a> expressions: </li> </ul> <pre data-language="elixir">  case x do
+    1 -&gt; :one
+    2 -&gt; :two
+    n when is_integer(n) and n &gt; 2 -&gt; :larger_than_two
+  end</pre> <ul> <li>anonymous functions (<a href="../kernel.specialforms/#fn/1"><code class="inline">fn</code></a>s): </li> </ul> <pre data-language="elixir">  larger_than_two? = fn
+    n when is_integer(n) and n &gt; 2 -&gt; true
+    n when is_integer(n) -&gt; false
+  end</pre> <ul> <li>custom guards can also be defined with <a href="../kernel/#defguard/1"><code class="inline">defguard/1</code></a> and <a href="../kernel/#defguardp/1"><code class="inline">defguardp/1</code></a>. A custom guard is always defined based on existing guards. </li> </ul> <p>Other constructs are <a href="../kernel.specialforms/#for/1"><code class="inline">for</code></a>, <a href="../kernel.specialforms/#with/1"><code class="inline">with</code></a>, <a href="../kernel.specialforms/#try/1"><code class="inline">try/rescue/catch/else</code></a>, and the <a href="../kernel/#match?/2"><code class="inline">match?/2</code></a>.</p> <h2 id="failing-guards" class="section-heading">  Failing guards </h2> <p>In guards, when functions would normally raise exceptions, they cause the guard to fail instead. For example, the <a href="../kernel/#length/1"><code class="inline">length/1</code></a> function only works with lists. If we use it with anything else, a runtime error is raised:</p> <pre data-language="elixir">iex&gt; length("hello")
+** (ArgumentError) argument error</pre> <p>However, when used in guards, the corresponding clause simply fails to match:</p> <pre data-language="elixir">iex&gt; case "hello" do
+...&gt;   something when length(something) &gt; 0 -&gt;
+...&gt;     :length_worked
+...&gt;   _anything_else -&gt;
+...&gt;     :length_failed
+...&gt; end
+:length_failed</pre> <p>In many cases, we can take advantage of this. In the code above, we used <a href="../kernel/#length/1"><code class="inline">length/1</code></a> to both check that the given thing is a list <em>and</em> check some properties of its length (instead of using <code class="inline">is_list(something) and length(something) &gt; 0</code>).</p> <h2 id="defining-custom-guard-expressions" class="section-heading">  Defining custom guard expressions </h2> <p>As mentioned before, only the expressions listed in this page are allowed in guards. However, we can take advantage of macros to write custom guards that can simplify our programs or make them more domain-specific. At the end of the day, what matters is that the <em>output</em> of the macros (which is what will be compiled) boils down to a combinations of the allowed expressions.</p> <p>Let's look at a quick case study: we want to check that a function argument is an even or odd integer. With pattern matching, this is impossible to do since there are infinite integers, and thus we can't pattern match on the single even/odd numbers. Let's focus on checking for even numbers since checking for odd ones is almost identical.</p> <p>Such a guard would look like this:</p> <pre data-language="elixir">def my_function(number) when is_integer(number) and rem(number, 2) == 0 do
+  # do stuff
+end</pre> <p>This would be repetitive to write every time we need this check, so, as mentioned at the beginning of this section, we can abstract this away using a macro. Remember that defining a function that performs this check wouldn't work because we can't use custom functions in guards. Use <code class="inline">defguard</code> and <code class="inline">defguardp</code> to create guard macros. Here's an example:</p> <pre data-language="elixir">defmodule MyInteger do
+  defguard is_even(value) when is_integer(value) and rem(value, 2) == 0
+end</pre> <p>and then:</p> <pre data-language="elixir">import MyInteger, only: [is_even: 1]
+
+def my_function(number) when is_even(number) do
+  # do stuff
+end</pre> <p>While it's possible to create custom guards with macros, it's recommended to define them using <code class="inline">defguard</code> and <code class="inline">defguardp</code> which perform additional compile-time checks.</p> <h2 id="multiple-guards-in-the-same-clause" class="section-heading">  Multiple guards in the same clause </h2> <p>There exists an additional way to simplify a chain of <code class="inline">or</code>s in guards: Elixir supports writing "multiple guards" in the same clause. This:</p> <pre data-language="elixir">def foo(term) when is_integer(term) or is_float(term) or is_nil(term),
+  do: :maybe_number
+def foo(_other),
+  do: :something_else</pre> <p>can be alternatively written as:</p> <pre data-language="elixir">def foo(term)
+    when is_integer(term)
+    when is_float(term)
+    when is_nil(term) do
+  :maybe_number
+end
+
+def foo(_other) do
+  :something_else
+end</pre> <p>If each guard expression always returns a boolean, the two forms are equivalent. However, recall that if any function call in a guard raises an exception, the entire guard fails. So this function will not detect empty tuples:</p> <pre data-language="elixir">defmodule Check do
+  # If given a tuple, map_size/1 will raise, and tuple_size/1 will not be evaluated
+  def empty?(val) when map_size(val) == 0 or tuple_size(val) == 0, do: true
+  def empty?(_val), do: false
+end
+
+Check.empty?(%{}) #=&gt; true
+Check.empty?({}) #=&gt; false # true was expected!</pre> <p>This could be corrected by ensuring that no exception is raised, either via type checks like <code class="inline">is_map(val) and map_size(val) == 0</code>, or by checking equality instead, like <code class="inline">val == %{}</code>.</p> <p>It could also be corrected by using multiple guards, so that if an exception causes one guard to fail, the next one is evaluated.</p> <pre data-language="elixir">defmodule Check do
+  # If given a tuple, map_size/1 will raise, and the second guard will be evaluated
+  def empty?(val)
+      when map_size(val) == 0
+      when tuple_size(val) == 0,
+      do: true
+
+  def empty?(_val), do: false
+end
+
+Check.empty?(%{}) #=&gt; true
+Check.empty?({}) #=&gt; true</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/elixir/1.9.1/guards.html" class="_attribution-link" target="_blank">https://hexdocs.pm/elixir/1.9.1/guards.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

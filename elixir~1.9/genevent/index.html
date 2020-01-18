@@ -1,0 +1,148 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>GenEvent - Elixir 1.9 - W3cubDocs</title>
+  
+  <meta name="description" content=" A event manager with event handlers behaviour. ">
+  <meta name="keywords" content="genevent, summary, types, handler, manager, name, on, start, options, callbacks, code, change, old, vsn, state, extra, handle, call, request, event, info, msg, init, args, terminate, reason, -, elixir, elixir~1.9">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/elixir~1.9/genevent/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/elixir~1.9.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/elixir~1.9/" class="_nav-link" title="" style="margin-left:0;">Elixir 1.9</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  GenEvent <small>behaviour</small>  </h1>  This behaviour is deprecated. Use Erlang/OTP's :gen_event module instead.   <p>A event manager with event handlers behaviour.</p> <p>If you are interested in implementing an event manager, please read the "Alternatives" section below. If you have to implement an event handler to integrate with an existing system, such as Elixir's Logger, please use <code class="inline">:gen_event</code> instead.</p> <h2 id="module-alternatives" class="section-heading">  Alternatives </h2> <p>There are a few suitable alternatives to replace GenEvent. Each of them can be the most beneficial based on the use case.</p> <h3 id="module-supervisor-and-genservers" class="section-heading">  Supervisor and GenServers </h3> <p>One alternative to GenEvent is a very minimal solution consisting of using a supervisor and multiple GenServers started under it. The supervisor acts as the "event manager" and the children GenServers act as the "event handlers". This approach has some shortcomings (it provides no backpressure for example) but can still replace GenEvent for low-profile usages of it. <a href="http://blog.plataformatec.com.br/2016/11/replacing-genevent-by-a-supervisor-genserver/" target="_blank">This blog post by José Valim</a> has more detailed information on this approach.</p> <h3 id="module-genstage" class="section-heading">  GenStage </h3> <p>If the use case where you were using GenEvent requires more complex logic, <a href="https://github.com/elixir-lang/gen_stage" target="_blank">GenStage</a> provides a great alternative. GenStage is an external Elixir library maintained by the Elixir team; it provides a tool to implement systems that exchange events in a demand-driven way with built-in support for backpressure. See the <a href="https://hexdocs.pm/gen_stage" target="_blank">GenStage documentation</a> for more information.</p> <h3 id="module-gen_event" class="section-heading">  <code class="inline">:gen_event</code> </h3> <p>If your use case requires exactly what GenEvent provided, or you have to integrate with an existing <code class="inline">:gen_event</code>-based system, you can still use the <a href="http://erlang.org/doc/man/gen_event.html" target="_blank"><code class="inline">:gen_event</code></a> Erlang module.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Types </h2>
+<dl class="summary-types summary">   <dt class="summary-signature"> <a href="#t:handler/0">handler()</a> </dt>   <dt class="summary-signature"> <a href="#t:manager/0">manager()</a> </dt>   <dt class="summary-signature"> <a href="#t:name/0">name()</a> </dt>   <dt class="summary-signature"> <a href="#t:on_start/0">on_start()</a> </dt>   <dt class="summary-signature"> <a href="#t:options/0">options()</a> </dt>  </dl> <h2> Callbacks </h2>
+<dl class="summary-callbacks summary">   <dt class="summary-signature"> <a href="#c:code_change/3">code_change(old_vsn, state, extra)</a> </dt>   <dt class="summary-signature"> <a href="#c:handle_call/2">handle_call(request, state)</a> </dt>   <dt class="summary-signature"> <a href="#c:handle_event/2">handle_event(event, state)</a> </dt>   <dt class="summary-signature"> <a href="#c:handle_info/2">handle_info(msg, state)</a> </dt>   <dt class="summary-signature"> <a href="#c:init/1">init(args)</a> </dt>   <dt class="summary-signature"> <a href="#c:terminate/2">terminate(reason, state)</a> </dt>  </dl>   <h1 class="section-heading" id="types">  Types </h1>   <h3 class="detail-header type" id="t:handler/0">  <h1 class="signature">handler()</h1>     </h3>
+<pre data-language="elixir">handler() :: atom() | {atom(), term()}</pre>     <h3 class="detail-header type" id="t:manager/0">  <h1 class="signature">manager()</h1>     </h3>
+<pre data-language="elixir">manager() :: pid() | name() | {atom(), node()}</pre>     <h3 class="detail-header type" id="t:name/0">  <h1 class="signature">name()</h1>     </h3>
+<pre data-language="elixir">name() :: atom() | {:global, term()} | {:via, module(), term()}</pre>     <h3 class="detail-header type" id="t:on_start/0">  <h1 class="signature">on_start()</h1>     </h3>
+<pre data-language="elixir">on_start() :: {:ok, pid()} | {:error, {:already_started, pid()}}</pre>     <h3 class="detail-header type" id="t:options/0">  <h1 class="signature">options()</h1>     </h3>
+<pre data-language="elixir">options() :: [{:name, name()}]</pre>       <h1 class="section-heading" id="callbacks">  Callbacks </h1>   <h3 class="detail-header callback" id="c:code_change/3">  <h1 class="signature">code_change(old_vsn, state, extra)</h1>     </h3>
+<pre data-language="elixir">code_change(old_vsn, state :: term(), extra :: term()) ::
+  {:ok, new_state :: term()}
+when old_vsn: term() | {:down, term()}</pre>     <h3 class="detail-header callback" id="c:handle_call/2">  <h1 class="signature">handle_call(request, state)</h1>     </h3>
+<pre data-language="elixir">handle_call(request :: term(), state :: term()) ::
+  {:ok, reply, new_state}
+  | {:ok, reply, new_state, :hibernate}
+  | {:remove_handler, reply}
+when reply: term(), new_state: term()</pre>     <h3 class="detail-header callback" id="c:handle_event/2">  <h1 class="signature">handle_event(event, state)</h1>     </h3>
+<pre data-language="elixir">handle_event(event :: term(), state :: term()) ::
+  {:ok, new_state} | {:ok, new_state, :hibernate} | :remove_handler
+when new_state: term()</pre>     <h3 class="detail-header callback" id="c:handle_info/2">  <h1 class="signature">handle_info(msg, state)</h1>     </h3>
+<pre data-language="elixir">handle_info(msg :: term(), state :: term()) ::
+  {:ok, new_state} | {:ok, new_state, :hibernate} | :remove_handler
+when new_state: term()</pre>     <h3 class="detail-header callback" id="c:init/1">  <h1 class="signature">init(args)</h1>     </h3>
+<pre data-language="elixir">init(args :: term()) ::
+  {:ok, state} | {:ok, state, :hibernate} | {:error, reason :: any()}
+when state: any()</pre>     <h3 class="detail-header callback" id="c:terminate/2">  <h1 class="signature">terminate(reason, state)</h1>     </h3>
+<pre data-language="elixir">terminate(reason, state :: term()) :: term()
+when reason:
+       :stop | {:stop, term()} | :remove_handler | {:error, term()} | term()</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/elixir/1.9.1/GenEvent.html" class="_attribution-link" target="_blank">https://hexdocs.pm/elixir/1.9.1/GenEvent.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

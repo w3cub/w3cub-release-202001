@@ -1,0 +1,142 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Config - Elixir 1.9 - W3cubDocs</title>
+  
+  <meta name="description" content=" A simple keyword-based configuration API. ">
+  <meta name="keywords" content="config, summary, functions, root, key, opts, import, file, -, elixir, elixir~1.9">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/elixir~1.9/config/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/elixir~1.9.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/elixir~1.9/" class="_nav-link" title="" style="margin-left:0;">Elixir 1.9</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Config  </h1>  <p>A simple keyword-based configuration API.</p> <h2 id="module-example" class="section-heading">  Example </h2> <p>This module is most commonly used to define application configuration, typically in <code class="inline">config/config.exs</code>:</p> <pre data-language="elixir">import Config
+
+config :some_app,
+  key1: "value1",
+  key2: "value2"
+
+import_config "#{Mix.env()}.exs"</pre> <p><code class="inline">import Config</code> will import the functions <a href="#config/2"><code class="inline">config/2</code></a>, <a href="#config/3"><code class="inline">config/3</code></a> and <a href="#import_config/1"><code class="inline">import_config/1</code></a> to help you manage your configuration.</p> <p><a href="#config/2"><code class="inline">config/2</code></a> and <a href="#config/3"><code class="inline">config/3</code></a> are used to define key-value configuration for a given application. Once Mix starts, it will automatically evaluate the configuration file and persist the configuration above into <code class="inline">:some_app</code>'s application environment, which can be accessed in as follows:</p> <pre data-language="elixir">"value1" = Application.fetch_env!(:some_app, :key1)</pre> <p>Finally, the line <code class="inline">import_config "#{Mix.env()}.exs"</code> will import other config files, based on the current Mix environment, such as <code class="inline">config/dev.exs</code> and <code class="inline">config/test.exs</code>.</p> <p><a href="#content"><code class="inline">Config</code></a> also provides a low-level API for evaluating and reading configuration, under the <a href="../config.reader/"><code class="inline">Config.Reader</code></a> module.</p> <p><strong>Important:</strong> if you are writing a library to be used by other developers, it is generally recommended to avoid the application environment, as the application environment is effectively a global storage. For more information, read our <a href="../library-guidelines/">library guidelines</a>.</p> <h2 id="module-migrating-from-use-mix-config" class="section-heading">  Migrating from <code class="inline">use Mix.Config</code> </h2> <p>The <code class="inline">Config</code> module in Elixir was introduced in v1.9 as a replacement to <a href="https://hexdocs.pm/mix/Mix.Config.html" target="_blank"><code class="inline">Mix.Config</code></a>, which was specific to Mix and has been deprecated.</p> <p>You can leverage <a href="#content"><code class="inline">Config</code></a> instead of <a href="https://hexdocs.pm/mix/Mix.Config.html" target="_blank"><code class="inline">Mix.Config</code></a> in two steps. The first step is to replace <code class="inline">use Mix.Config</code> at the top of your config files by <code class="inline">import Config</code>.</p> <p>The second is to make sure your <a href="#import_config/1"><code class="inline">import_config/1</code></a> calls do not have a wildcard character. If so, you need to perform the wildcard lookup manually. For example, if you did:</p> <pre data-language="elixir">import_config "../apps/*/config/config.exs"</pre> <p>It has to be replaced by:</p> <pre data-language="elixir">for config &lt;- "apps/*/config/config.exs" |&gt; Path.expand() |&gt; Path.wildcard() do
+  import_config config
+end</pre> <h2 id="module-config-releases-exs" class="section-heading">  config/releases.exs </h2> <p>If you are using releases, see <a href="https://hexdocs.pm/mix/Mix.Tasks.Release.html" target="_blank"><code class="inline">mix release</code></a>, there another configuration file called <code class="inline">config/releases.exs</code>. While <code class="inline">config/config.exs</code> and friends mentioned in the previous section are executed whenever you run a Mix command, including when you assemble a release, <code class="inline">config/releases.exs</code> is execute every time your production system boots. Since Mix is not available in a production system, <code class="inline">config/releases.exs</code> must not use any of the functions from Mix.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#config/2">config(root_key, opts)</a> </dt> <dd class="summary-synopsis"><p>Configures the given <code class="inline">root_key</code>.</p></dd>   <dt class="summary-signature"> <a href="#config/3">config(root_key, key, opts)</a> </dt> <dd class="summary-synopsis"><p>Configures the given <code class="inline">key</code> for the given <code class="inline">root_key</code>.</p></dd>   <dt class="summary-signature"> <a href="#import_config/1">import_config(file)</a> </dt> <dd class="summary-synopsis"><p>Imports configuration from the given file.</p></dd>  </dl>   <h1 class="section-heading" id="functions">  Functions </h1>   <h3 class="detail-header function" id="config/2">  <h1 class="signature">config(root_key, opts)</h1>  <span class="note">(since 1.9.0)</span> </h3>  <p>Configures the given <code class="inline">root_key</code>.</p> <p>Keyword lists are always deep-merged.</p> <h4 id="config/2-examples" class="section-heading">  Examples </h4> <p>The given <code class="inline">opts</code> are merged into the existing configuration for the given <code class="inline">root_key</code>. Conflicting keys are overridden by the ones specified in <code class="inline">opts</code>. For example, the application configuration below</p> <pre data-language="elixir">config :logger,
+  level: :warn,
+  backends: [:console]
+
+config :logger,
+  level: :info,
+  truncate: 1024</pre> <p>will have a final configuration for <code class="inline">:logger</code> of:</p> <pre data-language="elixir">[level: :info, backends: [:console], truncate: 1024]</pre>    <h3 class="detail-header function" id="config/3">  <h1 class="signature">config(root_key, key, opts)</h1>  <span class="note">(since 1.9.0)</span> </h3>  <p>Configures the given <code class="inline">key</code> for the given <code class="inline">root_key</code>.</p> <p>Keyword lists are always deep merged.</p> <h4 id="config/3-examples" class="section-heading">  Examples </h4> <p>The given <code class="inline">opts</code> are merged into the existing values for <code class="inline">key</code> in the given <code class="inline">root_key</code>. Conflicting keys are overridden by the ones specified in <code class="inline">opts</code>. For example, the application configuration below</p> <pre data-language="elixir">config :ecto, Repo,
+  log_level: :warn,
+  adapter: Ecto.Adapters.Postgres
+
+config :ecto, Repo,
+  log_level: :info,
+  pool_size: 10</pre> <p>will have a final value of the configuration for the <code class="inline">Repo</code> key in the <code class="inline">:ecto</code> application of:</p> <pre data-language="elixir">[log_level: :info, pool_size: 10, adapter: Ecto.Adapters.Postgres]</pre>    <h3 class="detail-header function" id="import_config/1">  <h1 class="signature">import_config(file)</h1>  <span class="note">(macro)</span> <span class="note">(since 1.9.0)</span> </h3>  <p>Imports configuration from the given file.</p> <p>In case the file doesn't exist, an error is raised.</p> <p>If file is a relative, it will be expanded relatively to the directory the current configuration file is in.</p> <h4 id="import_config/1-examples" class="section-heading">  Examples </h4> <p>This is often used to emulate configuration across environments:</p> <pre data-language="elixir">import_config "#{Mix.env()}.exs"</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/elixir/1.9.1/Config.html" class="_attribution-link" target="_blank">https://hexdocs.pm/elixir/1.9.1/Config.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

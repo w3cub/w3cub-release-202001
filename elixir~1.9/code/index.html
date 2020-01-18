@@ -1,0 +1,327 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Code - Elixir 1.9 - W3cubDocs</title>
+  
+  <meta name="description" content=" Utilities for managing code compilation, code evaluation, and code loading. ">
+  <meta name="keywords" content="code, summary, functions, append, path, available, compiler, options, compile, file, relative, nil, quoted, nofile, string, opts, delete, ensure, compiled, module, loaded, eval, binding, fetch, docs, or, format, file!, string!, get, kind, prepend, purge, modules, require, required, files, quoted!, unrequire, -, elixir, elixir~1.9">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/elixir~1.9/code/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/elixir~1.9.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/elixir~1.9/" class="_nav-link" title="" style="margin-left:0;">Elixir 1.9</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Code  </h1>  <p>Utilities for managing code compilation, code evaluation, and code loading.</p> <p>This module complements Erlang's <a href="http://www.erlang.org/doc/man/code.html" target="_blank"><code class="inline">:code</code> module</a> to add behaviour which is specific to Elixir. Almost all of the functions in this module have global side effects on the behaviour of Elixir.</p> <h2 id="module-working-with-files" class="section-heading">  Working with files </h2> <p>This module contains three functions for compiling and evaluating files. Here is a summary of them and their behaviour:</p> <ul> <li>
+<p><a href="#require_file/2"><code class="inline">require_file/2</code></a> - compiles a file and tracks its name. It does not compile the file again if it has been previously required.</p> </li> <li>
+<p><a href="#compile_file/2"><code class="inline">compile_file/2</code></a> - compiles a file without tracking its name. Compiles the file multiple times when invoked multiple times.</p> </li> <li>
+<p><a href="#eval_file/2"><code class="inline">eval_file/2</code></a> - evaluates the file contents without tracking its name. It returns the result of the last expression in the file, instead of the modules defined in it.</p> </li> </ul> <p>In a nutshell, the first must be used when you want to keep track of the files handled by the system, to avoid the same file from being compiled multiple times. This is common in scripts.</p> <p><a href="#compile_file/2"><code class="inline">compile_file/2</code></a> must be used when you are interested in the modules defined in a file, without tracking. <a href="#eval_file/2"><code class="inline">eval_file/2</code></a> should be used when you are interested in the result of evaluating the file rather than the modules it defines.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#append_path/1">append_path(path)</a> </dt> <dd class="summary-synopsis"><p>Appends a path to the end of the Erlang VM code path list.</p></dd>   <dt class="summary-signature"> <a href="#available_compiler_options/0">available_compiler_options()</a> </dt> <dd class="summary-synopsis"><p>Returns a list with the available compiler options.</p></dd>   <dt class="summary-signature"> <a href="#compile_file/2">compile_file(file, relative_to \\ nil)</a> </dt> <dd class="summary-synopsis"><p>Compiles the given file.</p></dd>   <dt class="summary-signature"> <a href="#compile_quoted/2">compile_quoted(quoted, file \\ "nofile")</a> </dt> <dd class="summary-synopsis"><p>Compiles the quoted expression.</p></dd>   <dt class="summary-signature"> <a href="#compile_string/2">compile_string(string, file \\ "nofile")</a> </dt> <dd class="summary-synopsis"><p>Compiles the given string.</p></dd>   <dt class="summary-signature"> <a href="#compiler_options/0">compiler_options()</a> </dt> <dd class="summary-synopsis"><p>Gets the compilation options from the code server.</p></dd>   <dt class="summary-signature"> <a href="#compiler_options/1">compiler_options(opts)</a> </dt> <dd class="summary-synopsis"><p>Sets compilation options.</p></dd>   <dt class="summary-signature"> <a href="#delete_path/1">delete_path(path)</a> </dt> <dd class="summary-synopsis"><p>Deletes a path from the Erlang VM code path list. This is the list of directories the Erlang VM uses for finding module code.</p></dd>   <dt class="summary-signature"> <a href="#ensure_compiled/1">ensure_compiled(module)</a> </dt> <dd class="summary-synopsis"><p>Ensures the given module is compiled and loaded.</p></dd>   <dt class="summary-signature"> <a href="#ensure_compiled?/1">ensure_compiled?(module)</a> </dt> <dd class="summary-synopsis"><p>Ensures the given module is compiled and loaded.</p></dd>   <dt class="summary-signature"> <a href="#ensure_loaded/1">ensure_loaded(module)</a> </dt> <dd class="summary-synopsis"><p>Ensures the given module is loaded.</p></dd>   <dt class="summary-signature"> <a href="#ensure_loaded?/1">ensure_loaded?(module)</a> </dt> <dd class="summary-synopsis"><p>Ensures the given module is loaded.</p></dd>   <dt class="summary-signature"> <a href="#eval_file/2">eval_file(file, relative_to \\ nil)</a> </dt> <dd class="summary-synopsis"><p>Evals the given file.</p></dd>   <dt class="summary-signature"> <a href="#eval_quoted/3">eval_quoted(quoted, binding \\ [], opts \\ [])</a> </dt> <dd class="summary-synopsis"><p>Evaluates the quoted contents.</p></dd>   <dt class="summary-signature"> <a href="#eval_string/3">eval_string(string, binding \\ [], opts \\ [])</a> </dt> <dd class="summary-synopsis"><p>Evaluates the contents given by <code class="inline">string</code>.</p></dd>   <dt class="summary-signature"> <a href="#fetch_docs/1">fetch_docs(module_or_path)</a> </dt> <dd class="summary-synopsis"><p>Returns the docs for the given module or path to <code class="inline">.beam</code> file.</p></dd>   <dt class="summary-signature"> <a href="#format_file!/2">format_file!(file, opts \\ [])</a> </dt> <dd class="summary-synopsis"><p>Formats a file.</p></dd>   <dt class="summary-signature"> <a href="#format_string!/2">format_string!(string, opts \\ [])</a> </dt> <dd class="summary-synopsis"><p>Formats the given code <code class="inline">string</code>.</p></dd>   <dt class="summary-signature"> <a href="#get_docs/2">get_docs(module, kind)</a> <span class="deprecated" title="Code.get_docs/2 always returns nil as its outdated documentation is no longer stored on BEAM files. Use Code.fetch_docs/1 instead">deprecated</span> </dt> <dd class="summary-synopsis"><p>Deprecated function to retrieve old documentation format.</p></dd>   <dt class="summary-signature"> <a href="#prepend_path/1">prepend_path(path)</a> </dt> <dd class="summary-synopsis"><p>Prepends a path to the beginning of the Erlang VM code path list.</p></dd>   <dt class="summary-signature"> <a href="#purge_compiler_modules/0">purge_compiler_modules()</a> </dt> <dd class="summary-synopsis"><p>Purge compiler modules.</p></dd>   <dt class="summary-signature"> <a href="#require_file/2">require_file(file, relative_to \\ nil)</a> </dt> <dd class="summary-synopsis"><p>Requires the given <code class="inline">file</code>.</p></dd>   <dt class="summary-signature"> <a href="#required_files/0">required_files()</a> </dt> <dd class="summary-synopsis"><p>Lists all required files.</p></dd>   <dt class="summary-signature"> <a href="#string_to_quoted/2">string_to_quoted(string, opts \\ [])</a> </dt> <dd class="summary-synopsis"><p>Converts the given string to its quoted form.</p></dd>   <dt class="summary-signature"> <a href="#string_to_quoted!/2">string_to_quoted!(string, opts \\ [])</a> </dt> <dd class="summary-synopsis"><p>Converts the given string to its quoted form.</p></dd>   <dt class="summary-signature"> <a href="#unrequire_files/1">unrequire_files(files)</a> </dt> <dd class="summary-synopsis"><p>Removes files from the required files list.</p></dd>  </dl>   <h1 class="section-heading" id="functions">  Functions </h1>   <h3 class="detail-header function" id="append_path/1">  <h1 class="signature">append_path(path)</h1>     </h3>
+<pre data-language="elixir">append_path(Path.t()) :: true | {:error, :bad_directory}</pre>  <p>Appends a path to the end of the Erlang VM code path list.</p> <p>This is the list of directories the Erlang VM uses for finding module code.</p> <p>The path is expanded with <a href="../path/#expand/1"><code class="inline">Path.expand/1</code></a> before being appended. If this path does not exist, an error is returned.</p> <h4 id="append_path/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">Code.append_path(".")
+#=&gt; true
+
+Code.append_path("/does_not_exist")
+#=&gt; {:error, :bad_directory}</pre>    <h3 class="detail-header function" id="available_compiler_options/0">  <h1 class="signature">available_compiler_options()</h1>     </h3>
+<pre data-language="elixir">available_compiler_options() :: [atom()]</pre>  <p>Returns a list with the available compiler options.</p> <p>See <a href="#compiler_options/1"><code class="inline">compiler_options/1</code></a> for more information.</p> <h4 id="available_compiler_options/0-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">Code.available_compiler_options()
+#=&gt; [:docs, :debug_info, ...]</pre>     <h3 class="detail-header function" id="compile_file/2">  <h1 class="signature">compile_file(file, relative_to \\ nil)</h1>  <span class="note">(since 1.7.0)</span>    </h3>
+<pre data-language="elixir">compile_file(binary(), nil | binary()) :: [{module(), binary()}]</pre>  <p>Compiles the given file.</p> <p>Accepts <code class="inline">relative_to</code> as an argument to tell where the file is located.</p> <p>Returns a list of tuples where the first element is the module name and the second one is its bytecode (as a binary). Opposite to <a href="#require_file/2"><code class="inline">require_file/2</code></a>, it does not track the filename of the compiled file.</p> <p>If you would like to get the result of evaluating file rather than the modules defined in it, see <a href="#eval_file/2"><code class="inline">eval_file/2</code></a>.</p> <p>For compiling many files concurrently, see <a href="../kernel.parallelcompiler/#compile/2"><code class="inline">Kernel.ParallelCompiler.compile/2</code></a>.</p>     <h3 class="detail-header function" id="compile_quoted/2">  <h1 class="signature">compile_quoted(quoted, file \\ "nofile")</h1>     </h3>
+<pre data-language="elixir">compile_quoted(Macro.t(), binary()) :: [{module(), binary()}]</pre>  <p>Compiles the quoted expression.</p> <p>Returns a list of tuples where the first element is the module name and the second one is its bytecode (as a binary). A <code class="inline">file</code> can be given as second argument which will be used for reporting warnings and errors.</p>     <h3 class="detail-header function" id="compile_string/2">  <h1 class="signature">compile_string(string, file \\ "nofile")</h1>     </h3>
+<pre data-language="elixir">compile_string(List.Chars.t(), binary()) :: [{module(), binary()}]</pre>  <p>Compiles the given string.</p> <p>Returns a list of tuples where the first element is the module name and the second one is its bytecode (as a binary). A <code class="inline">file</code> can be given as second argument which will be used for reporting warnings and errors.</p> <p><strong>Warning</strong>: <code class="inline">string</code> can be any Elixir code and code can be executed with the same privileges as the Erlang VM: this means that such code could compromise the machine (for example by executing system commands). Don't use <a href="#compile_string/2"><code class="inline">compile_string/2</code></a> with untrusted input (such as strings coming from the network).</p>    <h3 class="detail-header function" id="compiler_options/0">  <h1 class="signature">compiler_options()</h1>     </h3>
+<pre data-language="elixir">compiler_options() :: %{optional(atom()) =&gt; boolean()}</pre>  <p>Gets the compilation options from the code server.</p> <p>Check <a href="#compiler_options/1"><code class="inline">compiler_options/1</code></a> for more information.</p> <h4 id="compiler_options/0-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">Code.compiler_options()
+#=&gt; %{debug_info: true, docs: true, ...}</pre>    <h3 class="detail-header function" id="compiler_options/1">  <h1 class="signature">compiler_options(opts)</h1>     </h3>
+<pre data-language="elixir">compiler_options(Enumerable.t()) :: %{optional(atom()) =&gt; boolean()}</pre>  <p>Sets compilation options.</p> <p>These options are global since they are stored by Elixir's Code Server.</p> <p>Available options are:</p> <ul> <li>
+<p><code class="inline">:docs</code> - when <code class="inline">true</code>, retain documentation in the compiled module. Defaults to <code class="inline">true</code>.</p> </li> <li>
+<p><code class="inline">:debug_info</code> - when <code class="inline">true</code>, retain debug information in the compiled module. This allows a developer to reconstruct the original source code. Defaults to <code class="inline">false</code>.</p> </li> <li>
+<p><code class="inline">:ignore_module_conflict</code> - when <code class="inline">true</code>, override modules that were already defined without raising errors. Defaults to <code class="inline">false</code>.</p> </li> <li>
+<p><code class="inline">:relative_paths</code> - when <code class="inline">true</code>, use relative paths in quoted nodes, warnings and errors generated by the compiler. Note disabling this option won't affect runtime warnings and errors. Defaults to <code class="inline">true</code>.</p> </li> <li>
+<p><code class="inline">:warnings_as_errors</code> - causes compilation to fail when warnings are generated. Defaults to <code class="inline">false</code>.</p> </li> </ul> <p>It returns the new map of compiler options.</p> <h4 id="compiler_options/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">Code.compiler_options(debug_info: true)
+#=&gt; %{debug_info: true, docs: true,
+#=&gt;   warnings_as_errors: false, ignore_module_conflict: false}</pre>    <h3 class="detail-header function" id="delete_path/1">  <h1 class="signature">delete_path(path)</h1>     </h3>
+<pre data-language="elixir">delete_path(Path.t()) :: boolean()</pre>  <p>Deletes a path from the Erlang VM code path list. This is the list of directories the Erlang VM uses for finding module code.</p> <p>The path is expanded with <a href="../path/#expand/1"><code class="inline">Path.expand/1</code></a> before being deleted. If the path does not exist, this function returns <code class="inline">false</code>.</p> <h4 id="delete_path/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">Code.prepend_path(".")
+Code.delete_path(".")
+#=&gt; true
+
+Code.delete_path("/does_not_exist")
+#=&gt; false</pre>    <h3 class="detail-header function" id="ensure_compiled/1">  <h1 class="signature">ensure_compiled(module)</h1>     </h3>
+<pre data-language="elixir">ensure_compiled(module()) ::
+  {:module, module()}
+  | {:error, :embedded | :badfile | :nofile | :on_load_failure}</pre>  <p>Ensures the given module is compiled and loaded.</p> <p>If the module is already loaded, it works as no-op. If the module was not loaded yet, it checks if it needs to be compiled first and then tries to load it.</p> <p>If it succeeds in loading the module, it returns <code class="inline">{:module, module}</code>. If not, returns <code class="inline">{:error, reason}</code> with the error reason.</p> <p>If the module being checked is currently in a compiler deadlock, this functions returns <code class="inline">{:error, :nofile}</code>.</p> <p>Check <a href="#ensure_loaded/1"><code class="inline">ensure_loaded/1</code></a> for more information on module loading and when to use <a href="#ensure_loaded/1"><code class="inline">ensure_loaded/1</code></a> or <a href="#ensure_compiled/1"><code class="inline">ensure_compiled/1</code></a>.</p>    <h3 class="detail-header function" id="ensure_compiled?/1">  <h1 class="signature">ensure_compiled?(module)</h1>     </h3>
+<pre data-language="elixir">ensure_compiled?(module()) :: boolean()</pre>  <p>Ensures the given module is compiled and loaded.</p> <p>Similar to <a href="#ensure_compiled/1"><code class="inline">ensure_compiled/1</code></a>, but returns <code class="inline">true</code> if the module is already loaded or was successfully loaded and compiled. Returns <code class="inline">false</code> otherwise.</p>    <h3 class="detail-header function" id="ensure_loaded/1">  <h1 class="signature">ensure_loaded(module)</h1>     </h3>
+<pre data-language="elixir">ensure_loaded(module()) ::
+  {:module, module()}
+  | {:error, :embedded | :badfile | :nofile | :on_load_failure}</pre>  <p>Ensures the given module is loaded.</p> <p>If the module is already loaded, this works as no-op. If the module was not yet loaded, it tries to load it.</p> <p>If it succeeds in loading the module, it returns <code class="inline">{:module, module}</code>. If not, returns <code class="inline">{:error, reason}</code> with the error reason.</p> <h4 id="ensure_loaded/1-code-loading-on-the-erlang-vm" class="section-heading">  Code loading on the Erlang VM </h4> <p>Erlang has two modes to load code: interactive and embedded.</p> <p>By default, the Erlang VM runs in interactive mode, where modules are loaded as needed. In embedded mode the opposite happens, as all modules need to be loaded upfront or explicitly.</p> <p>Therefore, this function is used to check if a module is loaded before using it and allows one to react accordingly. For example, the <a href="../uri/"><code class="inline">URI</code></a> module uses this function to check if a specific parser exists for a given URI scheme.</p> <h4 id="ensure_loaded/1-ensure_compiled-1" class="section-heading">  <a href="#ensure_compiled/1"><code class="inline">ensure_compiled/1</code></a> </h4> <p>Elixir also contains an <a href="#ensure_compiled/1"><code class="inline">ensure_compiled/1</code></a> function that is a superset of <a href="#ensure_loaded/1"><code class="inline">ensure_loaded/1</code></a>.</p> <p>Since Elixir's compilation happens in parallel, in some situations you may need to use a module that was not yet compiled, therefore it can't even be loaded.</p> <p>When invoked, <a href="#ensure_compiled/1"><code class="inline">ensure_compiled/1</code></a> halts the compilation of the caller until the module given to <a href="#ensure_compiled/1"><code class="inline">ensure_compiled/1</code></a> becomes available or all files for the current project have been compiled. If compilation finishes and the module is not available, an error tuple is returned.</p> <p><a href="#ensure_compiled/1"><code class="inline">ensure_compiled/1</code></a> does not apply to dependencies, as dependencies must be compiled upfront.</p> <p>In most cases, <a href="#ensure_loaded/1"><code class="inline">ensure_loaded/1</code></a> is enough. <a href="#ensure_compiled/1"><code class="inline">ensure_compiled/1</code></a> must be used in rare cases, usually involving macros that need to invoke a module for callback information.</p> <h4 id="ensure_loaded/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Code.ensure_loaded(Atom)
+{:module, Atom}
+
+iex&gt; Code.ensure_loaded(DoesNotExist)
+{:error, :nofile}</pre>    <h3 class="detail-header function" id="ensure_loaded?/1">  <h1 class="signature">ensure_loaded?(module)</h1>     </h3>
+<pre data-language="elixir">ensure_loaded?(module()) :: boolean()</pre>  <p>Ensures the given module is loaded.</p> <p>Similar to <a href="#ensure_loaded/1"><code class="inline">ensure_loaded/1</code></a>, but returns <code class="inline">true</code> if the module is already loaded or was successfully loaded. Returns <code class="inline">false</code> otherwise.</p> <h4 id="ensure_loaded?/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Code.ensure_loaded?(Atom)
+true</pre>     <h3 class="detail-header function" id="eval_file/2">  <h1 class="signature">eval_file(file, relative_to \\ nil)</h1>     </h3>
+<pre data-language="elixir">eval_file(binary(), nil | binary()) :: {term(), binding :: list()}</pre>  <p>Evals the given file.</p> <p>Accepts <code class="inline">relative_to</code> as an argument to tell where the file is located.</p> <p>While <a href="#require_file/2"><code class="inline">require_file/2</code></a> and <a href="#compile_file/2"><code class="inline">compile_file/2</code></a> return the loaded modules and their bytecode, <a href="#eval_file/2"><code class="inline">eval_file/2</code></a> simply evaluates the file contents and returns the evaluation result and its bindings (exactly the same return value as <a href="#eval_string/3"><code class="inline">eval_string/3</code></a>).</p>      <h3 class="detail-header function" id="eval_quoted/3">  <h1 class="signature">eval_quoted(quoted, binding \\ [], opts \\ [])</h1>     </h3>
+<pre data-language="elixir">eval_quoted(Macro.t(), list(), Macro.Env.t() | keyword()) ::
+  {term(), binding :: list()}</pre>  <p>Evaluates the quoted contents.</p> <p><strong>Warning</strong>: Calling this function inside a macro is considered bad practice as it will attempt to evaluate runtime values at compile time. Macro arguments are typically transformed by unquoting them into the returned quoted expressions (instead of evaluated).</p> <p>See <a href="#eval_string/3"><code class="inline">eval_string/3</code></a> for a description of bindings and options.</p> <h4 id="eval_quoted/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; contents = quote(do: var!(a) + var!(b))
+iex&gt; Code.eval_quoted(contents, [a: 1, b: 2], file: __ENV__.file, line: __ENV__.line)
+{3, [a: 1, b: 2]}</pre> <p>For convenience, you can pass <a href="../kernel.specialforms/#__ENV__/0"><code class="inline">__ENV__/0</code></a> as the <code class="inline">opts</code> argument and all options will be automatically extracted from the current environment:</p> <pre data-language="elixir">iex&gt; contents = quote(do: var!(a) + var!(b))
+iex&gt; Code.eval_quoted(contents, [a: 1, b: 2], __ENV__)
+{3, [a: 1, b: 2]}</pre>      <h3 class="detail-header function" id="eval_string/3">  <h1 class="signature">eval_string(string, binding \\ [], opts \\ [])</h1>     </h3>
+<pre data-language="elixir">eval_string(List.Chars.t(), list(), Macro.Env.t() | keyword()) ::
+  {term(), binding :: list()}</pre>  <p>Evaluates the contents given by <code class="inline">string</code>.</p> <p>The <code class="inline">binding</code> argument is a keyword list of variable bindings. The <code class="inline">opts</code> argument is a keyword list of environment options.</p> <p><strong>Warning</strong>: <code class="inline">string</code> can be any Elixir code and will be executed with the same privileges as the Erlang VM: this means that such code could compromise the machine (for example by executing system commands). Don't use <a href="#eval_string/3"><code class="inline">eval_string/3</code></a> with untrusted input (such as strings coming from the network).</p> <h4 id="eval_string/3-options" class="section-heading">  Options </h4> <p>Options can be:</p> <ul> <li>
+<p><code class="inline">:file</code> - the file to be considered in the evaluation</p> </li> <li>
+<p><code class="inline">:line</code> - the line on which the script starts</p> </li> </ul> <p>Additionally, the following scope values can be configured:</p> <ul> <li>
+<p><code class="inline">:aliases</code> - a list of tuples with the alias and its target</p> </li> <li>
+<p><code class="inline">:requires</code> - a list of modules required</p> </li> <li>
+<p><code class="inline">:functions</code> - a list of tuples where the first element is a module and the second a list of imported function names and arity; the list of function names and arity must be sorted</p> </li> <li>
+<p><code class="inline">:macros</code> - a list of tuples where the first element is a module and the second a list of imported macro names and arity; the list of function names and arity must be sorted</p> </li> </ul> <p>Notice that setting any of the values above overrides Elixir's default values. For example, setting <code class="inline">:requires</code> to <code class="inline">[]</code> will no longer automatically require the <a href="../kernel/"><code class="inline">Kernel</code></a> module. In the same way setting <code class="inline">:macros</code> will no longer auto-import <a href="../kernel/"><code class="inline">Kernel</code></a> macros like <a href="../kernel/#if/2"><code class="inline">Kernel.if/2</code></a>, <a href="../kernel.specialforms/#case/2"><code class="inline">Kernel.SpecialForms.case/2</code></a>, and so on.</p> <p>Returns a tuple of the form <code class="inline">{value, binding}</code>, where <code class="inline">value</code> is the value returned from evaluating <code class="inline">string</code>. If an error occurs while evaluating <code class="inline">string</code> an exception will be raised.</p> <p><code class="inline">binding</code> is a keyword list with the value of all variable bindings after evaluating <code class="inline">string</code>. The binding key is usually an atom, but it may be a tuple for variables defined in a different context.</p> <h4 id="eval_string/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Code.eval_string("a + b", [a: 1, b: 2], file: __ENV__.file, line: __ENV__.line)
+{3, [a: 1, b: 2]}
+
+iex&gt; Code.eval_string("c = a + b", [a: 1, b: 2], __ENV__)
+{3, [a: 1, b: 2, c: 3]}
+
+iex&gt; Code.eval_string("a = a + b", [a: 1, b: 2])
+{3, [a: 3, b: 2]}</pre> <p>For convenience, you can pass <a href="../kernel.specialforms/#__ENV__/0"><code class="inline">__ENV__/0</code></a> as the <code class="inline">opts</code> argument and all imports, requires and aliases defined in the current environment will be automatically carried over:</p> <pre data-language="elixir">iex&gt; Code.eval_string("a + b", [a: 1, b: 2], __ENV__)
+{3, [a: 1, b: 2]}</pre>    <h3 class="detail-header function" id="fetch_docs/1">  <h1 class="signature">fetch_docs(module_or_path)</h1>  <span class="note">(since 1.7.0)</span>    </h3>
+<pre data-language="elixir">fetch_docs(module() | String.t()) ::
+  {:docs_v1, annotation, beam_language, format, module_doc :: doc_content,
+   metadata, docs :: [doc_element]}
+  | {:error, :module_not_found | :chunk_not_found | {:invalid_chunk, binary()}}
+when annotation: :erl_anno.anno(),
+     beam_language: :elixir | :erlang | :lfe | :alpaca | atom(),
+     doc_content: %{required(binary()) =&gt; binary()} | :none | :hidden,
+     doc_element:
+       {{kind :: atom(), function_name :: atom(), arity()}, annotation,
+        signature, doc_content, metadata},
+     format: binary(),
+     signature: [binary()],
+     metadata: map()</pre>  <p>Returns the docs for the given module or path to <code class="inline">.beam</code> file.</p> <p>When given a module name, it finds its BEAM code and reads the docs from it.</p> <p>When given a path to a <code class="inline">.beam</code> file, it will load the docs directly from that file.</p> <p>It returns the term stored in the documentation chunk in the format defined by <a href="http://erlang.org/eep/eeps/eep-0048.html" target="_blank">EEP 48</a> or <code class="inline">{:error, reason}</code> if the chunk is not available.</p> <h4 id="fetch_docs/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir"># Module documentation of an existing module
+iex&gt; {:docs_v1, _, :elixir, _, %{"en" =&gt; module_doc}, _, _} = Code.fetch_docs(Atom)
+iex&gt; module_doc |&gt; String.split("\n") |&gt; Enum.at(0)
+"Convenience functions for working with atoms."
+
+# A module that doesn't exist
+iex&gt; Code.fetch_docs(ModuleNotGood)
+{:error, :module_not_found}</pre>     <h3 class="detail-header function" id="format_file!/2">  <h1 class="signature">format_file!(file, opts \\ [])</h1>  <span class="note">(since 1.6.0)</span>    </h3>
+<pre data-language="elixir">format_file!(binary(), keyword()) :: iodata()</pre>  <p>Formats a file.</p> <p>See <a href="#format_string!/2"><code class="inline">format_string!/2</code></a> for more information on code formatting and available options.</p>     <h3 class="detail-header function" id="format_string!/2">  <h1 class="signature">format_string!(string, opts \\ [])</h1>  <span class="note">(since 1.6.0)</span>    </h3>
+<pre data-language="elixir">format_string!(binary(), keyword()) :: iodata()</pre>  <p>Formats the given code <code class="inline">string</code>.</p> <p>The formatter receives a string representing Elixir code and returns iodata representing the formatted code according to pre-defined rules.</p> <h4 id="format_string!/2-options" class="section-heading">  Options </h4> <ul> <li>
+<p><code class="inline">:file</code> - the file which contains the string, used for error reporting</p> </li> <li>
+<p><code class="inline">:line</code> - the line the string starts, used for error reporting</p> </li> <li>
+<p><code class="inline">:line_length</code> - the line length to aim for when formatting the document. Defaults to 98. Note this value is used as reference but it is not enforced by the formatter as sometimes user intervention is required. See "Running the formatter" section</p> </li> <li>
+<p><code class="inline">:locals_without_parens</code> - a keyword list of name and arity pairs that should be kept without parens whenever possible. The arity may be the atom <code class="inline">:*</code>, which implies all arities of that name. The formatter already includes a list of functions and this option augments this list.</p> </li> <li>
+<p><code class="inline">:rename_deprecated_at</code> - rename all known deprecated functions at the given version to their non-deprecated equivalent. It expects a valid <a href="../version/"><code class="inline">Version</code></a> which is usually the minimum Elixir version supported by the project.</p> </li> <li>
+<p><code class="inline">:force_do_end_blocks</code> (since v1.9.0) - when <code class="inline">true</code>, converts all inline usages of <code class="inline">do: ...</code>, <code class="inline">else: ...</code> and friends into <code class="inline">do/end</code> blocks. Defaults to <code class="inline">false</code>. Notice this option is convergent: once you set it to <code class="inline">true</code>, all keywords will be converted. If you set it to <code class="inline">false</code> later on, <code class="inline">do/end</code> blocks won't be converted back to keywords.</p> </li> </ul> <h4 id="format_string!/2-design-principles" class="section-heading">  Design principles </h4> <p>The formatter was designed under three principles.</p> <p>First, the formatter never changes the semantics of the code by default. This means the input AST and the output AST are equivalent. Optional behaviour, such as <code class="inline">:rename_deprecated_at</code>, is allowed to break this guarantee.</p> <p>The second principle is to provide as little configuration as possible. This eases the formatter adoption by removing contention points while making sure a single style is followed consistently by the community as a whole.</p> <p>The formatter does not hard code names. The formatter will not behave specially because a function is named <code class="inline">defmodule</code>, <code class="inline">def</code>, etc. This principle mirrors Elixir's goal of being an extensible language where developers can extend the language with new constructs as if they were part of the language. When it is absolutely necessary to change behaviour based on the name, this behaviour should be configurable, such as the <code class="inline">:locals_without_parens</code> option.</p> <h4 id="format_string!/2-running-the-formatter" class="section-heading">  Running the formatter </h4> <p>The formatter attempts to fit the most it can on a single line and introduces line breaks wherever possible when it cannot.</p> <p>In some cases, this may lead to undesired formatting. Therefore, <strong>some code generated by the formatter may not be aesthetically pleasing and may require explicit intervention from the developer</strong>. That's why we do not recommend to run the formatter blindly in an existing codebase. Instead you should format and sanity check each formatted file.</p> <p>Let's see some examples. The code below:</p> <pre data-language="elixir">"this is a very long string ... #{inspect(some_value)}"</pre> <p>may be formatted as:</p> <pre data-language="elixir">"this is a very long string ... #{
+  inspect(some_value)
+}"</pre> <p>This happens because the only place the formatter can introduce a new line without changing the code semantics is in the interpolation. In those scenarios, we recommend developers to directly adjust the code. Here we can use the binary concatenation operator <a href="../kernel/#%253C%253E/2"><code class="inline">&lt;&gt;/2</code></a>:</p> <pre data-language="elixir">"this is a very long string " &lt;&gt;
+  "... #{inspect(some_value)}"</pre> <p>The string concatenation makes the code fit on a single line and also gives more options to the formatter.</p> <p>A similar example is when the formatter breaks a function definition over multiple clauses:</p> <pre data-language="elixir">def my_function(
+  %User{name: name, age: age, ...},
+  arg1,
+  arg2
+) do
+  ...
+end</pre> <p>While the code above is completely valid, you may prefer to match on the struct variables inside the function body in order to keep the definition on a single line:</p> <pre data-language="elixir">def my_function(%User{} = user, arg1, arg2) do
+  %{name: name, age: age, ...} = user
+  ...
+end</pre> <p>In some situations, you can use the fact the formatter does not generate elegant code as a hint for refactoring. Take this code:</p> <pre data-language="elixir">def board?(board_id, %User{} = user, available_permissions, required_permissions) do
+  Tracker.OrganizationMembers.user_in_organization?(user.id, board.organization_id) and
+    required_permissions == Enum.to_list(MapSet.intersection(MapSet.new(required_permissions), MapSet.new(available_permissions)))
+end</pre> <p>The code above has very long lines and running the formatter is not going to address this issue. In fact, the formatter may make it more obvious that you have complex expressions:</p> <pre data-language="elixir">def board?(board_id, %User{} = user, available_permissions, required_permissions) do
+  Tracker.OrganizationMembers.user_in_organization?(user.id, board.organization_id) and
+    required_permissions ==
+      Enum.to_list(
+        MapSet.intersection(
+          MapSet.new(required_permissions),
+          MapSet.new(available_permissions)
+        )
+      )
+end</pre> <p>Take such cases as a suggestion that your code should be refactored:</p> <pre data-language="elixir">def board?(board_id, %User{} = user, available_permissions, required_permissions) do
+  Tracker.OrganizationMembers.user_in_organization?(user.id, board.organization_id) and
+    matching_permissions?(required_permissions, available_permissions)
+end
+
+defp matching_permissions?(required_permissions, available_permissions) do
+  intersection =
+    required_permissions
+    |&gt; MapSet.new()
+    |&gt; MapSet.intersection(MapSet.new(available_permissions))
+    |&gt; Enum.to_list()
+
+  required_permissions == intersection
+end</pre> <p>To sum it up: since the formatter cannot change the semantics of your code, sometimes it is necessary to tweak or refactor the code to get optimal formatting. To help better understand how to control the formatter, we describe in the next sections the cases where the formatter keeps the user encoding and how to control multiline expressions.</p> <h4 id="format_string!/2-keeping-users-formatting" class="section-heading">  Keeping user's formatting </h4> <p>The formatter respects the input format in some cases. Those are listed below:</p> <ul> <li>
+<p>Insignificant digits in numbers are kept as is. The formatter however always inserts underscores for decimal numbers with more than 5 digits and converts hexadecimal digits to uppercase</p> </li> <li>
+<p>Strings, charlists, atoms and sigils are kept as is. No character is automatically escaped or unescaped. The choice of delimiter is also respected from the input</p> </li> <li>
+<p>Newlines inside blocks are kept as in the input except for: 1) expressions that take multiple lines will always have an empty line before and after and 2) empty lines are always squeezed together into a single empty line</p> </li> <li>
+<p>The choice between <code class="inline">:do</code> keyword and <code class="inline">do/end</code> blocks is left to the user</p> </li> <li>
+<p>Lists, tuples, bitstrings, maps, structs and function calls will be broken into multiple lines if they are followed by a newline in the opening bracket and preceded by a new line in the closing bracket</p> </li> <li>
+<p>Newlines before certain operators (such as the pipeline operators) and before other operators (such as comparison operators)</p> </li> </ul> <p>The behaviours above are not guaranteed. We may remove or add new rules in the future. The goal of documenting them is to provide better understanding on what to expect from the formatter.</p> <h3 id="format_string!/2-multi-line-lists-maps-tuples-etc" class="section-heading">  Multi-line lists, maps, tuples, etc. </h3> <p>You can force lists, tuples, bitstrings, maps, structs and function calls to have one entry per line by adding a newline after the opening bracket and a new line before the closing bracket lines. For example:</p> <pre data-language="elixir">[
+  foo,
+  bar
+]</pre> <p>If there are no newlines around the brackets, then the formatter will try to fit everything on a single line, such that the snippet below</p> <pre data-language="elixir">[foo,
+ bar]</pre> <p>will be formatted as</p> <pre data-language="elixir">[foo, bar]</pre> <p>You can also force function calls and keywords to be rendered on multiple lines by having each entry on its own line:</p> <pre data-language="elixir">defstruct name: nil,
+          age: 0</pre> <p>The code above will be kept with one keyword entry per line by the formatter. To avoid that, just squash everything into a single line.</p> <h3 id="format_string!/2-parens-and-no-parens-in-function-calls" class="section-heading">  Parens and no parens in function calls </h3> <p>Elixir has two syntaxes for function calls. With parens and no parens. By default, Elixir will add parens to all calls except for:</p> <ol> <li>calls that have do/end blocks </li> <li>local calls without parens where the name and arity of the local call is also listed under <code class="inline">:locals_without_parens</code> (except for calls with arity 0, where the compiler always require parens) </li> </ol> <p>The choice of parens and no parens also affects indentation. When a function call with parens doesn't fit on the same line, the formatter introduces a newline around parens and indents the arguments with two spaces:</p> <pre data-language="elixir">some_call(
+  arg1,
+  arg2,
+  arg3
+)</pre> <p>On the other hand, function calls without parens are always indented by the function call length itself, like this:</p> <pre data-language="elixir">some_call arg1,
+          arg2,
+          arg3</pre> <p>If the last argument is a data structure, such as maps and lists, and the beginning of the data structure fits on the same line as the function call, then no indentation happens, this allows code like this:</p> <pre data-language="elixir">Enum.reduce(some_collection, initial_value, fn element, acc -&gt;
+  # code
+end)
+
+some_function_without_parens %{
+  foo: :bar,
+  baz: :bat
+}</pre> <h4 id="format_string!/2-code-comments" class="section-heading">  Code comments </h4> <p>The formatter also handles code comments in a way to guarantee a space is always added between the beginning of the comment (#) and the next character.</p> <p>The formatter also extracts all trailing comments to their previous line. For example, the code below</p> <pre data-language="elixir">hello #world</pre> <p>will be rewritten to</p> <pre data-language="elixir"># world
+hello</pre> <p>Because code comments are handled apart from the code representation (AST), there are some situations where code comments are seen as ambiguous by the code formatter. For example, the comment in the anonymous function below</p> <pre data-language="elixir">fn
+  arg1 -&gt;
+    body1
+    # comment
+
+  arg2 -&gt;
+    body2
+end</pre> <p>and in this one</p> <pre data-language="elixir">fn
+  arg1 -&gt;
+    body1
+
+  # comment
+  arg2 -&gt;
+    body2
+end</pre> <p>are considered equivalent (the nesting is discarded alongside most of user formatting). In such cases, the code formatter will always format to the latter.</p>    <h3 class="detail-header function" id="get_docs/2">  <h1 class="signature">get_docs(module, kind)</h1>     </h3>
+<pre data-language="elixir">get_docs(module(), :moduledoc | :docs | :callback_docs | :type_docs | :all) ::
+  nil</pre>  This function is deprecated. Code.get_docs/2 always returns nil as its outdated documentation is no longer stored on BEAM files. Use Code.fetch_docs/1 instead.   <p>Deprecated function to retrieve old documentation format.</p> <p>Elixir v1.7 adopts <a href="http://erlang.org/eep/eeps/eep-0048.html" target="_blank">EEP 48</a> which is a new documentation format meant to be shared across all BEAM languages. The old format, used by <a href="../code/#get_docs/2"><code class="inline">Code.get_docs/2</code></a>, is no longer available, and therefore this function always returns <code class="inline">nil</code>. Use <a href="../code/#fetch_docs/1"><code class="inline">Code.fetch_docs/1</code></a> instead.</p>    <h3 class="detail-header function" id="prepend_path/1">  <h1 class="signature">prepend_path(path)</h1>     </h3>
+<pre data-language="elixir">prepend_path(Path.t()) :: true | {:error, :bad_directory}</pre>  <p>Prepends a path to the beginning of the Erlang VM code path list.</p> <p>This is the list of directories the Erlang VM uses for finding module code.</p> <p>The path is expanded with <a href="../path/#expand/1"><code class="inline">Path.expand/1</code></a> before being prepended. If this path does not exist, an error is returned.</p> <h4 id="prepend_path/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">Code.prepend_path(".")
+#=&gt; true
+
+Code.prepend_path("/does_not_exist")
+#=&gt; {:error, :bad_directory}</pre>    <h3 class="detail-header function" id="purge_compiler_modules/0">  <h1 class="signature">purge_compiler_modules()</h1>  <span class="note">(since 1.7.0)</span>    </h3>
+<pre data-language="elixir">purge_compiler_modules() :: {:ok, non_neg_integer()}</pre>  <p>Purge compiler modules.</p> <p>The compiler utilizes temporary modules to compile code. For example, <code class="inline">elixir_compiler_1</code>, <code class="inline">elixir_compiler_2</code>, etc. In case the compiled code stores references to anonymous functions or similar, the Elixir compiler may be unable to reclaim those modules, keeping an unnecessary amount of code in memory and eventually leading to modules such as <code class="inline">elixir_compiler_12345</code>.</p> <p>This function purges all modules currently kept by the compiler, allowing old compiler module names to be reused. If there are any processes running any code from such modules, they will be terminated too.</p> <p>It returns <code class="inline">{:ok, number_of_modules_purged}</code>.</p>     <h3 class="detail-header function" id="require_file/2">  <h1 class="signature">require_file(file, relative_to \\ nil)</h1>     </h3>
+<pre data-language="elixir">require_file(binary(), nil | binary()) :: [{module(), binary()}] | nil</pre>  <p>Requires the given <code class="inline">file</code>.</p> <p>Accepts <code class="inline">relative_to</code> as an argument to tell where the file is located. If the file was already required, <a href="#require_file/2"><code class="inline">require_file/2</code></a> doesn't do anything and returns <code class="inline">nil</code>.</p> <p>Notice that if <a href="#require_file/2"><code class="inline">require_file/2</code></a> is invoked by different processes concurrently, the first process to invoke <a href="#require_file/2"><code class="inline">require_file/2</code></a> acquires a lock and the remaining ones will block until the file is available. This means that if <a href="#require_file/2"><code class="inline">require_file/2</code></a> is called more than once with a given file, that file will be compiled only once. The first process to call <a href="#require_file/2"><code class="inline">require_file/2</code></a> will get the list of loaded modules, others will get <code class="inline">nil</code>.</p> <p>See <a href="#compile_file/2"><code class="inline">compile_file/2</code></a> if you would like to compile a file without tracking its filenames. Finally, if you would like to get the result of evaluating a file rather than the modules defined in it, see <a href="#eval_file/2"><code class="inline">eval_file/2</code></a>.</p> <h4 id="require_file/2-examples" class="section-heading">  Examples </h4> <p>If the file has not been required, it returns the list of modules:</p> <pre data-language="elixir">modules = Code.require_file("eex_test.exs", "../eex/test")
+List.first(modules)
+#=&gt; {EExTest.Compiled, &lt;&lt;70, 79, 82, 49, ...&gt;&gt;}</pre> <p>If the file has been required, it returns <code class="inline">nil</code>:</p> <pre data-language="elixir">Code.require_file("eex_test.exs", "../eex/test")
+#=&gt; nil</pre>    <h3 class="detail-header function" id="required_files/0">  <h1 class="signature">required_files()</h1>  <span class="note">(since 1.7.0)</span>    </h3>
+<pre data-language="elixir">required_files() :: [binary()]</pre>  <p>Lists all required files.</p> <h4 id="required_files/0-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">Code.require_file("../eex/test/eex_test.exs")
+List.first(Code.required_files()) =~ "eex_test.exs"
+#=&gt; true</pre>     <h3 class="detail-header function" id="string_to_quoted/2">  <h1 class="signature">string_to_quoted(string, opts \\ [])</h1>     </h3>
+<pre data-language="elixir">string_to_quoted(List.Chars.t(), keyword()) ::
+  {:ok, Macro.t()} | {:error, {line :: pos_integer(), term(), term()}}</pre>  <p>Converts the given string to its quoted form.</p> <p>Returns <code class="inline">{:ok, quoted_form}</code> if it succeeds, <code class="inline">{:error, {line, error, token}}</code> otherwise.</p> <h4 id="string_to_quoted/2-options" class="section-heading">  Options </h4> <ul> <li>
+<p><code class="inline">:file</code> - the filename to be reported in case of parsing errors. Defaults to "nofile".</p> </li> <li>
+<p><code class="inline">:line</code> - the starting line of the string being parsed. Defaults to 1.</p> </li> <li>
+<p><code class="inline">:columns</code> - when <code class="inline">true</code>, attach a <code class="inline">:column</code> key to the quoted metadata. Defaults to <code class="inline">false</code>.</p> </li> <li>
+<p><code class="inline">:existing_atoms_only</code> - when <code class="inline">true</code>, raises an error when non-existing atoms are found by the tokenizer. Defaults to <code class="inline">false</code>.</p> </li> <li>
+<p><code class="inline">:static_atom_encoder</code> - The static atom encoder function, see "The <code class="inline">:static_atom_encoder</code> function" section below. This option overrides the <code class="inline">:existing_atoms_only</code> behaviour for static atoms but <code class="inline">:existing_atoms_only</code> is still used for dynamic atoms, such as atoms with interpolations.</p> </li> <li>
+<p><code class="inline">:warn_on_unnecessary_quotes</code> - when <code class="inline">false</code>, does not warn when atoms, keywords or calls have unnecessary quotes on them. Defaults to <code class="inline">true</code>.</p> </li> </ul> <h4 id="string_to_quoted/2-macro-to_string-2" class="section-heading">  <a href="../macro/#to_string/2"><code class="inline">Macro.to_string/2</code></a> </h4> <p>The opposite of converting a string to its quoted form is <a href="../macro/#to_string/2"><code class="inline">Macro.to_string/2</code></a>, which converts a quoted form to a string/binary representation.</p> <h4 id="string_to_quoted/2-the-static_atom_encoder-function" class="section-heading">  The <code class="inline">:static_atom_encoder</code> function </h4> <p>When <code class="inline">static_atom_encoder: &amp;my_encoder/2</code> is passed as an argument, <code class="inline">my_encoder/2</code> is called every time the tokenizer needs to create a "static" atom. Static atoms are atoms in the AST that function as aliases, remote calls, local calls, variable names, regular atoms and keyword lists.</p> <p>The encoder function will receive the atom name (as a binary) and a keyword list with the current file, line and column. It must return <code class="inline">{:ok, token :: term} | {:error, reason :: binary}</code>.</p> <p>The encoder function is supposed to create an atom from the given string. It is required to return either <code class="inline">{:ok, term}</code>, where term is an atom. It is possible to return something else than an atom, however, in that case the AST is no longer "valid" in that it cannot be used to compile or evaluate Elixir code. A use case for this is if you want to use the Elixir parser in a user-facing situation, but you don't want to exhaust the atom table.</p> <p>The atom encoder is not called for <em>all</em> atoms that are present in the AST. It won't be invoked for the following atoms:</p> <ul> <li>
+<p>operators (<code class="inline">:+</code>, <code class="inline">:-</code>, and so on)</p> </li> <li>
+<p>syntax keywords (<code class="inline">fn</code>, <code class="inline">do</code>, <code class="inline">else</code>, and so on)</p> </li> <li>
+<p>atoms containing interpolation (<code class="inline">:"#{1 + 1} is two"</code>), as these atoms are constructed at runtime.</p> </li> </ul>     <h3 class="detail-header function" id="string_to_quoted!/2">  <h1 class="signature">string_to_quoted!(string, opts \\ [])</h1>     </h3>
+<pre data-language="elixir">string_to_quoted!(List.Chars.t(), keyword()) :: Macro.t()</pre>  <p>Converts the given string to its quoted form.</p> <p>It returns the ast if it succeeds, raises an exception otherwise. The exception is a <a href="../tokenmissingerror/"><code class="inline">TokenMissingError</code></a> in case a token is missing (usually because the expression is incomplete), <a href="../syntaxerror/"><code class="inline">SyntaxError</code></a> otherwise.</p> <p>Check <a href="#string_to_quoted/2"><code class="inline">string_to_quoted/2</code></a> for options information.</p>    <h3 class="detail-header function" id="unrequire_files/1">  <h1 class="signature">unrequire_files(files)</h1>  <span class="note">(since 1.7.0)</span>    </h3>
+<pre data-language="elixir">unrequire_files([binary()]) :: :ok</pre>  <p>Removes files from the required files list.</p> <p>The modules defined in the file are not removed; calling this function only removes them from the list, allowing them to be required again.</p> <h4 id="unrequire_files/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir"># Require EEx test code
+Code.require_file("../eex/test/eex_test.exs")
+
+# Now unrequire all files
+Code.unrequire_files(Code.required_files())
+
+# Notice modules are still available
+function_exported?(EExTest.Compiled, :before_compile, 0)
+#=&gt; true</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/elixir/1.9.1/Code.html" class="_attribution-link" target="_blank">https://hexdocs.pm/elixir/1.9.1/Code.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,309 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Macro - Elixir 1.9 - W3cubDocs</title>
+  
+  <meta name="description" content=" Conveniences for working with macros. ">
+  <meta name="keywords" content="macro, summary, types, expr, literal, t, functions, camelize, string, decompose, call, ast, escape, opts, expand, env, once, generate, arguments, amount, context, operator, name, arity, pipe, args, position, postwalk, fun, acc, prewalk, quoted, term, special, form, struct!, module, tree, fn, -, end, traverse, pre, post, underscore, atom, unescape, chars, map, unpipe, update, meta, validate, var, elixir, elixir~1.9">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/elixir~1.9/macro/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/elixir~1.9.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/elixir~1.9/" class="_nav-link" title="" style="margin-left:0;">Elixir 1.9</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Macro  </h1>  <p>Conveniences for working with macros.</p> <h2 id="module-custom-sigils" class="section-heading">  Custom Sigils </h2> <p>To create a custom sigil, define a function with the name <code class="inline">sigil_{identifier}</code> that takes two arguments. The first argument will be the string, the second will be a charlist containing any modifiers. If the sigil is lower case (such as <code class="inline">sigil_x</code>) then the string argument will allow interpolation. If the sigil is upper case (such as <code class="inline">sigil_X</code>) then the string will not be interpolated.</p> <p>Valid modifiers include only lower and upper case letters. Other characters will cause a syntax error.</p> <p>The module containing the custom sigil must be imported before the sigil syntax can be used.</p> <h3 id="module-examples" class="section-heading">  Examples </h3> <pre data-language="elixir">defmodule MySigils do
+  defmacro sigil_x(term, [?r]) do
+    quote do
+      unquote(term) |&gt; String.reverse()
+    end
+  end
+  defmacro sigil_x(term, _modifiers) do
+    term
+  end
+  defmacro sigil_X(term, [?r]) do
+    quote do
+      unquote(term) |&gt; String.reverse()
+    end
+  end
+  defmacro sigil_X(term, _modifiers) do
+    term
+  end
+end
+
+import MySigils
+
+~x(with #{"inter" &lt;&gt; "polation"})
+#=&gt;"with interpolation"
+
+~x(with #{"inter" &lt;&gt; "polation"})r
+#=&gt;"noitalopretni htiw"
+
+~X(without #{"interpolation"})
+#=&gt;"without \#{"interpolation"}"
+
+~X(without #{"interpolation"})r
+#=&gt;"}\"noitalopretni\"{# tuohtiw"</pre>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Types </h2>
+<dl class="summary-types summary">   <dt class="summary-signature"> <a href="#t:expr/0">expr()</a> </dt> <dd class="summary-synopsis"><p>Represents expressions in the AST</p></dd>   <dt class="summary-signature"> <a href="#t:literal/0">literal()</a> </dt> <dd class="summary-synopsis"><p>Represents literals in the AST</p></dd>   <dt class="summary-signature"> <a href="#t:t/0">t()</a> </dt> <dd class="summary-synopsis"><p>Abstract Syntax Tree (AST)</p></dd>  </dl> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#camelize/1">camelize(string)</a> </dt> <dd class="summary-synopsis"><p>Converts the given string to CamelCase format.</p></dd>   <dt class="summary-signature"> <a href="#decompose_call/1">decompose_call(ast)</a> </dt> <dd class="summary-synopsis"><p>Decomposes a local or remote call into its remote part (when provided), function name and argument list.</p></dd>   <dt class="summary-signature"> <a href="#escape/2">escape(expr, opts \\ [])</a> </dt> <dd class="summary-synopsis"><p>Recursively escapes a value so it can be inserted into a syntax tree.</p></dd>   <dt class="summary-signature"> <a href="#expand/2">expand(ast, env)</a> </dt> <dd class="summary-synopsis"><p>Receives an AST node and expands it until it can no longer be expanded.</p></dd>   <dt class="summary-signature"> <a href="#expand_once/2">expand_once(ast, env)</a> </dt> <dd class="summary-synopsis"><p>Receives an AST node and expands it once.</p></dd>   <dt class="summary-signature"> <a href="#generate_arguments/2">generate_arguments(amount, context)</a> </dt> <dd class="summary-synopsis"><p>Generates AST nodes for a given number of required argument variables using <a href="../macro/#var/2"><code class="inline">Macro.var/2</code></a>.</p></dd>   <dt class="summary-signature"> <a href="#operator?/2">operator?(name, arity)</a> </dt> <dd class="summary-synopsis"><p>Returns <code class="inline">true</code> if the given name and arity is an operator.</p></dd>   <dt class="summary-signature"> <a href="#pipe/3">pipe(expr, call_args, position)</a> </dt> <dd class="summary-synopsis"><p>Pipes <code class="inline">expr</code> into the <code class="inline">call_args</code> at the given <code class="inline">position</code>.</p></dd>   <dt class="summary-signature"> <a href="#postwalk/2">postwalk(ast, fun)</a> </dt> <dd class="summary-synopsis"><p>Performs a depth-first, post-order traversal of quoted expressions.</p></dd>   <dt class="summary-signature"> <a href="#postwalk/3">postwalk(ast, acc, fun)</a> </dt> <dd class="summary-synopsis"><p>Performs a depth-first, post-order traversal of quoted expressions using an accumulator.</p></dd>   <dt class="summary-signature"> <a href="#prewalk/2">prewalk(ast, fun)</a> </dt> <dd class="summary-synopsis"><p>Performs a depth-first, pre-order traversal of quoted expressions.</p></dd>   <dt class="summary-signature"> <a href="#prewalk/3">prewalk(ast, acc, fun)</a> </dt> <dd class="summary-synopsis"><p>Performs a depth-first, pre-order traversal of quoted expressions using an accumulator.</p></dd>   <dt class="summary-signature"> <a href="#quoted_literal?/1">quoted_literal?(term)</a> </dt> <dd class="summary-synopsis"><p>Returns <code class="inline">true</code> if the given quoted expression is an AST literal.</p></dd>   <dt class="summary-signature"> <a href="#special_form?/2">special_form?(name, arity)</a> </dt> <dd class="summary-synopsis"><p>Returns <code class="inline">true</code> if the given name and arity is a special form.</p></dd>   <dt class="summary-signature"> <a href="#struct!/2">struct!(module, env)</a> </dt> <dd class="summary-synopsis"><p>Expands the struct given by <code class="inline">module</code> in the given <code class="inline">env</code>.</p></dd>   <dt class="summary-signature"> <a href="#to_string/2">to_string(tree, fun \\ fn _ast, string -&gt; string end)</a> </dt> <dd class="summary-synopsis"><p>Converts the given expression AST to a string.</p></dd>   <dt class="summary-signature"> <a href="#traverse/4">traverse(ast, acc, pre, post)</a> </dt> <dd class="summary-synopsis"><p>Performs a depth-first traversal of quoted expressions using an accumulator.</p></dd>   <dt class="summary-signature"> <a href="#underscore/1">underscore(atom)</a> </dt> <dd class="summary-synopsis"><p>Converts the given atom or binary to underscore format.</p></dd>   <dt class="summary-signature"> <a href="#unescape_string/1">unescape_string(chars)</a> </dt> <dd class="summary-synopsis"><p>Unescapes the given chars.</p></dd>   <dt class="summary-signature"> <a href="#unescape_string/2">unescape_string(chars, map)</a> </dt> <dd class="summary-synopsis"><p>Unescapes the given chars according to the map given.</p></dd>   <dt class="summary-signature"> <a href="#unpipe/1">unpipe(expr)</a> </dt> <dd class="summary-synopsis"><p>Breaks a pipeline expression into a list.</p></dd>   <dt class="summary-signature"> <a href="#update_meta/2">update_meta(quoted, fun)</a> </dt> <dd class="summary-synopsis"><p>Applies the given function to the node metadata if it contains one.</p></dd>   <dt class="summary-signature"> <a href="#validate/1">validate(expr)</a> </dt> <dd class="summary-synopsis"><p>Validates the given expressions are valid quoted expressions.</p></dd>   <dt class="summary-signature"> <a href="#var/2">var(var, context)</a> </dt> <dd class="summary-synopsis"><p>Generates an AST node representing the variable given by the atoms <code class="inline">var</code> and <code class="inline">context</code>.</p></dd>  </dl>   <h1 class="section-heading" id="types">  Types </h1>   <h3 class="detail-header type" id="t:expr/0">  <h1 class="signature">expr()</h1>     </h3>
+<pre data-language="elixir">expr() :: {expr() | atom(), keyword(), atom() | [t()]}</pre>  <p>Represents expressions in the AST</p>    <h3 class="detail-header type" id="t:literal/0">  <h1 class="signature">literal()</h1>     </h3>
+<pre data-language="elixir">literal() ::
+  atom() | number() | binary() | (... -&gt; any()) | {t(), t()} | [t()]</pre>  <p>Represents literals in the AST</p>    <h3 class="detail-header type" id="t:t/0">  <h1 class="signature">t()</h1>     </h3>
+<pre data-language="elixir">t() :: expr() | literal()</pre>  <p>Abstract Syntax Tree (AST)</p>      <h1 class="section-heading" id="functions">  Functions </h1>   <h3 class="detail-header function" id="camelize/1">  <h1 class="signature">camelize(string)</h1>     </h3>
+<pre data-language="elixir">camelize(String.t()) :: String.t()</pre>  <p>Converts the given string to CamelCase format.</p> <p>This function was designed to camelize language identifiers/tokens, that's why it belongs to the <a href="#content"><code class="inline">Macro</code></a> module. Do not use it as a general mechanism for camelizing strings as it does not support Unicode or characters that are not valid in Elixir identifiers.</p> <h4 id="camelize/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Macro.camelize("foo_bar")
+"FooBar"</pre> <p>If uppercase characters are present, they are not modified in any way as a mechanism to preserve acronyms:</p> <pre data-language="elixir">iex&gt; Macro.camelize("API.V1")
+"API.V1"
+iex&gt; Macro.camelize("API_SPEC")
+"API_SPEC"</pre>    <h3 class="detail-header function" id="decompose_call/1">  <h1 class="signature">decompose_call(ast)</h1>     </h3>
+<pre data-language="elixir">decompose_call(t()) ::
+  {atom(), [t()]} | {t(), atom(), [t()]} | :error</pre>  <p>Decomposes a local or remote call into its remote part (when provided), function name and argument list.</p> <p>Returns <code class="inline">:error</code> when an invalid call syntax is provided.</p> <h4 id="decompose_call/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Macro.decompose_call(quote(do: foo))
+{:foo, []}
+
+iex&gt; Macro.decompose_call(quote(do: foo()))
+{:foo, []}
+
+iex&gt; Macro.decompose_call(quote(do: foo(1, 2, 3)))
+{:foo, [1, 2, 3]}
+
+iex&gt; Macro.decompose_call(quote(do: Elixir.M.foo(1, 2, 3)))
+{{:__aliases__, [], [:Elixir, :M]}, :foo, [1, 2, 3]}
+
+iex&gt; Macro.decompose_call(quote(do: 42))
+:error</pre>     <h3 class="detail-header function" id="escape/2">  <h1 class="signature">escape(expr, opts \\ [])</h1>     </h3>
+<pre data-language="elixir">escape(term(), keyword()) :: t()</pre>  <p>Recursively escapes a value so it can be inserted into a syntax tree.</p> <h4 id="escape/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Macro.escape(:foo)
+:foo
+
+iex&gt; Macro.escape({:a, :b, :c})
+{:{}, [], [:a, :b, :c]}
+
+iex&gt; Macro.escape({:unquote, [], [1]}, unquote: true)
+1</pre> <h4 id="escape/2-options" class="section-heading">  Options </h4> <ul> <li>
+<p><code class="inline">:unquote</code> - when true, this function leaves <a href="../kernel.specialforms/#unquote/1"><code class="inline">unquote/1</code></a> and <a href="../kernel.specialforms/#unquote_splicing/1"><code class="inline">unquote_splicing/1</code></a> statements unescaped, effectively unquoting the contents on escape. This option is useful only when escaping ASTs which may have quoted fragments in them. Defaults to false.</p> </li> <li>
+<p><code class="inline">:prune_metadata</code> - when true, removes metadata from escaped AST nodes. Note this option changes the semantics of escaped code and it should only be used when escaping ASTs, never values. Defaults to false.</p> <p>As an example, <a href="https://hexdocs.pm/ex_unit/ExUnit.html" target="_blank"><code class="inline">ExUnit</code></a> stores the AST of every assertion, so when an assertion fails we can show code snippets to users. Without this option, each time the test module is compiled, we get a different MD5 of the module byte code, because the AST contains metadata, such as counters, specific to the compilation environment. By pruning the metadata, we ensure that the module is deterministic and reduce the amount of data <a href="https://hexdocs.pm/ex_unit/ExUnit.html" target="_blank"><code class="inline">ExUnit</code></a> needs to keep around.</p> </li> </ul> <h4 id="escape/2-comparison-to-kernel-specialforms-quote-2" class="section-heading">  Comparison to <a href="../kernel.specialforms/#quote/2"><code class="inline">Kernel.SpecialForms.quote/2</code></a> </h4> <p>The <a href="#escape/2"><code class="inline">escape/2</code></a> function is sometimes confused with <a href="../kernel.specialforms/#quote/2"><code class="inline">Kernel.SpecialForms.quote/2</code></a>, because the above examples behave the same with both. The key difference is best illustrated when the value to escape is stored in a variable.</p> <pre data-language="elixir">iex&gt; Macro.escape({:a, :b, :c})
+{:{}, [], [:a, :b, :c]}
+iex&gt; quote do: {:a, :b, :c}
+{:{}, [], [:a, :b, :c]}
+
+iex&gt; value = {:a, :b, :c}
+iex&gt; Macro.escape(value)
+{:{}, [], [:a, :b, :c]}
+
+iex&gt; quote do: value
+{:value, [], __MODULE__}
+
+iex&gt; value = {:a, :b, :c}
+iex&gt; quote do: unquote(value)
+{:a, :b, :c}</pre> <p><a href="#escape/2"><code class="inline">escape/2</code></a> is used to escape <em>values</em> (either directly passed or variable bound), while <a href="../kernel.specialforms/#quote/2"><code class="inline">Kernel.SpecialForms.quote/2</code></a> produces syntax trees for expressions.</p>    <h3 class="detail-header function" id="expand/2">  <h1 class="signature">expand(ast, env)</h1>  </h3>  <p>Receives an AST node and expands it until it can no longer be expanded.</p> <p>Note this function does not traverse the AST, only the root node is expanded.</p> <p>This function uses <a href="#expand_once/2"><code class="inline">expand_once/2</code></a> under the hood. Check it out for more information and examples.</p>    <h3 class="detail-header function" id="expand_once/2">  <h1 class="signature">expand_once(ast, env)</h1>  </h3>  <p>Receives an AST node and expands it once.</p> <p>The following contents are expanded:</p> <ul> <li>Macros (local or remote) </li> <li>Aliases are expanded (if possible) and return atoms </li> <li>Compilation environment macros (<a href="../kernel.specialforms/#__CALLER__/0"><code class="inline">__CALLER__/0</code></a>, <a href="../kernel.specialforms/#__DIR__/0"><code class="inline">__DIR__/0</code></a>, <a href="../kernel.specialforms/#__ENV__/0"><code class="inline">__ENV__/0</code></a> and <a href="../kernel.specialforms/#__MODULE__/0"><code class="inline">__MODULE__/0</code></a>) </li> <li>Module attributes reader (<code class="inline">@foo</code>) </li> </ul> <p>If the expression cannot be expanded, it returns the expression itself. This function does not traverse the AST, only the root node is expanded.</p> <p><a href="#expand_once/2"><code class="inline">expand_once/2</code></a> performs the expansion just once. Check <a href="#expand/2"><code class="inline">expand/2</code></a> to perform expansion until the node can no longer be expanded.</p> <h4 id="expand_once/2-examples" class="section-heading">  Examples </h4> <p>In the example below, we have a macro that generates a module with a function named <code class="inline">name_length</code> that returns the length of the module name. The value of this function will be calculated at compilation time and not at runtime.</p> <p>Consider the implementation below:</p> <pre data-language="elixir">defmacro defmodule_with_length(name, do: block) do
+  length = length(Atom.to_charlist(name))
+
+  quote do
+    defmodule unquote(name) do
+      def name_length, do: unquote(length)
+      unquote(block)
+    end
+  end
+end</pre> <p>When invoked like this:</p> <pre data-language="elixir">defmodule_with_length My.Module do
+  def other_function, do: ...
+end</pre> <p>The compilation will fail because <code class="inline">My.Module</code> when quoted is not an atom, but a syntax tree as follows:</p> <pre data-language="elixir">{:__aliases__, [], [:My, :Module]}</pre> <p>That said, we need to expand the aliases node above to an atom, so we can retrieve its length. Expanding the node is not straightforward because we also need to expand the caller aliases. For example:</p> <pre data-language="elixir">alias MyHelpers, as: My
+
+defmodule_with_length My.Module do
+  def other_function, do: ...
+end</pre> <p>The final module name will be <code class="inline">MyHelpers.Module</code> and not <code class="inline">My.Module</code>. With <a href="../macro/#expand/2"><code class="inline">Macro.expand/2</code></a>, such aliases are taken into consideration. Local and remote macros are also expanded. We could rewrite our macro above to use this function as:</p> <pre data-language="elixir">defmacro defmodule_with_length(name, do: block) do
+  expanded = Macro.expand(name, __CALLER__)
+  length = length(Atom.to_charlist(expanded))
+
+  quote do
+    defmodule unquote(name) do
+      def name_length, do: unquote(length)
+      unquote(block)
+    end
+  end
+end</pre>    <h3 class="detail-header function" id="generate_arguments/2">  <h1 class="signature">generate_arguments(amount, context)</h1>  <span class="note">(since 1.5.0)</span>     </h3>
+<pre data-language="elixir">generate_arguments(pos_integer(), context) :: [{atom(), [], context}, ...]
+when context: atom()</pre>
+<pre data-language="elixir">generate_arguments(0, context :: atom()) :: []</pre>  <p>Generates AST nodes for a given number of required argument variables using <a href="../macro/#var/2"><code class="inline">Macro.var/2</code></a>.</p> <h4 id="generate_arguments/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Macro.generate_arguments(2, __MODULE__)
+[{:arg1, [], __MODULE__}, {:arg2, [], __MODULE__}]</pre>    <h3 class="detail-header function" id="operator?/2">  <h1 class="signature">operator?(name, arity)</h1>  <span class="note">(since 1.7.0)</span>    </h3>
+<pre data-language="elixir">operator?(name :: atom(), arity()) :: boolean()</pre>  <p>Returns <code class="inline">true</code> if the given name and arity is an operator.</p>    <h3 class="detail-header function" id="pipe/3">  <h1 class="signature">pipe(expr, call_args, position)</h1>     </h3>
+<pre data-language="elixir">pipe(t(), t(), integer()) :: t()</pre>  <p>Pipes <code class="inline">expr</code> into the <code class="inline">call_args</code> at the given <code class="inline">position</code>.</p>    <h3 class="detail-header function" id="postwalk/2">  <h1 class="signature">postwalk(ast, fun)</h1>     </h3>
+<pre data-language="elixir">postwalk(t(), (t() -&gt; t())) :: t()</pre>  <p>Performs a depth-first, post-order traversal of quoted expressions.</p>    <h3 class="detail-header function" id="postwalk/3">  <h1 class="signature">postwalk(ast, acc, fun)</h1>     </h3>
+<pre data-language="elixir">postwalk(t(), any(), (t(), any() -&gt; {t(), any()})) ::
+  {t(), any()}</pre>  <p>Performs a depth-first, post-order traversal of quoted expressions using an accumulator.</p>    <h3 class="detail-header function" id="prewalk/2">  <h1 class="signature">prewalk(ast, fun)</h1>     </h3>
+<pre data-language="elixir">prewalk(t(), (t() -&gt; t())) :: t()</pre>  <p>Performs a depth-first, pre-order traversal of quoted expressions.</p>    <h3 class="detail-header function" id="prewalk/3">  <h1 class="signature">prewalk(ast, acc, fun)</h1>     </h3>
+<pre data-language="elixir">prewalk(t(), any(), (t(), any() -&gt; {t(), any()})) ::
+  {t(), any()}</pre>  <p>Performs a depth-first, pre-order traversal of quoted expressions using an accumulator.</p>    <h3 class="detail-header function" id="quoted_literal?/1">  <h1 class="signature">quoted_literal?(term)</h1>  <span class="note">(since 1.7.0)</span>     </h3>
+<pre data-language="elixir">quoted_literal?(expr()) :: false</pre>
+<pre data-language="elixir">quoted_literal?(literal()) :: true</pre>  <p>Returns <code class="inline">true</code> if the given quoted expression is an AST literal.</p>    <h3 class="detail-header function" id="special_form?/2">  <h1 class="signature">special_form?(name, arity)</h1>  <span class="note">(since 1.7.0)</span>    </h3>
+<pre data-language="elixir">special_form?(name :: atom(), arity()) :: boolean()</pre>  <p>Returns <code class="inline">true</code> if the given name and arity is a special form.</p>    <h3 class="detail-header function" id="struct!/2">  <h1 class="signature">struct!(module, env)</h1>  <span class="note">(since 1.8.0)</span>    </h3>
+<pre data-language="elixir">struct!(module, Macro.Env.t()) :: %module{} when module: module()</pre>  <p>Expands the struct given by <code class="inline">module</code> in the given <code class="inline">env</code>.</p> <p>This is useful when a struct needs to be expanded at compilation time and the struct being expanded may or may not have been compiled. This function is even capable of expanding structs defined under the module being compiled.</p> <p>It will raise <a href="../compileerror/"><code class="inline">CompileError</code></a> if the struct is not available.</p>     <h3 class="detail-header function" id="to_string/2">  <h1 class="signature">to_string(tree, fun \\ fn _ast, string -&gt; string end)</h1>     </h3>
+<pre data-language="elixir">to_string(t(), (t(), String.t() -&gt; String.t())) :: String.t()</pre>  <p>Converts the given expression AST to a string.</p> <p>The given <code class="inline">fun</code> is called for every node in the AST with two arguments: the AST of the node being printed and the string representation of that same node. The return value of this function is used as the final string representation for that AST node.</p> <p>This function discards all formatting of the original code.</p> <h4 id="to_string/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Macro.to_string(quote(do: foo.bar(1, 2, 3)))
+"foo.bar(1, 2, 3)"
+
+iex&gt; Macro.to_string(quote(do: 1 + 2), fn
+...&gt;   1, _string -&gt; "one"
+...&gt;   2, _string -&gt; "two"
+...&gt;   _ast, string -&gt; string
+...&gt; end)
+"one + two"</pre>    <h3 class="detail-header function" id="traverse/4">  <h1 class="signature">traverse(ast, acc, pre, post)</h1>     </h3>
+<pre data-language="elixir">traverse(
+  t(),
+  any(),
+  (t(), any() -&gt; {t(), any()}),
+  (t(), any() -&gt; {t(), any()})
+) :: {t(), any()}</pre>  <p>Performs a depth-first traversal of quoted expressions using an accumulator.</p>    <h3 class="detail-header function" id="underscore/1">  <h1 class="signature">underscore(atom)</h1>     </h3>
+<pre data-language="elixir">underscore(atom() | String.t()) :: String.t()</pre>  <p>Converts the given atom or binary to underscore format.</p> <p>If an atom is given, it is assumed to be an Elixir module, so it is converted to a binary and then processed.</p> <p>This function was designed to underscore language identifiers/tokens, that's why it belongs to the <a href="#content"><code class="inline">Macro</code></a> module. Do not use it as a general mechanism for underscoring strings as it does not support Unicode or characters that are not valid in Elixir identifiers.</p> <h4 id="underscore/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Macro.underscore("FooBar")
+"foo_bar"
+
+iex&gt; Macro.underscore("Foo.Bar")
+"foo/bar"
+
+iex&gt; Macro.underscore(Foo.Bar)
+"foo/bar"</pre> <p>In general, <code class="inline">underscore</code> can be thought of as the reverse of <code class="inline">camelize</code>, however, in some cases formatting may be lost:</p> <pre data-language="elixir">iex&gt; Macro.underscore("SAPExample")
+"sap_example"
+
+iex&gt; Macro.camelize("sap_example")
+"SapExample"
+
+iex&gt; Macro.camelize("hello_10")
+"Hello10"</pre>    <h3 class="detail-header function" id="unescape_string/1">  <h1 class="signature">unescape_string(chars)</h1>     </h3>
+<pre data-language="elixir">unescape_string(String.t()) :: String.t()</pre>  <p>Unescapes the given chars.</p> <p>This is the unescaping behaviour used by default in Elixir single- and double-quoted strings. Check <a href="#unescape_string/2"><code class="inline">unescape_string/2</code></a> for information on how to customize the escaping map.</p> <p>In this setup, Elixir will escape the following: <code class="inline">\0</code>, <code class="inline">\a</code>, <code class="inline">\b</code>, <code class="inline">\d</code>, <code class="inline">\e</code>, <code class="inline">\f</code>, <code class="inline">\n</code>, <code class="inline">\r</code>, <code class="inline">\s</code>, <code class="inline">\t</code> and <code class="inline">\v</code>. Bytes can be given as hexadecimals via <code class="inline">\xNN</code> and Unicode code points as <code class="inline">\uNNNN</code> escapes.</p> <p>This function is commonly used on sigil implementations (like <code class="inline">~r</code>, <code class="inline">~s</code> and others) which receive a raw, unescaped string.</p> <h4 id="unescape_string/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Macro.unescape_string("example\\n")
+"example\n"</pre> <p>In the example above, we pass a string with <code class="inline">\n</code> escaped and return a version with it unescaped.</p>    <h3 class="detail-header function" id="unescape_string/2">  <h1 class="signature">unescape_string(chars, map)</h1>     </h3>
+<pre data-language="elixir">unescape_string(String.t(), (non_neg_integer() -&gt; non_neg_integer() | false)) ::
+  String.t()</pre>  <p>Unescapes the given chars according to the map given.</p> <p>Check <a href="#unescape_string/1"><code class="inline">unescape_string/1</code></a> if you want to use the same map as Elixir single- and double-quoted strings.</p> <h4 id="unescape_string/2-map" class="section-heading">  Map </h4> <p>The map must be a function. The function receives an integer representing the code point of the character it wants to unescape. Here is the default mapping function implemented by Elixir:</p> <pre data-language="elixir">def unescape_map(unicode), do: true
+def unescape_map(hex), do: true
+def unescape_map(?0), do: ?0
+def unescape_map(?a), do: ?\a
+def unescape_map(?b), do: ?\b
+def unescape_map(?d), do: ?\d
+def unescape_map(?e), do: ?\e
+def unescape_map(?f), do: ?\f
+def unescape_map(?n), do: ?\n
+def unescape_map(?r), do: ?\r
+def unescape_map(?s), do: ?\s
+def unescape_map(?t), do: ?\t
+def unescape_map(?v), do: ?\v
+def unescape_map(e), do: e</pre> <p>If the <code class="inline">unescape_map/1</code> function returns <code class="inline">false</code>, the char is not escaped and the backslash is kept in the string.</p> <p>Hexadecimals and Unicode code points will be escaped if the map function returns <code class="inline">true</code> for <code class="inline">?x</code>. Unicode code points if the map function returns <code class="inline">true</code> for <code class="inline">?u</code>.</p> <h4 id="unescape_string/2-examples" class="section-heading">  Examples </h4> <p>Using the <code class="inline">unescape_map/1</code> function defined above is easy:</p> <pre data-language="elixir">Macro.unescape_string("example\\n", &amp;unescape_map(&amp;1))</pre>    <h3 class="detail-header function" id="unpipe/1">  <h1 class="signature">unpipe(expr)</h1>     </h3>
+<pre data-language="elixir">unpipe(t()) :: [t()]</pre>  <p>Breaks a pipeline expression into a list.</p> <p>The AST for a pipeline (a sequence of applications of <code class="inline">|&gt;</code>) is similar to the AST of a sequence of binary operators or function applications: the top-level expression is the right-most <code class="inline">:|&gt;</code> (which is the last one to be executed), and its left-hand and right-hand sides are its arguments:</p> <pre data-language="elixir">quote do: 100 |&gt; div(5) |&gt; div(2)
+#=&gt; {:|&gt;, _, [arg1, arg2]}</pre> <p>In the example above, the <code class="inline">|&gt;</code> pipe is the right-most pipe; <code class="inline">arg1</code> is the AST for <code class="inline">100 |&gt; div(5)</code>, and <code class="inline">arg2</code> is the AST for <code class="inline">div(2)</code>.</p> <p>It's often useful to have the AST for such a pipeline as a list of function applications. This function does exactly that:</p> <pre data-language="elixir">Macro.unpipe(quote do: 100 |&gt; div(5) |&gt; div(2))
+#=&gt; [{100, 0}, {{:div, [], [5]}, 0}, {{:div, [], [2]}, 0}]</pre> <p>We get a list that follows the pipeline directly: first the <code class="inline">100</code>, then the <code class="inline">div(5)</code> (more precisely, its AST), then <code class="inline">div(2)</code>. The <code class="inline">0</code> as the second element of the tuples is the position of the previous element in the pipeline inside the current function application: <code class="inline">{{:div, [], [5]}, 0}</code> means that the previous element (<code class="inline">100</code>) will be inserted as the 0th (first) argument to the <a href="../kernel/#div/2"><code class="inline">div/2</code></a> function, so that the AST for that function will become <code class="inline">{:div, [], [100, 5]}</code> (<code class="inline">div(100, 5)</code>).</p>    <h3 class="detail-header function" id="update_meta/2">  <h1 class="signature">update_meta(quoted, fun)</h1>     </h3>
+<pre data-language="elixir">update_meta(t(), (keyword() -&gt; keyword())) :: t()</pre>  <p>Applies the given function to the node metadata if it contains one.</p> <p>This is often useful when used with <a href="../macro/#prewalk/2"><code class="inline">Macro.prewalk/2</code></a> to remove information like lines and hygienic counters from the expression for either storage or comparison.</p> <h4 id="update_meta/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; quoted = quote line: 10, do: sample()
+{:sample, [line: 10], []}
+iex&gt; Macro.update_meta(quoted, &amp;Keyword.delete(&amp;1, :line))
+{:sample, [], []}</pre>    <h3 class="detail-header function" id="validate/1">  <h1 class="signature">validate(expr)</h1>     </h3>
+<pre data-language="elixir">validate(term()) :: :ok | {:error, term()}</pre>  <p>Validates the given expressions are valid quoted expressions.</p> <p>Checks the <a href="../macro/#t:t/0"><code class="inline">Macro.t/0</code></a> for the specification of a valid quoted expression.</p> <p>It returns <code class="inline">:ok</code> if the expression is valid. Otherwise it returns a tuple in the form of <code class="inline">{:error, remainder}</code> where <code class="inline">remainder</code> is the invalid part of the quoted expression.</p> <h4 id="validate/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Macro.validate({:two_element, :tuple})
+:ok
+iex&gt; Macro.validate({:three, :element, :tuple})
+{:error, {:three, :element, :tuple}}
+
+iex&gt; Macro.validate([1, 2, 3])
+:ok
+iex&gt; Macro.validate([1, 2, 3, {4}])
+{:error, {4}}</pre>    <h3 class="detail-header function" id="var/2">  <h1 class="signature">var(var, context)</h1>     </h3>
+<pre data-language="elixir">var(var, context) :: {var, [], context} when var: atom(), context: atom()</pre>  <p>Generates an AST node representing the variable given by the atoms <code class="inline">var</code> and <code class="inline">context</code>.</p> <h4 id="var/2-examples" class="section-heading">  Examples </h4> <p>In order to build a variable, a context is expected. Most of the times, in order to preserve hygiene, the context must be <a href="../kernel.specialforms/#__MODULE__/0"><code class="inline">__MODULE__/0</code></a>:</p> <pre data-language="elixir">iex&gt; Macro.var(:foo, __MODULE__)
+{:foo, [], __MODULE__}</pre> <p>However, if there is a need to access the user variable, nil can be given:</p> <pre data-language="elixir">iex&gt; Macro.var(:foo, nil)
+{:foo, [], nil}</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/elixir/1.9.1/Macro.html" class="_attribution-link" target="_blank">https://hexdocs.pm/elixir/1.9.1/Macro.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

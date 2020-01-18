@@ -1,0 +1,333 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Calendar.ISO - Elixir 1.9 - W3cubDocs</title>
+  
+  <meta name="description" content=" A calendar implementation that follows to ISO 8601. ">
+  <meta name="keywords" content="calendar, iso, summary, types, day, month, year, functions, date, string, format, extended, datetime, hour, minute, second, microsecond, time, zone, abbr, utc, offset, std, era, week, rollover, relative, midnight, days, leap, months, naive, from, arg, quarter, fraction, valid, -, elixir, elixir~1.9">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/elixir~1.9/calendar.iso/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/elixir~1.9.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/elixir~1.9/" class="_nav-link" title="" style="margin-left:0;">Elixir 1.9</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Calendar.ISO  </h1>  <p>A calendar implementation that follows to ISO 8601.</p> <p>This calendar implements the proleptic Gregorian calendar and is therefore compatible with the calendar used in most countries today. The proleptic means the Gregorian rules for leap years are applied for all time, consequently the dates give different results before the year 1583 from when the Gregorian calendar was adopted.</p> <p>Note that while ISO 8601 allows times and datetimes to specify 24:00:00 as the zero hour of the next day, this notation is not supported by Elixir.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Types </h2>
+<dl class="summary-types summary">   <dt class="summary-signature"> <a href="#t:day/0">day()</a> </dt>   <dt class="summary-signature"> <a href="#t:month/0">month()</a> </dt>   <dt class="summary-signature"> <a href="#t:year/0">year()</a> </dt>  </dl> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#date_to_string/4">date_to_string(year, month, day, format \\ :extended)</a> </dt> <dd class="summary-synopsis"><p>Converts the given date into a string.</p></dd>   <dt class="summary-signature"> <a href="#datetime_to_string/12">datetime_to_string(year, month, day, hour, minute, second, microsecond, time_zone, zone_abbr, utc_offset, std_offset, format \\ :extended)</a> </dt> <dd class="summary-synopsis"><p>Converts the datetime (with time zone) into a string.</p></dd>   <dt class="summary-signature"> <a href="#day_of_era/3">day_of_era(year, month, day)</a> </dt> <dd class="summary-synopsis"><p>Calculates the day and era from the given <code class="inline">year</code>, <code class="inline">month</code>, and <code class="inline">day</code>.</p></dd>   <dt class="summary-signature"> <a href="#day_of_week/3">day_of_week(year, month, day)</a> </dt> <dd class="summary-synopsis"><p>Calculates the day of the week from the given <code class="inline">year</code>, <code class="inline">month</code>, and <code class="inline">day</code>.</p></dd>   <dt class="summary-signature"> <a href="#day_of_year/3">day_of_year(year, month, day)</a> </dt> <dd class="summary-synopsis"><p>Calculates the day of the year from the given <code class="inline">year</code>, <code class="inline">month</code>, and <code class="inline">day</code>.</p></dd>   <dt class="summary-signature"> <a href="#day_rollover_relative_to_midnight_utc/0">day_rollover_relative_to_midnight_utc()</a> </dt> <dd class="summary-synopsis"><p>See <a href="../calendar/#c:day_rollover_relative_to_midnight_utc/0"><code class="inline">Calendar.day_rollover_relative_to_midnight_utc/0</code></a> for documentation.</p></dd>   <dt class="summary-signature"> <a href="#days_in_month/2">days_in_month(year, month)</a> </dt> <dd class="summary-synopsis"><p>Returns how many days there are in the given year-month.</p></dd>   <dt class="summary-signature"> <a href="#leap_year?/1">leap_year?(year)</a> </dt> <dd class="summary-synopsis"><p>Returns if the given year is a leap year.</p></dd>   <dt class="summary-signature"> <a href="#months_in_year/1">months_in_year(year)</a> </dt> <dd class="summary-synopsis"><p>Returns how many months there are in the given year.</p></dd>   <dt class="summary-signature"> <a href="#naive_datetime_from_iso_days/1">naive_datetime_from_iso_days(arg)</a> </dt> <dd class="summary-synopsis"><p>Converts the <a href="../calendar/#t:iso_days/0"><code class="inline">Calendar.iso_days/0</code></a> format to the datetime format specified by this calendar.</p></dd>   <dt class="summary-signature"> <a href="#naive_datetime_to_iso_days/7">naive_datetime_to_iso_days(year, month, day, hour, minute, second, microsecond)</a> </dt> <dd class="summary-synopsis"><p>Returns the <a href="../calendar/#t:iso_days/0"><code class="inline">Calendar.iso_days/0</code></a> format of the specified date.</p></dd>   <dt class="summary-signature"> <a href="#naive_datetime_to_string/8">naive_datetime_to_string(year, month, day, hour, minute, second, microsecond, format \\ :extended)</a> </dt> <dd class="summary-synopsis"><p>Converts the datetime (without time zone) into a string.</p></dd>   <dt class="summary-signature"> <a href="#quarter_of_year/3">quarter_of_year(year, month, day)</a> </dt> <dd class="summary-synopsis"><p>Calculates the quarter of the year from the given <code class="inline">year</code>, <code class="inline">month</code>, and <code class="inline">day</code>.</p></dd>   <dt class="summary-signature"> <a href="#time_from_day_fraction/1">time_from_day_fraction(arg)</a> </dt> <dd class="summary-synopsis"><p>Converts a day fraction to this Calendar's representation of time.</p></dd>   <dt class="summary-signature"> <a href="#time_to_day_fraction/4">time_to_day_fraction(hour, minute, second, arg)</a> </dt> <dd class="summary-synopsis"><p>Returns the normalized day fraction of the specified time.</p></dd>   <dt class="summary-signature"> <a href="#time_to_string/5">time_to_string(hour, minute, second, microsecond, format \\ :extended)</a> </dt> <dd class="summary-synopsis"><p>Converts the given time into a string.</p></dd>   <dt class="summary-signature"> <a href="#valid_date?/3">valid_date?(year, month, day)</a> </dt> <dd class="summary-synopsis"><p>Determines if the date given is valid according to the proleptic Gregorian calendar.</p></dd>   <dt class="summary-signature"> <a href="#valid_time?/4">valid_time?(hour, minute, second, arg)</a> </dt> <dd class="summary-synopsis"><p>Determines if the date given is valid according to the proleptic Gregorian calendar.</p></dd>   <dt class="summary-signature"> <a href="#year_of_era/1">year_of_era(year)</a> </dt> <dd class="summary-synopsis"><p>Calculates the year and era from the given <code class="inline">year</code>.</p></dd>  </dl>   <h1 class="section-heading" id="types">  Types </h1>   <h3 class="detail-header type" id="t:day/0">  <h1 class="signature">day()</h1>     </h3>
+<pre data-language="elixir">day() :: 1..31</pre>     <h3 class="detail-header type" id="t:month/0">  <h1 class="signature">month()</h1>     </h3>
+<pre data-language="elixir">month() :: 1..12</pre>     <h3 class="detail-header type" id="t:year/0">  <h1 class="signature">year()</h1>     </h3>
+<pre data-language="elixir">year() :: -9999..9999</pre>       <h1 class="section-heading" id="functions">  Functions </h1>    <h3 class="detail-header function" id="date_to_string/4">  <h1 class="signature">date_to_string(year, month, day, format \\ :extended)</h1>  <span class="note">(since 1.4.0)</span>    </h3>
+<pre data-language="elixir">date_to_string(year(), month(), day(), :basic | :extended) :: String.t()</pre>  <p>Converts the given date into a string.</p> <p>By default, returns dates formatted in the "extended" format, for human readability. It also supports the "basic" format by passing the <code class="inline">:basic</code> option.</p> <h4 id="date_to_string/4-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.date_to_string(2015, 2, 28)
+"2015-02-28"
+iex&gt; Calendar.ISO.date_to_string(2017, 8, 1)
+"2017-08-01"
+iex&gt; Calendar.ISO.date_to_string(-99, 1, 31)
+"-0099-01-31"
+
+iex&gt; Calendar.ISO.date_to_string(2015, 2, 28, :basic)
+"20150228"
+iex&gt; Calendar.ISO.date_to_string(-99, 1, 31, :basic)
+"-00990131"</pre>     <h3 class="detail-header function" id="datetime_to_string/12">  <h1 class="signature">datetime_to_string(year, month, day, hour, minute, second, microsecond, time_zone, zone_abbr, utc_offset, std_offset, format \\ :extended)</h1>  <span class="note">(since 1.4.0)</span>    </h3>
+<pre data-language="elixir">datetime_to_string(
+  year(),
+  month(),
+  day(),
+  Calendar.hour(),
+  Calendar.minute(),
+  Calendar.second(),
+  Calendar.microsecond(),
+  Calendar.time_zone(),
+  Calendar.zone_abbr(),
+  Calendar.utc_offset(),
+  Calendar.std_offset(),
+  :basic | :extended
+) :: String.t()</pre>  <p>Converts the datetime (with time zone) into a string.</p> <p>By default, returns datetimes formatted in the "extended" format, for human readability. It also supports the "basic" format by passing the <code class="inline">:basic</code> option.</p> <h4 id="datetime_to_string/12-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; time_zone = "Europe/Berlin"
+iex&gt; Calendar.ISO.datetime_to_string(2017, 8, 1, 1, 2, 3, {4, 5}, time_zone, "CET", 3600, 0)
+"2017-08-01 01:02:03.00000+01:00 CET Europe/Berlin"
+iex&gt; Calendar.ISO.datetime_to_string(2017, 8, 1, 1, 2, 3, {4, 5}, time_zone, "CDT", 3600, 3600)
+"2017-08-01 01:02:03.00000+02:00 CDT Europe/Berlin"
+
+iex&gt; time_zone = "America/Los_Angeles"
+iex&gt; Calendar.ISO.datetime_to_string(2015, 2, 28, 1, 2, 3, {4, 5}, time_zone, "PST", -28800, 0)
+"2015-02-28 01:02:03.00000-08:00 PST America/Los_Angeles"
+iex&gt; Calendar.ISO.datetime_to_string(2015, 2, 28, 1, 2, 3, {4, 5}, time_zone, "PDT", -28800, 3600)
+"2015-02-28 01:02:03.00000-07:00 PDT America/Los_Angeles"
+
+iex&gt; time_zone = "Europe/Berlin"
+iex&gt; Calendar.ISO.datetime_to_string(2017, 8, 1, 1, 2, 3, {4, 5}, time_zone, "CET", 3600, 0, :basic)
+"20170801 010203.00000+0100 CET Europe/Berlin"</pre>    <h3 class="detail-header function" id="day_of_era/3">  <h1 class="signature">day_of_era(year, month, day)</h1>  <span class="note">(since 1.8.0)</span>    </h3>
+<pre data-language="elixir">day_of_era(year(), month(), day()) :: {day :: pos_integer(), era :: 0..1}</pre>  <p>Calculates the day and era from the given <code class="inline">year</code>, <code class="inline">month</code>, and <code class="inline">day</code>.</p> <h4 id="day_of_era/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.day_of_era(0, 1, 1)
+{366, 0}
+iex&gt; Calendar.ISO.day_of_era(1, 1, 1)
+{1, 1}
+iex&gt; Calendar.ISO.day_of_era(0, 12, 31)
+{1, 0}
+iex&gt; Calendar.ISO.day_of_era(0, 12, 30)
+{2, 0}
+iex&gt; Calendar.ISO.day_of_era(-1, 12, 31)
+{367, 0}</pre>    <h3 class="detail-header function" id="day_of_week/3">  <h1 class="signature">day_of_week(year, month, day)</h1>  <span class="note">(since 1.4.0)</span>    </h3>
+<pre data-language="elixir">day_of_week(year(), month(), day()) :: 1..7</pre>  <p>Calculates the day of the week from the given <code class="inline">year</code>, <code class="inline">month</code>, and <code class="inline">day</code>.</p> <p>It is an integer from 1 to 7, where 1 is Monday and 7 is Sunday.</p> <h4 id="day_of_week/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.day_of_week(2016, 10, 31)
+1
+iex&gt; Calendar.ISO.day_of_week(2016, 11, 1)
+2
+iex&gt; Calendar.ISO.day_of_week(2016, 11, 2)
+3
+iex&gt; Calendar.ISO.day_of_week(2016, 11, 3)
+4
+iex&gt; Calendar.ISO.day_of_week(2016, 11, 4)
+5
+iex&gt; Calendar.ISO.day_of_week(2016, 11, 5)
+6
+iex&gt; Calendar.ISO.day_of_week(2016, 11, 6)
+7
+iex&gt; Calendar.ISO.day_of_week(-99, 1, 31)
+4</pre>    <h3 class="detail-header function" id="day_of_year/3">  <h1 class="signature">day_of_year(year, month, day)</h1>  <span class="note">(since 1.8.0)</span>    </h3>
+<pre data-language="elixir">day_of_year(year(), month(), day()) :: 1..366</pre>  <p>Calculates the day of the year from the given <code class="inline">year</code>, <code class="inline">month</code>, and <code class="inline">day</code>.</p> <p>It is an integer from 1 to 366.</p> <h4 id="day_of_year/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.day_of_year(2016, 1, 31)
+31
+iex&gt; Calendar.ISO.day_of_year(-99, 2, 1)
+32
+iex&gt; Calendar.ISO.day_of_year(2018, 2, 28)
+59</pre>    <h3 class="detail-header function" id="day_rollover_relative_to_midnight_utc/0">  <h1 class="signature">day_rollover_relative_to_midnight_utc()</h1>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">day_rollover_relative_to_midnight_utc() :: {0, 1}</pre>  <p>See <a href="../calendar/#c:day_rollover_relative_to_midnight_utc/0"><code class="inline">Calendar.day_rollover_relative_to_midnight_utc/0</code></a> for documentation.</p>    <h3 class="detail-header function" id="days_in_month/2">  <h1 class="signature">days_in_month(year, month)</h1>  <span class="note">(since 1.4.0)</span>    </h3>
+<pre data-language="elixir">days_in_month(year(), month()) :: 28..31</pre>  <p>Returns how many days there are in the given year-month.</p> <h4 id="days_in_month/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.days_in_month(1900, 1)
+31
+iex&gt; Calendar.ISO.days_in_month(1900, 2)
+28
+iex&gt; Calendar.ISO.days_in_month(2000, 2)
+29
+iex&gt; Calendar.ISO.days_in_month(2001, 2)
+28
+iex&gt; Calendar.ISO.days_in_month(2004, 2)
+29
+iex&gt; Calendar.ISO.days_in_month(2004, 4)
+30
+iex&gt; Calendar.ISO.days_in_month(-1, 5)
+31</pre>    <h3 class="detail-header function" id="leap_year?/1">  <h1 class="signature">leap_year?(year)</h1>  <span class="note">(since 1.3.0)</span>    </h3>
+<pre data-language="elixir">leap_year?(year()) :: boolean()</pre>  <p>Returns if the given year is a leap year.</p> <h4 id="leap_year?/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.leap_year?(2000)
+true
+iex&gt; Calendar.ISO.leap_year?(2001)
+false
+iex&gt; Calendar.ISO.leap_year?(2004)
+true
+iex&gt; Calendar.ISO.leap_year?(1900)
+false
+iex&gt; Calendar.ISO.leap_year?(-4)
+true</pre>    <h3 class="detail-header function" id="months_in_year/1">  <h1 class="signature">months_in_year(year)</h1>  <span class="note">(since 1.7.0)</span>    </h3>
+<pre data-language="elixir">months_in_year(year()) :: 12</pre>  <p>Returns how many months there are in the given year.</p> <h4 id="months_in_year/1-example" class="section-heading">  Example </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.months_in_year(2004)
+12</pre>    <h3 class="detail-header function" id="naive_datetime_from_iso_days/1">  <h1 class="signature">naive_datetime_from_iso_days(arg)</h1>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">naive_datetime_from_iso_days(Calendar.iso_days()) ::
+  {Calendar.year(), Calendar.month(), Calendar.day(), Calendar.hour(),
+   Calendar.minute(), Calendar.second(), Calendar.microsecond()}</pre>  <p>Converts the <a href="../calendar/#t:iso_days/0"><code class="inline">Calendar.iso_days/0</code></a> format to the datetime format specified by this calendar.</p> <h4 id="naive_datetime_from_iso_days/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.naive_datetime_from_iso_days({0, {0, 86400}})
+{0, 1, 1, 0, 0, 0, {0, 6}}
+iex&gt; Calendar.ISO.naive_datetime_from_iso_days({730_485, {0, 86400}})
+{2000, 1, 1, 0, 0, 0, {0, 6}}
+iex&gt; Calendar.ISO.naive_datetime_from_iso_days({730_485, {43200, 86400}})
+{2000, 1, 1, 12, 0, 0, {0, 6}}
+iex&gt; Calendar.ISO.naive_datetime_from_iso_days({-365, {0, 86400000000}})
+{-1, 1, 1, 0, 0, 0, {0, 6}}</pre>    <h3 class="detail-header function" id="naive_datetime_to_iso_days/7">  <h1 class="signature">naive_datetime_to_iso_days(year, month, day, hour, minute, second, microsecond)</h1>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">naive_datetime_to_iso_days(
+  Calendar.year(),
+  Calendar.month(),
+  Calendar.day(),
+  Calendar.hour(),
+  Calendar.minute(),
+  Calendar.second(),
+  Calendar.microsecond()
+) :: Calendar.iso_days()</pre>  <p>Returns the <a href="../calendar/#t:iso_days/0"><code class="inline">Calendar.iso_days/0</code></a> format of the specified date.</p> <h4 id="naive_datetime_to_iso_days/7-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.naive_datetime_to_iso_days(0, 1, 1, 0, 0, 0, {0, 6})
+{0, {0, 86400000000}}
+iex&gt; Calendar.ISO.naive_datetime_to_iso_days(2000, 1, 1, 12, 0, 0, {0, 6})
+{730485, {43200000000, 86400000000}}
+iex&gt; Calendar.ISO.naive_datetime_to_iso_days(2000, 1, 1, 13, 0, 0, {0, 6})
+{730485, {46800000000, 86400000000}}
+iex&gt; Calendar.ISO.naive_datetime_to_iso_days(-1, 1, 1, 0, 0, 0, {0, 6})
+{-365, {0, 86400000000}}</pre>     <h3 class="detail-header function" id="naive_datetime_to_string/8">  <h1 class="signature">naive_datetime_to_string(year, month, day, hour, minute, second, microsecond, format \\ :extended)</h1>  <span class="note">(since 1.4.0)</span>    </h3>
+<pre data-language="elixir">naive_datetime_to_string(
+  year(),
+  month(),
+  day(),
+  Calendar.hour(),
+  Calendar.minute(),
+  Calendar.second(),
+  Calendar.microsecond(),
+  :basic | :extended
+) :: String.t()</pre>  <p>Converts the datetime (without time zone) into a string.</p> <p>By default, returns datetimes formatted in the "extended" format, for human readability. It also supports the "basic" format by passing the <code class="inline">:basic</code> option.</p> <h4 id="naive_datetime_to_string/8-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.naive_datetime_to_string(2015, 2, 28, 1, 2, 3, {4, 6})
+"2015-02-28 01:02:03.000004"
+iex&gt; Calendar.ISO.naive_datetime_to_string(2017, 8, 1, 1, 2, 3, {4, 5})
+"2017-08-01 01:02:03.00000"
+
+iex&gt; Calendar.ISO.naive_datetime_to_string(2015, 2, 28, 1, 2, 3, {4, 6}, :basic)
+"20150228 010203.000004"</pre>    <h3 class="detail-header function" id="quarter_of_year/3">  <h1 class="signature">quarter_of_year(year, month, day)</h1>  <span class="note">(since 1.8.0)</span>    </h3>
+<pre data-language="elixir">quarter_of_year(year(), month(), day()) :: 1..4</pre>  <p>Calculates the quarter of the year from the given <code class="inline">year</code>, <code class="inline">month</code>, and <code class="inline">day</code>.</p> <p>It is an integer from 1 to 4.</p> <h4 id="quarter_of_year/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.quarter_of_year(2016, 1, 31)
+1
+iex&gt; Calendar.ISO.quarter_of_year(2016, 4, 3)
+2
+iex&gt; Calendar.ISO.quarter_of_year(-99, 9, 31)
+3
+iex&gt; Calendar.ISO.quarter_of_year(2018, 12, 28)
+4</pre>    <h3 class="detail-header function" id="time_from_day_fraction/1">  <h1 class="signature">time_from_day_fraction(arg)</h1>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">time_from_day_fraction(Calendar.day_fraction()) ::
+  {Calendar.hour(), Calendar.minute(), Calendar.second(),
+   Calendar.microsecond()}</pre>  <p>Converts a day fraction to this Calendar's representation of time.</p> <h4 id="time_from_day_fraction/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.time_from_day_fraction({1, 2})
+{12, 0, 0, {0, 6}}
+iex&gt; Calendar.ISO.time_from_day_fraction({13, 24})
+{13, 0, 0, {0, 6}}</pre>    <h3 class="detail-header function" id="time_to_day_fraction/4">  <h1 class="signature">time_to_day_fraction(hour, minute, second, arg)</h1>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">time_to_day_fraction(
+  Calendar.hour(),
+  Calendar.minute(),
+  Calendar.second(),
+  Calendar.microsecond()
+) :: Calendar.day_fraction()</pre>  <p>Returns the normalized day fraction of the specified time.</p> <h4 id="time_to_day_fraction/4-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.time_to_day_fraction(0, 0, 0, {0, 6})
+{0, 86400000000}
+iex&gt; Calendar.ISO.time_to_day_fraction(12, 34, 56, {123, 6})
+{45296000123, 86400000000}</pre>     <h3 class="detail-header function" id="time_to_string/5">  <h1 class="signature">time_to_string(hour, minute, second, microsecond, format \\ :extended)</h1>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">time_to_string(
+  Calendar.hour(),
+  Calendar.minute(),
+  Calendar.second(),
+  Calendar.microsecond(),
+  :basic | :extended
+) :: String.t()</pre>  <p>Converts the given time into a string.</p> <p>By default, returns times formatted in the "extended" format, for human readability. It also supports the "basic" format by passing the <code class="inline">:basic</code> option.</p> <h4 id="time_to_string/5-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.time_to_string(2, 2, 2, {2, 6})
+"02:02:02.000002"
+iex&gt; Calendar.ISO.time_to_string(2, 2, 2, {2, 2})
+"02:02:02.00"
+iex&gt; Calendar.ISO.time_to_string(2, 2, 2, {2, 0})
+"02:02:02"
+
+iex&gt; Calendar.ISO.time_to_string(2, 2, 2, {2, 6}, :basic)
+"020202.000002"
+iex&gt; Calendar.ISO.time_to_string(2, 2, 2, {2, 6}, :extended)
+"02:02:02.000002"</pre>    <h3 class="detail-header function" id="valid_date?/3">  <h1 class="signature">valid_date?(year, month, day)</h1>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">valid_date?(year(), month(), day()) :: boolean()</pre>  <p>Determines if the date given is valid according to the proleptic Gregorian calendar.</p> <h4 id="valid_date?/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.valid_date?(2015, 2, 28)
+true
+iex&gt; Calendar.ISO.valid_date?(2015, 2, 30)
+false
+iex&gt; Calendar.ISO.valid_date?(-1, 12, 31)
+true
+iex&gt; Calendar.ISO.valid_date?(-1, 12, 32)
+false</pre>    <h3 class="detail-header function" id="valid_time?/4">  <h1 class="signature">valid_time?(hour, minute, second, arg)</h1>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">valid_time?(
+  Calendar.hour(),
+  Calendar.minute(),
+  Calendar.second(),
+  Calendar.microsecond()
+) :: boolean()</pre>  <p>Determines if the date given is valid according to the proleptic Gregorian calendar.</p> <p>Note that while ISO 8601 allows times to specify 24:00:00 as the zero hour of the next day, this notation is not supported by Elixir. Leap seconds are not supported as well by the built-in Calendar.ISO.</p> <h4 id="valid_time?/4-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.valid_time?(10, 50, 25, {3006, 6})
+true
+iex&gt; Calendar.ISO.valid_time?(23, 59, 60, {0, 0})
+false
+iex&gt; Calendar.ISO.valid_time?(24, 0, 0, {0, 0})
+false</pre>    <h3 class="detail-header function" id="year_of_era/1">  <h1 class="signature">year_of_era(year)</h1>  <span class="note">(since 1.8.0)</span>    </h3>
+<pre data-language="elixir">year_of_era(year()) :: {year(), era :: 0..1}</pre>  <p>Calculates the year and era from the given <code class="inline">year</code>.</p> <p>The ISO calendar has two eras: the current era which starts in year 1 and is defined as era "1". And a second era for those years less than 1 defined as era "0".</p> <h4 id="year_of_era/1-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Calendar.ISO.year_of_era(1)
+{1, 1}
+iex&gt; Calendar.ISO.year_of_era(2018)
+{2018, 1}
+iex&gt; Calendar.ISO.year_of_era(0)
+{1, 0}
+iex&gt; Calendar.ISO.year_of_era(-1)
+{2, 0}</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/elixir/1.9.1/Calendar.ISO.html" class="_attribution-link" target="_blank">https://hexdocs.pm/elixir/1.9.1/Calendar.ISO.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

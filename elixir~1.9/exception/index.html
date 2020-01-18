@@ -1,0 +1,161 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Exception - Elixir 1.9 - W3cubDocs</title>
+  
+  <meta name="description" content=" Functions to format throw&#47;catch&#47;exit and exceptions. ">
+  <meta name="keywords" content="exception, summary, types, kind, stacktrace, entry, t, functions, blame, error, mfa, module, function, args, term, format, payload, banner, exit, reason, fa, fun, arity, file, line, suffix, trace, nil, message, normalize, callbacks, -, elixir, elixir~1.9">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/elixir~1.9/exception/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/elixir~1.9.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/elixir~1.9/" class="_nav-link" title="" style="margin-left:0;">Elixir 1.9</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _elixir">
+				
+				
+<h1>  Exception <small>behaviour</small>  </h1>  <p>Functions to format throw/catch/exit and exceptions.</p> <p>Note that stacktraces in Elixir are only available inside catch and rescue by using the <a href="../kernel.specialforms/#__STACKTRACE__/0"><code class="inline">__STACKTRACE__/0</code></a> variable.</p> <p>Do not rely on the particular format returned by the <code class="inline">format*</code> functions in this module. They may be changed in future releases in order to better suit Elixir's tool chain. In other words, by using the functions in this module it is guaranteed you will format exceptions as in the current Elixir version being used.</p>   <h1 class="section-heading" id="summary">  Summary </h1> <h2> Types </h2>
+<dl class="summary-types summary">   <dt class="summary-signature"> <a href="#t:kind/0">kind()</a> </dt> <dd class="summary-synopsis"><p>The kind handled by formatting functions</p></dd>   <dt class="summary-signature"> <a href="#t:stacktrace/0">stacktrace()</a> </dt>   <dt class="summary-signature"> <a href="#t:stacktrace_entry/0">stacktrace_entry()</a> </dt>   <dt class="summary-signature"> <a href="#t:t/0">t()</a> </dt> <dd class="summary-synopsis"><p>The exception type</p></dd>  </dl> <h2> Functions </h2>
+<dl class="summary-functions summary">   <dt class="summary-signature"> <a href="#blame/3">blame(kind, error, stacktrace)</a> </dt> <dd class="summary-synopsis"><p>Attaches information to exceptions for extra debugging.</p></dd>   <dt class="summary-signature"> <a href="#blame_mfa/3">blame_mfa(module, function, args)</a> </dt> <dd class="summary-synopsis"><p>Blames the invocation of the given module, function and arguments.</p></dd>   <dt class="summary-signature"> <a href="#exception?/1">exception?(term)</a> </dt> <dd class="summary-synopsis"><p>Returns <code class="inline">true</code> if the given <code class="inline">term</code> is an exception.</p></dd>   <dt class="summary-signature"> <a href="#format/3">format(kind, payload, stacktrace \\ [])</a> </dt> <dd class="summary-synopsis"><p>Normalizes and formats throw/errors/exits and stacktraces.</p></dd>   <dt class="summary-signature"> <a href="#format_banner/3">format_banner(kind, exception, stacktrace \\ [])</a> </dt> <dd class="summary-synopsis"><p>Normalizes and formats any throw/error/exit.</p></dd>   <dt class="summary-signature"> <a href="#format_exit/1">format_exit(reason)</a> </dt> <dd class="summary-synopsis"><p>Formats an exit. It returns a string.</p></dd>   <dt class="summary-signature"> <a href="#format_fa/2">format_fa(fun, arity)</a> </dt> <dd class="summary-synopsis"><p>Receives an anonymous function and arity and formats it as shown in stacktraces. The arity may also be a list of arguments.</p></dd>   <dt class="summary-signature"> <a href="#format_file_line/3">format_file_line(file, line, suffix \\ "")</a> </dt> <dd class="summary-synopsis"><p>Formats the given <code class="inline">file</code> and <code class="inline">line</code> as shown in stacktraces. If any of the values are <code class="inline">nil</code>, they are omitted.</p></dd>   <dt class="summary-signature"> <a href="#format_mfa/3">format_mfa(module, fun, arity)</a> </dt> <dd class="summary-synopsis"><p>Receives a module, fun and arity and formats it as shown in stacktraces. The arity may also be a list of arguments.</p></dd>   <dt class="summary-signature"> <a href="#format_stacktrace/1">format_stacktrace(trace \\ nil)</a> </dt> <dd class="summary-synopsis"><p>Formats the stacktrace.</p></dd>   <dt class="summary-signature"> <a href="#format_stacktrace_entry/1">format_stacktrace_entry(entry)</a> </dt> <dd class="summary-synopsis"><p>Receives a stacktrace entry and formats it into a string.</p></dd>   <dt class="summary-signature"> <a href="#message/1">message(exception)</a> </dt> <dd class="summary-synopsis"><p>Gets the message for an <code class="inline">exception</code>.</p></dd>   <dt class="summary-signature"> <a href="#normalize/3">normalize(kind, payload, stacktrace \\ [])</a> </dt> <dd class="summary-synopsis"><p>Normalizes an exception, converting Erlang exceptions to Elixir exceptions.</p></dd>  </dl> <h2> Callbacks </h2>
+<dl class="summary-callbacks summary">   <dt class="summary-signature"> <a href="#c:blame/2">blame(t, stacktrace)</a> </dt> <dd class="summary-synopsis"><p>Called from <a href="../exception/#blame/3"><code class="inline">Exception.blame/3</code></a> to augment the exception struct.</p></dd>   <dt class="summary-signature"> <a href="#c:exception/1">exception(term)</a> </dt>   <dt class="summary-signature"> <a href="#c:message/1">message(t)</a> </dt>  </dl>   <h1 class="section-heading" id="types">  Types </h1>   <h3 class="detail-header type" id="t:kind/0">  <h1 class="signature">kind()</h1>     </h3>
+<pre data-language="elixir">kind() :: :error | non_error_kind()</pre>  <p>The kind handled by formatting functions</p>    <h3 class="detail-header type" id="t:stacktrace/0">  <h1 class="signature">stacktrace()</h1>     </h3>
+<pre data-language="elixir">stacktrace() :: [stacktrace_entry()]</pre>     <h3 class="detail-header type" id="t:stacktrace_entry/0">  <h1 class="signature">stacktrace_entry()</h1>     </h3>
+<pre data-language="elixir">stacktrace_entry() ::
+  {module(), atom(), arity_or_args(), location()}
+  | {(... -&gt; any()), arity_or_args(), location()}</pre>     <h3 class="detail-header type" id="t:t/0">  <h1 class="signature">t()</h1>     </h3>
+<pre data-language="elixir">t() :: %module(){:__exception__ =&gt; true, optional(atom()) =&gt; any()}</pre>  <p>The exception type</p>      <h1 class="section-heading" id="functions">  Functions </h1>   <h3 class="detail-header function" id="blame/3">  <h1 class="signature">blame(kind, error, stacktrace)</h1>  <span class="note">(since 1.5.0)</span>     </h3>
+<pre data-language="elixir">blame(non_error_kind(), payload, stacktrace()) :: {payload, stacktrace()}
+when payload: var</pre>
+<pre data-language="elixir">blame(:error, any(), stacktrace()) :: {t(), stacktrace()}</pre>  <p>Attaches information to exceptions for extra debugging.</p> <p>This operation is potentially expensive, as it reads data from the file system, parses beam files, evaluates code and so on.</p> <p>If the exception module implements the optional <a href="#c:blame/2"><code class="inline">blame/2</code></a> callback, it will be invoked to perform the computation.</p>    <h3 class="detail-header function" id="blame_mfa/3">  <h1 class="signature">blame_mfa(module, function, args)</h1>  <span class="note">(since 1.5.0)</span>    </h3>
+<pre data-language="elixir">blame_mfa(module(), function(), args :: [term()]) ::
+  {:ok, :def | :defp | :defmacro | :defmacrop,
+   [{args :: [term()], guards :: [term()]}]}
+  | :error</pre>  <p>Blames the invocation of the given module, function and arguments.</p> <p>This function will retrieve the available clauses from bytecode and evaluate them against the given arguments. The clauses are returned as a list of <code class="inline">{args, guards}</code> pairs where each argument and each top-level condition in a guard separated by <code class="inline">and</code>/<code class="inline">or</code> is wrapped in a tuple with blame metadata.</p> <p>This function returns either <code class="inline">{:ok, definition, clauses}</code> or <code class="inline">:error</code>. Where <code class="inline">definition</code> is <code class="inline">:def</code>, <code class="inline">:defp</code>, <code class="inline">:defmacro</code> or <code class="inline">:defmacrop</code>.</p>    <h3 class="detail-header function" id="exception?/1">  <h1 class="signature">exception?(term)</h1>  </h3>  <p>Returns <code class="inline">true</code> if the given <code class="inline">term</code> is an exception.</p>     <h3 class="detail-header function" id="format/3">  <h1 class="signature">format(kind, payload, stacktrace \\ [])</h1>     </h3>
+<pre data-language="elixir">format(kind(), any(), stacktrace()) :: String.t()</pre>  <p>Normalizes and formats throw/errors/exits and stacktraces.</p> <p>It relies on <a href="#format_banner/3"><code class="inline">format_banner/3</code></a> and <a href="#format_stacktrace/1"><code class="inline">format_stacktrace/1</code></a> to generate the final format.</p> <p>If <code class="inline">kind</code> is <code class="inline">{:EXIT, pid}</code>, it does not generate a stacktrace, as such exits are retrieved as messages without stacktraces.</p>     <h3 class="detail-header function" id="format_banner/3">  <h1 class="signature">format_banner(kind, exception, stacktrace \\ [])</h1>     </h3>
+<pre data-language="elixir">format_banner(kind(), any(), stacktrace()) :: String.t()</pre>  <p>Normalizes and formats any throw/error/exit.</p> <p>The message is formatted and displayed in the same format as used by Elixir's CLI.</p> <p>The third argument is the stacktrace which is used to enrich a normalized error with more information. It is only used when the kind is an error.</p>    <h3 class="detail-header function" id="format_exit/1">  <h1 class="signature">format_exit(reason)</h1>     </h3>
+<pre data-language="elixir">format_exit(any()) :: String.t()</pre>  <p>Formats an exit. It returns a string.</p> <p>Often there are errors/exceptions inside exits. Exits are often wrapped by the caller and provide stacktraces too. This function formats exits in a way to nicely show the exit reason, caller and stacktrace.</p>    <h3 class="detail-header function" id="format_fa/2">  <h1 class="signature">format_fa(fun, arity)</h1>  </h3>  <p>Receives an anonymous function and arity and formats it as shown in stacktraces. The arity may also be a list of arguments.</p> <h4 id="format_fa/2-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">Exception.format_fa(fn -&gt; nil end, 1)
+#=&gt; "#Function&lt;...&gt;/1"</pre>     <h3 class="detail-header function" id="format_file_line/3">  <h1 class="signature">format_file_line(file, line, suffix \\ "")</h1>  </h3>  <p>Formats the given <code class="inline">file</code> and <code class="inline">line</code> as shown in stacktraces. If any of the values are <code class="inline">nil</code>, they are omitted.</p> <h4 id="format_file_line/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Exception.format_file_line("foo", 1)
+"foo:1:"
+
+iex&gt; Exception.format_file_line("foo", nil)
+"foo:"
+
+iex&gt; Exception.format_file_line(nil, nil)
+""</pre>    <h3 class="detail-header function" id="format_mfa/3">  <h1 class="signature">format_mfa(module, fun, arity)</h1>  </h3>  <p>Receives a module, fun and arity and formats it as shown in stacktraces. The arity may also be a list of arguments.</p> <h4 id="format_mfa/3-examples" class="section-heading">  Examples </h4> <pre data-language="elixir">iex&gt; Exception.format_mfa(Foo, :bar, 1)
+"Foo.bar/1"
+
+iex&gt; Exception.format_mfa(Foo, :bar, [])
+"Foo.bar()"
+
+iex&gt; Exception.format_mfa(nil, :bar, [])
+"nil.bar()"</pre> <p>Anonymous functions are reported as -func/arity-anonfn-count-, where func is the name of the enclosing function. Convert to "anonymous fn in func/arity"</p>     <h3 class="detail-header function" id="format_stacktrace/1">  <h1 class="signature">format_stacktrace(trace \\ nil)</h1>  </h3>  <p>Formats the stacktrace.</p> <p>A stacktrace must be given as an argument. If not, the stacktrace is retrieved from <a href="../process/#info/2"><code class="inline">Process.info/2</code></a>.</p>    <h3 class="detail-header function" id="format_stacktrace_entry/1">  <h1 class="signature">format_stacktrace_entry(entry)</h1>     </h3>
+<pre data-language="elixir">format_stacktrace_entry(stacktrace_entry()) :: String.t()</pre>  <p>Receives a stacktrace entry and formats it into a string.</p>    <h3 class="detail-header function" id="message/1">  <h1 class="signature">message(exception)</h1>  </h3>  <p>Gets the message for an <code class="inline">exception</code>.</p>     <h3 class="detail-header function" id="normalize/3">  <h1 class="signature">normalize(kind, payload, stacktrace \\ [])</h1>      </h3>
+<pre data-language="elixir">normalize(non_error_kind(), payload, stacktrace()) :: payload when payload: var</pre>
+<pre data-language="elixir">normalize(:error, any(), stacktrace()) :: t()</pre>  <p>Normalizes an exception, converting Erlang exceptions to Elixir exceptions.</p> <p>It takes the <code class="inline">kind</code> spilled by <code class="inline">catch</code> as an argument and normalizes only <code class="inline">:error</code>, returning the untouched payload for others.</p> <p>The third argument is the stacktrace which is used to enrich a normalized error with more information. It is only used when the kind is an error.</p>      <h1 class="section-heading" id="callbacks">  Callbacks </h1>   <h3 class="detail-header callback" id="c:blame/2">  <h1 class="signature">blame(t, stacktrace)</h1>  <span class="note">(optional)</span>    </h3>
+<pre data-language="elixir">blame(t(), stacktrace()) :: {t(), stacktrace()}</pre>  <p>Called from <a href="../exception/#blame/3"><code class="inline">Exception.blame/3</code></a> to augment the exception struct.</p> <p>Can be used to collect additional information about the exception or do some additional expensive computation.</p>    <h3 class="detail-header callback" id="c:exception/1">  <h1 class="signature">exception(term)</h1>     </h3>
+<pre data-language="elixir">exception(term()) :: t()</pre>     <h3 class="detail-header callback" id="c:message/1">  <h1 class="signature">message(t)</h1>     </h3>
+<pre data-language="elixir">message(t()) :: String.t()</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012 Plataformatec<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://hexdocs.pm/elixir/1.9.1/Exception.html" class="_attribution-link" target="_blank">https://hexdocs.pm/elixir/1.9.1/Exception.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
