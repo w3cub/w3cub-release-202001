@@ -1,0 +1,130 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>3.10.2. Operator Precedence Problems - GCC 9 CPP - W3cubDocs</title>
+  
+  <meta name="description" content="You may have noticed that in most of the macro definition examples shown above, each occurrence of a macro argument name had parentheses around it. &hellip;">
+  <meta name="keywords" content="operator, precedence, problems, -, gcc, cpp, gcc~9_cpp">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/gcc~9_cpp/operator-precedence-problems/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/gcc~9_cpp.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/gcc~9_cpp/" class="_nav-link" title="" style="margin-left:0;">GCC 9 CPP</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 class="subsection" id="Operator-Precedence-Problems-1">3.10.2 Operator Precedence Problems</h1>  <p id="index-parentheses-in-macro-bodies">You may have noticed that in most of the macro definition examples shown above, each occurrence of a macro argument name had parentheses around it. In addition, another pair of parentheses usually surround the entire macro definition. Here is why it is best to write macros that way. </p> <p>Suppose you define a macro as follows, </p> <div class="smallexample"> <pre class="smallexample" data-language="cpp">#define ceil_div(x, y) (x + y - 1) / y</pre>
+</div> <p>whose purpose is to divide, rounding up. (One use for this operation is to compute how many <code>int</code> objects are needed to hold a certain number of <code>char</code> objects.) Then suppose it is used as follows: </p> <div class="smallexample"> <pre class="smallexample" data-language="cpp">a = ceil_div (b &amp; c, sizeof (int));
+     → a = (b &amp; c + sizeof (int) - 1) / sizeof (int);</pre>
+</div> <p>This does not do what is intended. The operator-precedence rules of C make it equivalent to this: </p> <div class="smallexample"> <pre class="smallexample" data-language="cpp">a = (b &amp; (c + sizeof (int) - 1)) / sizeof (int);</pre>
+</div> <p>What we want is this: </p> <div class="smallexample"> <pre class="smallexample" data-language="cpp">a = ((b &amp; c) + sizeof (int) - 1)) / sizeof (int);</pre>
+</div> <p>Defining the macro as </p> <div class="smallexample"> <pre class="smallexample" data-language="cpp">#define ceil_div(x, y) ((x) + (y) - 1) / (y)</pre>
+</div> <p>provides the desired result. </p> <p>Unintended grouping can result in another way. Consider <code>sizeof
+ceil_div(1, 2)</code>. That has the appearance of a C expression that would compute the size of the type of <code>ceil_div (1, 2)</code>, but in fact it means something very different. Here is what it expands to: </p> <div class="smallexample"> <pre class="smallexample" data-language="cpp">sizeof ((1) + (2) - 1) / (2)</pre>
+</div> <p>This would take the size of an integer and divide it by two. The precedence rules have put the division outside the <code>sizeof</code> when it was intended to be inside. </p> <p>Parentheses around the entire macro definition prevent such problems. Here, then, is the recommended way to define <code>ceil_div</code>: </p> <div class="smallexample"> <pre class="smallexample" data-language="cpp">#define ceil_div(x, y) (((x) + (y) - 1) / (y))</pre>
+</div>  <p class="header"> </p>
+<p> Next: <a href="../swallowing-the-semicolon/#Swallowing-the-Semicolon" accesskey="n" rel="next">Swallowing the Semicolon</a>, Previous: <a href="../misnesting/#Misnesting" accesskey="p" rel="prev">Misnesting</a>, Up: <a href="../macro-pitfalls/#Macro-Pitfalls" accesskey="u" rel="up">Macro Pitfalls</a> [<a href="../#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="https://gcc.gnu.org/onlinedocs/gcc-9.2.0/cpp/Index-of-Directives.html#Index-of-Directives" title="Index" rel="index" target="_blank">Index</a>]</p> <div class="_attribution">
+  <p class="_attribution-p">
+    © Free Software Foundation<br>Licensed under the GNU Free Documentation License, Version 1.3.<br>
+    <a href="https://gcc.gnu.org/onlinedocs/gcc-9.2.0/cpp/Operator-Precedence-Problems.html" class="_attribution-link" target="_blank">https://gcc.gnu.org/onlinedocs/gcc-9.2.0/cpp/Operator-Precedence-Problems.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
