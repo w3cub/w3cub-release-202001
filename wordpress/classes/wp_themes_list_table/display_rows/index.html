@@ -1,0 +1,209 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>WP_Themes_List_Table&#58;&#58;display_rows() - WordPress - W3cubDocs</title>
+  
+  <meta name="description" content=" File&#58; wp-admin&#47;includes&#47;class-wp-themes-list-table.php ">
+  <meta name="keywords" content="wp, themes, list, table, display, rows, -, wordpress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/wordpress/classes/wp_themes_list_table/display_rows/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/wordpress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/wordpress/" class="_nav-link" title="" style="margin-left:0;">WordPress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _wordpress">
+				
+				
+<h1>WP_Themes_List_Table::display_rows()</h1>   <div class="content-toc">  <section class="description"> <h2 class="toc-heading" id="description" tabindex="-1">Description </h2> </section>  <section class="source-content"> <h3 class="toc-heading" id="source" tabindex="-1">Source </h3> <p> File: <a href="https://developer.wordpress.org/reference/files/wp-admin/includes/class-wp-themes-list-table.php/" target="_blank">wp-admin/includes/class-wp-themes-list-table.php</a> </p> <pre class="source-code-container" data-language="php">public function display_rows() {
+		$themes = $this-&gt;items;
+
+		foreach ( $themes as $theme ) :
+			?&gt;
+			&lt;div class="available-theme"&gt;
+			&lt;?php
+
+			$template   = $theme-&gt;get_template();
+			$stylesheet = $theme-&gt;get_stylesheet();
+			$title      = $theme-&gt;display( 'Name' );
+			$version    = $theme-&gt;display( 'Version' );
+			$author     = $theme-&gt;display( 'Author' );
+
+			$activate_link = wp_nonce_url( 'themes.php?action=activate&amp;amp;template=' . urlencode( $template ) . '&amp;amp;stylesheet=' . urlencode( $stylesheet ), 'switch-theme_' . $stylesheet );
+
+			$actions             = array();
+			$actions['activate'] = '&lt;a href="' . $activate_link . '" class="activatelink" title="'
+				. esc_attr( sprintf( __( 'Activate &amp;#8220;%s&amp;#8221;' ), $title ) ) . '"&gt;' . __( 'Activate' ) . '&lt;/a&gt;';
+
+			if ( current_user_can( 'edit_theme_options' ) &amp;&amp; current_user_can( 'customize' ) ) {
+				$actions['preview'] .= '&lt;a href="' . wp_customize_url( $stylesheet ) . '" class="load-customize hide-if-no-customize"&gt;'
+					. __( 'Live Preview' ) . '&lt;/a&gt;';
+			}
+
+			if ( ! is_multisite() &amp;&amp; current_user_can( 'delete_themes' ) ) {
+				$actions['delete'] = '&lt;a class="submitdelete deletion" href="' . wp_nonce_url( 'themes.php?action=delete&amp;amp;stylesheet=' . urlencode( $stylesheet ), 'delete-theme_' . $stylesheet )
+					. '" onclick="' . "return confirm( '" . esc_js( sprintf( __( "You are about to delete this theme '%s'\n  'Cancel' to stop, 'OK' to delete." ), $title ) )
+					. "' );" . '"&gt;' . __( 'Delete' ) . '&lt;/a&gt;';
+			}
+
+			/** This filter is documented in wp-admin/includes/class-wp-ms-themes-list-table.php */
+			$actions = apply_filters( 'theme_action_links', $actions, $theme, 'all' );
+
+			/** This filter is documented in wp-admin/includes/class-wp-ms-themes-list-table.php */
+			$actions       = apply_filters( "theme_action_links_$stylesheet", $actions, $theme, 'all' );
+			$delete_action = isset( $actions['delete'] ) ? '&lt;div class="delete-theme"&gt;' . $actions['delete'] . '&lt;/div&gt;' : '';
+			unset( $actions['delete'] );
+
+			?&gt;
+
+			&lt;span class="screenshot hide-if-customize"&gt;
+				&lt;?php if ( $screenshot = $theme-&gt;get_screenshot() ) : ?&gt;
+					&lt;img src="&lt;?php echo esc_url( $screenshot ); ?&gt;" alt="" /&gt;
+				&lt;?php endif; ?&gt;
+			&lt;/span&gt;
+			&lt;a href="&lt;?php echo wp_customize_url( $stylesheet ); ?&gt;" class="screenshot load-customize hide-if-no-customize"&gt;
+				&lt;?php if ( $screenshot = $theme-&gt;get_screenshot() ) : ?&gt;
+					&lt;img src="&lt;?php echo esc_url( $screenshot ); ?&gt;" alt="" /&gt;
+				&lt;?php endif; ?&gt;
+			&lt;/a&gt;
+
+			&lt;h3&gt;&lt;?php echo $title; ?&gt;&lt;/h3&gt;
+			&lt;div class="theme-author"&gt;&lt;?php printf( __( 'By %s' ), $author ); ?&gt;&lt;/div&gt;
+			&lt;div class="action-links"&gt;
+				&lt;ul&gt;
+					&lt;?php foreach ( $actions as $action ) : ?&gt;
+						&lt;li&gt;&lt;?php echo $action; ?&gt;&lt;/li&gt;
+					&lt;?php endforeach; ?&gt;
+					&lt;li class="hide-if-no-js"&gt;&lt;a href="#" class="theme-detail"&gt;&lt;?php _e( 'Details' ); ?&gt;&lt;/a&gt;&lt;/li&gt;
+				&lt;/ul&gt;
+				&lt;?php echo $delete_action; ?&gt;
+
+				&lt;?php theme_update_available( $theme ); ?&gt;
+			&lt;/div&gt;
+
+			&lt;div class="themedetaildiv hide-if-js"&gt;
+				&lt;p&gt;&lt;strong&gt;&lt;?php _e( 'Version:' ); ?&gt;&lt;/strong&gt; &lt;?php echo $version; ?&gt;&lt;/p&gt;
+				&lt;p&gt;&lt;?php echo $theme-&gt;display( 'Description' ); ?&gt;&lt;/p&gt;
+				&lt;?php
+				if ( $theme-&gt;parent() ) {
+					printf(
+						/* translators: %s: link to documentation on child themes */
+						' &lt;p class="howto"&gt;' . __( 'This &lt;a href="%1$s"&gt;child theme&lt;/a&gt; requires its parent theme, %2$s.' ) . '&lt;/p&gt;',
+						__( 'https://developer.wordpress.org/themes/advanced-topics/child-themes/' ),
+						$theme-&gt;parent()-&gt;display( 'Name' )
+					);
+				}
+				?&gt;
+			&lt;/div&gt;
+
+			&lt;/div&gt;
+			&lt;?php
+		endforeach;
+	}</pre>  </section>  <section class="related"> <h2 class="toc-heading" id="related" tabindex="-1">Related </h2> <article class="uses"> <h3 class="toc-heading" id="uses" tabindex="-1">Uses </h3> <table id="uses-table">  <thead> <tr> <th>Uses</th> <th class="related-desc">Description</th> </tr> </thead> <tbody> <tr> <td> <span>wp-admin/includes/theme.php:</span> <a href="../../../functions/theme_update_available/">theme_update_available()</a> </td> <td class="related-desc"> <p>Check if there is an update for a theme available.</p> </td> </tr> <tr> <td> <span>wp-admin/includes/class-wp-ms-themes-list-table.php:</span> <a href="../../../hooks/theme_action_links_stylesheet/">theme_action_links_{$stylesheet}</a> </td> <td class="related-desc"> <p>Filters the action links of a specific theme in the Multisite themes list table.</p> </td> </tr> <tr> <td> <span>wp-admin/includes/class-wp-ms-themes-list-table.php:</span> <a href="../../../hooks/theme_action_links/">theme_action_links</a> </td> <td class="related-desc"> <p>Filters the action links displayed for each theme in the Multisite themes list table.</p> </td> </tr> <tr> <td> <span>wp-includes/capabilities.php:</span> <a href="../../../functions/current_user_can/">current_user_can()</a> </td> <td class="related-desc"> <p>Whether the current user has a specific capability.</p> </td> </tr> <tr> <td> <span>wp-includes/theme.php:</span> <a href="../../../functions/wp_customize_url/">wp_customize_url()</a> </td> <td class="related-desc"> <p>Returns a URL to load the Customizer.</p> </td> </tr> <tr> <td> <span>wp-includes/l10n.php:</span> <a href="../../../functions/__/">__()</a> </td> <td class="related-desc"> <p>Retrieve the translation of $text.</p> </td> </tr> <tr> <td> <span>wp-includes/l10n.php:</span> <a href="../../../functions/_e/">_e()</a> </td> <td class="related-desc"> <p>Display translated text.</p> </td> </tr> <tr> <td> <span>wp-includes/formatting.php:</span> <a href="../../../functions/esc_attr/">esc_attr()</a> </td> <td class="related-desc"> <p>Escaping for HTML attributes.</p> </td> </tr> <tr> <td> <span>wp-includes/formatting.php:</span> <a href="../../../functions/esc_js/">esc_js()</a> </td> <td class="related-desc"> <p>Escape single quotes, htmlspecialchar ” &amp;, and fix line endings.</p> </td> </tr> <tr> <td> <span>wp-includes/formatting.php:</span> <a href="../../../functions/esc_url/">esc_url()</a> </td> <td class="related-desc"> <p>Checks and cleans a URL.</p> </td> </tr> <tr> <td> <span>wp-includes/load.php:</span> <a href="../../../functions/is_multisite/">is_multisite()</a> </td> <td class="related-desc"> <p>If Multisite is enabled.</p> </td> </tr> <tr> <td> <span>wp-includes/functions.php:</span> <a href="../../../functions/wp_nonce_url/">wp_nonce_url()</a> </td> <td class="related-desc"> <p>Retrieve URL with nonce added to URL query.</p> </td> </tr> <tr> <td> <span>wp-includes/plugin.php:</span> <a href="../../../functions/apply_filters/">apply_filters()</a> </td> <td class="related-desc"> <p>Call the functions added to a filter hook.</p> </td> </tr> </tbody>
+
+</table>   </article>  <article class="used-by"> <h3 class="toc-heading" id="used-by" tabindex="-1">Used By </h3> <table id="used-by-table">  <thead> <tr> <th>Used By</th> <th class="related-desc">Description</th> </tr> </thead> <tbody> <tr> <td> <span>wp-admin/includes/class-wp-themes-list-table.php:</span> <a href="../display_rows_or_placeholder/">WP_Themes_List_Table::display_rows_or_placeholder()</a> </td> <td class="related-desc"> </td> </tr> </tbody>
+
+</table> </article> </section>   </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2003–2019 WordPress Foundation<br>Licensed under the GNU GPLv2+ License.<br>
+    <a href="https://developer.wordpress.org/reference/classes/wp_themes_list_table/display_rows" class="_attribution-link" target="_blank">https://developer.wordpress.org/reference/classes/wp_themes_list_table/display_rows</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

@@ -1,0 +1,242 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>WP_Styles&#58;&#58;do_item() - WordPress - W3cubDocs</title>
+  
+  <meta name="description" content=" Processes a style dependency. ">
+  <meta name="keywords" content="wp, styles, do, item, string, &#36;handle, -, wordpress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/wordpress/classes/wp_styles/do_item/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/wordpress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/wordpress/" class="_nav-link" title="" style="margin-left:0;">WordPress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _wordpress">
+				
+				
+<h1>WP_Styles::do_item( string $handle )</h1>  <section class="summary"> <p>Processes a style dependency.</p> </section> <div class="content-toc">  <section class="description"> <h2 class="toc-heading" id="description" tabindex="-1">Description </h2> <h3 class="toc-heading" id="see-also" tabindex="-1">See also </h3> <ul> <li><a href="../../wp_dependencies/do_item/">WP_Dependencies::do_item()</a></li> </ul> </section>  <section class="parameters"> <h3 class="toc-heading" id="parameters" tabindex="-1">Parameters </h3> <dl> <dt>$handle</dt> <dd> <p class="desc"> <span class="type">(<span class="string">string</span>)</span> <span class="required">(Required)</span> <span class="description">The style's registered handle.</span> </p> </dd> </dl> </section>  <section class="return"> <h3 class="toc-heading" id="return" tabindex="-1">Return </h3> <p><span class="return-type">(bool)</span> True on success, false on failure.</p> </section>  <section class="source-content"> <h3 class="toc-heading" id="source" tabindex="-1">Source </h3> <p> File: <a href="https://developer.wordpress.org/reference/files/wp-includes/class-wp-styles.php/" target="_blank">wp-includes/class.wp-styles.php</a> </p> <pre class="source-code-container" data-language="php">public function do_item( $handle ) {
+		if ( ! parent::do_item( $handle ) ) {
+			return false;
+		}
+
+		$obj = $this-&gt;registered[ $handle ];
+
+		if ( null === $obj-&gt;ver ) {
+			$ver = '';
+		} else {
+			$ver = $obj-&gt;ver ? $obj-&gt;ver : $this-&gt;default_version;
+		}
+
+		if ( isset( $this-&gt;args[ $handle ] ) ) {
+			$ver = $ver ? $ver . '&amp;amp;' . $this-&gt;args[ $handle ] : $this-&gt;args[ $handle ];
+		}
+
+		$src         = $obj-&gt;src;
+		$cond_before = $cond_after = '';
+		$conditional = isset( $obj-&gt;extra['conditional'] ) ? $obj-&gt;extra['conditional'] : '';
+
+		if ( $conditional ) {
+			$cond_before = "&lt;!--[if {$conditional}]&gt;\n";
+			$cond_after  = "&lt;![endif]--&gt;\n";
+		}
+
+		$inline_style = $this-&gt;print_inline_style( $handle, false );
+
+		if ( $inline_style ) {
+			$inline_style_tag = sprintf( "&lt;style id='%s-inline-css' type='text/css'&gt;\n%s\n&lt;/style&gt;\n", esc_attr( $handle ), $inline_style );
+		} else {
+			$inline_style_tag = '';
+		}
+
+		if ( $this-&gt;do_concat ) {
+			if ( $this-&gt;in_default_dir( $src ) &amp;&amp; ! $conditional &amp;&amp; ! isset( $obj-&gt;extra['alt'] ) ) {
+				$this-&gt;concat         .= "$handle,";
+				$this-&gt;concat_version .= "$handle$ver";
+
+				$this-&gt;print_code .= $inline_style;
+
+				return true;
+			}
+		}
+
+		if ( isset( $obj-&gt;args ) ) {
+			$media = esc_attr( $obj-&gt;args );
+		} else {
+			$media = 'all';
+		}
+
+		// A single item may alias a set of items, by having dependencies, but no source.
+		if ( ! $src ) {
+			if ( $inline_style_tag ) {
+				if ( $this-&gt;do_concat ) {
+					$this-&gt;print_html .= $inline_style_tag;
+				} else {
+					echo $inline_style_tag;
+				}
+			}
+
+			return true;
+		}
+
+		$href = $this-&gt;_css_href( $src, $ver, $handle );
+		if ( ! $href ) {
+			return true;
+		}
+
+		$rel   = isset( $obj-&gt;extra['alt'] ) &amp;&amp; $obj-&gt;extra['alt'] ? 'alternate stylesheet' : 'stylesheet';
+		$title = isset( $obj-&gt;extra['title'] ) ? "title='" . esc_attr( $obj-&gt;extra['title'] ) . "'" : '';
+
+		/**
+		 * Filters the HTML link tag of an enqueued style.
+		 *
+		 * @since 2.6.0
+		 * @since 4.3.0 Introduced the `$href` parameter.
+		 * @since 4.5.0 Introduced the `$media` parameter.
+		 *
+		 * @param string $html   The link tag for the enqueued style.
+		 * @param string $handle The style's registered handle.
+		 * @param string $href   The stylesheet's source URL.
+		 * @param string $media  The stylesheet's media attribute.
+		 */
+		$tag = apply_filters( 'style_loader_tag', "&lt;link rel='$rel' id='$handle-css' $title href='$href' type='text/css' media='$media' /&gt;\n", $handle, $href, $media );
+
+		if ( 'rtl' === $this-&gt;text_direction &amp;&amp; isset( $obj-&gt;extra['rtl'] ) &amp;&amp; $obj-&gt;extra['rtl'] ) {
+			if ( is_bool( $obj-&gt;extra['rtl'] ) || 'replace' === $obj-&gt;extra['rtl'] ) {
+				$suffix   = isset( $obj-&gt;extra['suffix'] ) ? $obj-&gt;extra['suffix'] : '';
+				$rtl_href = str_replace( "{$suffix}.css", "-rtl{$suffix}.css", $this-&gt;_css_href( $src, $ver, "$handle-rtl" ) );
+			} else {
+				$rtl_href = $this-&gt;_css_href( $obj-&gt;extra['rtl'], $ver, "$handle-rtl" );
+			}
+
+			/** This filter is documented in wp-includes/class.wp-styles.php */
+			$rtl_tag = apply_filters( 'style_loader_tag', "&lt;link rel='$rel' id='$handle-rtl-css' $title href='$rtl_href' type='text/css' media='$media' /&gt;\n", $handle, $rtl_href, $media );
+
+			if ( $obj-&gt;extra['rtl'] === 'replace' ) {
+				$tag = $rtl_tag;
+			} else {
+				$tag .= $rtl_tag;
+			}
+		}
+
+		if ( $this-&gt;do_concat ) {
+			$this-&gt;print_html .= $cond_before;
+			$this-&gt;print_html .= $tag;
+			if ( $inline_style_tag ) {
+				$this-&gt;print_html .= $inline_style_tag;
+			}
+			$this-&gt;print_html .= $cond_after;
+		} else {
+			echo $cond_before;
+			echo $tag;
+			$this-&gt;print_inline_style( $handle );
+			echo $cond_after;
+		}
+
+		return true;
+	}</pre>  </section>  <section class="changelog"> <h3 class="toc-heading" id="changelog" tabindex="-1">Changelog </h3> <table>  <thead> <tr> <th class="changelog-version">Version</th> <th class="changelog-desc">Description</th> </tr> </thead> <tbody> <tr> <td><a href="https://developer.wordpress.org/reference/since/2.6.0/" alt="WordPress 2.6.0" target="_blank">2.6.0</a></td> <td>Introduced.</td> </tr> </tbody> </table> </section>  <section class="related"> <h2 class="toc-heading" id="related" tabindex="-1">Related </h2> <article class="uses"> <h3 class="toc-heading" id="uses" tabindex="-1">Uses </h3> <table id="uses-table">  <thead> <tr> <th>Uses</th> <th class="related-desc">Description</th> </tr> </thead> <tbody> <tr> <td> <span>wp-includes/class.wp-styles.php:</span> <a href="../print_inline_style/">WP_Styles::print_inline_style()</a> </td> <td class="related-desc"> <p>Prints extra CSS styles of a registered stylesheet.</p> </td> </tr> <tr> <td> <span>wp-includes/class.wp-styles.php:</span> <a href="../in_default_dir/">WP_Styles::in_default_dir()</a> </td> <td class="related-desc"> <p>Whether a handle’s source is in a default directory.</p> </td> </tr> <tr> <td> <span>wp-includes/class.wp-styles.php:</span> <a href="../_css_href/">WP_Styles::_css_href()</a> </td> <td class="related-desc"> <p>Generates an enqueued style’s fully-qualified URL.</p> </td> </tr> <tr> <td> <span>wp-includes/class.wp-styles.php:</span> <a href="../../../hooks/style_loader_tag/">style_loader_tag</a> </td> <td class="related-desc"> <p>Filters the HTML link tag of an enqueued style.</p> </td> </tr> <tr> <td> <span>wp-includes/formatting.php:</span> <a href="../../../functions/esc_attr/">esc_attr()</a> </td> <td class="related-desc"> <p>Escaping for HTML attributes.</p> </td> </tr> <tr> <td> <span>wp-includes/plugin.php:</span> <a href="../../../functions/apply_filters/">apply_filters()</a> </td> <td class="related-desc"> <p>Call the functions added to a filter hook.</p> </td> </tr> <tr> <td> <span>wp-includes/class.wp-dependencies.php:</span> <a href="../../wp_dependencies/do_item/">WP_Dependencies::do_item()</a> </td> <td class="related-desc"> <p>Processes a dependency.</p> </td> </tr> </tbody>
+
+</table>   </article> </section>   </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2003–2019 WordPress Foundation<br>Licensed under the GNU GPLv2+ License.<br>
+    <a href="https://developer.wordpress.org/reference/classes/wp_styles/do_item" class="_attribution-link" target="_blank">https://developer.wordpress.org/reference/classes/wp_styles/do_item</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

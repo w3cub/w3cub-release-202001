@@ -1,0 +1,293 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>WP_REST_Posts_Controller&#58;&#58;prepare_item_for_database() - WordPress - W3cubDocs</title>
+  
+  <meta name="description" content=" Prepares a single post for create or update. ">
+  <meta name="keywords" content="wp, rest, posts, controller, prepare, item, for, database, request, &#36;request, -, wordpress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/wordpress/classes/wp_rest_posts_controller/prepare_item_for_database/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/wordpress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/wordpress/" class="_nav-link" title="" style="margin-left:0;">WordPress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _wordpress">
+				
+				
+<h1>WP_REST_Posts_Controller::prepare_item_for_database( WP_REST_Request $request )</h1>  <section class="summary"> <p>Prepares a single post for create or update.</p> </section> <div class="content-toc">  <section class="description"> <h2 class="toc-heading" id="description" tabindex="-1">Description </h2> </section>  <section class="parameters"> <h3 class="toc-heading" id="parameters" tabindex="-1">Parameters </h3> <dl> <dt>$request</dt> <dd> <p class="desc"> <span class="type">(<span class="WP_REST_Request"><a href="../../wp_rest_request/">WP_REST_Request</a></span>)</span> <span class="required">(Required)</span> <span class="description">Request object.</span> </p> </dd> </dl> </section>  <section class="return"> <h3 class="toc-heading" id="return" tabindex="-1">Return </h3> <p><span class="return-type">(stdClass|<a href="../../wp_error/">WP_Error</a>)</span> Post object or <a href="../../wp_error/">WP_Error</a>.</p> </section>  <section class="source-content"> <h3 class="toc-heading" id="source" tabindex="-1">Source </h3> <p> File: <a href="https://developer.wordpress.org/reference/files/wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php/" target="_blank">wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php</a> </p> <pre class="source-code-container" data-language="php">protected function prepare_item_for_database( $request ) {
+		$prepared_post = new stdClass;
+
+		// Post ID.
+		if ( isset( $request['id'] ) ) {
+			$existing_post = $this-&gt;get_post( $request['id'] );
+			if ( is_wp_error( $existing_post ) ) {
+				return $existing_post;
+			}
+
+			$prepared_post-&gt;ID = $existing_post-&gt;ID;
+		}
+
+		$schema = $this-&gt;get_item_schema();
+
+		// Post title.
+		if ( ! empty( $schema['properties']['title'] ) &amp;&amp; isset( $request['title'] ) ) {
+			if ( is_string( $request['title'] ) ) {
+				$prepared_post-&gt;post_title = $request['title'];
+			} elseif ( ! empty( $request['title']['raw'] ) ) {
+				$prepared_post-&gt;post_title = $request['title']['raw'];
+			}
+		}
+
+		// Post content.
+		if ( ! empty( $schema['properties']['content'] ) &amp;&amp; isset( $request['content'] ) ) {
+			if ( is_string( $request['content'] ) ) {
+				$prepared_post-&gt;post_content = $request['content'];
+			} elseif ( isset( $request['content']['raw'] ) ) {
+				$prepared_post-&gt;post_content = $request['content']['raw'];
+			}
+		}
+
+		// Post excerpt.
+		if ( ! empty( $schema['properties']['excerpt'] ) &amp;&amp; isset( $request['excerpt'] ) ) {
+			if ( is_string( $request['excerpt'] ) ) {
+				$prepared_post-&gt;post_excerpt = $request['excerpt'];
+			} elseif ( isset( $request['excerpt']['raw'] ) ) {
+				$prepared_post-&gt;post_excerpt = $request['excerpt']['raw'];
+			}
+		}
+
+		// Post type.
+		if ( empty( $request['id'] ) ) {
+			// Creating new post, use default type for the controller.
+			$prepared_post-&gt;post_type = $this-&gt;post_type;
+		} else {
+			// Updating a post, use previous type.
+			$prepared_post-&gt;post_type = get_post_type( $request['id'] );
+		}
+
+		$post_type = get_post_type_object( $prepared_post-&gt;post_type );
+
+		// Post status.
+		if ( ! empty( $schema['properties']['status'] ) &amp;&amp; isset( $request['status'] ) ) {
+			$status = $this-&gt;handle_status_param( $request['status'], $post_type );
+
+			if ( is_wp_error( $status ) ) {
+				return $status;
+			}
+
+			$prepared_post-&gt;post_status = $status;
+		}
+
+		// Post date.
+		if ( ! empty( $schema['properties']['date'] ) &amp;&amp; ! empty( $request['date'] ) ) {
+			$date_data = rest_get_date_with_gmt( $request['date'] );
+
+			if ( ! empty( $date_data ) ) {
+				list( $prepared_post-&gt;post_date, $prepared_post-&gt;post_date_gmt ) = $date_data;
+				$prepared_post-&gt;edit_date                                        = true;
+			}
+		} elseif ( ! empty( $schema['properties']['date_gmt'] ) &amp;&amp; ! empty( $request['date_gmt'] ) ) {
+			$date_data = rest_get_date_with_gmt( $request['date_gmt'], true );
+
+			if ( ! empty( $date_data ) ) {
+				list( $prepared_post-&gt;post_date, $prepared_post-&gt;post_date_gmt ) = $date_data;
+				$prepared_post-&gt;edit_date                                        = true;
+			}
+		}
+
+		// Post slug.
+		if ( ! empty( $schema['properties']['slug'] ) &amp;&amp; isset( $request['slug'] ) ) {
+			$prepared_post-&gt;post_name = $request['slug'];
+		}
+
+		// Author.
+		if ( ! empty( $schema['properties']['author'] ) &amp;&amp; ! empty( $request['author'] ) ) {
+			$post_author = (int) $request['author'];
+
+			if ( get_current_user_id() !== $post_author ) {
+				$user_obj = get_userdata( $post_author );
+
+				if ( ! $user_obj ) {
+					return new WP_Error( 'rest_invalid_author', __( 'Invalid author ID.' ), array( 'status' =&gt; 400 ) );
+				}
+			}
+
+			$prepared_post-&gt;post_author = $post_author;
+		}
+
+		// Post password.
+		if ( ! empty( $schema['properties']['password'] ) &amp;&amp; isset( $request['password'] ) ) {
+			$prepared_post-&gt;post_password = $request['password'];
+
+			if ( '' !== $request['password'] ) {
+				if ( ! empty( $schema['properties']['sticky'] ) &amp;&amp; ! empty( $request['sticky'] ) ) {
+					return new WP_Error( 'rest_invalid_field', __( 'A post can not be sticky and have a password.' ), array( 'status' =&gt; 400 ) );
+				}
+
+				if ( ! empty( $prepared_post-&gt;ID ) &amp;&amp; is_sticky( $prepared_post-&gt;ID ) ) {
+					return new WP_Error( 'rest_invalid_field', __( 'A sticky post can not be password protected.' ), array( 'status' =&gt; 400 ) );
+				}
+			}
+		}
+
+		if ( ! empty( $schema['properties']['sticky'] ) &amp;&amp; ! empty( $request['sticky'] ) ) {
+			if ( ! empty( $prepared_post-&gt;ID ) &amp;&amp; post_password_required( $prepared_post-&gt;ID ) ) {
+				return new WP_Error( 'rest_invalid_field', __( 'A password protected post can not be set to sticky.' ), array( 'status' =&gt; 400 ) );
+			}
+		}
+
+		// Parent.
+		if ( ! empty( $schema['properties']['parent'] ) &amp;&amp; isset( $request['parent'] ) ) {
+			if ( 0 === (int) $request['parent'] ) {
+				$prepared_post-&gt;post_parent = 0;
+			} else {
+				$parent = get_post( (int) $request['parent'] );
+				if ( empty( $parent ) ) {
+					return new WP_Error( 'rest_post_invalid_id', __( 'Invalid post parent ID.' ), array( 'status' =&gt; 400 ) );
+				}
+				$prepared_post-&gt;post_parent = (int) $parent-&gt;ID;
+			}
+		}
+
+		// Menu order.
+		if ( ! empty( $schema['properties']['menu_order'] ) &amp;&amp; isset( $request['menu_order'] ) ) {
+			$prepared_post-&gt;menu_order = (int) $request['menu_order'];
+		}
+
+		// Comment status.
+		if ( ! empty( $schema['properties']['comment_status'] ) &amp;&amp; ! empty( $request['comment_status'] ) ) {
+			$prepared_post-&gt;comment_status = $request['comment_status'];
+		}
+
+		// Ping status.
+		if ( ! empty( $schema['properties']['ping_status'] ) &amp;&amp; ! empty( $request['ping_status'] ) ) {
+			$prepared_post-&gt;ping_status = $request['ping_status'];
+		}
+
+		if ( ! empty( $schema['properties']['template'] ) ) {
+			// Force template to null so that it can be handled exclusively by the REST controller.
+			$prepared_post-&gt;page_template = null;
+		}
+
+		/**
+		 * Filters a post before it is inserted via the REST API.
+		 *
+		 * The dynamic portion of the hook name, `$this-&gt;post_type`, refers to the post type slug.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param stdClass        $prepared_post An object representing a single post prepared
+		 *                                       for inserting or updating the database.
+		 * @param WP_REST_Request $request       Request object.
+		 */
+		return apply_filters( "rest_pre_insert_{$this-&gt;post_type}", $prepared_post, $request );
+
+	}</pre>  </section>  <section class="changelog"> <h3 class="toc-heading" id="changelog" tabindex="-1">Changelog </h3> <table>  <thead> <tr> <th class="changelog-version">Version</th> <th class="changelog-desc">Description</th> </tr> </thead> <tbody> <tr> <td><a href="https://developer.wordpress.org/reference/since/4.7.0/" alt="WordPress 4.7.0" target="_blank">4.7.0</a></td> <td>Introduced.</td> </tr> </tbody> </table> </section>  <section class="related"> <h2 class="toc-heading" id="related" tabindex="-1">Related </h2> <article class="uses"> <h3 class="toc-heading" id="uses" tabindex="-1">Uses </h3> <table id="uses-table">  <thead> <tr> <th>Uses</th> <th class="related-desc">Description</th> </tr> </thead> <tbody> <tr> <td> <span>wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:</span> <a href="../get_post/">WP_REST_Posts_Controller::get_post()</a> </td> <td class="related-desc"> <p>Get the post, if the ID is valid.</p> </td> </tr> <tr> <td> <span>wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:</span> <a href="../get_item_schema/">WP_REST_Posts_Controller::get_item_schema()</a> </td> <td class="related-desc"> <p>Retrieves the post’s schema, conforming to JSON Schema.</p> </td> </tr> <tr> <td> <span>wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:</span> <a href="../handle_status_param/">WP_REST_Posts_Controller::handle_status_param()</a> </td> <td class="related-desc"> <p>Determines validity and normalizes the given status parameter.</p> </td> </tr> <tr> <td> <span>wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:</span> <a href="../../../hooks/rest_pre_insert_this-post_type/">rest_pre_insert_{$this-&gt;post_type}</a> </td> <td class="related-desc"> <p>Filters a post before it is inserted via the REST API.</p> </td> </tr> <tr> <td> <span>wp-includes/rest-api.php:</span> <a href="../../../functions/rest_get_date_with_gmt/">rest_get_date_with_gmt()</a> </td> <td class="related-desc"> <p>Parses a date into both its local and UTC equivalent, in MySQL datetime format.</p> </td> </tr> <tr> <td> <span>wp-includes/l10n.php:</span> <a href="../../../functions/__/">__()</a> </td> <td class="related-desc"> <p>Retrieve the translation of $text.</p> </td> </tr> <tr> <td> <span>wp-includes/pluggable.php:</span> <a href="../../../functions/get_userdata/">get_userdata()</a> </td> <td class="related-desc"> <p>Retrieve user info by user ID.</p> </td> </tr> <tr> <td> <span>wp-includes/plugin.php:</span> <a href="../../../functions/apply_filters/">apply_filters()</a> </td> <td class="related-desc"> <p>Call the functions added to a filter hook.</p> </td> </tr> <tr> <td> <span>wp-includes/user.php:</span> <a href="../../../functions/get_current_user_id/">get_current_user_id()</a> </td> <td class="related-desc"> <p>Get the current user’s ID</p> </td> </tr> <tr> <td> <span>wp-includes/post-template.php:</span> <a href="../../../functions/post_password_required/">post_password_required()</a> </td> <td class="related-desc"> <p>Whether post requires password and correct password has been provided.</p> </td> </tr> <tr> <td> <span>wp-includes/post.php:</span> <a href="../../../functions/is_sticky/">is_sticky()</a> </td> <td class="related-desc"> <p>Determines whether a post is sticky.</p> </td> </tr> <tr> <td> <span>wp-includes/post.php:</span> <a href="../../../functions/get_post_type/">get_post_type()</a> </td> <td class="related-desc"> <p>Retrieves the post type of the current post or of a given post.</p> </td> </tr> <tr> <td> <span>wp-includes/post.php:</span> <a href="../../../functions/get_post_type_object/">get_post_type_object()</a> </td> <td class="related-desc"> <p>Retrieves a post type object by name.</p> </td> </tr> <tr> <td> <span>wp-includes/post.php:</span> <a href="../../../functions/get_post/">get_post()</a> </td> <td class="related-desc"> <p>Retrieves post data given a post ID or post object.</p> </td> </tr> <tr> <td> <span>wp-includes/load.php:</span> <a href="../../../functions/is_wp_error/">is_wp_error()</a> </td> <td class="related-desc"> <p>Check whether variable is a WordPress Error.</p> </td> </tr> <tr> <td> <span>wp-includes/class-wp-error.php:</span> <a href="../../wp_error/__construct/">WP_Error::__construct()</a> </td> <td class="related-desc"> <p>Initialize the error.</p> </td> </tr> </tbody>
+
+</table>   </article>  <article class="used-by"> <h3 class="toc-heading" id="used-by" tabindex="-1">Used By </h3> <table id="used-by-table">  <thead> <tr> <th>Used By</th> <th class="related-desc">Description</th> </tr> </thead> <tbody> <tr> <td> <span>wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php:</span> <a href="../../wp_rest_attachments_controller/prepare_item_for_database/">WP_REST_Attachments_Controller::prepare_item_for_database()</a> </td> <td class="related-desc"> <p>Prepares a single attachment for create or update.</p> </td> </tr> <tr> <td> <span>wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:</span> <a href="../create_item/">WP_REST_Posts_Controller::create_item()</a> </td> <td class="related-desc"> <p>Creates a single post.</p> </td> </tr> <tr> <td> <span>wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php:</span> <a href="../update_item/">WP_REST_Posts_Controller::update_item()</a> </td> <td class="related-desc"> <p>Updates a single post.</p> </td> </tr> </tbody>
+
+</table> </article> </section>   </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2003–2019 WordPress Foundation<br>Licensed under the GNU GPLv2+ License.<br>
+    <a href="https://developer.wordpress.org/reference/classes/wp_rest_posts_controller/prepare_item_for_database" class="_attribution-link" target="_blank">https://developer.wordpress.org/reference/classes/wp_rest_posts_controller/prepare_item_for_database</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

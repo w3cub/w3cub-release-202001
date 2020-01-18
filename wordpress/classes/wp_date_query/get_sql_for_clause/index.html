@@ -1,0 +1,212 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>WP_Date_Query&#58;&#58;get_sql_for_clause() - WordPress - W3cubDocs</title>
+  
+  <meta name="description" content=" Turns a first-order date query into SQL for a WHERE clause. ">
+  <meta name="keywords" content="wp, date, query, get, sql, for, clause, array, &#36;query, &#36;parent, -, wordpress">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/wordpress/classes/wp_date_query/get_sql_for_clause/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/wordpress.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/wordpress/" class="_nav-link" title="" style="margin-left:0;">WordPress</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _wordpress">
+				
+				
+<h1>WP_Date_Query::get_sql_for_clause( array $query, array $parent_query )</h1>  <section class="summary"> <p>Turns a first-order date query into SQL for a WHERE clause.</p> </section> <div class="content-toc">  <section class="description"> <h2 class="toc-heading" id="description" tabindex="-1">Description </h2> </section>  <section class="parameters"> <h3 class="toc-heading" id="parameters" tabindex="-1">Parameters </h3> <dl> <dt>$query</dt> <dd> <p class="desc"> <span class="type">(<span class="array">array</span>)</span> <span class="required">(Required)</span> <span class="description">Date query clause.</span> </p> </dd> <dt>$parent_query</dt> <dd> <p class="desc"> <span class="type">(<span class="array">array</span>)</span> <span class="required">(Required)</span> <span class="description">Parent query of the current date query.</span> </p> </dd> </dl> </section>  <section class="return"> <h3 class="toc-heading" id="return" tabindex="-1">Return </h3> <p><span class="return-type">(array)</span> Array containing JOIN and WHERE SQL clauses to append to the main query. </p>
+<ul class="param-hash">
+<li>
+<b>'join'</b><br><i><span class="type">(string)</span></i> SQL fragment to append to the main JOIN clause.</li> <li>
+<b>'where'</b><br><i><span class="type">(string)</span></i> SQL fragment to append to the main WHERE clause.</li> </ul> </section>  <section class="source-content"> <h3 class="toc-heading" id="source" tabindex="-1">Source </h3> <p> File: <a href="https://developer.wordpress.org/reference/files/wp-includes/date.php/" target="_blank">wp-includes/date.php</a> </p> <pre class="source-code-container" data-language="php">protected function get_sql_for_clause( $query, $parent_query ) {
+		global $wpdb;
+
+		// The sub-parts of a $where part.
+		$where_parts = array();
+
+		$column = ( ! empty( $query['column'] ) ) ? esc_sql( $query['column'] ) : $this-&gt;column;
+
+		$column = $this-&gt;validate_column( $column );
+
+		$compare = $this-&gt;get_compare( $query );
+
+		$inclusive = ! empty( $query['inclusive'] );
+
+		// Assign greater- and less-than values.
+		$lt = '&lt;';
+		$gt = '&gt;';
+
+		if ( $inclusive ) {
+			$lt .= '=';
+			$gt .= '=';
+		}
+
+		// Range queries.
+		if ( ! empty( $query['after'] ) ) {
+			$where_parts[] = $wpdb-&gt;prepare( "$column $gt %s", $this-&gt;build_mysql_datetime( $query['after'], ! $inclusive ) );
+		}
+		if ( ! empty( $query['before'] ) ) {
+			$where_parts[] = $wpdb-&gt;prepare( "$column $lt %s", $this-&gt;build_mysql_datetime( $query['before'], $inclusive ) );
+		}
+		// Specific value queries.
+
+		if ( isset( $query['year'] ) &amp;&amp; $value = $this-&gt;build_value( $compare, $query['year'] ) ) {
+			$where_parts[] = "YEAR( $column ) $compare $value";
+		}
+
+		if ( isset( $query['month'] ) &amp;&amp; $value = $this-&gt;build_value( $compare, $query['month'] ) ) {
+			$where_parts[] = "MONTH( $column ) $compare $value";
+		} elseif ( isset( $query['monthnum'] ) &amp;&amp; $value = $this-&gt;build_value( $compare, $query['monthnum'] ) ) {
+			$where_parts[] = "MONTH( $column ) $compare $value";
+		}
+		if ( isset( $query['week'] ) &amp;&amp; false !== ( $value = $this-&gt;build_value( $compare, $query['week'] ) ) ) {
+			$where_parts[] = _wp_mysql_week( $column ) . " $compare $value";
+		} elseif ( isset( $query['w'] ) &amp;&amp; false !== ( $value = $this-&gt;build_value( $compare, $query['w'] ) ) ) {
+			$where_parts[] = _wp_mysql_week( $column ) . " $compare $value";
+		}
+		if ( isset( $query['dayofyear'] ) &amp;&amp; $value = $this-&gt;build_value( $compare, $query['dayofyear'] ) ) {
+			$where_parts[] = "DAYOFYEAR( $column ) $compare $value";
+		}
+
+		if ( isset( $query['day'] ) &amp;&amp; $value = $this-&gt;build_value( $compare, $query['day'] ) ) {
+			$where_parts[] = "DAYOFMONTH( $column ) $compare $value";
+		}
+
+		if ( isset( $query['dayofweek'] ) &amp;&amp; $value = $this-&gt;build_value( $compare, $query['dayofweek'] ) ) {
+			$where_parts[] = "DAYOFWEEK( $column ) $compare $value";
+		}
+
+		if ( isset( $query['dayofweek_iso'] ) &amp;&amp; $value = $this-&gt;build_value( $compare, $query['dayofweek_iso'] ) ) {
+			$where_parts[] = "WEEKDAY( $column ) + 1 $compare $value";
+		}
+
+		if ( isset( $query['hour'] ) || isset( $query['minute'] ) || isset( $query['second'] ) ) {
+			// Avoid notices.
+			foreach ( array( 'hour', 'minute', 'second' ) as $unit ) {
+				if ( ! isset( $query[ $unit ] ) ) {
+					$query[ $unit ] = null;
+				}
+			}
+
+			if ( $time_query = $this-&gt;build_time_query( $column, $compare, $query['hour'], $query['minute'], $query['second'] ) ) {
+				$where_parts[] = $time_query;
+			}
+		}
+
+		/*
+		 * Return an array of 'join' and 'where' for compatibility
+		 * with other query classes.
+		 */
+		return array(
+			'where' =&gt; $where_parts,
+			'join'  =&gt; array(),
+		);
+	}</pre>  </section>  <section class="changelog"> <h3 class="toc-heading" id="changelog" tabindex="-1">Changelog </h3> <table>  <thead> <tr> <th class="changelog-version">Version</th> <th class="changelog-desc">Description</th> </tr> </thead> <tbody> <tr> <td><a href="https://developer.wordpress.org/reference/since/4.1.0/" alt="WordPress 4.1.0" target="_blank">4.1.0</a></td> <td>Introduced.</td> </tr> </tbody> </table> </section>  <section class="related"> <h2 class="toc-heading" id="related" tabindex="-1">Related </h2> <article class="uses"> <h3 class="toc-heading" id="uses" tabindex="-1">Uses </h3> <table id="uses-table">  <thead> <tr> <th>Uses</th> <th class="related-desc">Description</th> </tr> </thead> <tbody> <tr> <td> <span>wp-includes/formatting.php:</span> <a href="../../../functions/esc_sql/">esc_sql()</a> </td> <td class="related-desc"> <p>Escapes data for use in a MySQL query.</p> </td> </tr> <tr> <td> <span>wp-includes/date.php:</span> <a href="../build_mysql_datetime/">WP_Date_Query::build_mysql_datetime()</a> </td> <td class="related-desc"> <p>Builds a MySQL format date/time based on some query parameters.</p> </td> </tr> <tr> <td> <span>wp-includes/date.php:</span> <a href="../build_value/">WP_Date_Query::build_value()</a> </td> <td class="related-desc"> <p>Builds and validates a value string based on the comparison operator.</p> </td> </tr> <tr> <td> <span>wp-includes/date.php:</span> <a href="../build_time_query/">WP_Date_Query::build_time_query()</a> </td> <td class="related-desc"> <p>Builds a query string for comparing time values (hour, minute, second).</p> </td> </tr> <tr> <td> <span>wp-includes/date.php:</span> <a href="../validate_column/">WP_Date_Query::validate_column()</a> </td> <td class="related-desc"> <p>Validates a column name parameter.</p> </td> </tr> <tr> <td> <span>wp-includes/date.php:</span> <a href="../get_compare/">WP_Date_Query::get_compare()</a> </td> <td class="related-desc"> <p>Determines and validates what comparison operator to use.</p> </td> </tr> <tr> <td> <span>wp-includes/wp-db.php:</span> <a href="../../wpdb/prepare/">wpdb::prepare()</a> </td> <td class="related-desc"> <p>Prepares a SQL query for safe execution. Uses sprintf()-like syntax.</p> </td> </tr> </tbody>
+
+</table>   </article>  <article class="used-by"> <h3 class="toc-heading" id="used-by" tabindex="-1">Used By </h3> <table id="used-by-table">  <thead> <tr> <th>Used By</th> <th class="related-desc">Description</th> </tr> </thead> <tbody> <tr> <td> <span>wp-includes/date.php:</span> <a href="../get_sql_for_query/">WP_Date_Query::get_sql_for_query()</a> </td> <td class="related-desc"> <p>Generate SQL clauses for a single query array.</p> </td> </tr> <tr> <td> <span>wp-includes/date.php:</span> <a href="../get_sql_for_subquery/">WP_Date_Query::get_sql_for_subquery()</a> </td> <td class="related-desc"> <p>Turns a single date clause into pieces for a WHERE clause.</p> </td> </tr> </tbody>
+
+</table> </article> </section>   </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2003–2019 WordPress Foundation<br>Licensed under the GNU GPLv2+ License.<br>
+    <a href="https://developer.wordpress.org/reference/classes/wp_date_query/get_sql_for_clause" class="_attribution-link" target="_blank">https://developer.wordpress.org/reference/classes/wp_date_query/get_sql_for_clause</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
