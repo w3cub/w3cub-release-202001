@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Crypto&#47;ed25519 - Go - W3cubDocs</title>
+  
+  <meta name="description" content=" Package ed25519 implements the Ed25519 signature algorithm. See https&#58;&#47;&#47;ed25519.cr.yp.to&#47;. ">
+  <meta name="keywords" content="package, ed, crypto, -, go">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/go/crypto/ed25519/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/go.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/go/" class="_nav-link" title="" style="margin-left:0;">Go</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _go">
+				
+				
+<h1> Package ed25519  </h1>    <ul id="short-nav">
+<li><code>import "crypto/ed25519"</code></li>
+<li><a href="#pkg-overview" class="overviewLink">Overview</a></li>
+<li><a href="#pkg-index" class="indexLink">Index</a></li>
+<li><a href="#pkg-subdirectories">Subdirectories</a></li>
+</ul>     <h2 id="pkg-overview">Overview </h2> <p> Package ed25519 implements the Ed25519 signature algorithm. See <a href="https://ed25519.cr.yp.to/" target="_blank">https://ed25519.cr.yp.to/</a>. </p> <p> These functions are also compatible with the “Ed25519” function defined in RFC 8032. However, unlike RFC 8032's formulation, this package's private key representation includes a public key suffix to make multiple signing operations with the same key more efficient. This package refers to the RFC 8032 private key as the “seed”. </p>      <h2 id="pkg-index">Index </h2>  <ul id="manual-nav">
+<li><a href="#pkg-constants">Constants</a></li>
+<li><a href="#GenerateKey">func GenerateKey(rand io.Reader) (PublicKey, PrivateKey, error)</a></li>
+<li><a href="#Sign">func Sign(privateKey PrivateKey, message []byte) []byte</a></li>
+<li><a href="#Verify">func Verify(publicKey PublicKey, message, sig []byte) bool</a></li>
+<li><a href="#PrivateKey">type PrivateKey</a></li>
+<li> <a href="#NewKeyFromSeed">func NewKeyFromSeed(seed []byte) PrivateKey</a>
+</li>
+<li> <a href="#PrivateKey.Public">func (priv PrivateKey) Public() crypto.PublicKey</a>
+</li>
+<li> <a href="#PrivateKey.Seed">func (priv PrivateKey) Seed() []byte</a>
+</li>
+<li> <a href="#PrivateKey.Sign">func (priv PrivateKey) Sign(rand io.Reader, message []byte, opts crypto.SignerOpts) (signature []byte, err error)</a>
+</li>
+<li><a href="#PublicKey">type PublicKey</a></li>
+</ul> <h3>Package files</h3> <p>  <a href="https://golang.org/src/crypto/ed25519/ed25519.go" target="_blank">ed25519.go</a>  </p>   <h2 id="pkg-constants">Constants</h2> <pre data-language="go">const (
+    // PublicKeySize is the size, in bytes, of public keys as used in this package.
+    PublicKeySize = 32
+    // PrivateKeySize is the size, in bytes, of private keys as used in this package.
+    PrivateKeySize = 64
+    // SignatureSize is the size, in bytes, of signatures generated and verified by this package.
+    SignatureSize = 64
+    // SeedSize is the size, in bytes, of private key seeds. These are the private key representations used by RFC 8032.
+    SeedSize = 32
+)</pre> <h2 id="GenerateKey">func GenerateKey<a href="https://golang.org/src/crypto/ed25519/ed25519.go?s=2707:2770#L67" class="source" target="_blank">Source</a>  <span title="Added in Go 1.13">1.13</span> </h2> <pre data-language="go">func GenerateKey(rand io.Reader) (PublicKey, PrivateKey, error)</pre> <p> GenerateKey generates a public/private key pair using entropy from rand. If rand is nil, crypto/rand.Reader will be used. </p> <h2 id="Sign">func Sign<a href="https://golang.org/src/crypto/ed25519/ed25519.go?s=3996:4051#L114" class="source" target="_blank">Source</a>  <span title="Added in Go 1.13">1.13</span> </h2> <pre data-language="go">func Sign(privateKey PrivateKey, message []byte) []byte</pre> <p> Sign signs the message with privateKey and returns a signature. It will panic if len(privateKey) is not PrivateKeySize. </p> <h2 id="Verify">func Verify<a href="https://golang.org/src/crypto/ed25519/ed25519.go?s=5320:5378#L163" class="source" target="_blank">Source</a>  <span title="Added in Go 1.13">1.13</span> </h2> <pre data-language="go">func Verify(publicKey PublicKey, message, sig []byte) bool</pre> <p> Verify reports whether sig is a valid signature of message by publicKey. It will panic if len(publicKey) is not PublicKeySize. </p> <h2 id="PrivateKey">type PrivateKey<a href="https://golang.org/src/crypto/ed25519/ed25519.go?s=1488:1510#L34" class="source" target="_blank">Source</a>  <span title="Added in Go 1.13">1.13</span> </h2> <p> PrivateKey is the type of Ed25519 private keys. It implements crypto.Signer. </p> <pre data-language="go">type PrivateKey []byte</pre> <h3 id="NewKeyFromSeed">func NewKeyFromSeed<a href="https://golang.org/src/crypto/ed25519/ed25519.go?s=3316:3359#L88" class="source" target="_blank">Source</a>  <span title="Added in Go 1.13">1.13</span> </h3> <pre data-language="go">func NewKeyFromSeed(seed []byte) PrivateKey</pre> <p> NewKeyFromSeed calculates a private key from a seed. It will panic if len(seed) is not SeedSize. This function is provided for interoperability with RFC 8032. RFC 8032's private keys correspond to seeds in this package. </p> <h3 id="PrivateKey.Public">func (PrivateKey) Public<a href="https://golang.org/src/crypto/ed25519/ed25519.go?s=1567:1615#L37" class="source" target="_blank">Source</a>  <span title="Added in Go 1.13">1.13</span> </h3> <pre data-language="go">func (priv PrivateKey) Public() crypto.PublicKey</pre> <p> Public returns the PublicKey corresponding to priv. </p> <h3 id="PrivateKey.Seed">func (PrivateKey) Seed<a href="https://golang.org/src/crypto/ed25519/ed25519.go?s=1898:1934#L46" class="source" target="_blank">Source</a>  <span title="Added in Go 1.13">1.13</span> </h3> <pre data-language="go">func (priv PrivateKey) Seed() []byte</pre> <p> Seed returns the private key seed corresponding to priv. It is provided for interoperability with RFC 8032. RFC 8032's private keys correspond to seeds in this package. </p> <h3 id="PrivateKey.Sign">func (PrivateKey) Sign<a href="https://golang.org/src/crypto/ed25519/ed25519.go?s=2319:2432#L57" class="source" target="_blank">Source</a>  <span title="Added in Go 1.13">1.13</span> </h3> <pre data-language="go">func (priv PrivateKey) Sign(rand io.Reader, message []byte, opts crypto.SignerOpts) (signature []byte, err error)</pre> <p> Sign signs the given message with priv. Ed25519 performs two passes over messages to be signed and therefore cannot handle pre-hashed messages. Thus opts.HashFunc() must return zero to indicate the message hasn't been hashed. This can be achieved by passing crypto.Hash(0) as the value for opts. </p> <h2 id="PublicKey">type PublicKey<a href="https://golang.org/src/crypto/ed25519/ed25519.go?s=1385:1406#L31" class="source" target="_blank">Source</a>  <span title="Added in Go 1.13">1.13</span> </h2> <p> PublicKey is the type of Ed25519 public keys. </p> <pre data-language="go">type PublicKey []byte</pre> <h2 id="pkg-subdirectories">Subdirectories</h2> <div class="pkg-dir"> <table> <tr> <th class="pkg-name">Name</th> <th class="pkg-synopsis">Synopsis</th> </tr> <tr> <td colspan="2"><a href="../">..</a></td> </tr> </table> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © Google, Inc.<br>Licensed under the Creative Commons Attribution License 3.0.<br>
+    <a href="https://golang.org/pkg/crypto/ed25519/" class="_attribution-link" target="_blank">https://golang.org/pkg/crypto/ed25519/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
