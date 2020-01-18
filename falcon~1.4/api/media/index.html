@@ -1,0 +1,221 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Media - Falcon 1.4 - W3cubDocs</title>
+  
+  <meta name="description" content="Falcon allows for easy and customizable internet media type handling. By default Falcon only enables a single JSON handler. However, additional &hellip;">
+  <meta name="keywords" content="media, -, falcon, falcon~1.4">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/falcon~1.4/api/media/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/falcon~1.4.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/falcon~1.4/" class="_nav-link" title="" style="margin-left:0;">Falcon 1.4</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _sphinx">
+				
+				
+<h1 id="id1">Media</h1> <p id="media">Falcon allows for easy and customizable internet media type handling. By default Falcon only enables a single JSON handler. However, additional handlers can be configured through the <a class="reference internal" href="../api/#falcon.RequestOptions" title="falcon.RequestOptions"><code>falcon.RequestOptions</code></a> and <a class="reference internal" href="../api/#falcon.ResponseOptions" title="falcon.ResponseOptions"><code>falcon.ResponseOptions</code></a> objects specified on your <a class="reference internal" href="../api/#falcon.API" title="falcon.API"><code>falcon.API</code></a>.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">To avoid unnecessary overhead, Falcon will only process request media the first time the media property is referenced. Once it has been referenced, it’ll use the cached result for subsequent interactions.</p> </div>  <h2 id="usage">Usage</h2> <p>Zero configuration is needed if you’re creating a JSON API. Just access or set the <code>media</code> attribute as appropriate and let Falcon do the heavy lifting for you.</p> <pre data-language="python">import falcon
+
+
+class EchoResource(object):
+    def on_post(self, req, resp):
+        message = req.media.get('message')
+
+        resp.media = {'message': message}
+        resp.status = falcon.HTTP_200
+</pre> <div class="admonition warning"> <p class="first admonition-title">Warning</p> <p class="last">Once <code>media</code> is called on a request, it’ll consume the request’s stream.</p> </div>   <h2 id="validating-media">Validating Media</h2> <p>Falcon currently only provides a JSON Schema media validator; however, JSON Schema is very versatile and can be used to validate any deserialized media type that JSON also supports (i.e. dicts, lists, etc).</p> <dl class="function"> <dt id="falcon.media.validators.jsonschema.validate">
+<code>falcon.media.validators.jsonschema.validate(schema)</code> <a class="reference internal" href="https://falcon.readthedocs.io/en/1.4.1/_modules/falcon/media/validators/jsonschema.html#validate" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Decorator for validating <code>req.media</code> using JSON Schema.</p> <p>This decorator provides standard JSON Schema validation via the <code>jsonschema</code> package available from PyPI. Semantic validation via the <em>format</em> keyword is enabled for the default checkers implemented by <code>jsonschema.FormatChecker</code>.</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p class="last">The <code>jsonschema`</code> package must be installed separately in order to use this decorator, as Falcon does not install it by default.</p> </div> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<strong>schema</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)" target="_blank">dict</a>) – A dictionary that follows the JSON Schema specification. See <a class="reference external" href="http://json-schema.org/" target="_blank">json-schema.org</a> for more information on defining a compatible dictionary.</td> </tr>  </table> <h4 class="rubric">Example</h4> <pre data-language="python">from falcon.media.validators import jsonschema
+
+# -- snip --
+
+@jsonschema.validate(my_post_schema)
+def on_post(self, req, resp):
+
+# -- snip --
+</pre> </dd>
+</dl> <p>If JSON Schema does not meet your needs, a custom validator may be implemented in a similar manner to the one above.</p>   <h2 id="content-type-negotiation">Content-Type Negotiation</h2> <p>Falcon currently only supports partial negotiation out of the box. By default, when the <code>media</code> attribute is used it attempts to de/serialize based on the <code>Content-Type</code> header value. The missing link that Falcon doesn’t provide is the connection between the <a class="reference internal" href="../request_and_response/#falcon.Request" title="falcon.Request"><code>falcon.Request</code></a> <code>Accept</code> header provided by a user and the <a class="reference internal" href="../request_and_response/#falcon.Response" title="falcon.Response"><code>falcon.Response</code></a> <code>Content-Type</code> header.</p> <p>If you do need full negotiation, it is very easy to bridge the gap using middleware. Here is an example of how this can be done:</p> <pre data-language="python">class NegotiationMiddleware(object):
+    def process_request(self, req, resp):
+        resp.content_type = req.accept
+</pre>   <h2 id="replacing-the-default-handlers">Replacing the Default Handlers</h2> <p>When creating your API object you can either add or completely replace all of the handlers. For example, lets say you want to write an API that sends and receives MessagePack. We can easily do this by telling our Falcon API that we want a default media-type of <code>application/msgpack</code> and then create a new <a class="reference internal" href="#falcon.media.Handlers" title="falcon.media.Handlers"><code>Handlers</code></a> object specifying the desired media type and a handler that can process that data.</p> <pre data-language="python">import falcon
+from falcon import media
+
+
+handlers = media.Handlers({
+    'application/msgpack': media.MessagePackHandler(),
+})
+
+api = falcon.API(media_type='application/msgpack')
+
+api.req_options.media_handlers = handlers
+api.resp_options.media_handlers = handlers
+</pre> <p>Alternatively, if you would like to add an additional handler such as MessagePack, this can be easily done in the following manner:</p> <pre data-language="python">import falcon
+from falcon import media
+
+
+extra_handlers = {
+    'application/msgpack': media.MessagePackHandler(),
+}
+
+api = falcon.API()
+
+api.req_options.media_handlers.update(extra_handlers)
+api.resp_options.media_handlers.update(extra_handlers)
+</pre>   <h2 id="supported-handler-types">Supported Handler Types</h2> <dl class="class"> <dt id="falcon.media.JSONHandler">
+<code>class falcon.media.JSONHandler</code> <a class="reference internal" href="https://falcon.readthedocs.io/en/1.4.1/_modules/falcon/media/json.html#JSONHandler" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Handler built using Python’s <a class="reference external" href="https://docs.python.org/2/library/json.html#module-json" title="(in Python v2.7)" target="_blank"><code>json</code></a> module.</p> </dd>
+</dl> <dl class="class"> <dt id="falcon.media.MessagePackHandler">
+<code>class falcon.media.MessagePackHandler</code> <a class="reference internal" href="https://falcon.readthedocs.io/en/1.4.1/_modules/falcon/media/msgpack.html#MessagePackHandler" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Handler built using the <code>msgpack</code> module.</p> <p>This handler uses <code>msgpack.unpackb()</code> and <code>msgpack.packb()</code>. The MessagePack <code>bin</code> type is used to distinguish between Unicode strings (<code>str</code> on Python 3, <code>unicode</code> on Python 2) and byte strings (<code>bytes</code> on Python 2/3, or <code>str</code> on Python 2).</p> <div class="admonition note"> <p class="first admonition-title">Note</p> <p>This handler requires the extra <code>msgpack</code> package, which must be installed in addition to <code>falcon</code> from PyPI:</p> <pre data-language="python">$ pip install msgpack
+</pre> <p class="last">Python 2.6 users will need to use the deprecated <code>msgpack-python</code> package instead, pinned to version 0.4.8.</p> </div> </dd>
+</dl>   <h2 id="custom-handler-type">Custom Handler Type</h2> <p>If Falcon doesn’t have an internet media type handler that supports your use case, you can easily implement your own using the abstract base class provided by Falcon:</p> <dl class="class"> <dt id="falcon.media.BaseHandler">
+<code>class falcon.media.BaseHandler</code> <a class="reference internal" href="https://falcon.readthedocs.io/en/1.4.1/_modules/falcon/media/base.html#BaseHandler" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Abstract Base Class for an internet media type handler</p> <dl class="method"> <dt id="falcon.media.BaseHandler.serialize">
+<code>serialize(obj)</code> <a class="reference internal" href="https://falcon.readthedocs.io/en/1.4.1/_modules/falcon/media/base.html#BaseHandler.serialize" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Serialize the media object on a <a class="reference internal" href="../request_and_response/#falcon.Response" title="falcon.Response"><code>falcon.Response</code></a></p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<strong>obj</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)" target="_blank">object</a>) – A serializable object.</td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">The resulting serialized bytes from the input object.</td> </tr> <tr>
+<th class="field-name">Return type:</th>
+<td class="field-body">bytes</td> </tr>  </table> </dd>
+</dl> <dl class="method"> <dt id="falcon.media.BaseHandler.deserialize">
+<code>deserialize(raw)</code> <a class="reference internal" href="https://falcon.readthedocs.io/en/1.4.1/_modules/falcon/media/base.html#BaseHandler.deserialize" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>Deserialize the <a class="reference internal" href="../request_and_response/#falcon.Request" title="falcon.Request"><code>falcon.Request</code></a> body.</p> <table class="docutils field-list" frame="void" rules="none"> <col class="field-name"> <col class="field-body">  <tr>
+<th class="field-name">Parameters:</th>
+<td class="field-body">
+<strong>raw</strong> (<em>bytes</em>) – Input bytes to deserialize</td> </tr> <tr>
+<th class="field-name">Returns:</th>
+<td class="field-body">A deserialized object.</td> </tr> <tr>
+<th class="field-name">Return type:</th>
+<td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)" target="_blank">object</a></td> </tr>  </table> </dd>
+</dl> </dd>
+</dl>   <h2 id="handlers">Handlers</h2> <dl class="class"> <dt id="falcon.media.Handlers">
+<code>class falcon.media.Handlers(initial=None)</code> <a class="reference internal" href="https://falcon.readthedocs.io/en/1.4.1/_modules/falcon/media/handlers.html#Handlers" target="_blank"><span class="viewcode-link">[source]</span></a>
+</dt> <dd>
+<p>A dictionary like object that manages internet media type handlers.</p> </dd>
+</dl>   <h2 id="id2">Media Type Constants</h2> <p id="media-type-constants">The <code>falcon</code> module provides a number of constants for common media types, including the following:</p> <pre data-language="python">falcon.MEDIA_JSON
+falcon.MEDIA_MSGPACK
+falcon.MEDIA_YAML
+falcon.MEDIA_XML
+falcon.MEDIA_HTML
+falcon.MEDIA_JS
+falcon.MEDIA_TEXT
+falcon.MEDIA_JPEG
+falcon.MEDIA_PNG
+falcon.MEDIA_GIF
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2012–2017 by Rackspace Hosting, Inc. and other contributors<br>Licensed under the Apache License, Version 2.0.<br>
+    <a href="https://falcon.readthedocs.io/en/1.4.1/api/media.html" class="_attribution-link" target="_blank">https://falcon.readthedocs.io/en/1.4.1/api/media.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
