@@ -1,0 +1,199 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Guides&#58; Testing Crystal Code - Crystal 0.31 - W3cubDocs</title>
+  
+  <meta name="description" content="Crystal comes with a fully-featured spec library in the Spec module. It provides a structure for writing executable examples of how your code should &hellip;">
+  <meta name="keywords" content="testing, crystal, code, guides, -, crystal~0.31">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/crystal~0.31/docs/guides/testing/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/crystal~0.31.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/crystal~0.31/" class="_nav-link" title="" style="margin-left:0;">Crystal 0.31</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _crystal">
+				
+				
+<h1 id="testing-crystal-code">Testing Crystal Code</h1> <p>Crystal comes with a fully-featured spec library in the <a href="https://crystal-lang.org/api/latest/Spec.html" target="_blank"><code>Spec</code> module</a>. It provides a structure for writing executable examples of how your code should behave.</p> <p>Inspired by <a href="http://rspec.info/" target="_blank">Rspec</a>, it includes a domain specific language (DSL) that allows you to write examples in a way similar to plain english.</p> <p>A basic spec looks something like this:</p> <pre data-language="crystal">require "spec"
+
+describe Array do
+  describe "#size" do
+    it "correctly reports the number of elements in the Array" do
+      [1, 2, 3].size.should eq 3
+    end
+  end
+
+  describe "#empty?" do
+    it "is true when no elements are in the array" do
+      ([] of Int32).empty?.should be_true
+    end
+
+    it "is false if there are elements in the array" do
+      [1].empty?.should be_false
+    end
+  end
+end
+</pre> <h2 id="anatomy-of-a-spec-file">Anatomy of a spec file</h2> <p>To use the spec module and DSL, you need to add <code>require "spec"</code> to your spec files. Many projects use a custom <a href="#spec-helper">spec helper</a> which organizes these includes.</p> <p>Concrete test cases are defined in <code>it</code> blocks. An optional (but strongly recommended) descriptive string states it's purpose and a block contains the main logic performing the test.</p> <p>Test cases that have been defined or outlined but are not yet expected to work can be defined using <code>pending</code> instead of <code>it</code>. They will not be run but show up in the spec report as pending.</p> <p>An <code>it</code> block contains an example that should invoke the code to be tested and define what is expected of it. Each example can contain multiple expectations, but it should test only one specific behaviour.</p> <p>When <code>spec</code> is included, every object has the instance methods <code>#should</code> and <code>#should_not</code>. These methods are invoked on the value being tested with an expectation as argument. If the expectation is met, code execution continues. Otherwise the example has <em>failed</em> and other code in this block will not be executed.</p> <p>In test files, specs are structured by example groups which are defined by <code>describe</code> and <code>context</code> sections. Typically a top level <code>describe</code> defines the outer unit (such as a class) to be tested by the spec. Further <code>describe</code> sections can be nested within the outer unit to specify smaller units under test (such as individual methods).</p> <p>For unit tests, it is recommended to follow the conventions for method names: Outer <code>describe</code> is the name of the class, inner <code>describe</code> targets methods. Instance methods are prefixed with <code>#</code>, class methods with <code>.</code>.</p> <p>To establish certain contexts - think <em>empty array</em> versus <em>array with elements</em> - the <code>context</code> method may be used to communicate this to the reader. It has a different name, but behaves exactly like <code>describe</code>.</p> <p><code>describe</code> and <code>context</code> take a description as argument (which should usually be a string) and a block containing the individual specs or nested groupings.</p> <h2 id="expectations">Expectations</h2> <p>Expectations define if the value being tested (<em>actual</em>) matches a certain value or specific criteria.</p> <h3 id="equivalence-identity-and-type">Equivalence, Identity and Type</h3> <p>There are methods to create expectations which test for equivalence (<code>eq</code>), identity (<code>be</code>), type (<code>be_a</code>), and nil (<code>be_nil</code>). Note that the identity expectation uses <code>.same?</code> which tests if <a href="https://crystal-lang.org/api/latest/Reference.html#object_id%3AUInt64-instance-method" target="_blank"><code>#object_id</code></a> are identical. This is only true if the expected value points to <em>the same object</em> instead of <em>an equivalent one</em>. This is only possible for reference types and won't work for value types like structs or numbers.</p> <pre data-language="crystal">actual.should eq(expected)    # passes if actual == expected
+actual.should be(expected)    # passes if actual.same?(expected)
+actual.should be_a(expected)  # passes if actual.is_a?(expected)
+actual.should be_nil          # passes if actual.nil?
+</pre> <h3 id="truthiness">Truthiness</h3> <pre data-language="crystal">actual.should be_true         # passes if actual == true
+actual.should be_false        # passes if actual == false
+actual.should be_truthy       # passes if actual is truthy (neither nil nor false nor Pointer.null)
+actual.should be_falsey       # passes if actual is falsey (nil, false or Pointer.null)
+</pre> <h3 id="comparisons">Comparisons</h3> <pre data-language="crystal">actual.should be &lt;  expected  # passes if actual &lt;  expected
+actual.should be &lt;= expected  # passes if actual &lt;= expected
+actual.should be &gt;  expected  # passes if actual &gt;  expected
+actual.should be &gt;= expected  # passes if actual &gt;= expected
+</pre> <h3 id="other-matchers">Other matchers</h3> <pre data-language="crystal">actual.should be_close(expected, delta) # passes if actual is within delta of expected:
+                                        # (actual - expected).abs &lt;= delta
+actual.should contain(expected)         # passes if actual.includes?(expected)
+actual.should match(expected)           # passes if actual =~ expected
+</pre> <h3 id="expecting-errors">Expecting errors</h3> <p>These matchers run a block and pass if it raises a certain exception.</p> <pre data-language="crystal">expect_raises(MyError) do
+  # Passes if this block raises an exception of type MyError.
+end
+
+expect_raises(MyError, "error message") do
+  # Passes if this block raises an exception of type MyError
+  # and the error message contains "error message".
+end
+
+expect_raises(MyError, /error \w{7}/) do
+  # Passes if this block raises an exception of type MyError
+  # and the error message matches the regular expression.
+end
+</pre> <p>They return the rescued exception so it can be used for further expectations, for example to verify specific properties of the exception.</p> <h2 id="running-specs">Running specs</h2> <p>The Crystal compiler has a <code>spec</code> command with tools to constrain which examples get run and tailor the output. All specs of a project are compiled and executed through the command <code>crystal spec</code>.</p> <p>By convention, specs live in the <code>spec/</code> directory of a project. Spec files must end with <code>_spec.cr</code> to be recognizable as such by the compiler command.</p> <p>You can compile and run specs from folder trees, individual files or specific lines in a file.</p> <pre data-language="bash"># Run  all specs in files matching spec/**/*_spec.cr
+crystal spec
+
+# Run all specs in files matching spec/my/test/**/*_spec.cr
+crystal spec spec/my/test/
+
+# Run all specs in spec/my/test/file_spec.cr
+crystal spec spec/my/test/file_spec.cr
+
+# Run the spec or group defined in line 14 of spec/my/test/file_spec.cr
+crystal spec spec/my/test/file_spec.cr:14
+</pre> <p>If the specified line is the beginning of a <code>describe</code> or <code>context</code> section, all specs inside that group are run.</p> <p>The default formatter outputs the file and line style command for failing specs which makes it easy to rerun just this individual spec.</p> <h2 id="spec-helper">Spec helper</h2> <p>Many projects use a custom spec helper file, usually named <code>spec/spec_helper.cr</code>.</p> <p>This file is used to require <code>spec</code> and other includes like code from the project needed for every spec file. This is also a good place to define global helper methods that make writing specs easier and avoid code duplication.</p> <pre data-language="crystal"># spec/spec_helper.cr
+require "spec"
+require "../src/my_project.cr"
+
+def create_test_object(name)
+  project = MyProject.new(option: false)
+  object = project.create_object(name)
+  object
+end
+
+# spec/my_project_spec.cr
+require "./spec_helper"
+
+describe "MyProject::Object" do
+  it "is created" do
+    object = create_test_object(name)
+    object.should_not be_nil
+  end
+end
+</pre>
+<div class="_attribution">
+  <p class="_attribution-p">
+    To the extent possible under law, the persons who contributed to this workhave waived<br>all copyright and related or neighboring rights to this workby associating CC0 with it.<br>
+    <a href="https://crystal-lang.org/docs/guides/testing.html" class="_attribution-link" target="_blank">https://crystal-lang.org/docs/guides/testing.html</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
