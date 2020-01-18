@@ -1,0 +1,207 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Troubleshooting - Jest - W3cubDocs</title>
+  
+  <meta name="description" content=" Uh oh, something went wrong? Use this guide to resolve issues with Jest. ">
+  <meta name="keywords" content="troubleshooting, -, jest">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/jest/troubleshooting/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/jest.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/jest/" class="_nav-link" title="" style="margin-left:0;">Jest</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _simple">
+				
+				
+<h1 id="__docusaurus" class="postHeaderTitle">Troubleshooting</h1>
+<span><p>Uh oh, something went wrong? Use this guide to resolve issues with Jest.</p> <h2 id="tests-are-failing-and-you-dont-know-why">Tests are Failing and You Don't Know Why</h2> <p>Try using the debugging support built into Node. Note: This will only work in Node.js 8+.</p> <p>Place a <code>debugger;</code> statement in any of your tests, and then, in your project's directory, run:</p> <pre data-language="js">node --inspect-brk node_modules/.bin/jest --runInBand [any other arguments here]
+or on Windows
+node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand [any other arguments here]
+</pre> <p>This will run Jest in a Node process that an external debugger can connect to. Note that the process will pause until the debugger has connected to it.</p> <p>To debug in Google Chrome (or any Chromium-based browser), open your browser and go to <code>chrome://inspect</code> and click on "Open Dedicated DevTools for Node", which will give you a list of available node instances you can connect to. Click on the address displayed in the terminal (usually something like <code>localhost:9229</code>) after running the above command, and you will be able to debug Jest using Chrome's DevTools.</p> <p>The Chrome Developer Tools will be displayed, and a breakpoint will be set at the first line of the Jest CLI script (this is done to give you time to open the developer tools and to prevent Jest from executing before you have time to do so). Click the button that looks like a "play" button in the upper right hand side of the screen to continue execution. When Jest executes the test that contains the <code>debugger</code> statement, execution will pause and you can examine the current scope and call stack.</p> <blockquote> <p>Note: the <code>--runInBand</code> cli option makes sure Jest runs test in the same process rather than spawning processes for individual tests. Normally Jest parallelizes test runs across processes but it is hard to debug many processes at the same time.</p> </blockquote> <h2 id="debugging-in-vs-code">Debugging in VS Code</h2> <p>There are multiple ways to debug Jest tests with <a href="https://code.visualstudio.com" target="_blank">Visual Studio Code's</a> built in <a href="https://code.visualstudio.com/docs/nodejs/nodejs-debugging" target="_blank">debugger</a>.</p> <p>To attach the built-in debugger, run your tests as aforementioned:</p> <pre data-language="js">node --inspect-brk node_modules/.bin/jest --runInBand [any other arguments here]
+or on Windows
+node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand [any other arguments here]
+</pre> <p>Then attach VS Code's debugger using the following <code>launch.json</code> config:</p> <pre data-language="js">{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach",
+      "port": 9229
+    }
+  ]
+}
+</pre> <p>To automatically launch and attach to a process running your tests, use the following configuration:</p> <pre data-language="js">{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "${workspaceRoot}/node_modules/.bin/jest",
+        "--runInBand"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229
+    }
+  ]
+}
+</pre> <p>or the following for Windows:</p> <pre data-language="js">{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "${workspaceRoot}/node_modules/jest/bin/jest.js",
+        "--runInBand"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229
+    }
+  ]
+}
+</pre> <p>If you are using Facebook's <a href="https://github.com/facebookincubator/create-react-app" target="_blank"><code>create-react-app</code></a>, you can debug your Jest tests with the following configuration:</p> <pre data-language="js">{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug CRA Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
+      "args": ["test", "--runInBand", "--no-cache", "--env=jsdom"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
+</pre> <p>More information on Node debugging can be found <a href="https://nodejs.org/api/debugger.html" target="_blank">here</a>.</p> <h2 id="debugging-in-webstorm">Debugging in WebStorm</h2> <p>The easiest way to debug Jest tests in <a href="https://www.jetbrains.com/webstorm/" target="_blank">WebStorm</a> is using <code>Jest run/debug configuration</code>. It will launch tests and automatically attach debugger.</p> <p>In the WebStorm menu <code>Run</code> select <code>Edit Configurations...</code>. Then click <code>+</code> and select <code>Jest</code>. Optionally specify the Jest configuration file, additional options, and environment variables. Save the configuration, put the breakpoints in the code, then click the green debug icon to start debugging.</p> <p>If you are using Facebook's <a href="https://github.com/facebookincubator/create-react-app" target="_blank"><code>create-react-app</code></a>, in the Jest run/debug configuration specify the path to the <code>react-scripts</code> package in the Jest package field and add <code>--env=jsdom</code> to the Jest options field.</p> <h2 id="caching-issues">Caching Issues</h2> <p>The transform script was changed or Babel was updated and the changes aren't being recognized by Jest?</p> <p>Retry with <a href="../cli/#--cache"><code>--no-cache</code></a>. Jest caches transformed module files to speed up test execution. If you are using your own custom transformer, consider adding a <code>getCacheKey</code> function to it: <a href="https://github.com/facebook/relay/blob/58cf36c73769690f0bbf90562707eadb062b029d/scripts/jest/preprocessor.js#L56-L61" target="_blank">getCacheKey in Relay</a>.</p> <h2 id="unresolved-promises">Unresolved Promises</h2> <p>If a promise doesn't resolve at all, this error might be thrown:</p> <pre data-language="js">- Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.`
+</pre> <p>Most commonly this is being caused by conflicting Promise implementations. Consider replacing the global promise implementation with your own, for example <code>global.Promise = jest.requireActual('promise');</code> and/or consolidate the used Promise libraries to a single one.</p> <p>If your test is long running, you may want to consider to increase the timeout by calling <code>jest.setTimeout</code></p> <pre data-language="js">jest.setTimeout(10000); // 10 second timeout
+</pre> <h2 id="watchman-issues">Watchman Issues</h2> <p>Try running Jest with <a href="../cli/#--watchman"><code>--no-watchman</code></a> or set the <code>watchman</code> configuration option to <code>false</code>.</p> <p>Also see <a href="https://facebook.github.io/watchman/docs/troubleshooting.html" target="_blank">watchman troubleshooting</a>.</p> <h2 id="tests-are-extremely-slow-on-docker-andor-continuous-integration-ci-server">Tests are Extremely Slow on Docker and/or Continuous Integration (CI) server.</h2> <p>While Jest is most of the time extremely fast on modern multi-core computers with fast SSDs, it may be slow on certain setups as our users <a href="https://github.com/facebook/jest/issues/1395" target="_blank">have</a> <a href="https://github.com/facebook/jest/issues/1524#issuecomment-260246008" target="_blank">discovered</a>.</p> <p>Based on the <a href="https://github.com/facebook/jest/issues/1524#issuecomment-262366820" target="_blank">findings</a>, one way to mitigate this issue and improve the speed by up to 50% is to run tests sequentially.</p> <p>In order to do this you can run tests in the same thread using <a href="../cli/#--runinband"><code>--runInBand</code></a>:</p> <pre data-language="js"># Using Jest CLI
+jest --runInBand
+
+# Using yarn test (e.g. with create-react-app)
+yarn test --runInBand
+</pre> <p>Another alternative to expediting test execution time on Continuous Integration Servers such as Travis-CI is to set the max worker pool to ~<em>4</em>. Specifically on Travis-CI, this can reduce test execution time in half. Note: The Travis CI <em>free</em> plan available for open source projects only includes 2 CPU cores.</p> <pre data-language="js"># Using Jest CLI
+jest --maxWorkers=4
+
+# Using yarn test (e.g. with create-react-app)
+yarn test --maxWorkers=4
+</pre> <h2 id="compatibility-issues">Compatibility issues</h2> <p>Jest takes advantage of new features added to Node 6. We recommend that you upgrade to the latest stable release of Node. The minimum supported version is <code>v6.0.0</code>. Versions <code>0.x.x</code> and <code>4.x.x</code> are not supported because the <code>jsdom</code> version used in Jest doesn't support Node 4. However, if you need to run Jest on Node 4, you can use the <code>testEnvironment</code> config to use a <a href="../configuration/#testenvironment-string">custom environment</a> that supports Node 4, such as <a href="https://yarnpkg.com/en/package/jest-environment-node" target="_blank"><code>jest-environment-node</code></a>.</p> <h2 id="coveragepathignorepatterns-seems-to-not-have-any-effect">
+<code>coveragePathIgnorePatterns</code> seems to not have any effect.</h2> <p>Make sure you are not using the <code>babel-plugin-istanbul</code> plugin. Jest wraps Istanbul, and therefore also tells Istanbul what files to instrument with coverage collection. When using <code>babel-plugin-istanbul</code>, every file that is processed by Babel will have coverage collection code, hence it is not being ignored by <code>coveragePathIgnorePatterns</code>.</p> <h2 id="defining-tests">Defining Tests</h2> <p>Tests must be defined synchronously for Jest to be able to collect your tests.</p> <p>As an example to show why this is the case, imagine we wrote a test like so:</p> <pre data-language="js">// Don't do this it will not work
+setTimeout(() =&gt; {
+  it('passes', () =&gt; expect(1).toBe(1));
+}, 0);
+</pre> <p>When Jest runs your test to collect the <code>test</code>s it will not find any because we have set the definition to happen asynchronously on the next tick of the event loop.</p> <p><em>Note:</em> This means when you are using <code>test.each</code> you cannot set the table asynchronously within a <code>beforeEach</code> / <code>beforeAll</code>.</p> <h2 id="still-unresolved">Still unresolved?</h2> <p>See <a href="https://jestjs.io/help.html" target="_blank">Help</a>.</p> </span><div class="_attribution">
+  <p class="_attribution-p">
+    © 2019 Facebook, Inc. and its affiliates.<br>Licensed under the MIT License.<br>
+    <a href="https://jestjs.io/docs/en/troubleshooting" class="_attribution-link" target="_blank">https://jestjs.io/docs/en/troubleshooting</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
