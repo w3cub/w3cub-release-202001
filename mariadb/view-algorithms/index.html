@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>View Algorithms - MariaDB - W3cubDocs</title>
+  
+  <meta name="description" content=" The CREATE VIEW statement accepts an optional ALGORITHM clause, an extension to standard SQL for Views. ">
+  <meta name="keywords" content="view, algorithms, -, mariadb">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/mariadb/view-algorithms/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/mariadb.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/mariadb/" class="_nav-link" title="" style="margin-left:0;">MariaDB</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mariadb">
+				
+				
+<h1>View Algorithms</h1> <div> <div class="node creole"> <div class="answer formatted">  <h2 class="anchored_heading" id="description">Description</h2> <p>The <a href="../create-view/">CREATE VIEW</a> statement accepts an optional ALGORITHM clause, an extension to standard SQL for <a href="../views/">Views</a>.</p> <p>It can contain one of three values: MERGE, TEMPTABLE or UNDEFINED, and affects how MariaDB will process the view.</p> <p>With MERGE, the view definition and the related portion of the statement referring to the view are merged. If TEMPTABLE is selected, the view results are stored in a temporary table. </p> <p>MERGE is usually more efficient, and a view can only be updated with this algorithm. TEMPTABLE can be useful in certain situations, as locks on the underlying tables can be released before the statement is finished processing.</p> <p>If it's UNDEFINED (or the ALGORITHM clause is not used), MariaDB will choose what it thinks is the best algorithm. An algorithm can also be UNDEFINED if its defined as MERGE, but the view requires a temporary table.</p> <div class="cstm-style redbox">
+<p>Views with definition ALGORITHM=MERGE or ALGORITHM=TEMPTABLE got accidentally swapped between MariaDB and MySQL. When upgrading, you have to re-create views created with either of these definitions (see <a href="https://jira.mariadb.org/browse/MDEV-6916" target="_blank">MDEV-6916</a>).</p> </div>
+<h2 class="anchored_heading" id="merge-limitations">MERGE Limitations</h2> <p>A view cannot be of type ALGORITHM=MERGE if it uses any of the following:</p> <ul>
+<li>
+<a href="../select/">HAVING</a> </li>
+<li>
+<a href="../select/#limit">LIMIT</a> </li>
+<li>
+<a href="../select/#group-by">GROUP BY</a> </li>
+<li>
+<a href="../select/#distinct">DISTINCT</a> </li>
+<li>
+<a href="../union/">UNION</a> </li>
+<li>
+<a href="../union/">UNION ALL</a> </li>
+<li>An aggregate function, such as <a href="../max/">MAX()</a>, <a href="../min/">MIN()</a>, <a href="../sum/">SUM()</a> or <a href="../count/">COUNT()</a> </li>
+<li>subquery in the SELECT list </li>
+<li>if it has no underlying table because it refers only to literal values </li>
+</ul> <h2 class="anchored_heading" id="merge-examples">MERGE Examples</h2> <h3 class="anchored_heading" id="example-1">Example 1</h3> <p>Here's an example of how MariaDB handles a view with a MERGE algorithm. Take a view defined as follows:</p> <pre class="fixed" data-language="sql">CREATE ALGORITHM = MERGE VIEW view_name (view_field1, view_field2) AS
+SELECT field1, field2 FROM table_name WHERE field3 &gt; '2013-06-01';
+</pre>
+<p>Now, if we run a query on this view, as follows:</p> <pre class="fixed" data-language="sql">SELECT * FROM view_name;
+</pre>
+<p>to execute the view <code>view_name</code> becomes the underlying table, <code>table_name</code>, the <code>*</code> becomes the fields <code>view_field1</code> and <code>view_field2</code>, corresponding to <code>field1</code> and <code>field2</code> and the WHERE clause, <code>WHERE field3 &gt; 100</code> is added, so the actual query executed is:</p> <pre class="fixed" data-language="sql">SELECT field1, field2 FROM table_name WHERE field3 &gt; '2013-06-01'
+</pre>
+<h3 class="anchored_heading" id="example-2">Example 2</h3> <p>Given the same view as above, if we run the query:</p> <pre class="fixed" data-language="sql">SELECT * FROM view_name WHERE view_field &lt; 8000;
+</pre>
+<p>everything occurs as it does in the previous example, but <code>view_field &lt; 8000</code> takes the corresponding field name and becomes <code>field1 &lt; 8000</code>, connected with <code>AND</code> to the <code>field3 &gt; '2013-06-01'</code> part of the query.</p> <p>So the resulting query is:</p> <pre class="fixed" data-language="sql">SELECT field1, field2 FROM table_name WHERE (field3 &gt; '2013-06-01') AND (field1 &lt; 8000);
+</pre>
+<p>When connecting with <code>AND</code>, parentheses are added to make sure the correct precedence is used.</p> </div>     </div> <div id="content_disclaimer" class="graybox"> Content reproduced on this site is the property of its respective owners, and this content is not reviewed in advance by MariaDB. The views, information and opinions expressed by this content do not necessarily represent those of MariaDB or any other party. </div> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2019 MariaDB<br>Licensed under the Creative Commons Attribution 3.0 Unported License and the GNU Free Documentation License.<br>
+    <a href="https://mariadb.com/kb/en/view-algorithms/" class="_attribution-link" target="_blank">https://mariadb.com/kb/en/view-algorithms/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

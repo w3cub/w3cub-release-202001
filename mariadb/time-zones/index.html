@@ -1,0 +1,194 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Time Zones - MariaDB - W3cubDocs</title>
+  
+  <meta name="description" content=" MariaDB keeps track of several time zone settings. ">
+  <meta name="keywords" content="time, zones, -, mariadb">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/mariadb/time-zones/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/mariadb.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/mariadb/" class="_nav-link" title="" style="margin-left:0;">MariaDB</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mariadb">
+				
+				
+<h1>Time Zones</h1> <div> <div class="node creole"> <div class="answer formatted">  <p>MariaDB keeps track of several time zone settings.</p> <h2 class="anchored_heading" id="setting-the-time-zone">Setting the Time Zone</h2> <p>The <code><a href="../server-system-variables/#time_zone">time_zone</a></code> system variable is the primary way to set the time zone. It can be specified in one of the following formats:</p> <ul start="1">
+<li>The default value is <code>SYSTEM</code>, which indicates that the system time zone defined in the <code><a href="../server-system-variables/#system_time_zone">system_time_zone</a></code> system variable will be used. See <a href="#system-time-zone">System Time Zone</a> below for more information. </li>
+<li>An offset from <a href="../coordinated-universal-time/">Coordinated Universal Time (UTC)</a>, such as <code>+5:00</code> or <code>-9:00</code>, can also be used. </li>
+<li>If the time zone tables in the <code><a href="../the-mysql-database-tables/">mysql</a></code> database were loaded, then a named time zone, such as <code>America/New_York</code>, <code>Africa/Johannesburg</code>, or <code>Europe/Helsinki</code>, is also permissible. See <a href="#mysql-time-zone-tables">mysql Time Zone Tables</a> below for more information. </li>
+</ul> <p>There are two time zone settings that can be set within MariaDB--the global server time zone, and the time zone for your current session. There is also a third time zone setting which may be relevant--the system time zone.</p> <h3 class="anchored_heading" id="global-server-time-zone">Global Server Time Zone</h3> <p>The global server time zone can be changed at server startup by setting the <code>--default-time-zone</code> option either on the command-line or in a server <a href="../configuring-mariadb-with-option-files/#option-groups">option group</a> in an <a href="../configuring-mariadb-with-option-files/">option file</a>. For example:</p> <pre class="fixed" data-language="sql">[mariadb]
+...
+default_time_zone = 'America/New_York';
+</pre>
+<p>The global server time zone can also be changed dynamically by setting the <code><a href="../server-system-variables/#time_zone">time_zone</a></code> system variable as a user account that has the <code><a href="../grant/#global-privileges">SUPER</a></code> privilege. For example:</p> <pre class="fixed" data-language="sql">SET GLOBAL time_zone = 'America/New_York';
+</pre>
+<p>The current global server time zone can be viewed by looking at the global value of the <code><a href="../server-system-variables/#time_zone">time_zone</a></code> system variable. For example:</p> <pre class="fixed" data-language="sql">SHOW GLOBAL VARIABLES LIKE 'time_zone';
++---------------+--------+
+| Variable_name | Value  |
++---------------+--------+
+| time_zone     | SYSTEM |
++---------------+--------+
+</pre>
+<h3 class="anchored_heading" id="session-time-zone">Session Time Zone</h3> <p>Each session that connects to the server will also have its own time zone. This time zone is initially inherited from the global value of the <code><a href="../server-system-variables/#time_zone">time_zone</a></code> system variable, which sets the session value of the same variable.</p> <p>A session's time zone can be changed dynamically by setting the <code><a href="../server-system-variables/#time_zone">time_zone</a></code> system variable. For example:</p> <pre class="fixed" data-language="sql">SET time_zone = 'America/New_York';
+</pre>
+<p>The current session time zone can be viewed by looking at the session value of the <code><a href="../server-system-variables/#time_zone">time_zone</a></code> system variable. For example:</p> <pre class="fixed" data-language="sql">SHOW SESSION VARIABLES LIKE 'time_zone';
++---------------+--------+
+| Variable_name | Value  |
++---------------+--------+
+| time_zone     | SYSTEM |
++---------------+--------+
+</pre>
+<h3 class="anchored_heading" id="system-time-zone">System Time Zone</h3> <p>The system time zone is determined when the server starts, and it sets the value of the <code><a href="../server-system-variables/#system_time_zone">system_time_zone</a></code> system variable. The system time zone is usually read from the operating system's environment. You can change the system time zone in several different ways, such as:</p> <ul start="1"><li>If you are starting the server with <code><a href="../mysqld_safe/">mysqld_safe</a></code>, then you can set the system time zone with the <code>--timezone</code> option either on the command-line or in the <code>[mysqld_safe]</code> <a href="../configuring-mariadb-with-option-files/#option-groups">option group</a> in an <a href="../configuring-mariadb-with-option-files/">option file</a>. For example: </li></ul> <pre class="fixed" data-language="sql">[mysqld_safe]
+timezone='America/New_York'
+</pre>
+<ul start="1"><li>If you are using a Unix-like operating system, then you can set the system time zone by setting the <code>TZ</code> <a href="../mariadb-environment-variables/">environment variable</a> in your shell before starting the server. For example: </li></ul> <pre class="fixed" data-language="sql">$ export TZ='America/New_York'
+$ service mysql start
+</pre>
+<ul start="1"><li>On some Linux operating systems, you can change the default time zone for the whole system by making the <code><a href="https://www.freedesktop.org/software/systemd/man/localtime.html" target="_blank">/etc/localtime</a></code> symbolic link point to the desired time zone. For example: </li></ul> <pre class="fixed" data-language="sql">$ sudo rm /etc/localtime
+$ sudo ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+</pre>
+<ul start="1"><li>On some Debian-based Linux operating systems, you can change the default time zone for the whole system by executing the following: </li></ul> <pre class="fixed" data-language="sql">sudo dpkg-reconfigure tzdata
+</pre>
+<ul start="1"><li>On Linux operating systems that use <code><a href="../systemd/">systemd</a></code>, you can change the default time zone for the whole system by using the <code><a href="https://www.freedesktop.org/software/systemd/man/timedatectl.html" target="_blank">timedatectl</a></code> utility. For example: </li></ul> <pre class="fixed" data-language="sql">sudo timedatectl set-timezone America/New_York
+</pre>
+<h2 class="anchored_heading" id="time-zone-effects">Time Zone Effects</h2> <h3 class="anchored_heading" id="time-zone-effects-on-functions">Time Zone Effects on Functions</h3> <p>Some functions are affected by the time zone settings. These include:</p> <ul start="1">
+<li>
+<code><a href="../now/">NOW()</a></code> </li>
+<li>
+<code><a href="../sysdate/">SYSDATE()</a></code> </li>
+<li>
+<code><a href="../curdate/">CURDATE()</a></code> </li>
+<li>
+<code><a href="../curtime/">CURTIME()</a></code> </li>
+<li>
+<code><a href="../unix_timestamp/">UNIX_TIMESTAMP()</a></code> </li>
+</ul> <p>Some functions are not affected. These include:</p> <ul start="1">
+<li>
+<code><a href="../utc_date/">UTC_DATE()</a></code> </li>
+<li>
+<code><a href="../utc_time/">UTC_TIME()</a></code> </li>
+<li>
+<code><a href="../utc_timestamp/">UTC_TIMESTAMP()</a></code> </li>
+</ul> <h3 class="anchored_heading" id="time-zone-effects-on-data-types">Time Zone Effects on Data Types</h3> <p>Some data types are affected by the time zone settings.</p> <ul start="1">
+<li>
+<code><a href="../timestamp/">TIMESTAMP</a></code> - See <a href="../timestamp/#time-zones">TIMESTAMP: Time Zones</a> for information on how this data type is effected by time zones. </li>
+<li>
+<code><a href="../datetime/">DATETIME</a></code> - See <a href="../datetime/#time-zones">DATETIME: Time Zones</a> for information on how this data type is effected by time zones. </li>
+</ul> <h2 class="anchored_heading" id="mysql-time-zone-tables">mysql Time Zone Tables</h2> <p>The <code><a href="../the-mysql-database-tables/">mysql</a></code> database contains a number of time zone tables:</p> <ul start="1">
+<li>
+<code><a href="../mysqltime_zone-table/">time_zone</a></code> </li>
+<li>
+<code><a href="../mysqltime_zone_leap_second-table/">time_zone_leap_second</a></code> </li>
+<li>
+<code><a href="../mysqltime_zone_name-table/">time_zone_name</a></code> </li>
+<li>
+<code><a href="../mysqltime_zone_transition-table/">time_zone_transition</a></code> </li>
+<li>
+<code><a href="../mysqltime_zone_transition_type-table/">time_zone_transition_type</a></code> </li>
+</ul> <p>By default, these time zone tables in the <code><a href="../the-mysql-database-tables/">mysql</a></code> database are created, but not populated.</p> <p>If you are using a Unix-like operating system, then you can populate these tables using the <code><a href="../mysql_tzinfo_to_sql/">mysql_tzinfo_to_sql</a></code> utility, which uses the <code><a href="https://linux.die.net/man/5/tzfile" target="_blank">zoneinfo</a></code> data available on Linux, Mac OS X, FreeBSD and Solaris.</p> <p>If you are using Windows, then you will need to import pre-populated time zone tables. Some are available at <a href="http://dev.mysql.com/downloads/timezones.html" target="_blank">MySQL's documentation</a>.</p> <p>Time zone data needs to be updated on occasion. When that happens, the time zone tables may need to be reloaded.</p> </div>     </div> <div id="content_disclaimer" class="graybox"> Content reproduced on this site is the property of its respective owners, and this content is not reviewed in advance by MariaDB. The views, information and opinions expressed by this content do not necessarily represent those of MariaDB or any other party. </div> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2019 MariaDB<br>Licensed under the Creative Commons Attribution 3.0 Unported License and the GNU Free Documentation License.<br>
+    <a href="https://mariadb.com/kb/en/time-zones/" class="_attribution-link" target="_blank">https://mariadb.com/kb/en/time-zones/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

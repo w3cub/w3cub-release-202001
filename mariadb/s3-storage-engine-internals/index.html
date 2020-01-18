@@ -1,0 +1,158 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>S3 Storage Engine Internals - MariaDB - W3cubDocs</title>
+  
+  <meta name="description" content=" S3 is introduced in MariaDB 10.5. ">
+  <meta name="keywords" content="s, storage, engine, internals, -, mariadb">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/mariadb/s3-storage-engine-internals/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/mariadb.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/mariadb/" class="_nav-link" title="" style="margin-left:0;">MariaDB</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mariadb">
+				
+				
+<h1>S3 Storage Engine Internals</h1> <div> <div class="node creole"> <div class="answer formatted"> <div class="mariadb_from_10_5 mariadb from_10_5 product">
+<strong class="product_title">MariaDB starting with <a href="../what-is-mariadb-105/">10.5</a></strong><p>S3 is introduced in <a href="../what-is-mariadb-105/">MariaDB 10.5</a>.</p> </div>
+<p> The <a href="../s3-storage-engine/">S3 storage engine</a> is based on the <a href="../aria-storage-engine/">Aria</a> code. Internally the S3 storage inherits from the Aria code, with hooks that change reads, so that instead of reading data from the local disk it reads things from S3.</p> <p>The S3 engine uses it's own page cache, modified to be able to handle reading blocks from S3 (of size <code>s3_block_size</code>). Internally the S3 page cache uses pages of <a href="../aria-system-variables/#aria_block_size">aria-block-size</a> for splitting the blocks read from S3.</p> <h2 class="anchored_heading" id="alter-table">ALTER TABLE</h2> <p><a href="../alter-table/">ALTER TABLE</a> will first create a local table in the normal Aria on disk format and then move both index and data to S3 in buckets of S3_BLOCK_SIZE. The .frm file is also copied to S3 for discovery to support discovery for other MariaDB servers.</p> <h2 class="anchored_heading" id="big-reads">Big Reads</h2> <p>One of the properties of many S3 implementations is that they favor large reads. It's said that 4M gives the best performance, which is why the default value for <code>S3_BLOCK_SIZE</code> is 4M.</p> <h2 class="anchored_heading" id="compression">Compression</h2> <p>If compression (<code>COMPRESSION_ALGORITHM=zlib</code>) is used, then all index blocks and data blocks are compressed. The <code>.frm</code> file and Aria definition header (first page/pages in the index file) are not compressed as these are used by discovery/open.</p> <p>If compression is used, then the local block size is <code>S3_BLOCK_SIZE</code>, but the block stored in S3 will be the size of the compressed block.</p> <p>Typical compression we have seen is in the range of 80% saved space.</p> <h2 class="anchored_heading" id="structure-stored-on-s3">Structure Stored on S3</h2> <p>The table will be copied in S3 into the following locations:</p> <pre class="fixed" data-language="sql">frm file (for discovery):
+s3_bucket/database/table/frm
+
+First index block (contains description of the Aria file):
+s3_bucket/database/table/aria
+
+Rest of the index file:
+s3_bucket/database/table/index/block_number
+
+Data file:
+s3_bucket/database/table/data/block_number
+</pre>
+<p>block_number is a 6-digit decimal number, prefixed with 0 (Can be larger than 6 numbers, the prefix is just for nice output)</p> <h2 class="anchored_heading" id="using-the-awsctl-python-tool-to-examine-data">Using the awsctl Python Tool to Examine Data</h2> <h3 class="anchored_heading" id="installing-awsctl-on-linux">Installing awsctl on Linux</h3> <pre class="fixed" data-language="sql">#install python-pip
+zypper install python-pip# install aws client
+pip install --upgrade pip
+
+# The following installs awscli tools in ~/.local/bin
+pip install --upgrade --user awscli
+export PATH=~/.local/bin:$PATH
+
+# configure your aws credentials
+aws configure
+</pre>
+<h3 class="anchored_heading" id="using-the-awsctl-tool">Using the awsctl Tool</h3> <p>One can use the <code>aws</code> python tool to see how things are stored on S3:</p> <pre class="fixed" data-language="sql">shell&gt; aws s3 ls --recursive s3://mariadb-bucket/
+2019-05-10 17:46:48       8192 foo/test1/aria
+2019-05-10 17:46:49    3227648 foo/test1/data/000001
+2019-05-10 17:46:48        942 foo/test1/frm
+2019-05-10 17:46:48    1015808 foo/test1/index/000001
+</pre>
+<p>To delete an obsolete table <code>foo.test1</code> one can do:</p> <pre class="fixed" data-language="sql">shell&gt; ~/.local/bin/aws s3 rm --recursive s3://mariadb-bucket/foo/test1
+delete: s3://mariadb-bucket/foo/test1/aria
+delete: s3://mariadb-bucket/foo/test1/data/000001
+delete: s3://mariadb-bucket/foo/test1/frm
+delete: s3://mariadb-bucket/foo/test1/index/000001
+</pre>
+<h2 class="anchored_heading" id="see-also">See Also</h2> <ul start="1"><li><a href="../using-the-s3-storage-engine/">Using the S3 storage engine</a></li></ul> </div>     </div> <div id="content_disclaimer" class="graybox"> Content reproduced on this site is the property of its respective owners, and this content is not reviewed in advance by MariaDB. The views, information and opinions expressed by this content do not necessarily represent those of MariaDB or any other party. </div> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2019 MariaDB<br>Licensed under the Creative Commons Attribution 3.0 Unported License and the GNU Free Documentation License.<br>
+    <a href="https://mariadb.com/kb/en/s3-storage-engine-internals/" class="_attribution-link" target="_blank">https://mariadb.com/kb/en/s3-storage-engine-internals/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

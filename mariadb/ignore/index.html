@@ -1,0 +1,205 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>IGNORE - MariaDB - W3cubDocs</title>
+  
+  <meta name="description" content=" The IGNORE option tells the server to ignore some common errors. ">
+  <meta name="keywords" content="ignore, -, mariadb">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/mariadb/ignore/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/mariadb.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/mariadb/" class="_nav-link" title="" style="margin-left:0;">MariaDB</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mariadb">
+				
+				
+<h1>IGNORE</h1> <div> <div class="node creole"> <div class="answer formatted"> <p>The <code>IGNORE</code> option tells the server to ignore some common errors.</p> <p><code>IGNORE</code> can be used with the following statements:</p> <ul start="1">
+<li>
+<a href="../delete/">DELETE</a> </li>
+<li>
+<a href="../insert/">INSERT</a> (see also <a href="../insert-ignore/">INSERT IGNORE</a>) </li>
+<li>
+<a href="../load-data-infile/">LOAD DATA INFILE</a> </li>
+<li>
+<a href="../update/">UPDATE</a> </li>
+<li>
+<a href="../alter-table/">ALTER TABLE</a> </li>
+<li>
+<a href="../create-table/#create-select">CREATE TABLE ... SELECT</a> </li>
+<li>
+<a href="../insert-select/">INSERT ... SELECT</a> </li>
+</ul> <p>The logic used:</p> <ul start="1"><li>Variables out of ranges are replaced with the maximum/minimum value. </li></ul> <ul start="1"><li>
+<a href="../sql_mode/">SQL_MODEs</a> <code>STRICT_TRANS_TABLES</code>, <code>STRICT_ALL_TABLES</code>, <code>NO_ZERO_IN_DATE</code>, <code>NO_ZERO_DATE</code> are ignored. </li></ul> <ul start="1"><li>Inserting <code>NULL</code> in a <code>NOT NULL</code> field will insert 0 ( in a numerical field), 0000-00-00 ( in a date field) or an empty string ( in a character field). </li></ul> <ul start="1"><li>Rows that cause a duplicate key error or break a foreign key constraint are not inserted, updated, or deleted. </li></ul> <p>The following errors are ignored:</p> <div class="cstm-style darkheader-nospace-borders">
+<table>
+<tr>
+<th>Error number</th>
+<th>Symbolic error name</th>
+<th>Description</th>
+</tr> <tr>
+<td><code>1022</code></td>
+<td><code>ER_DUP_KEY</code></td>
+<td>Can't write; duplicate key in table '%s'</td>
+</tr> <tr>
+<td><code>1048</code></td>
+<td><code>ER_BAD_NULL_ERROR</code></td>
+<td>Column '%s' cannot be null</td>
+</tr> <tr>
+<td><code>1062</code></td>
+<td><code>ER_DUP_ENTRY</code></td>
+<td>Duplicate entry '%s' for key %d</td>
+</tr> <tr>
+<td><code>1242</code></td>
+<td><code>ER_SUBQUERY_NO_1_ROW</code></td>
+<td>Subquery returns more than 1 row</td>
+</tr> <tr>
+<td><code>1264</code></td>
+<td><code>ER_WARN_DATA_OUT_OF_RANGE</code></td>
+<td>Out of range value for column '%s' at row %ld</td>
+</tr> <tr>
+<td><code>1265</code></td>
+<td><code>WARN_DATA_TRUNCATED</code></td>
+<td>Data truncated for column '%s' at row %ld</td>
+</tr> <tr>
+<td><code>1292</code></td>
+<td><code>ER_TRUNCATED_WRONG_VALUE</code></td>
+<td>Truncated incorrect %s value: '%s'</td>
+</tr> <tr>
+<td><code>1366</code></td>
+<td><code>ER_TRUNCATED_WRONG_VALUE_FOR_FIELD</code></td>
+<td>Incorrect integer value</td>
+</tr> <tr>
+<td><code>1369</code></td>
+<td><code>ER_VIEW_CHECK_FAILED</code></td>
+<td><code>CHECK OPTION failed '%s.%s'</code></td>
+</tr> <tr>
+<td><code>1451</code></td>
+<td><code>ER_ROW_IS_REFERENCED_2</code></td>
+<td>Cannot delete or update a parent row</td>
+</tr> <tr>
+<td><code>1452</code></td>
+<td><code>ER_NO_REFERENCED_ROW_2</code></td>
+<td>Cannot add or update a child row: a foreign key constraint fails (%s)</td>
+</tr> <tr>
+<td><code>1526</code></td>
+<td><code>ER_NO_PARTITION_FOR_GIVEN_VALUE</code></td>
+<td>Table has no partition for value %s</td>
+</tr> <tr>
+<td><code>1586</code></td>
+<td><code>ER_DUP_ENTRY_WITH_KEY_NAME</code></td>
+<td>Duplicate entry '%s' for key '%s'</td>
+</tr> <tr>
+<td><code>1591</code></td>
+<td><code>ER_NO_PARTITION_FOR_GIVEN_VALUE_SILENT</code></td>
+<td>Table has no partition for some existing values</td>
+</tr> <tr>
+<td><code>1748</code></td>
+<td><code>ER_ROW_DOES_NOT_MATCH_GIVEN_PARTITION_SET</code></td>
+<td>Found a row not matching the given partition set</td>
+</tr> </table> </div>
+<p>Ignored errors normally generate a warning.</p> <p>A property of the <code>IGNORE</code> clause consists in causing transactional engines and non-transactional engines (like XtraDB and Aria) to behave the same way. For example, normally a multi-row insert which tries to violate a <code>UNIQUE</code> contraint is completely rolled back on XtraDB/InnoDB, but might be partially executed on Aria. With the <code>IGNORE</code> clause, the statement will be partially executed in both engines.</p> <div class="mariadb_from_5_5_28 mariadb from_5_5_28 product">
+<strong class="product_title">MariaDB starting with <a href="https://mariadb.com/kb/en/mariadb-5528-release-notes/" target="_blank">5.5.28</a></strong><p>Starting from <a href="https://mariadb.com/kb/en/mariadb-5528-release-notes/" target="_blank">MariaDB 5.5.28</a> duplicate key errors also generate warnings. The <code><a href="../old_mode/">OLD_MODE</a></code> server variable can be used to prevent this.</p> </div> </div>     </div> <div id="content_disclaimer" class="graybox"> Content reproduced on this site is the property of its respective owners, and this content is not reviewed in advance by MariaDB. The views, information and opinions expressed by this content do not necessarily represent those of MariaDB or any other party. </div> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2019 MariaDB<br>Licensed under the Creative Commons Attribution 3.0 Unported License and the GNU Free Documentation License.<br>
+    <a href="https://mariadb.com/kb/en/ignore/" class="_attribution-link" target="_blank">https://mariadb.com/kb/en/ignore/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

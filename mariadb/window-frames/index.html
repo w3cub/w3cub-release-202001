@@ -1,0 +1,275 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Window Frames - MariaDB - W3cubDocs</title>
+  
+  <meta name="description" content=" Window functions were first introduced in MariaDB 10.2.0. ">
+  <meta name="keywords" content="window, frames, -, mariadb">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/mariadb/window-frames/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/mariadb.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/mariadb/" class="_nav-link" title="" style="margin-left:0;">MariaDB</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mariadb">
+				
+				
+<h1>Window Frames</h1> <div> <div class="node creole"> <div class="answer formatted"> <div class="mariadb_from_10_2 mariadb from_10_2 product">
+<strong class="product_title">MariaDB starting with <a href="../what-is-mariadb-102/">10.2</a></strong><p><a href="../window-functions/">Window functions</a> were first introduced in <a href="https://mariadb.com/kb/en/mariadb-1020-release-notes/" target="_blank">MariaDB 10.2.0</a>.</p> </div>
+<h2 class="anchored_heading" id="syntax">Syntax</h2> <pre class="fixed" data-language="sql">frame_clause:
+  {ROWS | RANGE} {frame_border | BETWEEN frame_border AND frame_border}
+
+frame_border:
+  | UNBOUNDED PRECEDING
+  | UNBOUNDED FOLLOWING
+  | CURRENT ROW
+  | expr PRECEDING
+  | expr FOLLOWING
+</pre>
+<h2 class="anchored_heading" id="description">Description</h2> <p>A basic overview of <a href="../window-functions/">window functions</a> is described in <a href="../window-functions-overview/">Window Functions Overview</a>. Window frames expand this functionality by allowing the function to include a specified a number of rows around the current row.</p> <p>These include:</p> <ul start="1">
+<li>All rows before the current row (UNBOUNDED PRECEDING), for example <code>RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code> </li>
+<li>All rows after the current row (UNBOUNDED FOLLOWING), for example <code>RANGE BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING</code> </li>
+<li>A set number of rows before the current row (expr PRECEDING) for example <code>RANGE BETWEEN 6 PRECEDING AND CURRENT ROW</code> </li>
+<li>A set number of rows after the current row (expr PRECEDING AND expr FOLLOWING) for example <code>RANGE BETWEEN CURRENT ROW AND 2 FOLLOWING</code> </li>
+<li>A specified number of rows both before and after the current row, for example <code>RANGE BETWEEN 6 PRECEDING AND 3 FOLLOWING </code> </li>
+</ul> <p>The following functions operate on window frames:</p> <ul start="1">
+<li>
+<a href="../avg/">AVG</a> </li>
+<li>
+<a href="../bit_and/">BIT_AND</a> </li>
+<li>
+<a href="../bit_or/">BIT_OR</a> </li>
+<li>
+<a href="../bit_xor/">BIT_XOR</a> </li>
+<li>
+<a href="../count/">COUNT</a> </li>
+<li>
+<a href="../lead/">LEAD</a> </li>
+<li>
+<a href="../max/">MAX</a> </li>
+<li>
+<a href="../min/">MIN</a> </li>
+<li>
+<a href="../ntile/">NTILE</a> </li>
+<li>
+<a href="../std/">STD</a> </li>
+<li>
+<a href="../stddev/">STDDEV</a> </li>
+<li>
+<a href="../stddev_pop/">STDDEV_POP</a> </li>
+<li>
+<a href="../stddev_samp/">STDDEV_SAMP</a> </li>
+<li>
+<a href="../sum/">SUM</a> </li>
+<li>
+<a href="../var_pop/">VAR_POP</a> </li>
+<li>
+<a href="../var_samp/">VAR_SAMP</a> </li>
+<li>
+<a href="../variance/">VARIANCE</a> </li>
+</ul> <p>Window frames are determined by the <em>frame_clause</em> in the window function request. </p> <p>Take the following example:</p> <pre class="fixed" data-language="sql">CREATE TABLE `student_test` (
+  name char(10),
+  test char(10),
+  score tinyint(4)
+);
+
+INSERT INTO student_test VALUES 
+    ('Chun', 'SQL', 75), ('Chun', 'Tuning', 73), 
+    ('Esben', 'SQL', 43), ('Esben', 'Tuning', 31), 
+    ('Kaolin', 'SQL', 56), ('Kaolin', 'Tuning', 88), 
+    ('Tatiana', 'SQL', 87);
+
+SELECT name, test, score, SUM(score) 
+  OVER () AS total_score 
+  FROM student_test;
++---------+--------+-------+-------------+
+| name    | test   | score | total_score |
++---------+--------+-------+-------------+
+| Chun    | SQL    |    75 |         453 |
+| Chun    | Tuning |    73 |         453 |
+| Esben   | SQL    |    43 |         453 |
+| Esben   | Tuning |    31 |         453 |
+| Kaolin  | SQL    |    56 |         453 |
+| Kaolin  | Tuning |    88 |         453 |
+| Tatiana | SQL    |    87 |         453 |
++---------+--------+-------+-------------+
+</pre>
+<p>By not specifying an OVER condition, the <a href="../sum/">SUM</a> function is run over the entire dataset. However, if we specify an ORDER BY condition based on score (and order the entire result in the same way for clarity), the following result is returned:</p> <pre class="fixed" data-language="sql">SELECT name, test, score, SUM(score) 
+  OVER (ORDER BY score) AS total_score 
+  FROM student_test ORDER BY score;
++---------+--------+-------+-------------+
+| name    | test   | score | total_score |
++---------+--------+-------+-------------+
+| Esben   | Tuning |    31 |          31 |
+| Esben   | SQL    |    43 |          74 |
+| Kaolin  | SQL    |    56 |         130 |
+| Chun    | Tuning |    73 |         203 |
+| Chun    | SQL    |    75 |         278 |
+| Tatiana | SQL    |    87 |         365 |
+| Kaolin  | Tuning |    88 |         453 |
++---------+--------+-------+-------------+
+</pre>
+<p>The total_score column represents a running total of the current row, and all previous rows. The window frame in this example expands as the function proceeds.</p> <p>The above query makes use of the default to define the window frame. It could be written explicitly as follows:</p> <pre class="fixed" data-language="sql">SELECT name, test, score, SUM(score) 
+  OVER (ORDER BY score RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS total_score 
+  FROM student_test ORDER BY score;
++---------+--------+-------+-------------+
+| name    | test   | score | total_score |
++---------+--------+-------+-------------+
+| Esben   | Tuning |    31 |          31 |
+| Esben   | SQL    |    43 |          74 |
+| Kaolin  | SQL    |    56 |         130 |
+| Chun    | Tuning |    73 |         203 |
+| Chun    | SQL    |    75 |         278 |
+| Tatiana | SQL    |    87 |         365 |
+| Kaolin  | Tuning |    88 |         453 |
++---------+--------+-------+-------------+
+</pre>
+<p>Let's look at some alternatives:</p> <p>Firstly, applying the window function to the current row and all following rows can be done with the use of UNBOUNDED FOLLOWING:</p> <pre class="fixed" data-language="sql">SELECT name, test, score, SUM(score) 
+  OVER (ORDER BY score RANGE BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) AS total_score 
+  FROM student_test ORDER BY score;
++---------+--------+-------+-------------+
+| name    | test   | score | total_score |
++---------+--------+-------+-------------+
+| Esben   | Tuning |    31 |         453 |
+| Esben   | SQL    |    43 |         422 |
+| Kaolin  | SQL    |    56 |         379 |
+| Chun    | Tuning |    73 |         323 |
+| Chun    | SQL    |    75 |         250 |
+| Tatiana | SQL    |    87 |         175 |
+| Kaolin  | Tuning |    88 |          88 |
++---------+--------+-------+-------------+
+</pre>
+<p>It's possible to specify a number of rows, rather than the entire unbounded following or preceding set. The following example takes the current row, as well as the previous row:</p> <pre class="fixed" data-language="sql">SELECT name, test, score, SUM(score) 
+  OVER (ORDER BY score ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS total_score 
+  FROM student_test ORDER BY score;
++---------+--------+-------+-------------+
+| name    | test   | score | total_score |
++---------+--------+-------+-------------+
+| Esben   | Tuning |    31 |          31 |
+| Esben   | SQL    |    43 |          74 |
+| Kaolin  | SQL    |    56 |          99 |
+| Chun    | Tuning |    73 |         129 |
+| Chun    | SQL    |    75 |         148 |
+| Tatiana | SQL    |    87 |         162 |
+| Kaolin  | Tuning |    88 |         175 |
++---------+--------+-------+-------------+
+</pre>
+<p>The current row and the following row:</p> <pre class="fixed" data-language="sql">SELECT name, test, score, SUM(score) 
+  OVER (ORDER BY score ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS total_score 
+  FROM student_test ORDER BY score;
++---------+--------+-------+-------------+
+| name    | test   | score | total_score |
++---------+--------+-------+-------------+
+| Esben   | Tuning |    31 |          74 |
+| Esben   | SQL    |    43 |         130 |
+| Kaolin  | SQL    |    56 |         172 |
+| Chun    | Tuning |    73 |         204 |
+| Chun    | SQL    |    75 |         235 |
+| Tatiana | SQL    |    87 |         250 |
+| Kaolin  | Tuning |    88 |         175 |
++---------+--------+-------+-------------+
+</pre> </div>     </div> <div id="content_disclaimer" class="graybox"> Content reproduced on this site is the property of its respective owners, and this content is not reviewed in advance by MariaDB. The views, information and opinions expressed by this content do not necessarily represent those of MariaDB or any other party. </div> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2019 MariaDB<br>Licensed under the Creative Commons Attribution 3.0 Unported License and the GNU Free Documentation License.<br>
+    <a href="https://mariadb.com/kb/en/window-frames/" class="_attribution-link" target="_blank">https://mariadb.com/kb/en/window-frames/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

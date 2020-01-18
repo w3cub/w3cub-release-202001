@@ -1,0 +1,163 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Replace Utility - MariaDB - W3cubDocs</title>
+  
+  <meta name="description" content=" The replace utility program changes strings in place in files or on the standard input. Invoke replace in one of the following ways&#58; ">
+  <meta name="keywords" content="replace, utility, -, mariadb">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/mariadb/replace-utility/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/mariadb.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/mariadb/" class="_nav-link" title="" style="margin-left:0;">MariaDB</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mariadb">
+				
+				
+<h1>replace Utility</h1> <div> <div class="node creole"> <div class="answer formatted"> <h2 class="anchored_heading" id="description">Description</h2> <p>The replace utility program changes strings in place in files or on the standard input. Invoke replace in one of the following ways:</p> <pre class="fixed" data-language="sql">shell&gt; replace from to [from to] ... -- file_name [file_name] ...
+shell&gt; replace from to [from to] ... &lt; file_name
+</pre>
+<p>"<code>from</code>" represents a string to look for and "<code>to</code>" represents its replacement. There can be one or more pairs of strings.</p> <p>A from-string can contain these special characters:</p> <div class="cstm-style darkheader-nospace-borders">
+<table>
+<tr>
+<th>Character</th>
+<th>Description</th>
+</tr> <tr>
+<td><code>\^</code></td>
+<td>Match start of line.</td>
+</tr> <tr>
+<td><code>\$</code></td>
+<td>Match end of line.</td>
+</tr> <tr>
+<td><code>\b</code></td>
+<td>Match space-character, start of line or end of line. For an end <code>\b</code> the next replace starts looking at the end space-character. A <code>\b</code> alone in a string matches only a space-character</td>
+</tr> </table> </div>
+<p>Use the <code>--</code> option to indicate where the string-replacement list ends and the file names begin. Any file named on the command line is modified in place, so you may want to make a copy of the original before converting it. <code>replace</code> prints a message indicating which of the input files it actually modifies.</p> <p>If the <code>--</code> option is not given, replace reads standard input and writes to standard output.</p> <p>replace uses a finite state machine to match longer strings first. It can be used to swap strings. For example, the following command swaps "a" and "b" in the given files, /file1<em> and </em>file2<em>:</em></p> <pre class="fixed" data-language="sql">shell&gt; replace a b b a -- file1 file2 ...
+</pre>
+<p>The replace program is used by <a href="../msql2mysql/">msql2mysql</a>.</p> <h2 class="anchored_heading" id="options">Options</h2> <p><code>replace</code> supports the following options.</p> <div class="cstm-style darkheader-nospace-borders">
+<table>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr> <tr>
+<td>
+<code>-?</code>, <code>-I</code>
+</td>
+<td>Display a help message and exit.</td>
+</tr> <tr>
+<td><code>-#debug_options</code></td>
+<td>Enable debugging.</td>
+</tr> <tr>
+<td><code>-s</code></td>
+<td>Silent mode. Print less information about what the program does.</td>
+</tr> <tr>
+<td><code>-v</code></td>
+<td>Verbose mode. Print more information about what the program does.</td>
+</tr> <tr>
+<td><code>-V</code></td>
+<td>Display version information and exit.</td>
+</tr> </table> </div> </div>     </div> <div id="content_disclaimer" class="graybox"> Content reproduced on this site is the property of its respective owners, and this content is not reviewed in advance by MariaDB. The views, information and opinions expressed by this content do not necessarily represent those of MariaDB or any other party. </div> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2019 MariaDB<br>Licensed under the Creative Commons Attribution 3.0 Unported License and the GNU Free Documentation License.<br>
+    <a href="https://mariadb.com/kb/en/replace-utility/" class="_attribution-link" target="_blank">https://mariadb.com/kb/en/replace-utility/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

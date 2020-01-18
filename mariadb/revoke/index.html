@@ -1,0 +1,140 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>REVOKE - MariaDB - W3cubDocs</title>
+  
+  <meta name="description" content="The REVOKE statement enables system administrators to revoke privileges (or roles - see section below) from MariaDB accounts. Each account is named &hellip;">
+  <meta name="keywords" content="revoke, -, mariadb">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/mariadb/revoke/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/mariadb.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/mariadb/" class="_nav-link" title="" style="margin-left:0;">MariaDB</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mariadb">
+				
+				
+<h1>REVOKE</h1> <div> <div class="node creole"> <div class="answer formatted">  <h2 class="anchored_heading" id="privileges">Privileges</h2> <h3 class="anchored_heading" id="syntax">Syntax</h3> <pre class="fixed" data-language="sql">REVOKE 
+    priv_type [(column_list)]
+      [, priv_type [(column_list)]] ...
+    ON [object_type] priv_level
+    FROM user [, user] ...
+
+REVOKE ALL PRIVILEGES, GRANT OPTION
+    FROM user [, user] ...
+</pre>
+<h3 class="anchored_heading" id="description">Description</h3> <p>The <code>REVOKE</code> statement enables system administrators to revoke privileges (or roles - see <a href="#roles">section below</a>) from MariaDB accounts. Each account is named using the same format as for the <code>GRANT</code> statement; for example, '<code>jeffrey'@'localhost</code>'. If you specify only the user name part of the account name, a host name part of '<code><code>%</code></code>' is used. For details on the levels at which privileges exist, the allowable <code>priv_type</code> and <code>priv_level</code> values, and the syntax for specifying users and passwords, see <code><a href="../grant/">GRANT</a></code>.</p> <p>To use the first <code>REVOKE</code> syntax, you must have the <code>GRANT OPTION</code> privilege, and you must have the privileges that you are revoking.</p> <p>To revoke all privileges, use the second syntax, which drops all global, database, table, column, and routine privileges for the named user or users:</p> <pre class="fixed" data-language="sql">REVOKE ALL PRIVILEGES, GRANT OPTION FROM user [, user] ...
+</pre>
+<p>To use this <code>REVOKE</code> syntax, you must have the global <code><a href="../create-user/">CREATE USER</a></code> privilege or the <code><a href="../update/">UPDATE</a></code> privilege for the mysql database. See <code><a href="../grant/">GRANT</a></code>.</p> <h3 class="anchored_heading" id="examples">Examples</h3> <pre class="fixed" data-language="sql">REVOKE SUPER ON *.* FROM 'alexander'@'localhost';
+</pre>
+<h2 class="anchored_heading" id="roles">Roles</h2> <div class="mariadb_from_10_0_5 mariadb from_10_0_5 product">
+<strong class="product_title">MariaDB starting with <a href="https://mariadb.com/kb/en/mariadb-1005-release-notes/" target="_blank">10.0.5</a></strong><p><a href="../roles/">Roles</a> were introduced in <a href="https://mariadb.com/kb/en/mariadb-1005-release-notes/" target="_blank">MariaDB 10.0.5</a>.</p> </div>
+<h3 class="anchored_heading" id="syntax">Syntax</h3> <pre class="fixed" data-language="sql">REVOKE role  [, role ...]
+    FROM grantee [, grantee2 ... ]
+</pre>
+<h3 class="anchored_heading" id="description">Description</h3> <p><code>REVOKE</code> is also used to remove a <a href="../roles/">role</a> from a user or another role that it's previously been assigned to. If a role has previously been set as a <a href="../set-default-role/">default role</a>, <code>REVOKE</code> does not remove the record of the default role from the <code><a href="../mysqluser-table/">mysql.user</a></code> table. If the role is subsequently granted again, it will again be the user's default. Use <code><a href="../set-default-role/">SET DEFAULT ROLE NONE</a></code> to explicitly remove this.</p> <p>Before <a href="https://mariadb.com/kb/en/mariadb-10113-release-notes/" target="_blank">MariaDB 10.1.13</a>, the <code>REVOKE role</code> statement was not permitted in <a href="../prepared-statements/">prepared statements</a>.</p> <h3 class="anchored_heading" id="example">Example</h3> <pre class="fixed" data-language="sql">REVOKE journalist FROM hulda
+</pre> </div>     </div> <div id="content_disclaimer" class="graybox"> Content reproduced on this site is the property of its respective owners, and this content is not reviewed in advance by MariaDB. The views, information and opinions expressed by this content do not necessarily represent those of MariaDB or any other party. </div> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2019 MariaDB<br>Licensed under the Creative Commons Attribution 3.0 Unported License and the GNU Free Documentation License.<br>
+    <a href="https://mariadb.com/kb/en/revoke/" class="_attribution-link" target="_blank">https://mariadb.com/kb/en/revoke/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>

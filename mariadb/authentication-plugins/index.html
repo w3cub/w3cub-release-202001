@@ -1,0 +1,168 @@
+
+<!DOCTYPE HTML>
+
+<html lang="en" class="_theme-default">
+
+<head>
+  <meta charset="utf-8">
+  <title>Authentication Plugins - MariaDB - W3cubDocs</title>
+  
+  <meta name="description" content=" When a user attempts to log in, the authentication plugin controls how MariaDB Server determines whether the connection is from a legitimate user. ">
+  <meta name="keywords" content="authentication, plugins, -, mariadb">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="canonical" href="http://docs.w3cub.com/mariadb/authentication-plugins/">
+  <link href="/favicon.png" rel="icon">
+  <link rel="stylesheet" type="text/css" integrity="sha256-6/DH7X+2hvUPElJfGsvzm+tgIpmM9zjbYxnpsr6gR1A=" crossorigin="anonymous" href="/assets/application-ebf0c7ed7fb686f50f12525f1acbf39beb6022998cf738db6319e9b2bea04750.css">
+  <script type="text/javascript" src="/assets/application-db285287b40ed28fac520fcfd75d7d874692b647b5b5e05968c741dda5de4148.js" integrity="sha256-2yhSh7QO0o+sUg/P1119h0aStke1teBZaMdB3aXeQUg=" crossorigin="anonymous"></script>
+  <script src="/json/mariadb.js"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-71174418-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-2572770204602497",
+            enable_page_level_ads: true
+        });
+  </script>
+  <script async custom-element="amp-auto-ads"
+  src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+
+
+</head>
+
+<body>
+	<div class="_app">
+	<header class="_header">
+  
+  <form class="_search">
+    <input type="search" class="_search-input" placeholder="Search&hellip;" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="20">
+    <a class="_search-clear"></a>
+    <div class="_search-tag"></div>
+  </form>
+  
+  <a class="_home-link" href="/" ></a>
+  <a class="_menu-link"></a>
+  <h1 class="_logo">
+    <a href="/" class="_nav-link" title="API Documentation Browser">W3cubDocs</a>
+  </h1>
+  
+  <span class="_logo-sub-nav">/</span><span class="_logo-sub-nav"><a href="/mariadb/" class="_nav-link" title="" style="margin-left:0;">MariaDB</a></span>
+  
+  <nav class="_nav">
+    <a href="https://tools.w3cub.com/?_sp=docs" target="_blank" class="_nav-link ">W3cubTools</a>
+    <a href="/cheatsheets/" class="_nav-link ">Cheatsheets</a>
+    <a href="/about/" class="_nav-link ">About</a>
+  </nav>
+</header>
+	<section class="_sidebar">
+		<div class="_list">
+			
+		</div>
+	</section>
+	<section class="_container ">
+		<div class="_content">
+			<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="6861657091"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			<div class="_page _mariadb">
+				
+				
+<h1> Authentication Plugins </h1> <div> <div class="creole"> <p>When a user attempts to log in, the authentication plugin controls how MariaDB Server determines whether the connection is from a legitimate user.</p> <p>When creating or altering a user account with the <code><a href="../grant/">GRANT</a></code>, <code><a href="../create-user/">CREATE USER</a></code> or <code><a href="../alter-user/">ALTER USER</a></code> statements, you can specify the authentication plugin you want the user account to use by providing the <code>IDENTIFIED VIA</code> clause. By default, when you issue one of these statements for a user account without specifying an authentication plugin, MariaDB uses the <code><a href="../authentication-plugin-mysql_native_password/">mysql_native_password</a></code> plugin.</p> <div class="mariadb_from_10_4 mariadb from_10_4 product">
+<strong class="product_title">MariaDB starting with <a href="../what-is-mariadb-104/">10.4</a></strong><p>In <a href="../what-is-mariadb-104/">MariaDB 10.4</a> and later, there are some notable changes, such as:</p> <ul start="1">
+<li>You can specify multiple authentication plugins for each user account. </li>
+<li>The <code>root@localhost</code> user created by <code><a href="../mysql_install_db/">mysql_install_db</a></code> is created with the ability to use two authentication plugins. First, it is configured to try to use the <code><a href="../authentication-plugin-unix-socket/">unix_socket</a></code> authentication plugin. This allows the the <code>root@localhost</code> user to login without a password via the local Unix socket file defined by the <code><a href="../server-system-variables/#socket">socket</a></code> system variable, as long as the login is attempted from a process owned by the operating system <code>root</code> user account. Second, if authentication fails with the <code><a href="../authentication-plugin-unix-socket/">unix_socket</a></code> authentication plugin, then it is configured to try to use the <code><a href="../authentication-plugin-mysql_native_password/">mysql_native_password</a></code> authentication plugin. However, an invalid password is initially set, so in order to authenticate this way, a password must be set with <code><a href="../set-password/">SET PASSWORD</a></code>. </li>
+</ul> </div> </div> <table>
+<thead><tr>
+<th>Title</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><a href="../pluggable-authentication-overview/"> Pluggable Authentication Overview</a></td>
+<td> The authentication of users is delegated to plugins. </td>
+</tr>
+<tr>
+<td><a href="../authentication-plugin-mysql_native_password/"> Authentication Plugin - mysql_native_password</a></td>
+<td> Uses the password hashing algorithm introduced in MySQL 4.1. </td>
+</tr>
+<tr>
+<td><a href="../authentication-plugin-mysql_old_password/"> Authentication Plugin - mysql_old_password</a></td>
+<td> The mysql_old_password authentication plugin uses the pre-MySQL 4.1 password hashing algorithm. </td>
+</tr>
+<tr>
+<td><a href="../authentication-plugin-ed25519/"> Authentication Plugin - ed25519</a></td>
+<td> Uses the Elliptic Curve Digital Signature Algorithm to securely store users' passwords. </td>
+</tr>
+<tr>
+<td><a href="../authentication-plugin-gssapi/"> Authentication Plugin - GSSAPI</a></td>
+<td> The gssapi authentication plugin uses the GSSAPI interface to authenticate with Kerberos or NTLM. </td>
+</tr>
+<tr>
+<td><a href="../authentication-with-pluggable-authentication-modules-pam/"> Authentication with Pluggable Authentication Modules (PAM)</a></td>
+<td> Uses the Pluggable Authentication Module (PAM) framework to authenticate MariaDB users. </td>
+</tr>
+<tr>
+<td><a href="../authentication-plugin-unix-socket/"> Authentication Plugin - Unix Socket</a></td>
+<td> Uses the user name that owns the process connected to MariaDB's unix socket file. </td>
+</tr>
+<tr>
+<td><a href="../authentication-plugin-named-pipe/"> Authentication Plugin - Named Pipe</a></td>
+<td> Uses the user name that owns the process connected to MariaDB's named pipe on Windows. </td>
+</tr>
+<tr>
+<td><a href="../authentication-plugin-sha-256/"> Authentication Plugin - SHA-256</a></td>
+<td> MySQL supports the sha256_password and caching_sha2_password authentication plugins. </td>
+</tr>
+</tbody>
+</table>  <div id="content_disclaimer" class="graybox"> Content reproduced on this site is the property of its respective owners, and this content is not reviewed in advance by MariaDB. The views, information and opinions expressed by this content do not necessarily represent those of MariaDB or any other party. </div> </div>
+<div class="_attribution">
+  <p class="_attribution-p">
+    © 2019 MariaDB<br>Licensed under the Creative Commons Attribution 3.0 Unported License and the GNU Free Documentation License.<br>
+    <a href="https://mariadb.com/kb/en/authentication-plugins/" class="_attribution-link" target="_blank">https://mariadb.com/kb/en/authentication-plugins/</a>
+  </p>
+</div>
+
+				
+			</div>
+			<amp-auto-ads type="adsense"
+              data-ad-client="ca-pub-2572770204602497">
+</amp-auto-ads>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2572770204602497"
+     data-ad-slot="1992473792"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+		</div>
+	</section>
+
+	</div>
+	<svg style="display:none">
+		<symbol id="icon-dir"><svg viewBox="0 0 20 20"><path d="M15 10c0 .3-.305.515-.305.515l-8.56 5.303c-.625.41-1.135.106-1.135-.67V4.853c0-.777.51-1.078 1.135-.67l8.56 5.305S15 9.702 15 10z"/></svg></symbol>
+	  </svg>
+</body>
+</html>
